@@ -1,0 +1,230 @@
+:root {
+  --bg: #fffdf9;
+  --bg-soft: #fff8f5;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --surface-warm: rgba(255, 247, 235, 0.94);
+  --line: rgba(112, 83, 66, 0.12);
+  --line-strong: rgba(112, 83, 66, 0.24);
+  --text: #47392f;
+  --text-soft: #7d6a5d;
+  --peach: #ffc6ad;
+  --pink: #f6d4de;
+  --mint: #cfeadf;
+  --sky: #d8ebff;
+  --butter: #f9efbf;
+  --coral: #ff8e77;
+  --green: #5f9b7c;
+  --shadow-lg: 0 26px 60px rgba(197, 170, 155, 0.26);
+  --shadow-md: 0 18px 35px rgba(197, 170, 155, 0.18);
+  --shadow-sm: 0 8px 16px rgba(197, 170, 155, 0.12);
+  --radius-xl: 30px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --max-width: 1280px;
+  --font-ui:
+    'M PLUS Rounded 1c', 'Noto Sans SC', 'Noto Sans JP', 'Hiragino Sans GB',
+    'PingFang SC', sans-serif;
+  --font-body:
+    'Hiragino Sans', 'Noto Sans JP', 'Noto Sans SC', 'Microsoft YaHei',
+    sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 198, 173, 0.44), transparent 38%),
+    radial-gradient(circle at top right, rgba(207, 234, 223, 0.48), transparent 36%),
+    linear-gradient(180deg, #fffdf9 0%, #fff8f5 56%, #fdf7f2 100%);
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: transparent;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: auto;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+body::before {
+  top: 18px;
+  left: max(4vw, 12px);
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255, 198, 173, 0.26);
+}
+
+body::after {
+  right: max(3vw, 10px);
+  bottom: 56px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(216, 235, 255, 0.3);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+  color: inherit;
+}
+
+img,
+video,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.pageTitle {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  letter-spacing: 0.02em;
+}
+
+.sectionIntro {
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.glassCard {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-md);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.48rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text-soft);
+  font-size: 0.87rem;
+}
+
+.badgePeach {
+  background: rgba(255, 198, 173, 0.26);
+}
+
+.badgeMint {
+  background: rgba(207, 234, 223, 0.38);
+}
+
+.badgePink {
+  background: rgba(246, 212, 222, 0.34);
+}
+
+.softButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.7rem 1rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 245, 0.84));
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.softButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.softButton:disabled {
+  cursor: wait;
+  opacity: 0.66;
+  transform: none;
+}
+
+.primaryButton {
+  color: #5d3c2c;
+  background: linear-gradient(135deg, rgba(255, 198, 173, 0.95), rgba(249, 239, 191, 0.94));
+}
+
+.secondaryButton {
+  background: linear-gradient(135deg, rgba(207, 234, 223, 0.94), rgba(216, 235, 255, 0.92));
+}
+
+.dangerButton {
+  background: linear-gradient(135deg, rgba(255, 142, 119, 0.2), rgba(246, 212, 222, 0.55));
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.fadeIn {
+  animation: fadeInUp 420ms ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .pageTitle {
+    font-size: 2rem;
+  }
+
+  .softButton {
+    min-height: 42px;
+  }
+}

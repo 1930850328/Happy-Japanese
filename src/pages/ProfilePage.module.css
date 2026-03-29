@@ -1,0 +1,180 @@
+.page {
+  display: grid;
+  gap: 18px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.highlightCard,
+.card {
+  border-radius: var(--radius-xl);
+  padding: 1.2rem;
+}
+
+.highlightCard {
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+}
+
+.streakBadge,
+.highlightStats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.streakBadge {
+  color: #8b5b47;
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+}
+
+.highlightCard p,
+.highlightStats span,
+.placeholder,
+.favoriteList span,
+.sourceList span,
+.sourceList small {
+  color: var(--text-soft);
+}
+
+.highlightCard p {
+  margin: 0;
+  line-height: 1.75;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.cardHeader h2 {
+  margin: 0.55rem 0 0;
+  font-size: 1.2rem;
+  font-family: var(--font-ui);
+}
+
+.goalForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.goalForm label {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.goalForm span {
+  color: var(--text-soft);
+}
+
+.goalForm input,
+.textInput,
+.fileInput {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  padding: 0.85rem 1rem;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.dayCell {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-size: 0.92rem;
+  color: #5d4336;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+}
+
+.dayCellMuted {
+  color: rgba(93, 67, 54, 0.35);
+}
+
+.favoriteList,
+.sourceList,
+.settingList,
+.uploadForm {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.favoriteList article,
+.settingItem,
+.sourceList a {
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.76);
+  padding: 0.95rem;
+}
+
+.favoriteList article {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.favoriteList strong,
+.sourceList strong,
+.settingItem strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.settingItem,
+.sourceList a {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  text-align: left;
+}
+
+.sourceList a small {
+  display: block;
+  margin-top: 0.4rem;
+  line-height: 1.6;
+}
+
+.placeholder {
+  margin: 0;
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .goalForm {
+    grid-template-columns: 1fr;
+  }
+}

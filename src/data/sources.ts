@@ -1,0 +1,68 @@
+import type { SourceAttribution } from '../types'
+
+export const sourceAttributions: SourceAttribution[] = [
+  {
+    id: 'source-video-spy',
+    title: 'SPY x FAMILY - Season 2 Official Trailer / Shorts 搜索结果',
+    href: 'https://www.youtube.com/watch?v=Zcftn8ek1ls',
+    provider: 'TOHO animation',
+    license: '按平台公开视频展示',
+    note: '用于首页公开可嵌入学习流参考。',
+  },
+  {
+    id: 'source-video-suzume',
+    title: 'Suzume | Official Trailer 1',
+    href: 'https://www.youtube.com/watch?v=g0JMPkn7Wuo',
+    provider: 'Netflix Anime',
+    license: '按平台公开视频展示',
+    note: '作为情绪表达和剧情语境素材。',
+  },
+  {
+    id: 'source-video-conan',
+    title: "Detective Conan Zero's Tea Time - Official Trailer",
+    href: 'https://www.youtube.com/watch?v=o7BvOuis0Aw',
+    provider: 'JAPAN ANIME NOW!',
+    license: '按平台公开视频展示',
+    note: '作为观察与描述场景素材。',
+  },
+  {
+    id: 'source-video-nhk',
+    title: 'Easy Japanese Lesson 1',
+    href: 'https://www.youtube.com/watch?v=g_sbGLEerbI',
+    provider: 'NHK WORLD JAPAN',
+    license: '公开教学视频',
+    note: '作为问路和位置表达素材。',
+  },
+  {
+    id: 'source-video-pod101',
+    title: '100 Phrases Every Japanese Beginner Must-Know',
+    href: 'https://www.youtube.com/watch?v=66P5_R37vek',
+    provider: 'JapanesePod101',
+    license: '公开教学视频',
+    note: '作为基础短句和发音模仿素材。',
+  },
+  {
+    id: 'source-jmdict',
+    title: 'JMdict / EDRDG',
+    href: 'https://www.edrdg.org/',
+    provider: 'EDRDG',
+    license: 'EDRDG Licence',
+    note: '词典来源参考，当前项目使用了精选静态词条和人工整理释义。',
+  },
+  {
+    id: 'source-tatoeba',
+    title: 'Tatoeba Corpus',
+    href: 'https://tatoeba.org/en/downloads',
+    provider: 'Tatoeba',
+    license: 'CC-BY 2.0 FR / contributors',
+    note: '例句风格与公开资源参考，当前站内例句以精选和人工整理为主。',
+  },
+  {
+    id: 'source-nhk',
+    title: 'Easy Japanese by NHK',
+    href: 'https://www3.nhk.or.jp/nhkworld/en/learnjapanese/',
+    provider: 'NHK WORLD JAPAN',
+    license: '公开教学资源',
+    note: '入门课程与表达主题参考。',
+  },
+]

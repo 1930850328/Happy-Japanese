@@ -1,0 +1,182 @@
+.page {
+  display: grid;
+  gap: 18px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.heroStats,
+.cardPanel,
+.sideCard {
+  border-radius: var(--radius-xl);
+  padding: 1.2rem;
+}
+
+.heroStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.heroStats article {
+  border-radius: 20px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.heroStats small {
+  color: var(--text-soft);
+}
+
+.heroStats strong {
+  font-size: 1.35rem;
+  font-family: var(--font-ui);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 18px;
+}
+
+.cardMeta,
+.actions,
+.sideHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.reviewCard {
+  margin: 1.2rem 0;
+  padding: clamp(1.2rem, 5vw, 2.2rem);
+  border-radius: 28px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 249, 240, 0.86)),
+    rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  min-height: 360px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.expression {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  font-family: var(--font-ui);
+}
+
+.reading {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-soft);
+}
+
+.answerBlock {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.answerBlock strong {
+  font-size: 1.25rem;
+}
+
+.answerBlock p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.actions {
+  justify-content: space-between;
+}
+
+.sideColumn {
+  display: grid;
+  gap: 18px;
+}
+
+.sideHeader {
+  justify-content: space-between;
+}
+
+.sideHeader h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-family: var(--font-ui);
+}
+
+.reviewList,
+.logList {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.reviewList article,
+.logList article {
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.75);
+  padding: 0.95rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.reviewList span,
+.reviewList small,
+.logList small,
+.placeholder,
+.emptyState p {
+  color: var(--text-soft);
+}
+
+.emptyState {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 0.9rem;
+}
+
+.emptyState strong {
+  font-size: 1.2rem;
+}
+
+.emptyState p,
+.placeholder {
+  margin: 0;
+  line-height: 1.7;
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroStats {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
