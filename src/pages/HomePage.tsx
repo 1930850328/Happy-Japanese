@@ -1,4 +1,9 @@
 import {
+  AnimeStudyPlayer,
+  type AnimeStudyPlayerHandle,
+  type StudyPlayerSnapshot,
+} from 'anime-study-player'
+import {
   BookMarked,
   Heart,
   HeartOff,
@@ -38,23 +43,6 @@ interface PlayerOverlayProps {
   onPlayerError: (lessonId: string) => void
 }
 
-function getCurrentSegment(lesson: VideoLesson, currentMs: number) {
-  return (
-    lesson.segments.find(
-      (segment) => currentMs >= segment.startMs && currentMs < segment.endMs,
-    ) ?? lesson.segments.at(-1) ?? lesson.segments.at(0)
-  )
-}
-
-function getFocusedPoints(lesson: VideoLesson, segment?: TranscriptSegment) {
-  if (!segment) {
-    return []
-  }
-
-  const focusIds = new Set(segment.focusTermIds)
-  return lesson.knowledgePoints.filter((point) => focusIds.has(point.id))
-}
-
 function getPointExample(lesson: VideoLesson, point: KnowledgePoint) {
   const sourceSegment = lesson.segments.find((segment) => segment.focusTermIds.includes(point.id))
   if (sourceSegment) {
@@ -80,83 +68,6 @@ function formatProgress(currentMs: number, durationMs: number) {
   const total = Math.max(1, Math.round(durationMs / 1000))
   const current = Math.min(total, Math.max(0, Math.round(currentMs / 1000)))
   return `${current}s / ${total}s`
-}
-
-function escapeRegExp(input: string) {
-  return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
-
-function renderHighlightedText(text: string, points: KnowledgePoint[]): ReactNode {
-  if (!text) {
-    return text
-  }
-
-  const matches = points
-    .filter((point) => point.expression.trim())
-    .flatMap((point) => {
-      const regex = new RegExp(escapeRegExp(point.expression), 'g')
-      const result: Array<{ start: number; end: number; point: KnowledgePoint }> = []
-      let match = regex.exec(text)
-
-      while (match) {
-        result.push({
-          start: match.index,
-          end: match.index + match[0].length,
-          point,
-        })
-        if (regex.lastIndex === match.index) {
-          regex.lastIndex += 1
-        }
-        match = regex.exec(text)
-      }
-
-      return result
-    })
-    .sort((left, right) => {
-      if (left.start !== right.start) {
-        return left.start - right.start
-      }
-      return right.end - left.end
-    })
-
-  if (matches.length === 0) {
-    return text
-  }
-
-  const accepted: typeof matches = []
-  let cursor = -1
-  for (const match of matches) {
-    if (match.start < cursor) {
-      continue
-    }
-    accepted.push(match)
-    cursor = match.end
-  }
-
-  const nodes: ReactNode[] = []
-  let lastIndex = 0
-  for (const match of accepted) {
-    if (match.start > lastIndex) {
-      nodes.push(text.slice(lastIndex, match.start))
-    }
-    nodes.push(
-      <mark
-        key={`${match.point.id}-${match.start}`}
-        className={
-          match.point.kind === 'grammar' ? styles.highlightGrammar : styles.highlightWord
-        }
-      >
-        {text.slice(match.start, match.end)}
-      </mark>,
-    )
-    lastIndex = match.end
-  }
-
-  if (lastIndex < text.length) {
-    nodes.push(text.slice(lastIndex))
-  }
-
-  return nodes
 }
 
 function OverlayPortal({ children }: { children: ReactNode }) {
@@ -273,21 +184,21 @@ function LessonPlayerOverlay({
   onFavorite,
   onPlayerError,
 }: PlayerOverlayProps) {
-  const [elapsedMs, setElapsedMs] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isReady, setIsReady] = useState(false)
-  const [isBuffering, setIsBuffering] = useState(true)
-  const [localBlocked, setLocalBlocked] = useState(false)
+  const [playerState, setPlayerState] = useState<StudyPlayerSnapshot | null>(null)
   const [localSourceUrl, setLocalSourceUrl] = useState(lesson.sourceIdOrBlobKey)
-  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const playerRef = useRef<AnimeStudyPlayerHandle | null>(null)
   const objectUrlRef = useRef<string | null>(null)
   const finishedRef = useRef(false)
   const clipStartMs = lesson.clipStartMs ?? 0
   const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
 
-  const currentSegment = getCurrentSegment(lesson, elapsedMs)
-  const activePoints = getFocusedPoints(lesson, currentSegment)
-  const progressPercent = Math.min(100, Math.max(0, (elapsedMs / lesson.durationMs) * 100))
+  const currentSegment = playerState?.currentSegment ?? lesson.segments.at(0)
+  const activePoints = playerState?.activePoints ?? []
+  const elapsedMs = playerState?.elapsedMs ?? 0
+  const isPlaying = playerState?.isPlaying ?? false
+  const isReady = playerState?.isReady ?? false
+  const isBuffering = playerState?.isBuffering ?? true
+  const volumePercent = Math.round((playerState?.volume ?? 0.8) * 100)
 
   useEffect(() => {
     return () => {
@@ -318,76 +229,19 @@ function LessonPlayerOverlay({
 
   useEffect(() => {
     finishedRef.current = false
-    setElapsedMs(0)
-    setIsPlaying(false)
-    setIsReady(false)
-    setIsBuffering(true)
-    setLocalBlocked(false)
+    setPlayerState(null)
   }, [lesson.id])
 
-  const startPlayback = (fromBeginning = false) => {
-    const video = videoRef.current
-    if (!video) {
-      return
-    }
-
-    const startSec = clipStartMs / 1000
-    const endSec = clipEndMs / 1000
-    const outsideSlice = video.currentTime < startSec || video.currentTime > endSec
-
-    if (fromBeginning || outsideSlice) {
-      video.currentTime = startSec
-      setElapsedMs(0)
-      finishedRef.current = false
-    }
-
-    const attempt = video.play()
-    if (!attempt) {
-      return
-    }
-
-    void attempt
-      .then(() => {
-        setLocalBlocked(false)
-        setIsBuffering(false)
-      })
-      .catch(() => {
-        setLocalBlocked(true)
-        setIsPlaying(false)
-        setIsBuffering(false)
-      })
-  }
-
-  useEffect(() => {
-    const rafId = window.requestAnimationFrame(() => {
-      startPlayback()
-    })
-
-    return () => window.cancelAnimationFrame(rafId)
-  }, [localSourceUrl])
-
-  useEffect(() => {
-    return () => {
-      videoRef.current?.pause()
-    }
-  }, [])
-
   const pausePlayback = () => {
-    videoRef.current?.pause()
-    setIsPlaying(false)
+    playerRef.current?.pause()
   }
 
   const togglePlayback = () => {
-    if (!videoRef.current) {
-      return
-    }
+    playerRef.current?.toggle()
+  }
 
-    if (videoRef.current.paused) {
-      startPlayback()
-      return
-    }
-
-    pausePlayback()
+  const restartPlayback = () => {
+    playerRef.current?.restart()
   }
 
   const finishSession = () => {
@@ -425,112 +279,31 @@ function LessonPlayerOverlay({
           </header>
 
           <div className={styles.sessionViewportShell}>
-            <div className={styles.sessionViewport}>
-              <video
-                ref={videoRef}
-                className={styles.sessionVideo}
-                src={localSourceUrl}
-                poster={lesson.cover}
-                playsInline
-                preload="auto"
-                onClick={togglePlayback}
-                onLoadStart={() => {
-                  setIsReady(false)
-                  setIsBuffering(true)
-                }}
-                onLoadedMetadata={(event) => {
-                  const startSec = clipStartMs / 1000
-                  if (Math.abs(event.currentTarget.currentTime - startSec) > 0.1) {
-                    event.currentTarget.currentTime = startSec
-                  }
-                  setElapsedMs(0)
-                }}
-                onCanPlay={() => {
-                  setIsReady(true)
-                  setIsBuffering(false)
-                }}
-                onPlaying={() => {
-                  setIsReady(true)
-                  setIsPlaying(true)
-                  setIsBuffering(false)
-                  setLocalBlocked(false)
-                }}
-                onPause={() => {
-                  setIsPlaying(false)
-                }}
-                onWaiting={() => setIsBuffering(true)}
-                onSeeking={() => setIsBuffering(true)}
-                onSeeked={(event) => {
-                  const absoluteMs = Math.round(event.currentTarget.currentTime * 1000)
-                  if (absoluteMs < clipStartMs) {
-                    event.currentTarget.currentTime = clipStartMs / 1000
-                    return
-                  }
-                  if (absoluteMs > clipEndMs) {
-                    event.currentTarget.currentTime = clipEndMs / 1000
-                  }
-                  setIsBuffering(false)
-                  setElapsedMs(
-                    Math.min(lesson.durationMs, Math.max(0, absoluteMs - clipStartMs)),
-                  )
-                }}
-                onTimeUpdate={(event) => {
-                  const absoluteMs = Math.round(event.currentTarget.currentTime * 1000)
-                  if (absoluteMs >= clipEndMs) {
-                    event.currentTarget.pause()
-                    setElapsedMs(lesson.durationMs)
-                    finishSession()
-                    return
-                  }
-                  setElapsedMs(Math.min(lesson.durationMs, Math.max(0, absoluteMs - clipStartMs)))
-                }}
-                onEnded={finishSession}
-                onError={() => {
-                  onPlayerError(lesson.id)
-                  setLocalBlocked(true)
-                  setIsBuffering(false)
-                  setIsPlaying(false)
-                }}
-              />
-
-              {currentSegment ? (
-                <div className={styles.subtitleOverlay}>
-                  <span className={styles.subtitleLabel}>片中日语字幕</span>
-                  <strong className={styles.subtitleJa}>
-                    {renderHighlightedText(currentSegment.ja, activePoints)}
-                  </strong>
-                  <span className={styles.subtitleMeta}>
-                    {showRomaji
-                      ? `${currentSegment.kana} / ${currentSegment.romaji}`
-                      : currentSegment.kana}
-                  </span>
-                  <p className={styles.subtitleZh}>{currentSegment.zh}</p>
-                </div>
-              ) : null}
-
-              {!isPlaying ? (
-                <button className={styles.viewportButton} onClick={() => startPlayback()}>
-                  <Play size={22} />
-                  {localBlocked ? '点击开始播放' : elapsedMs > 0 ? '继续播放' : '开始播放'}
-                </button>
-              ) : null}
-
-              {isBuffering && isReady ? (
-                <div className={styles.viewportStatus}>正在缓冲…</div>
-              ) : null}
-
-              {!isReady && !localBlocked ? (
-                <div className={styles.viewportStatus}>视频加载中…</div>
-              ) : null}
-            </div>
+            <AnimeStudyPlayer
+              ref={playerRef}
+              url={localSourceUrl}
+              poster={lesson.cover}
+              title={lesson.title}
+              sourceLabel={lesson.sourceProvider}
+              durationMs={lesson.durationMs}
+              clipStartMs={clipStartMs}
+              clipEndMs={clipEndMs}
+              segments={lesson.segments}
+              knowledgePoints={lesson.knowledgePoints}
+              showRomaji={showRomaji}
+              onStateChange={setPlayerState}
+              onFinish={finishSession}
+              onError={() => onPlayerError(lesson.id)}
+            />
 
             <div className={styles.progressBox}>
               <div className={styles.progressMeta}>
-                <span>{isPlaying ? '正在播放' : '已暂停'}</span>
-                <strong>{formatProgress(elapsedMs, lesson.durationMs)}</strong>
-              </div>
-              <div className={styles.progressTrack}>
-                <span style={{ width: `${progressPercent}%` }} />
+                <span>
+                  {!isReady ? '视频加载中…' : isBuffering ? '正在缓冲…' : isPlaying ? '正在播放' : '已暂停'}
+                </span>
+                <strong>
+                  {formatProgress(elapsedMs, lesson.durationMs)} / 音量 {volumePercent}%
+                </strong>
               </div>
             </div>
 
@@ -577,7 +350,7 @@ function LessonPlayerOverlay({
                 {isPlaying ? '暂停学习' : '继续播放'}
               </button>
 
-              <button className="softButton" onClick={() => startPlayback(true)}>
+              <button className="softButton" onClick={restartPlayback}>
                 <RotateCcw size={18} />
                 从头再看
               </button>
@@ -589,7 +362,7 @@ function LessonPlayerOverlay({
             </div>
 
             <p className={styles.sessionHint}>
-              当前流程：看视频里的原句，看到高亮词法就可以点暂停；想跟读时可以播放片中原句；看完或随时都能进入知识点解析。
+              底部控制栏现在已经支持拖动进度、调节音量、全屏和倍速；上层仍然保留学习字幕、高亮词法和知识点联动。
             </p>
           </div>
         </section>
@@ -637,7 +410,7 @@ export function HomePage() {
     activeLesson?.knowledgePoints
       .slice(0, 2)
       .map((point) => point.expression)
-      .join(' / ') ?? '导入自己的原片后会在这里显示今日重点'
+      .join(' / ') ?? '导入自己的原片后，这里会显示今天重点'
   const currentSegment: TranscriptSegment | undefined = activeLesson?.segments[0]
 
   useEffect(() => {
@@ -734,11 +507,11 @@ export function HomePage() {
     <div className={`${styles.page} fadeIn`}>
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
-          <span className="chip badgeMint">短视频模块已切换为本地原片学习模式</span>
+          <span className="chip badgeMint">短视频模块已切到独立播放器内核</span>
           <h1 className="pageTitle">先把片中原句看清楚，再顺手记住对应的单词和语法</h1>
           <p className="sectionIntro">
-            现在首页会优先展示站内本地学习切片。导入你自己的原片后，系统会结合字幕和知识点自动切出更适合学习的短段，
-            每一段都带片中字幕、词法高亮和对应知识点，暂停后进度也会跟着停下。
+            首页会优先展示站内本地学习切片。现在视频底层播放已经抽到独立仓库维护，
+            并换成更完整的播放器控制层，进度、音量、全屏、倍速这些常用操作都在控制栏里。
           </p>
         </div>
 

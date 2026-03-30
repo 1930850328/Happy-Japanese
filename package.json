@@ -14,6 +14,7 @@
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@huggingface/transformers": "^4.0.0",
+    "anime-study-player": "github:1930850328/anime-study-player",
     "dayjs": "^1.11.20",
     "idb": "^8.0.3",
     "kuromoji": "^0.1.2",
