@@ -13,6 +13,17 @@ interface SubtitleGenerationResult {
   modelLabel: string
 }
 
+interface LoadedTranscriber {
+  transcriber: any
+  modelLabel: string
+}
+
+interface WhisperLoadStrategy {
+  modelId: string
+  label: string
+  dtype: 'fp32'
+}
+
 type StatusCallback = (message: string) => void
 
 const FFMPEG_CORE_VERSION = '0.12.10'
@@ -25,12 +36,58 @@ let ffmpegPromise: Promise<{
   fetchFile: (file: File | Blob) => Promise<Uint8Array>
 }> | null = null
 
-let transcriberPromise: Promise<any> | null = null
-let transcriberModelId = ''
+let transcriberEntry:
+  | {
+      cacheKey: string
+      promise: Promise<LoadedTranscriber>
+    }
+  | null = null
 
 function getPreferredModelId() {
   const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 0
   return memory >= 8 ? BASE_MODEL : TINY_MODEL
+}
+
+function getWhisperLoadStrategies() {
+  const preferredModelId = getPreferredModelId()
+  const strategies: WhisperLoadStrategy[] = [
+    {
+      modelId: preferredModelId,
+      label: preferredModelId === BASE_MODEL ? 'Whisper Base / fp32' : 'Whisper Tiny / fp32',
+      dtype: 'fp32',
+    },
+  ]
+
+  if (preferredModelId !== TINY_MODEL) {
+    strategies.push({
+      modelId: TINY_MODEL,
+      label: 'Whisper Tiny / fp32',
+      dtype: 'fp32',
+    })
+  }
+
+  return strategies
+}
+
+function normalizeErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message) {
+    return error.message
+  }
+
+  if (typeof error === 'string') {
+    return error
+  }
+
+  return '未知错误'
+}
+
+function isQuantizedWeightSessionError(message: string) {
+  return (
+    message.includes('Missing required scale') ||
+    message.includes('weight_merged_0_scale') ||
+    message.includes("Can't create a session") ||
+    message.includes('qdq_actions.cc')
+  )
 }
 
 async function getFFmpeg(onStatus?: StatusCallback) {
@@ -95,38 +152,71 @@ async function extractAudioTrack(file: File, onStatus?: StatusCallback) {
   }
 }
 
+async function loadTranscriberForStrategy(
+  strategy: WhisperLoadStrategy,
+  onStatus?: StatusCallback,
+): Promise<LoadedTranscriber> {
+  const { env, LogLevel, pipeline } = await import('@huggingface/transformers')
+  env.allowLocalModels = false
+  env.allowRemoteModels = true
+  env.useBrowserCache = true
+  env.logLevel = LogLevel.ERROR
+
+  onStatus?.(`正在加载 ${strategy.label}…`)
+
+  const transcriber = await pipeline('automatic-speech-recognition', strategy.modelId, {
+    device: 'wasm',
+    dtype: strategy.dtype,
+    progress_callback: (progress: { progress?: number; status?: string }) => {
+      if (typeof progress.progress === 'number') {
+        onStatus?.(`下载字幕模型中…${Math.round(progress.progress)}%`)
+      } else if (progress.status === 'ready') {
+        onStatus?.(`${strategy.label} 已就绪，开始识别…`)
+      }
+    },
+  })
+
+  return {
+    transcriber,
+    modelLabel: strategy.label,
+  }
+}
+
 async function getTranscriber(onStatus?: StatusCallback) {
-  const preferredModelId = getPreferredModelId()
-  if (transcriberPromise && transcriberModelId === preferredModelId) {
-    return transcriberPromise
+  const cacheKey = getPreferredModelId()
+  if (transcriberEntry && transcriberEntry.cacheKey === cacheKey) {
+    return transcriberEntry.promise
   }
 
-  transcriberModelId = preferredModelId
-  transcriberPromise = (async () => {
-    onStatus?.(
-      preferredModelId === BASE_MODEL
-        ? '首次运行会下载较高精度日语语音模型，请稍等…'
-        : '首次运行会下载轻量日语语音模型，请稍等…',
-    )
+  const promise = (async () => {
+    let lastError: unknown = null
 
-    const { env, LogLevel, pipeline } = await import('@huggingface/transformers')
-    env.allowLocalModels = false
-    env.allowRemoteModels = true
-    env.useBrowserCache = true
-    env.logLevel = LogLevel.ERROR
+    for (const strategy of getWhisperLoadStrategies()) {
+      try {
+        return await loadTranscriberForStrategy(strategy, onStatus)
+      } catch (error) {
+        lastError = error
+        const message = normalizeErrorMessage(error)
 
-    return pipeline('automatic-speech-recognition', preferredModelId, {
-      progress_callback: (progress: { progress?: number; status?: string }) => {
-        if (typeof progress.progress === 'number') {
-          onStatus?.(`下载语音模型…${Math.round(progress.progress)}%`)
-        } else if (progress.status === 'ready') {
-          onStatus?.('语音模型已就绪，开始识别…')
+        if (isQuantizedWeightSessionError(message)) {
+          onStatus?.('当前字幕模型量化权重异常，正在自动切换到更稳的加载方案…')
+        } else {
+          onStatus?.('当前字幕模型加载失败，正在切换到备用方案…')
         }
-      },
-    })
+      }
+    }
+
+    throw new Error(`自动字幕模型加载失败：${normalizeErrorMessage(lastError)}`)
   })()
 
-  return transcriberPromise
+  transcriberEntry = { cacheKey, promise }
+  promise.catch(() => {
+    if (transcriberEntry?.cacheKey === cacheKey) {
+      transcriberEntry = null
+    }
+  })
+
+  return promise
 }
 
 function cleanTranscriptText(text: string) {
@@ -148,7 +238,8 @@ function normalizeCues(
     }
 
     const timestamp = chunk.timestamp
-    const startSec = Array.isArray(timestamp) && Number.isFinite(timestamp[0]) ? timestamp[0] : index * 2
+    const startSec =
+      Array.isArray(timestamp) && Number.isFinite(timestamp[0]) ? timestamp[0] : index * 2
     const endSec =
       Array.isArray(timestamp) && Number.isFinite(timestamp[1])
         ? timestamp[1]
@@ -180,7 +271,7 @@ export async function generateStudyDataFromVideo(
   const audioUrl = await extractAudioTrack(file, onStatus)
 
   try {
-    const transcriber = await getTranscriber(onStatus)
+    const { transcriber, modelLabel } = await getTranscriber(onStatus)
     onStatus?.('识别日语字幕中…')
 
     const output = await transcriber(audioUrl, {
@@ -209,9 +300,15 @@ export async function generateStudyDataFromVideo(
     return {
       segments: studyData.segments,
       knowledgePoints: studyData.knowledgePoints,
-      modelLabel: transcriberModelId === BASE_MODEL ? 'Whisper Base' : 'Whisper Tiny',
+      modelLabel,
     }
+  } catch (error) {
+    const message = normalizeErrorMessage(error)
+    throw new Error(
+      `自动字幕生成失败：${message}。你也可以先导入 .srt / .vtt / .ass 字幕继续切片学习。`,
+    )
   } finally {
     URL.revokeObjectURL(audioUrl)
   }
 }
+
