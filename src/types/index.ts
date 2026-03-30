@@ -33,6 +33,9 @@ export interface VideoLesson {
   sourceUrl: string
   sourceProvider: string
   sourceStartSec?: number
+  originClipId?: string
+  clipStartMs?: number
+  clipEndMs?: number
   title: string
   cover: string
   theme: string
@@ -170,6 +173,10 @@ export interface ImportedClip {
   title: string
   theme: string
   difficulty: DifficultyLevel
+  importMode?: 'raw' | 'sliced'
+  sourceAnimeTitle?: string
+  sourceEpisodeTitle?: string
+  sourceSliceId?: string
   sourceType: 'local'
   sourceIdOrBlobKey: string
   sourceUrl: string
@@ -177,6 +184,8 @@ export interface ImportedClip {
   cover: string
   durationMs: number
   fileType: string
+  subtitleFileName?: string
+  subtitleSource?: 'manual' | 'auto'
   blob: Blob
   createdAt: string
   segments: TranscriptSegment[]

@@ -1,11 +1,11 @@
 .page {
   display: grid;
-  gap: 18px;
+  gap: 20px;
 }
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
   gap: 18px;
   align-items: stretch;
 }
@@ -17,18 +17,18 @@
 }
 
 .heroStats {
+  display: grid;
+  gap: 0.9rem;
   border-radius: var(--radius-xl);
   padding: 1.2rem;
-  display: grid;
-  gap: 0.85rem;
 }
 
 .heroStats article {
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.82);
-  padding: 1rem;
   display: grid;
   gap: 0.35rem;
+  padding: 1rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.78);
 }
 
 .heroStats small {
@@ -37,7 +37,7 @@
 
 .heroStats strong {
   font-family: var(--font-ui);
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   line-height: 1.6;
 }
 
@@ -50,29 +50,30 @@
   gap: 18px;
 }
 
+.feedItem,
 .slide {
   min-height: 0;
 }
 
 .playerCard {
-  padding: 1rem;
-  border-radius: 34px;
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 249, 240, 0.84)),
-    rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow-lg);
   display: grid;
   gap: 1rem;
+  padding: 1rem;
+  border-radius: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(255, 249, 243, 0.92)),
+    rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow-lg);
 }
 
 .posterStage {
   position: relative;
+  min-height: 360px;
   aspect-ratio: 16 / 9;
-  min-height: 340px;
   border-radius: 28px;
   overflow: hidden;
-  background: #241814;
+  background: #241815;
 }
 
 .posterImage {
@@ -85,8 +86,8 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(34, 21, 16, 0.16), rgba(34, 21, 16, 0.82)),
-    linear-gradient(90deg, rgba(34, 21, 16, 0.1), rgba(34, 21, 16, 0.24));
+    linear-gradient(180deg, rgba(21, 13, 10, 0.18), rgba(21, 13, 10, 0.06) 40%, rgba(21, 13, 10, 0.72)),
+    radial-gradient(circle at 50% 44%, rgba(255, 255, 255, 0.04), transparent 36%);
 }
 
 .cardTop,
@@ -95,7 +96,6 @@
   left: 0;
   right: 0;
   z-index: 2;
-  padding: 1.2rem;
 }
 
 .cardTop {
@@ -104,87 +104,76 @@
   justify-content: space-between;
   gap: 1rem;
   align-items: flex-start;
+  padding: 1.1rem;
 }
 
-.topChipRow {
+.topChipRow,
+.tagRow,
+.actionRow,
+.drawerActions,
+.sessionHeaderActions,
+.pointActions,
+.activePointRow,
+.previewPoints {
   display: flex;
-  gap: 0.55rem;
+  gap: 0.65rem;
   flex-wrap: wrap;
 }
 
 .favoriteButton {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  color: white;
-  background: rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(12px);
+  color: #fffaf6;
+  background: rgba(17, 12, 10, 0.32);
+  backdrop-filter: blur(16px);
   flex-shrink: 0;
+}
+
+.playBadge {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fffaf6;
+  background: rgba(22, 14, 12, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 32px rgba(38, 21, 13, 0.18);
 }
 
 .posterFooter {
   bottom: 0;
-  display: grid;
-  gap: 0.9rem;
+  padding: 1rem 1.1rem 1.15rem;
 }
 
-.copyBlock h2,
-.previewSentence strong {
-  color: #fff9f4;
+.copyBlock {
+  max-width: min(560px, 100%);
+  padding: 1rem 1.05rem;
+  border-radius: 24px;
+  background: rgba(17, 12, 10, 0.34);
+  backdrop-filter: blur(18px);
 }
 
 .copyBlock h2 {
-  margin: 0 0 0.4rem;
-  font-size: clamp(1.35rem, 2vw, 2rem);
+  margin: 0 0 0.35rem;
+  color: #fff8f4;
   font-family: var(--font-ui);
+  font-size: clamp(1.3rem, 2vw, 2rem);
 }
 
 .copyBlock p,
-.previewSentence span,
-.previewSentence p,
 .credit {
   margin: 0;
-  color: rgba(255, 248, 240, 0.86);
+  color: rgba(255, 248, 242, 0.86);
   line-height: 1.7;
-}
-
-.previewSentence {
-  max-width: min(760px, 100%);
-  padding: 1rem 1.1rem;
-  border-radius: 22px;
-  background: rgba(0, 0, 0, 0.36);
-  backdrop-filter: blur(12px);
-  display: grid;
-  gap: 0.35rem;
-}
-
-.focusRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-}
-
-.focusPill {
-  min-width: min(220px, 100%);
-  padding: 0.8rem 0.95rem;
-  border-radius: 18px;
-  background: rgba(255, 248, 240, 0.16);
-  color: #fff8f2;
-  backdrop-filter: blur(12px);
-  display: grid;
-  gap: 0.18rem;
-}
-
-.focusPill small,
-.focusPill span {
-  color: rgba(255, 248, 240, 0.84);
-}
-
-.focusPill strong {
-  font-size: 1rem;
-  line-height: 1.4;
 }
 
 .cardBody {
@@ -192,37 +181,55 @@
   gap: 0.9rem;
 }
 
-.microCopy,
-.examplePreview {
-  border-radius: 22px;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.76);
+.previewBlock {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.32rem;
+  padding: 1rem 1.05rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid var(--line);
 }
 
-.microCopy strong,
-.examplePreview strong {
+.previewBlock strong,
+.previewPoint strong {
   font-family: var(--font-ui);
 }
 
-.microCopy p,
-.examplePreview span {
-  margin: 0;
+.previewMeta,
+.previewBlock p,
+.previewPoint small,
+.previewPoint span,
+.progressMeta,
+.pointReading,
+.exampleBox span,
+.exampleBox p,
+.sessionTranscript span,
+.sessionTranscript p,
+.sessionHeader p,
+.sessionHint,
+.subtitleMeta,
+.subtitleZh {
   color: var(--text-soft);
+}
+
+.previewBlock p,
+.sessionHeader p,
+.sessionTranscript p,
+.exampleBox p,
+.sessionHint {
+  margin: 0;
   line-height: 1.7;
 }
 
-.examplePreview small {
-  color: var(--text-soft);
-}
-
-.actionRow,
-.tagRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
+.previewPoint {
+  min-width: min(210px, 100%);
+  flex: 1 1 180px;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 18px;
+  background: rgba(255, 247, 242, 0.92);
+  border: 1px solid rgba(238, 223, 213, 0.9);
 }
 
 .metaBar {
@@ -239,12 +246,12 @@
   position: fixed;
   inset: 0;
   z-index: 140;
-  background: rgba(32, 21, 17, 0.44);
-  backdrop-filter: blur(16px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 18px;
+  background: rgba(28, 20, 17, 0.42);
+  backdrop-filter: blur(16px);
 }
 
 .drawerBackdrop {
@@ -255,20 +262,20 @@
 .sessionPanel,
 .drawer {
   width: min(1040px, 100%);
-  max-height: calc(100svh - 32px);
+  max-height: calc(100svh - 36px);
   overflow-y: auto;
   border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.88);
   background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 238, 0.92)),
-    rgba(255, 255, 255, 0.86);
+    linear-gradient(160deg, rgba(255, 255, 255, 0.97), rgba(255, 248, 240, 0.93)),
+    rgba(255, 255, 255, 0.9);
   box-shadow: var(--shadow-lg);
 }
 
 .sessionPanel {
-  padding: 1.2rem;
   display: grid;
   gap: 1rem;
+  padding: 1.2rem;
 }
 
 .drawer {
@@ -277,12 +284,10 @@
 
 .sessionHeader,
 .drawerHeader,
-.sessionHeaderActions,
-.drawerActions,
-.pointActions {
+.pointList article header {
   display: flex;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1rem;
   align-items: flex-start;
 }
 
@@ -292,75 +297,111 @@
   font-family: var(--font-ui);
 }
 
-.sessionHeader p {
-  margin: 0.35rem 0 0;
-  color: var(--text-soft);
-  line-height: 1.6;
-}
-
 .sessionViewportShell {
   display: grid;
   gap: 1rem;
 }
 
 .sessionViewport {
+  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: min(58svh, 560px);
   min-height: 260px;
-  border-radius: 26px;
+  max-height: min(64svh, 680px);
+  aspect-ratio: 16 / 9;
+  border-radius: 28px;
   overflow: hidden;
-  background: #1f1513;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #150f0d;
 }
 
-.sessionVideo,
-.sessionIframe,
-.sessionPosterFill,
-.sessionPosterImage {
+.sessionVideo {
   width: 100%;
   height: 100%;
-}
-
-.sessionVideo,
-.sessionIframe {
   object-fit: contain;
-  background: #160f0d;
+  background: #150f0d;
 }
 
-.sessionIframe {
-  border: 0;
-}
-
-.sessionPosterFill {
-  position: relative;
-}
-
-.sessionPosterImage {
-  object-fit: cover;
-}
-
-.sessionPosterShade {
+.subtitleOverlay {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(20, 13, 11, 0.12), rgba(20, 13, 11, 0.72));
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  padding: 0.9rem 1rem;
+  border-radius: 24px;
+  background: rgba(16, 10, 8, 0.54);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 30px rgba(18, 12, 10, 0.28);
 }
 
-.sessionPosterCopy {
+.subtitleLabel {
+  display: inline-flex;
+  margin-bottom: 0.35rem;
+  padding: 0.3rem 0.62rem;
+  border-radius: 999px;
+  color: rgba(255, 248, 243, 0.86);
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.82rem;
+}
+
+.subtitleJa {
+  display: block;
+  color: #fffaf6;
+  font-family: var(--font-ui);
+  font-size: clamp(1.18rem, 2vw, 1.6rem);
+  line-height: 1.6;
+}
+
+.subtitleMeta,
+.subtitleZh {
+  display: block;
+  margin-top: 0.22rem;
+  color: rgba(255, 246, 241, 0.84);
+  line-height: 1.6;
+}
+
+.highlightWord,
+.highlightGrammar {
+  padding: 0.06em 0.22em;
+  border-radius: 0.4em;
+  color: #442f28;
+}
+
+.highlightWord {
+  background: linear-gradient(120deg, rgba(255, 215, 176, 0.98), rgba(255, 237, 191, 0.98));
+}
+
+.highlightGrammar {
+  background: linear-gradient(120deg, rgba(205, 234, 221, 0.98), rgba(181, 224, 237, 0.98));
+}
+
+.viewportButton,
+.viewportStatus {
   position: absolute;
-  inset: auto 18px 18px 18px;
-  padding: 1rem 1.1rem;
-  border-radius: 22px;
-  background: rgba(20, 13, 11, 0.56);
-  color: #fff7f3;
-  display: grid;
-  gap: 0.55rem;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
 }
 
-.sessionPosterCopy p {
-  margin: 0;
-  color: rgba(255, 247, 243, 0.88);
-  line-height: 1.7;
+.viewportButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.2rem;
+  border-radius: 999px;
+  color: #fffaf6;
+  background: rgba(20, 13, 11, 0.68);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.viewportStatus {
+  padding: 0.7rem 0.92rem;
+  border-radius: 999px;
+  color: #fffaf6;
+  background: rgba(20, 13, 11, 0.62);
+  backdrop-filter: blur(14px);
+  pointer-events: none;
 }
 
 .progressBox {
@@ -374,47 +415,65 @@
   gap: 1rem;
   align-items: center;
   color: var(--text-soft);
-  font-size: 0.95rem;
 }
 
 .progressMeta strong {
-  font-family: var(--font-ui);
   color: var(--text);
+  font-family: var(--font-ui);
 }
 
 .progressTrack {
   height: 10px;
   border-radius: 999px;
   overflow: hidden;
-  background: rgba(255, 248, 240, 0.38);
+  background: rgba(245, 225, 211, 0.92);
 }
 
 .progressTrack span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #ffc7b0, #ffe09a, #c7ecd8);
+  background: linear-gradient(90deg, #ffc8af, #ffe4a8, #c8ead8);
+}
+
+.activePointButton {
+  flex: 1 1 180px;
+  display: grid;
+  gap: 0.18rem;
+  min-width: min(220px, 100%);
+  padding: 0.85rem 0.95rem;
+  border-radius: 20px;
+  border: 1px solid rgba(241, 218, 205, 0.96);
+  background: rgba(255, 249, 244, 0.96);
+  text-align: left;
+}
+
+.activePointButton small,
+.activePointButton span {
+  color: var(--text-soft);
+}
+
+.activePointButton strong {
+  font-family: var(--font-ui);
+}
+
+.activePointGrammar {
+  background: rgba(241, 250, 247, 0.96);
+  border-color: rgba(198, 226, 220, 0.96);
 }
 
 .sessionTranscript {
-  padding: 1rem 1.1rem;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid var(--line);
   display: grid;
   gap: 0.45rem;
+  padding: 1rem 1.05rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid var(--line);
 }
 
 .sessionTranscript strong {
-  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  font-size: clamp(1.1rem, 1.4vw, 1.45rem);
   line-height: 1.5;
-}
-
-.sessionTranscript span,
-.sessionTranscript p {
-  margin: 0;
-  color: var(--text-soft);
-  line-height: 1.7;
 }
 
 .sessionControls {
@@ -424,34 +483,24 @@
 }
 
 .sessionHint {
-  margin: 0;
   padding: 0.95rem 1rem;
   border-radius: 18px;
-  background: rgba(255, 247, 235, 0.92);
-  color: var(--text-soft);
-  line-height: 1.7;
+  background: rgba(255, 248, 239, 0.96);
 }
 
 .pointList {
-  margin: 1rem 0;
   display: grid;
   gap: 0.9rem;
+  margin: 1rem 0;
 }
 
 .pointList article {
-  border-radius: 22px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.82);
-  padding: 1rem;
   display: grid;
   gap: 0.75rem;
-}
-
-.pointList article header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: flex-start;
+  padding: 1rem;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.86);
 }
 
 .pointList article strong {
@@ -460,24 +509,18 @@
 }
 
 .pointList article p,
-.pointReading,
-.exampleBox span,
-.exampleBox p {
+.exampleBox small {
   margin: 0;
   color: var(--text-soft);
   line-height: 1.75;
 }
 
 .exampleBox {
-  padding: 0.9rem 1rem;
-  border-radius: 18px;
-  background: rgba(255, 250, 244, 0.92);
   display: grid;
   gap: 0.35rem;
-}
-
-.exampleBox small {
-  color: var(--text-soft);
+  padding: 0.95rem 1rem;
+  border-radius: 18px;
+  background: rgba(255, 250, 245, 0.94);
 }
 
 @media (max-width: 980px) {
@@ -486,7 +529,7 @@
   }
 
   .posterStage {
-    min-height: 300px;
+    min-height: 320px;
   }
 }
 
@@ -494,14 +537,14 @@
   .playerCard,
   .sessionPanel,
   .drawer {
-    padding: 0.9rem;
+    padding: 0.92rem;
     border-radius: 24px;
   }
 
   .posterStage {
-    min-height: 260px;
-    border-radius: 22px;
+    min-height: 270px;
     aspect-ratio: 16 / 11;
+    border-radius: 24px;
   }
 
   .cardTop,
@@ -509,8 +552,9 @@
     padding: 0.9rem;
   }
 
-  .copyBlock h2 {
-    font-size: 1.28rem;
+  .playBadge {
+    width: 68px;
+    height: 68px;
   }
 
   .sessionBackdrop,
@@ -524,22 +568,26 @@
     aspect-ratio: 16 / 10;
   }
 
-  .actionRow,
-  .sessionControls,
-  .drawerActions,
-  .pointActions,
-  .sessionHeaderActions,
+  .subtitleOverlay {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 0.82rem 0.9rem;
+  }
+
   .sessionHeader,
   .drawerHeader,
   .pointList article header,
-  .progressMeta {
+  .progressMeta,
+  .sessionHeaderActions {
     flex-direction: column;
   }
 
-  .actionRow > *,
   .sessionControls > *,
+  .actionRow > *,
   .drawerActions > *,
-  .pointActions > * {
+  .pointActions > *,
+  .activePointRow > * {
     width: 100%;
   }
 }

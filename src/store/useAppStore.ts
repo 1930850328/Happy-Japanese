@@ -1,7 +1,16 @@
 import { create } from 'zustand'
 
+import { videoLessons } from '../data/videoLessons'
 import { defaultGoal, defaultSettings } from '../lib/defaults'
 import { getTodayKey } from '../lib/date'
+import { generateStudyDataFromVideo } from '../lib/autoSubtitles'
+import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
+import {
+  buildManifestClipFileMap,
+  getManifestClipFileName,
+  getManifestSubtitleSource,
+  parseSlicerManifest,
+} from '../lib/slicerManifest'
 import {
   createReviewFromKnowledgePoint,
   createReviewFromSentence,
@@ -31,6 +40,7 @@ import {
   saveStudyEvent,
   saveVocabProgress,
 } from '../lib/storage'
+import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
 import type {
   AppSettings,
   DailyGoal,
@@ -46,7 +56,8 @@ import type {
   VocabProgress,
   VideoLesson,
 } from '../types'
-import { videoLessons } from '../data/videoLessons'
+
+const baseLocalLessons = videoLessons.filter((lesson) => lesson.sourceType === 'local')
 
 function clipToLesson(clip: ImportedClip): VideoLesson {
   return {
@@ -66,13 +77,21 @@ function clipToLesson(clip: ImportedClip): VideoLesson {
     tags: clip.tags,
     description: clip.description,
     creditLine: clip.creditLine,
-    sliceLabel: `${Math.max(10, Math.round(clip.durationMs / 1000))} 秒私有片段`,
+    sliceLabel: `${Math.max(10, Math.round(clip.durationMs / 1000))} 秒原片学习`,
     feedPriority: 120,
   }
 }
 
+void clipToLesson
+
 function buildLessons(importedClips: ImportedClip[]) {
-  return [...importedClips.map(clipToLesson), ...videoLessons]
+  if (importedClips.length > 0) {
+    return importedClips.flatMap((clip) =>
+      clip.importMode === 'sliced' ? [clipToLesson(clip)] : buildLessonsFromImportedClip(clip),
+    )
+  }
+
+  return baseLocalLessons
 }
 
 function mapVocabProgress(records: VocabProgress[]) {
@@ -83,42 +102,124 @@ function mapVocabProgress(records: VocabProgress[]) {
 }
 
 function createCoverSvg(title: string, theme: string) {
+  const safeTitle = title.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  const safeTheme = theme.replace(/&/g, '&amp;').replace(/</g, '&lt;')
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
       <defs>
-        <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ffd3be" />
-          <stop offset="60%" stop-color="#fff3d5" />
-          <stop offset="100%" stop-color="#d9ebff" />
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffd7c2" />
+          <stop offset="50%" stop-color="#fff2d7" />
+          <stop offset="100%" stop-color="#d7ecdf" />
         </linearGradient>
       </defs>
-      <rect width="640" height="360" rx="28" fill="url(#g)" />
-      <circle cx="96" cy="94" r="54" fill="rgba(255,255,255,0.48)" />
-      <circle cx="520" cy="272" r="82" fill="rgba(255,255,255,0.32)" />
-      <text x="48" y="102" fill="#835744" font-size="18" font-family="sans-serif">${theme}</text>
-      <text x="48" y="176" fill="#4b372d" font-size="36" font-family="sans-serif">${title}</text>
-      <text x="48" y="232" fill="#6f5a4c" font-size="18" font-family="sans-serif">Local Clip</text>
+      <rect width="640" height="360" rx="30" fill="url(#bg)" />
+      <circle cx="92" cy="92" r="58" fill="rgba(255,255,255,0.42)" />
+      <circle cx="546" cy="278" r="92" fill="rgba(255,255,255,0.28)" />
+      <rect x="44" y="214" width="292" height="98" rx="24" fill="rgba(255,255,255,0.76)" />
+      <text x="48" y="78" fill="#815848" font-size="18" font-family="sans-serif">${safeTheme}</text>
+      <text x="60" y="258" fill="#4b362d" font-size="30" font-family="sans-serif">${safeTitle}</text>
+      <text x="60" y="290" fill="#866457" font-size="16" font-family="sans-serif">Local Original Study Clip</text>
     </svg>
   `
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
 }
 
-function readVideoDurationMs(file: File) {
-  return new Promise<number>((resolve) => {
+function captureVideoCover(
+  video: HTMLVideoElement,
+  title: string,
+  theme: string,
+  durationMs: number,
+) {
+  try {
+    const canvas = document.createElement('canvas')
+    canvas.width = video.videoWidth || 1280
+    canvas.height = video.videoHeight || 720
+    const context = canvas.getContext('2d')
+    if (!context) {
+      return createCoverSvg(title, theme)
+    }
+
+    context.drawImage(video, 0, 0, canvas.width, canvas.height)
+    context.fillStyle = 'rgba(20, 14, 12, 0.14)'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    context.fillStyle = 'rgba(255, 252, 249, 0.92)'
+    context.fillRect(26, canvas.height - 156, Math.min(canvas.width - 52, 430), 106)
+    context.fillStyle = '#4f382f'
+    context.font = '600 34px sans-serif'
+    context.fillText(title, 50, canvas.height - 96)
+    context.fillStyle = '#866457'
+    context.font = '22px sans-serif'
+    context.fillText(
+      `${theme} · ${Math.max(10, Math.round(durationMs / 1000))} 秒`,
+      50,
+      canvas.height - 58,
+    )
+    return canvas.toDataURL('image/jpeg', 0.9)
+  } catch {
+    return createCoverSvg(title, theme)
+  }
+}
+
+function readVideoMeta(file: File, title: string, theme: string) {
+  return new Promise<{ durationMs: number; cover: string }>((resolve) => {
     const objectUrl = URL.createObjectURL(file)
     const video = document.createElement('video')
-    video.preload = 'metadata'
-    video.src = objectUrl
-    video.onloadedmetadata = () => {
-      const duration = Number.isFinite(video.duration) ? Math.round(video.duration * 1000) : 30000
+    let durationMs = 30000
+    let settled = false
+    let timeoutId = 0
+
+    const cleanup = () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId)
+      }
+      video.pause()
+      video.removeAttribute('src')
+      video.load()
       URL.revokeObjectURL(objectUrl)
-      resolve(duration)
     }
+
+    const finalize = (cover: string) => {
+      if (settled) {
+        return
+      }
+
+      settled = true
+      cleanup()
+      resolve({ durationMs, cover })
+    }
+
+    video.preload = 'metadata'
+    video.muted = true
+    video.playsInline = true
+    video.src = objectUrl
+
+    video.onloadedmetadata = () => {
+      durationMs = Number.isFinite(video.duration) ? Math.round(video.duration * 1000) : 30000
+      const targetTime = Math.max(0.15, Math.min(video.duration / 3 || 0.6, 1.2))
+      timeoutId = window.setTimeout(() => {
+        finalize(createCoverSvg(title, theme))
+      }, 1400)
+
+      try {
+        video.currentTime = Number.isFinite(targetTime) ? targetTime : 0.6
+      } catch {
+        finalize(createCoverSvg(title, theme))
+      }
+    }
+
+    video.onseeked = () => {
+      finalize(captureVideoCover(video, title, theme, durationMs))
+    }
+
     video.onerror = () => {
-      URL.revokeObjectURL(objectUrl)
-      resolve(30000)
+      finalize(createCoverSvg(title, theme))
     }
   })
+}
+
+function mergeTags(...groups: Array<Array<string | undefined>>) {
+  return [...new Set(groups.flat().filter((item): item is string => Boolean(item && item.trim())))]
 }
 
 interface RecordStudyEventInput {
@@ -138,6 +239,21 @@ interface SaveNoteInput {
   analysisSnapshot?: SavedNote['analysisSnapshot']
   id?: string
 }
+
+interface ImportClipInput {
+  file: File
+  subtitleFile?: File | null
+  title?: string
+  theme?: string
+}
+
+interface ImportSlicerManifestInput {
+  manifestFile: File
+  clipFiles: File[]
+  theme?: string
+}
+
+type SubtitleStatusCallback = (message: string) => void
 
 interface AppStore {
   initialized: boolean
@@ -164,14 +280,19 @@ interface AppStore {
   answerReview: (itemId: string, result: ReviewResult) => Promise<void>
   touchVocab: (card: VocabCard, mastered?: boolean) => Promise<void>
   addThemeBatchToReview: (cards: VocabCard[]) => Promise<number>
-  importClip: (file: File, title?: string, theme?: string) => Promise<void>
+  importClip: (payload: ImportClipInput) => Promise<ImportedClip>
+  importSlicerManifest: (payload: ImportSlicerManifestInput) => Promise<ImportedClip[]>
+  generateAutoSubtitles: (
+    clipId: string,
+    onStatus?: SubtitleStatusCallback,
+  ) => Promise<ImportedClip | null>
   updateSettings: (updates: Partial<AppSettings>) => Promise<void>
 }
 
 export const useAppStore = create<AppStore>((set, get) => ({
   initialized: false,
   initializing: false,
-  lessons: videoLessons,
+  lessons: baseLocalLessons,
   favorites: [],
   notes: [],
   goal: defaultGoal,
@@ -276,10 +397,10 @@ export const useAppStore = create<AppStore>((set, get) => ({
   },
 
   async updateGoal(updates) {
-    const next = {
+    const next: DailyGoal = {
       ...get().goal,
       ...updates,
-      id: 'daily-goals' as const,
+      id: 'daily-goals',
       updatedAt: new Date().toISOString(),
     }
     await saveGoal(next)
@@ -333,8 +454,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
   },
 
   async addSentenceToReview(expression, reading, meaningZh) {
-    const current = get().reviewItems
-    const exists = current.some((item) => item.expression === expression && item.meaningZh === meaningZh)
+    const exists = get().reviewItems.some(
+      (item) => item.expression === expression && item.meaningZh === meaningZh,
+    )
     if (exists) {
       return
     }
@@ -444,11 +566,68 @@ export const useAppStore = create<AppStore>((set, get) => ({
     return count
   },
 
-  async importClip(file, title, theme) {
-    const durationMs = await readVideoDurationMs(file)
+  async importClip({ file, subtitleFile, title, theme }) {
     const clipTitle = title?.trim() || file.name.replace(/\.[^.]+$/, '')
     const clipTheme = theme?.trim() || '自定义片段'
+    const { durationMs, cover } = await readVideoMeta(file, clipTitle, clipTheme)
     const now = new Date().toISOString()
+
+    let segments = [
+      {
+        startMs: 0,
+        endMs: durationMs,
+        ja: '正在等待字幕。你可以先看原片，也可以让系统自动识别日语字幕并生成学习向中文字幕。',
+        kana: 'じまく を じどう せいせい すると、 ここ に げんぶん が でます。',
+        romaji: 'jimaku o jidou seisei suru to, koko ni genbun ga demasu.',
+        zh: '导入完成后，如果没有外部字幕，系统可以继续自动识别并生成中日双语字幕。',
+        focusTermIds: ['local-subtitle-tip'],
+      },
+    ]
+
+    let knowledgePoints: KnowledgePoint[] = [
+      {
+        id: 'local-subtitle-tip',
+        kind: 'phrase',
+        expression: '自动字幕',
+        reading: 'じどうじまく',
+        meaningZh: '自动识别生成字幕',
+        partOfSpeech: '学习提示',
+        explanationZh:
+          '如果你没有现成字幕，系统会先从视频里提取音频，再自动生成日语时间轴字幕，并补出学习向中文提示。',
+        exampleJa: '字幕がなくても、このあと自動生成できる。',
+        exampleZh: '就算没有现成字幕，后面也可以自动生成。',
+      },
+    ]
+
+    let subtitleFileName: string | undefined
+    let subtitleSource: ImportedClip['subtitleSource']
+    let sourceProvider = '本地原片'
+    let description =
+      '你导入的是本地原片。系统支持自动识别日语字幕，并进一步生成学习向中文字幕、词法高亮和知识点解析。'
+    let creditLine =
+      '只存储在当前设备，不会上传。自动字幕生成依赖浏览器端本地推理，首次运行会下载模型并缓存。'
+    let tags = ['私有原片', clipTheme, '待生成字幕']
+
+    if (subtitleFile) {
+      try {
+        const cues = await parseSubtitleFile(subtitleFile)
+        const studyData = await buildStudyDataFromCues(cues)
+        if (studyData.segments.length > 0) {
+          segments = studyData.segments
+          knowledgePoints = studyData.knowledgePoints
+          subtitleFileName = subtitleFile.name
+          subtitleSource = 'manual'
+          sourceProvider = '本地原片 + 外部字幕'
+          description =
+            '你导入的是本地原片和外部字幕，播放器会直接显示片中日语字幕，并补充学习向中文字幕和知识点。'
+          creditLine = '仅存储在当前设备，不会上传。片中例句和知识点都直接来自你导入的字幕。'
+          tags = ['私有原片', clipTheme, '外部字幕']
+        }
+      } catch (error) {
+        console.warn('Failed to parse subtitle file for imported clip.', error)
+      }
+    }
+
     const clip: ImportedClip = {
       id: `clip-${crypto.randomUUID()}`,
       title: clipTitle,
@@ -457,39 +636,19 @@ export const useAppStore = create<AppStore>((set, get) => ({
       sourceType: 'local',
       sourceIdOrBlobKey: `blob-${crypto.randomUUID()}`,
       sourceUrl: '',
-      sourceProvider: '本地导入',
-      cover: createCoverSvg(clipTitle, clipTheme),
+      sourceProvider,
+      cover,
       durationMs,
       fileType: file.type,
+      subtitleFileName,
+      subtitleSource,
       blob: file,
       createdAt: now,
-      description: '你导入的私人学习片段，可结合备注页自行补充台词与记忆点。',
-      creditLine: '仅存储在当前设备，不会上传。',
-      tags: ['私有片段', clipTheme],
-      segments: [
-        {
-          startMs: 0,
-          endMs: durationMs,
-          ja: '私有导入片段，建议边看边在备注页补充台词。',
-          kana: 'しゆうどうにゅうへん、べんりにめもをのこしましょう。',
-          romaji: 'shiyuu dounyuu hen, benri ni memo o nokoshimashou',
-          zh: '这是你导入的私人片段，建议边看边写备注。',
-          focusTermIds: ['local-note'],
-        },
-      ],
-      knowledgePoints: [
-        {
-          id: 'local-note',
-          kind: 'phrase',
-          expression: '気になる表現',
-          reading: 'きになるひょうげん',
-          meaningZh: '你想重点记住的表达',
-          partOfSpeech: '占位提醒',
-          explanationZh: '这条私有片段默认会生成一个占位知识点，方便你加入复习。',
-          exampleJa: '気になる表現はメモしておこう。',
-          exampleZh: '把值得注意的表达先记下来吧。',
-        },
-      ],
+      segments,
+      knowledgePoints,
+      tags,
+      description,
+      creditLine,
     }
 
     await saveImportedClip(clip)
@@ -500,13 +659,158 @@ export const useAppStore = create<AppStore>((set, get) => ({
         lessons: buildLessons(importedClips),
       }
     })
+
+    return clip
+  },
+
+  async importSlicerManifest({ manifestFile, clipFiles, theme }) {
+    const manifest = await parseSlicerManifest(manifestFile)
+    const fileMap = buildManifestClipFileMap(clipFiles)
+    const importedAt = new Date().toISOString()
+    const currentClips = get().importedClips
+    const prepared: ImportedClip[] = []
+    const missingFiles: string[] = []
+
+    for (const manifestClip of manifest.clips) {
+      const videoFileName = getManifestClipFileName(manifestClip)
+      const matchedFile = fileMap[videoFileName.trim().toLowerCase()]
+
+      if (!matchedFile) {
+        missingFiles.push(videoFileName)
+        continue
+      }
+
+      const sourceTag = theme?.trim() || manifest.animeTitle
+      const { durationMs: detectedDurationMs, cover } = await readVideoMeta(
+        matchedFile,
+        manifestClip.clipTitle,
+        sourceTag,
+      )
+
+      const existing = currentClips.find(
+        (clip) =>
+          clip.importMode === 'sliced' &&
+          clip.sourceAnimeTitle === manifest.animeTitle &&
+          clip.sourceEpisodeTitle === manifest.episodeTitle &&
+          clip.sourceSliceId === manifestClip.id,
+      )
+
+      prepared.push({
+        id: existing?.id ?? `clip-${crypto.randomUUID()}`,
+        title: manifestClip.clipTitle,
+        theme: sourceTag,
+        difficulty: 'Custom',
+        importMode: 'sliced',
+        sourceAnimeTitle: manifest.animeTitle,
+        sourceEpisodeTitle: manifest.episodeTitle,
+        sourceSliceId: manifestClip.id,
+        sourceType: 'local',
+        sourceIdOrBlobKey: existing?.sourceIdOrBlobKey ?? `blob-${crypto.randomUUID()}`,
+        sourceUrl: '',
+        sourceProvider: `切片导入 / ${manifest.animeTitle}${
+          manifest.episodeTitle ? ` / ${manifest.episodeTitle}` : ''
+        }`,
+        cover,
+        durationMs:
+          manifestClip.durationMs > 0 ? manifestClip.durationMs : detectedDurationMs,
+        fileType: matchedFile.type || 'video/mp4',
+        subtitleFileName: manifestClip.subtitlePath
+          ? getManifestClipFileName({
+              ...manifestClip,
+              videoPath: manifestClip.subtitlePath,
+            })
+          : manifestFile.name,
+        subtitleSource: getManifestSubtitleSource(manifest, manifestClip),
+        blob: matchedFile,
+        createdAt: existing?.createdAt ?? importedAt,
+        segments: manifestClip.segments,
+        knowledgePoints: manifestClip.knowledgePoints,
+        tags: mergeTags(
+          ['切片导入', manifest.animeTitle, sourceTag],
+          manifest.episodeTitle ? [manifest.episodeTitle] : [],
+          manifestClip.keywords,
+        ),
+        description:
+          manifestClip.keyNotes.join(' / ') ||
+          manifestClip.transcriptZh ||
+          '这条切片已经带好片中字幕、知识点和例句，可直接进入首页短视频流学习。',
+        creditLine:
+          '由 anime-learning-slicer 导出后导入本站，仅保存在当前设备；首页会直接按切片播放，不再二次切片。',
+      })
+    }
+
+    if (prepared.length === 0) {
+      throw new Error(
+        missingFiles.length > 0
+          ? `manifest 已读取，但没有匹配到切片视频文件：${missingFiles.join('、')}`
+          : 'manifest 已读取，但没有可导入的切片。',
+      )
+    }
+
+    await Promise.all(prepared.map((clip) => saveImportedClip(clip)))
+    set((state) => {
+      const replacedIds = new Set(prepared.map((clip) => clip.id))
+      const importedClips = [
+        ...prepared,
+        ...state.importedClips.filter((clip) => !replacedIds.has(clip.id)),
+      ]
+
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips),
+      }
+    })
+
+    return prepared
+  },
+
+  async generateAutoSubtitles(clipId, onStatus) {
+    const clip = get().importedClips.find((item) => item.id === clipId)
+    if (!clip) {
+      return null
+    }
+
+    onStatus?.('准备自动字幕…')
+    const studyData = await generateStudyDataFromVideo(clip.blob as File, clip.durationMs, onStatus)
+
+    const updatedClip: ImportedClip = {
+      ...clip,
+      subtitleFileName: '自动生成字幕',
+      subtitleSource: 'auto',
+      sourceProvider: `本地原片 + 自动字幕 (${studyData.modelLabel})`,
+      segments: studyData.segments,
+      knowledgePoints: studyData.knowledgePoints,
+      description:
+        '系统已从视频自动识别出日语时间轴字幕，并补充学习向中文字幕、高亮词法和知识点解析。',
+      creditLine:
+        '自动字幕仅供个人学习校对使用，数据仍然只存储在当前设备。首次运行会下载并缓存本地语音识别模型。',
+      tags: mergeTags(
+        [ ...clip.tags.filter((tag) => tag !== '待生成字幕' && tag !== '外部字幕') ],
+        ['自动字幕'],
+        clip.theme ? [clip.theme] : [],
+      ),
+    }
+
+    await saveImportedClip(updatedClip)
+    set((state) => {
+      const importedClips = state.importedClips.map((item) =>
+        item.id === clipId ? updatedClip : item,
+      )
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips),
+      }
+    })
+
+    onStatus?.('自动字幕已生成')
+    return updatedClip
   },
 
   async updateSettings(updates) {
-    const next = {
+    const next: AppSettings = {
       ...get().settings,
       ...updates,
-      id: 'settings' as const,
+      id: 'settings',
     }
     await saveSettings(next)
     set({ settings: next })
