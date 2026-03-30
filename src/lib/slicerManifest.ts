@@ -7,6 +7,7 @@ export interface SlicerManifestClip {
   endMs: number
   durationMs: number
   videoPath: string
+  coverPath?: string
   subtitlePath?: string
   metadataPath?: string
   transcriptJa: string
@@ -102,6 +103,7 @@ function normalizeClip(value: unknown): SlicerManifestClip | null {
     endMs: typeof item.endMs === 'number' ? item.endMs : 0,
     durationMs: typeof item.durationMs === 'number' ? item.durationMs : 0,
     videoPath: typeof item.videoPath === 'string' ? item.videoPath : '',
+    coverPath: typeof item.coverPath === 'string' ? item.coverPath : undefined,
     subtitlePath: typeof item.subtitlePath === 'string' ? item.subtitlePath : undefined,
     metadataPath: typeof item.metadataPath === 'string' ? item.metadataPath : undefined,
     transcriptJa: typeof item.transcriptJa === 'string' ? item.transcriptJa : segments.map((segment) => segment.ja).join(' '),

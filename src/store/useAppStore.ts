@@ -5,6 +5,7 @@ import { defaultGoal, defaultSettings } from '../lib/defaults'
 import { getTodayKey } from '../lib/date'
 import { generateStudyDataFromVideo } from '../lib/autoSubtitles'
 import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
+import { loadPublishedLessons } from '../lib/publishedLessons'
 import {
   buildManifestClipFileMap,
   getManifestClipFileName,
@@ -84,14 +85,18 @@ function clipToLesson(clip: ImportedClip): VideoLesson {
 
 void clipToLesson
 
-function buildLessons(importedClips: ImportedClip[]) {
-  if (importedClips.length > 0) {
-    return importedClips.flatMap((clip) =>
-      clip.importMode === 'sliced' ? [clipToLesson(clip)] : buildLessonsFromImportedClip(clip),
-    )
-  }
+function dedupeLessons(lessons: VideoLesson[]) {
+  return lessons.filter((lesson, index, all) => {
+    return all.findIndex((item) => item.id === lesson.id) === index
+  })
+}
 
-  return baseLocalLessons
+function buildLessons(importedClips: ImportedClip[], publishedLessons: VideoLesson[]) {
+  const importedLessons = importedClips.flatMap((clip) =>
+    clip.importMode === 'sliced' ? [clipToLesson(clip)] : buildLessonsFromImportedClip(clip),
+  )
+
+  return dedupeLessons([...importedLessons, ...publishedLessons, ...baseLocalLessons])
 }
 
 function mapVocabProgress(records: VocabProgress[]) {
@@ -267,8 +272,10 @@ interface AppStore {
   reviewLogs: ReviewLog[]
   vocabProgress: Record<string, VocabProgress>
   importedClips: ImportedClip[]
+  publishedLessons: VideoLesson[]
   settings: AppSettings
   initialize: () => Promise<void>
+  refreshPublishedLessons: () => Promise<void>
   toggleFavorite: (lessonId: string) => Promise<void>
   saveNoteEntry: (payload: SaveNoteInput) => Promise<void>
   deleteNoteEntry: (id: string) => Promise<void>
@@ -301,6 +308,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
   reviewLogs: [],
   vocabProgress: {},
   importedClips: [],
+  publishedLessons: [],
   settings: defaultSettings,
 
   async initialize() {
@@ -319,6 +327,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       vocabProgress,
       importedClips,
       settings,
+      publishedLessons,
     ] = await Promise.all([
       listFavorites(),
       listNotes(),
@@ -329,6 +338,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       listVocabProgress(),
       listImportedClips(),
       loadSettings(),
+      loadPublishedLessons(),
     ])
 
     set({
@@ -342,9 +352,18 @@ export const useAppStore = create<AppStore>((set, get) => ({
       reviewLogs,
       vocabProgress: mapVocabProgress(vocabProgress),
       importedClips,
-      lessons: buildLessons(importedClips),
+      publishedLessons,
+      lessons: buildLessons(importedClips, publishedLessons),
       settings: settings ?? defaultSettings,
     })
+  },
+
+  async refreshPublishedLessons() {
+    const publishedLessons = await loadPublishedLessons()
+    set((state) => ({
+      publishedLessons,
+      lessons: buildLessons(state.importedClips, publishedLessons),
+    }))
   },
 
   async toggleFavorite(lessonId) {
@@ -656,7 +675,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       const importedClips = [clip, ...state.importedClips]
       return {
         importedClips,
-        lessons: buildLessons(importedClips),
+        lessons: buildLessons(importedClips, state.publishedLessons),
       }
     })
 
@@ -757,7 +776,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
       return {
         importedClips,
-        lessons: buildLessons(importedClips),
+        lessons: buildLessons(importedClips, state.publishedLessons),
       }
     })
 
@@ -798,7 +817,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       )
       return {
         importedClips,
-        lessons: buildLessons(importedClips),
+        lessons: buildLessons(importedClips, state.publishedLessons),
       }
     })
 
