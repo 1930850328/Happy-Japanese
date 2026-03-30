@@ -173,20 +173,23 @@ export interface ImportedClip {
   title: string
   theme: string
   difficulty: DifficultyLevel
-  importMode?: 'raw' | 'sliced'
+  importMode?: 'raw' | 'sliced' | 'source'
   sourceAnimeTitle?: string
   sourceEpisodeTitle?: string
   sourceSliceId?: string
+  sourceClipId?: string
   sourceType: 'local'
   sourceIdOrBlobKey: string
   sourceUrl: string
   sourceProvider: string
   cover: string
   durationMs: number
+  clipStartMs?: number
+  clipEndMs?: number
   fileType: string
   subtitleFileName?: string
   subtitleSource?: 'manual' | 'auto'
-  blob: Blob
+  blob?: Blob
   createdAt: string
   segments: TranscriptSegment[]
   knowledgePoints: KnowledgePoint[]

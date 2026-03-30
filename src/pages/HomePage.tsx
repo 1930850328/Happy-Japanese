@@ -389,7 +389,9 @@ export function HomePage() {
 
   const clipMap = useMemo(() => {
     return importedClips.reduce<Record<string, Blob>>((acc, clip) => {
-      acc[clip.sourceIdOrBlobKey] = clip.blob
+      if (clip.blob) {
+        acc[clip.sourceIdOrBlobKey] = clip.blob
+      }
       return acc
     }, {})
   }, [importedClips])

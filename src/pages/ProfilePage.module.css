@@ -226,9 +226,251 @@
   flex-shrink: 0;
 }
 
+.importCard {
+  gap: 1rem;
+}
+
+.fileGrid,
+.fileMeta,
+.previewHeaderActions,
+.actionRow {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.fileGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fileMeta {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.actionRow {
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  align-items: center;
+}
+
+.previewSection {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.previewHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.previewSummary {
+  margin: 0.6rem 0 0;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.previewHeaderActions {
+  grid-template-columns: repeat(3, minmax(0, max-content));
+}
+
+.previewGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.previewCard {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border-radius: 22px;
+  border: 1px solid rgba(222, 204, 193, 0.85);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 18px 45px rgba(133, 93, 66, 0.08);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.previewCardSelected {
+  border-color: rgba(155, 205, 183, 0.95);
+  box-shadow: 0 18px 45px rgba(98, 150, 126, 0.14);
+  transform: translateY(-2px);
+}
+
+.previewCardTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.checkboxRow {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  color: var(--text-soft);
+}
+
+.previewPosterButton {
+  position: relative;
+  border: 0;
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #1f1713;
+  aspect-ratio: 16 / 9;
+}
+
+.previewPosterButton img,
+.previewPosterShade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.previewPosterButton img {
+  object-fit: cover;
+}
+
+.previewPosterShade {
+  background: linear-gradient(180deg, rgba(26, 18, 15, 0.14), rgba(26, 18, 15, 0.62));
+}
+
+.previewPosterPlay {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 250, 246, 0.9);
+  color: #5d4336;
+  font-weight: 600;
+}
+
+.previewBody {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.previewBody > strong {
+  font-size: 1.05rem;
+}
+
+.previewBody > p,
+.previewMeta {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.previewSentence {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  background: rgba(255, 248, 242, 0.92);
+}
+
+.previewSentence p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.previewChips {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.previewBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(44, 31, 25, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.previewPanel {
+  width: min(980px, 100%);
+  max-height: min(92vh, 980px);
+  overflow: auto;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 28px;
+  background: rgba(255, 250, 246, 0.94);
+  box-shadow: 0 32px 70px rgba(64, 42, 28, 0.22);
+}
+
+.previewPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.previewPanelHeader h2,
+.previewPanelHeader p {
+  margin: 0.55rem 0 0;
+}
+
+.previewPanelHeader p,
+.previewPointChip span,
+.previewTranscript span,
+.previewTranscript p {
+  color: var(--text-soft);
+}
+
+.previewTranscript {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem 1.1rem;
+  border-radius: 20px;
+  background: rgba(255, 248, 242, 0.96);
+}
+
+.previewTranscript p {
+  margin: 0;
+}
+
+.previewPointRow {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.previewPointChip {
+  min-width: 160px;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 18px;
+  background: rgba(242, 249, 245, 0.96);
+  border: 1px solid rgba(188, 225, 206, 0.9);
+}
+
 @media (max-width: 980px) {
   .hero,
   .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .previewGrid,
+  .fileMeta {
     grid-template-columns: 1fr;
   }
 }
@@ -249,5 +491,21 @@
 
   .clipActions > * {
     width: 100%;
+  }
+
+  .fileGrid,
+  .previewHeaderActions,
+  .actionRow {
+    grid-template-columns: 1fr;
+  }
+
+  .previewHeader,
+  .previewPanelHeader {
+    flex-direction: column;
+  }
+
+  .previewPosterPlay {
+    left: 0.75rem;
+    bottom: 0.75rem;
   }
 }

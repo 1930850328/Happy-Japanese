@@ -61,13 +61,19 @@ import type {
 const baseLocalLessons = videoLessons.filter((lesson) => lesson.sourceType === 'local')
 
 function clipToLesson(clip: ImportedClip): VideoLesson {
+  const clipStartMs = clip.clipStartMs ?? 0
+  const clipEndMs = clip.clipEndMs ?? clipStartMs + clip.durationMs
+
   return {
     id: clip.id,
+    originClipId: clip.sourceClipId ?? clip.id,
     sourceType: clip.sourceType,
     sourceIdOrBlobKey: clip.sourceIdOrBlobKey,
     sourceUrl: clip.sourceUrl,
     sourceProvider: clip.sourceProvider,
-    sourceStartSec: 0,
+    sourceStartSec: clipStartMs / 1000,
+    clipStartMs,
+    clipEndMs,
     title: clip.title,
     cover: clip.cover,
     theme: clip.theme,
@@ -78,7 +84,7 @@ function clipToLesson(clip: ImportedClip): VideoLesson {
     tags: clip.tags,
     description: clip.description,
     creditLine: clip.creditLine,
-    sliceLabel: `${Math.max(10, Math.round(clip.durationMs / 1000))} 秒原片学习`,
+    sliceLabel: `${Math.max(10, Math.round(clip.durationMs / 1000))} 秒学习切片`,
     feedPriority: 120,
   }
 }
@@ -92,9 +98,13 @@ function dedupeLessons(lessons: VideoLesson[]) {
 }
 
 function buildLessons(importedClips: ImportedClip[], publishedLessons: VideoLesson[]) {
-  const importedLessons = importedClips.flatMap((clip) =>
-    clip.importMode === 'sliced' ? [clipToLesson(clip)] : buildLessonsFromImportedClip(clip),
-  )
+  const importedLessons = importedClips.flatMap((clip) => {
+    if (clip.importMode === 'source') {
+      return []
+    }
+
+    return clip.importMode === 'sliced' ? [clipToLesson(clip)] : buildLessonsFromImportedClip(clip)
+  })
 
   return dedupeLessons([...importedLessons, ...publishedLessons, ...baseLocalLessons])
 }
@@ -258,6 +268,22 @@ interface ImportSlicerManifestInput {
   theme?: string
 }
 
+interface ImportSelectedSlicesInput {
+  file: File
+  title: string
+  theme: string
+  cover: string
+  durationMs: number
+  subtitleFileName?: string
+  subtitleSource?: ImportedClip['subtitleSource']
+  sourceProvider: string
+  sourceAnimeTitle?: string
+  sourceEpisodeTitle?: string
+  baseSegments: ImportedClip['segments']
+  baseKnowledgePoints: ImportedClip['knowledgePoints']
+  selectedLessons: VideoLesson[]
+}
+
 type SubtitleStatusCallback = (message: string) => void
 
 interface AppStore {
@@ -289,6 +315,7 @@ interface AppStore {
   addThemeBatchToReview: (cards: VocabCard[]) => Promise<number>
   importClip: (payload: ImportClipInput) => Promise<ImportedClip>
   importSlicerManifest: (payload: ImportSlicerManifestInput) => Promise<ImportedClip[]>
+  importSelectedSlices: (payload: ImportSelectedSlicesInput) => Promise<ImportedClip[]>
   generateAutoSubtitles: (
     clipId: string,
     onStatus?: SubtitleStatusCallback,
@@ -652,6 +679,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       title: clipTitle,
       theme: clipTheme,
       difficulty: 'Custom',
+      importMode: 'raw',
       sourceType: 'local',
       sourceIdOrBlobKey: `blob-${crypto.randomUUID()}`,
       sourceUrl: '',
@@ -680,6 +708,103 @@ export const useAppStore = create<AppStore>((set, get) => ({
     })
 
     return clip
+  },
+
+  async importSelectedSlices({
+    file,
+    title,
+    theme,
+    cover,
+    durationMs,
+    subtitleFileName,
+    subtitleSource,
+    sourceProvider,
+    sourceAnimeTitle,
+    sourceEpisodeTitle,
+    baseSegments,
+    baseKnowledgePoints,
+    selectedLessons,
+  }) {
+    if (selectedLessons.length === 0) {
+      return []
+    }
+
+    const importedAt = new Date().toISOString()
+    const sourceClipId = `clip-${crypto.randomUUID()}`
+    const sourceBlobKey = `blob-${crypto.randomUUID()}`
+    const sourceTitle = title.trim() || file.name.replace(/\.[^.]+$/, '')
+    const sourceTheme = theme.trim() || '自定义片段'
+
+    const sourceClip: ImportedClip = {
+      id: sourceClipId,
+      title: sourceTitle,
+      theme: sourceTheme,
+      difficulty: 'Custom',
+      importMode: 'source',
+      sourceAnimeTitle,
+      sourceEpisodeTitle,
+      sourceType: 'local',
+      sourceIdOrBlobKey: sourceBlobKey,
+      sourceUrl: '',
+      sourceProvider,
+      cover,
+      durationMs,
+      fileType: file.type || 'video/mp4',
+      subtitleFileName,
+      subtitleSource,
+      blob: file,
+      createdAt: importedAt,
+      segments: baseSegments,
+      knowledgePoints: baseKnowledgePoints,
+      tags: mergeTags(['页面自动切片源片', sourceTheme], sourceAnimeTitle ? [sourceAnimeTitle] : []),
+      description: '这是页面内自动切片时保存的原片源，仅用于支撑后续切片播放，不会直接出现在首页短视频流。',
+      creditLine: '仅保存在当前设备。切片预览确认后，首页会直接播放你勾选导入的学习片段。',
+    }
+
+    const importedSlices: ImportedClip[] = selectedLessons.map((lesson, index) => {
+      const clipStartMs = lesson.clipStartMs ?? 0
+      const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
+
+      return {
+        id: `clip-${crypto.randomUUID()}`,
+        title: lesson.title,
+        theme: lesson.theme || sourceTheme,
+        difficulty: lesson.difficulty,
+        importMode: 'sliced',
+        sourceAnimeTitle: sourceAnimeTitle ?? sourceTitle,
+        sourceEpisodeTitle,
+        sourceSliceId: lesson.id || `preview-slice-${index + 1}`,
+        sourceClipId,
+        sourceType: 'local',
+        sourceIdOrBlobKey: sourceBlobKey,
+        sourceUrl: '',
+        sourceProvider: `${sourceProvider} · 页面自动切片`,
+        cover: lesson.cover || cover,
+        durationMs: lesson.durationMs,
+        clipStartMs,
+        clipEndMs,
+        fileType: file.type || 'video/mp4',
+        subtitleFileName,
+        subtitleSource,
+        createdAt: importedAt,
+        segments: lesson.segments,
+        knowledgePoints: lesson.knowledgePoints,
+        tags: mergeTags(lesson.tags, ['页面自动切片', sourceTheme]),
+        description: lesson.description,
+        creditLine: '由页面内自动字幕与切片逻辑生成，可直接进入首页短视频模块学习。',
+      }
+    })
+
+    await Promise.all([saveImportedClip(sourceClip), ...importedSlices.map((clip) => saveImportedClip(clip))])
+    set((state) => {
+      const importedClips = [sourceClip, ...importedSlices, ...state.importedClips]
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips, state.publishedLessons),
+      }
+    })
+
+    return importedSlices
   },
 
   async importSlicerManifest({ manifestFile, clipFiles, theme }) {
@@ -785,7 +910,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
   async generateAutoSubtitles(clipId, onStatus) {
     const clip = get().importedClips.find((item) => item.id === clipId)
-    if (!clip) {
+    if (!clip || !clip.blob || !(clip.blob instanceof File)) {
       return null
     }
 
