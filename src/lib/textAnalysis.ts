@@ -1,5 +1,3 @@
-import Kuroshiro from 'kuroshiro'
-import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import kuromoji, { type IpadicFeatures, type Tokenizer } from 'kuromoji'
 import * as wanakana from 'wanakana'
 
@@ -23,20 +21,20 @@ for (const lesson of videoLessons) {
   }
 }
 
-let tokenizerPromise: Promise<Tokenizer<IpadicFeatures>> | null = null
-let kuroshiroPromise: Promise<Kuroshiro | null> | null = null
+let tokenizerPromise: Promise<Tokenizer<IpadicFeatures> | null> | null = null
 
 function getTokenizer() {
   if (tokenizerPromise) {
     return tokenizerPromise
   }
 
-  tokenizerPromise = new Promise((resolve, reject) => {
+  tokenizerPromise = new Promise((resolve) => {
     kuromoji.builder({ dicPath: '/dict' }).build((error, tokenizer) => {
-      if (error) {
-        reject(error)
+      if (error || !tokenizer) {
+        resolve(null)
         return
       }
+
       resolve(tokenizer)
     })
   })
@@ -44,36 +42,21 @@ function getTokenizer() {
   return tokenizerPromise
 }
 
-async function getKuroshiro() {
-  if (kuroshiroPromise) {
-    return kuroshiroPromise
-  }
-
-  kuroshiroPromise = (async () => {
-    try {
-      const instance = new Kuroshiro()
-      await instance.init(new KuromojiAnalyzer({ dictPath: '/dict' }))
-      return instance
-    } catch {
-      return null
-    }
-  })()
-
-  return kuroshiroPromise
-}
-
 function normalizePartOfSpeech(token: IpadicFeatures) {
-  return [token.pos, token.pos_detail_1]
+  const value = [token.pos, token.pos_detail_1]
     .filter((item) => item && item !== '*')
     .join(' / ')
+
+  return value || '未分类'
 }
 
-function resolveMeaning(surface: string, base: string, reading: string) {
+function resolveMeaning(surface: string, base: string, reading: string, kana: string) {
   return (
     meaningMap.get(surface) ??
     meaningMap.get(base) ??
     meaningMap.get(reading) ??
-    '暂未收录，可结合语境先记住'
+    meaningMap.get(kana) ??
+    '暂未收录，可先结合语境记住它的用法。'
   )
 }
 
@@ -81,16 +64,39 @@ function createToken(token: IpadicFeatures): TokenAnalysis {
   const reading = token.reading && token.reading !== '*' ? token.reading : token.surface_form
   const kana = wanakana.toHiragana(reading)
   const base = token.basic_form && token.basic_form !== '*' ? token.basic_form : token.surface_form
+
   return {
     id: crypto.randomUUID(),
     surface: token.surface_form,
     base,
     reading,
     kana,
-    romaji: wanakana.toRomaji(kana),
+    romaji: wanakana.toRomaji(kana || token.surface_form),
     partOfSpeech: normalizePartOfSpeech(token),
-    meaningZh: resolveMeaning(token.surface_form, base, kana),
+    meaningZh: resolveMeaning(token.surface_form, base, reading, kana),
   }
+}
+
+function createFallbackTokens(text: string) {
+  const chunks =
+    text.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]+|[A-Za-z]+|\d+|[^\s]/gu) ??
+    [text]
+
+  return chunks
+    .filter((chunk) => chunk.trim())
+    .map<TokenAnalysis>((chunk) => {
+      const kana = wanakana.toHiragana(chunk)
+      return {
+        id: crypto.randomUUID(),
+        surface: chunk,
+        base: chunk,
+        reading: chunk,
+        kana,
+        romaji: wanakana.toRomaji(kana || chunk),
+        partOfSpeech: '未分类',
+        meaningZh: resolveMeaning(chunk, chunk, chunk, kana),
+      }
+    })
 }
 
 function matchGrammar(text: string) {
@@ -106,11 +112,11 @@ function buildGloss(tokens: TokenAnalysis[], matches: GrammarMatch[]) {
   const coreWords = tokens
     .filter((token) => !token.partOfSpeech.includes('助詞') && !token.partOfSpeech.includes('記号'))
     .slice(0, 4)
-    .map((token) => `${token.surface}(${token.meaningZh})`)
+    .map((token) => `${token.surface}（${token.meaningZh}）`)
 
   const wordLine =
     coreWords.length > 0
-      ? `大意可先抓这几个词：${coreWords.join(' / ')}。`
+      ? `这句话可以先抓这几个词：${coreWords.join(' / ')}。`
       : '这句话可以先从主干词和句尾语气入手理解。'
 
   const grammarLine =
@@ -121,8 +127,34 @@ function buildGloss(tokens: TokenAnalysis[], matches: GrammarMatch[]) {
   return `${wordLine}${grammarLine}`
 }
 
-function buildFallbackKana(tokens: TokenAnalysis[]) {
-  return tokens.map((token) => token.kana || token.surface).join('')
+function buildSentenceKana(text: string, tokens: TokenAnalysis[]) {
+  const joined = tokens.map((token) => token.kana || token.surface).join('')
+  return joined || wanakana.toHiragana(text)
+}
+
+function buildSentenceRomaji(tokens: TokenAnalysis[], kana: string) {
+  const joined = tokens
+    .map((token) => token.romaji || wanakana.toRomaji(token.kana || token.surface))
+    .filter(Boolean)
+    .join(' ')
+
+  return joined || wanakana.toRomaji(kana)
+}
+
+async function tokenize(text: string) {
+  try {
+    const tokenizer = await getTokenizer()
+    if (!tokenizer) {
+      return createFallbackTokens(text)
+    }
+
+    return tokenizer
+      .tokenize(text)
+      .filter((token) => token.surface_form.trim())
+      .map(createToken)
+  } catch {
+    return createFallbackTokens(text)
+  }
 }
 
 export async function analyzeJapaneseText(
@@ -143,26 +175,11 @@ export async function analyzeJapaneseText(
     }
   }
 
-  const tokenizer = await getTokenizer()
-  const kuroshiro = await getKuroshiro()
-  const tokens = tokenizer
-    .tokenize(text)
-    .filter((token) => token.surface_form.trim())
-    .map(createToken)
-
+  const tokens = await tokenize(text)
   const grammarMatches = matchGrammar(text)
-  const noteIds = savedNotes
-    .filter((note) => note.input === text)
-    .map((note) => note.id)
-
-  const fallbackKana = buildFallbackKana(tokens)
-  const kana =
-    (await kuroshiro?.convert(text, { to: 'hiragana' }).catch(() => fallbackKana)) ??
-    fallbackKana
-  const romaji =
-    (await kuroshiro
-      ?.convert(text, { to: 'romaji', romajiSystem: 'passport' })
-      .catch(() => wanakana.toRomaji(kana))) ?? wanakana.toRomaji(kana)
+  const noteIds = savedNotes.filter((note) => note.input === text).map((note) => note.id)
+  const kana = buildSentenceKana(text, tokens)
+  const romaji = buildSentenceRomaji(tokens, kana)
 
   return {
     input: text,

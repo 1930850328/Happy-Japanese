@@ -55,6 +55,7 @@ function clipToLesson(clip: ImportedClip): VideoLesson {
     sourceIdOrBlobKey: clip.sourceIdOrBlobKey,
     sourceUrl: clip.sourceUrl,
     sourceProvider: clip.sourceProvider,
+    sourceStartSec: 0,
     title: clip.title,
     cover: clip.cover,
     theme: clip.theme,
@@ -65,6 +66,8 @@ function clipToLesson(clip: ImportedClip): VideoLesson {
     tags: clip.tags,
     description: clip.description,
     creditLine: clip.creditLine,
+    sliceLabel: `${Math.max(10, Math.round(clip.durationMs / 1000))} 秒私有片段`,
+    feedPriority: 120,
   }
 }
 

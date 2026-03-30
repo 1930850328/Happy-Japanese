@@ -1,6 +1,12 @@
 import { getTodayKey } from './date'
 import type { DailyGoal, ReviewItem, StudyEvent, TodayProgress, VideoLesson } from '../types'
 
+function hashString(input: string) {
+  return [...input].reduce((acc, char, index) => {
+    return (acc + char.charCodeAt(0) * (index + 11)) % 10007
+  }, 0)
+}
+
 export function getTodayProgress(events: StudyEvent[], date = getTodayKey()): TodayProgress {
   return events
     .filter((event) => event.date === date)
@@ -84,18 +90,31 @@ export function getDailyLessonFeed(
       .map((event) => event.sourceId),
   )
   const favoriteSet = new Set(favoriteIds)
+  const dailySeed = hashString(date)
 
   return [...lessons].sort((a, b) => {
-    const aFavorite = favoriteSet.has(a.id) ? -1 : 0
-    const bFavorite = favoriteSet.has(b.id) ? -1 : 0
-    if (aFavorite !== bFavorite) {
-      return aFavorite - bFavorite
-    }
-
     const aWatched = watchedToday.has(a.id) ? 1 : 0
     const bWatched = watchedToday.has(b.id) ? 1 : 0
     if (aWatched !== bWatched) {
       return aWatched - bWatched
+    }
+
+    const aPriority = a.feedPriority ?? 0
+    const bPriority = b.feedPriority ?? 0
+    if (aPriority !== bPriority) {
+      return bPriority - aPriority
+    }
+
+    const aDailyRank = (hashString(a.id) + dailySeed) % 997
+    const bDailyRank = (hashString(b.id) + dailySeed) % 997
+    if (aDailyRank !== bDailyRank) {
+      return aDailyRank - bDailyRank
+    }
+
+    const aFavorite = favoriteSet.has(a.id) ? -1 : 0
+    const bFavorite = favoriteSet.has(b.id) ? -1 : 0
+    if (aFavorite !== bFavorite) {
+      return aFavorite - bFavorite
     }
 
     return a.title.localeCompare(b.title, 'zh-Hans-CN')

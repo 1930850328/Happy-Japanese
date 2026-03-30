@@ -1,6 +1,6 @@
 export type DifficultyLevel = 'N5' | 'N4' | 'Mixed' | 'Custom'
 
-export type LessonSourceType = 'youtube' | 'local'
+export type LessonSourceType = 'local' | 'bilibili'
 
 export type KnowledgePointKind = 'word' | 'grammar' | 'phrase'
 
@@ -32,6 +32,7 @@ export interface VideoLesson {
   sourceIdOrBlobKey: string
   sourceUrl: string
   sourceProvider: string
+  sourceStartSec?: number
   title: string
   cover: string
   theme: string
@@ -42,6 +43,8 @@ export interface VideoLesson {
   tags: string[]
   description: string
   creditLine: string
+  sliceLabel?: string
+  feedPriority?: number
 }
 
 export interface TokenAnalysis {
