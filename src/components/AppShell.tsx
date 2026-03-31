@@ -20,9 +20,17 @@ export function AppShell() {
   const studyEvents = useAppStore((state) => state.studyEvents)
   const goal = useAppStore((state) => state.goal)
   const initialized = useAppStore((state) => state.initialized)
+  const sliceTask = useAppStore((state) => state.sliceTask)
 
   const progress = getTodayProgress(studyEvents)
   const completionRatio = getGoalCompletionRatio(progress, goal)
+  const showSliceBanner = sliceTask.status !== 'idle' && Boolean(sliceTask.detail)
+  const sliceBannerText =
+    sliceTask.status === 'running'
+      ? `切片任务进行中 · ${sliceTask.percent}% · ${sliceTask.detail}`
+      : sliceTask.status === 'completed'
+        ? `切片任务已完成 · ${sliceTask.detail}`
+        : `切片任务遇到问题 · ${sliceTask.detail}`
 
   return (
     <div className={styles.shell}>
@@ -106,6 +114,20 @@ export function AppShell() {
           </div>
           <span className="chip badgeMint">{Math.round(completionRatio * 100)}%</span>
         </div>
+        {showSliceBanner ? (
+          <NavLink
+            to="/profile"
+            className={`${styles.sliceBanner} ${
+              sliceTask.status === 'error' ? styles.sliceBannerError : ''
+            }`}
+          >
+            <div className={styles.sliceBannerText}>
+              <strong>{sliceTask.status === 'running' ? '切片任务进行中' : '切片任务提醒'}</strong>
+              <span>{sliceBannerText}</span>
+            </div>
+            <span className="chip badgePeach">回到我的页查看</span>
+          </NavLink>
+        ) : null}
         <Outlet />
       </main>
 

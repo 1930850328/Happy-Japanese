@@ -151,6 +151,44 @@
 .main {
   min-width: 0;
   display: grid;
+  gap: 12px;
+}
+
+.sliceBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 22px;
+  border: 1px solid rgba(189, 226, 205, 0.95);
+  background: linear-gradient(135deg, rgba(241, 251, 246, 0.96), rgba(255, 246, 238, 0.95));
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+}
+
+.sliceBanner:hover {
+  transform: translateY(-1px);
+}
+
+.sliceBannerError {
+  border-color: rgba(242, 185, 176, 0.95);
+  background: linear-gradient(135deg, rgba(255, 244, 242, 0.98), rgba(255, 248, 239, 0.95));
+}
+
+.sliceBannerText {
+  min-width: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.sliceBannerText strong {
+  font-family: var(--font-ui);
+}
+
+.sliceBannerText span {
+  color: var(--text-soft);
+  line-height: 1.5;
 }
 
 .mobileTopBar {
@@ -196,6 +234,11 @@
     background: rgba(255, 255, 255, 0.76);
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
+  }
+
+  .sliceBanner {
+    padding: 0.85rem 0.95rem;
+    align-items: flex-start;
   }
 
   .bottomNav {

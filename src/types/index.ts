@@ -198,6 +198,32 @@ export interface ImportedClip {
   creditLine: string
 }
 
+export type SliceTaskStatus = 'idle' | 'running' | 'completed' | 'error'
+
+export interface SliceTaskState {
+  status: SliceTaskStatus
+  percent: number
+  detail: string
+  startedAt?: string
+  updatedAt?: string
+}
+
+export interface SlicePreviewDraft {
+  file: File
+  title: string
+  theme: string
+  episodeTitle: string
+  cover: string
+  durationMs: number
+  subtitleFileName?: string
+  subtitleSource?: ImportedClip['subtitleSource']
+  sourceProvider: string
+  segments: ImportedClip['segments']
+  knowledgePoints: ImportedClip['knowledgePoints']
+  lessons: VideoLesson[]
+  selectedLessonIds: string[]
+}
+
 export interface AppSettings {
   id: 'settings'
   remindersEnabled: boolean

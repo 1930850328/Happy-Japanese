@@ -25,23 +25,8 @@ import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '.
 import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
 import { readVideoMeta } from '../lib/videoMeta'
 import { useAppStore } from '../store/useAppStore'
-import type { ImportedClip, VideoLesson } from '../types'
+import type { ImportedClip, SlicePreviewDraft, VideoLesson } from '../types'
 import styles from './ProfilePage.module.css'
-
-interface SlicePreviewState {
-  file: File
-  title: string
-  theme: string
-  episodeTitle: string
-  cover: string
-  durationMs: number
-  subtitleFileName?: string
-  subtitleSource?: ImportedClip['subtitleSource']
-  sourceProvider: string
-  segments: ImportedClip['segments']
-  knowledgePoints: ImportedClip['knowledgePoints']
-  lessons: VideoLesson[]
-}
 
 interface SlicePreviewOverlayProps {
   lesson: VideoLesson
@@ -50,10 +35,6 @@ interface SlicePreviewOverlayProps {
   onClose: () => void
 }
 
-interface TaskProgressState {
-  percent: number
-  detail: string
-}
 
 function OverlayPortal({ children }: { children: ReactNode }) {
   if (typeof document === 'undefined') {
@@ -216,6 +197,11 @@ export function ProfilePage() {
   const importSelectedSlices = useAppStore((state) => state.importSelectedSlices)
   const generateAutoSubtitles = useAppStore((state) => state.generateAutoSubtitles)
   const updateSettings = useAppStore((state) => state.updateSettings)
+  const persistedSliceTask = useAppStore((state) => state.sliceTask)
+  const persistedSlicePreview = useAppStore((state) => state.slicePreviewDraft)
+  const setSliceTask = useAppStore((state) => state.setSliceTask)
+  const setSlicePreviewDraft = useAppStore((state) => state.setSlicePreviewDraft)
+  const clearSliceWorkflow = useAppStore((state) => state.clearSliceWorkflow)
 
   const [goalForm, setGoalForm] = useState({
     videosTarget: String(goal.videosTarget),
@@ -228,14 +214,23 @@ export function ProfilePage() {
   const [episodeTitle, setEpisodeTitle] = useState('')
   const [clipFile, setClipFile] = useState<File | null>(null)
   const [subtitleFile, setSubtitleFile] = useState<File | null>(null)
-  const [slicePreview, setSlicePreview] = useState<SlicePreviewState | null>(null)
-  const [selectedSliceIds, setSelectedSliceIds] = useState<string[]>([])
+  const [slicePreview, setSlicePreview] = useState<SlicePreviewDraft | null>(persistedSlicePreview)
+  const [selectedSliceIds, setSelectedSliceIds] = useState<string[]>(
+    persistedSlicePreview?.selectedLessonIds ?? [],
+  )
   const [previewLessonId, setPreviewLessonId] = useState<string | null>(null)
-  const [buildingPreview, setBuildingPreview] = useState(false)
+  const [buildingPreview, setBuildingPreview] = useState(persistedSliceTask.status === 'running')
   const [importingSlices, setImportingSlices] = useState(false)
   const [busyClipId, setBusyClipId] = useState<string | null>(null)
-  const [statusText, setStatusText] = useState('')
-  const [taskProgress, setTaskProgress] = useState<TaskProgressState | null>(null)
+  const [statusText, setStatusText] = useState(persistedSliceTask.detail)
+  const [taskProgress, setTaskProgress] = useState<{
+    percent: number
+    detail: string
+  } | null>(
+    persistedSliceTask.status === 'idle'
+      ? null
+      : { percent: persistedSliceTask.percent, detail: persistedSliceTask.detail },
+  )
   const [slicerManifestFile, setSlicerManifestFile] = useState<File | null>(null)
   const [slicerClipFiles, setSlicerClipFiles] = useState<File[]>([])
   const [importingSlicer, setImportingSlicer] = useState(false)
@@ -249,6 +244,30 @@ export function ProfilePage() {
       reviewTarget: String(goal.reviewTarget),
     })
   }, [goal])
+
+  useEffect(() => {
+    if (previewLessonId && !slicePreview?.lessons.some((lesson) => lesson.id === previewLessonId)) {
+      setPreviewLessonId(null)
+    }
+  }, [previewLessonId, slicePreview])
+
+  useEffect(() => {
+    setSlicePreview(persistedSlicePreview)
+    setSelectedSliceIds(persistedSlicePreview?.selectedLessonIds ?? [])
+  }, [persistedSlicePreview])
+
+  useEffect(() => {
+    setBuildingPreview(persistedSliceTask.status === 'running')
+    setStatusText(persistedSliceTask.detail)
+    setTaskProgress(
+      persistedSliceTask.status === 'idle'
+        ? null
+        : {
+            percent: persistedSliceTask.percent,
+            detail: persistedSliceTask.detail,
+          },
+    )
+  }, [persistedSliceTask])
 
   const todayProgress = getTodayProgress(studyEvents)
   const completionRatio = getGoalCompletionRatio(todayProgress, goal)
@@ -278,15 +297,25 @@ export function ProfilePage() {
     if (!slicePreview) {
       return []
     }
-    const selectedIdSet = new Set(selectedSliceIds)
+    const selectedIdSet = new Set(slicePreview.selectedLessonIds)
     return slicePreview.lessons.filter((lesson) => selectedIdSet.has(lesson.id))
-  }, [selectedSliceIds, slicePreview])
+  }, [slicePreview])
   const previewLesson =
     slicePreview?.lessons.find((lesson) => lesson.id === previewLessonId) ?? null
 
   const updateTaskStatus = (message: string) => {
     setStatusText(message)
-    setTaskProgress((state) => deriveTaskProgress(message, state?.percent ?? 0))
+    setTaskProgress((state) => {
+      const nextProgress = deriveTaskProgress(message, state?.percent ?? persistedSliceTask.percent)
+      setSliceTask({
+        status: nextProgress.percent >= 100 ? 'completed' : 'running',
+        percent: nextProgress.percent,
+        detail: nextProgress.detail,
+        startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
+      return nextProgress
+    })
   }
 
   const handleGoalSave = async () => {
@@ -300,9 +329,24 @@ export function ProfilePage() {
 
   const handleGenerateForClip = async (clipId: string) => {
     setBusyClipId(clipId)
+    const startedAt = new Date().toISOString()
+    setSliceTask({
+      status: 'running',
+      percent: 6,
+      detail: '正在准备自动字幕…',
+      startedAt,
+      updatedAt: startedAt,
+    })
     updateTaskStatus('准备自动字幕中…')
     try {
       await generateAutoSubtitles(clipId, (message) => updateTaskStatus(message))
+      setSliceTask({
+        status: 'completed',
+        percent: 100,
+        detail: '自动字幕已生成完成，可以继续切片或回到首页学习。',
+        startedAt,
+        updatedAt: new Date().toISOString(),
+      })
     } finally {
       setBusyClipId(null)
     }
@@ -313,7 +357,17 @@ export function ProfilePage() {
       return
     }
 
+    const startedAt = new Date().toISOString()
+    const imported: ImportedClip[] = []
+    setSlicePreviewDraft(null)
     setBuildingPreview(true)
+    setSliceTask({
+      status: 'running',
+      percent: 4,
+      detail: '正在准备切片任务…',
+      startedAt,
+      updatedAt: startedAt,
+    })
     setTaskProgress({ percent: 4, detail: '正在准备切片任务…' })
     updateTaskStatus('正在读取视频信息…')
 
@@ -390,15 +444,53 @@ export function ProfilePage() {
         segments,
         knowledgePoints,
         lessons: previewLessons,
+        selectedLessonIds: previewLessons.map((lesson) => lesson.id),
+      })
+      setSlicePreviewDraft({
+        file: clipFile,
+        title: normalizedTitle,
+        theme: normalizedTheme,
+        episodeTitle: episodeTitle.trim(),
+        cover,
+        durationMs,
+        subtitleFileName,
+        subtitleSource,
+        sourceProvider,
+        segments,
+        knowledgePoints,
+        lessons: previewLessons,
+        selectedLessonIds: previewLessons.map((lesson) => lesson.id),
       })
       setSelectedSliceIds(previewLessons.map((lesson) => lesson.id))
       setPreviewLessonId(null)
+      setSliceTask({
+        status: 'completed',
+        percent: 100,
+        detail: `已生成 ${previewLessons.length} 条候选切片，可以先预览再决定是否导入。`,
+        startedAt,
+        updatedAt: new Date().toISOString(),
+      })
       updateTaskStatus(`已生成 ${previewLessons.length} 条候选切片，可以先预览再决定是否导入。`)
     } catch (error) {
+      setSliceTask({
+        status: 'completed',
+        percent: 100,
+        detail: `已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。`,
+        startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
       setSlicePreview(null)
       setSelectedSliceIds([])
+      setSlicePreviewDraft(null)
       setPreviewLessonId(null)
       setTaskProgress(null)
+      setSliceTask({
+        status: 'error',
+        percent: 0,
+        detail: error instanceof Error ? error.message : '切片预览生成失败，请换一个文件重试。',
+        startedAt,
+        updatedAt: new Date().toISOString(),
+      })
       setStatusText(error instanceof Error ? error.message : '切片预览生成失败，请换一个文件重试。')
     } finally {
       setBuildingPreview(false)
@@ -435,6 +527,14 @@ export function ProfilePage() {
       setStatusText(`已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。`)
       setSlicePreview(null)
       setSelectedSliceIds([])
+      setSliceTask({
+        status: 'completed',
+        percent: 100,
+        detail: `已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。`,
+        startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
+      setSlicePreviewDraft(null)
       setPreviewLessonId(null)
     } finally {
       setImportingSlices(false)
@@ -471,9 +571,20 @@ export function ProfilePage() {
   }
 
   const togglePreviewSelection = (lessonId: string) => {
-    setSelectedSliceIds((state) =>
-      state.includes(lessonId) ? state.filter((id) => id !== lessonId) : [...state, lessonId],
-    )
+    setSelectedSliceIds((state) => {
+      const nextSelectedIds = state.includes(lessonId)
+        ? state.filter((id) => id !== lessonId)
+        : [...state, lessonId]
+
+      if (slicePreview) {
+        setSlicePreviewDraft({
+          ...slicePreview,
+          selectedLessonIds: nextSelectedIds,
+        })
+      }
+
+      return nextSelectedIds
+    })
   }
 
   return (
@@ -676,6 +787,7 @@ export function ProfilePage() {
                   onClick={() => {
                     setSlicePreview(null)
                     setSelectedSliceIds([])
+                    clearSliceWorkflow()
                     setPreviewLessonId(null)
                     setTaskProgress(null)
                     setStatusText('已清空本次切片预览。')
@@ -706,12 +818,28 @@ export function ProfilePage() {
                 <div className={styles.previewHeaderActions}>
                   <button
                     className="softButton"
-                    onClick={() => setSelectedSliceIds(slicePreview.lessons.map((lesson) => lesson.id))}
+                    onClick={() => {
+                      const nextSelectedIds = slicePreview.lessons.map((lesson) => lesson.id)
+                      setSelectedSliceIds(nextSelectedIds)
+                      setSlicePreviewDraft({
+                        ...slicePreview,
+                        selectedLessonIds: nextSelectedIds,
+                      })
+                    }}
                   >
                     <CheckCircle2 size={18} />
                     全选
                   </button>
-                  <button className="softButton" onClick={() => setSelectedSliceIds([])}>
+                  <button
+                    className="softButton"
+                    onClick={() => {
+                      setSelectedSliceIds([])
+                      setSlicePreviewDraft({
+                        ...slicePreview,
+                        selectedLessonIds: [],
+                      })
+                    }}
+                  >
                     <X size={18} />
                     清空勾选
                   </button>

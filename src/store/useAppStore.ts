@@ -51,6 +51,8 @@ import type {
   ReviewLog,
   ReviewResult,
   SavedNote,
+  SlicePreviewDraft,
+  SliceTaskState,
   StudyEvent,
   StudyEventType,
   VocabCard,
@@ -59,6 +61,11 @@ import type {
 } from '../types'
 
 const baseLocalLessons = videoLessons.filter((lesson) => lesson.sourceType === 'local')
+const idleSliceTask: SliceTaskState = {
+  status: 'idle',
+  percent: 0,
+  detail: '',
+}
 
 function clipToLesson(clip: ImportedClip): VideoLesson {
   const clipStartMs = clip.clipStartMs ?? 0
@@ -299,6 +306,8 @@ interface AppStore {
   vocabProgress: Record<string, VocabProgress>
   importedClips: ImportedClip[]
   publishedLessons: VideoLesson[]
+  sliceTask: SliceTaskState
+  slicePreviewDraft: SlicePreviewDraft | null
   settings: AppSettings
   initialize: () => Promise<void>
   refreshPublishedLessons: () => Promise<void>
@@ -316,6 +325,9 @@ interface AppStore {
   importClip: (payload: ImportClipInput) => Promise<ImportedClip>
   importSlicerManifest: (payload: ImportSlicerManifestInput) => Promise<ImportedClip[]>
   importSelectedSlices: (payload: ImportSelectedSlicesInput) => Promise<ImportedClip[]>
+  setSliceTask: (payload: SliceTaskState) => void
+  setSlicePreviewDraft: (payload: SlicePreviewDraft | null) => void
+  clearSliceWorkflow: () => void
   generateAutoSubtitles: (
     clipId: string,
     onStatus?: SubtitleStatusCallback,
@@ -336,6 +348,8 @@ export const useAppStore = create<AppStore>((set, get) => ({
   vocabProgress: {},
   importedClips: [],
   publishedLessons: [],
+  sliceTask: idleSliceTask,
+  slicePreviewDraft: null,
   settings: defaultSettings,
 
   async initialize() {
@@ -407,6 +421,21 @@ export const useAppStore = create<AppStore>((set, get) => ({
     set((state) => ({
       favorites: [...state.favorites, lessonId],
     }))
+  },
+
+  setSliceTask(payload) {
+    set({ sliceTask: payload })
+  },
+
+  setSlicePreviewDraft(payload) {
+    set({ slicePreviewDraft: payload })
+  },
+
+  clearSliceWorkflow() {
+    set({
+      sliceTask: idleSliceTask,
+      slicePreviewDraft: null,
+    })
   },
 
   async saveNoteEntry(payload) {
