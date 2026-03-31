@@ -19,6 +19,7 @@ import { createPortal } from 'react-dom'
 
 import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
+import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
 import type { KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
 import styles from './HomePage.module.css'
@@ -185,20 +186,31 @@ function LessonPlayerOverlay({
   onPlayerError,
 }: PlayerOverlayProps) {
   const [playerState, setPlayerState] = useState<StudyPlayerSnapshot | null>(null)
-  const [localSourceUrl, setLocalSourceUrl] = useState(lesson.sourceIdOrBlobKey)
+  const [localSourceUrl, setLocalSourceUrl] = useState(localBlob ? '' : lesson.sourceIdOrBlobKey)
+  const [sourceStatus, setSourceStatus] = useState('')
+  const [preparingSource, setPreparingSource] = useState(Boolean(localBlob))
   const playerRef = useRef<AnimeStudyPlayerHandle | null>(null)
   const objectUrlRef = useRef<string | null>(null)
   const finishedRef = useRef(false)
   const clipStartMs = lesson.clipStartMs ?? 0
   const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
 
-  const currentSegment = playerState?.currentSegment ?? lesson.segments.at(0)
+  const currentSegment = playerState?.currentSegment
   const activePoints = playerState?.activePoints ?? []
   const elapsedMs = playerState?.elapsedMs ?? 0
   const isPlaying = playerState?.isPlaying ?? false
   const isReady = playerState?.isReady ?? false
   const isBuffering = playerState?.isBuffering ?? true
   const volumePercent = Math.round((playerState?.volume ?? 0.8) * 100)
+  const playerStatusText = preparingSource
+    ? sourceStatus || '正在准备视频…'
+    : !isReady
+      ? '视频加载中…'
+      : isBuffering
+        ? '正在缓冲…'
+        : isPlaying
+          ? '正在播放'
+          : '已暂停'
 
   useEffect(() => {
     return () => {
@@ -210,22 +222,73 @@ function LessonPlayerOverlay({
   }, [])
 
   useEffect(() => {
-    if (!localBlob) {
-      setLocalSourceUrl(lesson.sourceIdOrBlobKey)
-      return
-    }
+    let canceled = false
 
-    const objectUrl = URL.createObjectURL(localBlob)
-    objectUrlRef.current = objectUrl
-    setLocalSourceUrl(objectUrl)
-
-    return () => {
+    const releaseObjectUrl = () => {
       if (objectUrlRef.current) {
         URL.revokeObjectURL(objectUrlRef.current)
         objectUrlRef.current = null
       }
     }
-  }, [lesson.sourceIdOrBlobKey, localBlob])
+
+    const prepareSource = async () => {
+      if (!localBlob) {
+        setPreparingSource(false)
+        setSourceStatus('')
+        setLocalSourceUrl(lesson.sourceIdOrBlobKey)
+        return
+      }
+
+      setPreparingSource(true)
+      setSourceStatus('正在检查视频兼容性…')
+
+      try {
+        const sourceFile =
+          localBlob instanceof File
+            ? localBlob
+            : new File([localBlob], `${lesson.id}.mp4`, {
+                type: localBlob.type || 'video/mp4',
+                lastModified: Date.now(),
+              })
+
+        const { file, converted } = await ensureBrowserPlayableVideo(sourceFile, (message) => {
+          if (!canceled) {
+            setSourceStatus(message)
+          }
+        })
+
+        if (canceled) {
+          return
+        }
+
+        releaseObjectUrl()
+        const objectUrl = URL.createObjectURL(file)
+        objectUrlRef.current = objectUrl
+        setLocalSourceUrl(objectUrl)
+        setSourceStatus(converted ? '已转换为兼容格式，正在准备播放…' : '视频已准备完成')
+      } catch (error) {
+        if (canceled) {
+          return
+        }
+
+        setSourceStatus(
+          error instanceof Error ? error.message : '当前视频暂时无法播放，请换一个更通用的编码格式。',
+        )
+        onPlayerError(lesson.id)
+      } finally {
+        if (!canceled) {
+          setPreparingSource(false)
+        }
+      }
+    }
+
+    void prepareSource()
+
+    return () => {
+      canceled = true
+      releaseObjectUrl()
+    }
+  }, [lesson.id, lesson.sourceIdOrBlobKey, localBlob, onPlayerError])
 
   useEffect(() => {
     finishedRef.current = false
@@ -279,24 +342,39 @@ function LessonPlayerOverlay({
           </header>
 
           <div className={styles.sessionViewportShell}>
-            <AnimeStudyPlayer
-              ref={playerRef}
-              url={localSourceUrl}
-              poster={lesson.cover}
-              title={lesson.title}
-              sourceLabel={lesson.sourceProvider}
-              durationMs={lesson.durationMs}
-              clipStartMs={clipStartMs}
-              clipEndMs={clipEndMs}
-              segments={lesson.segments}
-              knowledgePoints={lesson.knowledgePoints}
-              showRomaji={showRomaji}
-              onStateChange={setPlayerState}
-              onFinish={finishSession}
-              onError={() => onPlayerError(lesson.id)}
-            />
+            {localSourceUrl ? (
+              <AnimeStudyPlayer
+                ref={playerRef}
+                url={localSourceUrl}
+                poster={lesson.cover}
+                title={lesson.title}
+                sourceLabel={lesson.sourceProvider}
+                durationMs={lesson.durationMs}
+                clipStartMs={clipStartMs}
+                clipEndMs={clipEndMs}
+                segments={lesson.segments}
+                knowledgePoints={lesson.knowledgePoints}
+                showRomaji={showRomaji}
+                onStateChange={setPlayerState}
+                onFinish={finishSession}
+                onError={() => onPlayerError(lesson.id)}
+              />
+            ) : (
+              <div className={styles.playerPreparing}>
+                <strong>{preparingSource ? '正在准备视频…' : '视频暂时还没准备好'}</strong>
+                <span>{sourceStatus || '请稍等，系统会先把本地视频整理成浏览器可播放的格式。'}</span>
+              </div>
+            )}
 
             <div className={styles.progressBox}>
+              <div className={styles.progressMeta}>
+                <span>{playerStatusText}</span>
+                <strong>
+                  {preparingSource
+                    ? '准备完成后会自动出现进度条、音量和设置面板'
+                    : `${formatProgress(elapsedMs, lesson.durationMs)} / 音量 ${volumePercent}%`}
+                </strong>
+              </div>
               <div className={styles.progressMeta}>
                 <span>
                   {!isReady ? '视频加载中…' : isBuffering ? '正在缓冲…' : isPlaying ? '正在播放' : '已暂停'}

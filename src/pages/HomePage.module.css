@@ -409,6 +409,10 @@
   gap: 0.45rem;
 }
 
+.progressBox > .progressMeta:last-child {
+  display: none;
+}
+
 .progressMeta {
   display: flex;
   justify-content: space-between;
@@ -420,6 +424,31 @@
 .progressMeta strong {
   color: var(--text);
   font-family: var(--font-ui);
+}
+
+.playerPreparing {
+  display: grid;
+  gap: 0.45rem;
+  place-items: center;
+  min-height: min(56svh, 520px);
+  padding: 1.4rem;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top, rgba(255, 224, 206, 0.24), transparent 44%),
+    rgba(20, 12, 10, 0.94);
+  text-align: center;
+}
+
+.playerPreparing strong {
+  color: #fffaf6;
+  font-family: var(--font-ui);
+  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+}
+
+.playerPreparing span {
+  max-width: 32rem;
+  color: rgba(255, 246, 241, 0.78);
+  line-height: 1.7;
 }
 
 .progressTrack {

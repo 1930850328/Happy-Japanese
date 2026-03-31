@@ -23,6 +23,7 @@ import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
 import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
+import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
 import { readVideoMeta } from '../lib/videoMeta'
 import { useAppStore } from '../store/useAppStore'
 import type { ImportedClip, SlicePreviewDraft, VideoLesson } from '../types'
@@ -64,6 +65,15 @@ function deriveTaskProgress(message: string, previousPercent: number) {
   const embeddedPercent = downloadMatch ? Number(downloadMatch[1]) : null
 
   let percent = previousPercent
+  if (message.includes('检查视频播放兼容性')) {
+    percent = 6
+  } else if (message.includes('准备视频兼容引擎')) {
+    percent = 10
+  } else if (message.includes('转换为浏览器兼容格式')) {
+    percent = embeddedPercent === null ? 16 : 16 + embeddedPercent * 0.14
+  } else if (message.includes('已转换为浏览器兼容格式')) {
+    percent = 30
+  } else
   if (message.includes('读取视频信息')) {
     percent = 8
   } else if (message.includes('解析外部字幕')) {
@@ -121,7 +131,7 @@ function SlicePreviewOverlay({ lesson, file, showRomaji, onClose }: SlicePreview
     }
   }, [])
 
-  const currentSegment = state?.currentSegment ?? lesson.segments[0]
+  const currentSegment = state?.currentSegment
   const activePoints = state?.activePoints ?? []
 
   return (
@@ -140,6 +150,7 @@ function SlicePreviewOverlay({ lesson, file, showRomaji, onClose }: SlicePreview
             </button>
           </header>
 
+          {objectUrl ? (
           <AnimeStudyPlayer
             url={objectUrl}
             poster={lesson.cover}
@@ -155,6 +166,12 @@ function SlicePreviewOverlay({ lesson, file, showRomaji, onClose }: SlicePreview
             onFinish={() => undefined}
             onError={() => undefined}
           />
+          ) : (
+            <div className={styles.previewPlayerLoading}>
+              <strong>正在准备预览播放器…</strong>
+              <span>片段文件已经切好，播放器初始化完成后会自动开始预览。</span>
+            </div>
+          )}
 
           {currentSegment ? (
             <div className={styles.previewTranscript}>
@@ -374,7 +391,11 @@ export function ProfilePage() {
     try {
       const normalizedTitle = clipTitle.trim() || clipFile.name.replace(/\.[^.]+$/, '')
       const normalizedTheme = clipTheme.trim() || '日语原片'
-      const { durationMs, cover } = await readVideoMeta(clipFile, normalizedTitle, normalizedTheme)
+      const { file: playbackFile, converted } = await ensureBrowserPlayableVideo(
+        clipFile,
+        (message) => updateTaskStatus(message),
+      )
+      const { durationMs, cover } = await readVideoMeta(playbackFile, normalizedTitle, normalizedTheme)
 
       let subtitleSource: ImportedClip['subtitleSource']
       let subtitleFileName: string | undefined
@@ -392,7 +413,7 @@ export function ProfilePage() {
         subtitleFileName = subtitleFile.name
         sourceProvider = '页面自动切片预览 / 外部字幕'
       } else {
-        const studyData = await generateStudyDataFromVideo(clipFile, durationMs, (message) =>
+        const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
           updateTaskStatus(message),
         )
         segments = studyData.segments
@@ -421,18 +442,23 @@ export function ProfilePage() {
         fileType: clipFile.type || 'video/mp4',
         subtitleFileName,
         subtitleSource,
-        blob: clipFile,
+        blob: playbackFile,
         createdAt: new Date().toISOString(),
         segments,
         knowledgePoints,
-        tags: ['页面切片预览', normalizedTheme, subtitleSource === 'manual' ? '外部字幕' : '自动字幕'],
+        tags: [
+          '页面切片预览',
+          normalizedTheme,
+          subtitleSource === 'manual' ? '外部字幕' : '自动字幕',
+          converted ? '兼容转换' : undefined,
+        ].filter(Boolean) as string[],
         description: '这是页面里生成的临时切片预览，确认后才会正式导入首页短视频流。',
         creditLine: '预览结果仅保留在当前页面中，点击导入后才会持久化到本地学习库。',
       }
 
       const previewLessons = buildLessonsFromImportedClip(previewClip)
       setSlicePreview({
-        file: clipFile,
+        file: playbackFile,
         title: normalizedTitle,
         theme: normalizedTheme,
         episodeTitle: episodeTitle.trim(),
@@ -447,7 +473,7 @@ export function ProfilePage() {
         selectedLessonIds: previewLessons.map((lesson) => lesson.id),
       })
       setSlicePreviewDraft({
-        file: clipFile,
+        file: playbackFile,
         title: normalizedTitle,
         theme: normalizedTheme,
         episodeTitle: episodeTitle.trim(),

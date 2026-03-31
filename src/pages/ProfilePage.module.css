@@ -481,6 +481,30 @@
   color: var(--text-soft);
 }
 
+.previewPlayerLoading {
+  display: grid;
+  gap: 0.45rem;
+  place-items: center;
+  min-height: min(52svh, 460px);
+  padding: 1.4rem;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top, rgba(255, 224, 206, 0.22), transparent 42%),
+    rgba(18, 11, 9, 0.96);
+  text-align: center;
+}
+
+.previewPlayerLoading strong {
+  color: #fffaf6;
+  font-family: var(--font-ui);
+}
+
+.previewPlayerLoading span {
+  max-width: 32rem;
+  color: rgba(255, 246, 241, 0.78);
+  line-height: 1.7;
+}
+
 .previewTranscript {
   display: grid;
   gap: 0.45rem;
