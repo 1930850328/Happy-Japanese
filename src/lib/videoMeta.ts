@@ -22,6 +22,36 @@ function createCoverSvg(title: string, theme: string) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
 }
 
+function getDefaultCoverTargets(durationMs: number) {
+  const maxTarget = Math.max(150, durationMs - 150)
+  const earlyTarget = Math.min(Math.max(durationMs * 0.08, 6000), maxTarget)
+  const midTarget = Math.min(Math.max(durationMs * 0.16, 12000), maxTarget)
+  const lateTarget = Math.min(Math.max(durationMs * 0.28, 18000), maxTarget)
+
+  return [...new Set([earlyTarget, midTarget, lateTarget].map((value) => Math.round(value)))]
+}
+
+function isLowInfoFrame(context: CanvasRenderingContext2D, width: number, height: number) {
+  try {
+    const sampleWidth = Math.min(24, width)
+    const sampleHeight = Math.min(24, height)
+    const imageData = context.getImageData(0, 0, sampleWidth, sampleHeight).data
+
+    let total = 0
+    for (let index = 0; index < imageData.length; index += 4) {
+      const red = imageData[index]
+      const green = imageData[index + 1]
+      const blue = imageData[index + 2]
+      total += red * 0.299 + green * 0.587 + blue * 0.114
+    }
+
+    const averageLuma = total / Math.max(1, imageData.length / 4)
+    return averageLuma < 28
+  } catch {
+    return false
+  }
+}
+
 function captureVideoCover(
   video: HTMLVideoElement,
   title: string,
@@ -34,10 +64,11 @@ function captureVideoCover(
     canvas.height = video.videoHeight || 720
     const context = canvas.getContext('2d')
     if (!context) {
-      return createCoverSvg(title, theme)
+      return { cover: createCoverSvg(title, theme), lowInfo: false }
     }
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height)
+    const lowInfo = isLowInfoFrame(context, canvas.width, canvas.height)
     context.fillStyle = 'rgba(20, 14, 12, 0.14)'
     context.fillRect(0, 0, canvas.width, canvas.height)
     context.fillStyle = 'rgba(255, 252, 249, 0.92)'
@@ -52,9 +83,12 @@ function captureVideoCover(
       50,
       canvas.height - 58,
     )
-    return canvas.toDataURL('image/jpeg', 0.9)
+    return {
+      cover: canvas.toDataURL('image/jpeg', 0.9),
+      lowInfo,
+    }
   } catch {
-    return createCoverSvg(title, theme)
+    return { cover: createCoverSvg(title, theme), lowInfo: false }
   }
 }
 
@@ -65,6 +99,8 @@ function loadVideoCoverAt(file: File, title: string, theme: string, targetMs?: n
     let durationMs = 30000
     let settled = false
     let timeoutId = 0
+    let seekTargets: number[] = []
+    let seekIndex = 0
 
     const cleanup = () => {
       if (timeoutId) {
@@ -93,11 +129,14 @@ function loadVideoCoverAt(file: File, title: string, theme: string, targetMs?: n
 
     video.onloadedmetadata = () => {
       durationMs = Number.isFinite(video.duration) ? Math.round(video.duration * 1000) : 30000
-      const defaultTargetMs = Math.max(150, Math.min(durationMs / 3 || 600, 1200))
+      seekTargets =
+        typeof targetMs === 'number'
+          ? [Math.max(150, Math.min(targetMs, Math.max(150, durationMs - 150)))]
+          : getDefaultCoverTargets(durationMs)
       const nextTargetMs =
         typeof targetMs === 'number'
-          ? Math.max(150, Math.min(targetMs, Math.max(150, durationMs - 150)))
-          : defaultTargetMs
+          ? seekTargets[0]
+          : seekTargets[0] ?? Math.max(150, Math.min(durationMs / 3 || 600, 1200))
 
       timeoutId = window.setTimeout(() => {
         finalize(createCoverSvg(title, theme))
@@ -111,7 +150,19 @@ function loadVideoCoverAt(file: File, title: string, theme: string, targetMs?: n
     }
 
     video.onseeked = () => {
-      finalize(captureVideoCover(video, title, theme, durationMs))
+      const { cover, lowInfo } = captureVideoCover(video, title, theme, durationMs)
+      if (lowInfo && seekIndex < seekTargets.length - 1) {
+        seekIndex += 1
+        try {
+          video.currentTime = seekTargets[seekIndex] / 1000
+          return
+        } catch {
+          finalize(cover)
+          return
+        }
+      }
+
+      finalize(cover)
     }
 
     video.onerror = () => {

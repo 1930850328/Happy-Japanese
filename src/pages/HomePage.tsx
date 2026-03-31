@@ -42,6 +42,7 @@ interface PlayerOverlayProps {
   showPlaybackKnowledge: boolean
   favorite: boolean
   localBlob?: Blob
+  localFileName?: string
   onClose: () => void
   onFinish: (lesson: VideoLesson) => void
   onFavorite: (lessonId: string) => void
@@ -204,6 +205,7 @@ function LessonPlayerOverlay({
   showPlaybackKnowledge,
   favorite,
   localBlob,
+  localFileName,
   onClose,
   onFinish,
   onFavorite,
@@ -270,7 +272,7 @@ function LessonPlayerOverlay({
         const sourceFile =
           localBlob instanceof File
             ? localBlob
-            : new File([localBlob], `${lesson.id}.mp4`, {
+            : new File([localBlob], localFileName || lesson.sourceFileName || `${lesson.id}.mp4`, {
                 type: localBlob.type || 'video/mp4',
                 lastModified: Date.now(),
               })
@@ -710,6 +712,7 @@ export function HomePage() {
           showPlaybackKnowledge={settings.showPlaybackKnowledge}
           favorite={favorites.includes(playerLesson.id)}
           localBlob={clipMap[playerLesson.sourceIdOrBlobKey]}
+          localFileName={playerLesson.sourceFileName}
           onClose={() => setPlayerLessonId(null)}
           onFinish={handleEnded}
           onFavorite={(lessonId) => void toggleFavorite(lessonId)}

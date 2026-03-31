@@ -53,6 +53,7 @@ function createFileFromBytes(bytes: Uint8Array, name: string, type: string) {
 export async function probeVideoPlayback(file: File | Blob, timeoutMs = 5000) {
   const objectUrl = URL.createObjectURL(file)
   const video = document.createElement('video')
+  const canvas = document.createElement('canvas')
 
   try {
     const result = await new Promise<boolean>((resolve) => {
@@ -71,12 +72,64 @@ export async function probeVideoPlayback(file: File | Blob, timeoutMs = 5000) {
         resolve(value)
       }
 
+      const canDrawFrame = () => {
+        if (video.videoWidth <= 0 || video.videoHeight <= 0) {
+          return false
+        }
+
+        try {
+          canvas.width = Math.min(video.videoWidth, 4)
+          canvas.height = Math.min(video.videoHeight, 4)
+          const context = canvas.getContext('2d')
+          if (!context) {
+            return false
+          }
+
+          context.drawImage(video, 0, 0, canvas.width, canvas.height)
+          return true
+        } catch {
+          return false
+        }
+      }
+
+      const validateFrame = () => {
+        if (canDrawFrame()) {
+          finalize(true)
+          return
+        }
+
+        if (video.readyState >= 2 && (video.videoWidth === 0 || video.videoHeight === 0)) {
+          finalize(false)
+        }
+      }
+
       timeoutId = window.setTimeout(() => finalize(false), timeoutMs)
       video.preload = 'auto'
       video.muted = true
       video.playsInline = true
       video.src = objectUrl
-      video.onloadeddata = () => finalize(true)
+      video.onloadedmetadata = () => {
+        if (video.videoWidth === 0 || video.videoHeight === 0) {
+          finalize(false)
+          return
+        }
+
+        const durationSec =
+          Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 0.8
+        const targetSec = Math.max(0.05, Math.min(durationSec / 3, 1))
+
+        try {
+          if (Math.abs(video.currentTime - targetSec) > 0.05) {
+            video.currentTime = targetSec
+          } else {
+            validateFrame()
+          }
+        } catch {
+          validateFrame()
+        }
+      }
+      video.onloadeddata = validateFrame
+      video.onseeked = validateFrame
       video.onerror = () => finalize(false)
       video.load()
     })

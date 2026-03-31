@@ -30,6 +30,7 @@ export interface VideoLesson {
   id: string
   sourceType: LessonSourceType
   sourceIdOrBlobKey: string
+  sourceFileName?: string
   sourceUrl: string
   sourceProvider: string
   sourceStartSec?: number
@@ -180,6 +181,7 @@ export interface ImportedClip {
   sourceClipId?: string
   sourceType: 'local'
   sourceIdOrBlobKey: string
+  sourceFileName?: string
   sourceUrl: string
   sourceProvider: string
   cover: string

@@ -117,17 +117,61 @@ function SlicePreviewOverlay({
 }: SlicePreviewOverlayProps) {
   const [state, setState] = useState<StudyPlayerSnapshot | null>(null)
   const [objectUrl, setObjectUrl] = useState('')
+  const [sourceStatus, setSourceStatus] = useState('正在检查视频兼容性…')
+  const [preparingSource, setPreparingSource] = useState(true)
   const objectUrlRef = useRef<string | null>(null)
 
   useEffect(() => {
-    const nextUrl = URL.createObjectURL(file)
-    objectUrlRef.current = nextUrl
-    setObjectUrl(nextUrl)
-    return () => {
+    let canceled = false
+
+    const releaseObjectUrl = () => {
       if (objectUrlRef.current) {
         URL.revokeObjectURL(objectUrlRef.current)
         objectUrlRef.current = null
       }
+    }
+
+    const prepareSource = async () => {
+      setPreparingSource(true)
+      setSourceStatus('正在检查视频兼容性…')
+
+      try {
+        const { file: playbackFile, converted } = await ensureBrowserPlayableVideo(file, (message) => {
+          if (!canceled) {
+            setSourceStatus(message)
+          }
+        })
+
+        if (canceled) {
+          return
+        }
+
+        releaseObjectUrl()
+        const nextUrl = URL.createObjectURL(playbackFile)
+        objectUrlRef.current = nextUrl
+        setObjectUrl(nextUrl)
+        setSourceStatus(converted ? '已转换为兼容格式，正在准备预览…' : '视频已准备完成')
+      } catch (error) {
+        if (canceled) {
+          return
+        }
+
+        setSourceStatus(
+          error instanceof Error ? error.message : '当前视频暂时无法预览，请换一个更通用的编码格式。',
+        )
+        setObjectUrl('')
+      } finally {
+        if (!canceled) {
+          setPreparingSource(false)
+        }
+      }
+    }
+
+    void prepareSource()
+
+    return () => {
+      canceled = true
+      releaseObjectUrl()
     }
   }, [file])
 
@@ -177,8 +221,8 @@ function SlicePreviewOverlay({
           />
           ) : (
             <div className={styles.previewPlayerLoading}>
-              <strong>正在准备预览播放器…</strong>
-              <span>片段文件已经切好，播放器初始化完成后会自动开始预览。</span>
+              <strong>{preparingSource ? '正在准备预览播放器…' : '预览暂时还没准备好'}</strong>
+              <span>{sourceStatus || '片段文件已经切好，播放器初始化完成后会自动开始预览。'}</span>
             </div>
           )}
 

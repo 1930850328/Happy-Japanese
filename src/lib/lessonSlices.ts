@@ -141,6 +141,7 @@ function buildFallbackLesson(clip: ImportedClip): VideoLesson {
     originClipId: clip.id,
     sourceType: clip.sourceType,
     sourceIdOrBlobKey: clip.sourceIdOrBlobKey,
+    sourceFileName: clip.sourceFileName,
     sourceUrl: clip.sourceUrl,
     sourceProvider: clip.sourceProvider,
     title: clip.title,
@@ -158,6 +159,12 @@ function buildFallbackLesson(clip: ImportedClip): VideoLesson {
   }
 }
 
+function hasMeaningfulStudyContent(clip: ImportedClip) {
+  return clip.knowledgePoints.some(
+    (point) => point.id !== 'local-subtitle-tip' && (point.kind === 'grammar' || point.kind === 'word'),
+  )
+}
+
 export function buildLessonsFromImportedClip(clip: ImportedClip) {
   const candidates = buildCandidateWindows(clip)
   const selected: CandidateWindow[] = []
@@ -173,6 +180,9 @@ export function buildLessonsFromImportedClip(clip: ImportedClip) {
   }
 
   if (selected.length === 0) {
+    if (clip.importMode === 'raw' && !hasMeaningfulStudyContent(clip)) {
+      return []
+    }
     return [buildFallbackLesson(clip)]
   }
 
@@ -189,6 +199,7 @@ export function buildLessonsFromImportedClip(clip: ImportedClip) {
         originClipId: clip.id,
         sourceType: clip.sourceType,
         sourceIdOrBlobKey: clip.sourceIdOrBlobKey,
+        sourceFileName: clip.sourceFileName,
         sourceUrl: clip.sourceUrl,
         sourceProvider:
           clip.subtitleSource === 'auto'
