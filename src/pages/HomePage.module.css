@@ -57,6 +57,11 @@
 
 .playerCard {
   display: grid;
+  grid-template-columns: minmax(300px, 38%) minmax(0, 1fr);
+  grid-template-areas:
+    'poster body'
+    'meta meta';
+  align-items: start;
   gap: 1rem;
   padding: 1rem;
   border-radius: 34px;
@@ -68,9 +73,11 @@
 }
 
 .posterStage {
+  grid-area: poster;
   position: relative;
-  min-height: 360px;
-  aspect-ratio: 16 / 9;
+  min-height: 240px;
+  max-height: 300px;
+  aspect-ratio: 16 / 10;
   border-radius: 28px;
   overflow: hidden;
   background: #241815;
@@ -196,7 +203,9 @@
 }
 
 .cardBody {
+  grid-area: body;
   display: grid;
+  align-content: start;
   gap: 0.9rem;
 }
 
@@ -252,12 +261,14 @@
 }
 
 .metaBar {
+  grid-area: meta;
   display: grid;
   gap: 0.7rem;
 }
 
 .credit {
   color: var(--text-soft);
+  word-break: break-word;
 }
 
 .sessionBackdrop,
@@ -576,8 +587,18 @@
     grid-template-columns: 1fr;
   }
 
+  .playerCard {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'poster'
+      'body'
+      'meta';
+  }
+
   .posterStage {
-    min-height: 320px;
+    min-height: 280px;
+    max-height: none;
+    aspect-ratio: 16 / 9;
   }
 }
 
@@ -590,7 +611,7 @@
   }
 
   .posterStage {
-    min-height: 270px;
+    min-height: 220px;
     aspect-ratio: 16 / 11;
     border-radius: 24px;
   }

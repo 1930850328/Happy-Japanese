@@ -84,8 +84,9 @@ function createToken(token: IpadicFeatures): TokenAnalysis {
 
 function createFallbackTokens(text: string) {
   const chunks =
-    text.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー々]+|[A-Za-z]+|\d+|[^\s]/gu) ??
-    [text]
+    text.match(
+      /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー々]+|[A-Za-z]+|\d+|[^\s]/gu,
+    ) ?? [text]
 
   return chunks
     .filter((chunk) => chunk.trim())
@@ -113,30 +114,60 @@ function matchGrammar(text: string) {
     }))
 }
 
+function uniqueValues(values: string[]) {
+  return [...new Set(values.filter(Boolean))]
+}
+
+function isUsefulGlossToken(token: TokenAnalysis) {
+  return (
+    !token.partOfSpeech.includes('助词') &&
+    !token.partOfSpeech.includes('助动词') &&
+    !token.partOfSpeech.includes('符号')
+  )
+}
+
+function pickSurfaceKeywords(tokens: TokenAnalysis[]) {
+  return uniqueValues(
+    tokens
+      .filter(isUsefulGlossToken)
+      .map((token) => token.surface.trim())
+      .filter((surface) => surface.length >= 2),
+  ).slice(0, 4)
+}
+
 function buildGloss(tokens: TokenAnalysis[], matches: GrammarMatch[]) {
-  const keywordMeanings = [
-    ...new Set(
-      tokens
-        .filter((token) => !token.partOfSpeech.includes('助词') && !token.partOfSpeech.includes('符号'))
-        .map((token) => token.meaningZh)
-        .filter(hasReliableMeaning),
-    ),
-  ].slice(0, 3)
-  const grammarMeanings = [...new Set(matches.map((item) => item.meaningZh).filter(Boolean))].slice(0, 1)
+  const keywordMeanings = uniqueValues(
+    tokens
+      .filter(isUsefulGlossToken)
+      .map((token) => token.meaningZh)
+      .filter(hasReliableMeaning),
+  ).slice(0, 4)
+  const keywordSurfaces = pickSurfaceKeywords(tokens)
+  const grammarHints = uniqueValues(
+    matches.map((item) => `${item.pattern} 表示“${item.meaningZh}”`),
+  ).slice(0, 2)
 
-  if (keywordMeanings.length > 0 && grammarMeanings.length > 0) {
-    return `${keywordMeanings.join(' / ')}；${grammarMeanings.join(' / ')}`
+  if (keywordMeanings.length >= 2 && grammarHints.length > 0) {
+    return `大意围绕“${keywordMeanings.join('、')}”展开，句里 ${grammarHints[0]}。`
   }
 
-  if (keywordMeanings.length > 0) {
-    return keywordMeanings.join(' / ')
+  if (keywordMeanings.length >= 2) {
+    return `大意围绕“${keywordMeanings.join('、')}”展开。`
   }
 
-  if (grammarMeanings.length > 0) {
-    return grammarMeanings.join(' / ')
+  if (keywordSurfaces.length > 0 && grammarHints.length > 0) {
+    return `这句在说「${keywordSurfaces.join(' / ')}」，句里 ${grammarHints[0]}。`
   }
 
-  return '请结合语境理解这句内容'
+  if (keywordSurfaces.length > 0) {
+    return `这句主要围绕「${keywordSurfaces.join(' / ')}」展开。`
+  }
+
+  if (grammarHints.length > 0) {
+    return `这句里 ${grammarHints[0]}。`
+  }
+
+  return '这句需要结合上下文来理解。'
 }
 
 function buildSentenceKana(text: string, tokens: TokenAnalysis[]) {

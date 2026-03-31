@@ -16,6 +16,7 @@ const TARGET_SLICE_MS = 18000
 const MAX_SLICE_MS = 42000
 const MAX_SEGMENTS_PER_SLICE = 4
 const MAX_SLICES_PER_CLIP = 8
+const MAX_RAW_FALLBACK_MS = 90000
 
 function uniquePoints(points: KnowledgePoint[]) {
   const map = new Map<string, KnowledgePoint>()
@@ -180,7 +181,10 @@ export function buildLessonsFromImportedClip(clip: ImportedClip) {
   }
 
   if (selected.length === 0) {
-    if (clip.importMode === 'raw' && !hasMeaningfulStudyContent(clip)) {
+    if (
+      clip.importMode === 'raw' &&
+      (!hasMeaningfulStudyContent(clip) || clip.durationMs > MAX_RAW_FALLBACK_MS)
+    ) {
       return []
     }
     return [buildFallbackLesson(clip)]
