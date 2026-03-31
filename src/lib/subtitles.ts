@@ -1,10 +1,12 @@
 import type { KnowledgePoint, TranscriptSegment } from '../types'
-import { analyzeJapaneseText } from './textAnalysis'
+import { analyzeJapaneseText, hasReliableMeaning } from './textAnalysis'
 
 interface SubtitleCue {
   startMs: number
   endMs: number
-  text: string
+  jaText?: string
+  text?: string
+  zhText?: string
 }
 
 function parseTimestamp(value: string) {
@@ -29,15 +31,35 @@ function normalizeCueText(input: string) {
     .replace(/\\N/g, ' ')
     .replace(/&nbsp;/gi, ' ')
     .replace(/\r/g, '')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .join(' ')
     .trim()
 }
 
 function hasJapaneseText(input: string) {
   return /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(input)
+}
+
+function hasChineseText(input: string) {
+  return /[\u4e00-\u9fff]/u.test(input)
+}
+
+function extractCueText(lines: string[]) {
+  const cleanedLines = lines.map(normalizeCueText).filter(Boolean)
+  if (cleanedLines.length === 0) {
+    return null
+  }
+
+  const jaLines = cleanedLines.filter((line) => hasJapaneseText(line))
+  const zhLines = cleanedLines.filter((line) => hasChineseText(line) && !hasJapaneseText(line))
+  const jaText = jaLines[0]
+
+  if (!jaText) {
+    return null
+  }
+
+  return {
+    jaText,
+    zhText: zhLines.length > 0 ? zhLines.join(' ') : undefined,
+  }
 }
 
 function parseTimedLines(text: string) {
@@ -68,15 +90,15 @@ function parseTimedLines(text: string) {
       }
     }
 
-    const textValue = normalizeCueText(contentLines.join('\n'))
-    if (!textValue || !hasJapaneseText(textValue)) {
+    const cueText = extractCueText(contentLines)
+    if (!cueText) {
       continue
     }
 
     cues.push({
       startMs: parseTimestamp(startText),
       endMs: parseTimestamp(endText),
-      text: textValue,
+      ...cueText,
     })
   }
 
@@ -113,14 +135,16 @@ function parseAss(text: string) {
       continue
     }
 
-    const startMs = parseTimestamp(fields[1])
-    const endMs = parseTimestamp(fields[2])
-    const textValue = normalizeCueText(fields[9])
-    if (!textValue || !hasJapaneseText(textValue)) {
+    const cueText = extractCueText(fields[9].split(/\n|\\N/g))
+    if (!cueText) {
       continue
     }
 
-    cues.push({ startMs, endMs, text: textValue })
+    cues.push({
+      startMs: parseTimestamp(fields[1]),
+      endMs: parseTimestamp(fields[2]),
+      ...cueText,
+    })
   }
 
   return cues
@@ -153,15 +177,26 @@ function isUsefulToken(partOfSpeech: string, surface: string) {
   return !/助詞|助動詞|記号/.test(partOfSpeech)
 }
 
+function buildTokenExplanation(surface: string, meaningZh: string) {
+  return hasReliableMeaning(meaningZh)
+    ? `${surface} 在这句里更接近“${meaningZh}”这个意思。`
+    : `${surface} 是片中反复出现的表达，建议先结合语境记住它的语气和位置。`
+}
+
 export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
   const knowledgeMap = new Map<string, KnowledgePoint>()
   const segments: TranscriptSegment[] = []
 
   for (const cue of cues) {
-    const analysis = await analyzeJapaneseText(cue.text)
+    const jaText = cue.jaText ?? cue.text ?? ''
+    if (!jaText.trim()) {
+      continue
+    }
+
+    const analysis = await analyzeJapaneseText(jaText)
     const focusTermIds: string[] = []
 
-    for (const match of analysis.grammarMatches.slice(0, 1)) {
+    for (const match of analysis.grammarMatches.slice(0, 2)) {
       const pointId = `grammar:${match.id}`
       if (!knowledgeMap.has(pointId)) {
         knowledgeMap.set(pointId, {
@@ -172,8 +207,8 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
           meaningZh: match.meaningZh,
           partOfSpeech: '语法',
           explanationZh: match.explanationZh,
-          exampleJa: cue.text,
-          exampleZh: analysis.glossZh,
+          exampleJa: jaText,
+          exampleZh: cue.zhText ?? analysis.glossZh,
         })
       }
       focusTermIds.push(pointId)
@@ -181,6 +216,7 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
 
     for (const token of analysis.tokens
       .filter((item) => isUsefulToken(item.partOfSpeech, item.surface))
+      .filter((item) => hasReliableMeaning(item.meaningZh))
       .slice(0, 2)) {
       const pointId = `word:${token.base}`
       if (!knowledgeMap.has(pointId)) {
@@ -191,10 +227,9 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
           reading: token.kana || token.reading,
           meaningZh: token.meaningZh,
           partOfSpeech: token.partOfSpeech,
-          explanationZh:
-            '这是字幕里反复出现或很适合暂停跟读的表达，建议先跟读，再回到原片里听第二遍。',
-          exampleJa: cue.text,
-          exampleZh: analysis.glossZh,
+          explanationZh: buildTokenExplanation(token.surface, token.meaningZh),
+          exampleJa: jaText,
+          exampleZh: cue.zhText ?? analysis.glossZh,
         })
       }
       focusTermIds.push(pointId)
@@ -203,10 +238,10 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
     segments.push({
       startMs: cue.startMs,
       endMs: cue.endMs,
-      ja: cue.text,
+      ja: jaText,
       kana: analysis.kana,
       romaji: analysis.romaji,
-      zh: analysis.glossZh,
+      zh: cue.zhText ?? analysis.glossZh,
       focusTermIds,
     })
   }

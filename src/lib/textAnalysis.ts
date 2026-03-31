@@ -8,6 +8,7 @@ import type { GrammarMatch, SavedNote, SentenceAnalysis, TokenAnalysis } from '.
 import { hasJapaneseSpeechSupport } from './speech'
 
 const meaningMap = new Map<string, string>()
+export const UNKNOWN_MEANING = '词义待补充'
 
 for (const card of vocabCards) {
   meaningMap.set(card.term, card.meaningZh)
@@ -51,13 +52,17 @@ function normalizePartOfSpeech(token: IpadicFeatures) {
 }
 
 function resolveMeaning(surface: string, base: string, reading: string, kana: string) {
-  return (
+  const resolved =
     meaningMap.get(surface) ??
     meaningMap.get(base) ??
     meaningMap.get(reading) ??
-    meaningMap.get(kana) ??
-    '暂未收录，可先结合语境记住它的用法。'
-  )
+    meaningMap.get(kana)
+
+  return resolved ?? UNKNOWN_MEANING
+}
+
+export function hasReliableMeaning(meaningZh: string) {
+  return Boolean(meaningZh && meaningZh.trim() && meaningZh !== UNKNOWN_MEANING)
 }
 
 function createToken(token: IpadicFeatures): TokenAnalysis {
@@ -79,7 +84,7 @@ function createToken(token: IpadicFeatures): TokenAnalysis {
 
 function createFallbackTokens(text: string) {
   const chunks =
-    text.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]+|[A-Za-z]+|\d+|[^\s]/gu) ??
+    text.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー々]+|[A-Za-z]+|\d+|[^\s]/gu) ??
     [text]
 
   return chunks
@@ -109,22 +114,29 @@ function matchGrammar(text: string) {
 }
 
 function buildGloss(tokens: TokenAnalysis[], matches: GrammarMatch[]) {
-  const coreWords = tokens
-    .filter((token) => !token.partOfSpeech.includes('助詞') && !token.partOfSpeech.includes('記号'))
-    .slice(0, 4)
-    .map((token) => `${token.surface}（${token.meaningZh}）`)
+  const keywordMeanings = [
+    ...new Set(
+      tokens
+        .filter((token) => !token.partOfSpeech.includes('助词') && !token.partOfSpeech.includes('符号'))
+        .map((token) => token.meaningZh)
+        .filter(hasReliableMeaning),
+    ),
+  ].slice(0, 3)
+  const grammarMeanings = [...new Set(matches.map((item) => item.meaningZh).filter(Boolean))].slice(0, 1)
 
-  const wordLine =
-    coreWords.length > 0
-      ? `这句话可以先抓这几个词：${coreWords.join(' / ')}。`
-      : '这句话可以先从主干词和句尾语气入手理解。'
+  if (keywordMeanings.length > 0 && grammarMeanings.length > 0) {
+    return `${keywordMeanings.join(' / ')}；${grammarMeanings.join(' / ')}`
+  }
 
-  const grammarLine =
-    matches.length > 0
-      ? `命中的语法重点：${matches.map((item) => item.label).join('、')}。`
-      : '当前没有命中预置语法，但你仍然可以先记住关键词和句型节奏。'
+  if (keywordMeanings.length > 0) {
+    return keywordMeanings.join(' / ')
+  }
 
-  return `${wordLine}${grammarLine}`
+  if (grammarMeanings.length > 0) {
+    return grammarMeanings.join(' / ')
+  }
+
+  return '请结合语境理解这句内容'
 }
 
 function buildSentenceKana(text: string, tokens: TokenAnalysis[]) {

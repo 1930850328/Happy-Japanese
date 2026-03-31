@@ -108,6 +108,7 @@
 }
 
 .topChipRow,
+.topActions,
 .tagRow,
 .actionRow,
 .drawerActions,
@@ -128,6 +129,24 @@
   place-items: center;
   color: #fffaf6;
   background: rgba(17, 12, 10, 0.32);
+  backdrop-filter: blur(16px);
+  flex-shrink: 0;
+}
+
+.topActions {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.deleteButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fffaf6;
+  background: rgba(102, 55, 44, 0.42);
   backdrop-filter: blur(16px);
   flex-shrink: 0;
 }

@@ -19,6 +19,7 @@ import {
   updateReviewSchedule,
 } from '../lib/review'
 import {
+  deleteImportedClip,
   deleteNote,
   listFavorites,
   listImportedClips,
@@ -244,6 +245,12 @@ function mergeTags(...groups: Array<Array<string | undefined>>) {
   return [...new Set(groups.flat().filter((item): item is string => Boolean(item && item.trim())))]
 }
 
+async function purgeFavorites(lessonIds: string[], favorites: string[]) {
+  const idsToRemove = lessonIds.filter((id) => favorites.includes(id))
+  await Promise.all(idsToRemove.map((id) => removeFavorite(id)))
+  return idsToRemove
+}
+
 interface RecordStudyEventInput {
   type: StudyEventType
   sourceId: string
@@ -325,6 +332,7 @@ interface AppStore {
   importClip: (payload: ImportClipInput) => Promise<ImportedClip>
   importSlicerManifest: (payload: ImportSlicerManifestInput) => Promise<ImportedClip[]>
   importSelectedSlices: (payload: ImportSelectedSlicesInput) => Promise<ImportedClip[]>
+  deleteLocalLesson: (lessonId: string) => Promise<boolean>
   setSliceTask: (payload: SliceTaskState) => void
   setSlicePreviewDraft: (payload: SlicePreviewDraft | null) => void
   clearSliceWorkflow: () => void
@@ -395,7 +403,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       importedClips,
       publishedLessons,
       lessons: buildLessons(importedClips, publishedLessons),
-      settings: settings ?? defaultSettings,
+      settings: settings ? { ...defaultSettings, ...settings } : defaultSettings,
     })
   },
 
@@ -834,6 +842,64 @@ export const useAppStore = create<AppStore>((set, get) => ({
     })
 
     return importedSlices
+  },
+
+  async deleteLocalLesson(lessonId) {
+    const lesson = get().lessons.find((item) => item.id === lessonId)
+    if (!lesson || lesson.sourceType !== 'local') {
+      return false
+    }
+
+    const currentClips = get().importedClips
+    const directClip = currentClips.find((clip) => clip.id === lessonId)
+    const sourceClip = lesson.originClipId
+      ? currentClips.find((clip) => clip.id === lesson.originClipId)
+      : undefined
+
+    const clipIdsToRemove = new Set<string>()
+    if (directClip) {
+      clipIdsToRemove.add(directClip.id)
+      if (directClip.importMode === 'source') {
+        currentClips
+          .filter((clip) => clip.sourceClipId === directClip.id)
+          .forEach((clip) => clipIdsToRemove.add(clip.id))
+      }
+    } else if (sourceClip) {
+      clipIdsToRemove.add(sourceClip.id)
+      if (sourceClip.importMode === 'source') {
+        currentClips
+          .filter((clip) => clip.sourceClipId === sourceClip.id)
+          .forEach((clip) => clipIdsToRemove.add(clip.id))
+      }
+    }
+
+    if (clipIdsToRemove.size === 0) {
+      return false
+    }
+
+    await Promise.all([...clipIdsToRemove].map((id) => deleteImportedClip(id)))
+
+    const nextImportedClips = currentClips.filter((clip) => !clipIdsToRemove.has(clip.id))
+    const nextLessons = buildLessons(nextImportedClips, get().publishedLessons)
+    const removedFavoriteIds = await purgeFavorites(
+      get().lessons
+        .filter(
+          (item) =>
+            item.id === lessonId ||
+            clipIdsToRemove.has(item.id) ||
+            (item.originClipId ? clipIdsToRemove.has(item.originClipId) : false),
+        )
+        .map((item) => item.id),
+      get().favorites,
+    )
+
+    set((state) => ({
+      importedClips: nextImportedClips,
+      lessons: nextLessons,
+      favorites: state.favorites.filter((id) => !removedFavoriteIds.includes(id)),
+    }))
+
+    return true
   },
 
   async importSlicerManifest({ manifestFile, clipFiles, theme }) {

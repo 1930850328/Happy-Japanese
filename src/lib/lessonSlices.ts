@@ -1,4 +1,5 @@
 import type { ImportedClip, KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
+import { hasReliableMeaning } from './textAnalysis'
 
 interface CandidateWindow {
   startIndex: number
@@ -98,19 +99,36 @@ function normalizeSegments(segments: TranscriptSegment[], offsetMs: number) {
   }))
 }
 
+function shortenTitle(input: string) {
+  if (input.length <= 30) {
+    return input
+  }
+  return `${input.slice(0, 30)}…`
+}
+
 function buildSliceTitle(clip: ImportedClip, index: number, points: KnowledgePoint[]) {
   const lead = points.slice(0, 2).map((point) => point.expression).join(' / ')
-  return lead ? `${clip.title} · ${lead}` : `${clip.title} · 第 ${index + 1} 段`
+  const baseTitle = shortenTitle(clip.sourceAnimeTitle ?? clip.title)
+  return lead ? `${baseTitle} · ${lead}` : `${baseTitle} · 第 ${index + 1} 段`
+}
+
+function summarizePoint(point: KnowledgePoint) {
+  if (point.kind === 'grammar') {
+    return `语法 ${point.expression} = ${point.meaningZh}`
+  }
+
+  if (hasReliableMeaning(point.meaningZh)) {
+    return `${point.expression} = ${point.meaningZh}`
+  }
+
+  return point.expression
 }
 
 function buildSliceDescription(points: KnowledgePoint[]) {
-  const summary = points
-    .slice(0, 3)
-    .map((point) => `${point.expression}(${point.meaningZh})`)
-    .join(' / ')
+  const summary = points.slice(0, 3).map(summarizePoint).join(' / ')
   return summary
-    ? `这段切片重点学习 ${summary}，适合先看一遍原句，再暂停跟读。`
-    : '这段切片适合暂停跟读并对照字幕整理词法。'
+    ? `这段更适合学 ${summary}，先看原句，再暂停跟读会更顺。`
+    : '这段适合先看原句，再暂停跟读。'
 }
 
 function overlap(a: CandidateWindow, b: CandidateWindow) {
@@ -174,8 +192,8 @@ export function buildLessonsFromImportedClip(clip: ImportedClip) {
         sourceUrl: clip.sourceUrl,
         sourceProvider:
           clip.subtitleSource === 'auto'
-            ? `${clip.sourceProvider} · 自动切片`
-            : `${clip.sourceProvider} · 字幕切片`,
+            ? `${clip.sourceProvider} / 自动切片`
+            : `${clip.sourceProvider} / 字幕切片`,
         title,
         cover: clip.cover,
         theme: clip.theme,

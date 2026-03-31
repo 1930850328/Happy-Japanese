@@ -135,6 +135,10 @@ export async function saveImportedClip(clip: ImportedClip) {
   return (await getDb()).put('imported_clips', clip)
 }
 
+export async function deleteImportedClip(id: string) {
+  return (await getDb()).delete('imported_clips', id)
+}
+
 export async function loadSettings() {
   return (await getDb()).get('app_settings', 'settings') as Promise<AppSettings | undefined>
 }

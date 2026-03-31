@@ -4,7 +4,7 @@ import { buildStudyDataFromCues } from './subtitles'
 interface SubtitleCue {
   startMs: number
   endMs: number
-  text: string
+  jaText: string
 }
 
 interface SubtitleGenerationResult {
@@ -272,7 +272,7 @@ function normalizeCues(
 
     const startMs = Math.max(0, Math.round(startSec * 1000))
     const endMs = Math.max(startMs + 600, Math.round(endSec * 1000))
-    cues.push({ startMs, endMs, text })
+    cues.push({ startMs, endMs, jaText: text })
   }
 
   if (cues.length === 0) {

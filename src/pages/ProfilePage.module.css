@@ -245,10 +245,19 @@
 }
 
 .clipCard {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 156px minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: flex-start;
+}
+
+.clipCover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  object-fit: cover;
+  background: #1f1713;
+  box-shadow: 0 14px 32px rgba(73, 49, 37, 0.12);
 }
 
 .clipMeta {
@@ -269,10 +278,13 @@
 
 .clipActions {
   display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
   flex-shrink: 0;
 }
 
 .importCard {
+  grid-column: 1 / -1;
   gap: 1rem;
 }
 
@@ -306,10 +318,8 @@
 }
 
 .previewHeader {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   gap: 1rem;
-  align-items: flex-start;
 }
 
 .previewSummary {
@@ -319,12 +329,16 @@
 }
 
 .previewHeaderActions {
-  grid-template-columns: repeat(3, minmax(0, max-content));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.8rem;
 }
 
 .previewGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
 }
 
@@ -411,6 +425,11 @@
 
 .previewBody > strong {
   font-size: 1.05rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .previewBody > p,
@@ -418,6 +437,13 @@
   margin: 0;
   color: var(--text-soft);
   line-height: 1.7;
+}
+
+.previewBody > p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .previewSentence {
@@ -550,9 +576,12 @@
     grid-template-columns: 1fr;
   }
 
-  .clipCard,
   .clipActions {
     flex-direction: column;
+  }
+
+  .clipCard {
+    grid-template-columns: 1fr;
   }
 
   .clipActions {

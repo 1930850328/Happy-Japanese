@@ -9,6 +9,7 @@ import {
   Save,
   Settings2,
   Sparkles,
+  Trash2,
   Upload,
   Video,
   Wand2,
@@ -24,7 +25,7 @@ import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
 import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
-import { readVideoMeta } from '../lib/videoMeta'
+import { readVideoCoverAt, readVideoMeta } from '../lib/videoMeta'
 import { useAppStore } from '../store/useAppStore'
 import type { ImportedClip, SlicePreviewDraft, VideoLesson } from '../types'
 import styles from './ProfilePage.module.css'
@@ -33,6 +34,7 @@ interface SlicePreviewOverlayProps {
   lesson: VideoLesson
   file: File
   showRomaji: boolean
+  showPlaybackKnowledge: boolean
   onClose: () => void
 }
 
@@ -106,7 +108,13 @@ function deriveTaskProgress(message: string, previousPercent: number) {
   }
 }
 
-function SlicePreviewOverlay({ lesson, file, showRomaji, onClose }: SlicePreviewOverlayProps) {
+function SlicePreviewOverlay({
+  lesson,
+  file,
+  showRomaji,
+  showPlaybackKnowledge,
+  onClose,
+}: SlicePreviewOverlayProps) {
   const [state, setState] = useState<StudyPlayerSnapshot | null>(null)
   const [objectUrl, setObjectUrl] = useState('')
   const objectUrlRef = useRef<string | null>(null)
@@ -162,6 +170,7 @@ function SlicePreviewOverlay({ lesson, file, showRomaji, onClose }: SlicePreview
             segments={lesson.segments}
             knowledgePoints={lesson.knowledgePoints}
             showRomaji={showRomaji}
+            showSubtitleReading={false}
             onStateChange={setState}
             onFinish={() => undefined}
             onError={() => undefined}
@@ -185,7 +194,7 @@ function SlicePreviewOverlay({ lesson, file, showRomaji, onClose }: SlicePreview
             </div>
           ) : null}
 
-          {activePoints.length > 0 ? (
+          {showPlaybackKnowledge && activePoints.length > 0 ? (
             <div className={styles.previewPointRow}>
               {activePoints.map((point) => (
                 <div key={point.id} className={styles.previewPointChip}>
@@ -214,6 +223,7 @@ export function ProfilePage() {
   const importSelectedSlices = useAppStore((state) => state.importSelectedSlices)
   const generateAutoSubtitles = useAppStore((state) => state.generateAutoSubtitles)
   const updateSettings = useAppStore((state) => state.updateSettings)
+  const deleteLocalLesson = useAppStore((state) => state.deleteLocalLesson)
   const persistedSliceTask = useAppStore((state) => state.sliceTask)
   const persistedSlicePreview = useAppStore((state) => state.slicePreviewDraft)
   const setSliceTask = useAppStore((state) => state.setSliceTask)
@@ -375,7 +385,6 @@ export function ProfilePage() {
     }
 
     const startedAt = new Date().toISOString()
-    const imported: ImportedClip[] = []
     setSlicePreviewDraft(null)
     setBuildingPreview(true)
     setSliceTask({
@@ -456,7 +465,21 @@ export function ProfilePage() {
         creditLine: '预览结果仅保留在当前页面中，点击导入后才会持久化到本地学习库。',
       }
 
-      const previewLessons = buildLessonsFromImportedClip(previewClip)
+      const previewLessons = await Promise.all(
+        buildLessonsFromImportedClip(previewClip).map(async (lesson) => {
+          const clipCover = await readVideoCoverAt(
+            playbackFile,
+            lesson.title,
+            normalizedTheme,
+            (lesson.clipStartMs ?? 0) + Math.max(300, Math.min(lesson.durationMs / 2, 1500)),
+          ).catch(() => cover)
+
+          return {
+            ...lesson,
+            cover: clipCover,
+          }
+        }),
+      )
       setSlicePreview({
         file: playbackFile,
         title: normalizedTitle,
@@ -498,13 +521,6 @@ export function ProfilePage() {
       })
       updateTaskStatus(`已生成 ${previewLessons.length} 条候选切片，可以先预览再决定是否导入。`)
     } catch (error) {
-      setSliceTask({
-        status: 'completed',
-        percent: 100,
-        detail: `已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。`,
-        startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      })
       setSlicePreview(null)
       setSelectedSliceIds([])
       setSlicePreviewDraft(null)
@@ -587,6 +603,15 @@ export function ProfilePage() {
     } finally {
       setImportingSlicer(false)
     }
+  }
+
+  const handleDeleteImportedClip = async (clipId: string, clipTitle: string) => {
+    const confirmed = window.confirm(`要删除「${clipTitle}」以及相关的短视频吗？`)
+    if (!confirmed) {
+      return
+    }
+
+    await deleteLocalLesson(clipId)
   }
 
   const handleToggleReminder = async () => {
@@ -1004,6 +1029,7 @@ export function ProfilePage() {
 
               return (
                 <article key={clip.id} className={styles.clipCard}>
+                  <img className={styles.clipCover} src={clip.cover} alt={clip.title} />
                   <div className={styles.clipMeta}>
                     <div className={styles.clipTitleRow}>
                       <Video size={16} />
@@ -1031,6 +1057,15 @@ export function ProfilePage() {
                             : '自动生成字幕'}
                       </button>
                     ) : null}
+                    <button
+                      className="softButton"
+                      onClick={() => void handleDeleteImportedClip(clip.id, clip.title)}
+                      aria-label={`删除 ${clip.title}`}
+                      title="删除这个导入片段以及相关短视频"
+                    >
+                      <Trash2 size={16} />
+                      删除
+                    </button>
                   </div>
                 </article>
               )
@@ -1083,6 +1118,19 @@ export function ProfilePage() {
 
             <button
               className={styles.settingItem}
+              onClick={() =>
+                void updateSettings({ showPlaybackKnowledge: !settings.showPlaybackKnowledge })
+              }
+            >
+              <div>
+                <strong>播放时显示知识点</strong>
+                <span>当前：{settings.showPlaybackKnowledge ? '显示词义与语法摘要' : '只显示中日字幕'}</span>
+              </div>
+              <Sparkles size={18} />
+            </button>
+
+            <button
+              className={styles.settingItem}
               onClick={() => void updateSettings({ showRomaji: !settings.showRomaji })}
             >
               <div>
@@ -1124,6 +1172,7 @@ export function ProfilePage() {
           lesson={previewLesson}
           file={slicePreview.file}
           showRomaji={settings.showRomaji}
+          showPlaybackKnowledge={settings.showPlaybackKnowledge}
           onClose={() => setPreviewLessonId(null)}
         />
       ) : null}

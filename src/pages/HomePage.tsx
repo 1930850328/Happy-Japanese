@@ -11,6 +11,7 @@ import {
   Pause,
   Play,
   RotateCcw,
+  Trash2,
   Volume2,
   X,
 } from 'lucide-react'
@@ -28,14 +29,17 @@ interface LessonCardProps {
   lesson: VideoLesson
   favorite: boolean
   showRomaji: boolean
+  canDelete: boolean
   onFavorite: (lessonId: string) => void
   onStart: (lessonId: string) => void
   onOpenKnowledge: (lessonId: string) => void
+  onDelete: (lessonId: string) => void
 }
 
 interface PlayerOverlayProps {
   lesson: VideoLesson
   showRomaji: boolean
+  showPlaybackKnowledge: boolean
   favorite: boolean
   localBlob?: Blob
   onClose: () => void
@@ -83,9 +87,11 @@ function LessonCard({
   lesson,
   favorite,
   showRomaji,
+  canDelete,
   onFavorite,
   onStart,
   onOpenKnowledge,
+  onDelete,
 }: LessonCardProps) {
   const previewSegment = lesson.segments[0]
   const previewPoints = lesson.knowledgePoints.slice(0, 3)
@@ -106,9 +112,26 @@ function LessonCard({
               </span>
             </div>
 
-            <button className={styles.favoriteButton} onClick={() => onFavorite(lesson.id)}>
-              {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
-            </button>
+            <div className={styles.topActions}>
+              <button
+                className={styles.favoriteButton}
+                onClick={() => onFavorite(lesson.id)}
+                aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
+                title={favorite ? '取消收藏这条短视频' : '收藏这条短视频'}
+              >
+                {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
+              </button>
+              {canDelete ? (
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => onDelete(lesson.id)}
+                  aria-label={`删除 ${lesson.title}`}
+                  title="删除这条本地短视频"
+                >
+                  <Trash2 size={18} />
+                </button>
+              ) : null}
+            </div>
           </div>
 
           <button className={styles.playBadge} onClick={() => onStart(lesson.id)}>
@@ -178,6 +201,7 @@ function LessonCard({
 function LessonPlayerOverlay({
   lesson,
   showRomaji,
+  showPlaybackKnowledge,
   favorite,
   localBlob,
   onClose,
@@ -355,6 +379,7 @@ function LessonPlayerOverlay({
                 segments={lesson.segments}
                 knowledgePoints={lesson.knowledgePoints}
                 showRomaji={showRomaji}
+                showSubtitleReading={false}
                 onStateChange={setPlayerState}
                 onFinish={finishSession}
                 onError={() => onPlayerError(lesson.id)}
@@ -385,7 +410,7 @@ function LessonPlayerOverlay({
               </div>
             </div>
 
-            {activePoints.length > 0 ? (
+            {showPlaybackKnowledge && activePoints.length > 0 ? (
               <div className={styles.activePointRow}>
                 {activePoints.map((point) => (
                   <button
@@ -456,6 +481,7 @@ export function HomePage() {
   const studyEvents = useAppStore((state) => state.studyEvents)
   const settings = useAppStore((state) => state.settings)
   const toggleFavorite = useAppStore((state) => state.toggleFavorite)
+  const deleteLocalLesson = useAppStore((state) => state.deleteLocalLesson)
   const recordStudyEvent = useAppStore((state) => state.recordStudyEvent)
   const addKnowledgeToReview = useAppStore((state) => state.addKnowledgeToReview)
 
@@ -477,6 +503,19 @@ export function HomePage() {
   const localLessons = useMemo(() => {
     return lessons.filter((lesson) => lesson.sourceType === 'local')
   }, [lessons])
+  const removableLessonIds = useMemo(() => {
+    return new Set(
+      lessons
+        .filter(
+          (lesson) =>
+            lesson.sourceType === 'local' &&
+            importedClips.some(
+              (clip) => clip.id === lesson.id || (lesson.originClipId ? clip.id === lesson.originClipId : false),
+            ),
+        )
+        .map((lesson) => lesson.id),
+    )
+  }, [importedClips, lessons])
 
   const orderedLessons = useMemo(
     () => getDailyLessonFeed(localLessons, favorites, studyEvents),
@@ -579,6 +618,30 @@ export function HomePage() {
     setPlayerErrors((state) => (state.includes(lessonId) ? state : [...state, lessonId]))
   }
 
+  const handleDeleteLesson = async (lessonId: string) => {
+    const target = lessons.find((lesson) => lesson.id === lessonId)
+    if (!target) {
+      return
+    }
+
+    const confirmed = window.confirm(`要从短视频模块中删除「${target.title}」吗？`)
+    if (!confirmed) {
+      return
+    }
+
+    const deleted = await deleteLocalLesson(lessonId)
+    if (!deleted) {
+      return
+    }
+
+    if (playerLessonId === lessonId) {
+      setPlayerLessonId(null)
+    }
+    if (drawerLessonId === lessonId) {
+      setDrawerLessonId(null)
+    }
+  }
+
   const handleAddReview = async (lesson: VideoLesson) => {
     await addKnowledgeToReview(lesson.knowledgePoints, lesson.id, lesson.id)
   }
@@ -626,12 +689,14 @@ export function HomePage() {
                 lesson={lesson}
                 favorite={favorites.includes(lesson.id)}
                 showRomaji={settings.showRomaji}
+                canDelete={removableLessonIds.has(lesson.id)}
                 onFavorite={(lessonId) => void toggleFavorite(lessonId)}
                 onStart={handleStartLesson}
                 onOpenKnowledge={(lessonId) => {
                   setPlayerLessonId(null)
                   setDrawerLessonId(lessonId)
                 }}
+                onDelete={(lessonId) => void handleDeleteLesson(lessonId)}
               />
             </section>
           ))}
@@ -642,6 +707,7 @@ export function HomePage() {
         <LessonPlayerOverlay
           lesson={playerLesson}
           showRomaji={settings.showRomaji}
+          showPlaybackKnowledge={settings.showPlaybackKnowledge}
           favorite={favorites.includes(playerLesson.id)}
           localBlob={clipMap[playerLesson.sourceIdOrBlobKey]}
           onClose={() => setPlayerLessonId(null)}

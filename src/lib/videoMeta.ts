@@ -58,7 +58,7 @@ function captureVideoCover(
   }
 }
 
-export function readVideoMeta(file: File, title: string, theme: string) {
+function loadVideoCoverAt(file: File, title: string, theme: string, targetMs?: number) {
   return new Promise<{ durationMs: number; cover: string }>((resolve) => {
     const objectUrl = URL.createObjectURL(file)
     const video = document.createElement('video')
@@ -93,13 +93,18 @@ export function readVideoMeta(file: File, title: string, theme: string) {
 
     video.onloadedmetadata = () => {
       durationMs = Number.isFinite(video.duration) ? Math.round(video.duration * 1000) : 30000
-      const targetTime = Math.max(0.15, Math.min(video.duration / 3 || 0.6, 1.2))
+      const defaultTargetMs = Math.max(150, Math.min(durationMs / 3 || 600, 1200))
+      const nextTargetMs =
+        typeof targetMs === 'number'
+          ? Math.max(150, Math.min(targetMs, Math.max(150, durationMs - 150)))
+          : defaultTargetMs
+
       timeoutId = window.setTimeout(() => {
         finalize(createCoverSvg(title, theme))
       }, 1400)
 
       try {
-        video.currentTime = Number.isFinite(targetTime) ? targetTime : 0.6
+        video.currentTime = nextTargetMs / 1000
       } catch {
         finalize(createCoverSvg(title, theme))
       }
@@ -115,3 +120,16 @@ export function readVideoMeta(file: File, title: string, theme: string) {
   })
 }
 
+export async function readVideoMeta(file: File, title: string, theme: string) {
+  return loadVideoCoverAt(file, title, theme)
+}
+
+export async function readVideoCoverAt(
+  file: File,
+  title: string,
+  theme: string,
+  targetMs: number,
+) {
+  const result = await loadVideoCoverAt(file, title, theme, targetMs)
+  return result.cover
+}

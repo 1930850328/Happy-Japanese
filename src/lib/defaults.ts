@@ -14,5 +14,6 @@ export const defaultSettings: AppSettings = {
   id: 'settings',
   remindersEnabled: false,
   showRomaji: true,
+  showPlaybackKnowledge: false,
   accentMode: 'macaron',
 }
