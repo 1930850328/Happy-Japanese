@@ -45,7 +45,7 @@ let transcriberEntry:
 
 function getPreferredModelId() {
   const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 0
-  return memory >= 8 ? BASE_MODEL : TINY_MODEL
+  return memory >= 16 ? BASE_MODEL : TINY_MODEL
 }
 
 function getWhisperLoadStrategies() {
@@ -90,6 +90,23 @@ function isQuantizedWeightSessionError(message: string) {
   )
 }
 
+async function waitForNextPaint() {
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => resolve())
+  })
+}
+
+function configureBrowserInferenceBackend(env: any) {
+  const wasmBackend = env.backends?.onnx?.wasm
+  if (!wasmBackend || typeof window === 'undefined') {
+    return
+  }
+
+  wasmBackend.proxy = true
+  const hardwareThreads = navigator.hardwareConcurrency ?? 2
+  wasmBackend.numThreads = Math.max(1, Math.min(2, Math.floor(hardwareThreads / 2)))
+}
+
 async function getFFmpeg(onStatus?: StatusCallback) {
   if (!ffmpegPromise) {
     ffmpegPromise = (async () => {
@@ -121,9 +138,13 @@ async function extractAudioTrack(file: File, onStatus?: StatusCallback) {
   const inputExt = file.name.split('.').pop() || 'mp4'
   const inputName = `input-${crypto.randomUUID()}.${inputExt}`
   const outputName = `audio-${crypto.randomUUID()}.wav`
+  const handleProgress = ({ progress }: { progress: number }) => {
+    onStatus?.(`从视频中提取音频…${Math.round(Math.max(0, Math.min(1, progress)) * 100)}%`)
+  }
 
-  onStatus?.('从视频中提取音频…')
+  onStatus?.('从视频中提取音频…0%')
   await ffmpeg.writeFile(inputName, await fetchFile(file))
+  ffmpeg.on('progress', handleProgress)
 
   try {
     const code = await ffmpeg.exec([
@@ -146,8 +167,10 @@ async function extractAudioTrack(file: File, onStatus?: StatusCallback) {
     const data = await ffmpeg.readFile(outputName)
     const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
     const audioBlob = new Blob([bytes], { type: 'audio/wav' })
+    onStatus?.('从视频中提取音频…100%')
     return URL.createObjectURL(audioBlob)
   } finally {
+    ffmpeg.off('progress', handleProgress)
     await Promise.allSettled([ffmpeg.deleteFile(inputName), ffmpeg.deleteFile(outputName)])
   }
 }
@@ -161,8 +184,10 @@ async function loadTranscriberForStrategy(
   env.allowRemoteModels = true
   env.useBrowserCache = true
   env.logLevel = LogLevel.ERROR
+  configureBrowserInferenceBackend(env)
 
   onStatus?.(`正在加载 ${strategy.label}…`)
+  await waitForNextPaint()
 
   const transcriber = await pipeline('automatic-speech-recognition', strategy.modelId, {
     device: 'wasm',
@@ -273,11 +298,12 @@ export async function generateStudyDataFromVideo(
   try {
     const { transcriber, modelLabel } = await getTranscriber(onStatus)
     onStatus?.('识别日语字幕中…')
+    await waitForNextPaint()
 
     const output = await transcriber(audioUrl, {
       return_timestamps: true,
-      chunk_length_s: 24,
-      stride_length_s: 4,
+      chunk_length_s: 18,
+      stride_length_s: 3,
       force_full_sequences: false,
       language: 'japanese',
       task: 'transcribe',
@@ -311,4 +337,3 @@ export async function generateStudyDataFromVideo(
     URL.revokeObjectURL(audioUrl)
   }
 }
-

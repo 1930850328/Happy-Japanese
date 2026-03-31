@@ -198,6 +198,52 @@
   line-height: 1.7;
 }
 
+.progressCard {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.95rem 1rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(237, 248, 243, 0.98), rgba(255, 247, 236, 0.96));
+  border: 1px solid rgba(210, 231, 219, 0.95);
+}
+
+.progressMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.progressMeta strong,
+.progressMeta span,
+.progressHint {
+  color: var(--text-soft);
+}
+
+.progressMeta strong {
+  color: var(--text);
+}
+
+.progressTrack {
+  position: relative;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #9cd4bb, #ffd5b9 72%, #ffe8a3);
+  transition: width 220ms ease;
+}
+
+.progressHint {
+  line-height: 1.65;
+}
+
 .clipCard {
   display: flex;
   justify-content: space-between;

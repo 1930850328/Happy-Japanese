@@ -50,6 +50,11 @@ interface SlicePreviewOverlayProps {
   onClose: () => void
 }
 
+interface TaskProgressState {
+  percent: number
+  detail: string
+}
+
 function OverlayPortal({ children }: { children: ReactNode }) {
   if (typeof document === 'undefined') {
     return null
@@ -67,6 +72,47 @@ function formatDuration(ms: number) {
 
 function formatRange(startMs: number, endMs: number) {
   return `${formatDuration(startMs)} - ${formatDuration(endMs)}`
+}
+
+function clampProgress(value: number) {
+  return Math.max(0, Math.min(100, Math.round(value)))
+}
+
+function deriveTaskProgress(message: string, previousPercent: number) {
+  const downloadMatch = message.match(/(\d{1,3})%/)
+  const embeddedPercent = downloadMatch ? Number(downloadMatch[1]) : null
+
+  let percent = previousPercent
+  if (message.includes('读取视频信息')) {
+    percent = 8
+  } else if (message.includes('解析外部字幕')) {
+    percent = 22
+  } else if (message.includes('准备音频引擎')) {
+    percent = 12
+  } else if (message.includes('从视频中提取音频')) {
+    percent = embeddedPercent === null ? 18 : 18 + embeddedPercent * 0.2
+  } else if (message.includes('正在加载 Whisper') || message.includes('正在加载')) {
+    percent = 40
+  } else if (message.includes('下载字幕模型中')) {
+    percent = embeddedPercent === null ? 48 : 48 + embeddedPercent * 0.18
+  } else if (message.includes('已就绪')) {
+    percent = 66
+  } else if (message.includes('识别日语字幕中')) {
+    percent = 72
+  } else if (message.includes('生成中文字幕与知识点中')) {
+    percent = 84
+  } else if (message.includes('正在分析并切片')) {
+    percent = 92
+  } else if (message.includes('已生成')) {
+    percent = 100
+  } else if (message.includes('已导入')) {
+    percent = 100
+  }
+
+  return {
+    percent: clampProgress(Math.max(previousPercent, percent)),
+    detail: message,
+  }
 }
 
 function SlicePreviewOverlay({ lesson, file, showRomaji, onClose }: SlicePreviewOverlayProps) {
@@ -189,6 +235,7 @@ export function ProfilePage() {
   const [importingSlices, setImportingSlices] = useState(false)
   const [busyClipId, setBusyClipId] = useState<string | null>(null)
   const [statusText, setStatusText] = useState('')
+  const [taskProgress, setTaskProgress] = useState<TaskProgressState | null>(null)
   const [slicerManifestFile, setSlicerManifestFile] = useState<File | null>(null)
   const [slicerClipFiles, setSlicerClipFiles] = useState<File[]>([])
   const [importingSlicer, setImportingSlicer] = useState(false)
@@ -237,6 +284,11 @@ export function ProfilePage() {
   const previewLesson =
     slicePreview?.lessons.find((lesson) => lesson.id === previewLessonId) ?? null
 
+  const updateTaskStatus = (message: string) => {
+    setStatusText(message)
+    setTaskProgress((state) => deriveTaskProgress(message, state?.percent ?? 0))
+  }
+
   const handleGoalSave = async () => {
     await updateGoal({
       videosTarget: Number(goalForm.videosTarget) || 0,
@@ -248,9 +300,9 @@ export function ProfilePage() {
 
   const handleGenerateForClip = async (clipId: string) => {
     setBusyClipId(clipId)
-    setStatusText('准备自动字幕中…')
+    updateTaskStatus('准备自动字幕中…')
     try {
-      await generateAutoSubtitles(clipId, (message) => setStatusText(message))
+      await generateAutoSubtitles(clipId, (message) => updateTaskStatus(message))
     } finally {
       setBusyClipId(null)
     }
@@ -262,7 +314,8 @@ export function ProfilePage() {
     }
 
     setBuildingPreview(true)
-    setStatusText('正在读取视频信息…')
+    setTaskProgress({ percent: 4, detail: '正在准备切片任务…' })
+    updateTaskStatus('正在读取视频信息…')
 
     try {
       const normalizedTitle = clipTitle.trim() || clipFile.name.replace(/\.[^.]+$/, '')
@@ -276,7 +329,7 @@ export function ProfilePage() {
       let knowledgePoints: ImportedClip['knowledgePoints'] = []
 
       if (subtitleFile) {
-        setStatusText('正在解析外部字幕并提取知识点…')
+        updateTaskStatus('正在解析外部字幕并提取知识点…')
         const cues = await parseSubtitleFile(subtitleFile)
         const studyData = await buildStudyDataFromCues(cues)
         segments = studyData.segments
@@ -286,7 +339,7 @@ export function ProfilePage() {
         sourceProvider = '页面自动切片预览 / 外部字幕'
       } else {
         const studyData = await generateStudyDataFromVideo(clipFile, durationMs, (message) =>
-          setStatusText(message),
+          updateTaskStatus(message),
         )
         segments = studyData.segments
         knowledgePoints = studyData.knowledgePoints
@@ -294,6 +347,8 @@ export function ProfilePage() {
         subtitleFileName = '自动生成字幕'
         sourceProvider = `页面自动切片预览 / ${studyData.modelLabel}`
       }
+
+      updateTaskStatus('正在分析并切片…')
 
       const previewClip: ImportedClip = {
         id: `preview-${crypto.randomUUID()}`,
@@ -338,11 +393,12 @@ export function ProfilePage() {
       })
       setSelectedSliceIds(previewLessons.map((lesson) => lesson.id))
       setPreviewLessonId(null)
-      setStatusText(`已生成 ${previewLessons.length} 条候选切片，可以先预览再决定是否导入。`)
+      updateTaskStatus(`已生成 ${previewLessons.length} 条候选切片，可以先预览再决定是否导入。`)
     } catch (error) {
       setSlicePreview(null)
       setSelectedSliceIds([])
       setPreviewLessonId(null)
+      setTaskProgress(null)
       setStatusText(error instanceof Error ? error.message : '切片预览生成失败，请换一个文件重试。')
     } finally {
       setBuildingPreview(false)
@@ -355,6 +411,7 @@ export function ProfilePage() {
     }
 
     setImportingSlices(true)
+    setTaskProgress({ percent: 94, detail: '正在导入勾选的切片到首页短视频流…' })
     setStatusText('正在导入勾选的切片到首页短视频流…')
 
     try {
@@ -374,6 +431,7 @@ export function ProfilePage() {
         selectedLessons: selectedPreviewLessons,
       })
 
+      setTaskProgress({ percent: 100, detail: `已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。` })
       setStatusText(`已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。`)
       setSlicePreview(null)
       setSelectedSliceIds([])
@@ -584,6 +642,23 @@ export function ProfilePage() {
               你只管选本地视频。系统会优先使用你提供的字幕；如果没有字幕，就自动抽取音频并生成时间轴字幕，然后挑出更适合学语法和单词的候选切片给你预览。
             </p>
             {statusText ? <p className={styles.statusNote}>{statusText}</p> : null}
+            {taskProgress ? (
+              <div className={styles.progressCard} aria-live="polite">
+                <div className={styles.progressMeta}>
+                  <strong>{taskProgress.detail}</strong>
+                  <span>{taskProgress.percent}%</span>
+                </div>
+                <div className={styles.progressTrack}>
+                  <span
+                    className={styles.progressFill}
+                    style={{ width: `${taskProgress.percent}%` }}
+                  />
+                </div>
+                <small className={styles.progressHint}>
+                  字幕识别现在会在后台 worker 中执行，页面应该不会再整页卡死。
+                </small>
+              </div>
+            ) : null}
 
             <div className={styles.actionRow}>
               <button
@@ -602,6 +677,7 @@ export function ProfilePage() {
                     setSlicePreview(null)
                     setSelectedSliceIds([])
                     setPreviewLessonId(null)
+                    setTaskProgress(null)
                     setStatusText('已清空本次切片预览。')
                   }}
                 >
