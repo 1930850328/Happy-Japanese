@@ -9,6 +9,30 @@ import { hasJapaneseSpeechSupport } from './speech'
 
 const meaningMap = new Map<string, string>()
 export const UNKNOWN_MEANING = '词义待补充'
+const heuristicMeaningMap = new Map<string, string>([
+  ['する', '做 / 进行'],
+  ['なる', '变成 / 成为'],
+  ['ある', '有 / 存在'],
+  ['いる', '在 / 存在'],
+  ['行く', '去'],
+  ['来る', '来'],
+  ['帰る', '回来 / 回去'],
+  ['見る', '看'],
+  ['聞く', '听'],
+  ['言う', '说'],
+  ['思う', '想 / 觉得'],
+  ['知る', '知道'],
+  ['分かる', '明白 / 懂'],
+  ['受ける', '接受 / 承受'],
+  ['降りる', '下来 / 降落'],
+  ['出る', '出去 / 出现'],
+  ['入る', '进入'],
+  ['食べる', '吃'],
+  ['飲む', '喝'],
+  ['待つ', '等'],
+  ['使う', '使用'],
+  ['できる', '能 / 做到'],
+])
 
 for (const card of vocabCards) {
   meaningMap.set(card.term, card.meaningZh)
@@ -58,7 +82,21 @@ function resolveMeaning(surface: string, base: string, reading: string, kana: st
     meaningMap.get(reading) ??
     meaningMap.get(kana)
 
-  return resolved ?? UNKNOWN_MEANING
+  if (resolved) {
+    return resolved
+  }
+
+  const heuristic = heuristicMeaningMap.get(base) ?? heuristicMeaningMap.get(surface)
+  if (heuristic) {
+    return heuristic
+  }
+
+  const hanGuess = (base.match(/[\p{Script=Han}]+/gu) || []).join('')
+  if (hanGuess) {
+    return hanGuess
+  }
+
+  return UNKNOWN_MEANING
 }
 
 export function hasReliableMeaning(meaningZh: string) {

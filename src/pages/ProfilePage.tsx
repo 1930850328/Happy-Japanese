@@ -183,7 +183,6 @@ function SlicePreviewOverlay({
     }
   }, [])
 
-  const currentSegment = state?.currentSegment
   const activePoints = state?.activePoints ?? []
 
   return (
@@ -225,18 +224,6 @@ function SlicePreviewOverlay({
               <span>{sourceStatus || '片段文件已经切好，播放器初始化完成后会自动开始预览。'}</span>
             </div>
           )}
-
-          {currentSegment ? (
-            <div className={styles.previewTranscript}>
-              <strong>{currentSegment.ja}</strong>
-              <span>
-                {showRomaji
-                  ? `${currentSegment.kana} / ${currentSegment.romaji}`
-                  : currentSegment.kana}
-              </span>
-              <p>{currentSegment.zh}</p>
-            </div>
-          ) : null}
 
           {showPlaybackKnowledge && activePoints.length > 0 ? (
             <div className={styles.previewPointRow}>

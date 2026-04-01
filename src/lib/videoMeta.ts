@@ -11,14 +11,15 @@ function createCoverSvg(title: string, theme: string) {
         </linearGradient>
       </defs>
       <rect width="640" height="360" rx="30" fill="url(#bg)" />
-      <circle cx="92" cy="92" r="58" fill="rgba(255,255,255,0.42)" />
-      <circle cx="546" cy="278" r="92" fill="rgba(255,255,255,0.28)" />
-      <rect x="44" y="214" width="292" height="98" rx="24" fill="rgba(255,255,255,0.76)" />
-      <text x="48" y="78" fill="#815848" font-size="18" font-family="sans-serif">${safeTheme}</text>
-      <text x="60" y="258" fill="#4b362d" font-size="30" font-family="sans-serif">${safeTitle}</text>
-      <text x="60" y="290" fill="#866457" font-size="16" font-family="sans-serif">Local Original Study Clip</text>
+      <circle cx="110" cy="92" r="58" fill="rgba(255,255,255,0.34)" />
+      <circle cx="540" cy="268" r="96" fill="rgba(255,255,255,0.22)" />
+      <rect x="44" y="42" width="160" height="40" rx="20" fill="rgba(255,255,255,0.62)" />
+      <text x="60" y="68" fill="#815848" font-size="18" font-family="sans-serif">${safeTheme}</text>
+      <rect x="44" y="238" width="250" height="80" rx="24" fill="rgba(255,255,255,0.18)" />
+      <text x="60" y="286" fill="rgba(75,54,45,0.68)" font-size="18" font-family="sans-serif">${safeTitle.slice(0, 18)}</text>
     </svg>
   `
+
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
 }
 
@@ -56,7 +57,6 @@ function captureVideoCover(
   video: HTMLVideoElement,
   title: string,
   theme: string,
-  durationMs: number,
 ) {
   try {
     const canvas = document.createElement('canvas')
@@ -69,20 +69,6 @@ function captureVideoCover(
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height)
     const lowInfo = isLowInfoFrame(context, canvas.width, canvas.height)
-    context.fillStyle = 'rgba(20, 14, 12, 0.14)'
-    context.fillRect(0, 0, canvas.width, canvas.height)
-    context.fillStyle = 'rgba(255, 252, 249, 0.92)'
-    context.fillRect(26, canvas.height - 156, Math.min(canvas.width - 52, 430), 106)
-    context.fillStyle = '#4f382f'
-    context.font = '600 34px sans-serif'
-    context.fillText(title, 50, canvas.height - 96)
-    context.fillStyle = '#866457'
-    context.font = '22px sans-serif'
-    context.fillText(
-      `${theme} · ${Math.max(10, Math.round(durationMs / 1000))} 秒`,
-      50,
-      canvas.height - 58,
-    )
     return {
       cover: canvas.toDataURL('image/jpeg', 0.9),
       lowInfo,
@@ -150,7 +136,7 @@ function loadVideoCoverAt(file: File, title: string, theme: string, targetMs?: n
     }
 
     video.onseeked = () => {
-      const { cover, lowInfo } = captureVideoCover(video, title, theme, durationMs)
+      const { cover, lowInfo } = captureVideoCover(video, title, theme)
       if (lowInfo && seekIndex < seekTargets.length - 1) {
         seekIndex += 1
         try {

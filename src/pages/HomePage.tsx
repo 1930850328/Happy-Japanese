@@ -22,7 +22,7 @@ import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
 import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
-import type { KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
+import type { KnowledgePoint, VideoLesson } from '../types'
 import styles from './HomePage.module.css'
 
 interface LessonCardProps {
@@ -70,12 +70,6 @@ function getPointExample(lesson: VideoLesson, point: KnowledgePoint) {
   }
 }
 
-function formatProgress(currentMs: number, durationMs: number) {
-  const total = Math.max(1, Math.round(durationMs / 1000))
-  const current = Math.min(total, Math.max(0, Math.round(currentMs / 1000)))
-  return `${current}s / ${total}s`
-}
-
 function OverlayPortal({ children }: { children: ReactNode }) {
   if (typeof document === 'undefined') {
     return null
@@ -109,7 +103,7 @@ function LessonCard({
               <span className="chip badgePeach">{lesson.theme}</span>
               <span className="chip">{lesson.difficulty}</span>
               <span className="chip badgeMint">
-                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒`}
+                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习切片`}
               </span>
             </div>
 
@@ -138,16 +132,14 @@ function LessonCard({
           <button className={styles.playBadge} onClick={() => onStart(lesson.id)}>
             <Play size={22} />
           </button>
-
-          <div className={styles.posterFooter}>
-            <div className={styles.copyBlock}>
-              <h2>{lesson.title}</h2>
-              <p>{lesson.description}</p>
-            </div>
-          </div>
         </div>
 
         <div className={styles.cardBody}>
+          <div className={styles.lessonTitleBlock}>
+            <h2 className={styles.lessonTitle}>{lesson.title}</h2>
+            <p className={styles.lessonDescription}>{lesson.description}</p>
+          </div>
+
           {previewSegment ? (
             <div className={styles.previewBlock}>
               <strong>{previewSegment.ja}</strong>
@@ -181,6 +173,12 @@ function LessonCard({
               <BookMarked size={18} />
               先看知识点
             </button>
+            {canDelete ? (
+              <button className="softButton" onClick={() => onDelete(lesson.id)}>
+                <Trash2 size={18} />
+                删除短片
+              </button>
+            ) : null}
           </div>
         </div>
 
@@ -217,26 +215,17 @@ function LessonPlayerOverlay({
   const [preparingSource, setPreparingSource] = useState(Boolean(localBlob))
   const playerRef = useRef<AnimeStudyPlayerHandle | null>(null)
   const objectUrlRef = useRef<string | null>(null)
+  const onPlayerErrorRef = useRef(onPlayerError)
   const finishedRef = useRef(false)
   const clipStartMs = lesson.clipStartMs ?? 0
   const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
 
-  const currentSegment = playerState?.currentSegment
   const activePoints = playerState?.activePoints ?? []
-  const elapsedMs = playerState?.elapsedMs ?? 0
   const isPlaying = playerState?.isPlaying ?? false
-  const isReady = playerState?.isReady ?? false
-  const isBuffering = playerState?.isBuffering ?? true
-  const volumePercent = Math.round((playerState?.volume ?? 0.8) * 100)
-  const playerStatusText = preparingSource
-    ? sourceStatus || '正在准备视频…'
-    : !isReady
-      ? '视频加载中…'
-      : isBuffering
-        ? '正在缓冲…'
-        : isPlaying
-          ? '正在播放'
-          : '已暂停'
+
+  useEffect(() => {
+    onPlayerErrorRef.current = onPlayerError
+  }, [onPlayerError])
 
   useEffect(() => {
     return () => {
@@ -291,7 +280,7 @@ function LessonPlayerOverlay({
         const objectUrl = URL.createObjectURL(file)
         objectUrlRef.current = objectUrl
         setLocalSourceUrl(objectUrl)
-        setSourceStatus(converted ? '已转换为兼容格式，正在准备播放…' : '视频已准备完成')
+        setSourceStatus(converted ? '已转成浏览器兼容格式，正在准备播放…' : '视频已准备完成')
       } catch (error) {
         if (canceled) {
           return
@@ -300,7 +289,7 @@ function LessonPlayerOverlay({
         setSourceStatus(
           error instanceof Error ? error.message : '当前视频暂时无法播放，请换一个更通用的编码格式。',
         )
-        onPlayerError(lesson.id)
+        onPlayerErrorRef.current(lesson.id)
       } finally {
         if (!canceled) {
           setPreparingSource(false)
@@ -314,7 +303,7 @@ function LessonPlayerOverlay({
       canceled = true
       releaseObjectUrl()
     }
-  }, [lesson.id, lesson.sourceIdOrBlobKey, localBlob, onPlayerError])
+  }, [lesson.id, lesson.sourceIdOrBlobKey, localBlob, localFileName, lesson.sourceFileName])
 
   useEffect(() => {
     finishedRef.current = false
@@ -350,7 +339,7 @@ function LessonPlayerOverlay({
           <header className={styles.sessionHeader}>
             <div>
               <span className="chip badgeMint">
-                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习`}
+                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习切片`}
               </span>
               <h2>{lesson.title}</h2>
               <p>{lesson.sourceProvider}</p>
@@ -373,8 +362,6 @@ function LessonPlayerOverlay({
                 ref={playerRef}
                 url={localSourceUrl}
                 poster={lesson.cover}
-                title={lesson.title}
-                sourceLabel={lesson.sourceProvider}
                 durationMs={lesson.durationMs}
                 clipStartMs={clipStartMs}
                 clipEndMs={clipEndMs}
@@ -392,25 +379,6 @@ function LessonPlayerOverlay({
                 <span>{sourceStatus || '请稍等，系统会先把本地视频整理成浏览器可播放的格式。'}</span>
               </div>
             )}
-
-            <div className={styles.progressBox}>
-              <div className={styles.progressMeta}>
-                <span>{playerStatusText}</span>
-                <strong>
-                  {preparingSource
-                    ? '准备完成后会自动出现进度条、音量和设置面板'
-                    : `${formatProgress(elapsedMs, lesson.durationMs)} / 音量 ${volumePercent}%`}
-                </strong>
-              </div>
-              <div className={styles.progressMeta}>
-                <span>
-                  {!isReady ? '视频加载中…' : isBuffering ? '正在缓冲…' : isPlaying ? '正在播放' : '已暂停'}
-                </span>
-                <strong>
-                  {formatProgress(elapsedMs, lesson.durationMs)} / 音量 {volumePercent}%
-                </strong>
-              </div>
-            </div>
 
             {showPlaybackKnowledge && activePoints.length > 0 ? (
               <div className={styles.activePointRow}>
@@ -433,22 +401,6 @@ function LessonPlayerOverlay({
               </div>
             ) : null}
 
-            {currentSegment ? (
-              <div className={styles.sessionTranscript}>
-                <strong>{currentSegment.ja}</strong>
-                <span>
-                  {showRomaji
-                    ? `${currentSegment.kana} / ${currentSegment.romaji}`
-                    : currentSegment.kana}
-                </span>
-                <p>{currentSegment.zh}</p>
-                <button className="softButton" onClick={() => speakJapanese(currentSegment.ja)}>
-                  <Volume2 size={18} />
-                  播放片中原句
-                </button>
-              </div>
-            ) : null}
-
             <div className={styles.sessionControls}>
               <button className="softButton primaryButton" onClick={togglePlayback}>
                 {isPlaying ? <Pause size={18} /> : <Play size={18} />}
@@ -465,10 +417,6 @@ function LessonPlayerOverlay({
                 进入知识点解析
               </button>
             </div>
-
-            <p className={styles.sessionHint}>
-              底部控制栏现在已经支持拖动进度、调节音量、全屏和倍速；上层仍然保留学习字幕、高亮词法和知识点联动。
-            </p>
           </div>
         </section>
       </div>
@@ -502,9 +450,7 @@ export function HomePage() {
     }, {})
   }, [importedClips])
 
-  const localLessons = useMemo(() => {
-    return lessons.filter((lesson) => lesson.sourceType === 'local')
-  }, [lessons])
+  const localLessons = useMemo(() => lessons.filter((lesson) => lesson.sourceType === 'local'), [lessons])
   const removableLessonIds = useMemo(() => {
     return new Set(
       lessons
@@ -512,7 +458,9 @@ export function HomePage() {
           (lesson) =>
             lesson.sourceType === 'local' &&
             importedClips.some(
-              (clip) => clip.id === lesson.id || (lesson.originClipId ? clip.id === lesson.originClipId : false),
+              (clip) =>
+                clip.id === lesson.id ||
+                (lesson.originClipId ? clip.id === lesson.originClipId : false),
             ),
         )
         .map((lesson) => lesson.id),
@@ -531,8 +479,8 @@ export function HomePage() {
     activeLesson?.knowledgePoints
       .slice(0, 2)
       .map((point) => point.expression)
-      .join(' / ') ?? '导入自己的原片后，这里会显示今天重点'
-  const currentSegment: TranscriptSegment | undefined = activeLesson?.segments[0]
+      .join(' / ') ?? '导入你自己的原片后，这里会显示今天重点'
+  const currentSentence = activeLesson?.segments[0]?.ja ?? '导入本地原片后会显示片中原句'
 
   useEffect(() => {
     if (typeof document === 'undefined') {
@@ -545,7 +493,6 @@ export function HomePage() {
 
     const originalOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-
     return () => {
       document.body.style.overflow = originalOverflow
     }
@@ -626,7 +573,7 @@ export function HomePage() {
       return
     }
 
-    const confirmed = window.confirm(`要从短视频模块中删除「${target.title}」吗？`)
+    const confirmed = window.confirm(`要从短视频模块里删除「${target.title}」吗？`)
     if (!confirmed) {
       return
     }
@@ -655,8 +602,8 @@ export function HomePage() {
           <span className="chip badgeMint">短视频模块已切到独立播放器内核</span>
           <h1 className="pageTitle">先把片中原句看清楚，再顺手记住对应的单词和语法</h1>
           <p className="sectionIntro">
-            首页会优先展示站内本地学习切片。现在视频底层播放已经抽到独立仓库维护，
-            并换成更完整的播放器控制层，进度、音量、全屏、倍速这些常用操作都在控制栏里。
+            首页会优先展示站内本地学习切片。播放器控制条现在已经交给独立内核处理，时间轴、音量、倍速、
+            全屏和画中画都在视频内完成；页面层主要保留学习字幕、知识点和收藏删除等操作。
           </p>
         </div>
 
@@ -671,7 +618,7 @@ export function HomePage() {
           </article>
           <article>
             <small>当前预览</small>
-            <strong>{currentSegment?.ja ?? '导入本地原片后会显示片中原句'}</strong>
+            <strong>{currentSentence}</strong>
           </article>
         </div>
       </section>
@@ -744,7 +691,11 @@ export function HomePage() {
                       <header>
                         <div>
                           <span className="chip badgeMint">
-                            {point.kind === 'grammar' ? '语法' : point.kind === 'word' ? '单词' : '词句'}
+                            {point.kind === 'grammar'
+                              ? '语法'
+                              : point.kind === 'word'
+                                ? '单词'
+                                : '词句'}
                           </span>
                           <strong>{point.expression}</strong>
                         </div>
@@ -796,7 +747,7 @@ export function HomePage() {
 
               {playerErrors.includes(drawerLesson.id) ? (
                 <p className={styles.sessionHint}>
-                  这条视频曾出现过播放异常，建议检查导入的视频格式是否完整，或重新导入同一片段。
+                  这条视频曾出现过播放异常，建议检查导入的视频格式是否完整，或者重新导入同一片段。
                 </p>
               ) : null}
             </aside>
