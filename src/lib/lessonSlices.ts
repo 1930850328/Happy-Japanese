@@ -101,16 +101,16 @@ function normalizeSegments(segments: TranscriptSegment[], offsetMs: number) {
 }
 
 function shortenTitle(input: string) {
-  if (input.length <= 30) {
+  if (input.length <= 22) {
     return input
   }
-  return `${input.slice(0, 30)}…`
+  return `${input.slice(0, 22)}...`
 }
 
 function buildSliceTitle(clip: ImportedClip, index: number, points: KnowledgePoint[]) {
-  const lead = points.slice(0, 2).map((point) => point.expression).join(' / ')
+  const lead = points.slice(0, 1).map((point) => point.expression).join(' / ')
   const baseTitle = shortenTitle(clip.sourceAnimeTitle ?? clip.title)
-  return lead ? `${baseTitle} · ${lead}` : `${baseTitle} · 第 ${index + 1} 段`
+  return lead ? `${baseTitle} - ${lead}` : `${baseTitle} - clip ${index + 1}`
 }
 
 function summarizePoint(point: KnowledgePoint) {
@@ -127,9 +127,9 @@ function summarizePoint(point: KnowledgePoint) {
 
 function buildSliceDescription(points: KnowledgePoint[]) {
   const summary = points.slice(0, 3).map(summarizePoint).join(' / ')
-  return summary
-    ? `这段更适合学 ${summary}，先看原句，再暂停跟读会更顺。`
-    : '这段适合先看原句，再暂停跟读。'
+  return summary ? `Focus: ${summary}` : 'Focus on the original line first.'
+
+
 }
 
 function overlap(a: CandidateWindow, b: CandidateWindow) {

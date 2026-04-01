@@ -15,5 +15,7 @@ export const defaultSettings: AppSettings = {
   remindersEnabled: false,
   showRomaji: true,
   showPlaybackKnowledge: false,
+  showJapaneseSubtitle: true,
+  showChineseSubtitle: true,
   accentMode: 'macaron',
 }

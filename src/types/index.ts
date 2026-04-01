@@ -231,6 +231,8 @@ export interface AppSettings {
   remindersEnabled: boolean
   showRomaji: boolean
   showPlaybackKnowledge: boolean
+  showJapaneseSubtitle: boolean
+  showChineseSubtitle: boolean
   accentMode: 'macaron'
   installedAt?: string
 }

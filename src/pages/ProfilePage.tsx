@@ -3,7 +3,6 @@ import {
   BellRing,
   CheckCircle2,
   Flame,
-  Heart,
   Link2,
   Play,
   Save,
@@ -23,11 +22,12 @@ import { generateStudyDataFromVideo } from '../lib/autoSubtitles'
 import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
 import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
+import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
 import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
 import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
 import { readVideoCoverAt, readVideoMeta } from '../lib/videoMeta'
 import { useAppStore } from '../store/useAppStore'
-import type { ImportedClip, SlicePreviewDraft, VideoLesson } from '../types'
+import type { ImportedClip, SlicePreviewDraft, TranscriptSegment, VideoLesson } from '../types'
 import styles from './ProfilePage.module.css'
 
 interface SlicePreviewOverlayProps {
@@ -35,6 +35,8 @@ interface SlicePreviewOverlayProps {
   file: File
   showRomaji: boolean
   showPlaybackKnowledge: boolean
+  showJapaneseSubtitle: boolean
+  showChineseSubtitle: boolean
   onClose: () => void
 }
 
@@ -113,13 +115,31 @@ function SlicePreviewOverlay({
   file,
   showRomaji,
   showPlaybackKnowledge,
+  showJapaneseSubtitle,
+  showChineseSubtitle,
   onClose,
 }: SlicePreviewOverlayProps) {
   const [state, setState] = useState<StudyPlayerSnapshot | null>(null)
   const [objectUrl, setObjectUrl] = useState('')
   const [sourceStatus, setSourceStatus] = useState('正在检查视频兼容性…')
   const [preparingSource, setPreparingSource] = useState(true)
+  const [playbackSegments, setPlaybackSegments] = useState<TranscriptSegment[]>(lesson.segments)
   const objectUrlRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    let canceled = false
+    setPlaybackSegments(lesson.segments)
+
+    void enrichSegmentsWithSentenceTranslations(lesson.segments).then((segments) => {
+      if (!canceled) {
+        setPlaybackSegments(segments)
+      }
+    })
+
+    return () => {
+      canceled = true
+    }
+  }, [lesson.id, lesson.segments])
 
   useEffect(() => {
     let canceled = false
@@ -210,10 +230,12 @@ function SlicePreviewOverlay({
             durationMs={lesson.durationMs}
             clipStartMs={lesson.clipStartMs ?? 0}
             clipEndMs={lesson.clipEndMs ?? (lesson.clipStartMs ?? 0) + lesson.durationMs}
-            segments={lesson.segments}
+            segments={playbackSegments}
             knowledgePoints={lesson.knowledgePoints}
             showRomaji={showRomaji}
             showSubtitleReading={false}
+            showJapaneseSubtitle={showJapaneseSubtitle}
+            showChineseSubtitle={showChineseSubtitle}
             onStateChange={setState}
             onFinish={() => undefined}
             onError={() => undefined}
@@ -1109,40 +1131,16 @@ export function ProfilePage() {
         <div className={`${styles.card} glassCard`}>
           <header className={styles.cardHeader}>
             <div>
-              <span className="chip badgeMint">收藏回看</span>
-              <h2>喜欢的片段放这里</h2>
-            </div>
-          </header>
-
-          <div className={styles.favoriteList}>
-            {favoriteLessons.map((lesson) => (
-              <article key={lesson.id}>
-                <Heart size={16} />
-                <div>
-                  <strong>{lesson.title}</strong>
-                  <span>{lesson.theme}</span>
-                </div>
-              </article>
-            ))}
-            {favoriteLessons.length === 0 ? (
-              <p className={styles.placeholder}>还没有收藏的短视频。</p>
-            ) : null}
-          </div>
-        </div>
-
-        <div className={`${styles.card} glassCard`}>
-          <header className={styles.cardHeader}>
-            <div>
-              <span className="chip badgePink">站内设置</span>
-              <h2>把体验调成更顺手</h2>
+              <span className="chip badgePink">Settings</span>
+              <h2>Tune the subtitle experience</h2>
             </div>
           </header>
 
           <div className={styles.settingList}>
             <button className={styles.settingItem} onClick={() => void handleToggleReminder()}>
               <div>
-                <strong>学习提醒</strong>
-                <span>当前：{settings.remindersEnabled ? '已开启' : '未开启'}</span>
+                <strong>Study reminder</strong>
+                <span>Current: {settings.remindersEnabled ? 'On' : 'Off'}</span>
               </div>
               <BellRing size={18} />
             </button>
@@ -1154,8 +1152,10 @@ export function ProfilePage() {
               }
             >
               <div>
-                <strong>播放时显示知识点</strong>
-                <span>当前：{settings.showPlaybackKnowledge ? '显示词义与语法摘要' : '只显示中日字幕'}</span>
+                <strong>Playback knowledge</strong>
+                <span>
+                  Current: {settings.showPlaybackKnowledge ? 'Show grammar hints' : 'Subtitles only'}
+                </span>
               </div>
               <Sparkles size={18} />
             </button>
@@ -1165,8 +1165,34 @@ export function ProfilePage() {
               onClick={() => void updateSettings({ showRomaji: !settings.showRomaji })}
             >
               <div>
-                <strong>显示罗马音</strong>
-                <span>当前：{settings.showRomaji ? '显示' : '隐藏'}</span>
+                <strong>Romaji</strong>
+                <span>Current: {settings.showRomaji ? 'Show' : 'Hide'}</span>
+              </div>
+              <Settings2 size={18} />
+            </button>
+
+            <button
+              className={styles.settingItem}
+              onClick={() =>
+                void updateSettings({ showJapaneseSubtitle: !settings.showJapaneseSubtitle })
+              }
+            >
+              <div>
+                <strong>Japanese subtitle</strong>
+                <span>Current: {settings.showJapaneseSubtitle ? 'Show' : 'Hide'}</span>
+              </div>
+              <Settings2 size={18} />
+            </button>
+
+            <button
+              className={styles.settingItem}
+              onClick={() =>
+                void updateSettings({ showChineseSubtitle: !settings.showChineseSubtitle })
+              }
+            >
+              <div>
+                <strong>Chinese subtitle</strong>
+                <span>Current: {settings.showChineseSubtitle ? 'Show' : 'Hide'}</span>
               </div>
               <Settings2 size={18} />
             </button>
@@ -1176,8 +1202,8 @@ export function ProfilePage() {
         <div className={`${styles.card} glassCard`}>
           <header className={styles.cardHeader}>
             <div>
-              <span className="chip badgeMint">来源与致谢</span>
-              <h2>公开学习素材都记在这里</h2>
+              <span className="chip badgeMint">Sources</span>
+              <h2>Credits and attributions</h2>
             </div>
           </header>
 
@@ -1204,6 +1230,8 @@ export function ProfilePage() {
           file={slicePreview.file}
           showRomaji={settings.showRomaji}
           showPlaybackKnowledge={settings.showPlaybackKnowledge}
+          showJapaneseSubtitle={settings.showJapaneseSubtitle}
+          showChineseSubtitle={settings.showChineseSubtitle}
           onClose={() => setPreviewLessonId(null)}
         />
       ) : null}

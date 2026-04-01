@@ -20,9 +20,10 @@ import { createPortal } from 'react-dom'
 
 import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
+import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
 import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
-import type { KnowledgePoint, VideoLesson } from '../types'
+import type { KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
 import styles from './HomePage.module.css'
 
 interface LessonCardProps {
@@ -40,6 +41,8 @@ interface PlayerOverlayProps {
   lesson: VideoLesson
   showRomaji: boolean
   showPlaybackKnowledge: boolean
+  showJapaneseSubtitle: boolean
+  showChineseSubtitle: boolean
   favorite: boolean
   localBlob?: Blob
   localFileName?: string
@@ -103,7 +106,7 @@ function LessonCard({
               <span className="chip badgePeach">{lesson.theme}</span>
               <span className="chip">{lesson.difficulty}</span>
               <span className="chip badgeMint">
-                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习切片`}
+                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} ?????`}
               </span>
             </div>
 
@@ -111,7 +114,7 @@ function LessonCard({
               <button
                 className={styles.favoriteButton}
                 onClick={() => onFavorite(lesson.id)}
-                aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
+                aria-label={favorite ? `???? ${lesson.title}` : `?? ${lesson.title}`}
                 title={favorite ? '取消收藏这条短视频' : '收藏这条短视频'}
               >
                 {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
@@ -135,6 +138,35 @@ function LessonCard({
         </div>
 
         <div className={styles.cardBody}>
+          <div className={styles.cardHeader}>
+            <div className={styles.topChipRow}>
+              <span className="chip badgePeach">{lesson.theme}</span>
+              <span className="chip">{lesson.difficulty}</span>
+              <span className="chip badgeMint">
+                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))}s study clip`}
+              </span>
+            </div>
+
+            <div className={styles.topActions}>
+              <button
+                className={styles.favoriteButton}
+                onClick={() => onFavorite(lesson.id)}
+                aria-label={favorite ? `Remove favorite ${lesson.title}` : `Favorite ${lesson.title}`}
+              >
+                {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
+              </button>
+              {canDelete ? (
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => onDelete(lesson.id)}
+                  aria-label={`鍒犻櫎 ${lesson.title}`}
+                >
+                  <Trash2 size={18} />
+                </button>
+              ) : null}
+            </div>
+          </div>
+
           <div className={styles.lessonTitleBlock}>
             <h2 className={styles.lessonTitle}>{lesson.title}</h2>
             <p className={styles.lessonDescription}>{lesson.description}</p>
@@ -201,6 +233,8 @@ function LessonPlayerOverlay({
   lesson,
   showRomaji,
   showPlaybackKnowledge,
+  showJapaneseSubtitle,
+  showChineseSubtitle,
   favorite,
   localBlob,
   localFileName,
@@ -222,10 +256,26 @@ function LessonPlayerOverlay({
 
   const activePoints = playerState?.activePoints ?? []
   const isPlaying = playerState?.isPlaying ?? false
+  const [playbackSegments, setPlaybackSegments] = useState<TranscriptSegment[]>(lesson.segments)
 
   useEffect(() => {
     onPlayerErrorRef.current = onPlayerError
   }, [onPlayerError])
+
+  useEffect(() => {
+    let canceled = false
+    setPlaybackSegments(lesson.segments)
+
+    void enrichSegmentsWithSentenceTranslations(lesson.segments).then((segments) => {
+      if (!canceled) {
+        setPlaybackSegments(segments)
+      }
+    })
+
+    return () => {
+      canceled = true
+    }
+  }, [lesson.id, lesson.segments])
 
   useEffect(() => {
     return () => {
@@ -365,10 +415,12 @@ function LessonPlayerOverlay({
                 durationMs={lesson.durationMs}
                 clipStartMs={clipStartMs}
                 clipEndMs={clipEndMs}
-                segments={lesson.segments}
+                segments={playbackSegments}
                 knowledgePoints={lesson.knowledgePoints}
                 showRomaji={showRomaji}
                 showSubtitleReading={false}
+                showJapaneseSubtitle={showJapaneseSubtitle}
+                showChineseSubtitle={showChineseSubtitle}
                 onStateChange={setPlayerState}
                 onFinish={finishSession}
                 onError={() => onPlayerError(lesson.id)}
@@ -657,6 +709,8 @@ export function HomePage() {
           lesson={playerLesson}
           showRomaji={settings.showRomaji}
           showPlaybackKnowledge={settings.showPlaybackKnowledge}
+          showJapaneseSubtitle={settings.showJapaneseSubtitle}
+          showChineseSubtitle={settings.showChineseSubtitle}
           favorite={favorites.includes(playerLesson.id)}
           localBlob={clipMap[playerLesson.sourceIdOrBlobKey]}
           localFileName={playerLesson.sourceFileName}

@@ -1,5 +1,6 @@
 import type { KnowledgePoint, TranscriptSegment } from '../types'
 import { analyzeJapaneseText, hasReliableMeaning } from './textAnalysis'
+import { translateJapaneseSentences } from './translation'
 
 interface SubtitleCue {
   startMs: number
@@ -17,10 +18,9 @@ function parseTimestamp(value: string) {
   }
 
   const [hours, minutes, seconds] = parts
-  const secondValue = Number(seconds)
   return Math.max(
     0,
-    Math.round((Number(hours) * 3600 + Number(minutes) * 60 + secondValue) * 1000),
+    Math.round((Number(hours) * 3600 + Number(minutes) * 60 + Number(seconds)) * 1000),
   )
 }
 
@@ -35,7 +35,7 @@ function normalizeCueText(input: string) {
 }
 
 function hasJapaneseText(input: string) {
-  return /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(input)
+  return /[\p{Script=Hiragana}\p{Script=Katakana}\u3000-\u30ff\u3400-\u9fff]/u.test(input)
 }
 
 function hasChineseText(input: string) {
@@ -49,7 +49,7 @@ function extractCueText(lines: string[]) {
   }
 
   const jaLines = cleanedLines.filter((line) => hasJapaneseText(line))
-  const zhLines = cleanedLines.filter((line) => hasChineseText(line) && !hasJapaneseText(line))
+  const zhLines = cleanedLines.filter((line) => hasChineseText(line) && !/[ぁ-んァ-ン]/u.test(line))
   const jaText = jaLines[0]
 
   if (!jaText) {
@@ -84,7 +84,6 @@ function parseTimedLines(text: string) {
       }
 
       contentLines.push(value)
-
       if (cursor === lines.length - 1) {
         index = cursor
       }
@@ -180,10 +179,45 @@ function isUsefulToken(partOfSpeech: string, surface: string) {
 function buildTokenExplanation(surface: string, meaningZh: string) {
   return hasReliableMeaning(meaningZh)
     ? `${surface} 在这句里更接近“${meaningZh}”这个意思。`
-    : `${surface} 是片中反复出现的表达，建议先结合语境记住它的语气和位置。`
+    : `${surface} 是片中重复出现的表达，建议结合语境记住它的用法。`
+}
+
+function hasSentenceLikeChinese(text?: string) {
+  const normalized = text?.trim() ?? ''
+  if (
+    !normalized ||
+    normalized.includes('鏆傛湭鏀跺綍') ||
+    normalized.startsWith('这句') ||
+    normalized.includes('句里') ||
+    normalized.includes('表示“')
+  ) {
+    return false
+  }
+
+  const chineseCharCount = (normalized.match(/[\u4e00-\u9fff]/g) || []).length
+  const slashCount = (normalized.match(/[\\/]/g) || []).length
+  return chineseCharCount >= 6 && slashCount <= 1
+}
+
+async function resolveChineseLines(cues: SubtitleCue[]) {
+  const missingJapaneseLines = cues
+    .filter((cue) => !hasSentenceLikeChinese(cue.zhText) && (cue.jaText ?? cue.text ?? '').trim())
+    .map((cue) => cue.jaText ?? cue.text ?? '')
+
+  if (missingJapaneseLines.length === 0) {
+    return new Map<string, string>()
+  }
+
+  try {
+    const translated = await translateJapaneseSentences(missingJapaneseLines)
+    return new Map(Object.entries(translated))
+  } catch {
+    return new Map<string, string>()
+  }
 }
 
 export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
+  const translatedMap = await resolveChineseLines(cues)
   const knowledgeMap = new Map<string, KnowledgePoint>()
   const segments: TranscriptSegment[] = []
 
@@ -195,6 +229,10 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
 
     const analysis = await analyzeJapaneseText(jaText)
     const focusTermIds: string[] = []
+    const resolvedZh =
+      cue.zhText && hasSentenceLikeChinese(cue.zhText)
+        ? cue.zhText
+        : translatedMap.get(jaText) ?? analysis.glossZh
 
     for (const match of analysis.grammarMatches.slice(0, 2)) {
       const pointId = `grammar:${match.id}`
@@ -208,7 +246,7 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
           partOfSpeech: '语法',
           explanationZh: match.explanationZh,
           exampleJa: jaText,
-          exampleZh: cue.zhText ?? analysis.glossZh,
+          exampleZh: resolvedZh,
         })
       }
       focusTermIds.push(pointId)
@@ -229,7 +267,7 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
           partOfSpeech: token.partOfSpeech,
           explanationZh: buildTokenExplanation(token.surface, token.meaningZh),
           exampleJa: jaText,
-          exampleZh: cue.zhText ?? analysis.glossZh,
+          exampleZh: resolvedZh,
         })
       }
       focusTermIds.push(pointId)
@@ -241,7 +279,7 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
       ja: jaText,
       kana: analysis.kana,
       romaji: analysis.romaji,
-      zh: cue.zhText ?? analysis.glossZh,
+      zh: resolvedZh,
       focusTermIds,
     })
   }
