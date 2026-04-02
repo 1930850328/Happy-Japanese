@@ -1,10 +1,12 @@
 import type { KnowledgePoint, TranscriptSegment } from '../types'
+import { getSharedFFmpeg } from './ffmpegRuntime'
 import { buildStudyDataFromCues } from './subtitles'
 
 interface SubtitleCue {
   startMs: number
   endMs: number
-  jaText: string
+  jaText?: string
+  text?: string
 }
 
 interface SubtitleGenerationResult {
@@ -26,15 +28,8 @@ interface WhisperLoadStrategy {
 
 type StatusCallback = (message: string) => void
 
-const FFMPEG_CORE_VERSION = '0.12.10'
-const FFMPEG_BASE_URL = `https://cdn.jsdelivr.net/npm/@ffmpeg/core@${FFMPEG_CORE_VERSION}/dist/esm`
 const TINY_MODEL = 'onnx-community/whisper-tiny_timestamped'
 const BASE_MODEL = 'onnx-community/whisper-base_timestamped'
-
-let ffmpegPromise: Promise<{
-  ffmpeg: any
-  fetchFile: (file: File | Blob) => Promise<Uint8Array>
-}> | null = null
 
 let transcriberEntry:
   | {
@@ -107,44 +102,30 @@ function configureBrowserInferenceBackend(env: any) {
   wasmBackend.numThreads = Math.max(1, Math.min(2, Math.floor(hardwareThreads / 2)))
 }
 
-async function getFFmpeg(onStatus?: StatusCallback) {
-  if (!ffmpegPromise) {
-    ffmpegPromise = (async () => {
-      onStatus?.('准备音频引擎…')
-      const [{ FFmpeg }, { fetchFile, toBlobURL }] = await Promise.all([
-        import('@ffmpeg/ffmpeg'),
-        import('@ffmpeg/util'),
-      ])
-
-      const ffmpeg = new FFmpeg()
-      await ffmpeg.load({
-        coreURL: await toBlobURL(`${FFMPEG_BASE_URL}/ffmpeg-core.js`, 'text/javascript'),
-        wasmURL: await toBlobURL(`${FFMPEG_BASE_URL}/ffmpeg-core.wasm`, 'application/wasm'),
-        workerURL: await toBlobURL(
-          `${FFMPEG_BASE_URL}/ffmpeg-core.worker.js`,
-          'text/javascript',
-        ),
-      })
-
-      return { ffmpeg, fetchFile }
-    })()
-  }
-
-  return ffmpegPromise
-}
-
 async function extractAudioTrack(file: File, onStatus?: StatusCallback) {
-  const { ffmpeg, fetchFile } = await getFFmpeg(onStatus)
+  const { ffmpeg, fetchFile } = await getSharedFFmpeg(onStatus, '准备音频引擎…')
   const inputExt = file.name.split('.').pop() || 'mp4'
   const inputName = `input-${crypto.randomUUID()}.${inputExt}`
   const outputName = `audio-${crypto.randomUUID()}.wav`
+
+  let latestProgress = 0
   const handleProgress = ({ progress }: { progress: number }) => {
-    onStatus?.(`从视频中提取音频…${Math.round(Math.max(0, Math.min(1, progress)) * 100)}%`)
+    if (!Number.isFinite(progress)) {
+      return
+    }
+
+    latestProgress = Math.max(latestProgress, Math.max(0, Math.min(1, progress)))
+    onStatus?.(`从视频中提取音频…${Math.round(latestProgress * 100)}%`)
   }
 
+  let heartbeatId = 0
   onStatus?.('从视频中提取音频…0%')
   await ffmpeg.writeFile(inputName, await fetchFile(file))
   ffmpeg.on('progress', handleProgress)
+  heartbeatId = window.setInterval(() => {
+    latestProgress = Math.min(0.95, latestProgress + 0.03)
+    onStatus?.(`从视频中提取音频…${Math.round(latestProgress * 100)}%`)
+  }, 1200)
 
   try {
     const code = await ffmpeg.exec([
@@ -164,12 +145,15 @@ async function extractAudioTrack(file: File, onStatus?: StatusCallback) {
       throw new Error('FFmpeg could not extract audio from the video.')
     }
 
+    onStatus?.('从视频中提取音频…100%')
     const data = await ffmpeg.readFile(outputName)
     const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
     const audioBlob = new Blob([bytes], { type: 'audio/wav' })
-    onStatus?.('从视频中提取音频…100%')
     return URL.createObjectURL(audioBlob)
   } finally {
+    if (heartbeatId) {
+      window.clearInterval(heartbeatId)
+    }
     ffmpeg.off('progress', handleProgress)
     await Promise.allSettled([ffmpeg.deleteFile(inputName), ffmpeg.deleteFile(outputName)])
   }
@@ -280,7 +264,7 @@ function normalizeCues(
       {
         startMs: 0,
         endMs: durationMs,
-        text: '暂时没有识别出可用字幕，可以换一段对白更清晰的片段重试。',
+        jaText: '字幕暂时没有识别成功，可以换一段对白更清晰的片段再试。',
       },
     ]
   }

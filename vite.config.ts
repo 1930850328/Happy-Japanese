@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-app.svg'],
       workbox: {
-        globIgnores: ['**/assets/ort-wasm-*.wasm'],
+        globIgnores: ['**/assets/ort-wasm-*.wasm', '**/assets/ffmpeg-core-*.wasm'],
       },
       manifest: {
         name: 'YuruNihongo',

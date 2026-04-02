@@ -1,38 +1,6 @@
-const FFMPEG_CORE_VERSION = '0.12.10'
-const FFMPEG_BASE_URL = `https://cdn.jsdelivr.net/npm/@ffmpeg/core@${FFMPEG_CORE_VERSION}/dist/esm`
+import { getSharedFFmpeg } from './ffmpegRuntime'
 
 type StatusCallback = (message: string) => void
-
-let ffmpegPromise: Promise<{
-  ffmpeg: any
-  fetchFile: (file: File | Blob) => Promise<Uint8Array>
-}> | null = null
-
-async function getFFmpeg(onStatus?: StatusCallback) {
-  if (!ffmpegPromise) {
-    ffmpegPromise = (async () => {
-      onStatus?.('正在准备视频处理引擎…')
-      const [{ FFmpeg }, { fetchFile, toBlobURL }] = await Promise.all([
-        import('@ffmpeg/ffmpeg'),
-        import('@ffmpeg/util'),
-      ])
-
-      const ffmpeg = new FFmpeg()
-      await ffmpeg.load({
-        coreURL: await toBlobURL(`${FFMPEG_BASE_URL}/ffmpeg-core.js`, 'text/javascript'),
-        wasmURL: await toBlobURL(`${FFMPEG_BASE_URL}/ffmpeg-core.wasm`, 'application/wasm'),
-        workerURL: await toBlobURL(
-          `${FFMPEG_BASE_URL}/ffmpeg-core.worker.js`,
-          'text/javascript',
-        ),
-      })
-
-      return { ffmpeg, fetchFile }
-    })()
-  }
-
-  return ffmpegPromise
-}
 
 function getOutputBaseName(fileName: string) {
   return fileName.replace(/\.[^.]+$/, '') || 'converted-video'
@@ -51,6 +19,10 @@ function createFileFromBytes(bytes: Uint8Array, name: string, type: string) {
 }
 
 function formatProgress(progress: number) {
+  if (!Number.isFinite(progress)) {
+    return '0%'
+  }
+
   return `${Math.round(Math.max(0, Math.min(1, progress)) * 100)}%`
 }
 
@@ -65,17 +37,33 @@ async function runFfmpegJob(
   onStatus?: StatusCallback,
   progressPrefix?: string,
 ) {
-  const { ffmpeg, fetchFile } = await getFFmpeg(onStatus)
+  const { ffmpeg, fetchFile } = await getSharedFFmpeg(onStatus, '正在准备视频处理引擎…')
   const inputExt = file.name.split('.').pop() || 'mkv'
   const inputName = `playback-input-${crypto.randomUUID()}.${inputExt}`
+
+  let latestProgress = 0
   const handleProgress = ({ progress }: { progress: number }) => {
+    if (!Number.isFinite(progress)) {
+      return
+    }
+
+    latestProgress = Math.max(latestProgress, Math.max(0, Math.min(1, progress)))
     if (progressPrefix) {
-      onStatus?.(`${progressPrefix}${formatProgress(progress)}`)
+      onStatus?.(`${progressPrefix}${formatProgress(latestProgress)}`)
     }
   }
 
+  let heartbeatId = 0
   await ffmpeg.writeFile(inputName, await fetchFile(file))
   ffmpeg.on('progress', handleProgress)
+
+  if (progressPrefix) {
+    onStatus?.(`${progressPrefix}0%`)
+    heartbeatId = window.setInterval(() => {
+      latestProgress = Math.min(0.95, latestProgress + 0.03)
+      onStatus?.(`${progressPrefix}${formatProgress(latestProgress)}`)
+    }, 1200)
+  }
 
   try {
     const code = await ffmpeg.exec(['-i', inputName, ...args, outputName])
@@ -83,9 +71,16 @@ async function runFfmpegJob(
       throw new Error('当前视频片段处理失败，请换一个更通用的编码格式后再试。')
     }
 
+    if (progressPrefix) {
+      onStatus?.(`${progressPrefix}100%`)
+    }
+
     const data = await ffmpeg.readFile(outputName)
     return data instanceof Uint8Array ? data : new Uint8Array(data)
   } finally {
+    if (heartbeatId) {
+      window.clearInterval(heartbeatId)
+    }
     ffmpeg.off('progress', handleProgress)
     await Promise.allSettled([ffmpeg.deleteFile(inputName), ffmpeg.deleteFile(outputName)])
   }
@@ -226,7 +221,7 @@ export async function ensureBrowserPlayableVideo(file: File, onStatus?: StatusCa
     throw new Error('视频已经完成转码，但浏览器仍然无法正常播放这个文件。')
   }
 
-  onStatus?.('视频已转换成浏览器兼容格式')
+  onStatus?.('视频已转成浏览器兼容格式')
   return {
     file: convertedFile,
     converted: true,
