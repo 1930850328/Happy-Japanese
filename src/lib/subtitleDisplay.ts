@@ -15,7 +15,7 @@ export function hasSentenceLikeChinese(text?: string) {
 
   const chineseCharCount = (normalized.match(/[\u4e00-\u9fff]/g) || []).length
   const slashCount = (normalized.match(/[\\/]/g) || []).length
-  return chineseCharCount >= 6 && slashCount <= 1
+  return chineseCharCount >= 6 && slashCount === 0
 }
 
 export async function enrichSegmentsWithSentenceTranslations(segments: TranscriptSegment[]) {

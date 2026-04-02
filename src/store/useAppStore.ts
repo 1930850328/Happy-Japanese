@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 
-import { videoLessons } from '../data/videoLessons'
 import { defaultGoal, defaultSettings } from '../lib/defaults'
 import { getTodayKey } from '../lib/date'
 import { generateStudyDataFromVideo } from '../lib/autoSubtitles'
@@ -61,7 +60,6 @@ import type {
   VideoLesson,
 } from '../types'
 
-const baseLocalLessons = videoLessons.filter((lesson) => lesson.sourceType === 'local')
 const idleSliceTask: SliceTaskState = {
   status: 'idle',
   percent: 0,
@@ -115,7 +113,7 @@ function buildLessons(importedClips: ImportedClip[], publishedLessons: VideoLess
     return clip.importMode === 'sliced' ? [clipToLesson(clip)] : buildLessonsFromImportedClip(clip)
   })
 
-  return dedupeLessons([...importedLessons, ...publishedLessons, ...baseLocalLessons])
+  return dedupeLessons([...importedLessons, ...publishedLessons])
 }
 
 function mapVocabProgress(records: VocabProgress[]) {
@@ -347,7 +345,7 @@ interface AppStore {
 export const useAppStore = create<AppStore>((set, get) => ({
   initialized: false,
   initializing: false,
-  lessons: baseLocalLessons,
+  lessons: [],
   favorites: [],
   notes: [],
   goal: defaultGoal,

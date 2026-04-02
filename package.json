@@ -16,7 +16,7 @@
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@huggingface/transformers": "^4.0.0",
-    "anime-study-player": "https://codeload.github.com/1930850328/anime-study-player/tar.gz/d23d9d3",
+    "anime-study-player": "https://codeload.github.com/1930850328/anime-study-player/tar.gz/c4fa3b5",
     "dayjs": "^1.11.20",
     "google-translate-api-x": "^10.7.2",
     "idb": "^8.0.3",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.59.1",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
