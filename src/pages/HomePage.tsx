@@ -1,4 +1,4 @@
-import {
+﻿import {
   AnimeStudyPlayer,
   type AnimeStudyPlayerHandle,
   type StudyPlayerSnapshot,
@@ -21,7 +21,12 @@ import { createPortal } from 'react-dom'
 import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
-import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
+import { readVideoMeta } from '../lib/videoMeta'
+import {
+  ensureBrowserPlayableVideo,
+  extractBrowserPlayableAudioClip,
+  extractBrowserPlayableClip,
+} from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
 import type { KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
 import styles from './HomePage.module.css'
@@ -52,20 +57,36 @@ interface PlayerOverlayProps {
   onPlayerError: (lessonId: string) => void
 }
 
-function getPointExample(lesson: VideoLesson, point: KnowledgePoint) {
-  const sourceSegment = lesson.segments.find((segment) => segment.focusTermIds.includes(point.id))
+interface PointExample {
+  label: string
+  ja: string
+  reading: string
+  romaji: string
+  zh: string
+  startMs?: number
+  endMs?: number
+}
+
+function getPointExample(
+  lesson: VideoLesson,
+  point: KnowledgePoint,
+  segments: TranscriptSegment[] = lesson.segments,
+): PointExample {
+  const sourceSegment = segments.find((segment) => segment.focusTermIds.includes(point.id))
   if (sourceSegment) {
     return {
-      label: '片中原句',
+      label: '鐗囦腑鍘熷彞',
       ja: sourceSegment.ja,
       reading: sourceSegment.kana,
       romaji: sourceSegment.romaji,
       zh: sourceSegment.zh,
+      startMs: sourceSegment.startMs,
+      endMs: sourceSegment.endMs,
     }
   }
 
   return {
-    label: '例句',
+    label: '渚嬪彞',
     ja: point.exampleJa,
     reading: point.reading,
     romaji: '',
@@ -114,7 +135,7 @@ function LessonCard({
               <button
                 className={styles.favoriteButton}
                 onClick={() => onFavorite(lesson.id)}
-                aria-label={favorite ? `???? ${lesson.title}` : `?? ${lesson.title}`}
+                aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
                 title={favorite ? '取消收藏这条短视频' : '收藏这条短视频'}
               >
                 {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
@@ -123,7 +144,7 @@ function LessonCard({
                 <button
                   className={styles.deleteButton}
                   onClick={() => onDelete(lesson.id)}
-                  aria-label={`删除 ${lesson.title}`}
+                  aria-label={`鍒犻櫎 ${lesson.title}`}
                   title="删除这条本地短视频"
                 >
                   <Trash2 size={18} />
@@ -159,7 +180,7 @@ function LessonCard({
                 <button
                   className={styles.deleteButton}
                   onClick={() => onDelete(lesson.id)}
-                  aria-label={`鍒犻櫎 ${lesson.title}`}
+                  aria-label={`删除 ${lesson.title}`}
                 >
                   <Trash2 size={18} />
                 </button>
@@ -188,7 +209,7 @@ function LessonCard({
             <div className={styles.previewPoints}>
               {previewPoints.map((point) => (
                 <div key={point.id} className={styles.previewPoint}>
-                  <small>{point.kind === 'grammar' ? '语法' : '词句'}</small>
+                  <small>{point.kind === 'grammar' ? '璇硶' : '璇嶅彞'}</small>
                   <strong>{point.expression}</strong>
                   <span>{point.meaningZh}</span>
                 </div>
@@ -208,7 +229,7 @@ function LessonCard({
             {canDelete ? (
               <button className="softButton" onClick={() => onDelete(lesson.id)}>
                 <Trash2 size={18} />
-                删除短片
+                鍒犻櫎鐭墖
               </button>
             ) : null}
           </div>
@@ -253,6 +274,10 @@ function LessonPlayerOverlay({
   const finishedRef = useRef(false)
   const clipStartMs = lesson.clipStartMs ?? 0
   const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
+  const [playbackWindow, setPlaybackWindow] = useState({
+    startMs: clipStartMs,
+    endMs: clipEndMs,
+  })
 
   const activePoints = playerState?.activePoints ?? []
   const isPlaying = playerState?.isPlaying ?? false
@@ -301,11 +326,15 @@ function LessonPlayerOverlay({
         setPreparingSource(false)
         setSourceStatus('')
         setLocalSourceUrl(lesson.sourceIdOrBlobKey)
+        setPlaybackWindow({
+          startMs: clipStartMs,
+          endMs: clipEndMs,
+        })
         return
       }
 
       setPreparingSource(true)
-      setSourceStatus('正在检查视频兼容性…')
+      setSourceStatus('正在检查视频播放兼容性…')
 
       try {
         const sourceFile =
@@ -316,21 +345,45 @@ function LessonPlayerOverlay({
                 lastModified: Date.now(),
               })
 
-        const { file, converted } = await ensureBrowserPlayableVideo(sourceFile, (message) => {
-          if (!canceled) {
-            setSourceStatus(message)
-          }
-        })
+        const { durationMs: sourceDurationMs } = await readVideoMeta(
+          sourceFile,
+          lesson.title,
+          lesson.theme,
+        )
+        const needsIsolatedClip =
+          clipStartMs > 120 ||
+          clipEndMs < Math.max(clipStartMs + lesson.durationMs, sourceDurationMs - 400)
+        const prepared = needsIsolatedClip
+          ? await extractBrowserPlayableClip(sourceFile, clipStartMs, clipEndMs, (message) => {
+              if (!canceled) {
+                setSourceStatus(message)
+              }
+            })
+          : await ensureBrowserPlayableVideo(sourceFile, (message) => {
+              if (!canceled) {
+                setSourceStatus(message)
+              }
+            })
 
         if (canceled) {
           return
         }
 
         releaseObjectUrl()
-        const objectUrl = URL.createObjectURL(file)
+        const objectUrl = URL.createObjectURL(prepared.file)
         objectUrlRef.current = objectUrl
         setLocalSourceUrl(objectUrl)
-        setSourceStatus(converted ? '已转成浏览器兼容格式，正在准备播放…' : '视频已准备完成')
+        setPlaybackWindow({
+          startMs: 0,
+          endMs: lesson.durationMs,
+        })
+        setSourceStatus(
+          needsIsolatedClip
+            ? '当前学习切片已准备完成'
+            : prepared.converted
+              ? '已转成浏览器兼容格式，正在准备播放'
+              : '视频已准备完成',
+        )
       } catch (error) {
         if (canceled) {
           return
@@ -353,12 +406,27 @@ function LessonPlayerOverlay({
       canceled = true
       releaseObjectUrl()
     }
-  }, [lesson.id, lesson.sourceIdOrBlobKey, localBlob, localFileName, lesson.sourceFileName])
+  }, [
+    clipEndMs,
+    clipStartMs,
+    lesson.durationMs,
+    lesson.id,
+    lesson.sourceFileName,
+    lesson.sourceIdOrBlobKey,
+    lesson.theme,
+    lesson.title,
+    localBlob,
+    localFileName,
+  ])
 
   useEffect(() => {
     finishedRef.current = false
     setPlayerState(null)
-  }, [lesson.id])
+    setPlaybackWindow({
+      startMs: clipStartMs,
+      endMs: clipEndMs,
+    })
+  }, [clipEndMs, clipStartMs, lesson.id])
 
   const pausePlayback = () => {
     playerRef.current?.pause()
@@ -401,7 +469,7 @@ function LessonPlayerOverlay({
               </button>
               <button className="softButton" onClick={onClose}>
                 <X size={18} />
-                关闭
+                鍏抽棴
               </button>
             </div>
           </header>
@@ -413,8 +481,8 @@ function LessonPlayerOverlay({
                 url={localSourceUrl}
                 poster={lesson.cover}
                 durationMs={lesson.durationMs}
-                clipStartMs={clipStartMs}
-                clipEndMs={clipEndMs}
+                clipStartMs={playbackWindow.startMs}
+                clipEndMs={playbackWindow.endMs}
                 segments={playbackSegments}
                 knowledgePoints={lesson.knowledgePoints}
                 showRomaji={showRomaji}
@@ -445,7 +513,7 @@ function LessonPlayerOverlay({
                       speakJapanese(point.expression)
                     }}
                   >
-                    <small>{point.kind === 'grammar' ? '语法' : '词句'}</small>
+                    <small>{point.kind === 'grammar' ? '璇硶' : '璇嶅彞'}</small>
                     <strong>{point.expression}</strong>
                     <span>{point.meaningZh}</span>
                   </button>
@@ -491,7 +559,15 @@ export function HomePage() {
   const [playerLessonId, setPlayerLessonId] = useState<string | null>(null)
   const [drawerLessonId, setDrawerLessonId] = useState<string | null>(null)
   const [playerErrors, setPlayerErrors] = useState<string[]>([])
+  const [drawerSegments, setDrawerSegments] = useState<TranscriptSegment[]>([])
+  const [exampleAudioState, setExampleAudioState] = useState<{
+    pointId: string
+    label: string
+    loading: boolean
+  } | null>(null)
   const cardRefs = useRef<Array<HTMLElement | null>>([])
+  const exampleAudioRef = useRef<HTMLAudioElement | null>(null)
+  const exampleAudioUrlRef = useRef<string | null>(null)
 
   const clipMap = useMemo(() => {
     return importedClips.reduce<Record<string, Blob>>((acc, clip) => {
@@ -533,6 +609,50 @@ export function HomePage() {
       .map((point) => point.expression)
       .join(' / ') ?? '导入你自己的原片后，这里会显示今天重点'
   const currentSentence = activeLesson?.segments[0]?.ja ?? '导入本地原片后会显示片中原句'
+
+  const stopExampleAudio = () => {
+    if (exampleAudioRef.current) {
+      exampleAudioRef.current.pause()
+      exampleAudioRef.current.src = ''
+      exampleAudioRef.current.load()
+      exampleAudioRef.current = null
+    }
+
+    if (exampleAudioUrlRef.current) {
+      URL.revokeObjectURL(exampleAudioUrlRef.current)
+      exampleAudioUrlRef.current = null
+    }
+
+    setExampleAudioState(null)
+  }
+
+  useEffect(() => {
+    return () => {
+      stopExampleAudio()
+    }
+  }, [])
+
+  useEffect(() => {
+    stopExampleAudio()
+
+    if (!drawerLesson) {
+      setDrawerSegments([])
+      return
+    }
+
+    let canceled = false
+    setDrawerSegments(drawerLesson.segments)
+
+    void enrichSegmentsWithSentenceTranslations(drawerLesson.segments).then((segments) => {
+      if (!canceled) {
+        setDrawerSegments(segments)
+      }
+    })
+
+    return () => {
+      canceled = true
+    }
+  }, [drawerLesson])
 
   useEffect(() => {
     if (typeof document === 'undefined') {
@@ -647,6 +767,84 @@ export function HomePage() {
     await addKnowledgeToReview(lesson.knowledgePoints, lesson.id, lesson.id)
   }
 
+  const handlePlayOriginalExample = async (
+    lesson: VideoLesson,
+    point: KnowledgePoint,
+    example: PointExample,
+  ) => {
+    if (example.startMs === undefined || example.endMs === undefined) {
+      speakJapanese(example.ja)
+      return
+    }
+
+    const localBlob = clipMap[lesson.sourceIdOrBlobKey]
+    if (!localBlob) {
+      speakJapanese(example.ja)
+      return
+    }
+
+    stopExampleAudio()
+    setExampleAudioState({
+      pointId: point.id,
+      label: '正在准备片中原声音频…',
+      loading: true,
+    })
+
+    try {
+      const sourceFile =
+        localBlob instanceof File
+          ? localBlob
+          : new File([localBlob], lesson.sourceFileName || `${lesson.id}.mp4`, {
+              type: localBlob.type || 'video/mp4',
+              lastModified: Date.now(),
+            })
+
+      const sourceClipStartMs = lesson.clipStartMs ?? 0
+      const sourceClipEndMs = lesson.clipEndMs ?? sourceClipStartMs + lesson.durationMs
+      const sourceStartMs = Math.max(0, sourceClipStartMs + example.startMs)
+      const sourceEndMs = Math.min(
+        Math.max(sourceStartMs + 240, sourceClipStartMs + example.endMs),
+        sourceClipEndMs,
+      )
+
+      const { file } = await extractBrowserPlayableAudioClip(
+        sourceFile,
+        sourceStartMs,
+        sourceEndMs,
+        (message) => {
+          setExampleAudioState({
+            pointId: point.id,
+            label: message,
+            loading: true,
+          })
+        },
+      )
+
+      const objectUrl = URL.createObjectURL(file)
+      exampleAudioUrlRef.current = objectUrl
+      const audio = new Audio(objectUrl)
+      audio.preload = 'auto'
+      audio.onended = () => {
+        stopExampleAudio()
+      }
+      audio.onerror = () => {
+        stopExampleAudio()
+        speakJapanese(example.ja)
+      }
+      exampleAudioRef.current = audio
+
+      await audio.play()
+      setExampleAudioState({
+        pointId: point.id,
+        label: '片中原声播放中…',
+        loading: false,
+      })
+    } catch {
+      stopExampleAudio()
+      speakJapanese(example.ja)
+    }
+  }
+
   return (
     <div className={`${styles.page} fadeIn`}>
       <section className={styles.hero}>
@@ -654,7 +852,7 @@ export function HomePage() {
           <span className="chip badgeMint">短视频模块已切到独立播放器内核</span>
           <h1 className="pageTitle">先把片中原句看清楚，再顺手记住对应的单词和语法</h1>
           <p className="sectionIntro">
-            首页会优先展示站内本地学习切片。播放器控制条现在已经交给独立内核处理，时间轴、音量、倍速、
+            首页会优先展示站内本地学习切片。播放器控制条已经交给独立内核处理，时间轴、音量、倍速、
             全屏和画中画都在视频内完成；页面层主要保留学习字幕、知识点和收藏删除等操作。
           </p>
         </div>
@@ -676,7 +874,7 @@ export function HomePage() {
       </section>
 
       <section className={styles.feedWrap}>
-        <div className={styles.feed} role="feed" aria-label="日语学习短视频流">
+        <div className={styles.feed} role="feed" aria-label="鏃ヨ瀛︿範鐭棰戞祦">
           {orderedLessons.map((lesson, index) => (
             <section
               key={lesson.id}
@@ -738,7 +936,12 @@ export function HomePage() {
 
               <div className={styles.pointList}>
                 {drawerLesson.knowledgePoints.map((point) => {
-                  const example = getPointExample(drawerLesson, point)
+                  const example = getPointExample(
+                    drawerLesson,
+                    point,
+                    drawerSegments.length > 0 ? drawerSegments : drawerLesson.segments,
+                  )
+                  const isPreparingExample = exampleAudioState?.pointId === point.id
 
                   return (
                     <article key={point.id}>
@@ -746,10 +949,10 @@ export function HomePage() {
                         <div>
                           <span className="chip badgeMint">
                             {point.kind === 'grammar'
-                              ? '语法'
+                              ? '璇硶'
                               : point.kind === 'word'
-                                ? '单词'
-                                : '词句'}
+                                ? '鍗曡瘝'
+                                : '璇嶅彞'}
                           </span>
                           <strong>{point.expression}</strong>
                         </div>
@@ -759,9 +962,17 @@ export function HomePage() {
                             <Volume2 size={18} />
                             发音
                           </button>
-                          <button className="softButton" onClick={() => speakJapanese(example.ja)}>
+                          <button
+                            className="softButton"
+                            onClick={() => void handlePlayOriginalExample(drawerLesson, point, example)}
+                            disabled={Boolean(isPreparingExample && exampleAudioState?.loading)}
+                          >
                             <Play size={18} />
-                            片中原句
+                            {isPreparingExample
+                              ? exampleAudioState?.loading
+                                ? '准备原声…'
+                                : '播放中…'
+                              : '片中原句'}
                           </button>
                         </div>
                       </header>
@@ -780,6 +991,10 @@ export function HomePage() {
                         </span>
                         <p>{example.zh}</p>
                       </div>
+
+                      {isPreparingExample ? (
+                        <p className={styles.sessionHint}>{exampleAudioState?.label}</p>
+                      ) : null}
                     </article>
                   )
                 })}
@@ -801,7 +1016,7 @@ export function HomePage() {
 
               {playerErrors.includes(drawerLesson.id) ? (
                 <p className={styles.sessionHint}>
-                  这条视频曾出现过播放异常，建议检查导入的视频格式是否完整，或者重新导入同一片段。
+                  这条视频曾经出现过播放异常，建议检查导入的视频格式是否完整，或者重新导入同一片段。
                 </p>
               ) : null}
             </aside>
@@ -811,3 +1026,4 @@ export function HomePage() {
     </div>
   )
 }
+

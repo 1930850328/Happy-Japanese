@@ -16,7 +16,7 @@
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@huggingface/transformers": "^4.0.0",
-    "anime-study-player": "https://codeload.github.com/1930850328/anime-study-player/tar.gz/c4fa3b5",
+    "anime-study-player": "https://codeload.github.com/1930850328/anime-study-player/tar.gz/1cd7047",
     "dayjs": "^1.11.20",
     "google-translate-api-x": "^10.7.2",
     "idb": "^8.0.3",

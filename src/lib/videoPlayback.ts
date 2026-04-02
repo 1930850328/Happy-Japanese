@@ -11,7 +11,7 @@ let ffmpegPromise: Promise<{
 async function getFFmpeg(onStatus?: StatusCallback) {
   if (!ffmpegPromise) {
     ffmpegPromise = (async () => {
-      onStatus?.('正在准备视频兼容引擎…')
+      onStatus?.('正在准备视频处理引擎…')
       const [{ FFmpeg }, { fetchFile, toBlobURL }] = await Promise.all([
         import('@ffmpeg/ffmpeg'),
         import('@ffmpeg/util'),
@@ -48,6 +48,47 @@ function createFileFromBytes(bytes: Uint8Array, name: string, type: string) {
     type,
     lastModified: Date.now(),
   })
+}
+
+function formatProgress(progress: number) {
+  return `${Math.round(Math.max(0, Math.min(1, progress)) * 100)}%`
+}
+
+function toFfmpegTimestamp(milliseconds: number) {
+  return (Math.max(0, milliseconds) / 1000).toFixed(3)
+}
+
+async function runFfmpegJob(
+  file: File,
+  outputName: string,
+  args: string[],
+  onStatus?: StatusCallback,
+  progressPrefix?: string,
+) {
+  const { ffmpeg, fetchFile } = await getFFmpeg(onStatus)
+  const inputExt = file.name.split('.').pop() || 'mkv'
+  const inputName = `playback-input-${crypto.randomUUID()}.${inputExt}`
+  const handleProgress = ({ progress }: { progress: number }) => {
+    if (progressPrefix) {
+      onStatus?.(`${progressPrefix}${formatProgress(progress)}`)
+    }
+  }
+
+  await ffmpeg.writeFile(inputName, await fetchFile(file))
+  ffmpeg.on('progress', handleProgress)
+
+  try {
+    const code = await ffmpeg.exec(['-i', inputName, ...args, outputName])
+    if (code !== 0) {
+      throw new Error('当前视频片段处理失败，请换一个更通用的编码格式后再试。')
+    }
+
+    const data = await ffmpeg.readFile(outputName)
+    return data instanceof Uint8Array ? data : new Uint8Array(data)
+  } finally {
+    ffmpeg.off('progress', handleProgress)
+    await Promise.allSettled([ffmpeg.deleteFile(inputName), ffmpeg.deleteFile(outputName)])
+  }
 }
 
 export async function probeVideoPlayback(file: File | Blob, timeoutMs = 5000) {
@@ -153,25 +194,14 @@ export async function ensureBrowserPlayableVideo(file: File, onStatus?: StatusCa
     }
   }
 
-  const { ffmpeg, fetchFile } = await getFFmpeg(onStatus)
-  const inputExt = file.name.split('.').pop() || 'mkv'
-  const inputName = `playback-input-${crypto.randomUUID()}.${inputExt}`
+  onStatus?.('原视频浏览器无法直接播放，正在转成兼容格式…0%')
   const outputName = `playback-output-${crypto.randomUUID()}.mp4`
   const outputBaseName = `${getOutputBaseName(file.name)}-browser.mp4`
-  const handleProgress = ({ progress }: { progress: number }) => {
-    onStatus?.(
-      `正在转换为浏览器兼容格式… ${Math.round(Math.max(0, Math.min(1, progress)) * 100)}%`,
-    )
-  }
 
-  onStatus?.('原视频浏览器无法直接播放，正在转换为兼容格式… 0%')
-  await ffmpeg.writeFile(inputName, await fetchFile(file))
-  ffmpeg.on('progress', handleProgress)
-
-  try {
-    const code = await ffmpeg.exec([
-      '-i',
-      inputName,
+  const bytes = await runFfmpegJob(
+    file,
+    outputName,
+    [
       '-c:v',
       'libx264',
       '-preset',
@@ -184,29 +214,109 @@ export async function ensureBrowserPlayableVideo(file: File, onStatus?: StatusCa
       'aac',
       '-b:a',
       '160k',
-      outputName,
-    ])
+    ],
+    onStatus,
+    '正在转成浏览器兼容格式…',
+  )
 
-    if (code !== 0) {
-      throw new Error('视频兼容转换失败，当前文件无法转成浏览器可播放格式。')
-    }
+  const convertedFile = createFileFromBytes(bytes, outputBaseName, 'video/mp4')
+  const convertedPlayable = await probeVideoPlayback(convertedFile, 8000)
 
-    const data = await ffmpeg.readFile(outputName)
-    const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
-    const convertedFile = createFileFromBytes(bytes, outputBaseName, 'video/mp4')
-    const convertedPlayable = await probeVideoPlayback(convertedFile, 8000)
+  if (!convertedPlayable) {
+    throw new Error('视频已经完成转码，但浏览器仍然无法正常播放这个文件。')
+  }
 
-    if (!convertedPlayable) {
-      throw new Error('视频已经完成转码，但浏览器仍无法播放这个文件。')
-    }
+  onStatus?.('视频已转换成浏览器兼容格式')
+  return {
+    file: convertedFile,
+    converted: true,
+  }
+}
 
-    onStatus?.('已转换为浏览器兼容格式 100%')
-    return {
-      file: convertedFile,
-      converted: true,
-    }
-  } finally {
-    ffmpeg.off('progress', handleProgress)
-    await Promise.allSettled([ffmpeg.deleteFile(inputName), ffmpeg.deleteFile(outputName)])
+export async function extractBrowserPlayableClip(
+  file: File,
+  startMs: number,
+  endMs: number,
+  onStatus?: StatusCallback,
+) {
+  const clipDurationMs = Math.max(300, endMs - startMs)
+  onStatus?.('正在截取当前学习片段…0%')
+
+  const outputName = `playback-clip-${crypto.randomUUID()}.mp4`
+  const outputBaseName = `${getOutputBaseName(file.name)}-${Math.round(startMs)}-${Math.round(endMs)}.mp4`
+
+  const bytes = await runFfmpegJob(
+    file,
+    outputName,
+    [
+      '-ss',
+      toFfmpegTimestamp(startMs),
+      '-t',
+      toFfmpegTimestamp(clipDurationMs),
+      '-c:v',
+      'libx264',
+      '-preset',
+      'veryfast',
+      '-pix_fmt',
+      'yuv420p',
+      '-movflags',
+      '+faststart',
+      '-c:a',
+      'aac',
+      '-b:a',
+      '160k',
+    ],
+    onStatus,
+    '正在截取当前学习片段…',
+  )
+
+  const clipFile = createFileFromBytes(bytes, outputBaseName, 'video/mp4')
+  const clipPlayable = await probeVideoPlayback(clipFile, 8000)
+
+  if (!clipPlayable) {
+    throw new Error('学习片段已经切出来了，但浏览器还是没法正常播放。')
+  }
+
+  onStatus?.('学习片段已准备完成')
+  return {
+    file: clipFile,
+    converted: true,
+  }
+}
+
+export async function extractBrowserPlayableAudioClip(
+  file: File,
+  startMs: number,
+  endMs: number,
+  onStatus?: StatusCallback,
+) {
+  const clipDurationMs = Math.max(240, endMs - startMs)
+  onStatus?.('正在准备片中原声音频…0%')
+
+  const outputName = `playback-audio-${crypto.randomUUID()}.m4a`
+  const outputBaseName = `${getOutputBaseName(file.name)}-${Math.round(startMs)}-${Math.round(endMs)}.m4a`
+
+  const bytes = await runFfmpegJob(
+    file,
+    outputName,
+    [
+      '-ss',
+      toFfmpegTimestamp(startMs),
+      '-t',
+      toFfmpegTimestamp(clipDurationMs),
+      '-vn',
+      '-c:a',
+      'aac',
+      '-b:a',
+      '128k',
+    ],
+    onStatus,
+    '正在准备片中原声音频…',
+  )
+
+  onStatus?.('片中原声音频已准备完成')
+  return {
+    file: createFileFromBytes(bytes, outputBaseName, 'audio/mp4'),
+    converted: true,
   }
 }

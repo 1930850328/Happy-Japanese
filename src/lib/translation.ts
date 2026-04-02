@@ -1,4 +1,4 @@
-const CACHE_KEY = 'yuru-nihongo-translation-cache-v1'
+const CACHE_KEY = 'yuru-nihongo-translation-cache-v2'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 
 const translationCache = new Map<string, string>()

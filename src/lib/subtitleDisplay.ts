@@ -1,26 +1,10 @@
 import type { TranscriptSegment } from '../types'
+import { isUsableChineseSubtitle } from './chineseTranslation'
 import { translateJapaneseSentences } from './translation'
-
-export function hasSentenceLikeChinese(text?: string) {
-  const normalized = text?.trim() ?? ''
-  if (
-    !normalized ||
-    normalized.includes('暂未收录') ||
-    normalized.startsWith('这句') ||
-    normalized.includes('句里') ||
-    normalized.includes('表示“')
-  ) {
-    return false
-  }
-
-  const chineseCharCount = (normalized.match(/[\u4e00-\u9fff]/g) || []).length
-  const slashCount = (normalized.match(/[\\/]/g) || []).length
-  return chineseCharCount >= 6 && slashCount === 0
-}
 
 export async function enrichSegmentsWithSentenceTranslations(segments: TranscriptSegment[]) {
   const pendingSegments = segments.filter(
-    (segment) => segment.ja.trim() && !hasSentenceLikeChinese(segment.zh),
+    (segment) => segment.ja.trim() && !isUsableChineseSubtitle(segment.ja, segment.zh),
   )
 
   if (pendingSegments.length === 0) {
@@ -30,12 +14,12 @@ export async function enrichSegmentsWithSentenceTranslations(segments: Transcrip
   try {
     const translated = await translateJapaneseSentences(pendingSegments.map((segment) => segment.ja))
     return segments.map((segment) => {
-      if (hasSentenceLikeChinese(segment.zh)) {
+      if (isUsableChineseSubtitle(segment.ja, segment.zh)) {
         return segment
       }
 
       const translatedLine = translated[segment.ja]?.trim()
-      if (!translatedLine) {
+      if (!isUsableChineseSubtitle(segment.ja, translatedLine)) {
         return segment
       }
 

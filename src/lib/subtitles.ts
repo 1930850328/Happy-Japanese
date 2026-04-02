@@ -1,4 +1,5 @@
 import type { KnowledgePoint, TranscriptSegment } from '../types'
+import { isUsableChineseSubtitle } from './chineseTranslation'
 import { analyzeJapaneseText, hasReliableMeaning } from './textAnalysis'
 import { translateJapaneseSentences } from './translation'
 
@@ -49,7 +50,7 @@ function extractCueText(lines: string[]) {
   }
 
   const jaLines = cleanedLines.filter((line) => hasJapaneseText(line))
-  const zhLines = cleanedLines.filter((line) => hasChineseText(line) && !/[ぁ-んァ-ン]/u.test(line))
+  const zhLines = cleanedLines.filter((line) => hasChineseText(line) && !/[ぁ-んァ-ヴ]/u.test(line))
   const jaText = jaLines[0]
 
   if (!jaText) {
@@ -179,29 +180,15 @@ function isUsefulToken(partOfSpeech: string, surface: string) {
 function buildTokenExplanation(surface: string, meaningZh: string) {
   return hasReliableMeaning(meaningZh)
     ? `${surface} 在这句里更接近“${meaningZh}”这个意思。`
-    : `${surface} 是片中重复出现的表达，建议结合语境记住它的用法。`
-}
-
-function hasSentenceLikeChinese(text?: string) {
-  const normalized = text?.trim() ?? ''
-  if (
-    !normalized ||
-    normalized.includes('鏆傛湭鏀跺綍') ||
-    normalized.startsWith('这句') ||
-    normalized.includes('句里') ||
-    normalized.includes('表示“')
-  ) {
-    return false
-  }
-
-  const chineseCharCount = (normalized.match(/[\u4e00-\u9fff]/g) || []).length
-  const slashCount = (normalized.match(/[\\/]/g) || []).length
-  return chineseCharCount >= 6 && slashCount === 0
+    : `${surface} 是片中反复出现的表达，建议先结合原句记住它的用法。`
 }
 
 async function resolveChineseLines(cues: SubtitleCue[]) {
   const missingJapaneseLines = cues
-    .filter((cue) => !hasSentenceLikeChinese(cue.zhText) && (cue.jaText ?? cue.text ?? '').trim())
+    .filter((cue) => {
+      const japaneseLine = cue.jaText ?? cue.text ?? ''
+      return japaneseLine.trim() && !isUsableChineseSubtitle(japaneseLine, cue.zhText)
+    })
     .map((cue) => cue.jaText ?? cue.text ?? '')
 
   if (missingJapaneseLines.length === 0) {
@@ -228,11 +215,13 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
     }
 
     const analysis = await analyzeJapaneseText(jaText)
+    const translatedLine = translatedMap.get(jaText)?.trim()
+    const resolvedZh = isUsableChineseSubtitle(jaText, cue.zhText)
+      ? cue.zhText!.trim()
+      : isUsableChineseSubtitle(jaText, translatedLine)
+        ? translatedLine!
+        : ''
     const focusTermIds: string[] = []
-    const resolvedZh =
-      cue.zhText && hasSentenceLikeChinese(cue.zhText)
-        ? cue.zhText
-        : translatedMap.get(jaText) ?? analysis.glossZh
 
     for (const match of analysis.grammarMatches.slice(0, 2)) {
       const pointId = `grammar:${match.id}`
