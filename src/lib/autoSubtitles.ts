@@ -15,8 +15,27 @@ interface SubtitleGenerationResult {
   modelLabel: string
 }
 
+interface TranscriberChunk {
+  text?: string
+  timestamp?: [number, number]
+}
+
+interface TranscriberOutput {
+  text?: string
+  chunks?: TranscriberChunk[]
+}
+
+interface TranscriberOptions {
+  return_timestamps: true
+  chunk_length_s: number
+  stride_length_s: number
+  force_full_sequences: boolean
+  language: string
+  task: string
+}
+
 interface LoadedTranscriber {
-  transcriber: any
+  transcriber: (audioUrl: string, options: TranscriberOptions) => Promise<TranscriberOutput>
   modelLabel: string
 }
 
@@ -27,6 +46,21 @@ interface WhisperLoadStrategy {
 }
 
 type StatusCallback = (message: string) => void
+
+interface BrowserInferenceEnv {
+  allowLocalModels: boolean
+  allowRemoteModels: boolean
+  useBrowserCache: boolean
+  logLevel: unknown
+  backends?: {
+    onnx?: {
+      wasm?: {
+        proxy?: boolean
+        numThreads?: number
+      }
+    }
+  }
+}
 
 const TINY_MODEL = 'onnx-community/whisper-tiny_timestamped'
 const BASE_MODEL = 'onnx-community/whisper-base_timestamped'
@@ -85,13 +119,29 @@ function isQuantizedWeightSessionError(message: string) {
   )
 }
 
+function toBinaryBytes(data: Uint8Array | ArrayBuffer | string) {
+  if (data instanceof Uint8Array) {
+    return data
+  }
+
+  if (typeof data === 'string') {
+    return new TextEncoder().encode(data)
+  }
+
+  return new Uint8Array(data)
+}
+
+function toArrayBuffer(bytes: Uint8Array) {
+  return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer
+}
+
 async function waitForNextPaint() {
   await new Promise<void>((resolve) => {
     requestAnimationFrame(() => resolve())
   })
 }
 
-function configureBrowserInferenceBackend(env: any) {
+function configureBrowserInferenceBackend(env: BrowserInferenceEnv) {
   const wasmBackend = env.backends?.onnx?.wasm
   if (!wasmBackend || typeof window === 'undefined') {
     return
@@ -147,8 +197,8 @@ async function extractAudioTrack(file: File, onStatus?: StatusCallback) {
 
     onStatus?.('从视频中提取音频…100%')
     const data = await ffmpeg.readFile(outputName)
-    const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
-    const audioBlob = new Blob([bytes], { type: 'audio/wav' })
+    const bytes = toBinaryBytes(data)
+    const audioBlob = new Blob([toArrayBuffer(bytes)], { type: 'audio/wav' })
     return URL.createObjectURL(audioBlob)
   } finally {
     if (heartbeatId) {

@@ -1,5 +1,5 @@
 import { BookOpenText, House, LibraryBig, RotateCcw, UserRound } from 'lucide-react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { useAppBootstrap } from '../hooks/useAppBootstrap'
 import { getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
@@ -16,6 +16,7 @@ const navItems = [
 
 export function AppShell() {
   useAppBootstrap()
+  const location = useLocation()
 
   const studyEvents = useAppStore((state) => state.studyEvents)
   const goal = useAppStore((state) => state.goal)
@@ -25,6 +26,7 @@ export function AppShell() {
   const progress = getTodayProgress(studyEvents)
   const completionRatio = getGoalCompletionRatio(progress, goal)
   const showSliceBanner = sliceTask.status !== 'idle' && Boolean(sliceTask.detail)
+  const isImmersiveRoute = location.pathname === '/immersive'
   const sliceBannerText =
     sliceTask.status === 'running'
       ? `切片任务进行中 · ${sliceTask.percent}% · ${sliceTask.detail}`
@@ -33,60 +35,112 @@ export function AppShell() {
         : `切片任务遇到问题 · ${sliceTask.detail}`
 
   return (
-    <div className={styles.shell}>
-      <aside className={styles.rail}>
-        <div className={`${styles.brandCard} glassCard`}>
-          <div className={styles.brandBadge}>ゆる</div>
-          <div className={styles.brandText}>
-            <strong>YuruNihongo</strong>
-            <span>轻松、治愈、能坚持下去的日语学习流</span>
+    <div className={`${styles.shell} ${isImmersiveRoute ? styles.shellImmersive : ''}`}>
+      {!isImmersiveRoute ? (
+        <aside className={styles.rail}>
+          <div className={`${styles.brandCard} glassCard`}>
+            <div className={styles.brandBadge}>ゆる</div>
+            <div className={styles.brandText}>
+              <strong>YuruNihongo</strong>
+              <span>轻松、治愈、能坚持下去的日语学习流</span>
+            </div>
           </div>
-        </div>
 
-        <div className={`${styles.goalCard} glassCard`}>
-          <div className={styles.goalHeader}>
-            <span className="chip badgePeach">今日进度</span>
-            <strong>{Math.round(completionRatio * 100)}%</strong>
+          <div className={`${styles.goalCard} glassCard`}>
+            <div className={styles.goalHeader}>
+              <span className="chip badgePeach">今日进度</span>
+              <strong>{Math.round(completionRatio * 100)}%</strong>
+            </div>
+            <div className={styles.goalBar}>
+              <div style={{ width: `${Math.max(completionRatio * 100, 6)}%` }} />
+            </div>
+            <div className={styles.goalGrid}>
+              <div>
+                <small>视频</small>
+                <strong>
+                  {progress.video}/{goal.videosTarget}
+                </strong>
+              </div>
+              <div>
+                <small>单词</small>
+                <strong>
+                  {progress.word}/{goal.wordsTarget}
+                </strong>
+              </div>
+              <div>
+                <small>语法</small>
+                <strong>
+                  {progress.grammar}/{goal.grammarTarget}
+                </strong>
+              </div>
+              <div>
+                <small>复习</small>
+                <strong>
+                  {progress.review}/{goal.reviewTarget}
+                </strong>
+              </div>
+            </div>
+            <p className={styles.goalHint}>
+              {initialized
+                ? completionRatio >= 1
+                  ? '今天已经顺利打卡，继续保持就很棒。'
+                  : '先看一条视频，再顺手记一句话，会很有进入感。'
+                : '正在载入你的学习小窝……'}
+            </p>
           </div>
-          <div className={styles.goalBar}>
-            <div style={{ width: `${Math.max(completionRatio * 100, 6)}%` }} />
-          </div>
-          <div className={styles.goalGrid}>
-            <div>
-              <small>视频</small>
-              <strong>
-                {progress.video}/{goal.videosTarget}
-              </strong>
-            </div>
-            <div>
-              <small>单词</small>
-              <strong>
-                {progress.word}/{goal.wordsTarget}
-              </strong>
-            </div>
-            <div>
-              <small>语法</small>
-              <strong>
-                {progress.grammar}/{goal.grammarTarget}
-              </strong>
-            </div>
-            <div>
-              <small>复习</small>
-              <strong>
-                {progress.review}/{goal.reviewTarget}
-              </strong>
-            </div>
-          </div>
-          <p className={styles.goalHint}>
-            {initialized
-              ? completionRatio >= 1
-                ? '今天已经顺利打卡，继续保持就很棒。'
-                : '先看一条视频，再顺手记一句话，会很有进入感。'
-              : '正在载入你的学习小窝……'}
-          </p>
-        </div>
 
-        <nav className={styles.nav}>
+          <nav className={styles.nav}>
+            {navItems.map((item) => {
+              const Icon = item.icon
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.to === '/'}
+                  className={({ isActive }) =>
+                    `${styles.navItem} ${isActive ? styles.navItemActive : ''}`
+                  }
+                >
+                  <Icon size={18} />
+                  <span>{item.label}</span>
+                </NavLink>
+              )
+            })}
+          </nav>
+        </aside>
+      ) : null}
+
+      <main className={`${styles.main} ${isImmersiveRoute ? styles.mainImmersive : ''}`}>
+        {!isImmersiveRoute ? (
+          <>
+            <div className={styles.mobileTopBar}>
+              <div>
+                <strong>YuruNihongo</strong>
+                <span>今天也轻松学一点</span>
+              </div>
+              <span className="chip badgeMint">{Math.round(completionRatio * 100)}%</span>
+            </div>
+            {showSliceBanner ? (
+              <NavLink
+                to="/profile"
+                className={`${styles.sliceBanner} ${
+                  sliceTask.status === 'error' ? styles.sliceBannerError : ''
+                }`}
+              >
+                <div className={styles.sliceBannerText}>
+                  <strong>{sliceTask.status === 'running' ? '切片任务进行中' : '切片任务提醒'}</strong>
+                  <span>{sliceBannerText}</span>
+                </div>
+                <span className="chip badgePeach">回到我的页查看</span>
+              </NavLink>
+            ) : null}
+          </>
+        ) : null}
+        <Outlet />
+      </main>
+
+      {!isImmersiveRoute ? (
+        <nav className={styles.bottomNav}>
           {navItems.map((item) => {
             const Icon = item.icon
             return (
@@ -95,7 +149,7 @@ export function AppShell() {
                 to={item.to}
                 end={item.to === '/'}
                 className={({ isActive }) =>
-                  `${styles.navItem} ${isActive ? styles.navItemActive : ''}`
+                  `${styles.bottomItem} ${isActive ? styles.bottomItemActive : ''}`
                 }
               >
                 <Icon size={18} />
@@ -104,51 +158,7 @@ export function AppShell() {
             )
           })}
         </nav>
-      </aside>
-
-      <main className={styles.main}>
-        <div className={styles.mobileTopBar}>
-          <div>
-            <strong>YuruNihongo</strong>
-            <span>今天也轻松学一点</span>
-          </div>
-          <span className="chip badgeMint">{Math.round(completionRatio * 100)}%</span>
-        </div>
-        {showSliceBanner ? (
-          <NavLink
-            to="/profile"
-            className={`${styles.sliceBanner} ${
-              sliceTask.status === 'error' ? styles.sliceBannerError : ''
-            }`}
-          >
-            <div className={styles.sliceBannerText}>
-              <strong>{sliceTask.status === 'running' ? '切片任务进行中' : '切片任务提醒'}</strong>
-              <span>{sliceBannerText}</span>
-            </div>
-            <span className="chip badgePeach">回到我的页查看</span>
-          </NavLink>
-        ) : null}
-        <Outlet />
-      </main>
-
-      <nav className={styles.bottomNav}>
-        {navItems.map((item) => {
-          const Icon = item.icon
-          return (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.to === '/'}
-              className={({ isActive }) =>
-                `${styles.bottomItem} ${isActive ? styles.bottomItemActive : ''}`
-              }
-            >
-              <Icon size={18} />
-              <span>{item.label}</span>
-            </NavLink>
-          )
-        })}
-      </nav>
+      ) : null}
     </div>
   )
 }

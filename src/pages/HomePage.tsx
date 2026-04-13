@@ -11,12 +11,14 @@ import {
   Pause,
   Play,
   RotateCcw,
+  Smartphone,
   Trash2,
   Volume2,
   X,
 } from 'lucide-react'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 
 import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
@@ -342,7 +344,7 @@ function LessonPlayerOverlay({
             ? localBlob
             : new File([localBlob], localFileName || lesson.sourceFileName || `${lesson.id}.mp4`, {
                 type: localBlob.type || 'video/mp4',
-                lastModified: Date.now(),
+                lastModified: 0,
               })
 
         const { durationMs: sourceDurationMs } = await readVideoMeta(
@@ -559,7 +561,10 @@ export function HomePage() {
   const [playerLessonId, setPlayerLessonId] = useState<string | null>(null)
   const [drawerLessonId, setDrawerLessonId] = useState<string | null>(null)
   const [playerErrors, setPlayerErrors] = useState<string[]>([])
-  const [drawerSegments, setDrawerSegments] = useState<TranscriptSegment[]>([])
+  const [drawerSegmentsEntry, setDrawerSegmentsEntry] = useState<{
+    lessonId: string
+    segments: TranscriptSegment[]
+  } | null>(null)
   const [exampleAudioState, setExampleAudioState] = useState<{
     pointId: string
     label: string
@@ -599,9 +604,15 @@ export function HomePage() {
     () => getDailyLessonFeed(localLessons, favorites, studyEvents),
     [favorites, localLessons, studyEvents],
   )
-  const activeLesson = orderedLessons[activeIndex]
+  const safeActiveIndex =
+    orderedLessons.length === 0 ? 0 : Math.min(activeIndex, orderedLessons.length - 1)
+  const activeLesson = orderedLessons[safeActiveIndex]
   const playerLesson = orderedLessons.find((lesson) => lesson.id === playerLessonId) ?? null
   const drawerLesson = orderedLessons.find((lesson) => lesson.id === drawerLessonId) ?? null
+  const drawerSegments =
+    drawerLesson && drawerSegmentsEntry?.lessonId === drawerLesson.id
+      ? drawerSegmentsEntry.segments
+      : drawerLesson?.segments ?? []
   const todayProgress = getTodayProgress(studyEvents)
   const todayFocusText =
     activeLesson?.knowledgePoints
@@ -633,24 +644,26 @@ export function HomePage() {
   }, [])
 
   useEffect(() => {
-    stopExampleAudio()
-
     if (!drawerLesson) {
-      setDrawerSegments([])
-      return
+      return () => {
+        stopExampleAudio()
+      }
     }
 
     let canceled = false
-    setDrawerSegments(drawerLesson.segments)
 
     void enrichSegmentsWithSentenceTranslations(drawerLesson.segments).then((segments) => {
       if (!canceled) {
-        setDrawerSegments(segments)
+        setDrawerSegmentsEntry({
+          lessonId: drawerLesson.id,
+          segments,
+        })
       }
     })
 
     return () => {
       canceled = true
+      stopExampleAudio()
     }
   }, [drawerLesson])
 
@@ -669,12 +682,6 @@ export function HomePage() {
       document.body.style.overflow = originalOverflow
     }
   }, [drawerLessonId, playerLessonId])
-
-  useEffect(() => {
-    if (activeIndex >= orderedLessons.length) {
-      setActiveIndex(0)
-    }
-  }, [activeIndex, orderedLessons.length])
 
   useEffect(() => {
     if (orderedLessons.length === 0) {
@@ -796,7 +803,7 @@ export function HomePage() {
           ? localBlob
           : new File([localBlob], lesson.sourceFileName || `${lesson.id}.mp4`, {
               type: localBlob.type || 'video/mp4',
-              lastModified: Date.now(),
+              lastModified: 0,
             })
 
       const sourceClipStartMs = lesson.clipStartMs ?? 0
@@ -855,6 +862,13 @@ export function HomePage() {
             首页会优先展示站内本地学习切片。播放器控制条已经交给独立内核处理，时间轴、音量、倍速、
             全屏和画中画都在视频内完成；页面层主要保留学习字幕、知识点和收藏删除等操作。
           </p>
+          <div className={styles.heroActions}>
+            <span className="chip badgePeach">当前模式：卡片流</span>
+            <Link to="/immersive" className="softButton secondaryButton">
+              <Smartphone size={18} />
+              打开竖屏刷流
+            </Link>
+          </div>
         </div>
 
         <div className={`${styles.heroStats} glassCard`}>
@@ -936,11 +950,7 @@ export function HomePage() {
 
               <div className={styles.pointList}>
                 {drawerLesson.knowledgePoints.map((point) => {
-                  const example = getPointExample(
-                    drawerLesson,
-                    point,
-                    drawerSegments.length > 0 ? drawerSegments : drawerLesson.segments,
-                  )
+                  const example = getPointExample(drawerLesson, point, drawerSegments)
                   const isPreparingExample = exampleAudioState?.pointId === point.id
 
                   return (
@@ -1026,4 +1036,3 @@ export function HomePage() {
     </div>
   )
 }
-

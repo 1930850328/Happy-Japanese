@@ -1,11 +1,13 @@
 import coreURL from '@ffmpeg/core?url'
 import wasmURL from '@ffmpeg/core/wasm?url'
+import type { FFmpeg } from '@ffmpeg/ffmpeg'
 
 type StatusCallback = (message: string) => void
+type FetchFile = (file?: string | File | Blob) => Promise<Uint8Array>
 
 interface SharedFFmpeg {
-  ffmpeg: any
-  fetchFile: (file: File | Blob) => Promise<Uint8Array>
+  ffmpeg: FFmpeg
+  fetchFile: FetchFile
 }
 
 let sharedPromise: Promise<SharedFFmpeg> | null = null

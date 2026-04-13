@@ -7,6 +7,14 @@
   gap: 18px;
 }
 
+.shellImmersive {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
 .rail {
   position: sticky;
   top: 20px;
@@ -154,6 +162,11 @@
   gap: 12px;
 }
 
+.mainImmersive {
+  min-height: 100vh;
+  gap: 0;
+}
+
 .sliceBanner {
   display: flex;
   align-items: center;
@@ -214,6 +227,11 @@
     width: min(100%, 100vw);
     padding: 12px 12px 88px;
     grid-template-columns: 1fr;
+  }
+
+  .shellImmersive {
+    width: 100%;
+    padding: 0;
   }
 
   .rail {

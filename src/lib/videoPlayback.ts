@@ -2,6 +2,18 @@ import { getSharedFFmpeg } from './ffmpegRuntime'
 
 type StatusCallback = (message: string) => void
 
+function toBinaryBytes(data: Uint8Array | ArrayBuffer | string) {
+  if (data instanceof Uint8Array) {
+    return data
+  }
+
+  if (typeof data === 'string') {
+    return new TextEncoder().encode(data)
+  }
+
+  return new Uint8Array(data)
+}
+
 function getOutputBaseName(fileName: string) {
   return fileName.replace(/\.[^.]+$/, '') || 'converted-video'
 }
@@ -76,7 +88,7 @@ async function runFfmpegJob(
     }
 
     const data = await ffmpeg.readFile(outputName)
-    return data instanceof Uint8Array ? data : new Uint8Array(data)
+    return toBinaryBytes(data)
   } finally {
     if (heartbeatId) {
       window.clearInterval(heartbeatId)

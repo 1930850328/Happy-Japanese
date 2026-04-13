@@ -16,6 +16,13 @@
   align-content: center;
 }
 
+.heroActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .heroStats {
   display: grid;
   gap: 0.9rem;
