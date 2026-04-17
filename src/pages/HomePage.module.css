@@ -124,6 +124,14 @@
   flex-wrap: wrap;
 }
 
+.topChipRow {
+  min-width: 0;
+}
+
+.topChipRow > * {
+  min-width: 0;
+}
+
 .favoriteButton {
   width: 48px;
   height: 48px;
@@ -188,6 +196,10 @@
   flex-wrap: wrap;
 }
 
+.cardHeader > * {
+  min-width: 0;
+}
+
 .lessonTitleBlock {
   display: grid;
   gap: 0.45rem;
@@ -230,6 +242,8 @@
 .previewBlock strong,
 .previewPoint strong {
   font-family: var(--font-ui);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .previewMeta,
@@ -256,6 +270,8 @@
 .sessionHint {
   margin: 0;
   line-height: 1.7;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .previewPoint {
@@ -277,6 +293,7 @@
 
 .credit {
   color: var(--text-soft);
+  overflow-wrap: anywhere;
   word-break: break-word;
 }
 

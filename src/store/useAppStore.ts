@@ -2,7 +2,6 @@ import { create } from 'zustand'
 
 import { defaultGoal, defaultSettings } from '../lib/defaults'
 import { getTodayKey } from '../lib/date'
-import { generateStudyDataFromVideo } from '../lib/autoSubtitles'
 import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { loadPublishedLessons } from '../lib/publishedLessons'
 import {
@@ -141,7 +140,6 @@ function createCoverSvg(title: string, theme: string) {
       <rect x="44" y="214" width="292" height="98" rx="24" fill="rgba(255,255,255,0.76)" />
       <text x="48" y="78" fill="#815848" font-size="18" font-family="sans-serif">${safeTheme}</text>
       <text x="60" y="258" fill="#4b362d" font-size="30" font-family="sans-serif">${safeTitle}</text>
-      <text x="60" y="290" fill="#866457" font-size="16" font-family="sans-serif">Local Original Study Clip</text>
     </svg>
   `
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
@@ -1013,6 +1011,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     }
 
     onStatus?.('准备自动字幕…')
+    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitles')
     const studyData = await generateStudyDataFromVideo(clip.blob as File, clip.durationMs, onStatus)
 
     const updatedClip: ImportedClip = {

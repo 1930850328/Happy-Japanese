@@ -110,7 +110,7 @@ function shortenTitle(input: string) {
 function buildSliceTitle(clip: ImportedClip, index: number, points: KnowledgePoint[]) {
   const lead = points.slice(0, 1).map((point) => point.expression).join(' / ')
   const baseTitle = shortenTitle(clip.sourceAnimeTitle ?? clip.title)
-  return lead ? `${baseTitle} - ${lead}` : `${baseTitle} - clip ${index + 1}`
+  return lead ? `${baseTitle} - ${lead}` : `${baseTitle} - 切片 ${index + 1}`
 }
 
 function summarizePoint(point: KnowledgePoint) {
@@ -127,9 +127,7 @@ function summarizePoint(point: KnowledgePoint) {
 
 function buildSliceDescription(points: KnowledgePoint[]) {
   const summary = points.slice(0, 3).map(summarizePoint).join(' / ')
-  return summary ? `Focus: ${summary}` : 'Focus on the original line first.'
-
-
+  return summary ? `学习重点：${summary}` : '先从片中原句入手，再带着知识点往下学。'
 }
 
 function overlap(a: CandidateWindow, b: CandidateWindow) {

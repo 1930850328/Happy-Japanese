@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test:e2e": "playwright test",
     "preview": "vite preview",
     "prepare:content": "node ./scripts/prepare-content.mjs",
     "ingest:video": "node ./scripts/ingest-video.mjs",

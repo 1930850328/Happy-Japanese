@@ -19,7 +19,6 @@ function createGradientCover(title: string, subtitle: string, accentA: string, a
       <circle cx="610" cy="142" r="46" fill="rgba(255,255,255,0.22)" />
       <text x="58" y="130" fill="#7d5647" font-size="26" font-family="sans-serif">${subtitle}</text>
       <text x="58" y="288" fill="#4a352d" font-size="56" font-family="sans-serif">${title}</text>
-      <text x="58" y="352" fill="#5f4b43" font-size="26" font-family="sans-serif">Official Clip Micro Lesson</text>
     </svg>
   `
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`

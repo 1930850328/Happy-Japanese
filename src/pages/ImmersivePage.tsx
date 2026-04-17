@@ -20,30 +20,12 @@ import type { Swiper as SwiperInstance } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 
+import { usePreparedPlaybackSource } from '../hooks/usePreparedPlaybackSource'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
 import { getDailyLessonFeed } from '../lib/selectors'
-import { readVideoMeta } from '../lib/videoMeta'
-import { ensureBrowserPlayableVideo, extractBrowserPlayableClip } from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
 import type { TranscriptSegment, VideoLesson } from '../types'
 import styles from './ImmersivePage.module.css'
-
-interface PreparedPlaybackState {
-  sourceUrl: string
-  preparing: boolean
-  status: string
-  playbackWindow: {
-    startMs: number
-    endMs: number
-  }
-}
-
-interface PreparedPlaybackOptions {
-  lesson: VideoLesson
-  localBlob?: Blob
-  localFileName?: string
-  enabled: boolean
-}
 
 interface ImmersiveSlideProps {
   lesson: VideoLesson
@@ -58,176 +40,6 @@ interface ImmersiveSlideProps {
   onToggleFavorite: (lessonId: string) => void
   onAddReview: (lesson: VideoLesson) => Promise<number>
   onRecordCompletion: (lesson: VideoLesson) => Promise<boolean>
-}
-
-function usePreparedPlaybackSource({
-  lesson,
-  localBlob,
-  localFileName,
-  enabled,
-}: PreparedPlaybackOptions): PreparedPlaybackState {
-  const clipStartMs = lesson.clipStartMs ?? 0
-  const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
-  const objectUrlRef = useRef<string | null>(null)
-  const [state, setState] = useState<PreparedPlaybackState>(() => ({
-    sourceUrl: localBlob ? '' : lesson.sourceIdOrBlobKey,
-    preparing: false,
-    status: '',
-    playbackWindow: {
-      startMs: clipStartMs,
-      endMs: clipEndMs,
-    },
-  }))
-
-  useEffect(() => {
-    return () => {
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current)
-        objectUrlRef.current = null
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (objectUrlRef.current) {
-      URL.revokeObjectURL(objectUrlRef.current)
-      objectUrlRef.current = null
-    }
-
-    setState({
-      sourceUrl: localBlob ? '' : lesson.sourceIdOrBlobKey,
-      preparing: false,
-      status: '',
-      playbackWindow: {
-        startMs: clipStartMs,
-        endMs: clipEndMs,
-      },
-    })
-  }, [
-    clipEndMs,
-    clipStartMs,
-    lesson.durationMs,
-    lesson.id,
-    lesson.sourceIdOrBlobKey,
-    localBlob,
-  ])
-
-  useEffect(() => {
-    let canceled = false
-
-    const releaseObjectUrl = () => {
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current)
-        objectUrlRef.current = null
-      }
-    }
-
-    const prepareSource = async () => {
-      if (!localBlob) {
-        return
-      }
-
-      if (!enabled || state.sourceUrl) {
-        return
-      }
-
-      setState((current) => ({
-        ...current,
-        preparing: true,
-        status: '正在检查视频播放兼容性…',
-      }))
-
-      try {
-        const sourceFile =
-          localBlob instanceof File
-            ? localBlob
-            : new File([localBlob], localFileName || lesson.sourceFileName || `${lesson.id}.mp4`, {
-                type: localBlob.type || 'video/mp4',
-                lastModified: 0,
-              })
-
-        const { durationMs: sourceDurationMs } = await readVideoMeta(
-          sourceFile,
-          lesson.title,
-          lesson.theme,
-        )
-        const needsIsolatedClip =
-          clipStartMs > 120 ||
-          clipEndMs < Math.max(clipStartMs + lesson.durationMs, sourceDurationMs - 400)
-        const prepared = needsIsolatedClip
-          ? await extractBrowserPlayableClip(sourceFile, clipStartMs, clipEndMs, (message) => {
-              if (!canceled) {
-                setState((current) => ({
-                  ...current,
-                  status: message,
-                }))
-              }
-            })
-          : await ensureBrowserPlayableVideo(sourceFile, (message) => {
-              if (!canceled) {
-                setState((current) => ({
-                  ...current,
-                  status: message,
-                }))
-              }
-            })
-
-        if (canceled) {
-          return
-        }
-
-        releaseObjectUrl()
-        const objectUrl = URL.createObjectURL(prepared.file)
-        objectUrlRef.current = objectUrl
-        setState({
-          sourceUrl: objectUrl,
-          preparing: false,
-          status: needsIsolatedClip
-            ? '当前学习切片已准备完成'
-            : prepared.converted
-              ? '已转成浏览器兼容格式，正在准备播放'
-              : '视频已准备完成',
-          playbackWindow: {
-            startMs: 0,
-            endMs: lesson.durationMs,
-          },
-        })
-      } catch (error) {
-        if (canceled) {
-          return
-        }
-
-        setState((current) => ({
-          ...current,
-          preparing: false,
-          status:
-            error instanceof Error
-              ? error.message
-              : '当前视频暂时无法播放，请换一个更通用的编码格式。',
-        }))
-      }
-    }
-
-    void prepareSource()
-
-    return () => {
-      canceled = true
-    }
-  }, [
-    clipEndMs,
-    clipStartMs,
-    enabled,
-    lesson.durationMs,
-    lesson.id,
-    lesson.sourceFileName,
-    lesson.theme,
-    lesson.title,
-    localBlob,
-    localFileName,
-    state.sourceUrl,
-  ])
-
-  return state
 }
 
 function formatDuration(durationMs: number) {
@@ -325,7 +137,7 @@ function ImmersiveSlide({
 
       <div className={styles.slideContent}>
         <div className={styles.viewerShell}>
-          <div className={styles.playerStage}>
+          <div className={styles.playerStage} data-testid="immersive-stage">
             {sourceUrl ? (
               <AnimeStudyPlayer
                 ref={playerRef}
@@ -350,99 +162,110 @@ function ImmersiveSlide({
                 <span>{status || '播放器会在切到当前视频前，优先准备浏览器兼容格式。'}</span>
               </div>
             )}
-          </div>
+            <div className={styles.playerShade} />
 
-          <div className={styles.actionRail}>
-            <button
-              type="button"
-              className={styles.actionButton}
-              onClick={() => onToggleFavorite(lesson.id)}
-              aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
-            >
-              {favorite ? <Heart size={20} fill="currentColor" /> : <HeartOff size={20} />}
-              <span>{favorite ? '已收藏' : '收藏'}</span>
-            </button>
+            <div className={styles.actionRail} data-testid="immersive-action-rail">
+              <button
+                type="button"
+                className={styles.actionButton}
+                onClick={() => onToggleFavorite(lesson.id)}
+                aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
+              >
+                {favorite ? <Heart size={20} fill="currentColor" /> : <HeartOff size={20} />}
+                <span>{favorite ? '已收藏' : '收藏'}</span>
+              </button>
 
-            <button type="button" className={styles.actionButton} onClick={() => void handleAddReview()}>
-              <BookMarked size={20} />
-              <span>加复习</span>
-            </button>
+              <button
+                type="button"
+                className={styles.actionButton}
+                onClick={() => void handleAddReview()}
+              >
+                <BookMarked size={20} />
+                <span>加复习</span>
+              </button>
 
-            <a
-              className={styles.actionButton}
-              href={lesson.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`打开 ${lesson.title} 的来源页面`}
-            >
-              <ExternalLink size={20} />
-              <span>来源</span>
-            </a>
-          </div>
-        </div>
-
-        <div className={`${styles.infoCard} glassCard`}>
-          <div className={styles.infoHeader}>
-            <div className={styles.infoBadges}>
-              <span className="chip badgeMint">竖屏刷流</span>
-              <span className="chip">{lesson.theme}</span>
-              <span className="chip badgePeach">{lesson.difficulty}</span>
-              <span className="chip">{lesson.sliceLabel ?? `${formatDuration(lesson.durationMs)} 微课`}</span>
+              <a
+                className={styles.actionButton}
+                href={lesson.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`打开 ${lesson.title} 的来源页面`}
+              >
+                <ExternalLink size={20} />
+                <span>来源</span>
+              </a>
             </div>
 
-            <div className={styles.statusStack}>
-              {preparing ? <span className="chip badgePink">视频准备中</span> : null}
-              {!preparing && status ? <span className="chip">{status}</span> : null}
-              {playerState?.isAutoplayBlocked ? <span className="chip badgePink">自动播放被浏览器拦截</span> : null}
-              {completionFeedback ? <span className="chip badgeMint">{completionFeedback}</span> : null}
-              {reviewFeedback ? <span className="chip badgePeach">{reviewFeedback}</span> : null}
+            <div className={styles.infoCard} data-testid="immersive-info">
+              <div className={styles.infoHeader}>
+                <div className={styles.infoBadges}>
+                  <span className="chip badgeMint">竖屏刷流</span>
+                  <span className="chip">{lesson.theme}</span>
+                  <span className="chip badgePeach">{lesson.difficulty}</span>
+                  <span className="chip">{lesson.sliceLabel ?? `${formatDuration(lesson.durationMs)} 微课`}</span>
+                </div>
+
+                <div className={styles.statusStack}>
+                  {preparing ? <span className="chip badgePink">视频准备中</span> : null}
+                  {!preparing && status ? <span className="chip">{status}</span> : null}
+                  {playerState?.isAutoplayBlocked ? (
+                    <span className="chip badgePink">自动播放被浏览器拦截</span>
+                  ) : null}
+                  {completionFeedback ? <span className="chip badgeMint">{completionFeedback}</span> : null}
+                  {reviewFeedback ? <span className="chip badgePeach">{reviewFeedback}</span> : null}
+                </div>
+              </div>
+
+              <div className={styles.lessonHeader}>
+                <div>
+                  <h1 className={styles.lessonTitle}>{lesson.title}</h1>
+                  <p className={styles.lessonMeta}>
+                    {lesson.sourceProvider}
+                    <span>·</span>
+                    <span>{formatDuration(lesson.durationMs)}</span>
+                  </p>
+                </div>
+                <span className={styles.focusTag}>
+                  <Sparkles size={16} />
+                  学习焦点
+                </span>
+              </div>
+
+              <p className={styles.lessonDescription}>{lesson.description}</p>
+
+              {currentSegment ? (
+                <div className={styles.currentSentenceCard}>
+                  <strong>{currentSegment.ja}</strong>
+                  <span>
+                    {showRomaji
+                      ? `${currentSegment.kana} / ${currentSegment.romaji}`
+                      : currentSegment.kana}
+                  </span>
+                  <p>{currentSegment.zh}</p>
+                </div>
+              ) : null}
+
+              <div className={styles.pointGrid}>
+                {visiblePoints.map((point) => (
+                  <article key={point.id} className={styles.pointCard}>
+                    <small>{point.kind === 'grammar' ? '语法' : point.kind === 'word' ? '单词' : '短句'}</small>
+                    <strong>{point.expression}</strong>
+                    <span>{point.meaningZh}</span>
+                  </article>
+                ))}
+              </div>
+
+              <div className={styles.tagRow}>
+                {lesson.tags.slice(0, 4).map((tag) => (
+                  <span key={tag} className="chip">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <p className={styles.creditLine}>{lesson.creditLine}</p>
             </div>
           </div>
-
-          <div className={styles.lessonHeader}>
-            <div>
-              <h1 className={styles.lessonTitle}>{lesson.title}</h1>
-              <p className={styles.lessonMeta}>
-                {lesson.sourceProvider}
-                <span>·</span>
-                <span>{formatDuration(lesson.durationMs)}</span>
-              </p>
-            </div>
-            <span className={styles.focusTag}>
-              <Sparkles size={16} />
-              学习焦点
-            </span>
-          </div>
-
-          <p className={styles.lessonDescription}>{lesson.description}</p>
-
-          {currentSegment ? (
-            <div className={styles.currentSentenceCard}>
-              <strong>{currentSegment.ja}</strong>
-              <span>{showRomaji ? `${currentSegment.kana} / ${currentSegment.romaji}` : currentSegment.kana}</span>
-              <p>{currentSegment.zh}</p>
-            </div>
-          ) : null}
-
-          <div className={styles.pointGrid}>
-            {visiblePoints.map((point) => (
-              <article key={point.id} className={styles.pointCard}>
-                <small>{point.kind === 'grammar' ? '语法' : point.kind === 'word' ? '单词' : '短句'}</small>
-                <strong>{point.expression}</strong>
-                <span>{point.meaningZh}</span>
-              </article>
-            ))}
-          </div>
-
-          <div className={styles.tagRow}>
-            {lesson.tags.slice(0, 4).map((tag) => (
-              <span key={tag} className="chip">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <p className={styles.creditLine}>{lesson.creditLine}</p>
         </div>
       </div>
     </div>
@@ -594,7 +417,7 @@ export function ImmersivePage() {
               lesson={lesson}
               localBlob={clipMap[lesson.sourceIdOrBlobKey]}
               active={index === safeActiveIndex}
-              shouldPrepare={Math.abs(index - safeActiveIndex) <= 1}
+              shouldPrepare={index === safeActiveIndex || index === safeActiveIndex + 1}
               favorite={favorites.includes(lesson.id)}
               showRomaji={settings.showRomaji}
               showPlaybackKnowledge={settings.showPlaybackKnowledge}

@@ -20,15 +20,11 @@ import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 
+import { usePreparedPlaybackSource } from '../hooks/usePreparedPlaybackSource'
 import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
-import { readVideoMeta } from '../lib/videoMeta'
-import {
-  ensureBrowserPlayableVideo,
-  extractBrowserPlayableAudioClip,
-  extractBrowserPlayableClip,
-} from '../lib/videoPlayback'
+import { extractBrowserPlayableAudioClip } from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
 import type { KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
 import styles from './HomePage.module.css'
@@ -77,7 +73,7 @@ function getPointExample(
   const sourceSegment = segments.find((segment) => segment.focusTermIds.includes(point.id))
   if (sourceSegment) {
     return {
-      label: '鐗囦腑鍘熷彞',
+      label: '片中原句',
       ja: sourceSegment.ja,
       reading: sourceSegment.kana,
       romaji: sourceSegment.romaji,
@@ -88,7 +84,7 @@ function getPointExample(
   }
 
   return {
-    label: '渚嬪彞',
+    label: '例句',
     ja: point.exampleJa,
     reading: point.reading,
     romaji: '',
@@ -119,7 +115,7 @@ function LessonCard({
 
   return (
     <article className={styles.slide}>
-      <div className={styles.playerCard}>
+      <div className={styles.playerCard} data-testid="lesson-card">
         <div className={styles.posterStage}>
           <img className={styles.posterImage} src={lesson.cover} alt={lesson.title} />
           <div className={styles.posterShade} />
@@ -129,7 +125,7 @@ function LessonCard({
               <span className="chip badgePeach">{lesson.theme}</span>
               <span className="chip">{lesson.difficulty}</span>
               <span className="chip badgeMint">
-                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} ?????`}
+                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习切片`}
               </span>
             </div>
 
@@ -146,7 +142,7 @@ function LessonCard({
                 <button
                   className={styles.deleteButton}
                   onClick={() => onDelete(lesson.id)}
-                  aria-label={`鍒犻櫎 ${lesson.title}`}
+                  aria-label={`删除 ${lesson.title}`}
                   title="删除这条本地短视频"
                 >
                   <Trash2 size={18} />
@@ -166,7 +162,7 @@ function LessonCard({
               <span className="chip badgePeach">{lesson.theme}</span>
               <span className="chip">{lesson.difficulty}</span>
               <span className="chip badgeMint">
-                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))}s study clip`}
+                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习切片`}
               </span>
             </div>
 
@@ -174,7 +170,7 @@ function LessonCard({
               <button
                 className={styles.favoriteButton}
                 onClick={() => onFavorite(lesson.id)}
-                aria-label={favorite ? `Remove favorite ${lesson.title}` : `Favorite ${lesson.title}`}
+                aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
               >
                 {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
               </button>
@@ -191,8 +187,12 @@ function LessonCard({
           </div>
 
           <div className={styles.lessonTitleBlock}>
-            <h2 className={styles.lessonTitle}>{lesson.title}</h2>
-            <p className={styles.lessonDescription}>{lesson.description}</p>
+            <h2 className={styles.lessonTitle} data-testid="lesson-title">
+              {lesson.title}
+            </h2>
+            <p className={styles.lessonDescription} data-testid="lesson-description">
+              {lesson.description}
+            </p>
           </div>
 
           {previewSegment ? (
@@ -211,7 +211,7 @@ function LessonCard({
             <div className={styles.previewPoints}>
               {previewPoints.map((point) => (
                 <div key={point.id} className={styles.previewPoint}>
-                  <small>{point.kind === 'grammar' ? '璇硶' : '璇嶅彞'}</small>
+                  <small>{point.kind === 'grammar' ? '语法' : '短句'}</small>
                   <strong>{point.expression}</strong>
                   <span>{point.meaningZh}</span>
                 </div>
@@ -231,7 +231,7 @@ function LessonCard({
             {canDelete ? (
               <button className="softButton" onClick={() => onDelete(lesson.id)}>
                 <Trash2 size={18} />
-                鍒犻櫎鐭墖
+                删除短片
               </button>
             ) : null}
           </div>
@@ -266,24 +266,37 @@ function LessonPlayerOverlay({
   onFavorite,
   onPlayerError,
 }: PlayerOverlayProps) {
-  const [playerState, setPlayerState] = useState<StudyPlayerSnapshot | null>(null)
-  const [localSourceUrl, setLocalSourceUrl] = useState(localBlob ? '' : lesson.sourceIdOrBlobKey)
-  const [sourceStatus, setSourceStatus] = useState('')
-  const [preparingSource, setPreparingSource] = useState(Boolean(localBlob))
+  const [playerStateEntry, setPlayerStateEntry] = useState<{
+    lessonId: string
+    snapshot: StudyPlayerSnapshot
+  } | null>(null)
   const playerRef = useRef<AnimeStudyPlayerHandle | null>(null)
-  const objectUrlRef = useRef<string | null>(null)
   const onPlayerErrorRef = useRef(onPlayerError)
   const finishedRef = useRef(false)
   const clipStartMs = lesson.clipStartMs ?? 0
   const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
-  const [playbackWindow, setPlaybackWindow] = useState({
-    startMs: clipStartMs,
-    endMs: clipEndMs,
+  const {
+    sourceUrl: localSourceUrl,
+    preparing: preparingSource,
+    status: sourceStatus,
+    playbackWindow,
+  } = usePreparedPlaybackSource({
+    lesson,
+    localBlob,
+    localFileName,
+    enabled: true,
   })
+  const playerState =
+    playerStateEntry?.lessonId === lesson.id ? playerStateEntry.snapshot : null
 
   const activePoints = playerState?.activePoints ?? []
   const isPlaying = playerState?.isPlaying ?? false
-  const [playbackSegments, setPlaybackSegments] = useState<TranscriptSegment[]>(lesson.segments)
+  const [playbackSegmentsEntry, setPlaybackSegmentsEntry] = useState<{
+    lessonId: string
+    segments: TranscriptSegment[]
+  } | null>(null)
+  const playbackSegments =
+    playbackSegmentsEntry?.lessonId === lesson.id ? playbackSegmentsEntry.segments : lesson.segments
 
   useEffect(() => {
     onPlayerErrorRef.current = onPlayerError
@@ -291,11 +304,13 @@ function LessonPlayerOverlay({
 
   useEffect(() => {
     let canceled = false
-    setPlaybackSegments(lesson.segments)
 
     void enrichSegmentsWithSentenceTranslations(lesson.segments).then((segments) => {
       if (!canceled) {
-        setPlaybackSegments(segments)
+        setPlaybackSegmentsEntry({
+          lessonId: lesson.id,
+          segments,
+        })
       }
     })
 
@@ -305,130 +320,14 @@ function LessonPlayerOverlay({
   }, [lesson.id, lesson.segments])
 
   useEffect(() => {
-    return () => {
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current)
-        objectUrlRef.current = null
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    let canceled = false
-
-    const releaseObjectUrl = () => {
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current)
-        objectUrlRef.current = null
-      }
-    }
-
-    const prepareSource = async () => {
-      if (!localBlob) {
-        setPreparingSource(false)
-        setSourceStatus('')
-        setLocalSourceUrl(lesson.sourceIdOrBlobKey)
-        setPlaybackWindow({
-          startMs: clipStartMs,
-          endMs: clipEndMs,
-        })
-        return
-      }
-
-      setPreparingSource(true)
-      setSourceStatus('正在检查视频播放兼容性…')
-
-      try {
-        const sourceFile =
-          localBlob instanceof File
-            ? localBlob
-            : new File([localBlob], localFileName || lesson.sourceFileName || `${lesson.id}.mp4`, {
-                type: localBlob.type || 'video/mp4',
-                lastModified: 0,
-              })
-
-        const { durationMs: sourceDurationMs } = await readVideoMeta(
-          sourceFile,
-          lesson.title,
-          lesson.theme,
-        )
-        const needsIsolatedClip =
-          clipStartMs > 120 ||
-          clipEndMs < Math.max(clipStartMs + lesson.durationMs, sourceDurationMs - 400)
-        const prepared = needsIsolatedClip
-          ? await extractBrowserPlayableClip(sourceFile, clipStartMs, clipEndMs, (message) => {
-              if (!canceled) {
-                setSourceStatus(message)
-              }
-            })
-          : await ensureBrowserPlayableVideo(sourceFile, (message) => {
-              if (!canceled) {
-                setSourceStatus(message)
-              }
-            })
-
-        if (canceled) {
-          return
-        }
-
-        releaseObjectUrl()
-        const objectUrl = URL.createObjectURL(prepared.file)
-        objectUrlRef.current = objectUrl
-        setLocalSourceUrl(objectUrl)
-        setPlaybackWindow({
-          startMs: 0,
-          endMs: lesson.durationMs,
-        })
-        setSourceStatus(
-          needsIsolatedClip
-            ? '当前学习切片已准备完成'
-            : prepared.converted
-              ? '已转成浏览器兼容格式，正在准备播放'
-              : '视频已准备完成',
-        )
-      } catch (error) {
-        if (canceled) {
-          return
-        }
-
-        setSourceStatus(
-          error instanceof Error ? error.message : '当前视频暂时无法播放，请换一个更通用的编码格式。',
-        )
-        onPlayerErrorRef.current(lesson.id)
-      } finally {
-        if (!canceled) {
-          setPreparingSource(false)
-        }
-      }
-    }
-
-    void prepareSource()
-
-    return () => {
-      canceled = true
-      releaseObjectUrl()
-    }
-  }, [
-    clipEndMs,
-    clipStartMs,
-    lesson.durationMs,
-    lesson.id,
-    lesson.sourceFileName,
-    lesson.sourceIdOrBlobKey,
-    lesson.theme,
-    lesson.title,
-    localBlob,
-    localFileName,
-  ])
-
-  useEffect(() => {
     finishedRef.current = false
-    setPlayerState(null)
-    setPlaybackWindow({
-      startMs: clipStartMs,
-      endMs: clipEndMs,
-    })
   }, [clipEndMs, clipStartMs, lesson.id])
+
+  useEffect(() => {
+    if (localBlob && !preparingSource && !localSourceUrl && sourceStatus) {
+      onPlayerErrorRef.current(lesson.id)
+    }
+  }, [lesson.id, localBlob, localSourceUrl, preparingSource, sourceStatus])
 
   const pausePlayback = () => {
     playerRef.current?.pause()
@@ -471,7 +370,7 @@ function LessonPlayerOverlay({
               </button>
               <button className="softButton" onClick={onClose}>
                 <X size={18} />
-                鍏抽棴
+                关闭
               </button>
             </div>
           </header>
@@ -491,7 +390,12 @@ function LessonPlayerOverlay({
                 showSubtitleReading={false}
                 showJapaneseSubtitle={showJapaneseSubtitle}
                 showChineseSubtitle={showChineseSubtitle}
-                onStateChange={setPlayerState}
+                onStateChange={(snapshot) => {
+                  setPlayerStateEntry({
+                    lessonId: lesson.id,
+                    snapshot,
+                  })
+                }}
                 onFinish={finishSession}
                 onError={() => onPlayerError(lesson.id)}
               />
@@ -515,7 +419,7 @@ function LessonPlayerOverlay({
                       speakJapanese(point.expression)
                     }}
                   >
-                    <small>{point.kind === 'grammar' ? '璇硶' : '璇嶅彞'}</small>
+                    <small>{point.kind === 'grammar' ? '语法' : '短句'}</small>
                     <strong>{point.expression}</strong>
                     <span>{point.meaningZh}</span>
                   </button>
@@ -888,7 +792,7 @@ export function HomePage() {
       </section>
 
       <section className={styles.feedWrap}>
-        <div className={styles.feed} role="feed" aria-label="鏃ヨ瀛︿範鐭棰戞祦">
+        <div className={styles.feed} role="feed" aria-label="日语学习短视频流" data-testid="home-feed">
           {orderedLessons.map((lesson, index) => (
             <section
               key={lesson.id}
@@ -959,10 +863,10 @@ export function HomePage() {
                         <div>
                           <span className="chip badgeMint">
                             {point.kind === 'grammar'
-                              ? '璇硶'
+                              ? '语法'
                               : point.kind === 'word'
-                                ? '鍗曡瘝'
-                                : '璇嶅彞'}
+                                ? '单词'
+                                : '短句'}
                           </span>
                           <strong>{point.expression}</strong>
                         </div>

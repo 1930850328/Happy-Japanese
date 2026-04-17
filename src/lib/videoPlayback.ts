@@ -1,5 +1,3 @@
-import { getSharedFFmpeg } from './ffmpegRuntime'
-
 type StatusCallback = (message: string) => void
 
 function toBinaryBytes(data: Uint8Array | ArrayBuffer | string) {
@@ -49,6 +47,7 @@ async function runFfmpegJob(
   onStatus?: StatusCallback,
   progressPrefix?: string,
 ) {
+  const { getSharedFFmpeg } = await import('./ffmpegRuntime')
   const { ffmpeg, fetchFile } = await getSharedFFmpeg(onStatus, '正在准备视频处理引擎…')
   const inputExt = file.name.split('.').pop() || 'mkv'
   const inputName = `playback-input-${crypto.randomUUID()}.${inputExt}`

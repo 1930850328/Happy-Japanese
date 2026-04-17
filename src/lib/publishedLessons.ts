@@ -47,7 +47,6 @@ function createFallbackCover(title: string, subtitle: string) {
       <rect x="48" y="680" width="420" height="170" rx="30" fill="rgba(255,255,255,0.78)" />
       <text x="64" y="136" fill="#8d6555" font-size="26" font-family="sans-serif">${safeSubtitle}</text>
       <text x="70" y="760" fill="#4a352d" font-size="42" font-family="sans-serif">${safeTitle}</text>
-      <text x="70" y="810" fill="#76584c" font-size="22" font-family="sans-serif">Auto-synced study clip</text>
     </svg>
   `
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`

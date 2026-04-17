@@ -18,7 +18,6 @@ import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { sourceAttributions } from '../data/sources'
-import { generateStudyDataFromVideo } from '../lib/autoSubtitles'
 import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
 import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
@@ -475,6 +474,7 @@ export function ProfilePage() {
         subtitleFileName = subtitleFile.name
         sourceProvider = '页面自动切片预览 / 外部字幕'
       } else {
+        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitles')
         const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
           updateTaskStatus(message),
         )

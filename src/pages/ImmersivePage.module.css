@@ -1,7 +1,7 @@
 .page {
   position: relative;
   min-height: 100dvh;
-  background: #090707;
+  background: #070505;
   overflow: hidden;
   isolation: isolate;
 }
@@ -19,17 +19,17 @@
   right: 0;
   z-index: 40;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  padding: 18px 20px 0;
+  padding: 14px 18px 0;
   pointer-events: none;
 }
 
 .headerCluster {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.7rem;
   pointer-events: auto;
 }
 
@@ -37,11 +37,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0.72rem 1rem;
+  min-width: 0;
+  padding: 0.7rem 0.95rem;
   border-radius: 999px;
   color: #fffaf6;
-  background: rgba(14, 10, 10, 0.46);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(14, 10, 10, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(18px);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
 }
@@ -52,6 +53,10 @@
 }
 
 .headerMeta span:last-child {
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: rgba(255, 248, 241, 0.78);
 }
 
@@ -60,8 +65,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  min-height: 46px;
-  padding: 0.75rem 1rem;
+  min-height: 44px;
+  padding: 0.72rem 0.95rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: #fffaf4;
@@ -75,9 +80,9 @@
 }
 
 .headerBackButton {
-  background: rgba(255, 248, 242, 0.9);
+  background: rgba(255, 248, 242, 0.92);
   color: #554137;
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.38);
 }
 
 .headerButton:hover:not(:disabled) {
@@ -95,7 +100,7 @@
   height: 100%;
   display: grid;
   place-items: center;
-  padding: 92px 20px 74px;
+  padding: 72px 20px 24px;
 }
 
 .slideBackdrop,
@@ -108,44 +113,55 @@
 .slideBackdrop {
   background-position: center;
   background-size: cover;
-  filter: blur(32px) saturate(1.08);
+  filter: blur(34px) saturate(1.1);
   transform: scale(1.08);
 }
 
 .slideNoise {
   background:
-    radial-gradient(circle at 20% 20%, rgba(255, 198, 173, 0.2), transparent 28%),
+    radial-gradient(circle at 18% 18%, rgba(255, 198, 173, 0.22), transparent 26%),
     radial-gradient(circle at 82% 14%, rgba(216, 235, 255, 0.16), transparent 28%),
-    linear-gradient(180deg, rgba(8, 6, 6, 0.16), rgba(8, 6, 6, 0.66));
+    linear-gradient(180deg, rgba(8, 6, 6, 0.18), rgba(8, 6, 6, 0.7));
 }
 
 .slideContent {
   position: relative;
   z-index: 1;
+  width: 100%;
   display: grid;
   justify-items: center;
-  gap: 16px;
 }
 
 .viewerShell {
+  width: 100%;
   display: grid;
-  grid-template-columns: auto 88px;
-  gap: 14px;
-  align-items: center;
+  justify-items: center;
 }
 
 .playerStage {
   position: relative;
-  height: clamp(360px, calc(100dvh - 320px), 720px);
+  width: min(calc(100vw - 28px), 430px);
+  height: min(calc(100dvh - 108px), 840px);
   aspect-ratio: 9 / 16;
-  max-width: calc(100vw - 148px);
   overflow: hidden;
-  border-radius: 36px;
+  border-radius: 34px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(11, 8, 8, 0.9);
+  background:
+    radial-gradient(circle at top, rgba(255, 198, 173, 0.16), transparent 34%),
+    rgba(11, 8, 8, 0.94);
   box-shadow:
     0 34px 90px rgba(0, 0, 0, 0.34),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.playerShade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(8, 6, 6, 0.08) 0%, transparent 18%, transparent 44%, rgba(8, 6, 6, 0.12) 58%, rgba(8, 6, 6, 0.82) 100%),
+    linear-gradient(90deg, rgba(8, 6, 6, 0.06), transparent 18%, transparent 76%, rgba(8, 6, 6, 0.38));
 }
 
 .playerFallback {
@@ -158,7 +174,7 @@
   text-align: center;
   color: #fff7f1;
   background:
-    linear-gradient(180deg, rgba(18, 12, 12, 0.92), rgba(10, 8, 8, 0.96)),
+    linear-gradient(180deg, rgba(18, 12, 12, 0.94), rgba(10, 8, 8, 0.98)),
     radial-gradient(circle at top, rgba(255, 198, 173, 0.18), transparent 36%);
 }
 
@@ -173,36 +189,52 @@
 }
 
 .actionRail {
+  position: absolute;
+  right: 14px;
+  bottom: 188px;
+  z-index: 3;
   display: grid;
-  gap: 12px;
+  gap: 10px;
+  width: 68px;
 }
 
 .actionButton {
   display: grid;
   justify-items: center;
-  gap: 0.45rem;
-  width: 88px;
-  padding: 0.9rem 0.65rem;
-  border-radius: 24px;
+  gap: 0.42rem;
+  width: 68px;
+  min-height: 68px;
+  padding: 0.72rem 0.38rem;
+  border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #fff7f2;
-  background: rgba(11, 8, 8, 0.58);
+  color: #fff8f2;
+  background: rgba(11, 8, 8, 0.54);
   backdrop-filter: blur(18px);
   box-shadow: 0 18px 38px rgba(0, 0, 0, 0.24);
 }
 
 .actionButton span {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   line-height: 1.2;
+  text-align: center;
 }
 
 .infoCard {
-  width: min(92vw, 520px);
+  position: absolute;
+  left: 12px;
+  right: 92px;
+  bottom: 14px;
+  z-index: 3;
   display: grid;
-  gap: 14px;
-  padding: 1rem;
-  border-radius: 28px;
-  background: rgba(255, 253, 248, 0.84);
+  gap: 0.8rem;
+  padding: 0.95rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(22, 16, 15, 0.3), rgba(12, 9, 9, 0.82)),
+    rgba(10, 8, 8, 0.6);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.26);
 }
 
 .infoHeader,
@@ -211,7 +243,7 @@
 .tagRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.45rem;
 }
 
 .infoHeader {
@@ -223,100 +255,120 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.8rem;
 }
 
 .lessonTitle {
   margin: 0;
   font-family: var(--font-ui);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  color: #3f2f29;
+  font-size: clamp(1.18rem, 3.8vw, 1.65rem);
+  line-height: 1.3;
+  color: #fffaf4;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .lessonMeta {
-  margin: 0.4rem 0 0;
+  margin: 0.28rem 0 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
-  color: var(--text-soft);
+  gap: 0.35rem;
+  color: rgba(255, 246, 241, 0.72);
+  font-size: 0.9rem;
 }
 
 .focusTag {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.55rem 0.9rem;
+  gap: 0.35rem;
+  padding: 0.5rem 0.78rem;
   border-radius: 999px;
-  color: #60463b;
-  background: linear-gradient(135deg, rgba(255, 198, 173, 0.65), rgba(249, 239, 191, 0.72));
+  color: #4f382f;
+  background: linear-gradient(135deg, rgba(255, 198, 173, 0.96), rgba(249, 239, 191, 0.92));
   flex-shrink: 0;
+  font-size: 0.86rem;
 }
 
 .lessonDescription,
 .creditLine {
   margin: 0;
-  line-height: 1.7;
-  color: var(--text-soft);
+  line-height: 1.55;
+  color: rgba(255, 246, 241, 0.74);
+  overflow-wrap: anywhere;
+}
+
+.lessonDescription {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.creditLine {
+  font-size: 0.82rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .currentSentenceCard {
   display: grid;
-  gap: 0.35rem;
-  padding: 0.95rem 1rem;
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 248, 241, 0.84));
-  border: 1px solid rgba(112, 83, 66, 0.09);
+  gap: 0.28rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .currentSentenceCard strong {
-  font-size: 1.15rem;
-  line-height: 1.5;
+  font-size: 1.04rem;
+  line-height: 1.45;
+  color: #fffaf4;
 }
 
-.currentSentenceCard span {
-  color: var(--text-soft);
-}
-
+.currentSentenceCard span,
 .currentSentenceCard p {
   margin: 0;
-  color: #5b493f;
+  color: rgba(255, 246, 241, 0.74);
 }
 
 .pointGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.7rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
 }
 
 .pointCard {
   display: grid;
-  gap: 0.24rem;
-  padding: 0.85rem;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(112, 83, 66, 0.08);
+  gap: 0.18rem;
+  padding: 0.72rem 0.76rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.pointCard small {
-  color: var(--text-soft);
+.pointCard small,
+.pointCard span {
+  color: rgba(255, 246, 241, 0.74);
 }
 
 .pointCard strong {
-  font-size: 1rem;
-}
-
-.pointCard span {
-  color: #5f4b41;
-  line-height: 1.5;
+  font-size: 0.98rem;
+  color: #fffaf4;
 }
 
 .swipeHint {
   position: fixed;
   left: 50%;
-  bottom: 18px;
+  bottom: 12px;
   z-index: 35;
   transform: translateX(-50%);
-  padding: 0.72rem 1rem;
+  padding: 0.68rem 0.95rem;
   border-radius: 999px;
   color: rgba(255, 248, 241, 0.82);
   background: rgba(8, 6, 6, 0.42);
@@ -359,12 +411,12 @@
 
 @media (max-width: 760px) {
   .pageHeader {
-    padding: 12px 12px 0;
+    padding: 10px 10px 0;
   }
 
   .headerMeta {
-    gap: 0.45rem;
-    padding: 0.72rem 0.85rem;
+    gap: 0.42rem;
+    padding: 0.68rem 0.8rem;
   }
 
   .headerMeta span:last-child {
@@ -376,42 +428,43 @@
   }
 
   .slideScene {
-    padding: 82px 14px 78px;
-  }
-
-  .viewerShell {
-    width: 100%;
-    grid-template-columns: 1fr;
-    justify-items: center;
+    padding: 68px 10px 22px;
   }
 
   .playerStage {
-    height: clamp(340px, calc(100dvh - 430px), 560px);
-    max-width: 92vw;
+    width: calc(100vw - 20px);
+    height: calc(100dvh - 98px);
+    border-radius: 28px;
   }
 
   .actionRail {
-    width: min(92vw, 520px);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    right: 10px;
+    bottom: 162px;
+    width: 58px;
   }
 
   .actionButton {
-    width: 100%;
+    width: 58px;
+    min-height: 58px;
+    padding: 0.62rem 0.28rem;
     border-radius: 18px;
-    grid-auto-flow: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.85rem 0.75rem;
+  }
+
+  .actionButton span {
+    font-size: 0.68rem;
   }
 
   .infoCard {
-    width: min(92vw, 520px);
-    padding: 0.9rem;
+    left: 10px;
+    right: 76px;
+    bottom: 10px;
+    padding: 0.82rem;
+    border-radius: 20px;
   }
 
   .lessonHeader {
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.55rem;
   }
 
   .pointGrid {
@@ -419,15 +472,18 @@
   }
 
   .swipeHint {
-    bottom: 10px;
     width: calc(100vw - 24px);
     text-align: center;
-    font-size: 0.86rem;
+    font-size: 0.84rem;
   }
 }
 
 @media (max-height: 760px) {
   .playerStage {
-    height: clamp(320px, calc(100dvh - 350px), 520px);
+    height: calc(100dvh - 88px);
+  }
+
+  .actionRail {
+    bottom: 150px;
   }
 }
