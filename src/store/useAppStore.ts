@@ -40,6 +40,11 @@ import {
   saveStudyEvent,
   saveVocabProgress,
 } from '../lib/storage'
+import {
+  deleteSiteVideos,
+  isManagedSiteVideoUrl,
+  uploadVideoToSite,
+} from '../lib/siteVideoStorage'
 import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
 import type {
   AppSettings,
@@ -242,6 +247,58 @@ function mergeTags(...groups: Array<Array<string | undefined>>) {
   return [...new Set(groups.flat().filter((item): item is string => Boolean(item && item.trim())))]
 }
 
+async function uploadManagedVideo(
+  file: File,
+  title: string,
+  uploadPassword?: string,
+  onUploadProgress?: RemoteUploadStatusCallback,
+) {
+  onUploadProgress?.('正在上传视频到网站…', 0)
+
+  const uploaded = await uploadVideoToSite({
+    file,
+    title,
+    uploadPassword,
+    onUploadProgress: (event) => {
+      onUploadProgress?.(
+        `正在上传视频到网站… ${Math.round(event.percentage)}%`,
+        event.percentage,
+      )
+    },
+  })
+
+  onUploadProgress?.('视频已上传到网站，正在写入学习资料…', 100)
+  return uploaded
+}
+
+async function loadClipProcessingFile(clip: ImportedClip) {
+  if (clip.blob instanceof File) {
+    return clip.blob
+  }
+
+  if (clip.blob) {
+    return new File([clip.blob], clip.sourceFileName || `${clip.id}.mp4`, {
+      type: clip.blob.type || clip.fileType || 'video/mp4',
+      lastModified: 0,
+    })
+  }
+
+  if (!clip.sourceUrl) {
+    return null
+  }
+
+  const response = await fetch(clip.sourceUrl)
+  if (!response.ok) {
+    throw new Error('无法从站内存储读取视频文件。')
+  }
+
+  const blob = await response.blob()
+  return new File([blob], clip.sourceFileName || `${clip.id}.mp4`, {
+    type: blob.type || clip.fileType || 'video/mp4',
+    lastModified: Date.now(),
+  })
+}
+
 async function purgeFavorites(lessonIds: string[], favorites: string[]) {
   const idsToRemove = lessonIds.filter((id) => favorites.includes(id))
   await Promise.all(idsToRemove.map((id) => removeFavorite(id)))
@@ -271,12 +328,16 @@ interface ImportClipInput {
   subtitleFile?: File | null
   title?: string
   theme?: string
+  uploadPassword?: string
+  onUploadProgress?: RemoteUploadStatusCallback
 }
 
 interface ImportSlicerManifestInput {
   manifestFile: File
   clipFiles: File[]
   theme?: string
+  uploadPassword?: string
+  onUploadProgress?: RemoteUploadStatusCallback
 }
 
 interface ImportSelectedSlicesInput {
@@ -293,9 +354,12 @@ interface ImportSelectedSlicesInput {
   baseSegments: ImportedClip['segments']
   baseKnowledgePoints: ImportedClip['knowledgePoints']
   selectedLessons: VideoLesson[]
+  uploadPassword?: string
+  onUploadProgress?: RemoteUploadStatusCallback
 }
 
 type SubtitleStatusCallback = (message: string) => void
+type RemoteUploadStatusCallback = (message: string, percent?: number) => void
 
 interface AppStore {
   initialized: boolean
@@ -646,7 +710,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     return count
   },
 
-  async importClip({ file, subtitleFile, title, theme }) {
+  async importClip({ file, subtitleFile, title, theme, uploadPassword, onUploadProgress }) {
     const clipTitle = title?.trim() || file.name.replace(/\.[^.]+$/, '')
     const clipTheme = theme?.trim() || '自定义片段'
     const { durationMs, cover } = await readVideoMeta(file, clipTitle, clipTheme)
@@ -708,6 +772,13 @@ export const useAppStore = create<AppStore>((set, get) => ({
       }
     }
 
+    const uploadedVideo = await uploadManagedVideo(
+      file,
+      clipTitle,
+      uploadPassword,
+      onUploadProgress,
+    )
+
     const clip: ImportedClip = {
       id: `clip-${crypto.randomUUID()}`,
       title: clipTitle,
@@ -715,22 +786,21 @@ export const useAppStore = create<AppStore>((set, get) => ({
       difficulty: 'Custom',
       importMode: 'raw',
       sourceType: 'local',
-      sourceIdOrBlobKey: `blob-${crypto.randomUUID()}`,
+      sourceIdOrBlobKey: uploadedVideo.pathname,
       sourceFileName: file.name,
-      sourceUrl: '',
-      sourceProvider,
+      sourceUrl: uploadedVideo.url,
+      sourceProvider: `${sourceProvider} / 站内存储`,
       cover,
       durationMs,
-      fileType: file.type,
+      fileType: file.type || uploadedVideo.contentType || 'video/mp4',
       subtitleFileName,
       subtitleSource,
-      blob: file,
       createdAt: now,
       segments,
       knowledgePoints,
-      tags,
+      tags: mergeTags(tags, ['站内存储']),
       description,
-      creditLine,
+      creditLine: `${creditLine} 视频文件已上传到网站存储，当前浏览器只保留学习信息、字幕分析结果和切片配置。`,
     }
 
     await saveImportedClip(clip)
@@ -759,6 +829,8 @@ export const useAppStore = create<AppStore>((set, get) => ({
     baseSegments,
     baseKnowledgePoints,
     selectedLessons,
+    uploadPassword,
+    onUploadProgress,
   }) {
     if (selectedLessons.length === 0) {
       return []
@@ -766,9 +838,14 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
     const importedAt = new Date().toISOString()
     const sourceClipId = `clip-${crypto.randomUUID()}`
-    const sourceBlobKey = `blob-${crypto.randomUUID()}`
     const sourceTitle = title.trim() || file.name.replace(/\.[^.]+$/, '')
     const sourceTheme = theme.trim() || '自定义片段'
+    const uploadedVideo = await uploadManagedVideo(
+      file,
+      sourceTitle,
+      uploadPassword,
+      onUploadProgress,
+    )
 
     const sourceClip: ImportedClip = {
       id: sourceClipId,
@@ -779,22 +856,25 @@ export const useAppStore = create<AppStore>((set, get) => ({
       sourceAnimeTitle,
       sourceEpisodeTitle,
       sourceType: 'local',
-      sourceIdOrBlobKey: sourceBlobKey,
+      sourceIdOrBlobKey: uploadedVideo.pathname,
       sourceFileName: file.name,
-      sourceUrl: '',
-      sourceProvider,
+      sourceUrl: uploadedVideo.url,
+      sourceProvider: `${sourceProvider} / 站内存储`,
       cover,
       durationMs,
-      fileType: file.type || 'video/mp4',
+      fileType: file.type || uploadedVideo.contentType || 'video/mp4',
       subtitleFileName,
       subtitleSource,
-      blob: file,
       createdAt: importedAt,
       segments: baseSegments,
       knowledgePoints: baseKnowledgePoints,
-      tags: mergeTags(['页面自动切片源片', sourceTheme], sourceAnimeTitle ? [sourceAnimeTitle] : []),
+      tags: mergeTags(
+        ['页面自动切片源片', sourceTheme, '站内存储'],
+        sourceAnimeTitle ? [sourceAnimeTitle] : [],
+      ),
       description: '这是页面内自动切片时保存的原片源，仅用于支撑后续切片播放，不会直接出现在首页短视频流。',
-      creditLine: '仅保存在当前设备。切片预览确认后，首页会直接播放你勾选导入的学习片段。',
+      creditLine:
+        '视频文件已上传到网站存储，当前浏览器只保留切片配置与学习信息，确认导入后首页会直接播放这些片段。',
     }
 
     const importedSlices: ImportedClip[] = selectedLessons.map((lesson, index) => {
@@ -812,23 +892,24 @@ export const useAppStore = create<AppStore>((set, get) => ({
         sourceSliceId: lesson.id || `preview-slice-${index + 1}`,
         sourceClipId,
         sourceType: 'local',
-        sourceIdOrBlobKey: sourceBlobKey,
+        sourceIdOrBlobKey: uploadedVideo.pathname,
         sourceFileName: file.name,
-        sourceUrl: '',
-        sourceProvider: `${sourceProvider} · 页面自动切片`,
+        sourceUrl: uploadedVideo.url,
+        sourceProvider: `${sourceProvider} / 页面自动切片 / 站内存储`,
         cover: lesson.cover || cover,
         durationMs: lesson.durationMs,
         clipStartMs,
         clipEndMs,
-        fileType: file.type || 'video/mp4',
+        fileType: file.type || uploadedVideo.contentType || 'video/mp4',
         subtitleFileName,
         subtitleSource,
         createdAt: importedAt,
         segments: lesson.segments,
         knowledgePoints: lesson.knowledgePoints,
-        tags: mergeTags(lesson.tags, ['页面自动切片', sourceTheme]),
+        tags: mergeTags(lesson.tags, ['页面自动切片', sourceTheme, '站内存储']),
         description: lesson.description,
-        creditLine: '由页面内自动字幕与切片逻辑生成，可直接进入首页短视频模块学习。',
+        creditLine:
+          '视频文件已上传到网站存储，播放器会直接按切片时间段播放，不再依赖当前浏览器本地文件。',
       }
     })
 
@@ -877,6 +958,15 @@ export const useAppStore = create<AppStore>((set, get) => ({
       return false
     }
 
+    const clipsToRemove = currentClips.filter((clip) => clipIdsToRemove.has(clip.id))
+    const remoteUrls = [...new Set(clipsToRemove.map((clip) => clip.sourceUrl).filter(isManagedSiteVideoUrl))]
+
+    if (remoteUrls.length > 0) {
+      await deleteSiteVideos(remoteUrls).catch((error) => {
+        console.warn('Failed to delete site-hosted videos.', error)
+      })
+    }
+
     await Promise.all([...clipIdsToRemove].map((id) => deleteImportedClip(id)))
 
     const nextImportedClips = currentClips.filter((clip) => !clipIdsToRemove.has(clip.id))
@@ -902,13 +992,20 @@ export const useAppStore = create<AppStore>((set, get) => ({
     return true
   },
 
-  async importSlicerManifest({ manifestFile, clipFiles, theme }) {
+  async importSlicerManifest({ manifestFile, clipFiles, theme, uploadPassword, onUploadProgress }) {
     const manifest = await parseSlicerManifest(manifestFile)
     const fileMap = buildManifestClipFileMap(clipFiles)
     const importedAt = new Date().toISOString()
     const currentClips = get().importedClips
     const prepared: ImportedClip[] = []
     const missingFiles: string[] = []
+    const replacedRemoteUrls = new Set<string>()
+    const uploadableClips = manifest.clips.filter((manifestClip) => {
+      const videoFileName = getManifestClipFileName(manifestClip)
+      return Boolean(fileMap[videoFileName.trim().toLowerCase()])
+    })
+    const totalUploads = Math.max(1, uploadableClips.length)
+    let completedUploads = 0
 
     for (const manifestClip of manifest.clips) {
       const videoFileName = getManifestClipFileName(manifestClip)
@@ -934,6 +1031,32 @@ export const useAppStore = create<AppStore>((set, get) => ({
           clip.sourceSliceId === manifestClip.id,
       )
 
+      const uploadedVideo = await uploadVideoToSite({
+        file: matchedFile,
+        title: manifestClip.clipTitle,
+        uploadPassword,
+        onUploadProgress: (event) => {
+          const overallPercent = Math.round(
+            ((completedUploads + event.percentage / 100) / totalUploads) * 100,
+          )
+          onUploadProgress?.(
+            `正在上传切片到网站… ${completedUploads + 1}/${totalUploads}（${Math.round(
+              event.percentage,
+            )}%）`,
+            overallPercent,
+          )
+        },
+      })
+      completedUploads += 1
+
+      if (
+        existing?.sourceUrl &&
+        existing.sourceUrl !== uploadedVideo.url &&
+        isManagedSiteVideoUrl(existing.sourceUrl)
+      ) {
+        replacedRemoteUrls.add(existing.sourceUrl)
+      }
+
       prepared.push({
         id: existing?.id ?? `clip-${crypto.randomUUID()}`,
         title: manifestClip.clipTitle,
@@ -944,16 +1067,16 @@ export const useAppStore = create<AppStore>((set, get) => ({
         sourceEpisodeTitle: manifest.episodeTitle,
         sourceSliceId: manifestClip.id,
         sourceType: 'local',
-        sourceIdOrBlobKey: existing?.sourceIdOrBlobKey ?? `blob-${crypto.randomUUID()}`,
+        sourceIdOrBlobKey: uploadedVideo.pathname,
         sourceFileName: matchedFile.name,
-        sourceUrl: '',
+        sourceUrl: uploadedVideo.url,
         sourceProvider: `切片导入 / ${manifest.animeTitle}${
           manifest.episodeTitle ? ` / ${manifest.episodeTitle}` : ''
-        }`,
+        } / 站内存储`,
         cover,
         durationMs:
           manifestClip.durationMs > 0 ? manifestClip.durationMs : detectedDurationMs,
-        fileType: matchedFile.type || 'video/mp4',
+        fileType: matchedFile.type || uploadedVideo.contentType || 'video/mp4',
         subtitleFileName: manifestClip.subtitlePath
           ? getManifestClipFileName({
               ...manifestClip,
@@ -961,12 +1084,11 @@ export const useAppStore = create<AppStore>((set, get) => ({
             })
           : manifestFile.name,
         subtitleSource: getManifestSubtitleSource(manifest, manifestClip),
-        blob: matchedFile,
         createdAt: existing?.createdAt ?? importedAt,
         segments: manifestClip.segments,
         knowledgePoints: manifestClip.knowledgePoints,
         tags: mergeTags(
-          ['切片导入', manifest.animeTitle, sourceTag],
+          ['切片导入', manifest.animeTitle, sourceTag, '站内存储'],
           manifest.episodeTitle ? [manifest.episodeTitle] : [],
           manifestClip.keywords,
         ),
@@ -975,7 +1097,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
           manifestClip.transcriptZh ||
           '这条切片已经带好片中字幕、知识点和例句，可直接进入首页短视频流学习。',
         creditLine:
-          '由 anime-learning-slicer 导出后导入本站，仅保存在当前设备；首页会直接按切片播放，不再二次切片。',
+          '切片视频文件已上传到网站存储，当前浏览器只保留学习资料和导入记录。',
       })
     }
 
@@ -987,7 +1109,15 @@ export const useAppStore = create<AppStore>((set, get) => ({
       )
     }
 
+    onUploadProgress?.('切片视频已上传到网站，正在写入导入记录…', 100)
+
     await Promise.all(prepared.map((clip) => saveImportedClip(clip)))
+
+    if (replacedRemoteUrls.size > 0) {
+      await deleteSiteVideos([...replacedRemoteUrls]).catch((error) => {
+        console.warn('Failed to clean up replaced site-hosted videos.', error)
+      })
+    }
     set((state) => {
       const replacedIds = new Set(prepared.map((clip) => clip.id))
       const importedClips = [
@@ -1006,25 +1136,30 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
   async generateAutoSubtitles(clipId, onStatus) {
     const clip = get().importedClips.find((item) => item.id === clipId)
-    if (!clip || !clip.blob || !(clip.blob instanceof File)) {
+    if (!clip) {
       return null
     }
 
     onStatus?.('准备自动字幕…')
+    const clipFile = await loadClipProcessingFile(clip)
+    if (!clipFile) {
+      return null
+    }
+
     const { generateStudyDataFromVideo } = await import('../lib/autoSubtitles')
-    const studyData = await generateStudyDataFromVideo(clip.blob as File, clip.durationMs, onStatus)
+    const studyData = await generateStudyDataFromVideo(clipFile, clip.durationMs, onStatus)
 
     const updatedClip: ImportedClip = {
       ...clip,
       subtitleFileName: '自动生成字幕',
       subtitleSource: 'auto',
-      sourceProvider: `本地原片 + 自动字幕 (${studyData.modelLabel})`,
+      sourceProvider: `站内视频 + 自动字幕 (${studyData.modelLabel})`,
       segments: studyData.segments,
       knowledgePoints: studyData.knowledgePoints,
       description:
         '系统已从视频自动识别出日语时间轴字幕，并补充学习向中文字幕、高亮词法和知识点解析。',
       creditLine:
-        '自动字幕仅供个人学习校对使用，数据仍然只存储在当前设备。首次运行会下载并缓存本地语音识别模型。',
+        '视频文件保存在网站存储中；自动字幕仅供个人学习校对使用，首次运行会下载并缓存本地语音识别模型。',
       tags: mergeTags(
         [ ...clip.tags.filter((tag) => tag !== '待生成字幕' && tag !== '外部字幕') ],
         ['自动字幕'],

@@ -18,6 +18,7 @@
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@huggingface/transformers": "^4.0.0",
+    "@vercel/blob": "^2.3.3",
     "anime-study-player": "https://codeload.github.com/1930850328/anime-study-player/tar.gz/1cd7047",
     "dayjs": "^1.11.20",
     "google-translate-api-x": "^10.7.2",

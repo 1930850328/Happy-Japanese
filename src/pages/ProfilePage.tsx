@@ -293,6 +293,7 @@ export function ProfilePage() {
   const [episodeTitle, setEpisodeTitle] = useState('')
   const [clipFile, setClipFile] = useState<File | null>(null)
   const [subtitleFile, setSubtitleFile] = useState<File | null>(null)
+  const [siteUploadPassword, setSiteUploadPassword] = useState('')
   const [slicePreview, setSlicePreview] = useState<SlicePreviewDraft | null>(persistedSlicePreview)
   const [selectedSliceIds, setSelectedSliceIds] = useState<string[]>(
     persistedSlicePreview?.selectedLessonIds ?? [],
@@ -598,8 +599,8 @@ export function ProfilePage() {
     }
 
     setImportingSlices(true)
-    setTaskProgress({ percent: 94, detail: '正在导入勾选的切片到首页短视频流…' })
-    setStatusText('正在导入勾选的切片到首页短视频流…')
+    setTaskProgress({ percent: 94, detail: '正在把勾选切片上传到网站并写入首页短视频流…' })
+    setStatusText('正在把勾选切片上传到网站并写入首页短视频流…')
 
     try {
       const imported = await importSelectedSlices({
@@ -616,16 +617,25 @@ export function ProfilePage() {
         baseSegments: slicePreview.segments,
         baseKnowledgePoints: slicePreview.knowledgePoints,
         selectedLessons: selectedPreviewLessons,
+        uploadPassword: siteUploadPassword.trim() || undefined,
+        onUploadProgress: (message, percent = 0) => {
+          const mappedPercent = Math.min(99, 94 + Math.round(percent * 0.05))
+          setTaskProgress({ percent: mappedPercent, detail: message })
+          setStatusText(message)
+        },
       })
 
-      setTaskProgress({ percent: 100, detail: `已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。` })
-      setStatusText(`已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。`)
+      setTaskProgress({
+        percent: 100,
+        detail: `已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`,
+      })
+      setStatusText(`已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`)
       setSlicePreview(null)
       setSelectedSliceIds([])
       setSliceTask({
         status: 'completed',
         percent: 100,
-        detail: `已导入 ${imported.length} 条切片。现在回首页就能直接刷到这些短视频。`,
+        detail: `已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`,
         startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       })
@@ -642,13 +652,17 @@ export function ProfilePage() {
     }
 
     setImportingSlicer(true)
-    setSlicerStatusText('正在读取切片 manifest 并匹配视频文件…')
+    setSlicerStatusText('正在读取切片 manifest，并把视频上传到网站…')
     try {
       const imported = await importSlicerManifest({
         manifestFile: slicerManifestFile,
         clipFiles: slicerClipFiles,
+        uploadPassword: siteUploadPassword.trim() || undefined,
+        onUploadProgress: (message) => {
+          setSlicerStatusText(message)
+        },
       })
-      setSlicerStatusText(`已导入 ${imported.length} 条切片，首页短视频流已同步更新。`)
+      setSlicerStatusText(`已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`)
       setSlicerManifestFile(null)
       setSlicerClipFiles([])
     } catch (error) {
@@ -851,10 +865,17 @@ export function ProfilePage() {
                 onChange={(event) => setClipTheme(event.target.value)}
                 placeholder="主题，例如 校园 / 乐队 / 日常 / 面试"
               />
+              <input
+                className={styles.textInput}
+                type="password"
+                value={siteUploadPassword}
+                onChange={(event) => setSiteUploadPassword(event.target.value)}
+                placeholder="网站上传密码，可选；已配置 VIDEO_UPLOAD_PASSWORD 时填写"
+              />
             </div>
 
             <p className={styles.helperNote}>
-              你只管选本地视频。系统会优先使用你提供的字幕；如果没有字幕，就自动抽取音频并生成时间轴字幕，然后挑出更适合学语法和单词的候选切片给你预览。
+              你只管选本地视频。系统会优先使用你提供的字幕；如果没有字幕，就自动抽取音频并生成时间轴字幕，然后挑出更适合学语法和单词的候选切片给你预览。确认导入后，视频文件会上传到你的网站存储，不再依赖当前浏览器本地保存。
             </p>
             {statusText ? <p className={styles.statusNote}>{statusText}</p> : null}
             {taskProgress ? (
@@ -1048,7 +1069,7 @@ export function ProfilePage() {
                 onChange={(event) => setSlicerClipFiles(Array.from(event.target.files ?? []))}
               />
               <p className={styles.helperNote}>
-                如果你已经用独立切片工具生成了 `manifest.json + clips`，也可以在这里直接一次性导入首页短视频流。
+                如果你已经用独立切片工具生成了 `manifest.json + clips`，也可以在这里直接一次性导入首页短视频流。上面的“网站上传密码”会同时用于这批视频文件。
               </p>
               {slicerStatusText ? <p className={styles.statusNote}>{slicerStatusText}</p> : null}
               <button
@@ -1124,7 +1145,7 @@ export function ProfilePage() {
               )
             })}
             {visibleImportedClips.length === 0 ? (
-              <p className={styles.placeholder}>导入的视频只保存在当前设备，不会上传。</p>
+              <p className={styles.placeholder}>导入后的视频文件会上传到网站存储；当前浏览器只保留学习资料和导入记录。</p>
             ) : null}
           </div>
         </div>
