@@ -19,7 +19,7 @@ import { createPortal } from 'react-dom'
 
 import { sourceAttributions } from '../data/sources'
 import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
-import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
+import { buildLessonsFromImportedClip } from '../lib/lessonSlicesSafe'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
 import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
@@ -464,6 +464,7 @@ export function ProfilePage() {
       let sourceProvider = '页面自动切片预览'
       let segments: ImportedClip['segments'] = []
       let knowledgePoints: ImportedClip['knowledgePoints'] = []
+      let autoSubtitleTag: string | undefined
 
       if (subtitleFile) {
         updateTaskStatus('正在解析外部字幕并提取知识点…')
@@ -475,12 +476,13 @@ export function ProfilePage() {
         subtitleFileName = subtitleFile.name
         sourceProvider = '页面自动切片预览 / 外部字幕'
       } else {
-        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitles')
+        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesSafe')
         const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
           updateTaskStatus(message),
         )
         segments = studyData.segments
         knowledgePoints = studyData.knowledgePoints
+        autoSubtitleTag = studyData.usedFallback ? '字幕兜底' : undefined
         subtitleSource = 'auto'
         subtitleFileName = '自动生成字幕'
         sourceProvider = `页面自动切片预览 / ${studyData.modelLabel}`
@@ -512,6 +514,7 @@ export function ProfilePage() {
         tags: [
           '页面切片预览',
           normalizedTheme,
+          autoSubtitleTag,
           subtitleSource === 'manual' ? '外部字幕' : '自动字幕',
           converted ? '兼容转换' : undefined,
         ].filter(Boolean) as string[],

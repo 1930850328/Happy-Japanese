@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { defaultGoal, defaultSettings } from '../lib/defaults'
 import { getTodayKey } from '../lib/date'
-import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
+import { buildLessonsFromImportedClip } from '../lib/lessonSlicesSafe'
 import { loadPublishedLessons } from '../lib/publishedLessons'
 import {
   buildManifestClipFileMap,
@@ -1146,7 +1146,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       return null
     }
 
-    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitles')
+    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesSafe')
     const studyData = await generateStudyDataFromVideo(clipFile, clip.durationMs, onStatus)
 
     const updatedClip: ImportedClip = {
@@ -1164,6 +1164,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
         [ ...clip.tags.filter((tag) => tag !== '待生成字幕' && tag !== '外部字幕') ],
         ['自动字幕'],
         clip.theme ? [clip.theme] : [],
+        studyData.usedFallback ? ['字幕兜底'] : [],
       ),
     }
 
