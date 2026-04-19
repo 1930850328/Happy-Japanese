@@ -1,5 +1,6 @@
 import type { KnowledgePoint, TranscriptSegment } from '../types'
 import { getSharedFFmpeg } from './ffmpegRuntime'
+import { enrichCuesWithHardSubtitles } from './hardSubtitleOcr'
 import { buildStudyDataFromCues, parseSubtitleText, type SubtitleCue } from './subtitles'
 
 interface SubtitleGenerationResult {
@@ -554,7 +555,8 @@ export async function generateStudyDataFromVideo(
     const embeddedTrack = await extractEmbeddedSubtitleTrack(file, onStatus)
     if (embeddedTrack) {
       onStatus?.(`已读取${embeddedTrack.label}，正在提取知识点…`)
-      const embeddedStudyData = await buildStudyDataFromCues(embeddedTrack.cues)
+      const embeddedCues = await enrichCuesWithHardSubtitles(file, embeddedTrack.cues, onStatus)
+      const embeddedStudyData = await buildStudyDataFromCues(embeddedCues)
 
       if (
         embeddedStudyData.segments.length > 0 &&
@@ -574,15 +576,16 @@ export async function generateStudyDataFromVideo(
 
     const { transcriber, modelLabel } = await getTranscriber(onStatus)
     const cues = await transcribeVideoInChunks(file, durationMs, transcriber, onStatus)
+    const enrichedCues = await enrichCuesWithHardSubtitles(file, cues, onStatus)
 
-    if (cues.length === 0) {
+    if (enrichedCues.length === 0) {
       throw new Error(
         '没有识别出可用字幕，无法按语法和单词切片。请先导入字幕文件，或换更短、更清晰的片段。',
       )
     }
 
-    onStatus?.(`生成中文字幕与知识点中…共 ${cues.length} 条字幕`)
-    const studyData = await buildStudyDataFromCues(cues)
+    onStatus?.(`生成中文字幕与知识点中…共 ${enrichedCues.length} 条字幕`)
+    const studyData = await buildStudyDataFromCues(enrichedCues)
 
     if (
       studyData.segments.length === 0 ||

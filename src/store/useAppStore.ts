@@ -1160,7 +1160,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       segments: studyData.segments,
       knowledgePoints: studyData.knowledgePoints,
       description:
-        '系统已优先尝试提取视频自带字幕轨，必要时再自动识别日语时间轴字幕，并补充学习向中文字幕、高亮词法和知识点解析。',
+        '系统已优先尝试提取视频自带字幕轨，再尝试识别画面底部硬字幕；必要时才自动识别日语时间轴字幕，并补充学习向中文字幕、高亮词法和知识点解析。',
       creditLine:
         '视频文件保存在网站存储中；自动字幕仅供个人学习校对使用，首次运行会下载并缓存本地语音识别模型。',
       tags: mergeTags(

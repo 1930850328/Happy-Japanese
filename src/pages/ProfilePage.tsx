@@ -97,6 +97,12 @@ function deriveTaskProgress(message: string, previousPercent: number) {
     percent = 66
   } else if (message.includes('识别日语字幕中')) {
     percent = 72
+  } else if (message.includes('正在加载硬字幕 OCR 模型')) {
+    percent = 76
+  } else if (message.includes('尝试识别画面底部中文字幕')) {
+    percent = 80
+  } else if (message.includes('已从画面底部识别出')) {
+    percent = 82
   } else if (message.includes('生成中文字幕与知识点中')) {
     percent = 84
   } else if (message.includes('正在分析并切片')) {
@@ -904,7 +910,7 @@ export function ProfilePage() {
             </div>
 
             <p className={styles.helperNote}>
-              你只管选本地视频。系统会优先使用你提供的字幕；如果你没给外挂字幕，就先尝试读取视频自带的字幕轨；再不行才会回退到自动听写和翻译。确认导入后，视频文件会上传到你的网站存储，不再依赖当前浏览器本地保存。
+              你只管选本地视频。系统会优先使用你提供的字幕；如果你没给外挂字幕，就先尝试读取视频自带的字幕轨，再尝试识别画面底部的硬中文字幕；再不行才会回退到自动听写和翻译。确认导入后，视频文件会上传到你的网站存储，不再依赖当前浏览器本地保存。
             </p>
             {statusText ? <p className={styles.statusNote}>{statusText}</p> : null}
             {taskProgress ? (
