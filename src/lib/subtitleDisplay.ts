@@ -1,5 +1,6 @@
 import type { TranscriptSegment } from '../types'
 import { isUsableChineseSubtitle } from './chineseTranslation'
+import { analyzeJapaneseText } from './textAnalysis'
 import { translateJapaneseSentences } from './translation'
 
 export async function enrichSegmentsWithSentenceTranslations(segments: TranscriptSegment[]) {
@@ -29,6 +30,18 @@ export async function enrichSegmentsWithSentenceTranslations(segments: Transcrip
       }
     })
   } catch {
-    return segments
+    return Promise.all(
+      segments.map(async (segment) => {
+        if (segment.zh.trim()) {
+          return segment
+        }
+
+        const analysis = await analyzeJapaneseText(segment.ja)
+        return {
+          ...segment,
+          zh: analysis.glossZh,
+        }
+      }),
+    )
   }
 }

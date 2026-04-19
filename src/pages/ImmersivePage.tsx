@@ -2,7 +2,7 @@ import {
   AnimeStudyPlayer,
   type AnimeStudyPlayerHandle,
   type StudyPlayerSnapshot,
-} from 'anime-study-player'
+} from '../components/AnimeStudyPlayer'
 import {
   ArrowLeft,
   BookMarked,

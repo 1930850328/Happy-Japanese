@@ -1,4 +1,4 @@
-import { AnimeStudyPlayer, type StudyPlayerSnapshot } from 'anime-study-player'
+import { AnimeStudyPlayer, type StudyPlayerSnapshot } from '../components/AnimeStudyPlayer'
 import {
   BellRing,
   CheckCircle2,
@@ -81,6 +81,10 @@ function deriveTaskProgress(message: string, previousPercent: number) {
     percent = 8
   } else if (message.includes('解析外部字幕')) {
     percent = 22
+  } else if (message.includes('尝试读取视频自带字幕轨')) {
+    percent = 26
+  } else if (message.includes('已读取视频自带字幕轨')) {
+    percent = 36
   } else if (message.includes('准备音频引擎')) {
     percent = 12
   } else if (message.includes('从视频中提取音频')) {
@@ -497,7 +501,9 @@ export function ProfilePage() {
         knowledgePoints = studyData.knowledgePoints
         autoSubtitleTag = studyData.usedFallback ? '字幕兜底' : undefined
         subtitleSource = 'auto'
-        subtitleFileName = '自动生成字幕'
+        subtitleFileName = studyData.modelLabel.startsWith('视频自带字幕轨')
+          ? studyData.modelLabel
+          : '自动生成字幕'
         sourceProvider = `页面自动切片预览 / ${studyData.modelLabel}`
       }
 
@@ -898,7 +904,7 @@ export function ProfilePage() {
             </div>
 
             <p className={styles.helperNote}>
-              你只管选本地视频。系统会优先使用你提供的字幕；如果没有字幕，就自动抽取音频并生成时间轴字幕，然后挑出更适合学语法和单词的候选切片给你预览。确认导入后，视频文件会上传到你的网站存储，不再依赖当前浏览器本地保存。
+              你只管选本地视频。系统会优先使用你提供的字幕；如果你没给外挂字幕，就先尝试读取视频自带的字幕轨；再不行才会回退到自动听写和翻译。确认导入后，视频文件会上传到你的网站存储，不再依赖当前浏览器本地保存。
             </p>
             {statusText ? <p className={styles.statusNote}>{statusText}</p> : null}
             {taskProgress ? (

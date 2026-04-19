@@ -1,5 +1,7 @@
 import { BlobNotFoundError, get, put } from '@vercel/blob'
 
+import { requireBlobToken } from './_blob-token.mjs'
+
 const STATE_PREFIX = 'app-state'
 
 function setCors(res) {
@@ -40,9 +42,10 @@ function readProfileId(req) {
   }
 }
 
-async function readBlobJson(pathname) {
+async function readBlobJson(pathname, token) {
   const result = await get(pathname, {
     access: 'private',
+    token,
   })
 
   if (!result || result.statusCode !== 200 || !result.stream) {
@@ -62,6 +65,8 @@ export default async function handler(req, res) {
   }
 
   try {
+    const token = requireBlobToken()
+
     if (req.method === 'GET') {
       const profileId = readProfileId(req)
       if (!profileId) {
@@ -69,7 +74,7 @@ export default async function handler(req, res) {
         return
       }
 
-      const state = await readBlobJson(getStatePath(profileId))
+      const state = await readBlobJson(getStatePath(profileId), token)
       if (!state) {
         res.status(404).json({ error: 'State not found.' })
         return
@@ -100,6 +105,7 @@ export default async function handler(req, res) {
 
       await put(getStatePath(profileId), JSON.stringify(payload), {
         access: 'private',
+        token,
         addRandomSuffix: false,
         allowOverwrite: true,
         contentType: 'application/json; charset=utf-8',

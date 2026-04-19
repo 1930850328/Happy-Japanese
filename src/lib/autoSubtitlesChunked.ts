@@ -1,13 +1,6 @@
 import type { KnowledgePoint, TranscriptSegment } from '../types'
 import { getSharedFFmpeg } from './ffmpegRuntime'
-import { buildStudyDataFromCues } from './subtitles'
-
-interface SubtitleCue {
-  startMs: number
-  endMs: number
-  jaText?: string
-  text?: string
-}
+import { buildStudyDataFromCues, parseSubtitleText, type SubtitleCue } from './subtitles'
 
 interface SubtitleGenerationResult {
   segments: TranscriptSegment[]
@@ -64,6 +57,11 @@ interface BrowserInferenceEnv {
 interface ChunkRange {
   startMs: number
   endMs: number
+}
+
+interface EmbeddedSubtitleTrack {
+  cues: SubtitleCue[]
+  label: string
 }
 
 type StatusCallback = (message: string) => void
@@ -144,6 +142,10 @@ function toBinaryBytes(data: Uint8Array | ArrayBuffer | string) {
 
 function toArrayBuffer(bytes: Uint8Array) {
   return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer
+}
+
+function decodeText(bytes: Uint8Array | ArrayBuffer | string) {
+  return new TextDecoder('utf-8', { fatal: false }).decode(toBinaryBytes(bytes))
 }
 
 function toFfmpegTimestamp(milliseconds: number) {
@@ -264,6 +266,87 @@ function normalizeCues(
 
 function hasUsableFocusTerms(segments: TranscriptSegment[]) {
   return segments.some((segment) => segment.focusTermIds.length > 0)
+}
+
+function scoreEmbeddedSubtitleCues(cues: SubtitleCue[]) {
+  return cues.reduce((score, cue) => {
+    const japaneseLine = cue.jaText ?? cue.text ?? ''
+    let nextScore = score
+
+    if (japaneseLine.trim()) {
+      nextScore += 2
+    }
+
+    if (cue.zhText?.trim()) {
+      nextScore += 3
+    }
+
+    return nextScore
+  }, 0)
+}
+
+async function extractEmbeddedSubtitleTrack(
+  file: File,
+  onStatus?: StatusCallback,
+): Promise<EmbeddedSubtitleTrack | null> {
+  const { ffmpeg, fetchFile } = await getSharedFFmpeg(onStatus, '尝试读取视频自带字幕轨…')
+  const inputExt = file.name.split('.').pop() || 'mp4'
+  const inputName = `subtitle-track-input-${crypto.randomUUID()}.${inputExt}`
+
+  await ffmpeg.writeFile(inputName, await fetchFile(file))
+
+  try {
+    let bestTrack: { cues: SubtitleCue[]; label: string; score: number } | null = null
+
+    for (let streamIndex = 0; streamIndex < 4; streamIndex += 1) {
+      const outputName = `embedded-track-${crypto.randomUUID()}-${streamIndex}.vtt`
+
+      try {
+        onStatus?.(`尝试读取视频自带字幕轨…第 ${streamIndex + 1} 条`)
+        const code = await ffmpeg.exec([
+          '-i',
+          inputName,
+          '-map',
+          `0:s:${streamIndex}`,
+          '-c:s',
+          'webvtt',
+          outputName,
+        ])
+
+        if (code !== 0) {
+          continue
+        }
+
+        const rawText = decodeText(await ffmpeg.readFile(outputName))
+        const cues = parseSubtitleText(rawText, outputName)
+        if (cues.length === 0) {
+          continue
+        }
+
+        const score = scoreEmbeddedSubtitleCues(cues)
+        if (!bestTrack || score > bestTrack.score) {
+          bestTrack = {
+            cues,
+            label: `视频自带字幕轨 ${streamIndex + 1}`,
+            score,
+          }
+        }
+      } catch {
+        // Ignore missing or unsupported subtitle streams and continue with the next track.
+      } finally {
+        await ffmpeg.deleteFile(outputName).catch(() => undefined)
+      }
+    }
+
+    return bestTrack
+      ? {
+          cues: bestTrack.cues,
+          label: bestTrack.label,
+        }
+      : null
+  } finally {
+    await ffmpeg.deleteFile(inputName).catch(() => undefined)
+  }
 }
 
 async function loadTranscriberForStrategy(
@@ -468,6 +551,27 @@ export async function generateStudyDataFromVideo(
   onStatus?: StatusCallback,
 ): Promise<SubtitleGenerationResult> {
   try {
+    const embeddedTrack = await extractEmbeddedSubtitleTrack(file, onStatus)
+    if (embeddedTrack) {
+      onStatus?.(`已读取${embeddedTrack.label}，正在提取知识点…`)
+      const embeddedStudyData = await buildStudyDataFromCues(embeddedTrack.cues)
+
+      if (
+        embeddedStudyData.segments.length > 0 &&
+        embeddedStudyData.knowledgePoints.length > 0 &&
+        hasUsableFocusTerms(embeddedStudyData.segments)
+      ) {
+        return {
+          segments: embeddedStudyData.segments,
+          knowledgePoints: embeddedStudyData.knowledgePoints,
+          modelLabel: embeddedTrack.label,
+          usedFallback: false,
+        }
+      }
+
+      onStatus?.(`${embeddedTrack.label} 可用，但还不足以切出重点，继续尝试语音识别…`)
+    }
+
     const { transcriber, modelLabel } = await getTranscriber(onStatus)
     const cues = await transcribeVideoInChunks(file, durationMs, transcriber, onStatus)
 

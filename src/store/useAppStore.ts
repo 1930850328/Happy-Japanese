@@ -1151,13 +1151,16 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
     const updatedClip: ImportedClip = {
       ...clip,
-      subtitleFileName: '自动生成字幕',
+      subtitleFileName:
+        studyData.modelLabel.startsWith('视频自带字幕轨')
+          ? studyData.modelLabel
+          : '自动生成字幕',
       subtitleSource: 'auto',
-      sourceProvider: `站内视频 + 自动字幕 (${studyData.modelLabel})`,
+      sourceProvider: `站内视频 + 字幕解析 (${studyData.modelLabel})`,
       segments: studyData.segments,
       knowledgePoints: studyData.knowledgePoints,
       description:
-        '系统已从视频自动识别出日语时间轴字幕，并补充学习向中文字幕、高亮词法和知识点解析。',
+        '系统已优先尝试提取视频自带字幕轨，必要时再自动识别日语时间轴字幕，并补充学习向中文字幕、高亮词法和知识点解析。',
       creditLine:
         '视频文件保存在网站存储中；自动字幕仅供个人学习校对使用，首次运行会下载并缓存本地语音识别模型。',
       tags: mergeTags(

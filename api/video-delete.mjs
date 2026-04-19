@@ -1,5 +1,7 @@
 import { del } from '@vercel/blob'
 
+import { requireBlobToken } from './_blob-token.mjs'
+
 const SITE_VIDEO_PREFIX = '/site-videos/'
 
 function setCors(res) {
@@ -43,6 +45,7 @@ export default async function handler(req, res) {
 
   try {
     const body = readBody(req)
+    const token = requireBlobToken()
     const urls = Array.isArray(body.urls)
       ? body.urls.map((item) => String(item ?? '').trim()).filter(Boolean)
       : []
@@ -53,7 +56,7 @@ export default async function handler(req, res) {
       return
     }
 
-    await del(managedUrls)
+    await del(managedUrls, { token })
     res.status(200).json({ deleted: managedUrls.length })
   } catch (error) {
     res.status(400).json({
