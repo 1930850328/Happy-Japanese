@@ -91,12 +91,13 @@ dist
 如果你想让“我的”页面里导入的视频文件保存到网站，而不是浏览器本地，需要在 Vercel 项目里配置：
 
 - `BLOB_READ_WRITE_TOKEN`
-- `VIDEO_UPLOAD_PASSWORD`
+- `VIDEO_UPLOAD_PASSWORD`（可选，推荐）
 
 其中：
 
 - `BLOB_READ_WRITE_TOKEN` 用来把视频上传到 Vercel Blob
-- `VIDEO_UPLOAD_PASSWORD` 用来保护站内上传入口，避免任何访客都能往你的网站传视频
+- `VIDEO_UPLOAD_PASSWORD` 如果配置了，就会保护站内上传入口，避免任何访客都能往你的网站传视频
+- 如果不配置 `VIDEO_UPLOAD_PASSWORD`，网站端视频上传也可以正常工作，只是上传入口不会额外做密码校验
 
 配置完成后，页面导入会变成：
 

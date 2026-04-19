@@ -24,13 +24,7 @@ function readBody(req) {
 
 function verifyUploadPassword(req) {
   const configuredPassword = process.env.VIDEO_UPLOAD_PASSWORD?.trim()
-  const requirePassword = process.env.NODE_ENV === 'production'
-
   if (!configuredPassword) {
-    if (requirePassword) {
-      throw new Error('Missing VIDEO_UPLOAD_PASSWORD environment variable.')
-    }
-
     return
   }
 
