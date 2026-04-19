@@ -19,7 +19,7 @@ import { createPortal } from 'react-dom'
 
 import { sourceAttributions } from '../data/sources'
 import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
-import { buildLessonsFromImportedClip } from '../lib/lessonSlicesSafe'
+import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
 import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
@@ -427,6 +427,19 @@ export function ProfilePage() {
         startedAt,
         updatedAt: new Date().toISOString(),
       })
+    } catch (error) {
+      const detail =
+        error instanceof Error
+          ? error.message
+          : '自动字幕生成失败。当前只支持按字幕里的语法和单词切片。'
+      setSliceTask({
+        status: 'error',
+        percent: 0,
+        detail,
+        startedAt,
+        updatedAt: new Date().toISOString(),
+      })
+      setStatusText(detail)
     } finally {
       setBusyClipId(null)
     }
@@ -476,7 +489,7 @@ export function ProfilePage() {
         subtitleFileName = subtitleFile.name
         sourceProvider = '页面自动切片预览 / 外部字幕'
       } else {
-        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesSafe')
+        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesStrict')
         const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
           updateTaskStatus(message),
         )
@@ -522,8 +535,15 @@ export function ProfilePage() {
         creditLine: '预览结果仅保留在当前页面中，点击导入后才会持久化到本地学习库。',
       }
 
+      const candidateLessons = buildLessonsFromImportedClip(previewClip)
+      if (candidateLessons.length === 0) {
+        throw new Error(
+          '没有找到足够的语法/单词切片。当前不会再按时间粗切，请先导入字幕文件，或换更短、更清晰的片段。',
+        )
+      }
+
       const previewLessons = await Promise.all(
-        buildLessonsFromImportedClip(previewClip).map(async (lesson) => {
+        candidateLessons.map(async (lesson) => {
           const clipCover = await readVideoCoverAt(
             playbackFile,
             lesson.title,

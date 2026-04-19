@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { defaultGoal, defaultSettings } from '../lib/defaults'
 import { getTodayKey } from '../lib/date'
-import { buildLessonsFromImportedClip } from '../lib/lessonSlicesSafe'
+import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { loadPublishedLessons } from '../lib/publishedLessons'
 import {
   buildManifestClipFileMap,
@@ -1146,7 +1146,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       return null
     }
 
-    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesSafe')
+    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesStrict')
     const studyData = await generateStudyDataFromVideo(clipFile, clip.durationMs, onStatus)
 
     const updatedClip: ImportedClip = {
