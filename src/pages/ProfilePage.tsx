@@ -489,7 +489,7 @@ export function ProfilePage() {
         subtitleFileName = subtitleFile.name
         sourceProvider = '页面自动切片预览 / 外部字幕'
       } else {
-        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesStrict')
+        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesChunked')
         const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
           updateTaskStatus(message),
         )

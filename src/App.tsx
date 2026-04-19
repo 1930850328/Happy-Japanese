@@ -7,11 +7,13 @@ import { NotesPage } from './pages/NotesPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { ReviewPage } from './pages/ReviewPage'
 import { VocabPage } from './pages/VocabPage'
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
     <Routes>
       <Route element={<AppShell />}>
+        <Analytics />
         <Route index element={<HomePage />} />
         <Route path="/immersive" element={<ImmersivePage />} />
         <Route path="/notes" element={<NotesPage />} />

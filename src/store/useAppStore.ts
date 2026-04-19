@@ -1146,7 +1146,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       return null
     }
 
-    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesStrict')
+    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesChunked')
     const studyData = await generateStudyDataFromVideo(clipFile, clip.durationMs, onStatus)
 
     const updatedClip: ImportedClip = {
