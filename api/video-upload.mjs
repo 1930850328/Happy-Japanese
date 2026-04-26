@@ -1,6 +1,6 @@
 import { handleUpload } from '@vercel/blob/client'
 
-import { requireBlobToken } from './_blob-token.mjs'
+import { requireVideoBlobToken } from './_blob-token.mjs'
 
 const SITE_VIDEO_PREFIX = 'site-videos/'
 const MAX_VIDEO_SIZE = 2 * 1024 * 1024 * 1024
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
 
   try {
     verifyUploadPassword(req)
-    const token = requireBlobToken()
+    const token = requireVideoBlobToken()
 
     const json = await handleUpload({
       token,

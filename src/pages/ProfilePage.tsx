@@ -676,6 +676,20 @@ export function ProfilePage() {
       })
       setSlicePreviewDraft(null)
       setPreviewLessonId(null)
+    } catch (error) {
+      const detail =
+        error instanceof Error
+          ? error.message
+          : '导入切片失败，视频已上传但学习资料写入没有完成，请重试。'
+      setTaskProgress({ percent: 99, detail })
+      setStatusText(detail)
+      setSliceTask({
+        status: 'error',
+        percent: 99,
+        detail,
+        startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
     } finally {
       setImportingSlices(false)
     }

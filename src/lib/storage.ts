@@ -51,6 +51,8 @@ let cachedState: RemoteAppState | null = null
 let loadTask: Promise<RemoteAppState> | null = null
 let writeTask: Promise<void> = Promise.resolve()
 
+const MAX_REMOTE_COVER_LENGTH = 160_000
+
 function isBrowser() {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 }
@@ -89,8 +91,26 @@ function createEmptyState(profileId: string): RemoteAppState {
   }
 }
 
+function createCompactCoverSvg(title: string, theme: string) {
+  const safeTitle = title.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 24)
+  const safeTheme = theme.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 16)
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd7c2"/><stop offset=".52" stop-color="#fff2d7"/><stop offset="1" stop-color="#d7ecdf"/></linearGradient></defs><rect width="640" height="360" rx="28" fill="url(#g)"/><rect x="44" y="42" width="176" height="42" rx="21" fill="rgba(255,255,255,.58)"/><text x="62" y="69" fill="#815848" font-size="18" font-family="sans-serif">${safeTheme}</text><rect x="44" y="232" width="430" height="86" rx="24" fill="rgba(255,255,255,.72)"/><text x="66" y="284" fill="#4b362d" font-size="30" font-family="sans-serif">${safeTitle}</text></svg>`
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
+}
+
+function sanitizeCoverForRemote(clip: ImportedClip) {
+  if (!clip.cover.startsWith('data:image/') || clip.cover.length <= MAX_REMOTE_COVER_LENGTH) {
+    return clip.cover
+  }
+
+  return createCompactCoverSvg(clip.title, clip.theme)
+}
+
 function sanitizeImportedClip(clip: ImportedClip): ImportedClip {
-  const next = { ...clip }
+  const next = {
+    ...clip,
+    cover: sanitizeCoverForRemote(clip),
+  }
   delete next.blob
   return next
 }
@@ -278,16 +298,22 @@ async function ensureStateLoaded() {
 }
 
 async function updateState(mutator: (state: RemoteAppState) => void) {
-  const current = await ensureStateLoaded()
-  const nextState = cloneState(current)
-  mutator(nextState)
-  nextState.updatedAt = new Date().toISOString()
+  let nextState: RemoteAppState | null = null
 
-  const snapshot = cloneState(nextState)
-  writeTask = writeTask.catch(() => undefined).then(() => persistRemoteState(snapshot))
+  writeTask = writeTask.catch(() => undefined).then(async () => {
+    const current = await ensureStateLoaded()
+    const next = cloneState(current)
+    mutator(next)
+    next.updatedAt = new Date().toISOString()
+
+    const snapshot = cloneState(next)
+    await persistRemoteState(snapshot)
+    cachedState = next
+    nextState = next
+  })
+
   await writeTask
-  cachedState = nextState
-  return nextState
+  return nextState!
 }
 
 export async function listFavorites() {
@@ -433,6 +459,17 @@ export async function saveImportedClip(clip: ImportedClip) {
     }
 
     state.importedClips.unshift(sanitized)
+  })
+}
+
+export async function saveImportedClips(clips: ImportedClip[]) {
+  const sanitizedClips = clips.map(sanitizeImportedClip)
+  await updateState((state) => {
+    const ids = new Set(sanitizedClips.map((clip) => clip.id))
+    state.importedClips = [
+      ...sanitizedClips,
+      ...state.importedClips.filter((clip) => !ids.has(clip.id)),
+    ]
   })
 }
 

@@ -269,6 +269,10 @@ function hasUsableFocusTerms(segments: TranscriptSegment[]) {
   return segments.some((segment) => segment.focusTermIds.length > 0)
 }
 
+function buildModelLabel(baseLabel: string, hardSubtitleCount: number) {
+  return hardSubtitleCount > 0 ? `${baseLabel} + 画面硬中文字幕 OCR` : baseLabel
+}
+
 function scoreEmbeddedSubtitleCues(cues: SubtitleCue[]) {
   return cues.reduce((score, cue) => {
     const japaneseLine = cue.jaText ?? cue.text ?? ''
@@ -555,8 +559,12 @@ export async function generateStudyDataFromVideo(
     const embeddedTrack = await extractEmbeddedSubtitleTrack(file, onStatus)
     if (embeddedTrack) {
       onStatus?.(`已读取${embeddedTrack.label}，正在提取知识点…`)
-      const embeddedCues = await enrichCuesWithHardSubtitles(file, embeddedTrack.cues, onStatus)
-      const embeddedStudyData = await buildStudyDataFromCues(embeddedCues)
+      const embeddedEnrichment = await enrichCuesWithHardSubtitles(
+        file,
+        embeddedTrack.cues,
+        onStatus,
+      )
+      const embeddedStudyData = await buildStudyDataFromCues(embeddedEnrichment.cues)
 
       if (
         embeddedStudyData.segments.length > 0 &&
@@ -566,7 +574,7 @@ export async function generateStudyDataFromVideo(
         return {
           segments: embeddedStudyData.segments,
           knowledgePoints: embeddedStudyData.knowledgePoints,
-          modelLabel: embeddedTrack.label,
+          modelLabel: buildModelLabel(embeddedTrack.label, embeddedEnrichment.recognizedCount),
           usedFallback: false,
         }
       }
@@ -576,7 +584,8 @@ export async function generateStudyDataFromVideo(
 
     const { transcriber, modelLabel } = await getTranscriber(onStatus)
     const cues = await transcribeVideoInChunks(file, durationMs, transcriber, onStatus)
-    const enrichedCues = await enrichCuesWithHardSubtitles(file, cues, onStatus)
+    const enrichment = await enrichCuesWithHardSubtitles(file, cues, onStatus)
+    const enrichedCues = enrichment.cues
 
     if (enrichedCues.length === 0) {
       throw new Error(
@@ -600,7 +609,7 @@ export async function generateStudyDataFromVideo(
     return {
       segments: studyData.segments,
       knowledgePoints: studyData.knowledgePoints,
-      modelLabel,
+      modelLabel: buildModelLabel(modelLabel, enrichment.recognizedCount),
       usedFallback: false,
     }
   } catch (error) {

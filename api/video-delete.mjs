@@ -1,6 +1,6 @@
 import { del } from '@vercel/blob'
 
-import { requireBlobToken } from './_blob-token.mjs'
+import { requireVideoBlobToken } from './_blob-token.mjs'
 
 const SITE_VIDEO_PREFIX = '/site-videos/'
 
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
 
   try {
     const body = readBody(req)
-    const token = requireBlobToken()
+    const token = requireVideoBlobToken()
     const urls = Array.isArray(body.urls)
       ? body.urls.map((item) => String(item ?? '').trim()).filter(Boolean)
       : []

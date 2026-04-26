@@ -32,6 +32,7 @@ import {
   saveFavorite,
   saveGoal,
   saveImportedClip,
+  saveImportedClips,
   saveNote,
   saveReviewItem,
   saveReviewItems,
@@ -150,6 +151,21 @@ function createCoverSvg(title: string, theme: string) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
 }
 
+const COVER_MAX_WIDTH = 640
+const COVER_MAX_HEIGHT = 360
+const COVER_JPEG_QUALITY = 0.76
+
+function getCoverSize(sourceWidth: number, sourceHeight: number) {
+  const width = sourceWidth || 1280
+  const height = sourceHeight || 720
+  const scale = Math.min(1, COVER_MAX_WIDTH / width, COVER_MAX_HEIGHT / height)
+
+  return {
+    width: Math.max(1, Math.round(width * scale)),
+    height: Math.max(1, Math.round(height * scale)),
+  }
+}
+
 function captureVideoCover(
   video: HTMLVideoElement,
   title: string,
@@ -157,15 +173,18 @@ function captureVideoCover(
   durationMs: number,
 ) {
   try {
+    const sourceWidth = video.videoWidth || 1280
+    const sourceHeight = video.videoHeight || 720
+    const coverSize = getCoverSize(sourceWidth, sourceHeight)
     const canvas = document.createElement('canvas')
-    canvas.width = video.videoWidth || 1280
-    canvas.height = video.videoHeight || 720
+    canvas.width = coverSize.width
+    canvas.height = coverSize.height
     const context = canvas.getContext('2d')
     if (!context) {
       return createCoverSvg(title, theme)
     }
 
-    context.drawImage(video, 0, 0, canvas.width, canvas.height)
+    context.drawImage(video, 0, 0, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height)
     context.fillStyle = 'rgba(20, 14, 12, 0.14)'
     context.fillRect(0, 0, canvas.width, canvas.height)
     context.fillStyle = 'rgba(255, 252, 249, 0.92)'
@@ -180,7 +199,7 @@ function captureVideoCover(
       50,
       canvas.height - 58,
     )
-    return canvas.toDataURL('image/jpeg', 0.9)
+    return canvas.toDataURL('image/jpeg', COVER_JPEG_QUALITY)
   } catch {
     return createCoverSvg(title, theme)
   }
@@ -913,7 +932,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       }
     })
 
-    await Promise.all([saveImportedClip(sourceClip), ...importedSlices.map((clip) => saveImportedClip(clip))])
+    await saveImportedClips([sourceClip, ...importedSlices])
     set((state) => {
       const importedClips = [sourceClip, ...importedSlices, ...state.importedClips]
       return {
@@ -1111,7 +1130,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
     onUploadProgress?.('切片视频已上传到网站，正在写入导入记录…', 100)
 
-    await Promise.all(prepared.map((clip) => saveImportedClip(clip)))
+    await saveImportedClips(prepared)
 
     if (replacedRemoteUrls.size > 0) {
       await deleteSiteVideos([...replacedRemoteUrls]).catch((error) => {

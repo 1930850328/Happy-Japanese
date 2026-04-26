@@ -273,7 +273,7 @@ export async function enrichCuesWithHardSubtitles(
 ) {
   const targets = buildSubtitleTargets(cues)
   if (targets.length === 0) {
-    return cues
+    return { cues, recognizedCount: 0 }
   }
 
   const { video, cleanup } = createVideoFromFile(file)
@@ -305,24 +305,27 @@ export async function enrichCuesWithHardSubtitles(
     }
 
     if (recognizedByCue.size === 0) {
-      return cues
+      return { cues, recognizedCount: 0 }
     }
 
     onStatus?.(`已从画面底部识别出 ${recognizedByCue.size} 条中文字幕`)
-    return cues.map((cue) => {
-      const recognized = recognizedByCue.get(cue)
-      if (!recognized) {
-        return cue
-      }
+    return {
+      cues: cues.map((cue) => {
+        const recognized = recognizedByCue.get(cue)
+        if (!recognized) {
+          return cue
+        }
 
-      return {
-        ...cue,
-        zhText: recognized,
-      }
-    })
+        return {
+          ...cue,
+          zhText: recognized,
+        }
+      }),
+      recognizedCount: recognizedByCue.size,
+    }
   } catch (error) {
     console.warn('Failed to read hard subtitles from video frames.', error)
-    return cues
+    return { cues, recognizedCount: 0 }
   } finally {
     cleanup()
   }

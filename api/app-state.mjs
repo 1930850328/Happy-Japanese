@@ -1,6 +1,6 @@
 import { BlobNotFoundError, get, put } from '@vercel/blob'
 
-import { requireBlobToken } from './_blob-token.mjs'
+import { requireAppStateBlobToken } from './_blob-token.mjs'
 
 const STATE_PREFIX = 'app-state'
 
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const token = requireBlobToken()
+    const token = requireAppStateBlobToken()
 
     if (req.method === 'GET') {
       const profileId = readProfileId(req)

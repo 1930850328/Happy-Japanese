@@ -53,24 +53,38 @@ function isLowInfoFrame(context: CanvasRenderingContext2D, width: number, height
   }
 }
 
-function captureVideoCover(
-  video: HTMLVideoElement,
-  title: string,
-  theme: string,
-) {
+const COVER_MAX_WIDTH = 640
+const COVER_MAX_HEIGHT = 360
+const COVER_JPEG_QUALITY = 0.76
+
+function getCoverSize(sourceWidth: number, sourceHeight: number) {
+  const width = sourceWidth || 1280
+  const height = sourceHeight || 720
+  const scale = Math.min(1, COVER_MAX_WIDTH / width, COVER_MAX_HEIGHT / height)
+
+  return {
+    width: Math.max(1, Math.round(width * scale)),
+    height: Math.max(1, Math.round(height * scale)),
+  }
+}
+
+function captureVideoCover(video: HTMLVideoElement, title: string, theme: string) {
   try {
+    const sourceWidth = video.videoWidth || 1280
+    const sourceHeight = video.videoHeight || 720
+    const coverSize = getCoverSize(sourceWidth, sourceHeight)
     const canvas = document.createElement('canvas')
-    canvas.width = video.videoWidth || 1280
-    canvas.height = video.videoHeight || 720
+    canvas.width = coverSize.width
+    canvas.height = coverSize.height
     const context = canvas.getContext('2d')
     if (!context) {
       return { cover: createCoverSvg(title, theme), lowInfo: false }
     }
 
-    context.drawImage(video, 0, 0, canvas.width, canvas.height)
+    context.drawImage(video, 0, 0, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height)
     const lowInfo = isLowInfoFrame(context, canvas.width, canvas.height)
     return {
-      cover: canvas.toDataURL('image/jpeg', 0.9),
+      cover: canvas.toDataURL('image/jpeg', COVER_JPEG_QUALITY),
       lowInfo,
     }
   } catch {

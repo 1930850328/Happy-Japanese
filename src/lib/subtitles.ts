@@ -35,12 +35,24 @@ function normalizeCueText(input: string) {
     .trim()
 }
 
-function hasJapaneseText(input: string) {
-  return /[\p{Script=Hiragana}\p{Script=Katakana}\u3000-\u30ff\u3400-\u9fff]/u.test(input)
+function hasKanaText(input: string) {
+  return /[\p{Script=Hiragana}\p{Script=Katakana}\u30a0-\u30ff]/u.test(input)
 }
 
 function hasChineseText(input: string) {
   return /[\u4e00-\u9fff]/u.test(input)
+}
+
+function looksLikeChineseOnly(input: string) {
+  return (
+    hasChineseText(input) &&
+    !hasKanaText(input) &&
+    /[这那们为会说语习没过还让吗吧呢个]/u.test(input)
+  )
+}
+
+function hasJapaneseText(input: string) {
+  return hasKanaText(input) || (hasChineseText(input) && !looksLikeChineseOnly(input))
 }
 
 function extractCueText(lines: string[]) {
@@ -50,7 +62,9 @@ function extractCueText(lines: string[]) {
   }
 
   const jaLines = cleanedLines.filter((line) => hasJapaneseText(line))
-  const zhLines = cleanedLines.filter((line) => hasChineseText(line) && !/[ぁ-んァ-ヴ]/u.test(line))
+  const zhLines = cleanedLines.filter(
+    (line) => hasChineseText(line) && !hasKanaText(line) && line !== jaLines[0],
+  )
   const jaText = jaLines[0]
 
   if (!jaText) {
