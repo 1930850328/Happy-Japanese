@@ -29,6 +29,9 @@ import { useAppStore } from '../store/useAppStore'
 import type { KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
 import styles from './HomePage.module.css'
 
+const APP_BUILD_LABEL = 'v2026.05.05-ocr-fix'
+const APP_BUILD_NOTE = '硬字幕 OCR 修复版'
+
 interface LessonCardProps {
   lesson: VideoLesson
   favorite: boolean
@@ -760,7 +763,11 @@ export function HomePage() {
     <div className={`${styles.page} fadeIn`}>
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
-          <span className="chip badgeMint">短视频模块已切到独立播放器内核</span>
+          <div className={styles.versionRow}>
+            <span className="chip badgeMint">短视频模块已切到独立播放器内核</span>
+            <span className={styles.versionBadge}>{APP_BUILD_LABEL}</span>
+            <span className={styles.versionBadge}>{APP_BUILD_NOTE}</span>
+          </div>
           <h1 className="pageTitle">先把片中原句看清楚，再顺手记住对应的单词和语法</h1>
           <p className="sectionIntro">
             首页会优先展示站内本地学习切片。播放器控制条已经交给独立内核处理，时间轴、音量、倍速、

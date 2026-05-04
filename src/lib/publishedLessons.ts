@@ -29,6 +29,22 @@ interface PublishedIndexEntry {
   clipCount?: number
 }
 
+async function readJsonResponse(response: Response) {
+  const contentType = response.headers.get('content-type') ?? ''
+  const raw = await response.text()
+  const trimmed = raw.trimStart()
+
+  if (!contentType.includes('application/json') && !trimmed.startsWith('{') && !trimmed.startsWith('[')) {
+    return null
+  }
+
+  try {
+    return JSON.parse(raw) as unknown
+  } catch {
+    return null
+  }
+}
+
 function createFallbackCover(title: string, subtitle: string) {
   const safeTitle = title.replace(/&/g, '&amp;').replace(/</g, '&lt;')
   const safeSubtitle = subtitle.replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -151,7 +167,7 @@ export async function loadPublishedLessons() {
       return []
     }
 
-    const indexData = (await indexResponse.json()) as unknown
+    const indexData = await readJsonResponse(indexResponse)
     const entries = Array.isArray(indexData)
       ? indexData.filter((item): item is PublishedIndexEntry => {
           return Boolean(
@@ -173,7 +189,7 @@ export async function loadPublishedLessons() {
           return []
         }
 
-        const manifest = (await response.json()) as PublishedManifest
+        const manifest = (await readJsonResponse(response)) as PublishedManifest | null
         if (!manifest || typeof manifest.animeTitle !== 'string' || !Array.isArray(manifest.clips)) {
           return []
         }

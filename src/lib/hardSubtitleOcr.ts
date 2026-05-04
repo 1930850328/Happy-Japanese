@@ -8,7 +8,7 @@ interface OcrWorker {
   recognize(
     image: HTMLCanvasElement,
     options?: Record<string, unknown>,
-  ): Promise<{ data?: { text?: string } }>
+  ): Promise<{ data?: { confidence?: number; text?: string } }>
 }
 
 interface TesseractApi {
@@ -22,6 +22,7 @@ interface TesseractApi {
   ) => Promise<OcrWorker>
   PSM: {
     SINGLE_BLOCK: string
+    SINGLE_LINE: string
   }
 }
 
@@ -30,16 +31,70 @@ interface SubtitleTarget {
   sampleMs: number
 }
 
-const OCR_REGION_TOP_RATIO = 0.72
-const OCR_REGION_HEIGHT_RATIO = 0.24
-const OCR_OUTPUT_WIDTH = 1600
+const OCR_OUTPUT_WIDTH = 1800
 const OCR_CACHE_BUCKET_MS = 800
 const OCR_MIN_CONFIDENT_TEXT_LENGTH = 4
+const OCR_MIN_CONFIDENCE = 35
+const OCR_COMMON_CHAR_MIN_RATIO = 0.32
+const OCR_BLACKLIST = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789<>|/\\\\[]{}=_~@#$%^&*'
+const COMMON_SUBTITLE_CHARS =
+  '我你他她它们这那哪就样和的是了在有不没吗吧呢啊呀着过给把被从到里上下面中为让但可会能要想说看听来去出见遇知做还都很也再又只真好坏多小大前后现今明天时分秒点自已己然所以因为如果怎么什么为什么谁与同向对等'
+
+interface OcrCrop {
+  leftRatio: number
+  name: string
+  topRatio: number
+  widthRatio: number
+  heightRatio: number
+}
+
+interface RecognizedLine {
+  confidence: number
+  score: number
+  text: string
+  variant: string
+}
+
+const OCR_CROPS: OcrCrop[] = [
+  {
+    name: 'bottom-tight',
+    leftRatio: 0.08,
+    topRatio: 0.78,
+    widthRatio: 0.84,
+    heightRatio: 0.16,
+  },
+  {
+    name: 'bottom-wide',
+    leftRatio: 0.04,
+    topRatio: 0.74,
+    widthRatio: 0.92,
+    heightRatio: 0.24,
+  },
+  {
+    name: 'bottom-lower',
+    leftRatio: 0.04,
+    topRatio: 0.82,
+    widthRatio: 0.92,
+    heightRatio: 0.14,
+  },
+]
 
 let workerPromise: Promise<OcrWorker> | null = null
 
 function countChineseCharacters(input: string) {
   return (input.match(/[\u4e00-\u9fff]/gu) || []).length
+}
+
+function countCommonSubtitleCharacters(input: string) {
+  return Array.from(input).filter((char) => COMMON_SUBTITLE_CHARS.includes(char)).length
+}
+
+function countAsciiNoise(input: string) {
+  return (input.match(/[A-Za-z0-9<>|/\\[\]{}=_~@#$%^&*]/gu) || []).length
+}
+
+function countJapaneseKana(input: string) {
+  return (input.match(/[\u3040-\u30ff]/gu) || []).length
 }
 
 function getSampleTimeMs(cue: SubtitleCue) {
@@ -65,26 +120,69 @@ function normalizeHardSubtitleText(input: string) {
     .replace(/[|｜]/g, '')
     .replace(/[“”]/g, '"')
     .replace(/[‘’]/g, "'")
+    .replace(/[，。！？、：“”‘’《》（）【】；：,.!?'"()]/g, '')
     .replace(/\s+/g, '')
+    .replace(/我[束東柬]/gu, '我就')
+    .replace(/这(?:人)?[梓祥]/gu, '这样')
+    .replace(/岛[旧曰日]/gu, '岛村')
+    .replace(/相遇[也巴巳己]/gu, '相遇了')
     .trim()
 }
 
-function pickBestChineseLine(rawText: string) {
+function scoreChineseLine(line: string, confidence: number) {
+  const chineseCount = countChineseCharacters(line)
+  if (chineseCount < OCR_MIN_CONFIDENT_TEXT_LENGTH) {
+    return null
+  }
+
+  const asciiNoise = countAsciiNoise(line)
+  const kanaNoise = countJapaneseKana(line)
+  const nonChineseNoise = Array.from(line).length - chineseCount - asciiNoise - kanaNoise
+  const commonCount = countCommonSubtitleCharacters(line)
+  const commonRatio = commonCount / Math.max(1, chineseCount)
+
+  if (asciiNoise > 0 || kanaNoise > 0 || nonChineseNoise > 1) {
+    return null
+  }
+
+  if (commonRatio < OCR_COMMON_CHAR_MIN_RATIO) {
+    return null
+  }
+
+  if (Number.isFinite(confidence) && confidence > 0 && confidence < OCR_MIN_CONFIDENCE) {
+    return null
+  }
+
+  return chineseCount * 14 + commonRatio * 60 + Math.max(0, confidence) * 0.25
+}
+
+function pickBestChineseLine(rawText: string, confidence = 0, variant = 'unknown'): RecognizedLine | null {
   const candidates = rawText
     .split('\n')
     .map(normalizeHardSubtitleText)
     .filter(Boolean)
-    .filter((line) => countChineseCharacters(line) >= OCR_MIN_CONFIDENT_TEXT_LENGTH)
-    .sort((left, right) => {
-      const chineseDiff = countChineseCharacters(right) - countChineseCharacters(left)
-      if (chineseDiff !== 0) {
-        return chineseDiff
-      }
-
-      return right.length - left.length
+    .map((line) => {
+      const score = scoreChineseLine(line, confidence)
+      return score === null
+        ? null
+        : {
+            confidence,
+            score,
+            text: line,
+            variant,
+          }
     })
+    .filter((line): line is RecognizedLine => line !== null)
+    .sort((left, right) => right.score - left.score)
 
-  return candidates[0] ?? ''
+  return candidates[0] ?? null
+}
+
+function isReliableHardSubtitle(
+  japaneseText: string,
+  candidate: RecognizedLine | null,
+): candidate is RecognizedLine {
+  return candidate !== null && isUsableChineseSubtitle(japaneseText, candidate.text)
 }
 
 function bucketSampleTime(sampleMs: number) {
@@ -171,39 +269,47 @@ function seekVideo(video: HTMLVideoElement, timeMs: number) {
   })
 }
 
-function renderSubtitleRegion(video: HTMLVideoElement) {
-  const sourceWidth = video.videoWidth || 1280
-  const sourceHeight = video.videoHeight || 720
-  const sourceTop = Math.round(sourceHeight * OCR_REGION_TOP_RATIO)
-  const sourceHeightRegion = Math.max(120, Math.round(sourceHeight * OCR_REGION_HEIGHT_RATIO))
-  const sourceBottom = Math.min(sourceHeight, sourceTop + sourceHeightRegion)
-  const sourceCropHeight = Math.max(120, sourceBottom - sourceTop)
-  const outputHeight = Math.round((OCR_OUTPUT_WIDTH * sourceCropHeight) / sourceWidth)
+function hasBrightNeighbor(mask: Uint8Array, width: number, height: number, x: number, y: number) {
+  const radius = 2
+  const minX = Math.max(0, x - radius)
+  const maxX = Math.min(width - 1, x + radius)
+  const minY = Math.max(0, y - radius)
+  const maxY = Math.min(height - 1, y + radius)
 
-  const canvas = document.createElement('canvas')
-  canvas.width = OCR_OUTPUT_WIDTH
-  canvas.height = outputHeight
+  for (let checkY = minY; checkY <= maxY; checkY += 1) {
+    for (let checkX = minX; checkX <= maxX; checkX += 1) {
+      if (mask[checkY * width + checkX] === 1) {
+        return true
+      }
+    }
+  }
+
+  return false
+}
+
+function cloneCanvas(canvas: HTMLCanvasElement) {
+  const copy = document.createElement('canvas')
+  copy.width = canvas.width
+  copy.height = canvas.height
+  const context = copy.getContext('2d')
+  if (!context) {
+    throw new Error('硬字幕 OCR 无法初始化画布')
+  }
+
+  context.drawImage(canvas, 0, 0)
+  return copy
+}
+
+function createSubtitleMaskCanvas(source: HTMLCanvasElement, includeOutline: boolean) {
+  const canvas = cloneCanvas(source)
   const context = canvas.getContext('2d')
   if (!context) {
     throw new Error('硬字幕 OCR 无法初始化画布')
   }
 
-  context.fillStyle = '#ffffff'
-  context.fillRect(0, 0, canvas.width, canvas.height)
-  context.drawImage(
-    video,
-    0,
-    sourceTop,
-    sourceWidth,
-    sourceCropHeight,
-    0,
-    0,
-    canvas.width,
-    canvas.height,
-  )
-
   const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
   const { data } = imageData
+  const brightMask = new Uint8Array(canvas.width * canvas.height)
 
   for (let index = 0; index < data.length; index += 4) {
     const red = data[index]
@@ -213,8 +319,25 @@ function renderSubtitleRegion(video: HTMLVideoElement) {
     const minChannel = Math.min(red, green, blue)
     const saturation = maxChannel - minChannel
     const luma = red * 0.299 + green * 0.587 + blue * 0.114
-    const looksLikeSubtitle = luma > 148 && saturation < 72
-    const value = looksLikeSubtitle ? 0 : 255
+    const pixelIndex = index / 4
+
+    if (luma > 150 && saturation < 120) {
+      brightMask[pixelIndex] = 1
+    }
+  }
+
+  for (let index = 0; index < data.length; index += 4) {
+    const pixelIndex = index / 4
+    const x = pixelIndex % canvas.width
+    const y = Math.floor(pixelIndex / canvas.width)
+    const red = data[index]
+    const green = data[index + 1]
+    const blue = data[index + 2]
+    const luma = red * 0.299 + green * 0.587 + blue * 0.114
+    const isSubtitleFill = brightMask[pixelIndex] === 1
+    const isSubtitleOutline =
+      includeOutline && luma < 125 && hasBrightNeighbor(brightMask, canvas.width, canvas.height, x, y)
+    const value = isSubtitleFill || isSubtitleOutline ? 0 : 255
 
     data[index] = value
     data[index + 1] = value
@@ -224,6 +347,70 @@ function renderSubtitleRegion(video: HTMLVideoElement) {
 
   context.putImageData(imageData, 0, 0)
   return canvas
+}
+
+function renderSubtitleRegions(video: HTMLVideoElement) {
+  const sourceWidth = video.videoWidth || 1280
+  const sourceHeight = video.videoHeight || 720
+  const variants: Array<{ canvas: HTMLCanvasElement; name: string }> = []
+
+  for (const crop of OCR_CROPS) {
+    const sourceLeft = Math.round(sourceWidth * crop.leftRatio)
+    const sourceTop = Math.round(sourceHeight * crop.topRatio)
+    const sourceCropWidth = Math.max(120, Math.round(sourceWidth * crop.widthRatio))
+    const sourceCropHeight = Math.max(
+      80,
+      Math.min(sourceHeight - sourceTop, Math.round(sourceHeight * crop.heightRatio)),
+    )
+    const outputHeight = Math.max(80, Math.round((OCR_OUTPUT_WIDTH * sourceCropHeight) / sourceCropWidth))
+
+    const canvas = document.createElement('canvas')
+    canvas.width = OCR_OUTPUT_WIDTH
+    canvas.height = outputHeight
+    const context = canvas.getContext('2d')
+    if (!context) {
+      throw new Error('硬字幕 OCR 无法初始化画布')
+    }
+
+    context.fillStyle = '#ffffff'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    context.drawImage(
+      video,
+      sourceLeft,
+      sourceTop,
+      sourceCropWidth,
+      sourceCropHeight,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+    )
+
+    variants.push({ canvas: cloneCanvas(canvas), name: `${crop.name}-raw` })
+    variants.push({ canvas: createSubtitleMaskCanvas(canvas, false), name: `${crop.name}-fill` })
+    variants.push({ canvas: createSubtitleMaskCanvas(canvas, true), name: `${crop.name}-outline` })
+  }
+
+  return variants
+}
+
+async function recognizeHardSubtitle(worker: OcrWorker, video: HTMLVideoElement) {
+  let best: RecognizedLine | null = null
+
+  for (const variant of renderSubtitleRegions(video)) {
+    const result = await worker.recognize(variant.canvas)
+    const candidate = pickBestChineseLine(
+      result.data?.text ?? '',
+      Number(result.data?.confidence ?? 0),
+      variant.name,
+    )
+
+    if (candidate && (!best || candidate.score > best.score)) {
+      best = candidate
+    }
+  }
+
+  return best
 }
 
 async function loadTesseractApi(): Promise<TesseractApi> {
@@ -250,9 +437,10 @@ async function getWorker(onStatus?: StatusCallback) {
       })
 
       await worker.setParameters({
-        tessedit_pageseg_mode: tesseract.PSM.SINGLE_BLOCK,
+        tessedit_pageseg_mode: tesseract.PSM.SINGLE_LINE,
         preserve_interword_spaces: '0',
-        user_defined_dpi: '180',
+        user_defined_dpi: '220',
+        tessedit_char_blacklist: OCR_BLACKLIST,
       })
 
       return worker
@@ -277,7 +465,7 @@ export async function enrichCuesWithHardSubtitles(
   }
 
   const { video, cleanup } = createVideoFromFile(file)
-  const recognizedByBucket = new Map<number, string>()
+  const recognizedByBucket = new Map<number, RecognizedLine | null>()
   const recognizedByCue = new Map<SubtitleCue, string>()
 
   try {
@@ -290,17 +478,15 @@ export async function enrichCuesWithHardSubtitles(
       onStatus?.(`尝试识别画面底部中文字幕…${index + 1}/${targets.length}`)
 
       let recognized = recognizedByBucket.get(bucket)
-      if (!recognized) {
+      if (recognized === undefined) {
         await seekVideo(video, target.sampleMs)
-        const canvas = renderSubtitleRegion(video)
-        const result = await worker.recognize(canvas)
-        recognized = pickBestChineseLine(result.data?.text ?? '')
+        recognized = await recognizeHardSubtitle(worker, video)
         recognizedByBucket.set(bucket, recognized)
       }
 
       const jaText = target.cue.jaText ?? target.cue.text ?? ''
-      if (isUsableChineseSubtitle(jaText, recognized)) {
-        recognizedByCue.set(target.cue, recognized)
+      if (isReliableHardSubtitle(jaText, recognized)) {
+        recognizedByCue.set(target.cue, recognized.text)
       }
     }
 

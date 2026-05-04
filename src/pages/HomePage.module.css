@@ -23,6 +23,27 @@
   align-items: center;
 }
 
+.versionRow {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.versionBadge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0.36rem 0.68rem;
+  border-radius: 999px;
+  border: 1px solid rgba(178, 211, 199, 0.92);
+  background: rgba(241, 250, 247, 0.92);
+  color: #41665a;
+  font-family: var(--font-ui);
+  font-size: 0.86rem;
+  line-height: 1.2;
+}
+
 .heroStats {
   display: grid;
   gap: 0.9rem;

@@ -15,6 +15,7 @@ const DB_NAME = 'yuru-nihongo-db'
 const DB_VERSION = 1
 const PROFILE_STORAGE_KEY = 'yuru-nihongo-cloud-profile-id'
 const STATE_ENDPOINT = '/api/app-state'
+const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 
 type StoreName =
   | 'favorites'
@@ -74,6 +75,19 @@ function getProfileId() {
   const next = sanitizeProfileId(crypto.randomUUID())
   window.localStorage.setItem(PROFILE_STORAGE_KEY, next)
   return next
+}
+
+function getStateEndpoint() {
+  if (!isBrowser()) {
+    return STATE_ENDPOINT
+  }
+
+  const { origin, hostname } = window.location
+  if (hostname === '127.0.0.1' || hostname === 'localhost') {
+    return `${FALLBACK_API_ORIGIN}${STATE_ENDPOINT}`
+  }
+
+  return `${origin}${STATE_ENDPOINT}`
 }
 
 function createEmptyState(profileId: string): RemoteAppState {
@@ -149,6 +163,22 @@ function hasAnyLegacyData(state: Omit<RemoteAppState, 'version' | 'profileId' | 
   )
 }
 
+async function readJsonResponse(response: Response) {
+  const contentType = response.headers.get('content-type') ?? ''
+  const raw = await response.text()
+  const trimmed = raw.trimStart()
+
+  if (!contentType.includes('application/json') && !trimmed.startsWith('{') && !trimmed.startsWith('[')) {
+    return null
+  }
+
+  try {
+    return JSON.parse(raw) as unknown
+  } catch {
+    return null
+  }
+}
+
 async function getLegacyDb() {
   return openDB(DB_NAME, DB_VERSION, {
     upgrade(db) {
@@ -221,7 +251,7 @@ async function loadLegacyState(profileId: string) {
 }
 
 async function fetchRemoteState(profileId: string) {
-  const response = await fetch(`${STATE_ENDPOINT}?profileId=${encodeURIComponent(profileId)}`, {
+  const response = await fetch(`${getStateEndpoint()}?profileId=${encodeURIComponent(profileId)}`, {
     cache: 'no-store',
   })
 
@@ -230,12 +260,12 @@ async function fetchRemoteState(profileId: string) {
   }
 
   if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as { error?: string } | null
+    const body = (await readJsonResponse(response)) as { error?: string } | null
     throw new Error(body?.error || '加载云端学习数据失败。')
   }
 
-  const body = (await response.json()) as { state?: RemoteAppState }
-  if (!body.state) {
+  const body = (await readJsonResponse(response)) as { state?: RemoteAppState } | null
+  if (!body?.state) {
     return null
   }
 
@@ -243,7 +273,7 @@ async function fetchRemoteState(profileId: string) {
 }
 
 async function persistRemoteState(state: RemoteAppState) {
-  const response = await fetch(STATE_ENDPOINT, {
+  const response = await fetch(getStateEndpoint(), {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -258,7 +288,7 @@ async function persistRemoteState(state: RemoteAppState) {
     return
   }
 
-  const body = (await response.json().catch(() => null)) as { error?: string } | null
+  const body = (await readJsonResponse(response)) as { error?: string } | null
   throw new Error(body?.error || '保存云端学习数据失败。')
 }
 
