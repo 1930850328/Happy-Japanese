@@ -306,16 +306,21 @@ async function loadClipProcessingFile(clip: ImportedClip) {
     return null
   }
 
-  const response = await fetch(clip.sourceUrl)
-  if (!response.ok) {
-    throw new Error('无法从站内存储读取视频文件。')
-  }
+  try {
+    const response = await fetch(clip.sourceUrl)
+    if (!response.ok) {
+      throw new Error(`站内存储返回 ${response.status}`)
+    }
 
-  const blob = await response.blob()
-  return new File([blob], clip.sourceFileName || `${clip.id}.mp4`, {
-    type: blob.type || clip.fileType || 'video/mp4',
-    lastModified: Date.now(),
-  })
+    const blob = await response.blob()
+    return new File([blob], clip.sourceFileName || `${clip.id}.mp4`, {
+      type: blob.type || clip.fileType || 'video/mp4',
+      lastModified: Date.now(),
+    })
+  } catch (error) {
+    const message = error instanceof Error && error.message ? error.message : '网络请求失败'
+    throw new Error(`无法读取用于自动字幕的视频文件：${message}。请刷新后重试，或重新导入原视频。`)
+  }
 }
 
 async function purgeFavorites(lessonIds: string[], favorites: string[]) {
@@ -814,6 +819,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       fileType: file.type || uploadedVideo.contentType || 'video/mp4',
       subtitleFileName,
       subtitleSource,
+      blob: file,
       createdAt: now,
       segments,
       knowledgePoints,
@@ -884,6 +890,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       fileType: file.type || uploadedVideo.contentType || 'video/mp4',
       subtitleFileName,
       subtitleSource,
+      blob: file,
       createdAt: importedAt,
       segments: baseSegments,
       knowledgePoints: baseKnowledgePoints,

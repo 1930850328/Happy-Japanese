@@ -40,10 +40,16 @@ interface WhisperLoadStrategy {
   dtype: 'fp32'
 }
 
+interface WhisperRemoteHost {
+  host: string
+  label: string
+}
+
 interface BrowserInferenceEnv {
   allowLocalModels: boolean
   allowRemoteModels: boolean
   useBrowserCache: boolean
+  remoteHost: string
   logLevel: unknown
   backends?: {
     onnx?: {
@@ -69,6 +75,10 @@ type StatusCallback = (message: string) => void
 
 const TINY_MODEL = 'onnx-community/whisper-tiny_timestamped'
 const BASE_MODEL = 'onnx-community/whisper-base_timestamped'
+const MODEL_REMOTE_HOSTS: WhisperRemoteHost[] = [
+  { host: 'https://huggingface.co/', label: 'Hugging Face' },
+  { host: 'https://hf-mirror.com/', label: 'HF Mirror' },
+]
 const MODEL_LOAD_TIMEOUT_MS = 75_000
 const CHUNK_DURATION_MS = 30_000
 const CHUNK_HEARTBEAT_MS = 5_000
@@ -83,24 +93,23 @@ let transcriberEntry:
   | null = null
 
 function getPreferredModelId() {
-  const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 0
-  return memory >= 16 ? BASE_MODEL : TINY_MODEL
+  return TINY_MODEL
 }
 
 function getWhisperLoadStrategies() {
-  const preferredModelId = getPreferredModelId()
   const strategies: WhisperLoadStrategy[] = [
     {
-      modelId: preferredModelId,
-      label: preferredModelId === BASE_MODEL ? 'Whisper Base / fp32' : 'Whisper Tiny / fp32',
+      modelId: TINY_MODEL,
+      label: 'Whisper Tiny / fp32',
       dtype: 'fp32',
     },
   ]
 
-  if (preferredModelId !== TINY_MODEL) {
+  const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 0
+  if (memory >= 16) {
     strategies.push({
-      modelId: TINY_MODEL,
-      label: 'Whisper Tiny / fp32',
+      modelId: BASE_MODEL,
+      label: 'Whisper Base / fp32',
       dtype: 'fp32',
     })
   }
@@ -110,6 +119,10 @@ function getWhisperLoadStrategies() {
 
 function normalizeErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) {
+    if (error.message === 'Failed to fetch') {
+      return '模型或视频资源下载失败，请检查网络；系统会自动尝试备用模型源。'
+    }
+
     return error.message
   }
 
@@ -192,7 +205,12 @@ function configureBrowserInferenceBackend(env: BrowserInferenceEnv) {
 function buildStrategyFailureStatus(
   message: string,
   nextStrategy: WhisperLoadStrategy | undefined,
+  nextRemoteHost?: WhisperRemoteHost,
 ) {
+  if (nextRemoteHost) {
+    return `当前字幕模型源加载失败，正在改用 ${nextRemoteHost.label}…`
+  }
+
   if (nextStrategy) {
     if (isQuantizedWeightSessionError(message)) {
       return `当前字幕模型权重异常，正在改用 ${nextStrategy.label}…`
@@ -356,16 +374,18 @@ async function extractEmbeddedSubtitleTrack(
 
 async function loadTranscriberForStrategy(
   strategy: WhisperLoadStrategy,
+  remoteHost: WhisperRemoteHost,
   onStatus?: StatusCallback,
 ): Promise<LoadedTranscriber> {
   const { env, LogLevel, pipeline } = await import('@huggingface/transformers')
   env.allowLocalModels = false
   env.allowRemoteModels = true
   env.useBrowserCache = true
+  env.remoteHost = remoteHost.host
   env.logLevel = LogLevel.ERROR
   configureBrowserInferenceBackend(env)
 
-  onStatus?.(`正在加载 ${strategy.label}…`)
+  onStatus?.(`正在加载 ${strategy.label}（${remoteHost.label}）…`)
   await waitForNextPaint()
 
   const transcriber = await withTimeout(
@@ -382,7 +402,7 @@ async function loadTranscriberForStrategy(
       },
     }),
     MODEL_LOAD_TIMEOUT_MS,
-    `${strategy.label} 加载超时`,
+    `${strategy.label}（${remoteHost.label}）加载超时`,
   )
 
   return {
@@ -404,11 +424,21 @@ async function getTranscriber(onStatus?: StatusCallback) {
     for (let index = 0; index < strategies.length; index += 1) {
       const strategy = strategies[index]
 
-      try {
-        return await loadTranscriberForStrategy(strategy, onStatus)
-      } catch (error) {
-        lastError = error
-        onStatus?.(buildStrategyFailureStatus(normalizeErrorMessage(error), strategies[index + 1]))
+      for (let hostIndex = 0; hostIndex < MODEL_REMOTE_HOSTS.length; hostIndex += 1) {
+        const remoteHost = MODEL_REMOTE_HOSTS[hostIndex]
+
+        try {
+          return await loadTranscriberForStrategy(strategy, remoteHost, onStatus)
+        } catch (error) {
+          lastError = error
+          onStatus?.(
+            buildStrategyFailureStatus(
+              normalizeErrorMessage(error),
+              hostIndex === MODEL_REMOTE_HOSTS.length - 1 ? strategies[index + 1] : undefined,
+              MODEL_REMOTE_HOSTS[hostIndex + 1],
+            ),
+          )
+        }
       }
     }
 
