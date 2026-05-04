@@ -2,6 +2,9 @@ import type { PutBlobResult, UploadProgressEvent } from '@vercel/blob'
 import { upload } from '@vercel/blob/client'
 
 const SITE_VIDEO_PREFIX = 'site-videos'
+const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
+const VIDEO_UPLOAD_ENDPOINT = '/api/video-upload'
+const VIDEO_DELETE_ENDPOINT = '/api/video-delete'
 
 function sanitizeSegment(value: string) {
   return value
@@ -37,6 +40,19 @@ function buildSiteVideoPath(file: File, title?: string) {
   const month = String(now.getMonth() + 1).padStart(2, '0')
   const stem = sanitizeSegment(title || file.name) || `video-${crypto.randomUUID()}`
   return `${SITE_VIDEO_PREFIX}/${year}/${month}/${stem}${getFileExtension(file)}`
+}
+
+function getApiEndpoint(pathname: string) {
+  if (typeof window === 'undefined') {
+    return pathname
+  }
+
+  const { origin, hostname } = window.location
+  if (hostname === '127.0.0.1' || hostname === 'localhost') {
+    return `${FALLBACK_API_ORIGIN}${pathname}`
+  }
+
+  return `${origin}${pathname}`
 }
 
 function parseErrorMessage(error: unknown, fallback: string) {
@@ -75,7 +91,7 @@ export async function uploadVideoToSite({
   try {
     return await upload(buildSiteVideoPath(file, title), file, {
       access: 'public',
-      handleUploadUrl: '/api/video-upload',
+      handleUploadUrl: getApiEndpoint(VIDEO_UPLOAD_ENDPOINT),
       headers: uploadPassword?.trim()
         ? {
             'x-upload-password': uploadPassword.trim(),
@@ -96,7 +112,7 @@ export async function deleteSiteVideos(urls: string[]) {
     return
   }
 
-  const response = await fetch('/api/video-delete', {
+  const response = await fetch(getApiEndpoint(VIDEO_DELETE_ENDPOINT), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
