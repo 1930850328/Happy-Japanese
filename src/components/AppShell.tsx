@@ -2,6 +2,7 @@ import { BookOpenText, House, LibraryBig, RotateCcw, UserRound } from 'lucide-re
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { useAppBootstrap } from '../hooks/useAppBootstrap'
+import { APP_BUILD_LABEL, APP_BUILD_NOTE } from '../lib/appVersion'
 import { getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import { useAppStore } from '../store/useAppStore'
 import styles from './AppShell.module.css'
@@ -42,6 +43,9 @@ export function AppShell() {
             <div className={styles.brandBadge}>ゆる</div>
             <div className={styles.brandText}>
               <strong>YuruNihongo</strong>
+              <small className={styles.versionBadge}>
+                {APP_BUILD_LABEL} · {APP_BUILD_NOTE}
+              </small>
               <span>轻松、治愈、能坚持下去的日语学习流</span>
             </div>
           </div>
@@ -116,6 +120,7 @@ export function AppShell() {
             <div className={styles.mobileTopBar}>
               <div>
                 <strong>YuruNihongo</strong>
+                <small className={styles.mobileVersion}>{APP_BUILD_LABEL}</small>
                 <span>今天也轻松学一点</span>
               </div>
               <span className="chip badgeMint">{Math.round(completionRatio * 100)}%</span>

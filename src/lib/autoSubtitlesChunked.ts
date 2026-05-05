@@ -77,7 +77,6 @@ const TINY_MODEL = 'onnx-community/whisper-tiny_timestamped'
 const BASE_MODEL = 'onnx-community/whisper-base_timestamped'
 const MODEL_REMOTE_HOSTS: WhisperRemoteHost[] = [
   { host: 'https://huggingface.co/', label: 'Hugging Face' },
-  { host: 'https://hf-mirror.com/', label: 'HF Mirror' },
 ]
 const MODEL_LOAD_TIMEOUT_MS = 75_000
 const CHUNK_DURATION_MS = 30_000
@@ -93,26 +92,22 @@ let transcriberEntry:
   | null = null
 
 function getPreferredModelId() {
-  return TINY_MODEL
+  return BASE_MODEL
 }
 
 function getWhisperLoadStrategies() {
   const strategies: WhisperLoadStrategy[] = [
+    {
+      modelId: BASE_MODEL,
+      label: 'Whisper Base / fp32',
+      dtype: 'fp32',
+    },
     {
       modelId: TINY_MODEL,
       label: 'Whisper Tiny / fp32',
       dtype: 'fp32',
     },
   ]
-
-  const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 0
-  if (memory >= 16) {
-    strategies.push({
-      modelId: BASE_MODEL,
-      label: 'Whisper Base / fp32',
-      dtype: 'fp32',
-    })
-  }
 
   return strategies
 }

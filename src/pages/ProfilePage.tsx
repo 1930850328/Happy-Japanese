@@ -325,6 +325,9 @@ export function ProfilePage() {
   const [slicerClipFiles, setSlicerClipFiles] = useState<File[]>([])
   const [importingSlicer, setImportingSlicer] = useState(false)
   const [slicerStatusText, setSlicerStatusText] = useState('')
+  const taskProgressRef = useRef(taskProgress)
+  const taskStartedAtRef = useRef(persistedSliceTask.startedAt)
+  const lastTaskStatusAtRef = useRef(0)
 
   useEffect(() => {
     setGoalForm({
@@ -347,16 +350,18 @@ export function ProfilePage() {
   }, [persistedSlicePreview])
 
   useEffect(() => {
+    taskStartedAtRef.current = persistedSliceTask.startedAt
     setBuildingPreview(persistedSliceTask.status === 'running')
     setStatusText(persistedSliceTask.detail)
-    setTaskProgress(
+    const nextTaskProgress =
       persistedSliceTask.status === 'idle'
         ? null
         : {
             percent: persistedSliceTask.percent,
             detail: persistedSliceTask.detail,
-          },
-    )
+          }
+    taskProgressRef.current = nextTaskProgress
+    setTaskProgress(nextTaskProgress)
   }, [persistedSliceTask])
 
   const todayProgress = getTodayProgress(studyEvents)
@@ -394,17 +399,34 @@ export function ProfilePage() {
     slicePreview?.lessons.find((lesson) => lesson.id === previewLessonId) ?? null
 
   const updateTaskStatus = (message: string) => {
+    const now = Date.now()
+    const previousPercent = taskProgressRef.current?.percent ?? persistedSliceTask.percent
+    const nextProgress = deriveTaskProgress(message, previousPercent)
+    const startedAt =
+      taskStartedAtRef.current ?? persistedSliceTask.startedAt ?? new Date().toISOString()
+    const isTerminalProgress = nextProgress.percent >= 100 || nextProgress.detail.includes('失败')
+    const isMeaningfulPercentChange =
+      Math.abs(nextProgress.percent - (taskProgressRef.current?.percent ?? 0)) >= 2
+
+    if (
+      !isTerminalProgress &&
+      !isMeaningfulPercentChange &&
+      now - lastTaskStatusAtRef.current < 350
+    ) {
+      return
+    }
+
+    taskProgressRef.current = nextProgress
+    taskStartedAtRef.current = startedAt
+    lastTaskStatusAtRef.current = now
     setStatusText(message)
-    setTaskProgress((state) => {
-      const nextProgress = deriveTaskProgress(message, state?.percent ?? persistedSliceTask.percent)
-      setSliceTask({
-        status: nextProgress.percent >= 100 ? 'completed' : 'running',
-        percent: nextProgress.percent,
-        detail: nextProgress.detail,
-        startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      })
-      return nextProgress
+    setTaskProgress(nextProgress)
+    setSliceTask({
+      status: nextProgress.percent >= 100 ? 'completed' : 'running',
+      percent: nextProgress.percent,
+      detail: nextProgress.detail,
+      startedAt,
+      updatedAt: new Date().toISOString(),
     })
   }
 

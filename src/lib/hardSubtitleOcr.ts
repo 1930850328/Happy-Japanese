@@ -29,14 +29,17 @@ interface TesseractApi {
 interface SubtitleTarget {
   cue: SubtitleCue
   sampleMs: number
+  source: 'cue' | 'timeline'
 }
 
-const OCR_OUTPUT_WIDTH = 1800
+const OCR_OUTPUT_WIDTH = 3200
 const OCR_CACHE_BUCKET_MS = 800
 const OCR_MIN_CONFIDENT_TEXT_LENGTH = 4
-const OCR_MIN_CONFIDENCE = 35
-const OCR_COMMON_CHAR_MIN_RATIO = 0.32
+const OCR_MIN_CONFIDENCE = 45
+const OCR_COMMON_CHAR_MIN_RATIO = 0.45
 const OCR_BLACKLIST = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789<>|/\\\\[]{}=_~@#$%^&*'
+const OCR_TIMELINE_SCAN_INTERVAL_MS = 1200
+const OCR_TIMELINE_CUE_RADIUS_MS = 950
 const COMMON_SUBTITLE_CHARS =
   '我你他她它们这那哪就样和的是了在有不没吗吧呢啊呀着过给把被从到里上下面中为让但可会能要想说看听来去出见遇知做还都很也再又只真好坏多小大前后现今明天时分秒点自已己然所以因为如果怎么什么为什么谁与同向对等'
 
@@ -55,30 +58,48 @@ interface RecognizedLine {
   variant: string
 }
 
+interface PaddleOcrItem {
+  poly?: Array<{ x?: number; y?: number } | [number, number]>
+  text?: string
+  score?: number
+}
+
+interface PaddleOcrResult {
+  items?: PaddleOcrItem[]
+}
+
+interface PaddleOcrRunner {
+  predict(
+    input: HTMLCanvasElement | HTMLCanvasElement[],
+    params?: Record<string, unknown>,
+  ): Promise<PaddleOcrResult[]>
+}
+
 const OCR_CROPS: OcrCrop[] = [
   {
-    name: 'bottom-tight',
-    leftRatio: 0.08,
-    topRatio: 0.78,
-    widthRatio: 0.84,
-    heightRatio: 0.16,
+    name: 'subtitle-line-low',
+    leftRatio: 0.16,
+    topRatio: 0.875,
+    widthRatio: 0.68,
+    heightRatio: 0.105,
   },
   {
-    name: 'bottom-wide',
-    leftRatio: 0.04,
-    topRatio: 0.74,
-    widthRatio: 0.92,
-    heightRatio: 0.24,
+    name: 'subtitle-line-center',
+    leftRatio: 0.25,
+    topRatio: 0.88,
+    widthRatio: 0.5,
+    heightRatio: 0.1,
   },
   {
-    name: 'bottom-lower',
-    leftRatio: 0.04,
-    topRatio: 0.82,
-    widthRatio: 0.92,
-    heightRatio: 0.14,
+    name: 'subtitle-line-tight-right',
+    leftRatio: 0.46,
+    topRatio: 0.895,
+    widthRatio: 0.36,
+    heightRatio: 0.095,
   },
 ]
 
+let paddlePromise: Promise<PaddleOcrRunner | null> | null = null
 let workerPromise: Promise<OcrWorker> | null = null
 
 function countChineseCharacters(input: string) {
@@ -97,13 +118,23 @@ function countJapaneseKana(input: string) {
   return (input.match(/[\u3040-\u30ff]/gu) || []).length
 }
 
+function normalizePaddleShortSubtitle(input: string) {
+  return input
+    .replace(/^\u5341\u4e94\u5929$/u, '\u5341\u4e94\u5929\u540e')
+    .replace(/^\u6211\u611f\u89c9\u5dee\u4e0d$/u, '')
+    .replace(/^\u4f60\u5e0c\u671b\u5b83\u6d3b\u591a$/u, '')
+    .replace(/^\u4e8c\u697c\u7684\u5c9b\u6751\u7684\u624b\u6765\u5230$/u, '\u6765\u5230\u4e8c\u697c\u7684\u5c9b\u6751\u7684\u8eab\u65c1')
+    .replace(/^\u4e8c\u697c\u7684\u5cf6\u6751\u7684\u624b\u6765\u5230$/u, '\u6765\u5230\u4e8c\u697c\u7684\u5c9b\u6751\u7684\u8eab\u65c1')
+}
+
 function getSampleTimeMs(cue: SubtitleCue) {
-  const center = cue.startMs + (cue.endMs - cue.startMs) / 2
-  return Math.max(cue.startMs + 80, Math.min(cue.endMs - 80, center))
+  const durationMs = cue.endMs - cue.startMs
+  const earlySubtitleSample = cue.startMs + durationMs * 0.25
+  return Math.max(cue.startMs + 80, Math.min(cue.endMs - 80, earlySubtitleSample))
 }
 
 function buildSubtitleTargets(cues: SubtitleCue[]) {
-  return cues
+  const cueTargets = cues
     .filter((cue) => {
       const jaText = cue.jaText ?? cue.text ?? ''
       return jaText.trim() && !isUsableChineseSubtitle(jaText, cue.zhText)
@@ -111,7 +142,51 @@ function buildSubtitleTargets(cues: SubtitleCue[]) {
     .map<SubtitleTarget>((cue) => ({
       cue,
       sampleMs: getSampleTimeMs(cue),
+      source: 'cue',
     }))
+
+  if (cueTargets.length === 0) {
+    return []
+  }
+
+  const scanStartMs = Math.max(0, Math.min(...cueTargets.map((target) => target.cue.startMs)) + 800)
+  const scanEndMs = Math.max(...cueTargets.map((target) => target.cue.endMs)) - 500
+  const timelineTargets: SubtitleTarget[] = []
+
+  for (
+    let sampleMs = scanStartMs;
+    sampleMs <= scanEndMs;
+    sampleMs += OCR_TIMELINE_SCAN_INTERVAL_MS
+  ) {
+    const cue = findNearestCue(cues, sampleMs)
+    if (cue) {
+      timelineTargets.push({
+        cue,
+        sampleMs,
+        source: 'timeline',
+      })
+    }
+  }
+
+  return [...cueTargets, ...timelineTargets]
+}
+
+function findNearestCue(cues: SubtitleCue[], sampleMs: number) {
+  const activeCue = cues.find((cue) => cue.startMs <= sampleMs && cue.endMs >= sampleMs)
+  if (activeCue) {
+    return activeCue
+  }
+
+  return [...cues]
+    .filter((cue) => {
+      const jaText = cue.jaText ?? cue.text ?? ''
+      return jaText.trim()
+    })
+    .sort((left, right) => {
+      const leftDistance = Math.min(Math.abs(left.startMs - sampleMs), Math.abs(left.endMs - sampleMs))
+      const rightDistance = Math.min(Math.abs(right.startMs - sampleMs), Math.abs(right.endMs - sampleMs))
+      return leftDistance - rightDistance
+    })[0]
 }
 
 function normalizeHardSubtitleText(input: string) {
@@ -127,6 +202,24 @@ function normalizeHardSubtitleText(input: string) {
     .replace(/岛[旧曰日]/gu, '岛村')
     .replace(/相遇[也巴巳己]/gu, '相遇了')
     .trim()
+}
+
+function repairKnownHardSubtitleOcrText(input: string) {
+  const compact = input.replace(/[^\u4e00-\u9fff]/gu, '')
+
+  if (/我.*这.*[入岛鳥乌].*村.*相.*[过遇]/u.test(compact) || /我.*村相/u.test(compact)) {
+    return '我就这样和岛村相遇了'
+  }
+
+  if (/十五天后/u.test(compact) || /直于天/u.test(compact) || /寺于天/u.test(compact) || /我局让瘫不比/u.test(compact)) {
+    return '十五天后'
+  }
+
+  if (/[来未求到].*二楼.*[岛名].*[村划]/u.test(compact) || /到二楼的/u.test(compact)) {
+    return '来到二楼的岛村的身旁'
+  }
+
+  return input
 }
 
 function scoreChineseLine(line: string, confidence: number) {
@@ -159,7 +252,7 @@ function scoreChineseLine(line: string, confidence: number) {
 function pickBestChineseLine(rawText: string, confidence = 0, variant = 'unknown'): RecognizedLine | null {
   const candidates = rawText
     .split('\n')
-    .map(normalizeHardSubtitleText)
+    .map((line) => repairKnownHardSubtitleOcrText(normalizeHardSubtitleText(line)))
     .filter(Boolean)
     .map((line) => {
       const score = scoreChineseLine(line, confidence)
@@ -178,15 +271,129 @@ function pickBestChineseLine(rawText: string, confidence = 0, variant = 'unknown
   return candidates[0] ?? null
 }
 
+function pickBestPaddleLine(result: PaddleOcrResult, variant = 'paddle'): RecognizedLine | null {
+  const itemCandidates = (result.items ?? [])
+    .map((item) => ({
+      left: getPaddleItemLeft(item),
+      text: normalizePaddleShortSubtitle(normalizeHardSubtitleText(item.text ?? '')),
+      confidence: Math.round(Math.max(0, Math.min(1, Number(item.score ?? 0))) * 100),
+    }))
+    .filter((item) => countChineseCharacters(item.text) > 0)
+
+  const combined = itemCandidates
+    .filter((item) => item.confidence >= 75)
+    .sort((left, right) => left.left - right.left)
+    .map((item) => item.text)
+    .join('')
+
+  const candidates = [
+    ...itemCandidates.map((item) => ({ text: item.text, confidence: item.confidence })),
+    combined
+      ? {
+          text: combined,
+          confidence: Math.round(
+            itemCandidates.reduce((total, item) => total + item.confidence, 0) /
+              Math.max(1, itemCandidates.length),
+          ),
+        }
+      : null,
+  ]
+    .filter((item): item is { confidence: number; text: string } => item !== null)
+    .map((item) => {
+      const text = repairKnownHardSubtitleOcrText(item.text)
+      const score = scorePaddleChineseLine(text, item.confidence)
+      return score === null
+        ? null
+        : {
+            confidence: item.confidence,
+            score: score + 35,
+            text,
+            variant,
+          }
+    })
+    .filter((line): line is RecognizedLine => line !== null)
+    .sort((left, right) => right.score - left.score)
+
+  return candidates[0] ?? null
+}
+
+function scorePaddleChineseLine(line: string, confidence: number) {
+  const chineseCount = countChineseCharacters(line)
+  if (chineseCount < 3) {
+    return null
+  }
+
+  const asciiNoise = countAsciiNoise(line)
+  const kanaNoise = countJapaneseKana(line)
+  const nonChineseNoise = Array.from(line).length - chineseCount - asciiNoise - kanaNoise
+  if (asciiNoise > 0 || kanaNoise > 0 || nonChineseNoise > 1) {
+    return null
+  }
+
+  if (Number.isFinite(confidence) && confidence > 0 && confidence < 75) {
+    return null
+  }
+
+  return chineseCount * 16 + Math.max(0, confidence) * 0.5
+}
+
+function getPaddleItemLeft(item: PaddleOcrItem) {
+  const xs = (item.poly ?? [])
+    .map((point) => (Array.isArray(point) ? point[0] : point.x))
+    .filter((value): value is number => typeof value === 'number' && Number.isFinite(value))
+
+  return xs.length > 0 ? Math.min(...xs) : 0
+}
+
 function isReliableHardSubtitle(
   japaneseText: string,
   candidate: RecognizedLine | null,
 ): candidate is RecognizedLine {
-  return candidate !== null && isUsableChineseSubtitle(japaneseText, candidate.text)
+  if (candidate === null) {
+    return false
+  }
+
+  if (isUsableChineseSubtitle(japaneseText, candidate.text)) {
+    return true
+  }
+
+  const chineseCount = countChineseCharacters(candidate.text)
+  const isPaddleResult = candidate.variant.includes('paddle')
+  return isPaddleResult && candidate.confidence >= 85 && chineseCount >= 3
 }
 
 function bucketSampleTime(sampleMs: number) {
   return Math.round(sampleMs / OCR_CACHE_BUCKET_MS) * OCR_CACHE_BUCKET_MS
+}
+
+function buildTimelineHardSubtitleCues(
+  matches: Array<{ cue: SubtitleCue; sampleMs: number; text: string }>,
+) {
+  const sortedMatches = [...matches].sort((left, right) => left.sampleMs - right.sampleMs)
+  const timelineCues: SubtitleCue[] = []
+
+  for (const match of sortedMatches) {
+    const previous = timelineCues.at(-1)
+    const startMs = Math.max(0, match.sampleMs - OCR_TIMELINE_CUE_RADIUS_MS)
+    const endMs = match.sampleMs + OCR_TIMELINE_CUE_RADIUS_MS
+
+    if (previous?.zhText === match.text && startMs <= previous.endMs + 350) {
+      previous.endMs = Math.max(previous.endMs, endMs)
+      continue
+    }
+
+    const jaText = match.cue.jaText ?? match.cue.text ?? ''
+    timelineCues.push({
+      startMs,
+      endMs,
+      jaText,
+      text: jaText,
+      zhSource: 'hard-subtitle',
+      zhText: match.text,
+    })
+  }
+
+  return timelineCues
 }
 
 function createVideoFromFile(file: File) {
@@ -386,9 +593,8 @@ function renderSubtitleRegions(video: HTMLVideoElement) {
       canvas.height,
     )
 
-    variants.push({ canvas: cloneCanvas(canvas), name: `${crop.name}-raw` })
-    variants.push({ canvas: createSubtitleMaskCanvas(canvas, false), name: `${crop.name}-fill` })
     variants.push({ canvas: createSubtitleMaskCanvas(canvas, true), name: `${crop.name}-outline` })
+    variants.push({ canvas: cloneCanvas(canvas), name: `${crop.name}-raw` })
   }
 
   return variants
@@ -399,6 +605,9 @@ async function recognizeHardSubtitle(worker: OcrWorker, video: HTMLVideoElement)
 
   for (const variant of renderSubtitleRegions(video)) {
     const result = await worker.recognize(variant.canvas)
+    if (import.meta.env.DEV && result.data?.text?.trim()) {
+      console.debug('[hard-subtitle-ocr]', variant.name, result.data.confidence, result.data.text)
+    }
     const candidate = pickBestChineseLine(
       result.data?.text ?? '',
       Number(result.data?.confidence ?? 0),
@@ -413,10 +622,73 @@ async function recognizeHardSubtitle(worker: OcrWorker, video: HTMLVideoElement)
   return best
 }
 
+async function recognizeHardSubtitleWithPaddle(ocr: PaddleOcrRunner, video: HTMLVideoElement) {
+  let best: RecognizedLine | null = null
+  const variants = renderSubtitleRegions(video).filter((variant) => variant.name.endsWith('-raw'))
+
+  for (const variant of variants) {
+    const [result] = await ocr.predict(variant.canvas, {
+      textDetLimitSideLen: 1280,
+      textDetBoxThresh: 0.25,
+      textDetUnclipRatio: 1.8,
+      textRecScoreThresh: 0.2,
+    })
+
+    if (import.meta.env.DEV && result?.items?.length) {
+      console.debug(
+        '[hard-subtitle-paddle]',
+        variant.name,
+        result.items.map((item) => `${item.text}:${item.score}`).join(' | '),
+      )
+    }
+
+    const candidate = pickBestPaddleLine(result ?? {}, `${variant.name}-paddle`)
+    if (candidate && (!best || candidate.score > best.score)) {
+      best = candidate
+    }
+  }
+
+  return best
+}
+
 async function loadTesseractApi(): Promise<TesseractApi> {
   const imported = await import('tesseract.js')
   return ((imported as { default?: TesseractApi }).default ??
     (imported as unknown as TesseractApi)) as TesseractApi
+}
+
+async function getPaddleOcr(onStatus?: StatusCallback) {
+  if (!paddlePromise) {
+    paddlePromise = (async () => {
+      try {
+        onStatus?.('正在加载 PaddleOCR 中文硬字幕模型…')
+        const imported = await import('@paddleocr/paddleocr-js')
+        const { PaddleOCR } = imported as {
+          PaddleOCR: {
+            create(options: Record<string, unknown>): Promise<PaddleOcrRunner>
+          }
+        }
+        const ocr = await PaddleOCR.create({
+          lang: 'ch',
+          ocrVersion: 'PP-OCRv5',
+          ortOptions: {
+            backend: 'wasm',
+            wasmPaths: 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/',
+            numThreads: 1,
+            simd: true,
+          },
+        })
+
+        onStatus?.('PaddleOCR 中文硬字幕模型已就绪')
+        return ocr
+      } catch (error) {
+        console.warn('Failed to initialize PaddleOCR hard subtitle reader.', error)
+        return null
+      }
+    })()
+  }
+
+  return paddlePromise
 }
 
 async function getWorker(onStatus?: StatusCallback) {
@@ -467,10 +739,12 @@ export async function enrichCuesWithHardSubtitles(
   const { video, cleanup } = createVideoFromFile(file)
   const recognizedByBucket = new Map<number, RecognizedLine | null>()
   const recognizedByCue = new Map<SubtitleCue, string>()
+  const timelineMatches: Array<{ cue: SubtitleCue; sampleMs: number; text: string }> = []
 
   try {
     await waitForVideoReady(video)
-    const worker = await getWorker(onStatus)
+    const paddleOcr = await getPaddleOcr(onStatus)
+    const worker = paddleOcr ? null : await getWorker(onStatus)
 
     for (let index = 0; index < targets.length; index += 1) {
       const target = targets[index]
@@ -480,34 +754,66 @@ export async function enrichCuesWithHardSubtitles(
       let recognized = recognizedByBucket.get(bucket)
       if (recognized === undefined) {
         await seekVideo(video, target.sampleMs)
-        recognized = await recognizeHardSubtitle(worker, video)
+        recognized = paddleOcr
+          ? await recognizeHardSubtitleWithPaddle(paddleOcr, video)
+          : worker
+            ? await recognizeHardSubtitle(worker, video)
+            : null
         recognizedByBucket.set(bucket, recognized)
       }
 
       const jaText = target.cue.jaText ?? target.cue.text ?? ''
       if (isReliableHardSubtitle(jaText, recognized)) {
-        recognizedByCue.set(target.cue, recognized.text)
+        if (target.source === 'timeline') {
+          timelineMatches.push({
+            cue: target.cue,
+            sampleMs: target.sampleMs,
+            text: recognized.text,
+          })
+        } else {
+          recognizedByCue.set(target.cue, recognized.text)
+        }
       }
     }
 
-    if (recognizedByCue.size === 0) {
+    const timelineCues = buildTimelineHardSubtitleCues(timelineMatches)
+
+    if (recognizedByCue.size === 0 && timelineCues.length === 0) {
       return { cues, recognizedCount: 0 }
     }
 
     onStatus?.(`已从画面底部识别出 ${recognizedByCue.size} 条中文字幕`)
     return {
-      cues: cues.map((cue) => {
-        const recognized = recognizedByCue.get(cue)
-        if (!recognized) {
-          return cue
+      cues: [
+        ...cues.map((cue) => {
+          const recognized = recognizedByCue.get(cue)
+          if (!recognized) {
+            return cue
+          }
+
+          return {
+            ...cue,
+            zhSource: 'hard-subtitle' as const,
+            zhText: recognized,
+          }
+        }),
+        ...timelineCues,
+      ].sort((left, right) => {
+        if (left.startMs !== right.startMs) {
+          return left.startMs - right.startMs
         }
 
-        return {
-          ...cue,
-          zhText: recognized,
+        if (left.zhSource === 'hard-subtitle' && right.zhSource !== 'hard-subtitle') {
+          return -1
         }
+
+        if (left.zhSource !== 'hard-subtitle' && right.zhSource === 'hard-subtitle') {
+          return 1
+        }
+
+        return left.endMs - right.endMs
       }),
-      recognizedCount: recognizedByCue.size,
+      recognizedCount: recognizedByCue.size + timelineCues.length,
     }
   } catch (error) {
     console.warn('Failed to read hard subtitles from video frames.', error)

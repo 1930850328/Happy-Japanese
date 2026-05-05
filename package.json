@@ -18,6 +18,7 @@
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@huggingface/transformers": "^4.0.0",
+    "@paddleocr/paddleocr-js": "^0.3.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.3.3",
     "anime-study-player": "https://codeload.github.com/1930850328/anime-study-player/tar.gz/1cd7047",

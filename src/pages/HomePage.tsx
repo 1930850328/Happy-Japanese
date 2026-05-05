@@ -21,6 +21,7 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 
 import { usePreparedPlaybackSource } from '../hooks/usePreparedPlaybackSource'
+import { APP_BUILD_LABEL, APP_BUILD_NOTE } from '../lib/appVersion'
 import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
@@ -28,9 +29,6 @@ import { extractBrowserPlayableAudioClip } from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
 import type { KnowledgePoint, TranscriptSegment, VideoLesson } from '../types'
 import styles from './HomePage.module.css'
-
-const APP_BUILD_LABEL = 'v2026.05.05-ocr-fix'
-const APP_BUILD_NOTE = '硬字幕 OCR 修复版'
 
 interface LessonCardProps {
   lesson: VideoLesson

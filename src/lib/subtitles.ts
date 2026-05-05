@@ -8,6 +8,7 @@ export interface SubtitleCue {
   endMs: number
   jaText?: string
   text?: string
+  zhSource?: 'hard-subtitle' | 'subtitle-file' | 'translation'
   zhText?: string
 }
 
@@ -292,7 +293,12 @@ function resolveSegmentChinese(
   cueZhText: string | undefined,
   translatedLine: string | undefined,
   fallbackZh: string,
+  cueZhSource?: SubtitleCue['zhSource'],
 ) {
+  if (cueZhSource === 'hard-subtitle' && cueZhText?.trim()) {
+    return cueZhText.trim()
+  }
+
   if (isUsableChineseSubtitle(jaText, cueZhText)) {
     return cueZhText!.trim()
   }
@@ -342,6 +348,7 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
       cue.zhText,
       translatedLine,
       analysis.glossZh,
+      cue.zhSource,
     )
     const focusTermIds: string[] = []
 

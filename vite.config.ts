@@ -3,6 +3,23 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@paddleocr') || id.includes('@techstark/opencv-js')) {
+            return 'paddleocr'
+          }
+
+          if (id.includes('onnxruntime-web')) {
+            return 'onnxruntime'
+          }
+
+          return undefined
+        },
+      },
+    },
+  },
   optimizeDeps: {
     exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@huggingface/transformers'],
   },
@@ -12,7 +29,16 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-app.svg'],
       workbox: {
-        globIgnores: ['**/assets/ort-wasm-*.wasm', '**/assets/ffmpeg-core-*.wasm'],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        globIgnores: [
+          '**/assets/ort-wasm-*.wasm',
+          '**/assets/ffmpeg-core-*.wasm',
+          '**/assets/paddleocr-*.js',
+          '**/assets/onnxruntime-*.js',
+          '**/assets/worker-entry-*.js',
+        ],
+        skipWaiting: true,
       },
       manifest: {
         name: 'YuruNihongo',

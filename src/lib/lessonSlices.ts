@@ -14,9 +14,10 @@ interface CandidateWindow {
 const MIN_SLICE_MS = 5000
 const TARGET_SLICE_MS = 18000
 const MAX_SLICE_MS = 42000
-const MAX_SEGMENTS_PER_SLICE = 4
+const MAX_SEGMENTS_PER_SLICE = 8
 const MAX_SLICES_PER_CLIP = 8
 const MAX_RAW_FALLBACK_MS = 90000
+const MAX_LEAD_IN_BEFORE_FOCUS_MS = 6500
 
 function uniquePoints(points: KnowledgePoint[]) {
   const map = new Map<string, KnowledgePoint>()
@@ -66,6 +67,14 @@ function buildCandidateWindows(clip: ImportedClip) {
 
       const points = uniquePoints(pickPointsForWindow(clip, segments, startIndex, endIndex))
       if (points.length === 0) {
+        continue
+      }
+
+      const focusedSegments = segments
+        .slice(startIndex, endIndex + 1)
+        .filter((segment) => segment.focusTermIds.length > 0)
+      const firstFocusStartMs = focusedSegments[0]?.startMs ?? startMs
+      if (firstFocusStartMs - startMs > MAX_LEAD_IN_BEFORE_FOCUS_MS) {
         continue
       }
 
