@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { Analytics } from '@vercel/analytics/react'
+import { Toaster } from 'sonner'
 
 import { AppShell } from './components/AppShell'
 import { HomePage } from './pages/HomePage'
@@ -24,6 +25,7 @@ function App() {
         </Route>
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
+      <Toaster position="top-center" richColors closeButton />
       <Analytics />
     </>
   )

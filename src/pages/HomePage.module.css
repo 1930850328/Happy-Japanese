@@ -1,7 +1,309 @@
 .page {
   display: grid;
-  gap: 22px;
+  gap: 18px;
   align-content: start;
+}
+
+.homeStage {
+  display: grid;
+  gap: 18px;
+}
+
+.homeHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.stageLabel {
+  margin: 0 0 0.28rem;
+  color: var(--green);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.stageTitle {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: clamp(2.2rem, 4vw, 4.8rem);
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.progressPill {
+  display: grid;
+  justify-items: end;
+  gap: 0.15rem;
+  flex-shrink: 0;
+  min-width: 88px;
+  padding: 0.72rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: var(--shadow-sm);
+}
+
+.progressPill span {
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.progressPill small {
+  color: var(--text-soft);
+}
+
+.focusLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  gap: 18px;
+  align-items: start;
+}
+
+.focusCard {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.92fr) minmax(0, 1fr);
+  min-height: 520px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: var(--shadow-md);
+}
+
+.focusMedia {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: #17211d;
+}
+
+.durationBadge {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  z-index: 2;
+  max-width: calc(100% - 36px);
+  padding: 0.42rem 0.66rem;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(14, 19, 17, 0.48);
+  backdrop-filter: blur(12px);
+  font-size: 0.82rem;
+}
+
+.focusBody {
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+  padding: clamp(1.3rem, 3vw, 2.6rem);
+}
+
+.focusMeta {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+}
+
+.focusMeta span {
+  padding: 0.22rem 0.58rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(246, 248, 244, 0.72);
+}
+
+.focusTitle {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(1.9rem, 3vw, 3.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.focusSentence {
+  margin: 0;
+  color: var(--text-soft);
+  font-family: var(--font-ui);
+  font-size: clamp(1.1rem, 1.8vw, 1.48rem);
+  line-height: 1.58;
+  overflow-wrap: anywhere;
+}
+
+.focusActions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.iconButton {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text-soft);
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.iconButton:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+.queuePanel {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.66);
+  box-shadow: var(--shadow-sm);
+}
+
+.queueHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+}
+
+.queueHeader span {
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-weight: 700;
+}
+
+.queueList {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.queueItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 36px;
+  gap: 0.35rem;
+  align-items: center;
+  border-radius: 16px;
+}
+
+.queueItemActive {
+  background: rgba(201, 222, 210, 0.42);
+}
+
+.queueMain {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 0.72rem;
+  align-items: center;
+  padding: 0.45rem;
+  border-radius: inherit;
+  text-align: left;
+}
+
+.queueMain img {
+  width: 58px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.queueMain span {
+  min-width: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.queueMain strong,
+.queueMain small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queueMain strong {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.queueMain small {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+}
+
+.queueMore {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--text-soft);
+}
+
+.queueMore:hover {
+  color: var(--text);
+  background: rgba(46, 63, 55, 0.08);
+}
+
+.emptyFocus {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  min-height: 420px;
+  align-content: center;
+  padding: clamp(1.6rem, 4vw, 3rem);
+  border: 1px dashed var(--line-strong);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.emptyFocus h2 {
+  max-width: 680px;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(1.6rem, 3vw, 3rem);
+  line-height: 1.12;
+}
+
+.emptyFocus p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.secondaryStrip {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--text-soft);
+}
+
+.textAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: inherit;
+  font-size: 0.92rem;
+}
+
+.textAction:hover {
+  color: var(--text);
 }
 
 .hero {
@@ -337,7 +639,8 @@
 
 .drawerBackdrop {
   z-index: 150;
-  align-items: flex-end;
+  display: block;
+  padding: 0;
 }
 
 .sessionPanel,
@@ -360,7 +663,18 @@
 }
 
 .drawer {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 151;
+  transform: translateX(-50%);
   padding: 1.2rem;
+}
+
+.drawerDescription {
+  margin: 0.5rem 0 0;
+  color: var(--text-soft);
+  line-height: 1.6;
 }
 
 .sessionHeader,
@@ -634,8 +948,18 @@
 }
 
 @media (max-width: 980px) {
+  .focusLayout,
   .hero {
     grid-template-columns: 1fr;
+  }
+
+  .focusCard {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .focusMedia {
+    min-height: 340px;
   }
 
   .posterStage {
@@ -646,6 +970,49 @@
 }
 
 @media (max-width: 720px) {
+  .homeHeader {
+    align-items: flex-start;
+  }
+
+  .stageTitle {
+    font-size: clamp(1.95rem, 10.5vw, 2.65rem);
+    letter-spacing: -0.045em;
+  }
+
+  .progressPill {
+    display: none;
+  }
+
+  .focusCard,
+  .emptyFocus {
+    border-radius: 24px;
+  }
+
+  .focusMedia {
+    min-height: 300px;
+  }
+
+  .emptyFocus {
+    min-height: 360px;
+  }
+
+  .focusBody {
+    padding: 1.15rem;
+  }
+
+  .focusTitle {
+    font-size: clamp(1.55rem, 8vw, 2.2rem);
+  }
+
+  .focusActions > .softButton,
+  .focusActions > * {
+    flex: 1 1 auto;
+  }
+
+  .queuePanel {
+    padding: 0.7rem;
+  }
+
   .playerCard,
   .sessionPanel,
   .drawer {
@@ -668,6 +1035,18 @@
   .drawerBackdrop {
     padding: 12px;
     align-items: flex-end;
+  }
+
+  .drawerBackdrop {
+    padding: 0;
+  }
+
+  .drawer {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    transform: none;
   }
 
   .sessionViewport {

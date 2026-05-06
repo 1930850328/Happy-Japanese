@@ -186,6 +186,19 @@ Primary purpose: manage slicing, imports, settings, and progress detail.
 - Knowledge points are discoverable but not competing with the video before the user asks for them.
 - The implementation remains CSS Modules friendly, accessible, and easy for future AI agents to extend.
 
+## Implementation Status
+
+Completed on 2026-05-06:
+
+- Homepage first viewport now centers on a single continue-learning stage.
+- Version/build chips and implementation-detail copy were removed from the learning path.
+- The old stats panel and full lesson feed were replaced by a focus card plus a compact next-up queue.
+- Knowledge points remain available through a Radix Dialog detail layer instead of competing with the video card.
+- Daily progress in the desktop rail now uses Radix Progress in a compact secondary position.
+- CJK fonts are self-hosted through `@fontsource/noto-sans-sc` and `@fontsource/noto-sans-jp`.
+- Completion/favorite/review feedback now uses `sonner` toasts.
+- Verified with `npm run build` and browser screenshots at 1440px desktop and 390px mobile widths.
+
 ## References
 
 - Apple Human Interface Guidelines: https://developer.apple.com/design/human-interface-guidelines/

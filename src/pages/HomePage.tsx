@@ -8,6 +8,7 @@ import {
   Heart,
   HeartOff,
   LibraryBig,
+  MoreHorizontal,
   Pause,
   Play,
   RotateCcw,
@@ -16,12 +17,13 @@ import {
   Volume2,
   X,
 } from 'lucide-react'
+import * as Dialog from '@radix-ui/react-dialog'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import { usePreparedPlaybackSource } from '../hooks/usePreparedPlaybackSource'
-import { APP_BUILD_LABEL, APP_BUILD_NOTE } from '../lib/appVersion'
 import { getDailyLessonFeed, getTodayProgress } from '../lib/selectors'
 import { speakJapanese } from '../lib/speech'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
@@ -104,7 +106,7 @@ function OverlayPortal({ children }: { children: ReactNode }) {
 function LessonCard({
   lesson,
   favorite,
-  showRomaji,
+  showRomaji: _showRomaji,
   canDelete,
   onFavorite,
   onStart,
@@ -112,144 +114,118 @@ function LessonCard({
   onDelete,
 }: LessonCardProps) {
   const previewSegment = lesson.segments[0]
-  const previewPoints = lesson.knowledgePoints.slice(0, 3)
+  const leadPoint = lesson.knowledgePoints[0]
+  const durationText =
+    lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒`
 
   return (
-    <article className={styles.slide}>
-      <div className={styles.playerCard} data-testid="lesson-card">
-        <div className={styles.posterStage}>
-          <img className={styles.posterImage} src={lesson.cover} alt={lesson.title} />
-          <div className={styles.posterShade} />
+    <article className={styles.focusCard} data-testid="lesson-card">
+      <div className={styles.focusMedia}>
+        <img className={styles.posterImage} src={lesson.cover} alt={lesson.title} />
+        <div className={styles.posterShade} />
+        <span className={styles.durationBadge}>{durationText}</span>
+        <button className={styles.playBadge} onClick={() => onStart(lesson.id)} aria-label="开始学习">
+          <Play size={24} />
+        </button>
+      </div>
 
-          <div className={styles.cardTop}>
-            <div className={styles.topChipRow}>
-              <span className="chip badgePeach">{lesson.theme}</span>
-              <span className="chip">{lesson.difficulty}</span>
-              <span className="chip badgeMint">
-                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习切片`}
-              </span>
-            </div>
+      <div className={styles.focusBody}>
+        <div className={styles.focusMeta}>
+          <span>{lesson.difficulty}</span>
+          {leadPoint ? <span>{leadPoint.kind === 'grammar' ? '语法' : '短句'} · {leadPoint.expression}</span> : null}
+        </div>
+        <h2 className={styles.focusTitle} data-testid="lesson-title">
+          {lesson.title}
+        </h2>
+        {previewSegment ? (
+          <p className={styles.focusSentence} data-testid="lesson-description">
+            {previewSegment.ja}
+          </p>
+        ) : (
+          <p className={styles.focusSentence}>{lesson.description}</p>
+        )}
 
-            <div className={styles.topActions}>
-              <button
-                className={styles.favoriteButton}
-                onClick={() => onFavorite(lesson.id)}
-                aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
-                title={favorite ? '取消收藏这条短视频' : '收藏这条短视频'}
-              >
-                {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
-              </button>
-              {canDelete ? (
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => onDelete(lesson.id)}
-                  aria-label={`删除 ${lesson.title}`}
-                  title="删除这条本地短视频"
-                >
-                  <Trash2 size={18} />
-                </button>
-              ) : null}
-            </div>
-          </div>
-
-          <button className={styles.playBadge} onClick={() => onStart(lesson.id)}>
-            <Play size={22} />
+        <div className={styles.focusActions}>
+          <button className="softButton primaryButton" onClick={() => onStart(lesson.id)}>
+            <Play size={18} />
+            继续这一段
           </button>
-        </div>
-
-        <div className={styles.cardBody}>
-          <div className={styles.cardHeader}>
-            <div className={styles.topChipRow}>
-              <span className="chip badgePeach">{lesson.theme}</span>
-              <span className="chip">{lesson.difficulty}</span>
-              <span className="chip badgeMint">
-                {lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒学习切片`}
-              </span>
-            </div>
-
-            <div className={styles.topActions}>
-              <button
-                className={styles.favoriteButton}
-                onClick={() => onFavorite(lesson.id)}
-                aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
-              >
-                {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
-              </button>
-              {canDelete ? (
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => onDelete(lesson.id)}
-                  aria-label={`删除 ${lesson.title}`}
-                >
-                  <Trash2 size={18} />
-                </button>
-              ) : null}
-            </div>
-          </div>
-
-          <div className={styles.lessonTitleBlock}>
-            <h2 className={styles.lessonTitle} data-testid="lesson-title">
-              {lesson.title}
-            </h2>
-            <p className={styles.lessonDescription} data-testid="lesson-description">
-              {lesson.description}
-            </p>
-          </div>
-
-          {previewSegment ? (
-            <div className={styles.previewBlock}>
-              <strong>{previewSegment.ja}</strong>
-              <span className={styles.previewMeta}>
-                {showRomaji
-                  ? `${previewSegment.kana} / ${previewSegment.romaji}`
-                  : previewSegment.kana}
-              </span>
-              <p>{previewSegment.zh}</p>
-            </div>
-          ) : null}
-
-          {previewPoints.length > 0 ? (
-            <div className={styles.previewPoints}>
-              {previewPoints.map((point) => (
-                <div key={point.id} className={styles.previewPoint}>
-                  <small>{point.kind === 'grammar' ? '语法' : '短句'}</small>
-                  <strong>{point.expression}</strong>
-                  <span>{point.meaningZh}</span>
-                </div>
-              ))}
-            </div>
-          ) : null}
-
-          <div className={styles.actionRow}>
-            <button className="softButton primaryButton" onClick={() => onStart(lesson.id)}>
-              <Play size={18} />
-              开始学习这段
+          <button className="softButton" onClick={() => onOpenKnowledge(lesson.id)}>
+            <BookMarked size={18} />
+            详情
+          </button>
+          <button
+            className={styles.iconButton}
+            onClick={() => onFavorite(lesson.id)}
+            aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
+          >
+            {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
+          </button>
+          {canDelete ? (
+            <button
+              className={styles.iconButton}
+              onClick={() => onDelete(lesson.id)}
+              aria-label={`删除 ${lesson.title}`}
+            >
+              <Trash2 size={18} />
             </button>
-            <button className="softButton" onClick={() => onOpenKnowledge(lesson.id)}>
-              <BookMarked size={18} />
-              先看知识点
-            </button>
-            {canDelete ? (
-              <button className="softButton" onClick={() => onDelete(lesson.id)}>
-                <Trash2 size={18} />
-                删除短片
-              </button>
-            ) : null}
-          </div>
-        </div>
-
-        <div className={styles.metaBar}>
-          <div className={styles.tagRow}>
-            {lesson.tags.map((tag) => (
-              <span key={tag} className="chip">
-                {tag}
-              </span>
-            ))}
-          </div>
-          <span className={styles.credit}>{lesson.creditLine}</span>
+          ) : null}
         </div>
       </div>
     </article>
+  )
+}
+
+function LessonQueue({
+  lessons,
+  activeLessonId,
+  onSelect,
+  onOpenKnowledge,
+}: {
+  lessons: VideoLesson[]
+  activeLessonId?: string
+  onSelect: (lessonId: string) => void
+  onOpenKnowledge: (lessonId: string) => void
+}) {
+  if (lessons.length === 0) {
+    return null
+  }
+
+  return (
+    <aside className={styles.queuePanel} aria-label="接下来学习">
+      <div className={styles.queueHeader}>
+        <span>接下来</span>
+        <small>{lessons.length} 段</small>
+      </div>
+      <div className={styles.queueList}>
+        {lessons.map((lesson) => {
+          const firstSentence = lesson.segments[0]?.ja ?? lesson.description
+          const isActive = lesson.id === activeLessonId
+
+          return (
+            <div
+              key={lesson.id}
+              className={`${styles.queueItem} ${isActive ? styles.queueItemActive : ''}`}
+            >
+              <button className={styles.queueMain} onClick={() => onSelect(lesson.id)}>
+                <img src={lesson.cover} alt="" />
+                <span>
+                  <strong>{lesson.title}</strong>
+                  <small>{firstSentence}</small>
+                </span>
+              </button>
+              <button
+                className={styles.queueMore}
+                onClick={() => onOpenKnowledge(lesson.id)}
+                aria-label={`查看 ${lesson.title} 的知识点`}
+              >
+                <MoreHorizontal size={18} />
+              </button>
+            </div>
+          )
+        })}
+      </div>
+    </aside>
   )
 }
 
@@ -457,6 +433,7 @@ export function HomePage() {
   const favorites = useAppStore((state) => state.favorites)
   const studyEvents = useAppStore((state) => state.studyEvents)
   const settings = useAppStore((state) => state.settings)
+  const goal = useAppStore((state) => state.goal)
   const toggleFavorite = useAppStore((state) => state.toggleFavorite)
   const deleteLocalLesson = useAppStore((state) => state.deleteLocalLesson)
   const recordStudyEvent = useAppStore((state) => state.recordStudyEvent)
@@ -475,7 +452,6 @@ export function HomePage() {
     label: string
     loading: boolean
   } | null>(null)
-  const cardRefs = useRef<Array<HTMLElement | null>>([])
   const exampleAudioRef = useRef<HTMLAudioElement | null>(null)
   const exampleAudioUrlRef = useRef<string | null>(null)
 
@@ -519,12 +495,10 @@ export function HomePage() {
       ? drawerSegmentsEntry.segments
       : drawerLesson?.segments ?? []
   const todayProgress = getTodayProgress(studyEvents)
-  const todayFocusText =
-    activeLesson?.knowledgePoints
-      .slice(0, 2)
-      .map((point) => point.expression)
-      .join(' / ') ?? '导入你自己的原片后，这里会显示今天重点'
-  const currentSentence = activeLesson?.segments[0]?.ja ?? '导入本地原片后会显示片中原句'
+  const nextLessons = orderedLessons
+    .filter((lesson) => lesson.id !== activeLesson?.id)
+    .slice(0, 5)
+  const completionRatio = Math.min(1, goal.videosTarget > 0 ? todayProgress.video / goal.videosTarget : 0)
 
   const stopExampleAudio = () => {
     if (exampleAudioRef.current) {
@@ -588,41 +562,25 @@ export function HomePage() {
     }
   }, [drawerLessonId, playerLessonId])
 
-  useEffect(() => {
-    if (orderedLessons.length === 0) {
-      return
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0]
-
-        if (!visible) {
-          return
-        }
-
-        const index = Number((visible.target as HTMLElement).dataset.index)
-        if (!Number.isNaN(index)) {
-          setActiveIndex(index)
-        }
-      },
-      { threshold: 0.45 },
-    )
-
-    for (const node of cardRefs.current) {
-      if (node) {
-        observer.observe(node)
-      }
-    }
-
-    return () => observer.disconnect()
-  }, [orderedLessons])
-
   const handleStartLesson = (lessonId: string) => {
     setDrawerLessonId(null)
     setPlayerLessonId(lessonId)
+  }
+
+  const handleSelectLesson = (lessonId: string) => {
+    const nextIndex = orderedLessons.findIndex((lesson) => lesson.id === lessonId)
+    if (nextIndex >= 0) {
+      setActiveIndex(nextIndex)
+    }
+  }
+
+  const handleToggleFavorite = async (lessonId: string) => {
+    const lesson = lessons.find((item) => item.id === lessonId)
+    const wasFavorite = favorites.includes(lessonId)
+    await toggleFavorite(lessonId)
+    toast.success(wasFavorite ? '已取消收藏' : '已收藏', {
+      description: lesson?.title,
+    })
   }
 
   const handleEnded = async (lesson: VideoLesson) => {
@@ -667,6 +625,10 @@ export function HomePage() {
       return
     }
 
+    toast.success('已删除短片', {
+      description: target.title,
+    })
+
     if (playerLessonId === lessonId) {
       setPlayerLessonId(null)
     }
@@ -676,7 +638,10 @@ export function HomePage() {
   }
 
   const handleAddReview = async (lesson: VideoLesson) => {
-    await addKnowledgeToReview(lesson.knowledgePoints, lesson.id, lesson.id)
+    const addedCount = await addKnowledgeToReview(lesson.knowledgePoints, lesson.id, lesson.id)
+    toast.success('已加入复习', {
+      description: `${addedCount} 个知识点会出现在复习页`,
+    })
   }
 
   const handlePlayOriginalExample = async (
@@ -759,69 +724,63 @@ export function HomePage() {
 
   return (
     <div className={`${styles.page} fadeIn`}>
-      <section className={styles.hero}>
-        <div className={styles.heroCopy}>
-          <div className={styles.versionRow}>
-            <span className="chip badgeMint">短视频模块已切到独立播放器内核</span>
-            <span className={styles.versionBadge}>{APP_BUILD_LABEL}</span>
-            <span className={styles.versionBadge}>{APP_BUILD_NOTE}</span>
+      <section className={styles.homeStage}>
+        <header className={styles.homeHeader}>
+          <div>
+            <p className={styles.stageLabel}>今日继续</p>
+            <h1 className={styles.stageTitle}>
+              {activeLesson ? '看一段，记一句。' : '先导入一段视频。'}
+            </h1>
           </div>
-          <h1 className="pageTitle">先把片中原句看清楚，再顺手记住对应的单词和语法</h1>
-          <p className="sectionIntro">
-            首页会优先展示站内本地学习切片。播放器控制条已经交给独立内核处理，时间轴、音量、倍速、
-            全屏和画中画都在视频内完成；页面层主要保留学习字幕、知识点和收藏删除等操作。
-          </p>
-          <div className={styles.heroActions}>
-            <span className="chip badgePeach">当前模式：卡片流</span>
-            <Link to="/immersive" className="softButton secondaryButton">
-              <Smartphone size={18} />
-              打开竖屏刷流
+          <div className={styles.progressPill} aria-label="今日观看进度">
+            <span>{todayProgress.video}/{goal.videosTarget}</span>
+            <small>{Math.round(completionRatio * 100)}%</small>
+          </div>
+        </header>
+
+        {activeLesson ? (
+          <div className={styles.focusLayout}>
+            <LessonCard
+              lesson={activeLesson}
+              favorite={favorites.includes(activeLesson.id)}
+              showRomaji={settings.showRomaji}
+              canDelete={removableLessonIds.has(activeLesson.id)}
+              onFavorite={(lessonId) => void handleToggleFavorite(lessonId)}
+              onStart={handleStartLesson}
+              onOpenKnowledge={(lessonId) => {
+                setPlayerLessonId(null)
+                setDrawerLessonId(lessonId)
+              }}
+              onDelete={(lessonId) => void handleDeleteLesson(lessonId)}
+            />
+            <LessonQueue
+              lessons={nextLessons}
+              activeLessonId={activeLesson.id}
+              onSelect={handleSelectLesson}
+              onOpenKnowledge={(lessonId) => {
+                setPlayerLessonId(null)
+                setDrawerLessonId(lessonId)
+              }}
+            />
+          </div>
+        ) : (
+          <div className={styles.emptyFocus}>
+            <h2>导入视频后，这里只放下一段该学的内容。</h2>
+            <p>切片、字幕和知识点都去“我的”里准备；首页只负责让你马上开始。</p>
+            <Link to="/profile" className="softButton primaryButton">
+              去导入视频
             </Link>
           </div>
-        </div>
+        )}
 
-        <div className={`${styles.heroStats} glassCard`}>
-          <article>
-            <small>今日已看</small>
-            <strong>{todayProgress.video}</strong>
-          </article>
-          <article>
-            <small>今日重点</small>
-            <strong>{todayFocusText}</strong>
-          </article>
-          <article>
-            <small>当前预览</small>
-            <strong>{currentSentence}</strong>
-          </article>
-        </div>
-      </section>
-
-      <section className={styles.feedWrap}>
-        <div className={styles.feed} role="feed" aria-label="日语学习短视频流" data-testid="home-feed">
-          {orderedLessons.map((lesson, index) => (
-            <section
-              key={lesson.id}
-              ref={(node) => {
-                cardRefs.current[index] = node
-              }}
-              data-index={index}
-              className={styles.feedItem}
-            >
-              <LessonCard
-                lesson={lesson}
-                favorite={favorites.includes(lesson.id)}
-                showRomaji={settings.showRomaji}
-                canDelete={removableLessonIds.has(lesson.id)}
-                onFavorite={(lessonId) => void toggleFavorite(lessonId)}
-                onStart={handleStartLesson}
-                onOpenKnowledge={(lessonId) => {
-                  setPlayerLessonId(null)
-                  setDrawerLessonId(lessonId)
-                }}
-                onDelete={(lessonId) => void handleDeleteLesson(lessonId)}
-              />
-            </section>
-          ))}
+        <div className={styles.secondaryStrip}>
+          <Link to="/immersive" className={styles.textAction}>
+            <Smartphone size={17} />
+            竖屏刷流
+          </Link>
+          <Link to="/profile" className={styles.textAction}>
+            管理导入
+          </Link>
         </div>
       </section>
 
@@ -842,20 +801,33 @@ export function HomePage() {
         />
       ) : null}
 
-      {drawerLesson ? (
-        <OverlayPortal>
-          <div className={styles.drawerBackdrop} onClick={() => setDrawerLessonId(null)}>
-            <aside className={styles.drawer} onClick={(event) => event.stopPropagation()}>
+      <Dialog.Root
+        open={Boolean(drawerLesson)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDrawerLessonId(null)
+          }
+        }}
+      >
+        {drawerLesson ? (
+          <Dialog.Portal>
+            <Dialog.Overlay className={styles.drawerBackdrop} />
+            <Dialog.Content className={styles.drawer}>
               <div className={styles.drawerHeader}>
                 <div>
                   <span className="chip badgePeach">知识点解析</span>
-                  <h2>{drawerLesson.title}</h2>
+                  <Dialog.Title asChild>
+                    <h2>{drawerLesson.title}</h2>
+                  </Dialog.Title>
                 </div>
-                <button className="softButton" onClick={() => setDrawerLessonId(null)}>
+                <Dialog.Close className="softButton">
                   <X size={18} />
                   收起
-                </button>
+                </Dialog.Close>
               </div>
+              <Dialog.Description className={styles.drawerDescription}>
+                知识点、例句和片中原声都收在这里，首页保持轻一点。
+              </Dialog.Description>
 
               <div className={styles.pointList}>
                 {drawerLesson.knowledgePoints.map((point) => {
@@ -927,7 +899,7 @@ export function HomePage() {
                   <LibraryBig size={18} />
                   知识点加入复习
                 </button>
-                <button className="softButton" onClick={() => void toggleFavorite(drawerLesson.id)}>
+                <button className="softButton" onClick={() => void handleToggleFavorite(drawerLesson.id)}>
                   <BookMarked size={18} />
                   {favorites.includes(drawerLesson.id) ? '已收藏' : '收藏这条视频'}
                 </button>
@@ -938,10 +910,10 @@ export function HomePage() {
                   这条视频曾经出现过播放异常，建议检查导入的视频格式是否完整，或者重新导入同一片段。
                 </p>
               ) : null}
-            </aside>
-          </div>
-        </OverlayPortal>
-      ) : null}
+            </Dialog.Content>
+          </Dialog.Portal>
+        ) : null}
+      </Dialog.Root>
     </div>
   )
 }

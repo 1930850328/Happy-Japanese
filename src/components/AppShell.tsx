@@ -1,8 +1,8 @@
 import { BookOpenText, House, LibraryBig, RotateCcw, UserRound } from 'lucide-react'
+import * as Progress from '@radix-ui/react-progress'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { useAppBootstrap } from '../hooks/useAppBootstrap'
-import { APP_BUILD_LABEL, APP_BUILD_NOTE } from '../lib/appVersion'
 import { getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import { useAppStore } from '../store/useAppStore'
 import styles from './AppShell.module.css'
@@ -43,54 +43,8 @@ export function AppShell() {
             <div className={styles.brandBadge}>ゆる</div>
             <div className={styles.brandText}>
               <strong>YuruNihongo</strong>
-              <small className={styles.versionBadge}>
-                {APP_BUILD_LABEL} · {APP_BUILD_NOTE}
-              </small>
               <span>轻松、治愈、能坚持下去的日语学习流</span>
             </div>
-          </div>
-
-          <div className={`${styles.goalCard} glassCard`}>
-            <div className={styles.goalHeader}>
-              <span className="chip badgePeach">今日进度</span>
-              <strong>{Math.round(completionRatio * 100)}%</strong>
-            </div>
-            <div className={styles.goalBar}>
-              <div style={{ width: `${Math.max(completionRatio * 100, 6)}%` }} />
-            </div>
-            <div className={styles.goalGrid}>
-              <div>
-                <small>视频</small>
-                <strong>
-                  {progress.video}/{goal.videosTarget}
-                </strong>
-              </div>
-              <div>
-                <small>单词</small>
-                <strong>
-                  {progress.word}/{goal.wordsTarget}
-                </strong>
-              </div>
-              <div>
-                <small>语法</small>
-                <strong>
-                  {progress.grammar}/{goal.grammarTarget}
-                </strong>
-              </div>
-              <div>
-                <small>复习</small>
-                <strong>
-                  {progress.review}/{goal.reviewTarget}
-                </strong>
-              </div>
-            </div>
-            <p className={styles.goalHint}>
-              {initialized
-                ? completionRatio >= 1
-                  ? '今天已经顺利打卡，继续保持就很棒。'
-                  : '先看一条视频，再顺手记一句话，会很有进入感。'
-                : '正在载入你的学习小窝……'}
-            </p>
           </div>
 
           <nav className={styles.nav}>
@@ -111,6 +65,30 @@ export function AppShell() {
               )
             })}
           </nav>
+
+          <div className={styles.goalMini} aria-label="今日学习进度">
+            <div>
+              <span>今日</span>
+              <strong>{progress.video}/{goal.videosTarget} 条</strong>
+            </div>
+            <Progress.Root
+              className={styles.goalBar}
+              value={Math.round(completionRatio * 100)}
+              aria-label="今日目标完成度"
+            >
+              <Progress.Indicator
+                className={styles.goalBarIndicator}
+                style={{ transform: `translateX(-${100 - Math.max(completionRatio * 100, 6)}%)` }}
+              />
+            </Progress.Root>
+            <small>
+              {initialized
+                ? completionRatio >= 1
+                  ? '已完成'
+                  : `${Math.round(completionRatio * 100)}%`
+                : '载入中'}
+            </small>
+          </div>
         </aside>
       ) : null}
 
@@ -120,7 +98,6 @@ export function AppShell() {
             <div className={styles.mobileTopBar}>
               <div>
                 <strong>YuruNihongo</strong>
-                <small className={styles.mobileVersion}>{APP_BUILD_LABEL}</small>
                 <span>今天也轻松学一点</span>
               </div>
               <span className="chip badgeMint">{Math.round(completionRatio * 100)}%</span>
