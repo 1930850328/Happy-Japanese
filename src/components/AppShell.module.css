@@ -1,10 +1,10 @@
 .shell {
   width: min(100%, calc(var(--max-width) + 56px));
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
   display: grid;
-  grid-template-columns: 290px minmax(0, 1fr);
-  gap: 18px;
+  grid-template-columns: 264px minmax(0, 1fr);
+  gap: 24px;
 }
 
 .shellImmersive {
@@ -17,10 +17,10 @@
 
 .rail {
   position: sticky;
-  top: 20px;
+  top: 24px;
   align-self: start;
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
 .brandCard,
@@ -31,7 +31,7 @@
 
 .brandCard,
 .goalCard {
-  padding: 1.2rem;
+  padding: 1.05rem;
 }
 
 .brandCard {
@@ -41,13 +41,13 @@
 }
 
 .brandBadge {
-  width: 58px;
-  height: 58px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255, 198, 173, 0.95), rgba(207, 234, 223, 0.9));
-  color: #5b4438;
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(201, 222, 210, 0.96), rgba(207, 225, 237, 0.9));
+  color: #26312c;
   font-family: var(--font-ui);
-  font-size: 1.1rem;
+  font-size: 1rem;
   display: grid;
   place-items: center;
   box-shadow: var(--shadow-sm);
@@ -61,6 +61,7 @@
 .brandText strong {
   font-family: var(--font-ui);
   font-size: 1.1rem;
+  line-height: 1.2;
 }
 
 .brandText span,
@@ -74,12 +75,12 @@
 .mobileVersion {
   width: fit-content;
   max-width: 100%;
-  padding: 0.22rem 0.5rem;
-  border-radius: 999px;
-  border: 1px solid rgba(91, 68, 56, 0.16);
-  background: rgba(255, 255, 255, 0.72);
-  color: #6f574b;
-  font-family: var(--font-ui);
+  padding: 0.18rem 0;
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: var(--font-body);
   font-size: 0.72rem;
   line-height: 1.2;
   white-space: normal;
@@ -89,18 +90,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
 }
 
 .goalHeader strong {
-  font-size: 1.5rem;
+  font-size: 1.36rem;
   font-family: var(--font-ui);
 }
 
 .goalBar {
-  height: 12px;
+  height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.74);
+  background: rgba(46, 63, 55, 0.08);
   overflow: hidden;
   margin-bottom: 1rem;
 }
@@ -108,19 +109,20 @@
 .goalBar div {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--peach), var(--mint), var(--sky));
+  background: linear-gradient(90deg, var(--green), #8fbba4);
 }
 
 .goalGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
+  gap: 0.65rem;
 }
 
 .goalGrid div {
-  padding: 0.85rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.74);
+  padding: 0.72rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(46, 63, 55, 0.08);
   display: grid;
   gap: 0.22rem;
 }
@@ -140,11 +142,11 @@
 
 .nav {
   display: grid;
-  gap: 0.45rem;
-  padding: 0.6rem;
+  gap: 0.35rem;
+  padding: 0.45rem;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: var(--shadow-md);
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: var(--shadow-sm);
 }
 
 .navItem,
@@ -152,7 +154,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  border-radius: 18px;
+  border-radius: 14px;
   color: var(--text-soft);
   transition:
     background 180ms ease,
@@ -161,12 +163,12 @@
 }
 
 .navItem {
-  padding: 0.9rem 1rem;
+  padding: 0.8rem 0.9rem;
 }
 
 .navItemActive,
 .navItem:hover {
-  background: linear-gradient(135deg, rgba(255, 198, 173, 0.34), rgba(216, 235, 255, 0.4));
+  background: rgba(201, 222, 210, 0.56);
   color: var(--text);
   transform: translateX(2px);
 }
@@ -174,7 +176,7 @@
 .main {
   min-width: 0;
   display: grid;
-  gap: 12px;
+  gap: 16px;
 }
 
 .mainImmersive {
@@ -188,9 +190,9 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.9rem 1rem;
-  border-radius: 22px;
-  border: 1px solid rgba(189, 226, 205, 0.95);
-  background: linear-gradient(135deg, rgba(241, 251, 246, 0.96), rgba(255, 246, 238, 0.95));
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(151, 191, 171, 0.58);
+  background: rgba(246, 251, 247, 0.9);
   box-shadow: var(--shadow-sm);
   color: var(--text);
 }
@@ -233,6 +235,14 @@
   font-size: 0.9rem;
 }
 
+.mobileTopBar > span {
+  flex-shrink: 0;
+  justify-content: center;
+  min-width: 56px;
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
 .mobileVersion {
   display: inline-block;
   margin-top: 0.28rem;
@@ -267,9 +277,9 @@
     align-items: center;
     padding: 0.95rem 1rem;
     margin-bottom: 12px;
-    border-radius: 24px;
-    backdrop-filter: blur(18px);
-    background: rgba(255, 255, 255, 0.76);
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.82);
     border: 1px solid var(--line);
     box-shadow: var(--shadow-sm);
   }
@@ -289,11 +299,11 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 6px;
     padding: 8px;
-    border-radius: 24px;
+    border-radius: 20px;
     background: rgba(255, 255, 255, 0.86);
     border: 1px solid var(--line);
-    box-shadow: var(--shadow-lg);
-    backdrop-filter: blur(18px);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(12px);
   }
 
   .bottomItem {
@@ -303,9 +313,13 @@
     font-size: 0.74rem;
   }
 
+  .bottomItem span {
+    white-space: nowrap;
+  }
+
   .bottomItemActive {
     color: var(--text);
-    border-radius: 18px;
-    background: linear-gradient(135deg, rgba(255, 198, 173, 0.34), rgba(216, 235, 255, 0.34));
+    border-radius: 14px;
+    background: rgba(201, 222, 210, 0.56);
   }
 }
