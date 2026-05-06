@@ -26,6 +26,8 @@ npm run build
 
 ## 自动切片并导入短视频模块
 
+切片链路的长期升级方案记录在 [`docs/slicing-pipeline-plan.md`](docs/slicing-pipeline-plan.md)。这份计划把生产级切片从浏览器自研流程迁移到可维护、可扩展的 CLI / Worker 管线，并定义了 manifest v2、阶段产物、验证标准和实施顺序。
+
 如果你已经把独立切片仓库 `anime-learning-slicer` 放在当前项目同级目录，可以直接在本仓库根目录执行：
 
 ```bash
