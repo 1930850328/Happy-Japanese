@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,6 +13,7 @@
     "test:e2e": "playwright test",
     "preview": "vite preview",
     "prepare:content": "node ./scripts/prepare-content.mjs",
+    "slicer:help": "node ./packages/anime-learning-slicer/src/cli.mjs --help",
     "ingest:video": "node ./scripts/ingest-video.mjs",
     "watch:video-inbox": "node ./scripts/watch-video-inbox.mjs"
   },

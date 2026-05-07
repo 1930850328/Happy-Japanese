@@ -28,7 +28,7 @@ npm run build
 
 切片链路的长期升级方案记录在 [`docs/slicing-pipeline-plan.md`](docs/slicing-pipeline-plan.md)。这份计划把生产级切片从浏览器自研流程迁移到可维护、可扩展的 CLI / Worker 管线，并定义了 manifest v2、阶段产物、验证标准和实施顺序。
 
-如果你已经把独立切片仓库 `anime-learning-slicer` 放在当前项目同级目录，可以直接在本仓库根目录执行：
+当前仓库已经是 monorepo，切片 CLI 位于 `packages/anime-learning-slicer`。可以直接在本仓库根目录执行：
 
 ```bash
 npm run ingest:video -- --input F:\path\to\episode01.mkv --anime "Bocchi the Rock!" --episode "EP01"
@@ -36,11 +36,12 @@ npm run ingest:video -- --input F:\path\to\episode01.mkv --anime "Bocchi the Roc
 
 这条命令会自动完成：
 
-1. 调用 `anime-learning-slicer`
-2. 对原片进行切片
-3. 生成字幕、封面和知识点元数据
-4. 自动同步到 `public/generated-slices`
-5. 让首页短视频模块自动加载这些切片
+1. 调用 monorepo 内的 `packages/anime-learning-slicer`
+2. 使用 FFmpeg 对原片进行真实裁切
+3. 优先读取视频内嵌字幕；没有字幕轨时使用 Transformers.js Whisper ASR 生成日语时间轴字幕
+4. 使用开源字幕解析、Kuromoji 和 Wanakana 生成中文字幕、封面和知识点元数据
+5. 自动同步到 `public/generated-slices`
+6. 让首页短视频模块自动加载这些切片
 
 如果你想要“丢一个视频进去就自动处理”，可以启动监听模式：
 
@@ -51,16 +52,22 @@ npm run watch:video-inbox
 默认监听目录是：
 
 ```text
-..\anime-learning-slicer\inbox
+./inbox
 ```
 
 把 `mp4 / mkv / mov / webm / avi` 视频放进去后，切片会自动生成并导入首页短视频流。
 
-如果同名字幕文件存在，也会自动拾取：
+如果视频自带字幕轨，CLI 会优先尝试提取；如果同名字幕文件存在，也会自动拾取。它们是内部生产素材，不是页面要求用户额外上传的文件：
 
 - `episode01.ass`
 - `episode01.srt`
 - `episode01.vtt`
+
+如果没有字幕轨或同名字幕，CLI 会自动使用开源 ASR 生成日语字幕。默认模型是 `onnx-community/whisper-base_timestamped`，可以按机器性能调整：
+
+```bash
+npm run ingest:video -- --input ./episode01.mp4 --asrModel onnx-community/whisper-tiny_timestamped
+```
 
 如果同名 JSON 存在，也会自动覆盖元数据和切片参数：
 

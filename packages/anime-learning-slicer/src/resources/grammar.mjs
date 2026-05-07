@@ -1,0 +1,58 @@
+export const grammarPatterns = [
+  {
+    id: 'te-miru',
+    pattern: 'てみる',
+    label: 'てみる',
+    meaningZh: '试着做',
+    explanationZh: '表示尝试做某事，常用于“先做做看”。',
+  },
+  {
+    id: 'te-miyou',
+    pattern: 'てみよう',
+    label: 'てみよう',
+    meaningZh: '试着做做看吧',
+    explanationZh: '表示提议尝试做某事，语气比命令更柔和。',
+  },
+  {
+    id: 'te-iru',
+    pattern: 'ている',
+    label: 'ている',
+    meaningZh: '正在做 / 状态持续',
+    explanationZh: '表示动作正在进行，或动作结果形成的状态持续。',
+  },
+  {
+    id: 'nakereba-naranai',
+    pattern: 'なければならない',
+    label: 'なければならない',
+    meaningZh: '必须',
+    explanationZh: '表示有义务或必要做某事。',
+  },
+  {
+    id: 'koto-ga-dekiru',
+    pattern: 'ことができる',
+    label: 'ことができる',
+    meaningZh: '能够',
+    explanationZh: '表示能力、可能性或许可。',
+  },
+  {
+    id: 'souda',
+    pattern: 'そうだ',
+    label: 'そうだ',
+    meaningZh: '看起来 / 听说',
+    explanationZh: '可以表示样态，也可以表示传闻，需要结合上下文判断。',
+  },
+  {
+    id: 'tara',
+    pattern: 'たら',
+    label: 'たら',
+    meaningZh: '如果 / 之后',
+    explanationZh: '表示条件，也可表示某动作完成之后发生另一件事。',
+  },
+  {
+    id: 'node',
+    pattern: 'ので',
+    label: 'ので',
+    meaningZh: '因为',
+    explanationZh: '说明原因，语气比“から”更柔和。',
+  },
+]

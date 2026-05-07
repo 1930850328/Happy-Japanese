@@ -7,8 +7,8 @@
   "pipeline": {
     "engine": "anime-learning-slicer",
     "engineVersion": "0.1.0",
-    "asr": "external-subtitle",
-    "alignment": "ffsubsync",
+    "asr": "faster-whisper",
+    "alignment": "whisperx",
     "sceneDetector": "pyscenedetect-content",
     "nlp": "sudachi"
   },
@@ -49,15 +49,15 @@
         }
       ],
       "quality": {
-        "asrConfidence": null,
-        "alignmentConfidence": 0.91,
+        "asrConfidence": 0.58,
+        "alignmentConfidence": 0.7,
         "ocrConfidence": null,
         "sceneBoundaryStart": true,
         "sceneBoundaryEnd": false,
         "speechBoundaryStart": true,
         "speechBoundaryEnd": true,
-        "needsReview": false,
-        "warnings": []
+        "needsReview": true,
+        "warnings": ["ASR confidence is too low."]
       }
     }
   ]

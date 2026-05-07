@@ -88,6 +88,11 @@ function isFiniteNumber(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value)
 }
 
+const MAX_DURATION_DRIFT_MS = 1000
+const MIN_ASR_CONFIDENCE = 0.82
+const MIN_ALIGNMENT_CONFIDENCE = 0.82
+const MIN_OCR_CONFIDENCE = 0.74
+
 function readString(item: Record<string, unknown>, key: string) {
   const value = item[key]
   return typeof value === 'string' && value.trim().length > 0 ? value : undefined
@@ -178,6 +183,62 @@ function normalizePipeline(value: unknown) {
   }
 }
 
+function validateGeneratedAt(value: string | undefined) {
+  if (!value) {
+    return false
+  }
+
+  const parsed = Date.parse(value)
+  return Number.isFinite(parsed)
+}
+
+function validateV2Pipeline(
+  pipeline: SlicerManifestPipeline | undefined,
+  rawPipeline: unknown,
+) {
+  const errors: string[] = []
+
+  if (!isRecord(rawPipeline)) {
+    return ['pipeline is required for manifest v2.']
+  }
+
+  if (!pipeline?.engine) {
+    errors.push('pipeline.engine is required for manifest v2.')
+  }
+
+  return errors
+}
+
+function validateV2Quality(value: unknown, path: string) {
+  const errors: string[] = []
+
+  if (!isRecord(value)) {
+    return [`${path}.quality is required for manifest v2.`]
+  }
+
+  if (typeof value.needsReview !== 'boolean') {
+    errors.push(`${path}.quality.needsReview must be a boolean.`)
+  }
+  if (!Array.isArray(value.warnings)) {
+    errors.push(`${path}.quality.warnings must be an array.`)
+  }
+
+  return errors
+}
+
+function validateConfidence(
+  value: number | null | undefined,
+  minimum: number,
+  path: string,
+  fieldName: string,
+) {
+  if (typeof value === 'number' && value < minimum) {
+    return [`${path}.quality.${fieldName} is below the production threshold ${minimum}.`]
+  }
+
+  return []
+}
+
 function normalizeQuality(value: unknown): SlicerManifestClipQuality | undefined {
   if (!isRecord(value)) {
     return undefined
@@ -247,18 +308,19 @@ function normalizeClip(
   const endMs = value.endMs
   const durationMs = value.durationMs
   const videoPath = readString(value, 'videoPath')
+  const coverPath = readString(value, 'coverPath')
   const subtitlePath = readString(value, 'subtitlePath')
   const quality = normalizeQuality(value.quality)
-  const segments = Array.isArray(value.segments)
-    ? value.segments
+  const rawSegments = Array.isArray(value.segments) ? value.segments : []
+  const segments = rawSegments
         .map(normalizeSegment)
         .filter((segment): segment is TranscriptSegment => Boolean(segment))
-    : []
-  const knowledgePoints = Array.isArray(value.knowledgePoints)
-    ? value.knowledgePoints
+  const rawKnowledgePoints = Array.isArray(value.knowledgePoints) ? value.knowledgePoints : []
+  const knowledgePoints = rawKnowledgePoints
         .map(normalizeKnowledgePoint)
         .filter((point): point is KnowledgePoint => Boolean(point))
-    : []
+  const transcriptJa = readString(value, 'transcriptJa') ?? segments.map((segment) => segment.ja).join(' ')
+  const transcriptZh = readString(value, 'transcriptZh') ?? segments.map((segment) => segment.zh).join(' ')
 
   if (!id) {
     errors.push(`${path}.id is required.`)
@@ -283,12 +345,78 @@ function normalizeClip(
     if (!isFiniteNumber(durationMs)) {
       errors.push(`${path}.durationMs must be a number.`)
     }
+    if (isFiniteNumber(startMs) && startMs < 0) {
+      errors.push(`${path}.startMs must not be negative.`)
+    }
+    if (isFiniteNumber(startMs) && isFiniteNumber(endMs) && endMs <= startMs) {
+      errors.push(`${path}.endMs must be greater than startMs.`)
+    }
+    if (isFiniteNumber(durationMs) && durationMs <= 0) {
+      errors.push(`${path}.durationMs must be greater than 0.`)
+    }
+    if (
+      isFiniteNumber(startMs) &&
+      isFiniteNumber(endMs) &&
+      isFiniteNumber(durationMs) &&
+      Math.abs(endMs - startMs - durationMs) > MAX_DURATION_DRIFT_MS
+    ) {
+      errors.push(`${path}.durationMs must match endMs - startMs within ${MAX_DURATION_DRIFT_MS}ms.`)
+    }
+    if (!coverPath) {
+      errors.push(`${path}.coverPath is required for manifest v2.`)
+    }
     if (!subtitlePath) {
       errors.push(`${path}.subtitlePath is required for manifest v2.`)
     }
-    if (!quality) {
-      errors.push(`${path}.quality is required for manifest v2.`)
+    errors.push(...validateV2Quality(value.quality, path))
+    if (rawSegments.length !== segments.length) {
+      errors.push(`${path}.segments must all include valid startMs, endMs, ja, and zh fields.`)
     }
+    if (!transcriptJa.trim()) {
+      errors.push(`${path}.transcriptJa or bilingual Japanese segments are required for manifest v2.`)
+    }
+    if (!transcriptZh.trim()) {
+      errors.push(`${path}.transcriptZh or bilingual Chinese segments are required for manifest v2.`)
+    }
+    if (rawKnowledgePoints.length !== knowledgePoints.length) {
+      errors.push(`${path}.knowledgePoints must all include valid id, kind, expression, and Chinese learning fields.`)
+    }
+    if (knowledgePoints.length === 0) {
+      errors.push(`${path}.knowledgePoints must include at least one grammar, word, or phrase point for manifest v2.`)
+    }
+    const incompleteKnowledgeIndex = knowledgePoints.findIndex(
+      (point) => !point.meaningZh.trim() || !point.exampleJa.trim() || !point.exampleZh.trim(),
+    )
+    if (incompleteKnowledgeIndex >= 0) {
+      errors.push(
+        `${path}.knowledgePoints[${incompleteKnowledgeIndex}] must include meaningZh, exampleJa, and exampleZh.`,
+      )
+    }
+    const knowledgePointIds = new Set(knowledgePoints.map((point) => point.id))
+    const focusTermIds = [...new Set(segments.flatMap((segment) => segment.focusTermIds))]
+    if (focusTermIds.length === 0) {
+      errors.push(`${path}.segments must include focusTermIds so words or grammar can be highlighted.`)
+    }
+    const unknownFocusTermIds = focusTermIds.filter((termId) => !knowledgePointIds.has(termId))
+    if (unknownFocusTermIds.length > 0) {
+      errors.push(`${path}.segments focusTermIds must reference knowledgePoints: ${unknownFocusTermIds.join(', ')}.`)
+    }
+    if (quality?.needsReview) {
+      errors.push(`${path}.quality.needsReview must be false before import.`)
+    }
+    if (quality && quality.warnings.length > 0) {
+      errors.push(`${path}.quality.warnings must be empty before import.`)
+    }
+    errors.push(...validateConfidence(quality?.asrConfidence, MIN_ASR_CONFIDENCE, path, 'asrConfidence'))
+    errors.push(
+      ...validateConfidence(
+        quality?.alignmentConfidence,
+        MIN_ALIGNMENT_CONFIDENCE,
+        path,
+        'alignmentConfidence',
+      ),
+    )
+    errors.push(...validateConfidence(quality?.ocrConfidence, MIN_OCR_CONFIDENCE, path, 'ocrConfidence'))
   }
 
   const normalizedDurationMs = isFiniteNumber(durationMs) ? durationMs : 0
@@ -300,8 +428,6 @@ function normalizeClip(
     return { clip: null, errors }
   }
 
-  const transcriptJa = readString(value, 'transcriptJa') ?? segments.map((segment) => segment.ja).join(' ')
-  const transcriptZh = readString(value, 'transcriptZh') ?? segments.map((segment) => segment.zh).join(' ')
   const qualityWarnings = quality?.warnings ?? []
   const needsReview = quality?.needsReview === true || qualityWarnings.length > 0
 
@@ -313,7 +439,7 @@ function normalizeClip(
       endMs: isFiniteNumber(endMs) ? endMs : 0,
       durationMs: normalizedDurationMs,
       videoPath: videoPath ?? '',
-      coverPath: readString(value, 'coverPath'),
+      coverPath,
       subtitlePath,
       metadataPath: readString(value, 'metadataPath'),
       transcriptJa,
@@ -360,12 +486,20 @@ export function parseSlicerManifestData(input: unknown): SlicerManifestData {
     if (!readString(input, 'sourceVideo')) {
       errors.push('sourceVideo is required for manifest v2.')
     }
-    if (!readString(input, 'generatedAt')) {
+    if (
+      isFiniteNumber(input.clipCount) &&
+      Array.isArray(input.clips) &&
+      input.clipCount !== input.clips.length
+    ) {
+      errors.push('clipCount must match clips.length for manifest v2.')
+    }
+    const generatedAt = readString(input, 'generatedAt')
+    if (!generatedAt) {
       errors.push('generatedAt is required for manifest v2.')
+    } else if (!validateGeneratedAt(generatedAt)) {
+      errors.push('generatedAt must be a valid date string for manifest v2.')
     }
-    if (!pipeline) {
-      errors.push('pipeline is required for manifest v2.')
-    }
+    errors.push(...validateV2Pipeline(pipeline, input.pipeline))
   }
 
   if (errors.length > 0) {
@@ -428,6 +562,42 @@ export function buildManifestClipFileMap(files: File[]) {
 
 export function getManifestClipFileName(clip: SlicerManifestClip) {
   return basenameFromPath(clip.videoPath)
+}
+
+export function getManifestCoverFileName(clip: SlicerManifestClip) {
+  return clip.coverPath ? basenameFromPath(clip.coverPath) : undefined
+}
+
+export function getManifestSubtitleFileName(clip: SlicerManifestClip) {
+  return clip.subtitlePath ? basenameFromPath(clip.subtitlePath) : undefined
+}
+
+export function getManifestMetadataFileName(clip: SlicerManifestClip) {
+  return clip.metadataPath ? basenameFromPath(clip.metadataPath) : undefined
+}
+
+export function getMissingManifestAssetMessages(manifest: SlicerManifestData, files: File[]) {
+  const fileMap = buildManifestClipFileMap(files)
+  const messages: string[] = []
+
+  manifest.clips.forEach((clip, index) => {
+    const videoFileName = getManifestClipFileName(clip)
+    if (!fileMap[normalizeFileKey(videoFileName)]) {
+      messages.push(`clips[${index}].videoPath asset is missing: ${clip.videoPath}`)
+    }
+
+    const coverFileName = getManifestCoverFileName(clip)
+    if (manifest.version === 2 && coverFileName && !fileMap[normalizeFileKey(coverFileName)]) {
+      messages.push(`clips[${index}].coverPath asset is missing: ${clip.coverPath}`)
+    }
+
+    const subtitleFileName = getManifestSubtitleFileName(clip)
+    if (manifest.version === 2 && subtitleFileName && !fileMap[normalizeFileKey(subtitleFileName)]) {
+      messages.push(`clips[${index}].subtitlePath asset is missing: ${clip.subtitlePath}`)
+    }
+  })
+
+  return messages
 }
 
 export function getManifestQualityTags(clip: SlicerManifestClip) {

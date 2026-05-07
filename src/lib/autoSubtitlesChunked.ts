@@ -615,7 +615,7 @@ export async function generateStudyDataFromVideo(
 
     if (enrichedCues.length === 0) {
       throw new Error(
-        '没有识别出可用字幕，无法按语法和单词切片。请先导入字幕文件，或换更短、更清晰的片段。',
+        '没有识别出可用字幕，无法按语法和单词切片。请换更短、更清晰、对白更明显的视频片段。',
       )
     }
 
@@ -628,7 +628,7 @@ export async function generateStudyDataFromVideo(
       !hasUsableFocusTerms(studyData.segments)
     ) {
       throw new Error(
-        '识别到了字幕，但没有抽出足够的语法或单词知识点，无法按语法和单词切片。请换对白更清晰的片段，或直接导入字幕文件。',
+        '识别到了字幕，但没有抽出足够的语法或单词知识点，无法按语法和单词切片。请换对白更清晰、信息密度更高的视频片段。',
       )
     }
 

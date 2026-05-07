@@ -2,38 +2,64 @@
 
 ## Goal
 
-Build a maintainable, AI-friendly, and extensible video slicing pipeline for Japanese learning clips.
+Build one maintainable, AI-friendly, and extensible production slicing pipeline for Japanese learning clips.
 
-The current browser-only flow is useful for quick previews, but it is not reliable enough for high-quality slicing. The upgraded pipeline should produce real short video files, accurate subtitle timing, cleaner Japanese learning metadata, and a stable manifest that this app can import.
+The user should not need to understand or choose between multiple slicing chains. The product goal is simple: given a source video, reliably produce high-quality learning clips with accurate Japanese subtitles, accurate Chinese subtitles, useful vocabulary or grammar highlights, and no runtime surprises during import or playback.
 
 ## Current State
 
-The app currently has two ingestion paths:
+The app currently has one user-facing upload path and one internal artifact contract:
 
-- Page preview flow: `src/pages/ProfilePage.tsx` runs browser-side video compatibility checks, subtitle parsing or browser ASR, knowledge extraction, and candidate slicing.
-- External slicer flow: `scripts/ingest-video.mjs` and `scripts/watch-video-inbox.mjs` call a sibling `anime-learning-slicer` repo, then import `manifest.json + clips` through `src/lib/slicerManifest.ts`.
+- User path: `src/pages/ProfilePage.tsx` asks the user for one source video, then runs the currently available browser-side compatibility checks, subtitle extraction or ASR, knowledge extraction, and candidate slicing.
+- Internal artifact contract: `scripts/ingest-video.mjs` and `scripts/watch-video-inbox.mjs` call the monorepo package `packages/anime-learning-slicer`. That slicer uses FFmpeg, subtitle parsers, Transformers.js Whisper ASR, Kuromoji, Wanakana, and translation enrichment to produce `manifest.json + clips / covers / subtitles`; the app keeps `src/lib/slicerManifest.ts` as the internal import boundary.
 
-The page preview flow does not physically cut videos. It uploads one source video and stores each slice as a `clipStartMs` / `clipEndMs` playback window.
+The current user path does not physically cut videos yet. It uploads one source video and stores each slice as a `clipStartMs` / `clipEndMs` playback window, so it must be replaced by a slicer-backed job before it can be considered the production quality bar. The monorepo CLI is the first production engine and already supports the video-only case through embedded subtitle extraction or ASR fallback.
 
 ## Decision
 
-Move production-quality slicing out of the browser and into a deterministic slicer engine. Keep the browser flow as a lightweight preview and fallback only.
+Move production-quality slicing out of the browser and into a deterministic slicer engine. The app UI should still present one simple user action: upload a source video. Manifest files, cut clips, covers, and subtitle files are internal artifacts, not user upload inputs.
 
 The production path should be:
 
-1. User or watcher submits a source video and optional subtitle/metadata.
+1. User submits one source video, or watcher receives one source video.
 2. Slicer engine extracts media, subtitles, scenes, speech regions, and learning metadata.
 3. Slicer engine writes real clip files, cover images, subtitle files, metadata files, and one manifest.
-4. This app imports the manifest through the existing advanced import path.
+4. This app imports the manifest internally after the slicer job succeeds.
 
-This can be implemented first as the existing sibling CLI `anime-learning-slicer`, then optionally exposed as a local or hosted worker service later.
+## Product Quality Bar
+
+A clip is not importable as production output unless it satisfies all of these conditions before upload starts:
+
+- The manifest is v2 and uses a named slicer engine.
+- Every clip references an existing real video file, cover image, and subtitle file.
+- Every clip has bilingual Japanese and Chinese transcript data.
+- Every clip has at least one valid grammar, word, or phrase knowledge point.
+- Subtitle `focusTermIds` reference existing knowledge point ids so the player can highlight words or grammar.
+- `quality.needsReview` is false and `quality.warnings` is empty.
+- Any provided ASR, alignment, or OCR confidence values meet the current production thresholds.
+- Clip timing is internally consistent and segment timing does not exceed the clip duration beyond tolerance.
+
+This is intentionally strict. Failed imports are better than silently publishing a clip with missing subtitles, missing highlights, or known quality warnings.
+
+## Completion Reflection Checklist
+
+Every slicing change should be reviewed from the user's point of view before it is considered done:
+
+- Can the user understand the single next action without knowing implementation details?
+- Can the flow fail before upload when required files or learning metadata are missing?
+- Are Japanese subtitles, Chinese subtitles, grammar or word highlights, and examples present after import?
+- Does the player receive enough data to render subtitles and highlighted knowledge points correctly?
+- Is the code path still maintainable, typed, and isolated behind the manifest contract?
+- Did tests cover both successful output and quality-gate rejection?
+
+This now starts as the monorepo CLI package `packages/anime-learning-slicer`, then can be exposed as a local or hosted worker service later.
 
 ## Architecture
 
 ```text
 Happy-Japanese app
   |
-  | upload/import request
+  | user uploads one source video
   v
 Slicer adapter
   |
@@ -59,10 +85,11 @@ Owned by this repository.
 
 Responsibilities:
 
-- Collect video, subtitle, title, episode, and slicing preferences.
+- Present one clear video upload action to the user.
+- Hide manifest assets, generated clips, covers, and subtitles from the user-facing upload UI.
 - Show task status and imported clip results.
-- Import manifest assets into current `ImportedClip` / `VideoLesson` models.
-- Keep browser preview available for small files and debugging.
+- Import slicer manifest assets internally into current `ImportedClip` / `VideoLesson` models.
+- Keep browser slicing as the temporary implementation until the slicer-backed job path is connected.
 
 Non-responsibilities:
 
@@ -82,7 +109,7 @@ Responsibilities:
 
 ### Slicer engine
 
-Can live in `anime-learning-slicer`, `server/slicer`, or a separate worker service.
+Currently lives in `packages/anime-learning-slicer`. It can later be wrapped by `server/slicer` or a separate worker service.
 
 Responsibilities:
 
@@ -115,11 +142,11 @@ Fallback:
 
 ### Subtitle synchronization
 
-Use `ffsubsync` when an external subtitle exists but timing may not match the video.
+Use `ffsubsync` when an internal sidecar subtitle asset exists but timing may not match the video.
 
 Input cases:
 
-- User-provided `.srt`, `.vtt`, or `.ass`.
+- Same-name or job-provided `.srt`, `.vtt`, or `.ass` assets.
 - Extracted embedded subtitle streams.
 
 Output:
@@ -253,14 +280,14 @@ Recommended `quality` shape:
 
 Quality handling:
 
-- `needsReview: true` must remain visible after import, either as a tag or an import warning.
-- `warnings` should be preserved in app metadata or tags until a richer report view exists.
-- Confidence fields are advisory. A missing confidence should not fail import unless the field is required by the manifest version.
+- `needsReview: true` must block production import.
+- Non-empty `warnings` must block production import.
+- Missing confidence fields are allowed when a provider cannot emit them, but any provided confidence must satisfy the production threshold.
 - Clips with fatal media issues should not be emitted as accepted clips; they belong in `report.json` rejected candidate reasons.
 
 ### Minimal v2 Fixture
 
-Use this shape for the first schema fixture. The actual fixture can be shorter, but it should include one warning so the warning preservation path is tested.
+Use this shape for the first schema fixture. The accepted fixture should be warning-free; separate invalid or low-quality fixtures should cover rejection paths.
 
 ```json
 {
@@ -272,7 +299,7 @@ Use this shape for the first schema fixture. The actual fixture can be shorter, 
   "pipeline": {
     "engine": "anime-learning-slicer",
     "engineVersion": "0.1.0",
-    "asr": "external-subtitle",
+    "asr": "sidecar-subtitle",
     "alignment": "ffsubsync",
     "sceneDetector": "pyscenedetect-content",
     "nlp": "sudachi"
@@ -321,8 +348,8 @@ Use this shape for the first schema fixture. The actual fixture can be shorter, 
         "sceneBoundaryEnd": false,
         "speechBoundaryStart": true,
         "speechBoundaryEnd": true,
-        "needsReview": true,
-        "warnings": ["Scene boundary is approximate."]
+        "needsReview": false,
+        "warnings": []
       }
     }
   ]
@@ -382,7 +409,7 @@ stages/01-probe.json
 
 Priority order:
 
-1. External subtitle supplied by user.
+1. Same-name or job-provided subtitle asset.
 2. Embedded subtitle stream.
 3. Hard subtitle OCR.
 4. ASR.
@@ -399,7 +426,7 @@ stages/02-subtitle-candidates.json
 
 ### 4. Subtitle alignment
 
-If subtitles came from external or embedded files, run ffsubsync against the audio track.
+If subtitles came from sidecar or embedded files, run ffsubsync against the audio track.
 
 If subtitles came from ASR, use WhisperX alignment.
 
@@ -585,9 +612,9 @@ Scope:
 
 Acceptance:
 
-- The app imports v1 and v2 manifests.
+- The internal importer accepts v1 and v2 manifests.
 - Invalid manifests produce clear UI errors.
-- No changes to current browser preview behavior.
+- The user-facing page still starts from one source video upload.
 
 ### Phase 1: Slicer CLI baseline
 
@@ -595,13 +622,14 @@ Scope:
 
 - Implement or update `anime-learning-slicer` to write the job folder structure.
 - Use FFmpeg to probe, extract audio, cut clips, and create covers.
-- Use existing external subtitles first.
-- Use current app manifest import path.
+- Use existing internal sidecar subtitles first.
+- Use current app manifest import path internally.
+- Use Transformers.js Whisper ASR when the source video has no subtitle track, while keeping WhisperX/faster-whisper as the later higher-confidence provider.
 
 Acceptance:
 
-- Given a video and `.srt/.ass`, the CLI produces real clips and manifest v2.
-- The app imports those clips through advanced import.
+- Given one source video with embedded subtitles, same-name internal subtitle assets, or ASR-readable Japanese audio, the CLI produces real clips and manifest v2.
+- The app imports those clips internally after the slicer job succeeds.
 - Generated clips play without source-video seeking.
 
 ### Phase 2: Production subtitle pipeline
@@ -609,15 +637,15 @@ Acceptance:
 Scope:
 
 - Add faster-whisper or WhisperX.
-- Add ffsubsync for external subtitles.
+- Add ffsubsync for internal sidecar subtitles.
 - Store aligned cues and confidence.
 - Keep browser ASR only as fallback preview.
 
 Acceptance:
 
 - A no-subtitle video can produce Japanese timed subtitles.
-- External subtitle timing drift is corrected.
-- Low-confidence transcript jobs are marked `needsReview`.
+- Sidecar subtitle timing drift is corrected.
+- Low-confidence transcript jobs are marked `needsReview` and blocked from production import until fixed.
 
 ### Phase 3: Better boundaries
 
@@ -671,12 +699,12 @@ Scope:
 
 Acceptance:
 
-- The app can submit a job and import results without manually selecting manifest + clips.
+- The app can submit a job and import results without asking the user to select manifest or generated clips.
 - Long-running work does not run inside Vercel serverless functions.
 
 ## Feasibility Notes
 
-- This is feasible as a CLI-first pipeline because the repository already has `ingest:video` and `watch:video-inbox` wrappers for a sibling slicer.
+- This is feasible as a CLI-first pipeline because the repository now includes `packages/anime-learning-slicer` and root wrappers for `ingest:video` and `watch:video-inbox`.
 - Heavy work should not run in `api/*.mjs` Vercel functions because ASR/OCR/FFmpeg jobs are long-running and resource-heavy.
 - GPU is optional but recommended. CPU mode can work for short videos and development fixtures.
 - Browser processing remains useful for quick feedback, but it should not be the quality bar.
@@ -686,7 +714,7 @@ Acceptance:
 Add tests at three levels:
 
 1. Schema tests: manifest v1/v2 validation and import mapping.
-2. Fixture tests: one short video with external subtitles, expected 2-3 clips, and stable manifest fields.
+2. Fixture tests: one short video with internal sidecar subtitles, expected 2-3 clips, and stable manifest fields.
 3. Golden report tests: candidate scoring produces understandable rejection reasons.
 
 Manual QA checklist:
@@ -703,16 +731,15 @@ Manual QA checklist:
 
 Short term:
 
-- Keep current page preview.
-- Keep current advanced manifest import.
-- Add v2 manifest support.
-- Make `anime-learning-slicer` the recommended path for serious slicing.
+- Make source video upload the single visible user path.
+- Keep manifest v2 artifact import as an internal contract and test seam only.
+- Add strict v2 quality gates for bilingual subtitles, learning points, highlight links, asset matching, and confidence.
+- Keep v1 parser compatibility for old artifact inspection, but production import must require manifest v2.
 
 Medium term:
 
-- Replace page auto-slicing copy with "quick preview" wording.
 - Surface slicer reports in the app after import.
-- Add import warnings for low-confidence clips.
+- Surface rejected quality-gate reasons in a clearer report view.
 
 Long term:
 
@@ -722,7 +749,7 @@ Long term:
 
 ## Open Questions
 
-- Should the production slicer live permanently in the sibling `anime-learning-slicer` repo or move into this repo under `server/slicer`?
+- Should the production slicer remain as the monorepo package `packages/anime-learning-slicer`, or later be wrapped by `server/slicer`?
 - Should generated clips be stored in `public/generated-slices`, Vercel Blob, or another object store?
 - Do we want fully local processing as the primary product behavior, or is a hosted worker acceptable?
 - Which subtitle source should win when ASR and OCR disagree but both have medium confidence?
@@ -735,7 +762,7 @@ Deliverables:
 
 - `SlicerManifestDataV2` and `SlicerManifestClipV2` types.
 - Version-aware parser in `src/lib/slicerManifest.ts`.
-- Quality warnings preserved in imported tags or metadata.
+- Production quality warnings rejected before upload.
 - Fixture manifest under `tests/fixtures`.
 - Unit tests for v1 backward compatibility and v2 validation.
 
@@ -747,21 +774,35 @@ This keeps the first change small, improves the contract immediately, and prepar
 2. Split parsing into two layers: raw JSON validation and app-facing normalization.
 3. Treat missing `version` as v1, and treat `version: 2` as the stricter contract.
 4. Keep v1's current permissive behavior where possible, but make v2 validation field-specific.
-5. Map v2 `quality.needsReview` and `quality.warnings` into import tags or preserved metadata.
+5. Reject v2 `quality.needsReview` and `quality.warnings` before upload.
 6. Add fixture files:
    - `tests/fixtures/slicer-manifest-v1.json`
    - `tests/fixtures/slicer-manifest-v2.json`
    - `tests/fixtures/slicer-manifest-invalid-v2.json`
+   - `tests/fixtures/slicer-manifest-low-quality-v2.json`
 7. Add tests that prove:
    - v1 imports without a `version` field.
    - v2 imports with required pipeline and quality fields.
    - invalid v2 errors include the failing field path.
-   - warning text survives normalization.
+   - low-quality v2 manifests are blocked before upload.
 
 ### Definition Of Done
 
 - `npm run build` passes.
-- The advanced import UI still accepts current v1 manifests.
+- The parser keeps current v1 compatibility for old artifact inspection.
+- Production import rejects v1 manifests because they cannot prove the quality bar.
 - A v2 fixture with physical clip paths imports into the same short-video feed behavior.
 - Invalid v2 manifests fail before uploading videos.
+- Low-quality v2 manifests fail before uploading videos.
 - The docs and fixture names make the next slicer-side implementation obvious.
+
+### Follow-up hardening completed
+
+- Manifest v2 now treats `coverPath`, `subtitlePath`, `quality.needsReview`, and `quality.warnings` as strict contract fields.
+- Manifest v2 now rejects invalid source timing such as negative starts, non-positive duration, or `endMs <= startMs`.
+- Manifest v2 now rejects clips with missing bilingual transcript data, missing knowledge points, missing subtitle highlight links, unresolved warnings, review flags, or low confidence values.
+- Production import now rejects v1 manifests because they cannot prove the learning quality bar.
+- Production import now validates all manifest-referenced video, cover, and subtitle assets before any upload starts.
+- Production import can use the slicer-generated cover image instead of regenerating a browser preview cover.
+- The primary UI now only asks the user to upload a source video; manifest assets, generated clips, covers, and subtitles are no longer user-facing upload inputs.
+- Regression coverage now checks parser validation, selected-asset matching, and quality-gate rejection.

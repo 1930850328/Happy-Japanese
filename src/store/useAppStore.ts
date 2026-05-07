@@ -6,8 +6,10 @@ import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { loadPublishedLessons } from '../lib/publishedLessons'
 import {
   buildManifestClipFileMap,
+  getManifestCoverFileName,
   getManifestClipFileName,
-  getManifestQualityTags,
+  getManifestSubtitleFileName,
+  getMissingManifestAssetMessages,
   getManifestSubtitleSource,
   parseSlicerManifest,
 } from '../lib/slicerManifest'
@@ -260,6 +262,22 @@ function readVideoMeta(file: File, title: string, theme: string) {
     video.onerror = () => {
       finalize(createCoverSvg(title, theme))
     }
+  })
+}
+
+function readFileAsDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result)
+        return
+      }
+
+      reject(new Error(`无法读取文件：${file.name}`))
+    }
+    reader.onerror = () => reject(new Error(`无法读取文件：${file.name}`))
+    reader.readAsDataURL(file)
   })
 }
 
@@ -1021,7 +1039,16 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
   async importSlicerManifest({ manifestFile, clipFiles, theme, uploadPassword, onUploadProgress }) {
     const manifest = await parseSlicerManifest(manifestFile)
+    if (manifest.version !== 2) {
+      throw new Error('请使用切片工具导出的 manifest v2。旧版 manifest 缺少封面、字幕、高亮和质量闸门信息，不能作为可发布切片导入。')
+    }
+
     const fileMap = buildManifestClipFileMap(clipFiles)
+    const missingAssetMessages = getMissingManifestAssetMessages(manifest, clipFiles)
+    if (missingAssetMessages.length > 0) {
+      throw new Error(`切片工具产物缺少必要文件：\n- ${missingAssetMessages.join('\n- ')}`)
+    }
+
     const importedAt = new Date().toISOString()
     const currentClips = get().importedClips
     const prepared: ImportedClip[] = []
@@ -1049,6 +1076,13 @@ export const useAppStore = create<AppStore>((set, get) => ({
         manifestClip.clipTitle,
         sourceTag,
       )
+      const coverFileName = getManifestCoverFileName(manifestClip)
+      const matchedCoverFile = coverFileName ? fileMap[coverFileName.trim().toLowerCase()] : undefined
+      const importedCover =
+        matchedCoverFile && matchedCoverFile.type.startsWith('image/')
+          ? await readFileAsDataUrl(matchedCoverFile)
+          : cover
+      const subtitleFileName = getManifestSubtitleFileName(manifestClip)
 
       const existing = currentClips.find(
         (clip) =>
@@ -1100,16 +1134,11 @@ export const useAppStore = create<AppStore>((set, get) => ({
         sourceProvider: `切片导入 / ${manifest.animeTitle}${
           manifest.episodeTitle ? ` / ${manifest.episodeTitle}` : ''
         } / 站内存储`,
-        cover,
+        cover: importedCover,
         durationMs:
           manifestClip.durationMs > 0 ? manifestClip.durationMs : detectedDurationMs,
         fileType: matchedFile.type || uploadedVideo.contentType || 'video/mp4',
-        subtitleFileName: manifestClip.subtitlePath
-          ? getManifestClipFileName({
-              ...manifestClip,
-              videoPath: manifestClip.subtitlePath,
-            })
-          : manifestFile.name,
+        subtitleFileName: subtitleFileName ?? manifestFile.name,
         subtitleSource: getManifestSubtitleSource(manifest, manifestClip),
         createdAt: existing?.createdAt ?? importedAt,
         segments: manifestClip.segments,
@@ -1118,7 +1147,6 @@ export const useAppStore = create<AppStore>((set, get) => ({
           ['切片导入', manifest.animeTitle, sourceTag, '站内存储'],
           manifest.episodeTitle ? [manifest.episodeTitle] : [],
           manifestClip.keywords,
-          getManifestQualityTags(manifestClip),
         ),
         description:
           manifestClip.keyNotes.join(' / ') ||

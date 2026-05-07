@@ -22,7 +22,6 @@ import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
 import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import { enrichSegmentsWithSentenceTranslations } from '../lib/subtitleDisplay'
-import { buildStudyDataFromCues, parseSubtitleFile } from '../lib/subtitles'
 import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
 import { readVideoCoverAt, readVideoMeta } from '../lib/videoMeta'
 import { useAppStore } from '../store/useAppStore'
@@ -281,7 +280,6 @@ export function ProfilePage() {
   const importedClips = useAppStore((state) => state.importedClips)
   const settings = useAppStore((state) => state.settings)
   const updateGoal = useAppStore((state) => state.updateGoal)
-  const importSlicerManifest = useAppStore((state) => state.importSlicerManifest)
   const importSelectedSlices = useAppStore((state) => state.importSelectedSlices)
   const generateAutoSubtitles = useAppStore((state) => state.generateAutoSubtitles)
   const updateSettings = useAppStore((state) => state.updateSettings)
@@ -298,11 +296,7 @@ export function ProfilePage() {
     grammarTarget: String(goal.grammarTarget),
     reviewTarget: String(goal.reviewTarget),
   })
-  const [clipTitle, setClipTitle] = useState('')
-  const [clipTheme, setClipTheme] = useState('')
-  const [episodeTitle, setEpisodeTitle] = useState('')
   const [clipFile, setClipFile] = useState<File | null>(null)
-  const [subtitleFile, setSubtitleFile] = useState<File | null>(null)
   const [siteUploadPassword, setSiteUploadPassword] = useState('')
   const [slicePreview, setSlicePreview] = useState<SlicePreviewDraft | null>(persistedSlicePreview)
   const [selectedSliceIds, setSelectedSliceIds] = useState<string[]>(
@@ -321,10 +315,6 @@ export function ProfilePage() {
       ? null
       : { percent: persistedSliceTask.percent, detail: persistedSliceTask.detail },
   )
-  const [slicerManifestFile, setSlicerManifestFile] = useState<File | null>(null)
-  const [slicerClipFiles, setSlicerClipFiles] = useState<File[]>([])
-  const [importingSlicer, setImportingSlicer] = useState(false)
-  const [slicerStatusText, setSlicerStatusText] = useState('')
   const taskProgressRef = useRef(taskProgress)
   const taskStartedAtRef = useRef(persistedSliceTask.startedAt)
   const lastTaskStatusAtRef = useRef(0)
@@ -496,44 +486,32 @@ export function ProfilePage() {
     updateTaskStatus('正在读取视频信息…')
 
     try {
-      const normalizedTitle = clipTitle.trim() || clipFile.name.replace(/\.[^.]+$/, '')
-      const normalizedTheme = clipTheme.trim() || '日语原片'
+      const normalizedTitle = clipFile.name.replace(/\.[^.]+$/, '')
+      const normalizedTheme = '日语原片'
       const { file: playbackFile, converted } = await ensureBrowserPlayableVideo(
         clipFile,
         (message) => updateTaskStatus(message),
       )
       const { durationMs, cover } = await readVideoMeta(playbackFile, normalizedTitle, normalizedTheme)
 
-      let subtitleSource: ImportedClip['subtitleSource']
+      let subtitleSource: ImportedClip['subtitleSource'] = 'auto'
       let subtitleFileName: string | undefined
       let sourceProvider = '页面自动切片预览'
       let segments: ImportedClip['segments'] = []
       let knowledgePoints: ImportedClip['knowledgePoints'] = []
       let autoSubtitleTag: string | undefined
 
-      if (subtitleFile) {
-        updateTaskStatus('正在解析外部字幕并提取知识点…')
-        const cues = await parseSubtitleFile(subtitleFile)
-        const studyData = await buildStudyDataFromCues(cues)
-        segments = studyData.segments
-        knowledgePoints = studyData.knowledgePoints
-        subtitleSource = 'manual'
-        subtitleFileName = subtitleFile.name
-        sourceProvider = '页面自动切片预览 / 外部字幕'
-      } else {
-        const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesChunked')
-        const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
-          updateTaskStatus(message),
-        )
-        segments = studyData.segments
-        knowledgePoints = studyData.knowledgePoints
-        autoSubtitleTag = studyData.usedFallback ? '字幕兜底' : undefined
-        subtitleSource = 'auto'
-        subtitleFileName = studyData.modelLabel.startsWith('视频自带字幕轨')
-          ? studyData.modelLabel
-          : '自动生成字幕'
-        sourceProvider = `页面自动切片预览 / ${studyData.modelLabel}`
-      }
+      const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesChunked')
+      const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
+        updateTaskStatus(message),
+      )
+      segments = studyData.segments
+      knowledgePoints = studyData.knowledgePoints
+      autoSubtitleTag = studyData.usedFallback ? '字幕兜底' : undefined
+      subtitleFileName = studyData.modelLabel.startsWith('视频自带字幕轨')
+        ? studyData.modelLabel
+        : '自动生成字幕'
+      sourceProvider = `页面自动切片预览 / ${studyData.modelLabel}`
 
       updateTaskStatus('正在分析并切片…')
 
@@ -544,7 +522,7 @@ export function ProfilePage() {
         difficulty: 'Custom',
         importMode: 'raw',
         sourceAnimeTitle: normalizedTitle,
-        sourceEpisodeTitle: episodeTitle.trim() || undefined,
+        sourceEpisodeTitle: undefined,
         sourceType: 'local',
         sourceIdOrBlobKey: `preview-blob-${crypto.randomUUID()}`,
         sourceUrl: '',
@@ -562,7 +540,7 @@ export function ProfilePage() {
           '页面切片预览',
           normalizedTheme,
           autoSubtitleTag,
-          subtitleSource === 'manual' ? '外部字幕' : '自动字幕',
+          '自动字幕',
           converted ? '兼容转换' : undefined,
         ].filter(Boolean) as string[],
         description: '这是页面里生成的临时切片预览，确认后才会正式导入首页短视频流。',
@@ -572,7 +550,7 @@ export function ProfilePage() {
       const candidateLessons = buildLessonsFromImportedClip(previewClip)
       if (candidateLessons.length === 0) {
         throw new Error(
-          '没有找到足够的语法/单词切片。当前不会再按时间粗切，请先导入字幕文件，或换更短、更清晰的片段。',
+          '没有找到足够的语法/单词切片。当前不会再按时间粗切，请换一个对白更清晰、时长更短的视频片段。',
         )
       }
 
@@ -595,7 +573,7 @@ export function ProfilePage() {
         file: playbackFile,
         title: normalizedTitle,
         theme: normalizedTheme,
-        episodeTitle: episodeTitle.trim(),
+        episodeTitle: '',
         cover,
         durationMs,
         subtitleFileName,
@@ -610,7 +588,7 @@ export function ProfilePage() {
         file: playbackFile,
         title: normalizedTitle,
         theme: normalizedTheme,
-        episodeTitle: episodeTitle.trim(),
+        episodeTitle: '',
         cover,
         durationMs,
         subtitleFileName,
@@ -717,32 +695,6 @@ export function ProfilePage() {
     }
   }
 
-  const handleImportSlicerOutput = async () => {
-    if (!slicerManifestFile || slicerClipFiles.length === 0) {
-      return
-    }
-
-    setImportingSlicer(true)
-    setSlicerStatusText('正在读取切片 manifest，并把视频上传到网站…')
-    try {
-      const imported = await importSlicerManifest({
-        manifestFile: slicerManifestFile,
-        clipFiles: slicerClipFiles,
-        uploadPassword: siteUploadPassword.trim() || undefined,
-        onUploadProgress: (message) => {
-          setSlicerStatusText(message)
-        },
-      })
-      setSlicerStatusText(`已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`)
-      setSlicerManifestFile(null)
-      setSlicerClipFiles([])
-    } catch (error) {
-      setSlicerStatusText(error instanceof Error ? error.message : '切片导入失败。')
-    } finally {
-      setImportingSlicer(false)
-    }
-  }
-
   const handleDeleteImportedClip = async (clipId: string, clipTitle: string) => {
     const confirmed = window.confirm(`要删除「${clipTitle}」以及相关的短视频吗？`)
     if (!confirmed) {
@@ -780,10 +732,10 @@ export function ProfilePage() {
     <div className={`${styles.page} fadeIn`}>
       <section className={styles.hero}>
         <div>
-          <span className="chip badgeMint">目标 / 导入 / 设置</span>
-          <h1 className="pageTitle">把切片、预览和导入都收在一个页面里完成</h1>
+          <span className="chip badgeMint">目标 / 视频切片 / 设置</span>
+          <h1 className="pageTitle">上传一个视频，剩下交给系统</h1>
           <p className="sectionIntro">
-            现在你只需要在页面里选择番剧文件。系统会自动读取视频、生成字幕、提炼知识点、做候选切片，再让你先看结果、再勾选导入首页短视频流。
+            用户不需要处理额外文件。这里从原视频开始自动分析，先生成候选切片，确认后再进入首页学习流。
           </p>
         </div>
 
@@ -896,57 +848,34 @@ export function ProfilePage() {
         <div className={`${styles.card} glassCard ${styles.importCard}`}>
           <header className={styles.cardHeader}>
             <div>
-              <span className="chip badgePeach">一键切片预览</span>
-              <h2>页面里直接选番剧文件，然后先看切片结果</h2>
+              <span className="chip badgePeach">主流程</span>
+              <h2>上传视频，系统自动生成切片</h2>
             </div>
           </header>
 
-          <div className={styles.uploadForm}>
-            <div className={styles.fileGrid}>
+          <div className={styles.primaryImportPanel}>
+            <div className={styles.singleUpload}>
               <input
                 className={styles.fileInput}
                 type="file"
                 accept="video/*,.mp4,.mkv,.mov,.webm,.avi"
                 onChange={(event) => setClipFile(event.target.files?.[0] ?? null)}
               />
-              <input
-                className={styles.fileInput}
-                type="file"
-                accept=".srt,.vtt,.ass,text/vtt,application/x-subrip"
-                onChange={(event) => setSubtitleFile(event.target.files?.[0] ?? null)}
-              />
             </div>
 
-            <div className={styles.fileMeta}>
-              <input
-                className={styles.textInput}
-                value={clipTitle}
-                onChange={(event) => setClipTitle(event.target.value)}
-                placeholder="番剧或片段标题，不填就使用文件名"
-              />
-              <input
-                className={styles.textInput}
-                value={episodeTitle}
-                onChange={(event) => setEpisodeTitle(event.target.value)}
-                placeholder="集数或片段编号，例如 EP01 / 第3话"
-              />
-              <input
-                className={styles.textInput}
-                value={clipTheme}
-                onChange={(event) => setClipTheme(event.target.value)}
-                placeholder="主题，例如 校园 / 乐队 / 日常 / 面试"
-              />
+            <details className={styles.uploadSettings}>
+              <summary>上传失败提示需要密码时再填写</summary>
               <input
                 className={styles.textInput}
                 type="password"
                 value={siteUploadPassword}
                 onChange={(event) => setSiteUploadPassword(event.target.value)}
-                placeholder="网站上传密码，可选；已配置 VIDEO_UPLOAD_PASSWORD 时填写"
+                placeholder="网站上传密码"
               />
-            </div>
+            </details>
 
             <p className={styles.helperNote}>
-              你只管选本地视频。系统会优先使用你提供的字幕；如果你没给外挂字幕，就先尝试读取视频自带的字幕轨，再尝试识别画面底部的硬中文字幕；再不行才会回退到自动听写和翻译。确认导入后，视频文件会上传到你的网站存储，不再依赖当前浏览器本地保存。
+              你只需要选择原视频。系统会自动读取视频信息、尝试提取字幕或识别语音、生成中文字幕和知识点，再给出可预览的候选切片。
             </p>
             {statusText ? <p className={styles.statusNote}>{statusText}</p> : null}
             {taskProgress ? (
@@ -962,7 +891,7 @@ export function ProfilePage() {
                   />
                 </div>
                 <small className={styles.progressHint}>
-                  字幕识别现在会在后台 worker 中执行，页面应该不会再整页卡死。
+                  字幕识别会在后台 worker 中执行，页面应该不会整页卡死。
                 </small>
               </div>
             ) : null}
@@ -974,7 +903,7 @@ export function ProfilePage() {
                 disabled={buildingPreview || !clipFile}
               >
                 <Wand2 size={18} />
-                {buildingPreview ? '正在分析并切片…' : '生成切片预览'}
+                {buildingPreview ? '正在分析并切片…' : '上传视频并生成切片'}
               </button>
 
               {slicePreview ? (
@@ -1118,41 +1047,6 @@ export function ProfilePage() {
               </div>
             </div>
           ) : null}
-
-          <div className={styles.subSection}>
-            <div>
-              <span className="chip badgeMint">高级导入</span>
-              <h3 className={styles.subTitle}>导入独立切片工具产物</h3>
-            </div>
-
-            <div className={styles.uploadForm}>
-              <input
-                className={styles.fileInput}
-                type="file"
-                accept=".json,application/json"
-                onChange={(event) => setSlicerManifestFile(event.target.files?.[0] ?? null)}
-              />
-              <input
-                className={styles.fileInput}
-                type="file"
-                multiple
-                accept="video/*,.mp4,.mkv,.mov,.webm,.avi"
-                onChange={(event) => setSlicerClipFiles(Array.from(event.target.files ?? []))}
-              />
-              <p className={styles.helperNote}>
-                如果你已经用独立切片工具生成了 `manifest.json + clips`，也可以在这里直接一次性导入首页短视频流。上面的“网站上传密码”会同时用于这批视频文件。
-              </p>
-              {slicerStatusText ? <p className={styles.statusNote}>{slicerStatusText}</p> : null}
-              <button
-                className="softButton"
-                onClick={() => void handleImportSlicerOutput()}
-                disabled={importingSlicer || !slicerManifestFile || slicerClipFiles.length === 0}
-              >
-                <Video size={18} />
-                {importingSlicer ? '导入切片中…' : '导入切片工具产物'}
-              </button>
-            </div>
-          </div>
 
           <div className={styles.favoriteList}>
             {visibleImportedClips.map((clip) => {
