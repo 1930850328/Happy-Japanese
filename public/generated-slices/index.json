@@ -1,5 +1,21 @@
 [
   {
+    "slug": "generated-wikimedia-inkscape-editing",
+    "animeTitle": "Wikimedia Commons: Inkscape",
+    "episodeTitle": "画像編集の基本",
+    "manifestPath": "/generated-slices/generated-wikimedia-inkscape-editing/manifest.json",
+    "generatedAt": "2026-05-07T08:50:33.893Z",
+    "clipCount": 2
+  },
+  {
+    "slug": "generated-public-domain-aapi-psa",
+    "animeTitle": "Public Domain: AAPI PSA",
+    "episodeTitle": "コミュニティへの呼びかけ",
+    "manifestPath": "/generated-slices/generated-public-domain-aapi-psa/manifest.json",
+    "generatedAt": "2026-05-07T08:50:33.860Z",
+    "clipCount": 2
+  },
+  {
     "slug": "generated-ave-prima-aurora",
     "animeTitle": "BanG Dream! Ave Mujica",
     "episodeTitle": "prima aurora 预告",

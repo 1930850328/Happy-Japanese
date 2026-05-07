@@ -1,0 +1,110 @@
+{
+  "id": "generated-wikimedia-inkscape-editing-00010-00032",
+  "clipTitle": "Wikimedia Commons: Inkscape - 開く",
+  "startMs": 10000,
+  "endMs": 32000,
+  "durationMs": 22000,
+  "videoPath": "/generated-slices/generated-wikimedia-inkscape-editing/clips/generated-wikimedia-inkscape-editing-00010-00032.mp4",
+  "coverPath": "/generated-slices/generated-wikimedia-inkscape-editing/covers/generated-wikimedia-inkscape-editing-00010-00032.jpg",
+  "subtitlePath": "/generated-slices/generated-wikimedia-inkscape-editing/subtitles/generated-wikimedia-inkscape-editing-00010-00032.vtt",
+  "metadataPath": "/generated-slices/generated-wikimedia-inkscape-editing/metadata/generated-wikimedia-inkscape-editing-00010-00032.json",
+  "transcriptJa": "そして、ダウンロードしたファイルを Inkscape で開きます。 基本的には変更するパーツを選択して、色を変更させるだけです。",
+  "transcriptZh": "然后，用 Inkscape 打开下载的文件。 基本上只需要选择要修改的部件，然后更改颜色。",
+  "subtitleSource": "external",
+  "exampleJa": "そして、ダウンロードしたファイルを Inkscape で開きます。",
+  "exampleZh": "然后，用 Inkscape 打开下载的文件。",
+  "keyNotes": [
+    "词 する: 做",
+    "词 開く: 打开",
+    "词 基本: 基本"
+  ],
+  "keywords": [
+    "する",
+    "開く",
+    "基本",
+    "変更"
+  ],
+  "knowledgePoints": [
+    {
+      "id": "word:する",
+      "kind": "word",
+      "expression": "する",
+      "reading": "する",
+      "meaningZh": "做",
+      "partOfSpeech": "動詞",
+      "explanationZh": "し 是 する 的句中形式，这里更接近“做”。",
+      "exampleJa": "ファイルをクリックして、名前をつけて保存で大丈夫です。",
+      "exampleZh": "点击文件，选择另存为并命名即可。"
+    },
+    {
+      "id": "word:開く",
+      "kind": "word",
+      "expression": "開く",
+      "reading": "ひらく",
+      "meaningZh": "打开",
+      "partOfSpeech": "動詞",
+      "explanationZh": "開き 是 開く 的句中形式，这里更接近“打开”。",
+      "exampleJa": "そして、ダウンロードしたファイルを Inkscape で開きます。",
+      "exampleZh": "然后，用 Inkscape 打开下载的文件。"
+    },
+    {
+      "id": "word:基本",
+      "kind": "word",
+      "expression": "基本",
+      "reading": "きほん",
+      "meaningZh": "基本",
+      "partOfSpeech": "名詞",
+      "explanationZh": "基本 在这句里更接近“基本”。",
+      "exampleJa": "基本的には変更するパーツを選択して、色を変更させるだけです。",
+      "exampleZh": "基本上只需要选择要修改的部件，然后更改颜色。"
+    },
+    {
+      "id": "word:変更",
+      "kind": "word",
+      "expression": "変更",
+      "reading": "へんこう",
+      "meaningZh": "更改",
+      "partOfSpeech": "名詞",
+      "explanationZh": "変更 在这句里更接近“更改”。",
+      "exampleJa": "基本的には変更するパーツを選択して、色を変更させるだけです。",
+      "exampleZh": "基本上只需要选择要修改的部件，然后更改颜色。"
+    }
+  ],
+  "segments": [
+    {
+      "startMs": 0,
+      "endMs": 10000,
+      "ja": "そして、ダウンロードしたファイルを Inkscape で開きます。",
+      "kana": "そして、だうんろうどしたふぁいるを Inkscape でひらきます。",
+      "romaji": "soshite,daunroudoshitafuairuwo Inkscape dehirakimasu.",
+      "zh": "然后，用 Inkscape 打开下载的文件。",
+      "focusTermIds": [
+        "word:開く",
+        "word:する"
+      ]
+    },
+    {
+      "startMs": 10000,
+      "endMs": 22000,
+      "ja": "基本的には変更するパーツを選択して、色を変更させるだけです。",
+      "kana": "きほんてきにはへんこうするぱあつをせんたくして、いろをへんこうさせるだけです。",
+      "romaji": "kihontekinihahenkousurupaatsuwosentakushite,irowohenkousaserudakedesu.",
+      "zh": "基本上只需要选择要修改的部件，然后更改颜色。",
+      "focusTermIds": [
+        "word:基本",
+        "word:変更"
+      ]
+    }
+  ],
+  "quality": {
+    "asrConfidence": null,
+    "alignmentConfidence": 0.9,
+    "ocrConfidence": null,
+    "sceneBoundaryStart": false,
+    "sceneBoundaryEnd": false,
+    "speechBoundaryStart": true,
+    "speechBoundaryEnd": true,
+    "needsReview": false,
+    "warnings": []
+  }
+}

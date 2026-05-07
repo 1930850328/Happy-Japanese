@@ -1,0 +1,73 @@
+{
+  "id": "generated-wikimedia-inkscape-editing-00000-00007",
+  "clipTitle": "Wikimedia Commons: Inkscape - 名前",
+  "startMs": 0,
+  "endMs": 7000,
+  "durationMs": 7000,
+  "videoPath": "/generated-slices/generated-wikimedia-inkscape-editing/clips/generated-wikimedia-inkscape-editing-00000-00007.mp4",
+  "coverPath": "/generated-slices/generated-wikimedia-inkscape-editing/covers/generated-wikimedia-inkscape-editing-00000-00007.jpg",
+  "subtitlePath": "/generated-slices/generated-wikimedia-inkscape-editing/subtitles/generated-wikimedia-inkscape-editing-00000-00007.vtt",
+  "metadataPath": "/generated-slices/generated-wikimedia-inkscape-editing/metadata/generated-wikimedia-inkscape-editing-00000-00007.json",
+  "transcriptJa": "ファイルをクリックして、名前をつけて保存で大丈夫です。",
+  "transcriptZh": "点击文件，选择另存为并命名即可。",
+  "subtitleSource": "external",
+  "exampleJa": "ファイルをクリックして、名前をつけて保存で大丈夫です。",
+  "exampleZh": "点击文件，选择另存为并命名即可。",
+  "keyNotes": [
+    "词 する: 做",
+    "词 名前: 名字"
+  ],
+  "keywords": [
+    "する",
+    "名前"
+  ],
+  "knowledgePoints": [
+    {
+      "id": "word:する",
+      "kind": "word",
+      "expression": "する",
+      "reading": "する",
+      "meaningZh": "做",
+      "partOfSpeech": "動詞",
+      "explanationZh": "し 是 する 的句中形式，这里更接近“做”。",
+      "exampleJa": "ファイルをクリックして、名前をつけて保存で大丈夫です。",
+      "exampleZh": "点击文件，选择另存为并命名即可。"
+    },
+    {
+      "id": "word:名前",
+      "kind": "word",
+      "expression": "名前",
+      "reading": "なまえ",
+      "meaningZh": "名字",
+      "partOfSpeech": "名詞",
+      "explanationZh": "名前 在这句里更接近“名字”。",
+      "exampleJa": "ファイルをクリックして、名前をつけて保存で大丈夫です。",
+      "exampleZh": "点击文件，选择另存为并命名即可。"
+    }
+  ],
+  "segments": [
+    {
+      "startMs": 0,
+      "endMs": 7000,
+      "ja": "ファイルをクリックして、名前をつけて保存で大丈夫です。",
+      "kana": "ふぁいるをくりっくして、なまえをつけてほぞんでだいじょうぶです。",
+      "romaji": "fuairuwokurikkushite,namaewotsuketehozondedaijoubudesu.",
+      "zh": "点击文件，选择另存为并命名即可。",
+      "focusTermIds": [
+        "word:する",
+        "word:名前"
+      ]
+    }
+  ],
+  "quality": {
+    "asrConfidence": null,
+    "alignmentConfidence": 0.9,
+    "ocrConfidence": null,
+    "sceneBoundaryStart": false,
+    "sceneBoundaryEnd": false,
+    "speechBoundaryStart": true,
+    "speechBoundaryEnd": true,
+    "needsReview": false,
+    "warnings": []
+  }
+}

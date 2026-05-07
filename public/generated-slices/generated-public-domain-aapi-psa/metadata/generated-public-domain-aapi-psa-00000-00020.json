@@ -1,0 +1,146 @@
+{
+  "id": "generated-public-domain-aapi-psa-00000-00020",
+  "clipTitle": "Public Domain: AAPI PSA - 増える",
+  "startMs": 0,
+  "endMs": 20000,
+  "durationMs": 20000,
+  "videoPath": "/generated-slices/generated-public-domain-aapi-psa/clips/generated-public-domain-aapi-psa-00000-00020.mp4",
+  "coverPath": "/generated-slices/generated-public-domain-aapi-psa/covers/generated-public-domain-aapi-psa-00000-00020.jpg",
+  "subtitlePath": "/generated-slices/generated-public-domain-aapi-psa/subtitles/generated-public-domain-aapi-psa-00000-00020.vtt",
+  "metadataPath": "/generated-slices/generated-public-domain-aapi-psa/metadata/generated-public-domain-aapi-psa-00000-00020.json",
+  "transcriptJa": "今日は、私たちのコミュニティにとって大切なことをお話ししたいと思います。 皆さんもご存じのように、アジア系アメリカ人または太平洋諸島系のコミュニティに対する ヘイトクライム、憎悪犯罪が増えています。",
+  "transcriptZh": "今天，我想谈谈对我们社区很重要的事情。 正如大家所知，针对亚裔美国人和太平洋岛民社区的 仇恨犯罪正在增加。",
+  "subtitleSource": "external",
+  "exampleJa": "今日は、私たちのコミュニティにとって大切なことをお話ししたいと思います。",
+  "exampleZh": "今天，我想谈谈对我们社区很重要的事情。",
+  "keyNotes": [
+    "词 思う: 认为",
+    "词 今日: 今天",
+    "词 皆さん: 大家"
+  ],
+  "keywords": [
+    "思う",
+    "今日",
+    "皆さん",
+    "ご存じ",
+    "増える",
+    "憎悪"
+  ],
+  "knowledgePoints": [
+    {
+      "id": "word:思う",
+      "kind": "word",
+      "expression": "思う",
+      "reading": "おもう",
+      "meaningZh": "认为",
+      "partOfSpeech": "動詞",
+      "explanationZh": "思い 是 思う 的句中形式，这里更接近“认为”。",
+      "exampleJa": "今日は、私たちのコミュニティにとって大切なことをお話ししたいと思います。",
+      "exampleZh": "今天，我想谈谈对我们社区很重要的事情。"
+    },
+    {
+      "id": "word:今日",
+      "kind": "word",
+      "expression": "今日",
+      "reading": "きょう",
+      "meaningZh": "今天",
+      "partOfSpeech": "名詞",
+      "explanationZh": "今日 在这句里更接近“今天”。",
+      "exampleJa": "今日は、私たちのコミュニティにとって大切なことをお話ししたいと思います。",
+      "exampleZh": "今天，我想谈谈对我们社区很重要的事情。"
+    },
+    {
+      "id": "word:皆さん",
+      "kind": "word",
+      "expression": "皆さん",
+      "reading": "みなさん",
+      "meaningZh": "大家",
+      "partOfSpeech": "名詞",
+      "explanationZh": "皆さん 在这句里更接近“大家”。",
+      "exampleJa": "皆さんもご存じのように、アジア系アメリカ人または太平洋諸島系のコミュニティに対する",
+      "exampleZh": "正如大家所知，针对亚裔美国人和太平洋岛民社区的"
+    },
+    {
+      "id": "word:ご存じ",
+      "kind": "word",
+      "expression": "ご存じ",
+      "reading": "ごぞんじ",
+      "meaningZh": "知道",
+      "partOfSpeech": "名詞",
+      "explanationZh": "ご存じ 在这句里更接近“知道”。",
+      "exampleJa": "皆さんもご存じのように、アジア系アメリカ人または太平洋諸島系のコミュニティに対する",
+      "exampleZh": "正如大家所知，针对亚裔美国人和太平洋岛民社区的"
+    },
+    {
+      "id": "word:増える",
+      "kind": "word",
+      "expression": "増える",
+      "reading": "ふえる",
+      "meaningZh": "增加",
+      "partOfSpeech": "動詞",
+      "explanationZh": "増え 是 増える 的句中形式，这里更接近“增加”。",
+      "exampleJa": "ヘイトクライム、憎悪犯罪が増えています。",
+      "exampleZh": "仇恨犯罪正在增加。"
+    },
+    {
+      "id": "word:憎悪",
+      "kind": "word",
+      "expression": "憎悪",
+      "reading": "ぞうお",
+      "meaningZh": "憎恨",
+      "partOfSpeech": "名詞",
+      "explanationZh": "憎悪 在这句里更接近“憎恨”。",
+      "exampleJa": "ヘイトクライム、憎悪犯罪が増えています。",
+      "exampleZh": "仇恨犯罪正在增加。"
+    }
+  ],
+  "segments": [
+    {
+      "startMs": 0,
+      "endMs": 8000,
+      "ja": "今日は、私たちのコミュニティにとって大切なことをお話ししたいと思います。",
+      "kana": "きょうは、わたしたちのこみゅにてぃにとってたいせつなことをおはなししたいとおもいます。",
+      "romaji": "kyouha,watashitachinokomyuniteinitottetaisetsunakotowoohanashishitaitoomoimasu.",
+      "zh": "今天，我想谈谈对我们社区很重要的事情。",
+      "focusTermIds": [
+        "word:思う",
+        "word:今日"
+      ]
+    },
+    {
+      "startMs": 8000,
+      "endMs": 16000,
+      "ja": "皆さんもご存じのように、アジア系アメリカ人または太平洋諸島系のコミュニティに対する",
+      "kana": "みなさんもごぞんじのように、あじあけいあめりかじんまたはたいへいようしょとうけいのこみゅにてぃにたいする",
+      "romaji": "minasanmogozonjinoyouni,ajiakeiamerikajinmatahataiheiyoushotoukeinokomyuniteinitaisuru",
+      "zh": "正如大家所知，针对亚裔美国人和太平洋岛民社区的",
+      "focusTermIds": [
+        "word:皆さん",
+        "word:ご存じ"
+      ]
+    },
+    {
+      "startMs": 16000,
+      "endMs": 20000,
+      "ja": "ヘイトクライム、憎悪犯罪が増えています。",
+      "kana": "ヘイトクライム、ぞうおはんざいがふえています。",
+      "romaji": "heitokuraimu,zouohanzaigafueteimasu.",
+      "zh": "仇恨犯罪正在增加。",
+      "focusTermIds": [
+        "word:増える",
+        "word:憎悪"
+      ]
+    }
+  ],
+  "quality": {
+    "asrConfidence": null,
+    "alignmentConfidence": 0.9,
+    "ocrConfidence": null,
+    "sceneBoundaryStart": false,
+    "sceneBoundaryEnd": false,
+    "speechBoundaryStart": true,
+    "speechBoundaryEnd": true,
+    "needsReview": false,
+    "warnings": []
+  }
+}

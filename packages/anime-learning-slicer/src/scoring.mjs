@@ -49,6 +49,25 @@ function makeClipId(slug, startMs, endMs) {
   return `${slug}-${String(Math.round(startMs / 1000)).padStart(5, '0')}-${String(Math.round(endMs / 1000)).padStart(5, '0')}`
 }
 
+const genericTitleTerms = new Set([
+  'する',
+  'ある',
+  'いる',
+  'なる',
+  'こと',
+  'もの',
+  'ため',
+  '思う',
+  '今日',
+  '皆さん',
+  'ご存じ',
+])
+
+function titleLeadForClip(points) {
+  const specificPoint = points.find((point) => !genericTitleTerms.has(point.expression))
+  return specificPoint?.expression ?? points[0]?.expression
+}
+
 export function selectClipWindows({
   slug,
   segments,
@@ -125,7 +144,7 @@ export function selectClipWindows({
     )
     const clipPointIds = new Set(clipSegments.flatMap((segment) => segment.focusTermIds))
     const clipPoints = knowledgePoints.filter((point) => clipPointIds.has(point.id))
-    const lead = clipPoints[0]?.expression
+    const lead = titleLeadForClip(clipPoints)
 
     return {
       ...window,

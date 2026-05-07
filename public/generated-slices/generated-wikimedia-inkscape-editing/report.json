@@ -1,0 +1,13 @@
+{
+  "sourceVideo": "inkscape-20-65.mp4",
+  "subtitlePath": "inkscape-20-65.vtt",
+  "subtitleProvider": "external-subtitle",
+  "durationMs": 45000,
+  "acceptedClipCount": 2,
+  "cueCount": 3,
+  "translationCueCount": 0,
+  "segmentCount": 3,
+  "knowledgePointCount": 5,
+  "silenceEventCount": 16,
+  "generatedAt": "2026-05-07T08:50:33.893Z"
+}

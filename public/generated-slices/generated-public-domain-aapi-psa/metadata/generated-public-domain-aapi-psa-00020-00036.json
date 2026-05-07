@@ -1,0 +1,73 @@
+{
+  "id": "generated-public-domain-aapi-psa-00020-00036",
+  "clipTitle": "Public Domain: AAPI PSA - 挙げる",
+  "startMs": 20000,
+  "endMs": 36000,
+  "durationMs": 16000,
+  "videoPath": "/generated-slices/generated-public-domain-aapi-psa/clips/generated-public-domain-aapi-psa-00020-00036.mp4",
+  "coverPath": "/generated-slices/generated-public-domain-aapi-psa/covers/generated-public-domain-aapi-psa-00020-00036.jpg",
+  "subtitlePath": "/generated-slices/generated-public-domain-aapi-psa/subtitles/generated-public-domain-aapi-psa-00020-00036.vtt",
+  "metadataPath": "/generated-slices/generated-public-domain-aapi-psa/metadata/generated-public-domain-aapi-psa-00020-00036.json",
+  "transcriptJa": "私たちの協力支援団体との話し合いの中で、警察に報告されていない事例があるということが挙げられました。",
+  "transcriptZh": "在与合作支援团体的讨论中，有人指出存在未向警方报告的案例。",
+  "subtitleSource": "external",
+  "exampleJa": "私たちの協力支援団体との話し合いの中で、警察に報告されていない事例があるということが挙げられました。",
+  "exampleZh": "在与合作支援团体的讨论中，有人指出存在未向警方报告的案例。",
+  "keyNotes": [
+    "词 挙げる: 提出",
+    "词 協力: 合作"
+  ],
+  "keywords": [
+    "挙げる",
+    "協力"
+  ],
+  "knowledgePoints": [
+    {
+      "id": "word:挙げる",
+      "kind": "word",
+      "expression": "挙げる",
+      "reading": "あげる",
+      "meaningZh": "提出",
+      "partOfSpeech": "動詞",
+      "explanationZh": "挙げ 是 挙げる 的句中形式，这里更接近“提出”。",
+      "exampleJa": "私たちの協力支援団体との話し合いの中で、警察に報告されていない事例があるということが挙げられました。",
+      "exampleZh": "在与合作支援团体的讨论中，有人指出存在未向警方报告的案例。"
+    },
+    {
+      "id": "word:協力",
+      "kind": "word",
+      "expression": "協力",
+      "reading": "きょうりょく",
+      "meaningZh": "合作",
+      "partOfSpeech": "名詞",
+      "explanationZh": "協力 在这句里更接近“合作”。",
+      "exampleJa": "私たちの協力支援団体との話し合いの中で、警察に報告されていない事例があるということが挙げられました。",
+      "exampleZh": "在与合作支援团体的讨论中，有人指出存在未向警方报告的案例。"
+    }
+  ],
+  "segments": [
+    {
+      "startMs": 0,
+      "endMs": 16000,
+      "ja": "私たちの協力支援団体との話し合いの中で、警察に報告されていない事例があるということが挙げられました。",
+      "kana": "わたしたちのきょうりょくしえんだんたいとのはなしあいのなかで、けいさつにほうこくされていないじれいがあるということがあげられました。",
+      "romaji": "watashitachinokyouryokushiendantaitonohanashiainonakade,keisatsunihoukokusareteinaijireigaarutoiukotogaageraremashita.",
+      "zh": "在与合作支援团体的讨论中，有人指出存在未向警方报告的案例。",
+      "focusTermIds": [
+        "word:挙げる",
+        "word:協力"
+      ]
+    }
+  ],
+  "quality": {
+    "asrConfidence": null,
+    "alignmentConfidence": 0.9,
+    "ocrConfidence": null,
+    "sceneBoundaryStart": false,
+    "sceneBoundaryEnd": false,
+    "speechBoundaryStart": true,
+    "speechBoundaryEnd": true,
+    "needsReview": false,
+    "warnings": []
+  }
+}

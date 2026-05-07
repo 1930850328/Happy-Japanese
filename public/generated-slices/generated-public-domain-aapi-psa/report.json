@@ -1,0 +1,13 @@
+{
+  "sourceVideo": "aapi-15-51.mp4",
+  "subtitlePath": "aapi-15-51.vtt",
+  "subtitleProvider": "external-subtitle",
+  "durationMs": 36003,
+  "acceptedClipCount": 2,
+  "cueCount": 4,
+  "translationCueCount": 0,
+  "segmentCount": 4,
+  "knowledgePointCount": 8,
+  "silenceEventCount": 0,
+  "generatedAt": "2026-05-07T08:50:33.860Z"
+}
