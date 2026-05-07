@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "animeTitle": "Fixture Anime",
+  "episodeTitle": "EP01",
+  "sourceVideo": "fixture-episode.mp4",
+  "generatedAt": "2026-05-06T00:00:00.000Z",
+  "pipeline": {
+    "engine": "anime-learning-slicer"
+  },
+  "clips": [
+    {
+      "id": "fixture-invalid-clip",
+      "clipTitle": "Invalid v2 clip",
+      "startMs": 8000,
+      "endMs": 24000,
+      "durationMs": 16000,
+      "transcriptJa": "少し待ってみよう。",
+      "transcriptZh": "先稍微等一下看看吧。",
+      "segments": [
+        {
+          "startMs": -100,
+          "endMs": 2800,
+          "ja": "少し待ってみよう。",
+          "kana": "すこしまってみよう。",
+          "romaji": "sukoshi matte miyou.",
+          "zh": "先稍微等一下看看吧。",
+          "focusTermIds": ["grammar-te-miru"]
+        }
+      ],
+      "knowledgePoints": []
+    }
+  ]
+}

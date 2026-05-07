@@ -171,6 +171,14 @@ Optional enrichment:
 
 Keep the app-facing contract stable and explicit. Introduce a manifest v2 while remaining backward compatible with the current `SlicerManifestData`.
 
+### Compatibility Rules
+
+- Manifest v1 remains the compatibility format for existing slicer outputs that do not include a `version` field.
+- Manifest v2 is the production slicer contract. It must include `version: 2`, pipeline provenance, physical clip asset paths, and quality metadata.
+- The app importer should normalize v1 and v2 into one app-facing shape before creating `ImportedClip` records.
+- Unknown top-level fields and unknown clip fields should be preserved only in debug logs or future metadata, not used for playback decisions.
+- Invalid required fields should produce actionable errors that name the failing field path, for example `clips[3].videoPath`.
+
 ### Required top-level fields
 
 ```json
@@ -207,6 +215,26 @@ Each clip should contain:
 - `knowledgePoints`: words, grammar, and phrases tied to segment focus ids.
 - `quality`: debug and confidence fields.
 
+Each segment should contain clip-local timing:
+
+```json
+{
+  "startMs": 0,
+  "endMs": 2800,
+  "ja": "少し待ってみよう。",
+  "kana": "すこしまってみよう。",
+  "romaji": "sukoshi matte miyou.",
+  "zh": "先稍微等一下看看吧。",
+  "focusTermIds": ["grammar-te-miru"]
+}
+```
+
+Timing rule:
+
+- `clip.startMs` / `clip.endMs` refer to the original source video.
+- `segment.startMs` / `segment.endMs` refer to the generated clip file, starting near `0`.
+- Importers should reject negative segment timings and segments that run far past `clip.durationMs`.
+
 Recommended `quality` shape:
 
 ```json
@@ -220,6 +248,84 @@ Recommended `quality` shape:
   "speechBoundaryEnd": true,
   "needsReview": false,
   "warnings": []
+}
+```
+
+Quality handling:
+
+- `needsReview: true` must remain visible after import, either as a tag or an import warning.
+- `warnings` should be preserved in app metadata or tags until a richer report view exists.
+- Confidence fields are advisory. A missing confidence should not fail import unless the field is required by the manifest version.
+- Clips with fatal media issues should not be emitted as accepted clips; they belong in `report.json` rejected candidate reasons.
+
+### Minimal v2 Fixture
+
+Use this shape for the first schema fixture. The actual fixture can be shorter, but it should include one warning so the warning preservation path is tested.
+
+```json
+{
+  "version": 2,
+  "animeTitle": "Fixture Anime",
+  "episodeTitle": "EP01",
+  "sourceVideo": "fixture-episode.mp4",
+  "generatedAt": "2026-05-06T00:00:00.000Z",
+  "pipeline": {
+    "engine": "anime-learning-slicer",
+    "engineVersion": "0.1.0",
+    "asr": "external-subtitle",
+    "alignment": "ffsubsync",
+    "sceneDetector": "pyscenedetect-content",
+    "nlp": "sudachi"
+  },
+  "clips": [
+    {
+      "id": "fixture-ep01-000800-002400",
+      "clipTitle": "少し待ってみよう",
+      "startMs": 8000,
+      "endMs": 24000,
+      "durationMs": 16000,
+      "videoPath": "clips/fixture-ep01-000800-002400.mp4",
+      "coverPath": "covers/fixture-ep01-000800-002400.jpg",
+      "subtitlePath": "subtitles/fixture-ep01-000800-002400.vtt",
+      "transcriptJa": "少し待ってみよう。",
+      "transcriptZh": "先稍微等一下看看吧。",
+      "segments": [
+        {
+          "startMs": 0,
+          "endMs": 2800,
+          "ja": "少し待ってみよう。",
+          "kana": "すこしまってみよう。",
+          "romaji": "sukoshi matte miyou.",
+          "zh": "先稍微等一下看看吧。",
+          "focusTermIds": ["grammar-te-miru"]
+        }
+      ],
+      "knowledgePoints": [
+        {
+          "id": "grammar-te-miru",
+          "kind": "grammar",
+          "expression": "てみる",
+          "reading": "てみる",
+          "meaningZh": "试着做",
+          "partOfSpeech": "grammar",
+          "explanationZh": "表示尝试做某事。",
+          "exampleJa": "少し待ってみよう。",
+          "exampleZh": "先稍微等一下看看吧。"
+        }
+      ],
+      "quality": {
+        "asrConfidence": null,
+        "alignmentConfidence": 0.91,
+        "ocrConfidence": null,
+        "sceneBoundaryStart": true,
+        "sceneBoundaryEnd": false,
+        "speechBoundaryStart": true,
+        "speechBoundaryEnd": true,
+        "needsReview": true,
+        "warnings": ["Scene boundary is approximate."]
+      }
+    }
+  ]
 }
 ```
 
@@ -634,3 +740,28 @@ Deliverables:
 - Unit tests for v1 backward compatibility and v2 validation.
 
 This keeps the first change small, improves the contract immediately, and prepares the app for a stronger slicer without destabilizing playback.
+
+### Implementation Checklist
+
+1. Add manifest v2 types without changing existing `ImportedClip` or `VideoLesson` contracts.
+2. Split parsing into two layers: raw JSON validation and app-facing normalization.
+3. Treat missing `version` as v1, and treat `version: 2` as the stricter contract.
+4. Keep v1's current permissive behavior where possible, but make v2 validation field-specific.
+5. Map v2 `quality.needsReview` and `quality.warnings` into import tags or preserved metadata.
+6. Add fixture files:
+   - `tests/fixtures/slicer-manifest-v1.json`
+   - `tests/fixtures/slicer-manifest-v2.json`
+   - `tests/fixtures/slicer-manifest-invalid-v2.json`
+7. Add tests that prove:
+   - v1 imports without a `version` field.
+   - v2 imports with required pipeline and quality fields.
+   - invalid v2 errors include the failing field path.
+   - warning text survives normalization.
+
+### Definition Of Done
+
+- `npm run build` passes.
+- The advanced import UI still accepts current v1 manifests.
+- A v2 fixture with physical clip paths imports into the same short-video feed behavior.
+- Invalid v2 manifests fail before uploading videos.
+- The docs and fixture names make the next slicer-side implementation obvious.

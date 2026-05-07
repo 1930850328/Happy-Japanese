@@ -7,6 +7,7 @@ import { loadPublishedLessons } from '../lib/publishedLessons'
 import {
   buildManifestClipFileMap,
   getManifestClipFileName,
+  getManifestQualityTags,
   getManifestSubtitleSource,
   parseSlicerManifest,
 } from '../lib/slicerManifest'
@@ -1117,6 +1118,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
           ['切片导入', manifest.animeTitle, sourceTag, '站内存储'],
           manifest.episodeTitle ? [manifest.episodeTitle] : [],
           manifestClip.keywords,
+          getManifestQualityTags(manifestClip),
         ),
         description:
           manifestClip.keyNotes.join(' / ') ||

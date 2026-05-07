@@ -1,0 +1,64 @@
+{
+  "version": 2,
+  "animeTitle": "Fixture Anime",
+  "episodeTitle": "EP01",
+  "sourceVideo": "fixture-episode.mp4",
+  "generatedAt": "2026-05-06T00:00:00.000Z",
+  "pipeline": {
+    "engine": "anime-learning-slicer",
+    "engineVersion": "0.1.0",
+    "asr": "external-subtitle",
+    "alignment": "ffsubsync",
+    "sceneDetector": "pyscenedetect-content",
+    "nlp": "sudachi"
+  },
+  "clips": [
+    {
+      "id": "fixture-ep01-000800-002400",
+      "clipTitle": "少し待ってみよう",
+      "startMs": 8000,
+      "endMs": 24000,
+      "durationMs": 16000,
+      "videoPath": "clips/fixture-ep01-000800-002400.mp4",
+      "coverPath": "covers/fixture-ep01-000800-002400.jpg",
+      "subtitlePath": "subtitles/fixture-ep01-000800-002400.vtt",
+      "transcriptJa": "少し待ってみよう。",
+      "transcriptZh": "先稍微等一下看看吧。",
+      "segments": [
+        {
+          "startMs": 0,
+          "endMs": 2800,
+          "ja": "少し待ってみよう。",
+          "kana": "すこしまってみよう。",
+          "romaji": "sukoshi matte miyou.",
+          "zh": "先稍微等一下看看吧。",
+          "focusTermIds": ["grammar-te-miru"]
+        }
+      ],
+      "knowledgePoints": [
+        {
+          "id": "grammar-te-miru",
+          "kind": "grammar",
+          "expression": "てみる",
+          "reading": "てみる",
+          "meaningZh": "试着做",
+          "partOfSpeech": "grammar",
+          "explanationZh": "表示尝试做某事。",
+          "exampleJa": "少し待ってみよう。",
+          "exampleZh": "先稍微等一下看看吧。"
+        }
+      ],
+      "quality": {
+        "asrConfidence": null,
+        "alignmentConfidence": 0.91,
+        "ocrConfidence": null,
+        "sceneBoundaryStart": true,
+        "sceneBoundaryEnd": false,
+        "speechBoundaryStart": true,
+        "speechBoundaryEnd": true,
+        "needsReview": true,
+        "warnings": ["Scene boundary is approximate."]
+      }
+    }
+  ]
+}

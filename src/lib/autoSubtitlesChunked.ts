@@ -21,6 +21,7 @@ interface TranscriberOutput {
 }
 
 interface TranscriberOptions {
+  [key: string]: unknown
   return_timestamps: true
   chunk_length_s: number
   stride_length_s: number

@@ -1,0 +1,42 @@
+{
+  "animeTitle": "Fixture Anime",
+  "episodeTitle": "EP01",
+  "subtitleSource": "external",
+  "clips": [
+    {
+      "id": "fixture-v1-clip-01",
+      "clipTitle": "V1 compatibility clip",
+      "startMs": 1000,
+      "endMs": 9000,
+      "durationMs": 8000,
+      "videoPath": "clips/fixture-v1-clip-01.mp4",
+      "transcriptJa": "少し待ってみよう。",
+      "transcriptZh": "先稍微等一下看看吧。",
+      "keywords": ["fixture", "v1"],
+      "segments": [
+        {
+          "startMs": 0,
+          "endMs": 2800,
+          "ja": "少し待ってみよう。",
+          "kana": "すこしまってみよう。",
+          "romaji": "sukoshi matte miyou.",
+          "zh": "先稍微等一下看看吧。",
+          "focusTermIds": ["grammar-te-miru"]
+        }
+      ],
+      "knowledgePoints": [
+        {
+          "id": "grammar-te-miru",
+          "kind": "grammar",
+          "expression": "てみる",
+          "reading": "てみる",
+          "meaningZh": "试着做",
+          "partOfSpeech": "grammar",
+          "explanationZh": "表示尝试做某事。",
+          "exampleJa": "少し待ってみよう。",
+          "exampleZh": "先稍微等一下看看吧。"
+        }
+      ]
+    }
+  ]
+}
