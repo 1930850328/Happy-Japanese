@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm ci --workspaces=false",
+  "installCommand": "rm -rf node_modules /vercel/.npm && npm ci --workspaces=false --no-audit --no-fund --cache /tmp/hxf-npm-cache",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
