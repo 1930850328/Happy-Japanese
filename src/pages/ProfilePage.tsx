@@ -58,6 +58,22 @@ function formatRange(startMs: number, endMs: number) {
   return `${formatDuration(startMs)} - ${formatDuration(endMs)}`
 }
 
+function fileKey(file: File) {
+  return `${file.name}-${file.size}-${file.lastModified}`
+}
+
+function selectedIdsForPreview(preview: SlicePreviewDraft, selectedIds: Set<string>) {
+  return preview.lessons.filter((lesson) => selectedIds.has(lesson.id)).map((lesson) => lesson.id)
+}
+
+function applySelectedIdsToPreviews(previews: SlicePreviewDraft[], selectedIds: string[]) {
+  const selectedIdSet = new Set(selectedIds)
+  return previews.map((preview) => ({
+    ...preview,
+    selectedLessonIds: selectedIdsForPreview(preview, selectedIdSet),
+  }))
+}
+
 function clampProgress(value: number) {
   return Math.max(0, Math.min(100, Math.round(value)))
 }
@@ -296,9 +312,11 @@ export function ProfilePage() {
     grammarTarget: String(goal.grammarTarget),
     reviewTarget: String(goal.reviewTarget),
   })
-  const [clipFile, setClipFile] = useState<File | null>(null)
+  const [clipFiles, setClipFiles] = useState<File[]>([])
   const [siteUploadPassword, setSiteUploadPassword] = useState('')
-  const [slicePreview, setSlicePreview] = useState<SlicePreviewDraft | null>(persistedSlicePreview)
+  const [slicePreviews, setSlicePreviews] = useState<SlicePreviewDraft[]>(
+    persistedSlicePreview ? [persistedSlicePreview] : [],
+  )
   const [selectedSliceIds, setSelectedSliceIds] = useState<string[]>(
     persistedSlicePreview?.selectedLessonIds ?? [],
   )
@@ -329,13 +347,18 @@ export function ProfilePage() {
   }, [goal])
 
   useEffect(() => {
-    if (previewLessonId && !slicePreview?.lessons.some((lesson) => lesson.id === previewLessonId)) {
+    if (
+      previewLessonId &&
+      !slicePreviews.some((preview) =>
+        preview.lessons.some((lesson) => lesson.id === previewLessonId),
+      )
+    ) {
       setPreviewLessonId(null)
     }
-  }, [previewLessonId, slicePreview])
+  }, [previewLessonId, slicePreviews])
 
   useEffect(() => {
-    setSlicePreview(persistedSlicePreview)
+    setSlicePreviews(persistedSlicePreview ? [persistedSlicePreview] : [])
     setSelectedSliceIds(persistedSlicePreview?.selectedLessonIds ?? [])
   }, [persistedSlicePreview])
 
@@ -379,14 +402,21 @@ export function ProfilePage() {
     return calendar.filter((cell) => cell.inCurrentMonth && cell.completed).length
   }, [calendar])
   const selectedPreviewLessons = useMemo(() => {
-    if (!slicePreview) {
+    if (slicePreviews.length === 0) {
       return []
     }
-    const selectedIdSet = new Set(slicePreview.selectedLessonIds)
-    return slicePreview.lessons.filter((lesson) => selectedIdSet.has(lesson.id))
-  }, [slicePreview])
+    const selectedIdSet = new Set(selectedSliceIds)
+    return slicePreviews.flatMap((preview) =>
+      preview.lessons.filter((lesson) => selectedIdSet.has(lesson.id)),
+    )
+  }, [selectedSliceIds, slicePreviews])
+  const selectedSliceIdSet = useMemo(() => new Set(selectedSliceIds), [selectedSliceIds])
+  const previewSource =
+    slicePreviews.find((preview) =>
+      preview.lessons.some((lesson) => lesson.id === previewLessonId),
+    ) ?? null
   const previewLesson =
-    slicePreview?.lessons.find((lesson) => lesson.id === previewLessonId) ?? null
+    previewSource?.lessons.find((lesson) => lesson.id === previewLessonId) ?? null
 
   const updateTaskStatus = (message: string) => {
     const now = Date.now()
@@ -409,6 +439,28 @@ export function ProfilePage() {
     taskProgressRef.current = nextProgress
     taskStartedAtRef.current = startedAt
     lastTaskStatusAtRef.current = now
+    setStatusText(message)
+    setTaskProgress(nextProgress)
+    setSliceTask({
+      status: nextProgress.percent >= 100 ? 'completed' : 'running',
+      percent: nextProgress.percent,
+      detail: nextProgress.detail,
+      startedAt,
+      updatedAt: new Date().toISOString(),
+    })
+  }
+
+  const updateTaskStatusWithProgress = (message: string, percent: number) => {
+    const startedAt =
+      taskStartedAtRef.current ?? persistedSliceTask.startedAt ?? new Date().toISOString()
+    const nextProgress = {
+      percent: clampProgress(percent),
+      detail: message,
+    }
+
+    taskProgressRef.current = nextProgress
+    taskStartedAtRef.current = startedAt
+    lastTaskStatusAtRef.current = Date.now()
     setStatusText(message)
     setTaskProgress(nextProgress)
     setSliceTask({
@@ -467,150 +519,196 @@ export function ProfilePage() {
     }
   }
 
+  const buildSlicePreviewForFile = async (
+    sourceFile: File,
+    fileIndex: number,
+    totalFiles: number,
+  ): Promise<SlicePreviewDraft> => {
+    const normalizedTitle = sourceFile.name.replace(/\.[^.]+$/, '')
+    const normalizedTheme = '日语原片'
+    const statusPrefix = totalFiles > 1 ? `第 ${fileIndex + 1}/${totalFiles} 个视频：` : ''
+    let fileProgressPercent = 0
+    const updateFileStatus = (message: string) => {
+      if (totalFiles <= 1) {
+        updateTaskStatus(message)
+        return
+      }
+
+      const nextFileProgress = deriveTaskProgress(message, fileProgressPercent)
+      fileProgressPercent = Math.max(fileProgressPercent, nextFileProgress.percent)
+      const queueStartPercent = 4
+      const queueEndPercent = 86
+      const fileSharePercent = (queueEndPercent - queueStartPercent) / totalFiles
+      const mappedPercent =
+        queueStartPercent + fileSharePercent * fileIndex + (fileProgressPercent / 100) * fileSharePercent
+
+      updateTaskStatusWithProgress(`${statusPrefix}${message}`, mappedPercent)
+    }
+
+    updateFileStatus('正在读取视频信息…')
+    const { file: playbackFile, converted } = await ensureBrowserPlayableVideo(
+      sourceFile,
+      updateFileStatus,
+    )
+    const { durationMs, cover } = await readVideoMeta(playbackFile, normalizedTitle, normalizedTheme)
+
+    let subtitleSource: ImportedClip['subtitleSource'] = 'auto'
+    let subtitleFileName: string | undefined
+    let sourceProvider = '页面自动切片预览'
+    let segments: ImportedClip['segments'] = []
+    let knowledgePoints: ImportedClip['knowledgePoints'] = []
+    let autoSubtitleTag: string | undefined
+
+    const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesChunked')
+    const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, updateFileStatus)
+    segments = studyData.segments
+    knowledgePoints = studyData.knowledgePoints
+    autoSubtitleTag = studyData.usedFallback ? '字幕兜底' : undefined
+    subtitleFileName = studyData.modelLabel.startsWith('视频自带字幕轨')
+      ? studyData.modelLabel
+      : '自动生成字幕'
+    sourceProvider = `页面自动切片预览 / ${studyData.modelLabel}`
+
+    updateFileStatus('正在分析并切片…')
+
+    const previewClip: ImportedClip = {
+      id: `preview-${crypto.randomUUID()}`,
+      title: normalizedTitle,
+      theme: normalizedTheme,
+      difficulty: 'Custom',
+      importMode: 'raw',
+      sourceAnimeTitle: normalizedTitle,
+      sourceEpisodeTitle: undefined,
+      sourceType: 'local',
+      sourceIdOrBlobKey: `preview-blob-${crypto.randomUUID()}`,
+      sourceUrl: '',
+      sourceProvider,
+      cover,
+      durationMs,
+      fileType: sourceFile.type || playbackFile.type || 'video/mp4',
+      subtitleFileName,
+      subtitleSource,
+      blob: playbackFile,
+      createdAt: new Date().toISOString(),
+      segments,
+      knowledgePoints,
+      tags: [
+        '页面切片预览',
+        normalizedTheme,
+        autoSubtitleTag,
+        '自动字幕',
+        converted ? '兼容转换' : undefined,
+      ].filter(Boolean) as string[],
+      description: '这是页面里生成的临时切片预览，确认后才会正式导入首页短视频流。',
+      creditLine: '预览结果仅保留在当前页面中，点击导入后才会持久化到本地学习库。',
+    }
+
+    const candidateLessons = buildLessonsFromImportedClip(previewClip)
+    if (candidateLessons.length === 0) {
+      throw new Error(
+        '没有找到足够的语法/单词切片。当前不会再按时间粗切，请换一个对白更清晰、时长更短的视频片段。',
+      )
+    }
+
+    const previewLessons = await Promise.all(
+      candidateLessons.map(async (lesson) => {
+        const clipCover = await readVideoCoverAt(
+          playbackFile,
+          lesson.title,
+          normalizedTheme,
+          (lesson.clipStartMs ?? 0) + Math.max(300, Math.min(lesson.durationMs / 2, 1500)),
+        ).catch(() => cover)
+
+        return {
+          ...lesson,
+          cover: clipCover,
+        }
+      }),
+    )
+
+    return {
+      file: playbackFile,
+      title: normalizedTitle,
+      theme: normalizedTheme,
+      episodeTitle: '',
+      cover,
+      durationMs,
+      subtitleFileName,
+      subtitleSource,
+      sourceProvider,
+      segments,
+      knowledgePoints,
+      lessons: previewLessons,
+      selectedLessonIds: previewLessons.map((lesson) => lesson.id),
+    }
+  }
+
   const handleBuildSlicePreview = async () => {
-    if (!clipFile) {
+    if (clipFiles.length === 0) {
       return
     }
 
     const startedAt = new Date().toISOString()
+    const failedFiles: string[] = []
+    const builtPreviews: SlicePreviewDraft[] = []
+
     setSlicePreviewDraft(null)
+    setSlicePreviews([])
+    setSelectedSliceIds([])
+    setPreviewLessonId(null)
     setBuildingPreview(true)
     setSliceTask({
       status: 'running',
       percent: 4,
-      detail: '正在准备切片任务…',
+      detail: `正在准备 ${clipFiles.length} 个视频的切片任务…`,
       startedAt,
       updatedAt: startedAt,
     })
-    setTaskProgress({ percent: 4, detail: '正在准备切片任务…' })
-    updateTaskStatus('正在读取视频信息…')
+    const initialProgress = { percent: 4, detail: `正在准备 ${clipFiles.length} 个视频的切片任务…` }
+    taskProgressRef.current = initialProgress
+    setTaskProgress(initialProgress)
 
     try {
-      const normalizedTitle = clipFile.name.replace(/\.[^.]+$/, '')
-      const normalizedTheme = '日语原片'
-      const { file: playbackFile, converted } = await ensureBrowserPlayableVideo(
-        clipFile,
-        (message) => updateTaskStatus(message),
-      )
-      const { durationMs, cover } = await readVideoMeta(playbackFile, normalizedTitle, normalizedTheme)
-
-      let subtitleSource: ImportedClip['subtitleSource'] = 'auto'
-      let subtitleFileName: string | undefined
-      let sourceProvider = '页面自动切片预览'
-      let segments: ImportedClip['segments'] = []
-      let knowledgePoints: ImportedClip['knowledgePoints'] = []
-      let autoSubtitleTag: string | undefined
-
-      const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesChunked')
-      const studyData = await generateStudyDataFromVideo(playbackFile, durationMs, (message) =>
-        updateTaskStatus(message),
-      )
-      segments = studyData.segments
-      knowledgePoints = studyData.knowledgePoints
-      autoSubtitleTag = studyData.usedFallback ? '字幕兜底' : undefined
-      subtitleFileName = studyData.modelLabel.startsWith('视频自带字幕轨')
-        ? studyData.modelLabel
-        : '自动生成字幕'
-      sourceProvider = `页面自动切片预览 / ${studyData.modelLabel}`
-
-      updateTaskStatus('正在分析并切片…')
-
-      const previewClip: ImportedClip = {
-        id: `preview-${crypto.randomUUID()}`,
-        title: normalizedTitle,
-        theme: normalizedTheme,
-        difficulty: 'Custom',
-        importMode: 'raw',
-        sourceAnimeTitle: normalizedTitle,
-        sourceEpisodeTitle: undefined,
-        sourceType: 'local',
-        sourceIdOrBlobKey: `preview-blob-${crypto.randomUUID()}`,
-        sourceUrl: '',
-        sourceProvider,
-        cover,
-        durationMs,
-        fileType: clipFile.type || 'video/mp4',
-        subtitleFileName,
-        subtitleSource,
-        blob: playbackFile,
-        createdAt: new Date().toISOString(),
-        segments,
-        knowledgePoints,
-        tags: [
-          '页面切片预览',
-          normalizedTheme,
-          autoSubtitleTag,
-          '自动字幕',
-          converted ? '兼容转换' : undefined,
-        ].filter(Boolean) as string[],
-        description: '这是页面里生成的临时切片预览，确认后才会正式导入首页短视频流。',
-        creditLine: '预览结果仅保留在当前页面中，点击导入后才会持久化到本地学习库。',
+      for (const [fileIndex, sourceFile] of clipFiles.entries()) {
+        try {
+          const preview = await buildSlicePreviewForFile(sourceFile, fileIndex, clipFiles.length)
+          builtPreviews.push(preview)
+          const nextSelectedIds = builtPreviews.flatMap((item) => item.selectedLessonIds)
+          setSlicePreviews([...builtPreviews])
+          setSelectedSliceIds(nextSelectedIds)
+          setSlicePreviewDraft(builtPreviews.length === 1 ? builtPreviews[0] : null)
+        } catch (error) {
+          const detail = error instanceof Error ? error.message : '切片预览生成失败'
+          failedFiles.push(`${sourceFile.name}: ${detail}`)
+        }
       }
 
-      const candidateLessons = buildLessonsFromImportedClip(previewClip)
-      if (candidateLessons.length === 0) {
+      if (builtPreviews.length === 0) {
         throw new Error(
-          '没有找到足够的语法/单词切片。当前不会再按时间粗切，请换一个对白更清晰、时长更短的视频片段。',
+          failedFiles.length > 0
+            ? `所有视频都没有生成可用切片：${failedFiles.join('；')}`
+            : '没有生成可用切片，请换一个对白更清晰、时长更短的视频片段。',
         )
       }
 
-      const previewLessons = await Promise.all(
-        candidateLessons.map(async (lesson) => {
-          const clipCover = await readVideoCoverAt(
-            playbackFile,
-            lesson.title,
-            normalizedTheme,
-            (lesson.clipStartMs ?? 0) + Math.max(300, Math.min(lesson.durationMs / 2, 1500)),
-          ).catch(() => cover)
+      const generatedCount = builtPreviews.reduce((total, preview) => total + preview.lessons.length, 0)
+      const detail =
+        failedFiles.length > 0
+          ? `已从 ${builtPreviews.length}/${clipFiles.length} 个视频生成 ${generatedCount} 条候选切片；${failedFiles.length} 个视频失败，可先导入成功部分。`
+          : `已从 ${builtPreviews.length} 个视频生成 ${generatedCount} 条候选切片，可以先预览再决定是否导入。`
 
-          return {
-            ...lesson,
-            cover: clipCover,
-          }
-        }),
-      )
-      setSlicePreview({
-        file: playbackFile,
-        title: normalizedTitle,
-        theme: normalizedTheme,
-        episodeTitle: '',
-        cover,
-        durationMs,
-        subtitleFileName,
-        subtitleSource,
-        sourceProvider,
-        segments,
-        knowledgePoints,
-        lessons: previewLessons,
-        selectedLessonIds: previewLessons.map((lesson) => lesson.id),
-      })
-      setSlicePreviewDraft({
-        file: playbackFile,
-        title: normalizedTitle,
-        theme: normalizedTheme,
-        episodeTitle: '',
-        cover,
-        durationMs,
-        subtitleFileName,
-        subtitleSource,
-        sourceProvider,
-        segments,
-        knowledgePoints,
-        lessons: previewLessons,
-        selectedLessonIds: previewLessons.map((lesson) => lesson.id),
-      })
-      setSelectedSliceIds(previewLessons.map((lesson) => lesson.id))
-      setPreviewLessonId(null)
       setSliceTask({
-        status: 'completed',
+        status: failedFiles.length > 0 ? 'error' : 'completed',
         percent: 100,
-        detail: `已生成 ${previewLessons.length} 条候选切片，可以先预览再决定是否导入。`,
+        detail,
         startedAt,
         updatedAt: new Date().toISOString(),
       })
-      updateTaskStatus(`已生成 ${previewLessons.length} 条候选切片，可以先预览再决定是否导入。`)
+      setTaskProgress({ percent: 100, detail })
+      setStatusText(detail)
     } catch (error) {
-      setSlicePreview(null)
+      const detail = error instanceof Error ? error.message : '切片预览生成失败，请换一组文件重试。'
+      setSlicePreviews([])
       setSelectedSliceIds([])
       setSlicePreviewDraft(null)
       setPreviewLessonId(null)
@@ -618,64 +716,96 @@ export function ProfilePage() {
       setSliceTask({
         status: 'error',
         percent: 0,
-        detail: error instanceof Error ? error.message : '切片预览生成失败，请换一个文件重试。',
+        detail,
         startedAt,
         updatedAt: new Date().toISOString(),
       })
-      setStatusText(error instanceof Error ? error.message : '切片预览生成失败，请换一个文件重试。')
+      setStatusText(detail)
     } finally {
       setBuildingPreview(false)
     }
   }
 
   const handleImportSelectedSlices = async () => {
-    if (!slicePreview || selectedPreviewLessons.length === 0) {
+    if (slicePreviews.length === 0 || selectedPreviewLessons.length === 0) {
       return
     }
 
     setImportingSlices(true)
-    setTaskProgress({ percent: 94, detail: '正在把勾选切片上传到网站并写入首页短视频流…' })
-    setStatusText('正在把勾选切片上传到网站并写入首页短视频流…')
+    setTaskProgress({ percent: 88, detail: '正在把勾选切片按视频分组上传到网站…' })
+    setStatusText('正在把勾选切片按视频分组上传到网站…')
 
     try {
-      const imported = await importSelectedSlices({
-        file: slicePreview.file,
-        title: slicePreview.title,
-        theme: slicePreview.theme,
-        cover: slicePreview.cover,
-        durationMs: slicePreview.durationMs,
-        subtitleFileName: slicePreview.subtitleFileName,
-        subtitleSource: slicePreview.subtitleSource,
-        sourceProvider: slicePreview.sourceProvider,
-        sourceAnimeTitle: slicePreview.title,
-        sourceEpisodeTitle: slicePreview.episodeTitle || undefined,
-        baseSegments: slicePreview.segments,
-        baseKnowledgePoints: slicePreview.knowledgePoints,
-        selectedLessons: selectedPreviewLessons,
-        uploadPassword: siteUploadPassword.trim() || undefined,
-        onUploadProgress: (message, percent = 0) => {
-          const mappedPercent = Math.min(99, 94 + Math.round(percent * 0.05))
-          setTaskProgress({ percent: mappedPercent, detail: message })
-          setStatusText(message)
-        },
-      })
+      const selectedIdSet = new Set(selectedSliceIds)
+      const previewGroups = slicePreviews
+        .map((preview) => ({
+          preview,
+          lessons: preview.lessons.filter((lesson) => selectedIdSet.has(lesson.id)),
+        }))
+        .filter((group) => group.lessons.length > 0)
+      const successfulPreviews = new Set<SlicePreviewDraft>()
+      const failedImports: string[] = []
+      let importedCount = 0
 
-      setTaskProgress({
-        percent: 100,
-        detail: `已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`,
-      })
-      setStatusText(`已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`)
-      setSlicePreview(null)
-      setSelectedSliceIds([])
+      for (const [groupIndex, group] of previewGroups.entries()) {
+        try {
+          const imported = await importSelectedSlices({
+            file: group.preview.file,
+            title: group.preview.title,
+            theme: group.preview.theme,
+            cover: group.preview.cover,
+            durationMs: group.preview.durationMs,
+            subtitleFileName: group.preview.subtitleFileName,
+            subtitleSource: group.preview.subtitleSource,
+            sourceProvider: group.preview.sourceProvider,
+            sourceAnimeTitle: group.preview.title,
+            sourceEpisodeTitle: group.preview.episodeTitle || undefined,
+            baseSegments: group.preview.segments,
+            baseKnowledgePoints: group.preview.knowledgePoints,
+            selectedLessons: group.lessons,
+            uploadPassword: siteUploadPassword.trim() || undefined,
+            onUploadProgress: (message, percent = 0) => {
+              const groupBase = 88 + (groupIndex / previewGroups.length) * 10
+              const groupShare = 10 / previewGroups.length
+              const mappedPercent = Math.min(99, Math.round(groupBase + (percent / 100) * groupShare))
+              const detail =
+                previewGroups.length > 1
+                  ? `第 ${groupIndex + 1}/${previewGroups.length} 个视频：${message}`
+                  : message
+              setTaskProgress({ percent: mappedPercent, detail })
+              setStatusText(detail)
+            },
+          })
+          importedCount += imported.length
+          successfulPreviews.add(group.preview)
+        } catch (error) {
+          const detail = error instanceof Error ? error.message : '导入切片失败'
+          failedImports.push(`${group.preview.title}: ${detail}`)
+        }
+      }
+
+      const remainingPreviews = slicePreviews.filter((preview) => !successfulPreviews.has(preview))
+      const remainingSelectedIds = remainingPreviews.flatMap((preview) => preview.selectedLessonIds)
+      const detail =
+        failedImports.length > 0
+          ? `已导入 ${importedCount} 条切片，${failedImports.length} 个视频导入失败：${failedImports.join('；')}`
+          : `已导入 ${importedCount} 条切片，视频文件现在保存在网站上。`
+
+      setTaskProgress({ percent: failedImports.length > 0 ? 99 : 100, detail })
+      setStatusText(detail)
+      setSlicePreviews(remainingPreviews)
+      setSelectedSliceIds(remainingSelectedIds)
       setSliceTask({
-        status: 'completed',
-        percent: 100,
-        detail: `已导入 ${imported.length} 条切片，视频文件现在保存在网站上。`,
+        status: failedImports.length > 0 ? 'error' : 'completed',
+        percent: failedImports.length > 0 ? 99 : 100,
+        detail,
         startedAt: persistedSliceTask.startedAt ?? new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       })
-      setSlicePreviewDraft(null)
-      setPreviewLessonId(null)
+      setSlicePreviewDraft(remainingPreviews.length === 1 ? remainingPreviews[0] : null)
+      if (remainingPreviews.length === 0) {
+        setPreviewLessonId(null)
+      }
     } catch (error) {
       const detail =
         error instanceof Error
@@ -717,12 +847,11 @@ export function ProfilePage() {
         ? state.filter((id) => id !== lessonId)
         : [...state, lessonId]
 
-      if (slicePreview) {
-        setSlicePreviewDraft({
-          ...slicePreview,
-          selectedLessonIds: nextSelectedIds,
-        })
-      }
+      setSlicePreviews((previews) => {
+        const nextPreviews = applySelectedIdsToPreviews(previews, nextSelectedIds)
+        setSlicePreviewDraft(nextPreviews.length === 1 ? nextPreviews[0] : null)
+        return nextPreviews
+      })
 
       return nextSelectedIds
     })
@@ -733,9 +862,9 @@ export function ProfilePage() {
       <section className={styles.hero}>
         <div>
           <span className="chip badgeMint">目标 / 视频切片 / 设置</span>
-          <h1 className="pageTitle">上传一个视频，剩下交给系统</h1>
+          <h1 className="pageTitle">上传一组视频，剩下交给系统</h1>
           <p className="sectionIntro">
-            用户不需要处理额外文件。这里从原视频开始自动分析，先生成候选切片，确认后再进入首页学习流。
+            用户不需要处理额外文件。这里从一个或多个原视频开始自动分析，先生成候选切片，确认后再进入首页学习流。
           </p>
         </div>
 
@@ -859,9 +988,23 @@ export function ProfilePage() {
                 className={styles.fileInput}
                 type="file"
                 accept="video/*,.mp4,.mkv,.mov,.webm,.avi"
-                onChange={(event) => setClipFile(event.target.files?.[0] ?? null)}
+                multiple
+                onChange={(event) => setClipFiles(Array.from(event.target.files ?? []))}
               />
             </div>
+
+            {clipFiles.length > 0 ? (
+              <div className={styles.selectedFileList}>
+                <strong>已选择 {clipFiles.length} 个视频</strong>
+                <div>
+                  {clipFiles.map((file, index) => (
+                    <span key={`${fileKey(file)}-${index}`} className="chip">
+                      {file.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             <details className={styles.uploadSettings}>
               <summary>上传失败提示需要密码时再填写</summary>
@@ -875,7 +1018,7 @@ export function ProfilePage() {
             </details>
 
             <p className={styles.helperNote}>
-              你只需要选择原视频。系统会自动读取视频信息、尝试提取字幕或识别语音、生成中文字幕和知识点，再给出可预览的候选切片。
+              你只需要选择原视频，单个或多个都可以。系统会按队列逐个读取视频信息、尝试提取字幕或识别语音、生成中文字幕和知识点，再给出可预览的候选切片。
             </p>
             {statusText ? <p className={styles.statusNote}>{statusText}</p> : null}
             {taskProgress ? (
@@ -900,17 +1043,21 @@ export function ProfilePage() {
               <button
                 className="softButton primaryButton"
                 onClick={() => void handleBuildSlicePreview()}
-                disabled={buildingPreview || !clipFile}
+                disabled={buildingPreview || clipFiles.length === 0}
               >
                 <Wand2 size={18} />
-                {buildingPreview ? '正在分析并切片…' : '上传视频并生成切片'}
+                {buildingPreview
+                  ? '正在分析并切片…'
+                  : clipFiles.length > 1
+                    ? `批量生成 ${clipFiles.length} 个视频的切片`
+                    : '上传视频并生成切片'}
               </button>
 
-              {slicePreview ? (
+              {slicePreviews.length > 0 ? (
                 <button
                   className="softButton"
                   onClick={() => {
-                    setSlicePreview(null)
+                    setSlicePreviews([])
                     setSelectedSliceIds([])
                     clearSliceWorkflow()
                     setPreviewLessonId(null)
@@ -925,18 +1072,20 @@ export function ProfilePage() {
             </div>
           </div>
 
-          {slicePreview ? (
+          {slicePreviews.length > 0 ? (
             <div className={styles.previewSection}>
               <div className={styles.previewHeader}>
                 <div>
-                  <span className="chip badgeMint">候选切片 {slicePreview.lessons.length} 条</span>
+                  <span className="chip badgeMint">
+                    候选切片 {slicePreviews.reduce((total, preview) => total + preview.lessons.length, 0)} 条
+                  </span>
                   <h3 className={styles.subTitle}>
-                    {slicePreview.title}
-                    {slicePreview.episodeTitle ? ` / ${slicePreview.episodeTitle}` : ''}
+                    {slicePreviews.length > 1
+                      ? `已分析 ${slicePreviews.length} 个视频`
+                      : slicePreviews[0]?.title}
                   </h3>
                   <p className={styles.previewSummary}>
-                    原片时长 {formatDuration(slicePreview.durationMs)}，当前已勾选{' '}
-                    {selectedPreviewLessons.length} 条准备导入首页短视频流。
+                    当前已勾选 {selectedPreviewLessons.length} 条准备导入首页短视频流。批量导入时会按视频分组上传，某个视频失败不会影响其他已成功的视频。
                   </p>
                 </div>
 
@@ -944,12 +1093,13 @@ export function ProfilePage() {
                   <button
                     className="softButton"
                     onClick={() => {
-                      const nextSelectedIds = slicePreview.lessons.map((lesson) => lesson.id)
+                      const nextSelectedIds = slicePreviews.flatMap((preview) =>
+                        preview.lessons.map((lesson) => lesson.id),
+                      )
                       setSelectedSliceIds(nextSelectedIds)
-                      setSlicePreviewDraft({
-                        ...slicePreview,
-                        selectedLessonIds: nextSelectedIds,
-                      })
+                      const nextPreviews = applySelectedIdsToPreviews(slicePreviews, nextSelectedIds)
+                      setSlicePreviews(nextPreviews)
+                      setSlicePreviewDraft(nextPreviews.length === 1 ? nextPreviews[0] : null)
                     }}
                   >
                     <CheckCircle2 size={18} />
@@ -959,10 +1109,9 @@ export function ProfilePage() {
                     className="softButton"
                     onClick={() => {
                       setSelectedSliceIds([])
-                      setSlicePreviewDraft({
-                        ...slicePreview,
-                        selectedLessonIds: [],
-                      })
+                      const nextPreviews = applySelectedIdsToPreviews(slicePreviews, [])
+                      setSlicePreviews(nextPreviews)
+                      setSlicePreviewDraft(nextPreviews.length === 1 ? nextPreviews[0] : null)
                     }}
                   >
                     <X size={18} />
@@ -981,70 +1130,88 @@ export function ProfilePage() {
                 </div>
               </div>
 
-              <div className={styles.previewGrid}>
-                {slicePreview.lessons.map((lesson) => {
-                  const selected = selectedSliceIds.includes(lesson.id)
-                  const leadSegment = lesson.segments[0]
-                  return (
-                    <article
-                      key={lesson.id}
-                      className={`${styles.previewCard} ${selected ? styles.previewCardSelected : ''}`}
-                    >
-                      <div className={styles.previewCardTop}>
-                        <label className={styles.checkboxRow}>
-                          <input
-                            type="checkbox"
-                            checked={selected}
-                            onChange={() => togglePreviewSelection(lesson.id)}
-                          />
-                          <span>导入这条切片</span>
-                        </label>
-                        <span className="chip">{lesson.sliceLabel}</span>
-                      </div>
+              {slicePreviews.map((preview, index) => (
+                <section key={`${fileKey(preview.file)}-${index}`} className={styles.previewGroup}>
+                  <div className={styles.previewGroupHeader}>
+                    <div>
+                      <strong>{preview.title}</strong>
+                      <span>
+                        原片时长 {formatDuration(preview.durationMs)} / 已勾选{' '}
+                        {preview.selectedLessonIds.length} 条
+                      </span>
+                    </div>
+                    <span className="chip">{preview.lessons.length} 条候选</span>
+                  </div>
 
-                      <button
-                        className={styles.previewPosterButton}
-                        onClick={() => setPreviewLessonId(lesson.id)}
-                      >
-                        <img src={lesson.cover} alt={lesson.title} />
-                        <span className={styles.previewPosterShade} />
-                        <span className={styles.previewPosterPlay}>
-                          <Play size={18} />
-                          预览
-                        </span>
-                      </button>
-
-                      <div className={styles.previewBody}>
-                        <strong>{lesson.title}</strong>
-                        <span className={styles.previewMeta}>
-                          {formatRange(lesson.clipStartMs ?? 0, lesson.clipEndMs ?? lesson.durationMs)}
-                        </span>
-                        <p>{lesson.description}</p>
-
-                        {leadSegment ? (
-                          <div className={styles.previewSentence}>
-                            <strong>{leadSegment.ja}</strong>
-                            <span>
-                              {settings.showRomaji
-                                ? `${leadSegment.kana} / ${leadSegment.romaji}`
-                                : leadSegment.kana}
-                            </span>
-                            <p>{leadSegment.zh}</p>
+                  <div className={styles.previewGrid}>
+                    {preview.lessons.map((lesson) => {
+                      const selected = selectedSliceIdSet.has(lesson.id)
+                      const leadSegment = lesson.segments[0]
+                      return (
+                        <article
+                          key={lesson.id}
+                          className={`${styles.previewCard} ${selected ? styles.previewCardSelected : ''}`}
+                        >
+                          <div className={styles.previewCardTop}>
+                            <label className={styles.checkboxRow}>
+                              <input
+                                type="checkbox"
+                                checked={selected}
+                                onChange={() => togglePreviewSelection(lesson.id)}
+                              />
+                              <span>导入这条切片</span>
+                            </label>
+                            <span className="chip">{lesson.sliceLabel}</span>
                           </div>
-                        ) : null}
 
-                        <div className={styles.previewChips}>
-                          {lesson.knowledgePoints.slice(0, 4).map((point) => (
-                            <span key={point.id} className="chip badgePeach">
-                              {point.kind === 'grammar' ? '语法' : '词句'} · {point.expression}
+                          <button
+                            className={styles.previewPosterButton}
+                            onClick={() => setPreviewLessonId(lesson.id)}
+                          >
+                            <img src={lesson.cover} alt={lesson.title} />
+                            <span className={styles.previewPosterShade} />
+                            <span className={styles.previewPosterPlay}>
+                              <Play size={18} />
+                              预览
                             </span>
-                          ))}
-                        </div>
-                      </div>
-                    </article>
-                  )
-                })}
-              </div>
+                          </button>
+
+                          <div className={styles.previewBody}>
+                            <strong>{lesson.title}</strong>
+                            <span className={styles.previewMeta}>
+                              {formatRange(
+                                lesson.clipStartMs ?? 0,
+                                lesson.clipEndMs ?? lesson.durationMs,
+                              )}
+                            </span>
+                            <p>{lesson.description}</p>
+
+                            {leadSegment ? (
+                              <div className={styles.previewSentence}>
+                                <strong>{leadSegment.ja}</strong>
+                                <span>
+                                  {settings.showRomaji
+                                    ? `${leadSegment.kana} / ${leadSegment.romaji}`
+                                    : leadSegment.kana}
+                                </span>
+                                <p>{leadSegment.zh}</p>
+                              </div>
+                            ) : null}
+
+                            <div className={styles.previewChips}>
+                              {lesson.knowledgePoints.slice(0, 4).map((point) => (
+                                <span key={point.id} className="chip badgePeach">
+                                  {point.kind === 'grammar' ? '语法' : '词句'} · {point.expression}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </article>
+                      )
+                    })}
+                  </div>
+                </section>
+              ))}
             </div>
           ) : null}
 
@@ -1210,10 +1377,10 @@ export function ProfilePage() {
         </div>
       </section>
 
-      {previewLesson && slicePreview ? (
+      {previewLesson && previewSource ? (
         <SlicePreviewOverlay
           lesson={previewLesson}
-          file={slicePreview.file}
+          file={previewSource.file}
           showRomaji={settings.showRomaji}
           showPlaybackKnowledge={settings.showPlaybackKnowledge}
           showJapaneseSubtitle={settings.showJapaneseSubtitle}
