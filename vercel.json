@@ -1,6 +1,6 @@
 {
-  "installCommand": "rm -rf node_modules /vercel/.npm && npm ci --workspaces=false --no-audit --no-fund --cache /tmp/hxf-npm-cache",
-  "buildCommand": "npm run build",
+  "installCommand": "corepack enable && corepack prepare pnpm@10.26.2 --activate && pnpm install --frozen-lockfile",
+  "buildCommand": "corepack enable && pnpm run build",
   "outputDirectory": "dist",
   "rewrites": [
     {
