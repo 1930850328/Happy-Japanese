@@ -1,0 +1,14 @@
+{
+  "sourceVideo": "2026-01-12_18-33-06_新作剧场版「BanG Dream! Ave Mujica prima aurora」2026年秋正式公开_BV1KKreBkEy1.mp4",
+  "subtitlePath": "source-asr.vtt",
+  "subtitleProvider": "asr",
+  "asrModel": "onnx-community/whisper-base_timestamped",
+  "durationMs": 30037,
+  "acceptedClipCount": 1,
+  "cueCount": 2,
+  "translationCueCount": 0,
+  "segmentCount": 2,
+  "knowledgePointCount": 3,
+  "silenceEventCount": 6,
+  "generatedAt": "2026-05-07T08:28:27.900Z"
+}

@@ -63,10 +63,10 @@ npm run watch:video-inbox
 - `episode01.srt`
 - `episode01.vtt`
 
-如果没有字幕轨或同名字幕，CLI 会自动使用开源 ASR 生成日语字幕。默认模型是 `onnx-community/whisper-base_timestamped`，可以按机器性能调整：
+如果没有日语字幕轨或同名字幕，CLI 会自动使用开源 ASR 生成日语字幕；如果视频只有中文字幕轨，它会作为翻译时间轴合并进 ASR 结果，不再被误当作日语原文。默认模型是 `onnx-community/whisper-small_timestamped`，可以按机器性能调整：
 
 ```bash
-npm run ingest:video -- --input ./episode01.mp4 --asrModel onnx-community/whisper-tiny_timestamped
+npm run ingest:video -- --input ./episode01.mp4 --asrModel onnx-community/whisper-base_timestamped
 ```
 
 如果同名 JSON 存在，也会自动覆盖元数据和切片参数：

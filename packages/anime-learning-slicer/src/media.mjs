@@ -50,6 +50,52 @@ export async function extractFirstSubtitle(inputPath, outputPath) {
   }
 }
 
+function normalizeLanguage(language) {
+  return String(language ?? '').toLowerCase()
+}
+
+function isJapaneseLanguage(language) {
+  return /^(ja|jpn|japanese)$/i.test(normalizeLanguage(language))
+}
+
+function isChineseLanguage(language) {
+  return /^(zh|zho|chi|chs|cht|cmn|cn|chinese)$/i.test(normalizeLanguage(language))
+}
+
+function pickSubtitleStream(streams, matcher) {
+  return streams.find((stream) => stream.codec_type === 'subtitle' && matcher(stream.tags?.language))
+}
+
+export function findSubtitleStreams(streams) {
+  const subtitleStreams = streams.filter((stream) => stream.codec_type === 'subtitle')
+  return {
+    japanese: pickSubtitleStream(subtitleStreams, isJapaneseLanguage) ?? null,
+    chinese: pickSubtitleStream(subtitleStreams, isChineseLanguage) ?? null,
+    first: subtitleStreams[0] ?? null,
+  }
+}
+
+export async function extractSubtitleStream(inputPath, stream, outputPath) {
+  if (!stream || !Number.isInteger(stream.index)) {
+    return null
+  }
+
+  await mkdir(dirname(outputPath), { recursive: true })
+  try {
+    await execa(assertBinary(ffmpegPath, 'ffmpeg'), [
+      '-y',
+      '-i',
+      inputPath,
+      '-map',
+      `0:${stream.index}`,
+      outputPath,
+    ])
+    return outputPath
+  } catch {
+    return null
+  }
+}
+
 export async function detectSilences(inputPath) {
   try {
     const { stderr } = await execa(

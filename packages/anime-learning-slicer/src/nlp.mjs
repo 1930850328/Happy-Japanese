@@ -66,17 +66,39 @@ function tokenScore(token) {
 
 const translationCache = new Map()
 
+const exactTranslationGlossary = new Map([
+  ['映画', '电影'],
+  ['公開', '公开'],
+  ['予定', '预定'],
+  ['公開予定', '计划公开'],
+])
+
+function normalizeKnownTranslationTerms(input) {
+  return input
+    .replace(/班(?:多里|德里|多利|多莉)(?:·|・|\s*)阿(?:贝|貝|维|維|韦|韋)?(?:穆什卡|穆希卡|维穆吉卡|維穆吉卡)/g, 'BanG Dream! Ave Mujica')
+    .replace(/班(?:多里|德里|多利|多莉)/g, 'BanG Dream!')
+    .replace(/阿(?:贝|貝|维|維|韦|韋)?(?:穆什卡|穆希卡|维穆吉卡|維穆吉卡)/g, 'Ave Mujica')
+    .replace(/普里马(?:奥|澳|欧|歐)(?:滚筒|罗拉|羅拉|萝拉|蘿拉)/g, 'prima aurora')
+    .replace(/映画/g, '电影')
+    .replace(/公開予定/g, '计划公开')
+    .replace(/公開/g, '公开')
+    .replace(/予定/g, '预定')
+}
+
 async function translateToChinese(input) {
   const key = input.trim()
   if (!key) {
     return ''
+  }
+  if (exactTranslationGlossary.has(key)) {
+    return exactTranslationGlossary.get(key)
   }
   if (translationCache.has(key)) {
     return translationCache.get(key)
   }
 
   const result = await translate(key, { to: 'zh-CN' })
-  const text = typeof result.text === 'string' ? result.text.trim() : ''
+  const text = typeof result.text === 'string' ? normalizeKnownTranslationTerms(result.text.trim()) : ''
   if (!text) {
     throw new Error(`Translation returned empty text for: ${key}`)
   }

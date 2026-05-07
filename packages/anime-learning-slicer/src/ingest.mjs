@@ -2,8 +2,23 @@ import { rm } from 'node:fs/promises'
 import { basename, resolve } from 'node:path'
 
 import { buildStudyData } from './nlp.mjs'
-import { makeOutputLayout, ensureLayout, joinOutput, publicPath, updateGeneratedIndex, writeJson } from './output.mjs'
-import { captureCover, cutClip, detectSilences, extractFirstSubtitle, probeVideo } from './media.mjs'
+import {
+  ensureLayout,
+  isPublishedOutput,
+  joinOutput,
+  makeOutputLayout,
+  publicPath,
+  updateGeneratedIndex,
+  writeJson,
+} from './output.mjs'
+import {
+  captureCover,
+  cutClip,
+  detectSilences,
+  extractSubtitleStream,
+  findSubtitleStreams,
+  probeVideo,
+} from './media.mjs'
 import { findSidecarSubtitle, readSubtitleCues, writeClipSubtitle } from './subtitles.mjs'
 import { selectClipWindows } from './scoring.mjs'
 import { transcribeVideoToCues } from './transcript.mjs'
@@ -31,6 +46,46 @@ function normalizeOptions(options) {
   }
 }
 
+function overlapMs(left, right) {
+  return Math.max(0, Math.min(left.endMs, right.endMs) - Math.max(left.startMs, right.startMs))
+}
+
+function translationForCue(cue, translationCues) {
+  const overlaps = translationCues
+    .map((translationCue) => ({
+      cue: translationCue,
+      overlap: overlapMs(cue, translationCue),
+    }))
+    .filter((item) => item.overlap > 0 && item.cue.zhText)
+    .sort((left, right) => right.overlap - left.overlap)
+
+  return overlaps[0]?.cue.zhText
+}
+
+function mergeTranslationCues(cues, translationCues) {
+  if (translationCues.length === 0) {
+    return cues
+  }
+
+  return cues.map((cue) => ({
+    ...cue,
+    zhText: cue.zhText || translationForCue(cue, translationCues),
+  }))
+}
+
+function validateSubtitleQuality({ subtitleProvider, cues, silences }) {
+  if (subtitleProvider !== 'asr') {
+    return
+  }
+
+  const longCueCount = cues.filter((cue) => cue.endMs - cue.startMs > 6500).length
+  if (silences.length === 0 && longCueCount > 0) {
+    throw new Error(
+      'ASR quality gate blocked this source: continuous music audio produced long subtitle spans with no reliable speech boundaries. Use a Japanese subtitle source or an OCR/WhisperX provider before publishing this clip.',
+    )
+  }
+}
+
 export async function ingestVideo(rawOptions) {
   const options = normalizeOptions(rawOptions)
   const animeTitle = options.animeTitle || basename(options.inputPath).replace(/\.[^.]+$/, '')
@@ -45,18 +100,35 @@ export async function ingestVideo(rawOptions) {
   await ensureLayout(layout)
 
   const probe = await probeVideo(options.inputPath)
+  const embeddedStreams = findSubtitleStreams(probe.streams)
   const sidecarSubtitle = options.subtitlePath
     ? resolve(options.subtitlePath)
     : await findSidecarSubtitle(options.inputPath)
-  const embeddedSubtitle = sidecarSubtitle
+  const embeddedJapaneseSubtitle = sidecarSubtitle
     ? null
-    : await extractFirstSubtitle(options.inputPath, joinOutput(layout.metadataDir, 'source.vtt'))
-  let subtitlePath = sidecarSubtitle ?? embeddedSubtitle
+    : await extractSubtitleStream(
+        options.inputPath,
+        embeddedStreams.japanese,
+        joinOutput(layout.metadataDir, 'source.ja.vtt'),
+      )
+  const embeddedChineseSubtitle = sidecarSubtitle
+    ? null
+    : await extractSubtitleStream(
+        options.inputPath,
+        embeddedStreams.chinese,
+        joinOutput(layout.metadataDir, 'source.zh.vtt'),
+      )
+  let subtitlePath = sidecarSubtitle ?? embeddedJapaneseSubtitle
   let cues = []
+  let translationCues = []
   let asrModelUsed = ''
 
+  if (embeddedChineseSubtitle && embeddedChineseSubtitle !== subtitlePath) {
+    translationCues = await readSubtitleCues(embeddedChineseSubtitle, { language: 'zh' })
+  }
+
   if (subtitlePath) {
-    cues = await readSubtitleCues(subtitlePath)
+    cues = await readSubtitleCues(subtitlePath, { language: 'ja' })
   } else if (options.noAsr) {
     throw new Error(
       'No subtitle stream was found and --noAsr was provided, so the slicer cannot produce timed Japanese subtitles.',
@@ -73,15 +145,19 @@ export async function ingestVideo(rawOptions) {
     asrModelUsed = asrResult.modelUsed
   }
 
+  cues = mergeTranslationCues(cues, translationCues)
+
   if (cues.length === 0) {
     throw new Error(`No usable subtitle cues were parsed from: ${subtitlePath}`)
   }
 
   const subtitleSource = sidecarSubtitle ? 'external' : 'auto'
-  const subtitleProvider = sidecarSubtitle ? 'external-subtitle' : embeddedSubtitle ? 'embedded-subtitle' : 'asr'
+  const subtitleProvider = sidecarSubtitle ? 'external-subtitle' : embeddedJapaneseSubtitle ? 'embedded-subtitle' : 'asr'
+  const translationProvider = translationCues.length > 0 ? 'embedded-zh-subtitle' : undefined
 
-  const studyData = await buildStudyData(cues)
   const silences = await detectSilences(options.inputPath)
+  validateSubtitleQuality({ subtitleProvider, cues, silences })
+  const studyData = await buildStudyData(cues)
   const windows = selectClipWindows({
     slug,
     segments: studyData.segments,
@@ -170,6 +246,7 @@ export async function ingestVideo(rawOptions) {
       alignment: 'subtitle-timing',
       sceneDetector: 'ffmpeg-silencedetect',
       nlp: 'kuromoji+wanakana',
+      translation: translationProvider,
     },
     clipCount: clips.length,
     clips,
@@ -178,11 +255,14 @@ export async function ingestVideo(rawOptions) {
   const report = {
     sourceVideo: basename(options.inputPath),
     subtitlePath: basename(subtitlePath),
+    translationSubtitlePath: embeddedChineseSubtitle ? basename(embeddedChineseSubtitle) : undefined,
     subtitleProvider,
+    translationProvider,
     asrModel: asrModelUsed || undefined,
     durationMs: probe.durationMs,
     acceptedClipCount: clips.length,
     cueCount: cues.length,
+    translationCueCount: translationCues.length,
     segmentCount: studyData.segments.length,
     knowledgePointCount: studyData.knowledgePoints.length,
     silenceEventCount: silences.length,
@@ -191,14 +271,16 @@ export async function ingestVideo(rawOptions) {
 
   await writeJson(layout.manifestPath, manifest)
   await writeJson(layout.reportPath, report)
-  await updateGeneratedIndex(layout, {
-    slug,
-    animeTitle,
-    episodeTitle: options.episodeTitle,
-    manifestPath: publicPath(layout.manifestPath, layout.publicRoot),
-    generatedAt: manifest.generatedAt,
-    clipCount: clips.length,
-  })
+  if (isPublishedOutput(layout)) {
+    await updateGeneratedIndex(layout, {
+      slug,
+      animeTitle,
+      episodeTitle: options.episodeTitle,
+      manifestPath: publicPath(layout.manifestPath, layout.publicRoot),
+      generatedAt: manifest.generatedAt,
+      clipCount: clips.length,
+    })
+  }
 
   return {
     manifestPath: layout.manifestPath,

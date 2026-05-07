@@ -1,0 +1,116 @@
+{
+  "version": 2,
+  "animeTitle": "BanG Dream! Ave Mujica",
+  "episodeTitle": "prima aurora 预告",
+  "sourceVideo": "2026-01-12_18-33-06_新作剧场版「BanG Dream! Ave Mujica prima aurora」2026年秋正式公开_BV1KKreBkEy1.mp4",
+  "subtitleSource": "auto",
+  "generatedAt": "2026-05-07T08:28:27.900Z",
+  "pipeline": {
+    "engine": "anime-learning-slicer",
+    "engineVersion": "0.1.0",
+    "asr": "onnx-community/whisper-base_timestamped",
+    "alignment": "subtitle-timing",
+    "sceneDetector": "ffmpeg-silencedetect",
+    "nlp": "kuromoji+wanakana"
+  },
+  "clipCount": 1,
+  "clips": [
+    {
+      "id": "generated-ave-prima-aurora-00016-00026",
+      "clipTitle": "BanG Dream! Ave Mujica - 映画",
+      "startMs": 16000,
+      "endMs": 26000,
+      "durationMs": 10000,
+      "videoPath": "/generated-slices/generated-ave-prima-aurora/clips/generated-ave-prima-aurora-00016-00026.mp4",
+      "coverPath": "/generated-slices/generated-ave-prima-aurora/covers/generated-ave-prima-aurora-00016-00026.jpg",
+      "subtitlePath": "/generated-slices/generated-ave-prima-aurora/subtitles/generated-ave-prima-aurora-00016-00026.vtt",
+      "metadataPath": "/generated-slices/generated-ave-prima-aurora/metadata/generated-ave-prima-aurora-00016-00026.json",
+      "transcriptJa": "映画、BanG Dream!、Ave Mujica、prima aurora 2026年秋、公開予定",
+      "transcriptZh": "电影、BanG Dream!、Ave Mujica、prima aurora 计划于 2026 年秋季发布",
+      "subtitleSource": "auto",
+      "exampleJa": "映画、BanG Dream!、Ave Mujica、prima aurora",
+      "exampleZh": "电影、BanG Dream!、Ave Mujica、prima aurora",
+      "keyNotes": [
+        "词 映画: 电影",
+        "词 公開: 公开",
+        "词 予定: 预定"
+      ],
+      "keywords": [
+        "映画",
+        "公開",
+        "予定"
+      ],
+      "knowledgePoints": [
+        {
+          "id": "word:映画",
+          "kind": "word",
+          "expression": "映画",
+          "reading": "えいが",
+          "meaningZh": "电影",
+          "partOfSpeech": "名詞",
+          "explanationZh": "映画 在这句里更接近“电影”。",
+          "exampleJa": "映画、BanG Dream!、Ave Mujica、prima aurora",
+          "exampleZh": "电影、BanG Dream!、Ave Mujica、prima aurora"
+        },
+        {
+          "id": "word:公開",
+          "kind": "word",
+          "expression": "公開",
+          "reading": "こうかい",
+          "meaningZh": "公开",
+          "partOfSpeech": "名詞",
+          "explanationZh": "公開 在这句里更接近“公开”。",
+          "exampleJa": "2026年秋、公開予定",
+          "exampleZh": "计划于 2026 年秋季发布"
+        },
+        {
+          "id": "word:予定",
+          "kind": "word",
+          "expression": "予定",
+          "reading": "よてい",
+          "meaningZh": "预定",
+          "partOfSpeech": "名詞",
+          "explanationZh": "予定 在这句里更接近“预定”。",
+          "exampleJa": "2026年秋、公開予定",
+          "exampleZh": "计划于 2026 年秋季发布"
+        }
+      ],
+      "segments": [
+        {
+          "startMs": 0,
+          "endMs": 6000,
+          "ja": "映画、BanG Dream!、Ave Mujica、prima aurora",
+          "kana": "えいが、BanG Dream!、Ave Mujica、prima aurora",
+          "romaji": "eiga,BanG Dream!,Ave Mujica,prima aurora",
+          "zh": "电影、BanG Dream!、Ave Mujica、prima aurora",
+          "focusTermIds": [
+            "word:映画"
+          ]
+        },
+        {
+          "startMs": 6000,
+          "endMs": 10000,
+          "ja": "2026年秋、公開予定",
+          "kana": "2026ねんあき、こうかいよてい",
+          "romaji": "2026nen'aki,koukaiyotei",
+          "zh": "计划于 2026 年秋季发布",
+          "focusTermIds": [
+            "word:公開",
+            "word:予定"
+          ]
+        }
+      ],
+      "quality": {
+        "asrConfidence": null,
+        "alignmentConfidence": null,
+        "ocrConfidence": null,
+        "sceneBoundaryStart": false,
+        "sceneBoundaryEnd": false,
+        "speechBoundaryStart": true,
+        "speechBoundaryEnd": true,
+        "needsReview": false,
+        "warnings": []
+      }
+    }
+  ]
+}

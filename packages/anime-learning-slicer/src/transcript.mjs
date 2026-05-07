@@ -1,16 +1,32 @@
 import { dirname, join } from 'node:path'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 
 import { env, LogLevel, pipeline } from '@huggingface/transformers'
 
 import { extractAudioWav } from './media.mjs'
 import { cuesToVtt } from './subtitles.mjs'
 
-const DEFAULT_ASR_MODEL = 'onnx-community/whisper-base_timestamped'
-const FALLBACK_ASR_MODEL = 'onnx-community/whisper-tiny_timestamped'
+const DEFAULT_ASR_MODEL = 'onnx-community/whisper-small_timestamped'
+const FALLBACK_ASR_MODEL = 'onnx-community/whisper-base_timestamped'
 
 function cleanTranscriptText(text) {
-  return text.replace(/\s+/g, ' ').replace(/<\|[^>]+?\|>/g, '').trim()
+  return text
+    .replace(/\s+/g, ' ')
+    .replace(/<\|[^>]+?\|>/g, '')
+    .replace(/【\s*音楽\s*】/g, '')
+    .replace(/\[\s*音楽\s*\]/gi, '')
+    .trim()
+}
+
+function normalizeKnownTerms(text) {
+  return text
+    .replace(/バング[・\s-]?ドリ(?:ーム)?|バンドリ(?:ー)?/g, 'BanG Dream!')
+    .replace(/ア[ヴベ]ェ?ム[ジシ]カ/g, 'Ave Mujica')
+    .replace(/プリ[ー-]?マ[・\s-]?ア[ウオ]ロ[ー-]?ラ[ー]?/g, 'prima aurora')
+}
+
+function hasLearningSignal(text) {
+  return /[\p{Script=Hiragana}\p{Script=Katakana}\u3400-\u9fff]/u.test(text)
 }
 
 function normalizeChunks(chunks, durationMs) {
@@ -19,8 +35,8 @@ function normalizeChunks(chunks, durationMs) {
 
   for (let index = 0; index < chunks.length; index += 1) {
     const chunk = chunks[index]
-    const text = cleanTranscriptText(chunk.text ?? '')
-    if (!text) {
+    const text = normalizeKnownTerms(cleanTranscriptText(chunk.text ?? ''))
+    if (!text || !hasLearningSignal(text)) {
       continue
     }
 
@@ -143,6 +159,8 @@ export async function transcribeVideoToCues({
     }
     modelUsed = FALLBACK_ASR_MODEL
     cues = await runAsr(audioPath, durationMs, FALLBACK_ASR_MODEL)
+  } finally {
+    await rm(audioPath, { force: true })
   }
 
   if (cues.length === 0) {

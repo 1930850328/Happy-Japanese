@@ -1,5 +1,5 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { dirname, join, relative, resolve } from 'node:path'
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path'
 
 export function makeOutputLayout({ appDir, slug, outputDir }) {
   const publicRoot = resolve(appDir, 'public')
@@ -51,6 +51,11 @@ export async function updateGeneratedIndex(layout, entry) {
 
   const next = [entry, ...existing.filter((item) => item.slug !== entry.slug)]
   await writeJson(layout.indexPath, next)
+}
+
+export function isPublishedOutput(layout) {
+  const relativeRoot = relative(layout.generatedRoot, layout.root)
+  return Boolean(relativeRoot) && !relativeRoot.startsWith('..') && !isAbsolute(relativeRoot)
 }
 
 export function joinOutput(...parts) {
