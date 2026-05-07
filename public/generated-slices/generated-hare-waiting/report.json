@@ -1,0 +1,12 @@
+{
+  "sourceVideo": "hare-waiting.webm",
+  "subtitlePath": "hare-waiting.vtt",
+  "subtitleProvider": "external-subtitle",
+  "durationMs": 14012,
+  "acceptedClipCount": 1,
+  "cueCount": 2,
+  "segmentCount": 2,
+  "knowledgePointCount": 2,
+  "silenceEventCount": 0,
+  "generatedAt": "2026-05-07T07:18:57.618Z"
+}

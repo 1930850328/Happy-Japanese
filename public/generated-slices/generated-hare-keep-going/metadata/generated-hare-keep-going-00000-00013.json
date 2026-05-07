@@ -1,0 +1,97 @@
+{
+  "id": "generated-hare-keep-going-00000-00013",
+  "clipTitle": "The Hare and the Tortoise - あきらめる",
+  "startMs": 0,
+  "endMs": 13000,
+  "durationMs": 13000,
+  "videoPath": "/generated-slices/generated-hare-keep-going/clips/generated-hare-keep-going-00000-00013.mp4",
+  "coverPath": "/generated-slices/generated-hare-keep-going/covers/generated-hare-keep-going-00000-00013.jpg",
+  "subtitlePath": "/generated-slices/generated-hare-keep-going/subtitles/generated-hare-keep-going-00000-00013.vtt",
+  "metadataPath": "/generated-slices/generated-hare-keep-going/metadata/generated-hare-keep-going-00000-00013.json",
+  "transcriptJa": "あきらめないで。 いま、進んでいる。",
+  "transcriptZh": "别放弃。 现在正在前进。",
+  "subtitleSource": "external",
+  "exampleJa": "あきらめないで。",
+  "exampleZh": "别放弃。",
+  "keyNotes": [
+    "词 あきらめる: 放弃",
+    "词 進む: 继续前行",
+    "词 いま: 现在"
+  ],
+  "keywords": [
+    "あきらめる",
+    "進む",
+    "いま"
+  ],
+  "knowledgePoints": [
+    {
+      "id": "word:あきらめる",
+      "kind": "word",
+      "expression": "あきらめる",
+      "reading": "あきらめる",
+      "meaningZh": "放弃",
+      "partOfSpeech": "動詞",
+      "explanationZh": "あきらめ 是 あきらめる 的句中形式，这里更接近“放弃”。",
+      "exampleJa": "あきらめないで。",
+      "exampleZh": "别放弃。"
+    },
+    {
+      "id": "word:進む",
+      "kind": "word",
+      "expression": "進む",
+      "reading": "すすむ",
+      "meaningZh": "继续前行",
+      "partOfSpeech": "動詞",
+      "explanationZh": "進ん 是 進む 的句中形式，这里更接近“继续前行”。",
+      "exampleJa": "いま、進んでいる。",
+      "exampleZh": "现在正在前进。"
+    },
+    {
+      "id": "word:いま",
+      "kind": "word",
+      "expression": "いま",
+      "reading": "いま",
+      "meaningZh": "现在",
+      "partOfSpeech": "名詞",
+      "explanationZh": "いま 在这句里更接近“现在”。",
+      "exampleJa": "いま、進んでいる。",
+      "exampleZh": "现在正在前进。"
+    }
+  ],
+  "segments": [
+    {
+      "startMs": 0,
+      "endMs": 6500,
+      "ja": "あきらめないで。",
+      "kana": "あきらめないで。",
+      "romaji": "akiramenaide.",
+      "zh": "别放弃。",
+      "focusTermIds": [
+        "word:あきらめる"
+      ]
+    },
+    {
+      "startMs": 6500,
+      "endMs": 13000,
+      "ja": "いま、進んでいる。",
+      "kana": "いま、すすんでいる。",
+      "romaji": "ima,susundeiru.",
+      "zh": "现在正在前进。",
+      "focusTermIds": [
+        "word:進む",
+        "word:いま"
+      ]
+    }
+  ],
+  "quality": {
+    "asrConfidence": null,
+    "alignmentConfidence": 0.9,
+    "ocrConfidence": null,
+    "sceneBoundaryStart": false,
+    "sceneBoundaryEnd": false,
+    "speechBoundaryStart": true,
+    "speechBoundaryEnd": true,
+    "needsReview": false,
+    "warnings": []
+  }
+}

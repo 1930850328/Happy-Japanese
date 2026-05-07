@@ -1,0 +1,12 @@
+{
+  "sourceVideo": "hare-keep-going.webm",
+  "subtitlePath": "hare-keep-going.vtt",
+  "subtitleProvider": "external-subtitle",
+  "durationMs": 13053,
+  "acceptedClipCount": 1,
+  "cueCount": 2,
+  "segmentCount": 2,
+  "knowledgePointCount": 3,
+  "silenceEventCount": 0,
+  "generatedAt": "2026-05-07T07:19:00.753Z"
+}

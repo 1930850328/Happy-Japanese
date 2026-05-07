@@ -1,0 +1,12 @@
+{
+  "sourceVideo": "tobacco-choose.webm",
+  "subtitlePath": "tobacco-choose.vtt",
+  "subtitleProvider": "external-subtitle",
+  "durationMs": 13013,
+  "acceptedClipCount": 1,
+  "cueCount": 2,
+  "segmentCount": 2,
+  "knowledgePointCount": 4,
+  "silenceEventCount": 0,
+  "generatedAt": "2026-05-07T07:19:04.778Z"
+}

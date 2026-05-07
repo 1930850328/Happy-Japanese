@@ -1,0 +1,83 @@
+{
+  "id": "generated-hare-waiting-00000-00014",
+  "clipTitle": "The Hare and the Tortoise - まだ",
+  "startMs": 0,
+  "endMs": 14000,
+  "durationMs": 14000,
+  "videoPath": "/generated-slices/generated-hare-waiting/clips/generated-hare-waiting-00000-00014.mp4",
+  "coverPath": "/generated-slices/generated-hare-waiting/covers/generated-hare-waiting-00000-00014.jpg",
+  "subtitlePath": "/generated-slices/generated-hare-waiting/subtitles/generated-hare-waiting-00000-00014.vtt",
+  "metadataPath": "/generated-slices/generated-hare-waiting/metadata/generated-hare-waiting-00000-00014.json",
+  "transcriptJa": "まだかな。 ゆっくりでいいよ。",
+  "transcriptZh": "还没好吗？ 慢慢来也可以。",
+  "subtitleSource": "external",
+  "exampleJa": "まだかな。",
+  "exampleZh": "还没好吗？",
+  "keyNotes": [
+    "词 まだ: 仍然",
+    "词 ゆっくり: 慢慢地"
+  ],
+  "keywords": [
+    "まだ",
+    "ゆっくり"
+  ],
+  "knowledgePoints": [
+    {
+      "id": "word:まだ",
+      "kind": "word",
+      "expression": "まだ",
+      "reading": "まだ",
+      "meaningZh": "仍然",
+      "partOfSpeech": "副詞",
+      "explanationZh": "まだ 在这句里更接近“仍然”。",
+      "exampleJa": "まだかな。",
+      "exampleZh": "还没好吗？"
+    },
+    {
+      "id": "word:ゆっくり",
+      "kind": "word",
+      "expression": "ゆっくり",
+      "reading": "ゆっくり",
+      "meaningZh": "慢慢地",
+      "partOfSpeech": "副詞",
+      "explanationZh": "ゆっくり 在这句里更接近“慢慢地”。",
+      "exampleJa": "ゆっくりでいいよ。",
+      "exampleZh": "慢慢来也可以。"
+    }
+  ],
+  "segments": [
+    {
+      "startMs": 0,
+      "endMs": 7000,
+      "ja": "まだかな。",
+      "kana": "まだかな。",
+      "romaji": "madakana.",
+      "zh": "还没好吗？",
+      "focusTermIds": [
+        "word:まだ"
+      ]
+    },
+    {
+      "startMs": 7000,
+      "endMs": 14000,
+      "ja": "ゆっくりでいいよ。",
+      "kana": "ゆっくりでいいよ。",
+      "romaji": "yukkurideiiyo.",
+      "zh": "慢慢来也可以。",
+      "focusTermIds": [
+        "word:ゆっくり"
+      ]
+    }
+  ],
+  "quality": {
+    "asrConfidence": null,
+    "alignmentConfidence": 0.9,
+    "ocrConfidence": null,
+    "sceneBoundaryStart": false,
+    "sceneBoundaryEnd": false,
+    "speechBoundaryStart": true,
+    "speechBoundaryEnd": true,
+    "needsReview": false,
+    "warnings": []
+  }
+}

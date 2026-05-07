@@ -1,0 +1,129 @@
+{
+  "version": 2,
+  "animeTitle": "A Story of Tobacco",
+  "episodeTitle": "决定与尝试",
+  "sourceVideo": "tobacco-choose.webm",
+  "subtitleSource": "external",
+  "generatedAt": "2026-05-07T07:19:04.778Z",
+  "pipeline": {
+    "engine": "anime-learning-slicer",
+    "engineVersion": "0.1.0",
+    "asr": "external-subtitle",
+    "alignment": "subtitle-timing",
+    "sceneDetector": "ffmpeg-silencedetect",
+    "nlp": "kuromoji+wanakana"
+  },
+  "clipCount": 1,
+  "clips": [
+    {
+      "id": "generated-tobacco-choose-00000-00013",
+      "clipTitle": "A Story of Tobacco - する",
+      "startMs": 0,
+      "endMs": 13000,
+      "durationMs": 13000,
+      "videoPath": "/generated-slices/generated-tobacco-choose/clips/generated-tobacco-choose-00000-00013.mp4",
+      "coverPath": "/generated-slices/generated-tobacco-choose/covers/generated-tobacco-choose-00000-00013.jpg",
+      "subtitlePath": "/generated-slices/generated-tobacco-choose/subtitles/generated-tobacco-choose-00000-00013.vtt",
+      "metadataPath": "/generated-slices/generated-tobacco-choose/metadata/generated-tobacco-choose-00000-00013.json",
+      "transcriptJa": "これにしよう。 やってみる。",
+      "transcriptZh": "就选这个吧。 试着做做看。",
+      "subtitleSource": "external",
+      "exampleJa": "これにしよう。",
+      "exampleZh": "就选这个吧。",
+      "keyNotes": [
+        "词 する: 做",
+        "词 これ: 这",
+        "语法 てみる: 试着做"
+      ],
+      "keywords": [
+        "する",
+        "これ",
+        "てみる",
+        "やる"
+      ],
+      "knowledgePoints": [
+        {
+          "id": "word:する",
+          "kind": "word",
+          "expression": "する",
+          "reading": "する",
+          "meaningZh": "做",
+          "partOfSpeech": "動詞",
+          "explanationZh": "しよ 是 する 的句中形式，这里更接近“做”。",
+          "exampleJa": "これにしよう。",
+          "exampleZh": "就选这个吧。"
+        },
+        {
+          "id": "word:これ",
+          "kind": "word",
+          "expression": "これ",
+          "reading": "これ",
+          "meaningZh": "这",
+          "partOfSpeech": "名詞",
+          "explanationZh": "これ 在这句里更接近“这”。",
+          "exampleJa": "これにしよう。",
+          "exampleZh": "就选这个吧。"
+        },
+        {
+          "id": "grammar:te-miru",
+          "kind": "grammar",
+          "expression": "てみる",
+          "reading": "てみる",
+          "meaningZh": "试着做",
+          "partOfSpeech": "语法",
+          "explanationZh": "表示尝试做某事，常用于“先做做看”。",
+          "exampleJa": "やってみる。",
+          "exampleZh": "试着做做看。"
+        },
+        {
+          "id": "word:やる",
+          "kind": "word",
+          "expression": "やる",
+          "reading": "やる",
+          "meaningZh": "做",
+          "partOfSpeech": "動詞",
+          "explanationZh": "やっ 是 やる 的句中形式，这里更接近“做”。",
+          "exampleJa": "やってみる。",
+          "exampleZh": "试着做做看。"
+        }
+      ],
+      "segments": [
+        {
+          "startMs": 0,
+          "endMs": 6500,
+          "ja": "これにしよう。",
+          "kana": "これにしよう。",
+          "romaji": "korenishiyou.",
+          "zh": "就选这个吧。",
+          "focusTermIds": [
+            "word:する",
+            "word:これ"
+          ]
+        },
+        {
+          "startMs": 6500,
+          "endMs": 13000,
+          "ja": "やってみる。",
+          "kana": "やってみる。",
+          "romaji": "yattemiru.",
+          "zh": "试着做做看。",
+          "focusTermIds": [
+            "grammar:te-miru",
+            "word:やる"
+          ]
+        }
+      ],
+      "quality": {
+        "asrConfidence": null,
+        "alignmentConfidence": 0.9,
+        "ocrConfidence": null,
+        "sceneBoundaryStart": false,
+        "sceneBoundaryEnd": false,
+        "speechBoundaryStart": true,
+        "speechBoundaryEnd": true,
+        "needsReview": false,
+        "warnings": []
+      }
+    }
+  ]
+}

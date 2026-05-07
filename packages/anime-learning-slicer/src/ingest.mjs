@@ -176,8 +176,8 @@ export async function ingestVideo(rawOptions) {
   }
 
   const report = {
-    sourceVideo: options.inputPath,
-    subtitlePath,
+    sourceVideo: basename(options.inputPath),
+    subtitlePath: basename(subtitlePath),
     subtitleProvider,
     asrModel: asrModelUsed || undefined,
     durationMs: probe.durationMs,

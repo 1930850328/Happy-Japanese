@@ -1,5 +1,5 @@
 import { dirname, join } from 'node:path'
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 
 import { env, LogLevel, pipeline } from '@huggingface/transformers'
 
@@ -40,6 +40,50 @@ function normalizeChunks(chunks, durationMs) {
   return cues
 }
 
+async function readMonoPcm16Wav(pathValue) {
+  const buffer = await readFile(pathValue)
+  if (buffer.toString('ascii', 0, 4) !== 'RIFF' || buffer.toString('ascii', 8, 12) !== 'WAVE') {
+    throw new Error(`Unsupported ASR audio container: ${pathValue}`)
+  }
+
+  let offset = 12
+  let audioFormat = 0
+  let channelCount = 0
+  let bitsPerSample = 0
+  let dataStart = 0
+  let dataSize = 0
+
+  while (offset + 8 <= buffer.length) {
+    const chunkId = buffer.toString('ascii', offset, offset + 4)
+    const chunkSize = buffer.readUInt32LE(offset + 4)
+    const chunkStart = offset + 8
+
+    if (chunkId === 'fmt ') {
+      audioFormat = buffer.readUInt16LE(chunkStart)
+      channelCount = buffer.readUInt16LE(chunkStart + 2)
+      bitsPerSample = buffer.readUInt16LE(chunkStart + 14)
+    } else if (chunkId === 'data') {
+      dataStart = chunkStart
+      dataSize = chunkSize
+      break
+    }
+
+    offset = chunkStart + chunkSize + (chunkSize % 2)
+  }
+
+  if (audioFormat !== 1 || channelCount !== 1 || bitsPerSample !== 16 || !dataStart || !dataSize) {
+    throw new Error('ASR audio must be 16-bit mono PCM WAV.')
+  }
+
+  const sampleCount = Math.floor(dataSize / 2)
+  const audio = new Float32Array(sampleCount)
+  for (let index = 0; index < sampleCount; index += 1) {
+    audio[index] = buffer.readInt16LE(dataStart + index * 2) / 32768
+  }
+
+  return audio
+}
+
 async function loadTranscriber(modelId) {
   env.allowLocalModels = true
   env.allowRemoteModels = true
@@ -54,7 +98,8 @@ async function loadTranscriber(modelId) {
 
 async function runAsr(audioPath, durationMs, modelId) {
   const transcriber = await loadTranscriber(modelId)
-  const output = await transcriber(audioPath, {
+  const audio = await readMonoPcm16Wav(audioPath)
+  const output = await transcriber(audio, {
     return_timestamps: true,
     chunk_length_s: 30,
     stride_length_s: 5,

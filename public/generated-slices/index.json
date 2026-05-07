@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "generated-tobacco-choose",
+    "animeTitle": "A Story of Tobacco",
+    "episodeTitle": "决定与尝试",
+    "manifestPath": "/generated-slices/generated-tobacco-choose/manifest.json",
+    "generatedAt": "2026-05-07T07:19:04.778Z",
+    "clipCount": 1
+  },
+  {
+    "slug": "generated-hare-keep-going",
+    "animeTitle": "The Hare and the Tortoise",
+    "episodeTitle": "坚持与推进",
+    "manifestPath": "/generated-slices/generated-hare-keep-going/manifest.json",
+    "generatedAt": "2026-05-07T07:19:00.753Z",
+    "clipCount": 1
+  },
+  {
+    "slug": "generated-hare-waiting",
+    "animeTitle": "The Hare and the Tortoise",
+    "episodeTitle": "等待与放松",
+    "manifestPath": "/generated-slices/generated-hare-waiting/manifest.json",
+    "generatedAt": "2026-05-07T07:18:57.618Z",
+    "clipCount": 1
+  }
+]
