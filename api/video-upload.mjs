@@ -1,6 +1,8 @@
 import { handleUpload } from '@vercel/blob/client'
 
 import { requireVideoBlobToken } from './_blob-token.mjs'
+import { getMediaStorageProvider } from './_media-storage-provider.mjs'
+import { createR2UploadTicket } from './_r2-storage.mjs'
 
 const SITE_VIDEO_PREFIX = 'site-videos/'
 const MAX_VIDEO_SIZE = 2 * 1024 * 1024 * 1024
@@ -36,6 +38,46 @@ function verifyUploadPassword(req) {
   }
 }
 
+async function handleR2Upload(req, res) {
+  const body = readBody(req)
+  const size = Number(body.size ?? 0)
+
+  if (Number.isFinite(size) && size > MAX_VIDEO_SIZE) {
+    throw new Error('Video is larger than the 2GB upload limit.')
+  }
+
+  const ticket = await createR2UploadTicket({
+    pathname: body.pathname,
+    contentType: body.contentType,
+  })
+
+  res.status(200).json(ticket)
+}
+
+async function handleVercelBlobUpload(req, res) {
+  const token = requireVideoBlobToken()
+  const json = await handleUpload({
+    token,
+    request: req,
+    body: readBody(req),
+    onBeforeGenerateToken: async (pathname) => {
+      if (typeof pathname !== 'string' || !pathname.startsWith(SITE_VIDEO_PREFIX)) {
+        throw new Error('Invalid upload path.')
+      }
+
+      return {
+        allowedContentTypes: ['video/*'],
+        addRandomSuffix: true,
+        cacheControlMaxAge: 60 * 60 * 24 * 30,
+        maximumSizeInBytes: MAX_VIDEO_SIZE,
+      }
+    },
+    onUploadCompleted: async () => undefined,
+  })
+
+  res.status(200).json(json)
+}
+
 export default async function handler(req, res) {
   setCors(res)
 
@@ -51,28 +93,12 @@ export default async function handler(req, res) {
 
   try {
     verifyUploadPassword(req)
-    const token = requireVideoBlobToken()
+    if (getMediaStorageProvider() === 'r2') {
+      await handleR2Upload(req, res)
+      return
+    }
 
-    const json = await handleUpload({
-      token,
-      request: req,
-      body: readBody(req),
-      onBeforeGenerateToken: async (pathname) => {
-        if (typeof pathname !== 'string' || !pathname.startsWith(SITE_VIDEO_PREFIX)) {
-          throw new Error('Invalid upload path.')
-        }
-
-        return {
-          allowedContentTypes: ['video/*'],
-          addRandomSuffix: true,
-          cacheControlMaxAge: 60 * 60 * 24 * 30,
-          maximumSizeInBytes: MAX_VIDEO_SIZE,
-        }
-      },
-      onUploadCompleted: async () => undefined,
-    })
-
-    res.status(200).json(json)
+    await handleVercelBlobUpload(req, res)
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : 'Video upload failed',

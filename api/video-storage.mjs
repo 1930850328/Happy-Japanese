@@ -1,6 +1,8 @@
 import { del, list } from '@vercel/blob'
 
 import { requireVideoBlobToken } from './_blob-token.mjs'
+import { getMediaStorageProvider } from './_media-storage-provider.mjs'
+import { deleteR2SiteVideos, listR2SiteVideos } from './_r2-storage.mjs'
 
 const SITE_VIDEO_PREFIX = 'site-videos/'
 const MAX_LIST_PAGES = 20
@@ -84,6 +86,14 @@ async function listManagedVideos(token) {
   return blobs
 }
 
+function sendStorageSummary(res, blobs) {
+  res.status(200).json({
+    blobs,
+    count: blobs.length,
+    totalSize: blobs.reduce((sum, blob) => sum + blob.size, 0),
+  })
+}
+
 export default async function handler(req, res) {
   setCors(res)
 
@@ -99,15 +109,12 @@ export default async function handler(req, res) {
 
   try {
     verifyUploadPassword(req)
-    const token = requireVideoBlobToken()
+    const provider = getMediaStorageProvider()
 
     if (req.method === 'GET') {
-      const blobs = await listManagedVideos(token)
-      res.status(200).json({
-        blobs,
-        count: blobs.length,
-        totalSize: blobs.reduce((sum, blob) => sum + blob.size, 0),
-      })
+      const blobs =
+        provider === 'r2' ? await listR2SiteVideos() : await listManagedVideos(requireVideoBlobToken())
+      sendStorageSummary(res, blobs)
       return
     }
 
@@ -115,6 +122,14 @@ export default async function handler(req, res) {
     const urls = Array.isArray(body.urls)
       ? body.urls.map((item) => String(item ?? '').trim()).filter(Boolean)
       : []
+
+    if (provider === 'r2') {
+      const deleted = await deleteR2SiteVideos(urls)
+      res.status(200).json({ deleted })
+      return
+    }
+
+    const token = requireVideoBlobToken()
     const managedUrls = urls.filter(isManagedSiteVideoUrl)
 
     if (managedUrls.length === 0) {

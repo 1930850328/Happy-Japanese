@@ -1088,7 +1088,7 @@ export function ProfilePage() {
                     <span>
                       {storageSummary
                         ? `${storageSummary.count} 个文件 / ${formatFileSize(storageSummary.totalSize)}`
-                        : '查看 Vercel Blob 里已有整片视频占用'}
+                        : '查看 Cloudflare R2 里已有整片视频占用'}
                     </span>
                   </div>
                 </div>

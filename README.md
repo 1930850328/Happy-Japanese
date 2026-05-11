@@ -97,21 +97,42 @@ npm run build
 dist
 ```
 
-如果你想让“我的”页面里导入的视频文件保存到网站，而不是浏览器本地，需要在 Vercel 项目里配置：
+如果你想让“我的”页面里导入的视频文件保存到网站，而不是浏览器本地，需要先创建 Cloudflare R2 Bucket，并在 Vercel 项目里配置：
 
-- `BLOB_READ_WRITE_TOKEN`
+- `MEDIA_STORAGE_PROVIDER=r2`
+- `R2_ACCOUNT_ID`
+- `R2_ACCESS_KEY_ID`
+- `R2_SECRET_ACCESS_KEY`
+- `R2_BUCKET`
+- `R2_PUBLIC_BASE_URL`
 - `VIDEO_UPLOAD_PASSWORD`（可选，推荐）
 
 其中：
 
-- `BLOB_READ_WRITE_TOKEN` 用来把视频上传到 Vercel Blob
+- `R2_ACCOUNT_ID` 是 Cloudflare 账户 ID；如果你想手动指定 S3 兼容 endpoint，也可以改用 `R2_ENDPOINT`
+- `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY` 是 R2 API Token 里的 S3 凭证
+- `R2_BUCKET` 是视频 Bucket 名
+- `R2_PUBLIC_BASE_URL` 是 Bucket 的公开访问域名，例如 `https://media.example.com`
 - `VIDEO_UPLOAD_PASSWORD` 如果配置了，就会保护站内上传入口，避免任何访客都能往你的网站传视频
 - 如果不配置 `VIDEO_UPLOAD_PASSWORD`，网站端视频上传也可以正常工作，只是上传入口不会额外做密码校验
+
+R2 Bucket 还需要配置 CORS，允许你的网站域名直接 `PUT` 视频到 R2。示例：
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://你的域名.com", "http://localhost:4173"],
+    "AllowedMethods": ["PUT", "GET", "HEAD"],
+    "AllowedHeaders": ["content-type"],
+    "ExposeHeaders": ["etag"]
+  }
+]
+```
 
 配置完成后，页面导入会变成：
 
 1. 本地预览和切片分析仍然在浏览器里完成
-2. 点击导入后，视频文件上传到网站存储
+2. 点击导入后，前端向站点 API 申请 R2 上传地址，然后把视频直传到 R2
 3. 浏览器本地只保留字幕、知识点、切片区间和导入记录
 
 注意：

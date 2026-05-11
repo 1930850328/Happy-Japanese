@@ -1,6 +1,8 @@
 import { del } from '@vercel/blob'
 
 import { requireVideoBlobToken } from './_blob-token.mjs'
+import { getMediaStorageProvider } from './_media-storage-provider.mjs'
+import { deleteR2SiteVideos } from './_r2-storage.mjs'
 
 const SITE_VIDEO_PREFIX = '/site-videos/'
 
@@ -63,10 +65,17 @@ export default async function handler(req, res) {
   try {
     verifyUploadPassword(req)
     const body = readBody(req)
-    const token = requireVideoBlobToken()
     const urls = Array.isArray(body.urls)
       ? body.urls.map((item) => String(item ?? '').trim()).filter(Boolean)
       : []
+
+    if (getMediaStorageProvider() === 'r2') {
+      const deleted = await deleteR2SiteVideos(urls)
+      res.status(200).json({ deleted })
+      return
+    }
+
+    const token = requireVideoBlobToken()
     const managedUrls = urls.filter(isManagedSiteVideoUrl)
 
     if (managedUrls.length === 0) {
