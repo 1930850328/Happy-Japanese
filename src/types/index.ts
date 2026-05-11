@@ -26,6 +26,73 @@ export interface KnowledgePoint {
   exampleZh: string
 }
 
+export type StudyIndexQuality = 'trusted' | 'draft' | 'blocked'
+
+export type StudyIndexStatus = 'ready' | 'needsReview' | 'failed'
+
+export interface TranscriptCueIndex {
+  id: string
+  startMs: number
+  endMs: number
+  ja: string
+  zh: string
+  kana: string
+  romaji: string
+  termOccurrenceIds: string[]
+  grammarOccurrenceIds: string[]
+}
+
+export interface TermOccurrence {
+  id: string
+  videoId: string
+  cueId: string
+  startMs: number
+  endMs: number
+  surface: string
+  lemma: string
+  reading: string
+  kana: string
+  romaji: string
+  partOfSpeech: string
+  meaningZh: string
+  confidence: number
+}
+
+export interface GrammarOccurrence {
+  id: string
+  videoId: string
+  cueId: string
+  grammarId: string
+  level: DifficultyLevel
+  label: string
+  matchedText: string
+  meaningZh: string
+  explanationZh: string
+  startMs: number
+  endMs: number
+  exampleJa: string
+  exampleZh: string
+  confidence: number
+}
+
+export interface StudyIndex {
+  version: 1
+  videoId: string
+  status: StudyIndexStatus
+  quality: StudyIndexQuality
+  sourceLabel: string
+  generatedAt: string
+  transcript: TranscriptCueIndex[]
+  termOccurrences: TermOccurrence[]
+  grammarOccurrences: GrammarOccurrence[]
+  summary: {
+    cueCount: number
+    termCount: number
+    grammarCount: number
+    trusted: boolean
+  }
+}
+
 export interface VideoLesson {
   id: string
   sourceType: LessonSourceType
@@ -192,6 +259,7 @@ export interface ImportedClip {
   subtitleFileName?: string
   subtitleSource?: 'manual' | 'auto'
   blob?: Blob
+  studyIndex?: StudyIndex
   createdAt: string
   segments: TranscriptSegment[]
   knowledgePoints: KnowledgePoint[]

@@ -12,6 +12,10 @@ export interface SubtitleCue {
   zhText?: string
 }
 
+interface BuildStudyDataOptions {
+  includeKnowledge?: boolean
+}
+
 function parseTimestamp(value: string) {
   const cleaned = value.trim().replace(',', '.')
   const parts = cleaned.split(':')
@@ -330,7 +334,16 @@ async function resolveChineseLines(cues: SubtitleCue[]) {
   }
 }
 
-export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
+function buildFallbackChineseLine(jaText: string) {
+  const previewText = jaText.trim().slice(0, 36)
+  return previewText ? `这句字幕是「${previewText}」，可以在预览里校对中文。` : '这句字幕可以在预览里校对中文。'
+}
+
+export async function buildStudyDataFromCues(
+  cues: SubtitleCue[],
+  options: BuildStudyDataOptions = {},
+) {
+  const includeKnowledge = options.includeKnowledge ?? true
   const translatedMap = await resolveChineseLines(cues)
   const knowledgeMap = new Map<string, KnowledgePoint>()
   const segments: TranscriptSegment[] = []
@@ -341,68 +354,70 @@ export async function buildStudyDataFromCues(cues: SubtitleCue[]) {
       continue
     }
 
-    const analysis = await analyzeJapaneseText(jaText)
+    const analysis = includeKnowledge ? await analyzeJapaneseText(jaText) : null
     const translatedLine = translatedMap.get(jaText)?.trim()
     const resolvedZh = resolveSegmentChinese(
       jaText,
       cue.zhText,
       translatedLine,
-      analysis.glossZh,
+      analysis?.glossZh ?? buildFallbackChineseLine(jaText),
       cue.zhSource,
     )
     const focusTermIds: string[] = []
 
-    const grammarMatches = [...analysis.grammarMatches]
-      .sort((left, right) => right.matchedText.length - left.matchedText.length)
-      .filter(
-        (match, index, all) =>
-          !all
-            .slice(0, index)
-            .some((existing) => existing.matchedText.includes(match.matchedText)),
-      )
+    if (includeKnowledge && analysis) {
+      const grammarMatches = [...analysis.grammarMatches]
+        .sort((left, right) => right.matchedText.length - left.matchedText.length)
+        .filter(
+          (match, index, all) =>
+            !all
+              .slice(0, index)
+              .some((existing) => existing.matchedText.includes(match.matchedText)),
+        )
 
-    for (const match of grammarMatches.slice(0, 2)) {
-      const pointId = `grammar:${match.id}`
-      if (!knowledgeMap.has(pointId)) {
-        knowledgeMap.set(pointId, {
-          id: pointId,
-          kind: 'grammar',
-          expression: match.pattern,
-          reading: match.pattern,
-          meaningZh: match.meaningZh,
-          partOfSpeech: '语法',
-          explanationZh: match.explanationZh,
-          exampleJa: jaText,
-          exampleZh: resolvedZh,
-        })
+      for (const match of grammarMatches.slice(0, 2)) {
+        const pointId = `grammar:${match.id}`
+        if (!knowledgeMap.has(pointId)) {
+          knowledgeMap.set(pointId, {
+            id: pointId,
+            kind: 'grammar',
+            expression: match.pattern,
+            reading: match.pattern,
+            meaningZh: match.meaningZh,
+            partOfSpeech: '语法',
+            explanationZh: match.explanationZh,
+            exampleJa: jaText,
+            exampleZh: resolvedZh,
+          })
+        }
+        focusTermIds.push(pointId)
       }
-      focusTermIds.push(pointId)
-    }
 
-    for (const token of pickFocusTokens(analysis, jaText)) {
-      const pointId = `word:${token.base}`
-      if (!knowledgeMap.has(pointId)) {
-        knowledgeMap.set(pointId, {
-          id: pointId,
-          kind: 'word',
-          expression: token.surface,
-          reading: token.kana || token.reading,
-          meaningZh: token.meaningZh,
-          partOfSpeech: token.partOfSpeech,
-          explanationZh: buildTokenExplanation(token.surface, token.meaningZh),
-          exampleJa: jaText,
-          exampleZh: resolvedZh,
-        })
+      for (const token of pickFocusTokens(analysis, jaText)) {
+        const pointId = `word:${token.base}`
+        if (!knowledgeMap.has(pointId)) {
+          knowledgeMap.set(pointId, {
+            id: pointId,
+            kind: 'word',
+            expression: token.surface,
+            reading: token.kana || token.reading,
+            meaningZh: token.meaningZh,
+            partOfSpeech: token.partOfSpeech,
+            explanationZh: buildTokenExplanation(token.surface, token.meaningZh),
+            exampleJa: jaText,
+            exampleZh: resolvedZh,
+          })
+        }
+        focusTermIds.push(pointId)
       }
-      focusTermIds.push(pointId)
     }
 
     segments.push({
       startMs: cue.startMs,
       endMs: cue.endMs,
       ja: jaText,
-      kana: analysis.kana,
-      romaji: analysis.romaji,
+      kana: analysis?.kana ?? jaText,
+      romaji: analysis?.romaji ?? '',
       zh: resolvedZh,
       focusTermIds,
     })

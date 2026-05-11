@@ -30,10 +30,10 @@ export function AppShell() {
   const isImmersiveRoute = location.pathname === '/immersive'
   const sliceBannerText =
     sliceTask.status === 'running'
-      ? `切片任务进行中 · ${sliceTask.percent}% · ${sliceTask.detail}`
+      ? `视频处理进行中 · ${sliceTask.percent}% · ${sliceTask.detail}`
       : sliceTask.status === 'completed'
-        ? `切片任务已完成 · ${sliceTask.detail}`
-        : `切片任务遇到问题 · ${sliceTask.detail}`
+        ? `视频处理已完成 · ${sliceTask.detail}`
+        : `视频处理遇到问题 · ${sliceTask.detail}`
 
   return (
     <div className={`${styles.shell} ${isImmersiveRoute ? styles.shellImmersive : ''}`}>
@@ -110,7 +110,7 @@ export function AppShell() {
                 }`}
               >
                 <div className={styles.sliceBannerText}>
-                  <strong>{sliceTask.status === 'running' ? '切片任务进行中' : '切片任务提醒'}</strong>
+                  <strong>{sliceTask.status === 'running' ? '视频处理进行中' : '视频处理提醒'}</strong>
                   <span>{sliceBannerText}</span>
                 </div>
                 <span className="chip badgePeach">回到我的页查看</span>

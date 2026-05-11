@@ -1,5 +1,7 @@
 const CACHE_KEY = 'yuru-nihongo-translation-cache-v4'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
+const TRANSLATION_BATCH_SIZE = 24
+const TRANSLATION_BATCH_TIMEOUT_MS = 15_000
 
 const translationCache = new Map<string, string>()
 
@@ -55,20 +57,19 @@ function getEndpoint() {
   return `${origin}/api/translate`
 }
 
-export async function translateJapaneseSentences(texts: string[]) {
-  loadCacheFromStorage()
+async function fetchTranslationBatch(batch: string[]) {
+  const controller = new AbortController()
+  const timeoutId = window.setTimeout(() => controller.abort(), TRANSLATION_BATCH_TIMEOUT_MS)
 
-  const normalized = [...new Set(texts.map((item) => item.trim()).filter(Boolean))]
-  const missing = normalized.filter((item) => !translationCache.has(item))
-
-  if (missing.length > 0) {
+  try {
     const response = await fetch(getEndpoint(), {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
+      signal: controller.signal,
       body: JSON.stringify({
-        texts: missing,
+        texts: batch,
         from: 'ja',
         to: 'zh-CN',
       }),
@@ -79,15 +80,37 @@ export async function translateJapaneseSentences(texts: string[]) {
     }
 
     const payload = (await response.json()) as { translations?: string[] }
-    const translations = Array.isArray(payload.translations) ? payload.translations : []
+    return Array.isArray(payload.translations) ? payload.translations : []
+  } finally {
+    window.clearTimeout(timeoutId)
+  }
+}
 
-    missing.forEach((item, index) => {
-      const translated = translations[index]?.trim()
+export async function translateJapaneseSentences(texts: string[]) {
+  loadCacheFromStorage()
+
+  const normalized = [...new Set(texts.map((item) => item.trim()).filter(Boolean))]
+  const missing = normalized.filter((item) => !translationCache.has(item))
+
+  for (let index = 0; index < missing.length; index += TRANSLATION_BATCH_SIZE) {
+    const batch = missing.slice(index, index + TRANSLATION_BATCH_SIZE)
+    let translations: string[] = []
+
+    try {
+      translations = await fetchTranslationBatch(batch)
+    } catch {
+      break
+    }
+
+    batch.forEach((item, batchIndex) => {
+      const translated = translations[batchIndex]?.trim()
       if (translated) {
         translationCache.set(item, translated)
       }
     })
+  }
 
+  if (missing.length > 0) {
     persistCache()
   }
 

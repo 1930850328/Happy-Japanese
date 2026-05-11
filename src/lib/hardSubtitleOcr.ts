@@ -40,6 +40,9 @@ const OCR_COMMON_CHAR_MIN_RATIO = 0.45
 const OCR_BLACKLIST = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789<>|/\\\\[]{}=_~@#$%^&*'
 const OCR_TIMELINE_SCAN_INTERVAL_MS = 1200
 const OCR_TIMELINE_CUE_RADIUS_MS = 950
+const OCR_MAX_CUE_TARGETS = 36
+const OCR_MAX_TIMELINE_TARGETS = 18
+const OCR_MAX_TOTAL_TARGETS = 54
 const COMMON_SUBTITLE_CHARS =
   '我你他她它们这那哪就样和的是了在有不没吗吧呢啊呀着过给把被从到里上下面中为让但可会能要想说看听来去出见遇知做还都很也再又只真好坏多小大前后现今明天时分秒点自已己然所以因为如果怎么什么为什么谁与同向对等'
 
@@ -133,6 +136,24 @@ function getSampleTimeMs(cue: SubtitleCue) {
   return Math.max(cue.startMs + 80, Math.min(cue.endMs - 80, earlySubtitleSample))
 }
 
+function sampleTargets<T>(items: T[], maxCount: number) {
+  if (items.length <= maxCount) {
+    return items
+  }
+
+  if (maxCount <= 1) {
+    return items.slice(0, 1)
+  }
+
+  const sampled: T[] = []
+  const step = (items.length - 1) / (maxCount - 1)
+  for (let index = 0; index < maxCount; index += 1) {
+    sampled.push(items[Math.round(index * step)])
+  }
+
+  return sampled
+}
+
 function buildSubtitleTargets(cues: SubtitleCue[]) {
   const cueTargets = cues
     .filter((cue) => {
@@ -148,6 +169,8 @@ function buildSubtitleTargets(cues: SubtitleCue[]) {
   if (cueTargets.length === 0) {
     return []
   }
+
+  const sampledCueTargets = sampleTargets(cueTargets, OCR_MAX_CUE_TARGETS)
 
   const scanStartMs = Math.max(0, Math.min(...cueTargets.map((target) => target.cue.startMs)) + 800)
   const scanEndMs = Math.max(...cueTargets.map((target) => target.cue.endMs)) - 500
@@ -168,7 +191,10 @@ function buildSubtitleTargets(cues: SubtitleCue[]) {
     }
   }
 
-  return [...cueTargets, ...timelineTargets]
+  return sampleTargets(
+    [...sampledCueTargets, ...sampleTargets(timelineTargets, OCR_MAX_TIMELINE_TARGETS)],
+    OCR_MAX_TOTAL_TARGETS,
+  )
 }
 
 function findNearestCue(cues: SubtitleCue[], sampleMs: number) {

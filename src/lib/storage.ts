@@ -12,10 +12,11 @@ import type {
 } from '../types'
 
 const DB_NAME = 'yuru-nihongo-db'
-const DB_VERSION = 1
+const DB_VERSION = 2
 const PROFILE_STORAGE_KEY = 'yuru-nihongo-cloud-profile-id'
 const STATE_ENDPOINT = '/api/app-state'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
+const LOCAL_VIDEO_KEY_PREFIX = 'local-video:'
 
 type StoreName =
   | 'favorites'
@@ -27,10 +28,19 @@ type StoreName =
   | 'vocab_progress'
   | 'imported_clips'
   | 'app_settings'
+  | 'video_blobs'
 
 export interface FavoriteRecord {
   id: string
   createdAt: string
+}
+
+interface LocalVideoBlobRecord {
+  id: string
+  blob: Blob
+  fileName: string
+  fileType: string
+  updatedAt: string
 }
 
 interface RemoteAppState {
@@ -192,6 +202,7 @@ async function getLegacyDb() {
         ['vocab_progress', 'id'],
         ['imported_clips', 'id'],
         ['app_settings', 'id'],
+        ['video_blobs', 'id'],
       ]
 
       for (const [name, keyPath] of stores) {
@@ -201,6 +212,60 @@ async function getLegacyDb() {
       }
     },
   })
+}
+
+export function createLocalVideoBlobKey(clipId: string) {
+  return `${LOCAL_VIDEO_KEY_PREFIX}${clipId}`
+}
+
+export function isLocalVideoBlobKey(value: string | undefined) {
+  return Boolean(value?.startsWith(LOCAL_VIDEO_KEY_PREFIX))
+}
+
+export async function saveLocalVideoBlob(key: string, file: File | Blob, fileName: string) {
+  if (!isBrowser()) {
+    return
+  }
+
+  const db = await getLegacyDb()
+  const record: LocalVideoBlobRecord = {
+    id: key,
+    blob: file,
+    fileName,
+    fileType: file.type || 'video/mp4',
+    updatedAt: new Date().toISOString(),
+  }
+  await db.put('video_blobs', record)
+}
+
+export async function loadLocalVideoFile(
+  key: string,
+  fallbackFileName: string,
+  fallbackFileType = 'video/mp4',
+) {
+  if (!isBrowser() || !isLocalVideoBlobKey(key)) {
+    return null
+  }
+
+  const db = await getLegacyDb()
+  const record = await db.get('video_blobs', key) as LocalVideoBlobRecord | undefined
+  if (!record?.blob) {
+    return null
+  }
+
+  return new File([record.blob], record.fileName || fallbackFileName, {
+    type: record.fileType || record.blob.type || fallbackFileType,
+    lastModified: new Date(record.updatedAt).getTime() || Date.now(),
+  })
+}
+
+export async function deleteLocalVideoBlob(key: string | undefined) {
+  if (!isBrowser() || !isLocalVideoBlobKey(key)) {
+    return
+  }
+
+  const db = await getLegacyDb()
+  await db.delete('video_blobs', key!)
 }
 
 async function loadLegacyState(profileId: string) {

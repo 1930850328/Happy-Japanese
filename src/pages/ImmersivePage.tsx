@@ -137,7 +137,7 @@ function ImmersiveSlide({
 
       <div className={styles.slideContent}>
         <div className={styles.viewerShell}>
-          <div className={styles.playerStage} data-testid="immersive-stage">
+          <div className={styles.playerStage} data-testid={active ? 'immersive-stage' : undefined}>
             {sourceUrl ? (
               <AnimeStudyPlayer
                 ref={playerRef}
@@ -164,7 +164,7 @@ function ImmersiveSlide({
             )}
             <div className={styles.playerShade} />
 
-            <div className={styles.actionRail} data-testid="immersive-action-rail">
+            <div className={styles.actionRail} data-testid={active ? 'immersive-action-rail' : undefined}>
               <button
                 type="button"
                 className={styles.actionButton}
@@ -196,7 +196,7 @@ function ImmersiveSlide({
               </a>
             </div>
 
-            <div className={styles.infoCard} data-testid="immersive-info">
+            <div className={styles.infoCard} data-testid={active ? 'immersive-info' : undefined}>
               <div className={styles.infoHeader}>
                 <div className={styles.infoBadges}>
                   <span className="chip badgeMint">竖屏刷流</span>

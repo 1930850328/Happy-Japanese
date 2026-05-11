@@ -124,7 +124,7 @@ function LessonCard({
         <img className={styles.posterImage} src={lesson.cover} alt={lesson.title} />
         <div className={styles.posterShade} />
         <span className={styles.durationBadge}>{durationText}</span>
-        <button className={styles.playBadge} onClick={() => onStart(lesson.id)} aria-label="开始学习">
+        <button className={styles.playBadge} onClick={() => onStart(lesson.id)} aria-label="播放这段">
           <Play size={24} />
         </button>
       </div>
@@ -146,7 +146,11 @@ function LessonCard({
         )}
 
         <div className={styles.focusActions}>
-          <button className="softButton primaryButton" onClick={() => onStart(lesson.id)}>
+          <button
+            className="softButton primaryButton"
+            onClick={() => onStart(lesson.id)}
+            aria-label="开始学习这段"
+          >
             <Play size={18} />
             继续这一段
           </button>
@@ -739,7 +743,7 @@ export function HomePage() {
         </header>
 
         {activeLesson ? (
-          <div className={styles.focusLayout}>
+          <div className={styles.focusLayout} data-testid="home-feed">
             <LessonCard
               lesson={activeLesson}
               favorite={favorites.includes(activeLesson.id)}

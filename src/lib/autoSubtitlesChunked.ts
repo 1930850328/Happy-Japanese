@@ -79,7 +79,8 @@ const BASE_MODEL = 'onnx-community/whisper-base_timestamped'
 const MODEL_REMOTE_HOSTS: WhisperRemoteHost[] = [
   { host: 'https://huggingface.co/', label: 'Hugging Face' },
 ]
-const MODEL_LOAD_TIMEOUT_MS = 75_000
+const MODEL_CACHE_LOAD_TIMEOUT_MS = 25_000
+const MODEL_LOAD_TIMEOUT_MS = 240_000
 const CHUNK_DURATION_MS = 30_000
 const CHUNK_HEARTBEAT_MS = 5_000
 const MIN_CHUNK_TIMEOUT_MS = 45_000
@@ -215,7 +216,7 @@ function buildStrategyFailureStatus(
     return `当前字幕模型加载失败，正在改用 ${nextStrategy.label}…`
   }
 
-  return '当前设备暂时无法加载字幕模型，无法按语法和单词切片。'
+  return '当前设备暂时无法加载字幕模型，无法生成字幕草稿。'
 }
 
 function buildChunkRanges(durationMs: number) {
@@ -277,10 +278,6 @@ function normalizeCues(
   }
 
   return cues
-}
-
-function hasUsableFocusTerms(segments: TranscriptSegment[]) {
-  return segments.some((segment) => segment.focusTermIds.length > 0)
 }
 
 function buildModelLabel(baseLabel: string, hardSubtitleCount: number) {
@@ -371,6 +368,7 @@ async function extractEmbeddedSubtitleTrack(
 async function loadTranscriberForStrategy(
   strategy: WhisperLoadStrategy,
   remoteHost: WhisperRemoteHost,
+  localFilesOnly: boolean,
   onStatus?: StatusCallback,
 ): Promise<LoadedTranscriber> {
   const { env, LogLevel, pipeline } = await import('@huggingface/transformers')
@@ -381,13 +379,18 @@ async function loadTranscriberForStrategy(
   env.logLevel = LogLevel.ERROR
   configureBrowserInferenceBackend(env)
 
-  onStatus?.(`正在加载 ${strategy.label}（${remoteHost.label}）…`)
+  onStatus?.(
+    localFilesOnly
+      ? `正在检查本地字幕模型缓存（${strategy.label}）…`
+      : `正在加载 ${strategy.label}（${remoteHost.label}）…`,
+  )
   await waitForNextPaint()
 
   const transcriber = await withTimeout(
     pipeline('automatic-speech-recognition', strategy.modelId, {
       device: 'wasm',
       dtype: strategy.dtype,
+      local_files_only: localFilesOnly,
       progress_callback: (progress: { progress?: number; status?: string }) => {
         if (typeof progress.progress === 'number') {
           const percent = progress.progress <= 1 ? progress.progress * 100 : progress.progress
@@ -397,8 +400,10 @@ async function loadTranscriberForStrategy(
         }
       },
     }),
-    MODEL_LOAD_TIMEOUT_MS,
-    `${strategy.label}（${remoteHost.label}）加载超时`,
+    localFilesOnly ? MODEL_CACHE_LOAD_TIMEOUT_MS : MODEL_LOAD_TIMEOUT_MS,
+    localFilesOnly
+      ? `${strategy.label} 本地缓存读取超时`
+      : `${strategy.label}（${remoteHost.label}）加载超时`,
   )
 
   return {
@@ -423,8 +428,16 @@ async function getTranscriber(onStatus?: StatusCallback) {
       for (let hostIndex = 0; hostIndex < MODEL_REMOTE_HOSTS.length; hostIndex += 1) {
         const remoteHost = MODEL_REMOTE_HOSTS[hostIndex]
 
+        if (hostIndex === 0) {
+          try {
+            return await loadTranscriberForStrategy(strategy, remoteHost, true, onStatus)
+          } catch {
+            onStatus?.(`本地没有可用的 ${strategy.label} 缓存，准备从 ${remoteHost.label} 下载…`)
+          }
+        }
+
         try {
-          return await loadTranscriberForStrategy(strategy, remoteHost, onStatus)
+          return await loadTranscriberForStrategy(strategy, remoteHost, false, onStatus)
         } catch (error) {
           lastError = error
           onStatus?.(
@@ -449,6 +462,10 @@ async function getTranscriber(onStatus?: StatusCallback) {
   })
 
   return promise
+}
+
+export async function preloadSubtitleModel(onStatus?: StatusCallback) {
+  await getTranscriber(onStatus)
 }
 
 async function transcribeChunk(
@@ -494,7 +511,7 @@ async function transcribeVideoInChunks(
   transcriber: LoadedTranscriber['transcriber'],
   onStatus?: StatusCallback,
 ) {
-  const { ffmpeg, fetchFile } = await getSharedFFmpeg(onStatus, '准备音频切片引擎…')
+  const { ffmpeg, fetchFile } = await getSharedFFmpeg(onStatus, '准备分段音频引擎…')
   const inputExt = file.name.split('.').pop() || 'mp4'
   const inputName = `subtitle-input-${crypto.randomUUID()}.${inputExt}`
   const chunkRanges = buildChunkRanges(durationMs)
@@ -584,19 +601,17 @@ export async function generateStudyDataFromVideo(
   try {
     const embeddedTrack = await extractEmbeddedSubtitleTrack(file, onStatus)
     if (embeddedTrack) {
-      onStatus?.(`已读取${embeddedTrack.label}，正在提取知识点…`)
+      onStatus?.(`已读取${embeddedTrack.label}，正在生成字幕时间轴…`)
       const embeddedEnrichment = await enrichCuesWithHardSubtitles(
         file,
         embeddedTrack.cues,
         onStatus,
       )
-      const embeddedStudyData = await buildStudyDataFromCues(embeddedEnrichment.cues)
+      const embeddedStudyData = await buildStudyDataFromCues(embeddedEnrichment.cues, {
+        includeKnowledge: false,
+      })
 
-      if (
-        embeddedStudyData.segments.length > 0 &&
-        embeddedStudyData.knowledgePoints.length > 0 &&
-        hasUsableFocusTerms(embeddedStudyData.segments)
-      ) {
+      if (embeddedStudyData.segments.length > 0) {
         return {
           segments: embeddedStudyData.segments,
           knowledgePoints: embeddedStudyData.knowledgePoints,
@@ -605,7 +620,7 @@ export async function generateStudyDataFromVideo(
         }
       }
 
-      onStatus?.(`${embeddedTrack.label} 可用，但还不足以切出重点，继续尝试语音识别…`)
+      onStatus?.(`${embeddedTrack.label} 没有提取到可用字幕，继续尝试语音识别…`)
     }
 
     const { transcriber, modelLabel } = await getTranscriber(onStatus)
@@ -615,20 +630,16 @@ export async function generateStudyDataFromVideo(
 
     if (enrichedCues.length === 0) {
       throw new Error(
-        '没有识别出可用字幕，无法按语法和单词切片。请换更短、更清晰、对白更明显的视频片段。',
+        '没有识别出可用字幕。请换更清晰、对白更明显的视频，或上传外部字幕。',
       )
     }
 
-    onStatus?.(`生成中文字幕与知识点中…共 ${enrichedCues.length} 条字幕`)
-    const studyData = await buildStudyDataFromCues(enrichedCues)
+    onStatus?.(`生成中文字幕与字幕时间轴中…共 ${enrichedCues.length} 条字幕`)
+    const studyData = await buildStudyDataFromCues(enrichedCues, { includeKnowledge: false })
 
-    if (
-      studyData.segments.length === 0 ||
-      studyData.knowledgePoints.length === 0 ||
-      !hasUsableFocusTerms(studyData.segments)
-    ) {
+    if (studyData.segments.length === 0) {
       throw new Error(
-        '识别到了字幕，但没有抽出足够的语法或单词知识点，无法按语法和单词切片。请换对白更清晰、信息密度更高的视频片段。',
+        '识别到了字幕，但没有生成可编辑的字幕行。请换对白更清晰的视频片段，或上传外部字幕。',
       )
     }
 
@@ -640,7 +651,7 @@ export async function generateStudyDataFromVideo(
     }
   } catch (error) {
     throw new Error(
-      `自动字幕生成失败：${normalizeErrorMessage(error)}。当前切片只会基于字幕里的语法和单词，不会再按时间粗切。`,
+      `自动字幕生成失败：${normalizeErrorMessage(error)}。请稍后重试，或上传 .srt / .vtt / .ass 字幕。`,
     )
   }
 }

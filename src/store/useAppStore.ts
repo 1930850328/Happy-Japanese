@@ -5,6 +5,13 @@ import { getTodayKey } from '../lib/date'
 import { buildLessonsFromImportedClip } from '../lib/lessonSlices'
 import { loadPublishedLessons } from '../lib/publishedLessons'
 import {
+  buildGrammarStudyLessons,
+  buildStudyIndex,
+  buildTermStudyLessons,
+  type GrammarStudyRequest,
+  type TermStudyRequest,
+} from '../lib/studyIndex'
+import {
   buildManifestClipFileMap,
   getManifestCoverFileName,
   getManifestClipFileName,
@@ -21,6 +28,9 @@ import {
 } from '../lib/review'
 import {
   deleteImportedClip,
+  deleteLocalVideoBlob,
+  createLocalVideoBlobKey,
+  isLocalVideoBlobKey,
   deleteNote,
   listFavorites,
   listImportedClips,
@@ -29,6 +39,7 @@ import {
   listReviewLogs,
   listStudyEvents,
   listVocabProgress,
+  loadLocalVideoFile,
   loadGoal,
   loadSettings,
   removeFavorite,
@@ -36,6 +47,7 @@ import {
   saveGoal,
   saveImportedClip,
   saveImportedClips,
+  saveLocalVideoBlob,
   saveNote,
   saveReviewItem,
   saveReviewItems,
@@ -63,6 +75,7 @@ import type {
   SliceTaskState,
   StudyEvent,
   StudyEventType,
+  TranscriptSegment,
   VocabCard,
   VocabProgress,
   VideoLesson,
@@ -115,6 +128,10 @@ function dedupeLessons(lessons: VideoLesson[]) {
 function buildLessons(importedClips: ImportedClip[], publishedLessons: VideoLesson[]) {
   const importedLessons = importedClips.flatMap((clip) => {
     if (clip.importMode === 'source') {
+      return []
+    }
+
+    if (clip.importMode === 'raw') {
       return []
     }
 
@@ -285,6 +302,65 @@ function mergeTags(...groups: Array<Array<string | undefined>>) {
   return [...new Set(groups.flat().filter((item): item is string => Boolean(item && item.trim())))]
 }
 
+function stableClipId(prefix: string, rawId: string) {
+  const safeId = rawId.replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '')
+  return `${prefix}-${safeId}`.slice(0, 160)
+}
+
+function buildGeneratedStudyClips({
+  lessons,
+  baseClips,
+  idPrefix,
+  extraTag,
+}: {
+  lessons: VideoLesson[]
+  baseClips: ImportedClip[]
+  idPrefix: string
+  extraTag: string
+}) {
+  const createdAt = new Date().toISOString()
+  const existingById = new Map(baseClips.map((clip) => [clip.id, clip]))
+  const sourceClipById = new Map(baseClips.map((clip) => [clip.id, clip]))
+
+  return lessons.map<ImportedClip>((lesson) => {
+    const id = stableClipId(idPrefix, lesson.id)
+    const existing = existingById.get(id)
+    const sourceClip = lesson.originClipId ? sourceClipById.get(lesson.originClipId) : undefined
+    const clipStartMs = lesson.clipStartMs ?? 0
+    const clipEndMs = lesson.clipEndMs ?? clipStartMs + lesson.durationMs
+
+    return {
+      id,
+      title: lesson.title,
+      theme: lesson.theme,
+      difficulty: lesson.difficulty,
+      importMode: 'sliced',
+      sourceAnimeTitle: sourceClip?.title ?? lesson.theme,
+      sourceSliceId: lesson.id,
+      sourceClipId: lesson.originClipId,
+      sourceType: 'local',
+      sourceIdOrBlobKey: lesson.sourceIdOrBlobKey,
+      sourceFileName: lesson.sourceFileName,
+      sourceUrl: lesson.sourceUrl,
+      sourceProvider: `${lesson.sourceProvider} / 按需生成`,
+      cover: lesson.cover,
+      durationMs: lesson.durationMs,
+      clipStartMs,
+      clipEndMs,
+      fileType: sourceClip?.fileType ?? 'video/mp4',
+      subtitleFileName: sourceClip?.subtitleFileName,
+      subtitleSource: lesson.tags.includes('可信字幕') ? 'manual' : 'auto',
+      blob: sourceClip?.blob,
+      createdAt: existing?.createdAt ?? createdAt,
+      segments: lesson.segments,
+      knowledgePoints: lesson.knowledgePoints,
+      tags: mergeTags(lesson.tags, [extraTag]),
+      description: lesson.description,
+      creditLine: lesson.creditLine,
+    }
+  })
+}
+
 async function uploadManagedVideo(
   file: File,
   title: string,
@@ -309,6 +385,93 @@ async function uploadManagedVideo(
   return uploaded
 }
 
+async function attachCachedLocalVideos(importedClips: ImportedClip[]) {
+  return Promise.all(
+    importedClips.map(async (clip) => {
+      if (!isLocalVideoBlobKey(clip.sourceIdOrBlobKey) || clip.blob) {
+        return clip
+      }
+
+      const file = await loadLocalVideoFile(
+        clip.sourceIdOrBlobKey,
+        clip.sourceFileName || `${clip.id}.mp4`,
+        clip.fileType,
+      )
+      return file ? { ...clip, blob: file } : clip
+    }),
+  )
+}
+
+function markSourceProviderUploaded(sourceProvider: string) {
+  const base = sourceProvider
+    .split(' / ')
+    .filter((item) => item && item !== '本地草稿' && item !== '本地待上传' && item !== '浏览器本地暂存')
+  return [...new Set([...base, '站内存储'])].join(' / ')
+}
+
+function markTagsUploaded(tags: string[]) {
+  return mergeTags(
+    tags.filter((tag) => tag !== '本地草稿' && tag !== '本地待上传' && tag !== '浏览器本地暂存'),
+    ['站内存储'],
+  )
+}
+
+function markClipUploaded(
+  clip: ImportedClip,
+  uploaded: Awaited<ReturnType<typeof uploadManagedVideo>>,
+) {
+  const next: ImportedClip = {
+    ...clip,
+    sourceIdOrBlobKey: uploaded.pathname,
+    sourceUrl: uploaded.url,
+    sourceProvider: markSourceProviderUploaded(clip.sourceProvider),
+    fileType: clip.fileType || uploaded.contentType || 'video/mp4',
+    tags: markTagsUploaded(clip.tags),
+    creditLine:
+      '视频文件已上传到网站存储；当前浏览器保留学习信息、字幕分析结果和切片配置。',
+  }
+  delete next.blob
+  return next
+}
+
+function applyStoredIndexQuality(clip: ImportedClip, studyIndex: NonNullable<ImportedClip['studyIndex']>) {
+  if (clip.studyIndex?.quality !== 'trusted') {
+    return studyIndex
+  }
+
+  return {
+    ...studyIndex,
+    status: 'ready' as const,
+    quality: 'trusted' as const,
+    sourceLabel: `${studyIndex.sourceLabel} / 用户已确认`,
+    summary: {
+      ...studyIndex.summary,
+      trusted: true,
+    },
+  }
+}
+
+async function buildRuntimeIndexedClips(importedClips: ImportedClip[]) {
+  return Promise.all(
+    importedClips.map(async (clip) => {
+      if (clip.importMode === 'sliced' || !clip.subtitleSource || clip.segments.length === 0) {
+        return clip
+      }
+
+      const studyIndex = await buildStudyIndex({
+        videoId: clip.id,
+        segments: clip.segments,
+        subtitleSource: clip.subtitleSource,
+      })
+
+      return {
+        ...clip,
+        studyIndex: applyStoredIndexQuality(clip, studyIndex),
+      }
+    }),
+  )
+}
+
 async function loadClipProcessingFile(clip: ImportedClip) {
   if (clip.blob instanceof File) {
     return clip.blob
@@ -319,6 +482,17 @@ async function loadClipProcessingFile(clip: ImportedClip) {
       type: clip.blob.type || clip.fileType || 'video/mp4',
       lastModified: 0,
     })
+  }
+
+  if (isLocalVideoBlobKey(clip.sourceIdOrBlobKey)) {
+    const localFile = await loadLocalVideoFile(
+      clip.sourceIdOrBlobKey,
+      clip.sourceFileName || `${clip.id}.mp4`,
+      clip.fileType,
+    )
+    if (localFile) {
+      return localFile
+    }
   }
 
   if (!clip.sourceUrl) {
@@ -346,6 +520,17 @@ async function purgeFavorites(lessonIds: string[], favorites: string[]) {
   const idsToRemove = lessonIds.filter((id) => favorites.includes(id))
   await Promise.all(idsToRemove.map((id) => removeFavorite(id)))
   return idsToRemove
+}
+
+function collectGeneratedStudyChildIds(importedClips: ImportedClip[], sourceClipId: string) {
+  return importedClips
+    .filter(
+      (item) =>
+        item.sourceClipId === sourceClipId &&
+        item.importMode === 'sliced' &&
+        (item.tags.includes('按需语法切片') || item.tags.includes('按需单词切片')),
+    )
+    .map((item) => item.id)
 }
 
 interface RecordStudyEventInput {
@@ -434,8 +619,22 @@ interface AppStore {
   touchVocab: (card: VocabCard, mastered?: boolean) => Promise<void>
   addThemeBatchToReview: (cards: VocabCard[]) => Promise<number>
   importClip: (payload: ImportClipInput) => Promise<ImportedClip>
+  uploadClipToSite: (
+    clipId: string,
+    uploadPassword?: string,
+    onUploadProgress?: RemoteUploadStatusCallback,
+  ) => Promise<ImportedClip | null>
   importSlicerManifest: (payload: ImportSlicerManifestInput) => Promise<ImportedClip[]>
   importSelectedSlices: (payload: ImportSelectedSlicesInput) => Promise<ImportedClip[]>
+  generateGrammarStudyBatch: (payload: GrammarStudyRequest) => Promise<ImportedClip[]>
+  generateTermStudyBatch: (payload: TermStudyRequest) => Promise<ImportedClip[]>
+  markClipStudyIndexTrusted: (clipId: string) => Promise<boolean>
+  replaceClipSubtitle: (clipId: string, subtitleFile: File) => Promise<ImportedClip | null>
+  updateClipTranscript: (
+    clipId: string,
+    segments: TranscriptSegment[],
+    trusted: boolean,
+  ) => Promise<ImportedClip | null>
   deleteLocalLesson: (lessonId: string) => Promise<boolean>
   setSliceTask: (payload: SliceTaskState) => void
   setSlicePreviewDraft: (payload: SlicePreviewDraft | null) => void
@@ -493,6 +692,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       loadSettings(),
       loadPublishedLessons(),
     ])
+    const hydratedImportedClips = await attachCachedLocalVideos(importedClips)
 
     set({
       initialized: true,
@@ -504,9 +704,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
       reviewItems,
       reviewLogs,
       vocabProgress: mapVocabProgress(vocabProgress),
-      importedClips,
+      importedClips: hydratedImportedClips,
       publishedLessons,
-      lessons: buildLessons(importedClips, publishedLessons),
+      lessons: buildLessons(hydratedImportedClips, publishedLessons),
       settings: settings ? { ...defaultSettings, ...settings } : defaultSettings,
     })
   },
@@ -758,6 +958,8 @@ export const useAppStore = create<AppStore>((set, get) => ({
     const clipTheme = theme?.trim() || '自定义片段'
     const { durationMs, cover } = await readVideoMeta(file, clipTitle, clipTheme)
     const now = new Date().toISOString()
+    const clipId = `clip-${crypto.randomUUID()}`
+    const localVideoKey = createLocalVideoBlobKey(clipId)
 
     let segments = [
       {
@@ -767,38 +969,25 @@ export const useAppStore = create<AppStore>((set, get) => ({
         kana: 'じまく を じどう せいせい すると、 ここ に げんぶん が でます。',
         romaji: 'jimaku o jidou seisei suru to, koko ni genbun ga demasu.',
         zh: '导入完成后，如果没有外部字幕，系统可以继续自动识别并生成中日双语字幕。',
-        focusTermIds: ['local-subtitle-tip'],
+        focusTermIds: [],
       },
     ]
 
-    let knowledgePoints: KnowledgePoint[] = [
-      {
-        id: 'local-subtitle-tip',
-        kind: 'phrase',
-        expression: '自动字幕',
-        reading: 'じどうじまく',
-        meaningZh: '自动识别生成字幕',
-        partOfSpeech: '学习提示',
-        explanationZh:
-          '如果你没有现成字幕，系统会先从视频里提取音频，再自动生成日语时间轴字幕，并补出学习向中文提示。',
-        exampleJa: '字幕がなくても、このあと自動生成できる。',
-        exampleZh: '就算没有现成字幕，后面也可以自动生成。',
-      },
-    ]
+    let knowledgePoints: KnowledgePoint[] = []
 
     let subtitleFileName: string | undefined
     let subtitleSource: ImportedClip['subtitleSource']
     let sourceProvider = '本地原片'
     let description =
-      '你导入的是本地原片。系统支持自动识别日语字幕，并进一步生成学习向中文字幕、词法高亮和知识点解析。'
+      '你导入的是本地原片。系统会先生成中日字幕时间轴，单词和语法切片会在后续执行学习计划时动态生成。'
     let creditLine =
-      '只存储在当前设备，不会上传。自动字幕生成依赖浏览器端本地推理，首次运行会下载模型并缓存。'
+      '视频会先暂存在当前浏览器，不会立刻上传。自动字幕生成依赖浏览器端本地推理，首次运行会下载模型并缓存。'
     let tags = ['私有原片', clipTheme, '待生成字幕']
 
     if (subtitleFile) {
       try {
         const cues = await parseSubtitleFile(subtitleFile)
-        const studyData = await buildStudyDataFromCues(cues)
+        const studyData = await buildStudyDataFromCues(cues, { includeKnowledge: false })
         if (studyData.segments.length > 0) {
           segments = studyData.segments
           knowledgePoints = studyData.knowledgePoints
@@ -806,8 +995,8 @@ export const useAppStore = create<AppStore>((set, get) => ({
           subtitleSource = 'manual'
           sourceProvider = '本地原片 + 外部字幕'
           description =
-            '你导入的是本地原片和外部字幕，播放器会直接显示片中日语字幕，并补充学习向中文字幕和知识点。'
-          creditLine = '仅存储在当前设备，不会上传。片中例句和知识点都直接来自你导入的字幕。'
+            '你导入的是本地原片和外部字幕，系统只保存中日字幕时间轴，后续按学习计划动态匹配单词和语法。'
+          creditLine = '视频会先暂存在当前浏览器，不会立刻上传。片中例句直接来自你导入的字幕。'
           tags = ['私有原片', clipTheme, '外部字幕']
         }
       } catch (error) {
@@ -815,36 +1004,43 @@ export const useAppStore = create<AppStore>((set, get) => ({
       }
     }
 
-    const uploadedVideo = await uploadManagedVideo(
-      file,
-      clipTitle,
-      uploadPassword,
-      onUploadProgress,
-    )
+    const studyIndex = subtitleSource
+      ? await buildStudyIndex({
+          videoId: clipId,
+          segments,
+          subtitleSource,
+          includeOccurrences: false,
+        })
+      : undefined
+
+    void uploadPassword
+    await saveLocalVideoBlob(localVideoKey, file, file.name)
+    onUploadProgress?.('视频已暂存到当前浏览器，正在写入字幕时间轴…', 100)
 
     const clip: ImportedClip = {
-      id: `clip-${crypto.randomUUID()}`,
+      id: clipId,
       title: clipTitle,
       theme: clipTheme,
       difficulty: 'Custom',
       importMode: 'raw',
       sourceType: 'local',
-      sourceIdOrBlobKey: uploadedVideo.pathname,
+      sourceIdOrBlobKey: localVideoKey,
       sourceFileName: file.name,
-      sourceUrl: uploadedVideo.url,
-      sourceProvider: `${sourceProvider} / 站内存储`,
+      sourceUrl: '',
+      sourceProvider: `${sourceProvider} / 本地草稿`,
       cover,
       durationMs,
-      fileType: file.type || uploadedVideo.contentType || 'video/mp4',
+      fileType: file.type || 'video/mp4',
       subtitleFileName,
       subtitleSource,
       blob: file,
+      studyIndex,
       createdAt: now,
       segments,
       knowledgePoints,
-      tags: mergeTags(tags, ['站内存储']),
+      tags: mergeTags(tags, ['本地草稿'], studyIndex ? ['字幕时间轴'] : []),
       description,
-      creditLine: `${creditLine} 视频文件已上传到网站存储，当前浏览器只保留学习信息、字幕分析结果和切片配置。`,
+      creditLine: `${creditLine} 你可以先预览和编辑字幕，确认后再上传整片到网站存储。`,
     }
 
     await saveImportedClip(clip)
@@ -857,6 +1053,51 @@ export const useAppStore = create<AppStore>((set, get) => ({
     })
 
     return clip
+  },
+
+  async uploadClipToSite(clipId, uploadPassword, onUploadProgress) {
+    const clip = get().importedClips.find((item) => item.id === clipId)
+    if (!clip) {
+      return null
+    }
+
+    if (clip.sourceUrl && !isLocalVideoBlobKey(clip.sourceIdOrBlobKey)) {
+      return clip
+    }
+
+    const file = await loadClipProcessingFile(clip)
+    if (!file) {
+      throw new Error('当前浏览器没有找到原视频文件。请重新导入视频后再上传。')
+    }
+
+    const uploadedVideo = await uploadManagedVideo(
+      file,
+      clip.title,
+      uploadPassword,
+      onUploadProgress,
+    )
+    const affectedClips = get().importedClips
+      .filter(
+        (item) =>
+          item.id === clip.id ||
+          item.sourceClipId === clip.id ||
+          item.sourceIdOrBlobKey === clip.sourceIdOrBlobKey,
+      )
+      .map((item) => markClipUploaded(item, uploadedVideo))
+
+    await saveImportedClips(affectedClips)
+    await deleteLocalVideoBlob(clip.sourceIdOrBlobKey)
+
+    const affectedById = new Map(affectedClips.map((item) => [item.id, item]))
+    set((state) => {
+      const importedClips = state.importedClips.map((item) => affectedById.get(item.id) ?? item)
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips, state.publishedLessons),
+      }
+    })
+
+    return affectedById.get(clip.id) ?? null
   },
 
   async importSelectedSlices({
@@ -890,6 +1131,12 @@ export const useAppStore = create<AppStore>((set, get) => ({
       uploadPassword,
       onUploadProgress,
     )
+    const sourceStudyIndex = await buildStudyIndex({
+      videoId: sourceClipId,
+      segments: baseSegments,
+      subtitleSource,
+      includeOccurrences: false,
+    })
 
     const sourceClip: ImportedClip = {
       id: sourceClipId,
@@ -910,6 +1157,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       subtitleFileName,
       subtitleSource,
       blob: file,
+      studyIndex: sourceStudyIndex,
       createdAt: importedAt,
       segments: baseSegments,
       knowledgePoints: baseKnowledgePoints,
@@ -970,33 +1218,294 @@ export const useAppStore = create<AppStore>((set, get) => ({
     return importedSlices
   },
 
-  async deleteLocalLesson(lessonId) {
-    const lesson = get().lessons.find((item) => item.id === lessonId)
-    if (!lesson || lesson.sourceType !== 'local') {
+  async generateGrammarStudyBatch(payload) {
+    const baseClips = await buildRuntimeIndexedClips(get().importedClips)
+    const generatedLessons = buildGrammarStudyLessons(baseClips, payload)
+    if (generatedLessons.length === 0) {
+      return []
+    }
+
+    const generatedClips = buildGeneratedStudyClips({
+      lessons: generatedLessons,
+      baseClips,
+      idPrefix: 'clip-grammar',
+      extraTag: '按需语法切片',
+    })
+
+    await saveImportedClips(generatedClips)
+    set((state) => {
+      const generatedIds = new Set(generatedClips.map((clip) => clip.id))
+      const importedClips = [
+        ...generatedClips,
+        ...state.importedClips.filter((clip) => !generatedIds.has(clip.id)),
+      ]
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips, state.publishedLessons),
+      }
+    })
+
+    return generatedClips
+  },
+
+  async generateTermStudyBatch(payload) {
+    const baseClips = await buildRuntimeIndexedClips(get().importedClips)
+    const generatedLessons = buildTermStudyLessons(baseClips, payload)
+    if (generatedLessons.length === 0) {
+      return []
+    }
+
+    const generatedClips = buildGeneratedStudyClips({
+      lessons: generatedLessons,
+      baseClips,
+      idPrefix: 'clip-term',
+      extraTag: '按需单词切片',
+    })
+
+    await saveImportedClips(generatedClips)
+    set((state) => {
+      const generatedIds = new Set(generatedClips.map((clip) => clip.id))
+      const importedClips = [
+        ...generatedClips,
+        ...state.importedClips.filter((clip) => !generatedIds.has(clip.id)),
+      ]
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips, state.publishedLessons),
+      }
+    })
+
+    return generatedClips
+  },
+
+  async markClipStudyIndexTrusted(clipId) {
+    const clip = get().importedClips.find((item) => item.id === clipId)
+    if (!clip?.studyIndex) {
       return false
     }
 
+    const updatedClip: ImportedClip = {
+      ...clip,
+      studyIndex: {
+        ...clip.studyIndex,
+        status: 'ready',
+        quality: 'trusted',
+        sourceLabel: `${clip.studyIndex.sourceLabel} / 用户已确认`,
+        summary: {
+          ...clip.studyIndex.summary,
+          trusted: true,
+        },
+      },
+      tags: mergeTags(
+        clip.tags.filter((tag) => tag !== '字幕待校对'),
+        ['字幕已确认'],
+      ),
+    }
+    const updatedChildren = get().importedClips
+      .filter((item) => item.sourceClipId === clipId)
+      .map<ImportedClip>((item) => ({
+        ...item,
+        subtitleSource: 'manual',
+        tags: mergeTags(
+          item.tags.filter((tag) => tag !== '字幕待校对'),
+          ['可信字幕', '字幕已确认'],
+        ),
+        creditLine: item.creditLine.replace('自动字幕草稿', '已确认字幕时间轴'),
+      }))
+
+    await saveImportedClips([updatedClip, ...updatedChildren])
+    set((state) => {
+      const importedClips = state.importedClips.map((item) => {
+        if (item.id === clipId) {
+          return updatedClip
+        }
+
+        return updatedChildren.find((child) => child.id === item.id) ?? item
+      })
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips, state.publishedLessons),
+      }
+    })
+
+    return true
+  },
+
+  async replaceClipSubtitle(clipId, subtitleFile) {
+    const clip = get().importedClips.find((item) => item.id === clipId)
+    if (!clip || clip.importMode === 'sliced') {
+      return null
+    }
+
+    const cues = await parseSubtitleFile(subtitleFile)
+    const studyData = await buildStudyDataFromCues(cues, { includeKnowledge: false })
+    if (studyData.segments.length === 0) {
+      throw new Error('字幕文件里没有可用的日文时间轴，请检查字幕格式或内容。')
+    }
+
+    const studyIndex = await buildStudyIndex({
+      videoId: clip.id,
+      segments: studyData.segments,
+      subtitleSource: 'manual',
+      includeOccurrences: false,
+    })
+    const updatedClip: ImportedClip = {
+      ...clip,
+      subtitleFileName: subtitleFile.name,
+      subtitleSource: 'manual',
+      studyIndex,
+      sourceProvider: `${clip.sourceProvider} / 外部字幕`,
+      segments: studyData.segments,
+      knowledgePoints: studyData.knowledgePoints,
+      tags: mergeTags(
+        clip.tags.filter(
+          (tag) =>
+            ![
+              '待生成字幕',
+              '自动字幕',
+              '字幕兜底',
+              '字幕待校对',
+              '外部字幕',
+              '字幕索引',
+              '字幕时间轴',
+              '字幕已确认',
+            ].includes(tag),
+        ),
+        ['外部字幕', '字幕时间轴', '字幕已确认'],
+      ),
+      description:
+        '这部整片已绑定外部字幕，后续单词和语法切片会从中日字幕时间轴动态生成。',
+      creditLine:
+        '视频文件保存在网站存储中；字幕来自你上传的外部字幕文件，学习切片会直接播放原视频的对应时间段。',
+    }
+    const generatedChildIds = collectGeneratedStudyChildIds(get().importedClips, clipId)
+
+    await saveImportedClip(updatedClip)
+    await Promise.all(generatedChildIds.map((id) => deleteImportedClip(id)))
+    const removedFavoriteIds = await purgeFavorites(generatedChildIds, get().favorites)
+
+    set((state) => {
+      const generatedIdSet = new Set(generatedChildIds)
+      const importedClips = state.importedClips
+        .map((item) => (item.id === clipId ? updatedClip : item))
+        .filter((item) => !generatedIdSet.has(item.id))
+
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips, state.publishedLessons),
+        favorites: state.favorites.filter((id) => !removedFavoriteIds.includes(id)),
+      }
+    })
+
+    return updatedClip
+  },
+
+  async updateClipTranscript(clipId, segments, trusted) {
+    const clip = get().importedClips.find((item) => item.id === clipId)
+    if (!clip) {
+      return null
+    }
+
+    const cleanSegments = segments
+      .map((segment) => ({
+        ...segment,
+        ja: segment.ja.trim(),
+        zh: segment.zh.trim(),
+        kana: segment.kana.trim(),
+        romaji: segment.romaji.trim(),
+        focusTermIds: [],
+      }))
+      .filter((segment) => segment.ja && segment.endMs > segment.startMs)
+
+    if (cleanSegments.length === 0) {
+      return null
+    }
+
+    const subtitleSource: ImportedClip['subtitleSource'] = trusted ? 'manual' : clip.subtitleSource ?? 'auto'
+    const studyIndex = await buildStudyIndex({
+      videoId: clip.id,
+      segments: cleanSegments,
+      subtitleSource,
+      includeOccurrences: false,
+    })
+    const updatedClip: ImportedClip = {
+      ...clip,
+      subtitleSource,
+      subtitleFileName: trusted ? clip.subtitleFileName ?? '手动校对字幕' : clip.subtitleFileName,
+      studyIndex: trusted
+        ? {
+            ...studyIndex,
+            status: 'ready',
+            quality: 'trusted',
+            sourceLabel: `${studyIndex.sourceLabel} / 用户已校对`,
+            summary: {
+              ...studyIndex.summary,
+              trusted: true,
+            },
+          }
+        : studyIndex,
+      segments: cleanSegments,
+      tags: mergeTags(
+        clip.tags.filter(
+          (tag) =>
+            tag !== '字幕兜底' &&
+            tag !== '待生成字幕' &&
+            tag !== '字幕待校对' &&
+            tag !== '字幕索引',
+        ),
+        ['字幕时间轴'],
+        trusted ? ['字幕已确认'] : ['字幕待校对'],
+      ),
+      description: trusted
+        ? '这部整片的字幕已经过人工复核，后续单词和语法切片会从中日字幕时间轴动态生成。'
+        : clip.description,
+    }
+
+    const generatedChildIds = collectGeneratedStudyChildIds(get().importedClips, clipId)
+
+    await saveImportedClip(updatedClip)
+    await Promise.all(generatedChildIds.map((id) => deleteImportedClip(id)))
+    const removedFavoriteIds = await purgeFavorites(generatedChildIds, get().favorites)
+
+    set((state) => {
+      const generatedIdSet = new Set(generatedChildIds)
+      const importedClips = state.importedClips
+        .map((item) => (item.id === clipId ? updatedClip : item))
+        .filter((item) => !generatedIdSet.has(item.id))
+
+      return {
+        importedClips,
+        lessons: buildLessons(importedClips, state.publishedLessons),
+        favorites: state.favorites.filter((id) => !removedFavoriteIds.includes(id)),
+      }
+    })
+
+    return updatedClip
+  },
+
+  async deleteLocalLesson(lessonId) {
     const currentClips = get().importedClips
     const directClip = currentClips.find((clip) => clip.id === lessonId)
-    const sourceClip = lesson.originClipId
+    const lesson = get().lessons.find((item) => item.id === lessonId)
+    if (!directClip && (!lesson || lesson.sourceType !== 'local')) {
+      return false
+    }
+
+    const sourceClip = lesson?.originClipId
       ? currentClips.find((clip) => clip.id === lesson.originClipId)
       : undefined
 
     const clipIdsToRemove = new Set<string>()
     if (directClip) {
       clipIdsToRemove.add(directClip.id)
-      if (directClip.importMode === 'source') {
-        currentClips
-          .filter((clip) => clip.sourceClipId === directClip.id)
-          .forEach((clip) => clipIdsToRemove.add(clip.id))
-      }
+      currentClips
+        .filter((clip) => clip.sourceClipId === directClip.id)
+        .forEach((clip) => clipIdsToRemove.add(clip.id))
     } else if (sourceClip) {
       clipIdsToRemove.add(sourceClip.id)
-      if (sourceClip.importMode === 'source') {
-        currentClips
-          .filter((clip) => clip.sourceClipId === sourceClip.id)
-          .forEach((clip) => clipIdsToRemove.add(clip.id))
-      }
+      currentClips
+        .filter((clip) => clip.sourceClipId === sourceClip.id)
+        .forEach((clip) => clipIdsToRemove.add(clip.id))
     }
 
     if (clipIdsToRemove.size === 0) {
@@ -1004,13 +1513,33 @@ export const useAppStore = create<AppStore>((set, get) => ({
     }
 
     const clipsToRemove = currentClips.filter((clip) => clipIdsToRemove.has(clip.id))
-    const remoteUrls = [...new Set(clipsToRemove.map((clip) => clip.sourceUrl).filter(isManagedSiteVideoUrl))]
+    const remainingClips = currentClips.filter((clip) => !clipIdsToRemove.has(clip.id))
+    const remoteUrls = [
+      ...new Set(
+        clipsToRemove
+          .map((clip) => clip.sourceUrl)
+          .filter(
+            (url) =>
+              isManagedSiteVideoUrl(url) &&
+              !remainingClips.some((clip) => clip.sourceUrl === url),
+          ),
+      ),
+    ]
 
     if (remoteUrls.length > 0) {
       await deleteSiteVideos(remoteUrls).catch((error) => {
         console.warn('Failed to delete site-hosted videos.', error)
       })
     }
+
+    const localVideoKeys = [
+      ...new Set(
+        clipsToRemove
+          .map((clip) => clip.sourceIdOrBlobKey)
+          .filter((key) => isLocalVideoBlobKey(key)),
+      ),
+    ]
+    await Promise.all(localVideoKeys.map((key) => deleteLocalVideoBlob(key)))
 
     await Promise.all([...clipIdsToRemove].map((id) => deleteImportedClip(id)))
 
@@ -1204,6 +1733,12 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
     const { generateStudyDataFromVideo } = await import('../lib/autoSubtitlesChunked')
     const studyData = await generateStudyDataFromVideo(clipFile, clip.durationMs, onStatus)
+    const studyIndex = await buildStudyIndex({
+      videoId: clip.id,
+      segments: studyData.segments,
+      subtitleSource: 'auto',
+      includeOccurrences: false,
+    })
 
     const updatedClip: ImportedClip = {
       ...clip,
@@ -1212,29 +1747,35 @@ export const useAppStore = create<AppStore>((set, get) => ({
           ? studyData.modelLabel
           : '自动生成字幕',
       subtitleSource: 'auto',
+      studyIndex,
       sourceProvider: `站内视频 + 字幕解析 (${studyData.modelLabel})`,
       segments: studyData.segments,
       knowledgePoints: studyData.knowledgePoints,
       description:
-        '系统已优先尝试提取视频自带字幕轨，再尝试识别画面底部硬字幕；必要时才自动识别日语时间轴字幕，并补充学习向中文字幕、高亮词法和知识点解析。',
+        '系统已优先尝试提取视频自带字幕轨，再尝试识别画面底部硬字幕；必要时才自动识别日语时间轴字幕，并补充学习向中文字幕。',
       creditLine:
         '视频文件保存在网站存储中；自动字幕仅供个人学习校对使用，首次运行会下载并缓存本地语音识别模型。',
       tags: mergeTags(
-        [ ...clip.tags.filter((tag) => tag !== '待生成字幕' && tag !== '外部字幕') ],
-        ['自动字幕'],
+        [ ...clip.tags.filter((tag) => tag !== '待生成字幕' && tag !== '外部字幕' && tag !== '字幕已确认') ],
+        ['自动字幕', '字幕时间轴', '字幕待校对'],
         clip.theme ? [clip.theme] : [],
         studyData.usedFallback ? ['字幕兜底'] : [],
       ),
     }
+    const generatedChildIds = collectGeneratedStudyChildIds(get().importedClips, clipId)
 
     await saveImportedClip(updatedClip)
+    await Promise.all(generatedChildIds.map((id) => deleteImportedClip(id)))
+    const removedFavoriteIds = await purgeFavorites(generatedChildIds, get().favorites)
     set((state) => {
-      const importedClips = state.importedClips.map((item) =>
-        item.id === clipId ? updatedClip : item,
-      )
+      const generatedIdSet = new Set(generatedChildIds)
+      const importedClips = state.importedClips
+        .map((item) => (item.id === clipId ? updatedClip : item))
+        .filter((item) => !generatedIdSet.has(item.id))
       return {
         importedClips,
         lessons: buildLessons(importedClips, state.publishedLessons),
+        favorites: state.favorites.filter((id) => !removedFavoriteIds.includes(id)),
       }
     })
 
