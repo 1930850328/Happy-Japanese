@@ -994,7 +994,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     const clipId = `clip-${crypto.randomUUID()}`
     const localVideoKey = createLocalVideoBlobKey(clipId)
 
-    let segments = [
+    let segments: TranscriptSegment[] = [
       {
         startMs: 0,
         endMs: durationMs,
