@@ -7,7 +7,12 @@ const SITE_VIDEO_PREFIX = '/site-videos/'
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,x-upload-password')
+}
+
+function getHeader(req, name) {
+  const value = req.headers?.[name]
+  return Array.isArray(value) ? value[0] : value
 }
 
 function readBody(req) {
@@ -30,6 +35,18 @@ function isManagedSiteVideoUrl(value) {
   }
 }
 
+function verifyUploadPassword(req) {
+  const configuredPassword = process.env.VIDEO_UPLOAD_PASSWORD?.trim()
+  if (!configuredPassword) {
+    return
+  }
+
+  const providedPassword = String(getHeader(req, 'x-upload-password') ?? '').trim()
+  if (!providedPassword || providedPassword !== configuredPassword) {
+    throw new Error('Upload password is incorrect.')
+  }
+}
+
 export default async function handler(req, res) {
   setCors(res)
 
@@ -44,6 +61,7 @@ export default async function handler(req, res) {
   }
 
   try {
+    verifyUploadPassword(req)
     const body = readBody(req)
     const token = requireVideoBlobToken()
     const urls = Array.isArray(body.urls)

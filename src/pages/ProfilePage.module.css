@@ -405,6 +405,43 @@
   line-height: 1.6;
 }
 
+.storageTool {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+  padding: 0.85rem;
+  border-radius: 16px;
+  border: 1px solid rgba(222, 204, 193, 0.82);
+  background: rgba(255, 250, 246, 0.72);
+}
+
+.storageToolHeader {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+}
+
+.storageToolHeader div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.storageToolHeader span,
+.storageTool p {
+  color: var(--text-soft);
+}
+
+.storageTool p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.storageActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
 .previewHeaderActions,
 .actionRow {
   display: grid;

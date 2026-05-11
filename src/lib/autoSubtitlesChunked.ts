@@ -1,3 +1,5 @@
+import type { FFmpeg } from '@ffmpeg/ffmpeg'
+
 import type { KnowledgePoint, TranscriptSegment } from '../types'
 import { getSharedFFmpeg } from './ffmpegRuntime'
 import { enrichCuesWithHardSubtitles } from './hardSubtitleOcr'
@@ -85,6 +87,8 @@ const CHUNK_DURATION_MS = 30_000
 const CHUNK_HEARTBEAT_MS = 5_000
 const MIN_CHUNK_TIMEOUT_MS = 45_000
 const MAX_CHUNK_TIMEOUT_MS = 75_000
+const CHUNK_TRANSCRIBE_ATTEMPTS = 2
+const MIN_ADAPTIVE_CHUNK_DURATION_MS = 7_500
 
 let transcriberEntry:
   | {
@@ -278,6 +282,32 @@ function normalizeCues(
   }
 
   return cues
+}
+
+function normalizeTranscriberOutput(output: TranscriberOutput | undefined, durationMs: number) {
+  return normalizeCues(
+    Array.isArray(output?.chunks) && output.chunks.length > 0
+      ? output.chunks
+      : output?.text
+        ? [
+            {
+              text: output.text,
+              timestamp: [0, Math.max(1, Math.round(durationMs / 1000))] as [number, number],
+            },
+          ]
+        : [],
+    durationMs,
+  )
+}
+
+function buildTimedOutCue(range: ChunkRange): SubtitleCue {
+  return {
+    startMs: range.startMs,
+    endMs: Math.max(range.startMs + 800, range.endMs),
+    jaText: '音声認識がこの区間でタイムアウトしました。プレビューで字幕を補ってください。',
+    zhText: '这一小段语音识别超时，请在预览里补充或修改字幕。',
+    zhSource: 'translation',
+  }
 }
 
 function buildModelLabel(baseLabel: string, hardSubtitleCount: number) {
@@ -474,17 +504,22 @@ async function transcribeChunk(
   chunkIndex: number,
   totalChunks: number,
   chunkDurationMs: number,
+  attempt: number,
   onStatus?: StatusCallback,
 ) {
   const timeoutMs = getChunkTimeoutMs(chunkDurationMs)
   let waitedSeconds = 0
+  const attemptLabel =
+    attempt > 1 ? `，重试 ${attempt}/${CHUNK_TRANSCRIBE_ATTEMPTS}` : ''
 
-  onStatus?.(`识别日语字幕中…第 ${chunkIndex}/${totalChunks} 段`)
+  onStatus?.(`识别日语字幕中…第 ${chunkIndex}/${totalChunks} 段${attemptLabel}`)
   await waitForNextPaint()
 
   const heartbeatId = window.setInterval(() => {
     waitedSeconds += Math.round(CHUNK_HEARTBEAT_MS / 1000)
-    onStatus?.(`识别日语字幕中…第 ${chunkIndex}/${totalChunks} 段，已等待 ${waitedSeconds} 秒`)
+    onStatus?.(
+      `识别日语字幕中…第 ${chunkIndex}/${totalChunks} 段${attemptLabel}，已等待 ${waitedSeconds} 秒`,
+    )
   }, CHUNK_HEARTBEAT_MS)
 
   try {
@@ -502,6 +537,153 @@ async function transcribeChunk(
     )
   } finally {
     window.clearInterval(heartbeatId)
+  }
+}
+
+async function transcribeRangeOnce({
+  ffmpeg,
+  inputName,
+  range,
+  chunkIndex,
+  totalChunks,
+  transcriber,
+  attempt,
+  onStatus,
+}: {
+  ffmpeg: FFmpeg
+  inputName: string
+  range: ChunkRange
+  chunkIndex: number
+  totalChunks: number
+  transcriber: LoadedTranscriber['transcriber']
+  attempt: number
+  onStatus?: StatusCallback
+}) {
+  const outputName = `subtitle-audio-${crypto.randomUUID()}.wav`
+  const chunkDurationMs = range.endMs - range.startMs
+
+  try {
+    onStatus?.(`准备第 ${chunkIndex}/${totalChunks} 段音频…`)
+    const code = await ffmpeg.exec([
+      '-ss',
+      toFfmpegTimestamp(range.startMs),
+      '-t',
+      toFfmpegTimestamp(chunkDurationMs),
+      '-i',
+      inputName,
+      '-vn',
+      '-ac',
+      '1',
+      '-ar',
+      '16000',
+      outputName,
+    ])
+
+    if (code !== 0) {
+      throw new Error(`第 ${chunkIndex}/${totalChunks} 段音频提取失败`)
+    }
+
+    const data = await ffmpeg.readFile(outputName)
+    const bytes = toBinaryBytes(data)
+    const audioBlob = new Blob([toArrayBuffer(bytes)], { type: 'audio/wav' })
+    const audioUrl = URL.createObjectURL(audioBlob)
+
+    try {
+      const output = await transcribeChunk(
+        transcriber,
+        audioUrl,
+        chunkIndex,
+        totalChunks,
+        chunkDurationMs,
+        attempt,
+        onStatus,
+      )
+
+      return shiftCues(normalizeTranscriberOutput(output, chunkDurationMs), range.startMs)
+    } finally {
+      URL.revokeObjectURL(audioUrl)
+    }
+  } finally {
+    await ffmpeg.deleteFile(outputName).catch(() => undefined)
+  }
+}
+
+async function transcribeRangeWithRetries(input: {
+  ffmpeg: FFmpeg
+  inputName: string
+  range: ChunkRange
+  chunkIndex: number
+  totalChunks: number
+  transcriber: LoadedTranscriber['transcriber']
+  onStatus?: StatusCallback
+}) {
+  let lastError: unknown = null
+
+  for (let attempt = 1; attempt <= CHUNK_TRANSCRIBE_ATTEMPTS; attempt += 1) {
+    try {
+      return await transcribeRangeOnce({
+        ...input,
+        attempt,
+      })
+    } catch (error) {
+      lastError = error
+      if (attempt < CHUNK_TRANSCRIBE_ATTEMPTS) {
+        input.onStatus?.(
+          `第 ${input.chunkIndex}/${input.totalChunks} 段识别失败，正在用同一字幕模型重试…`,
+        )
+      }
+    }
+  }
+
+  throw lastError instanceof Error ? lastError : new Error('字幕识别失败')
+}
+
+async function transcribeRangeAdaptive(input: {
+  ffmpeg: FFmpeg
+  inputName: string
+  range: ChunkRange
+  chunkIndex: number
+  totalChunks: number
+  transcriber: LoadedTranscriber['transcriber']
+  onStatus?: StatusCallback
+  depth?: number
+}): Promise<SubtitleCue[]> {
+  try {
+    return await transcribeRangeWithRetries(input)
+  } catch (error) {
+    const chunkDurationMs = input.range.endMs - input.range.startMs
+    const canSplit = chunkDurationMs > MIN_ADAPTIVE_CHUNK_DURATION_MS * 1.4
+    if (canSplit) {
+      const middleMs = Math.round((input.range.startMs + input.range.endMs) / 2)
+      input.onStatus?.(
+        `第 ${input.chunkIndex}/${input.totalChunks} 段识别超时，正在拆成更小音频继续识别…`,
+      )
+
+      const left = await transcribeRangeAdaptive({
+        ...input,
+        range: {
+          startMs: input.range.startMs,
+          endMs: middleMs,
+        },
+        depth: (input.depth ?? 0) + 1,
+      })
+      const right = await transcribeRangeAdaptive({
+        ...input,
+        range: {
+          startMs: middleMs,
+          endMs: input.range.endMs,
+        },
+        depth: (input.depth ?? 0) + 1,
+      })
+
+      return [...left, ...right]
+    }
+
+    console.warn('Subtitle chunk still failed after adaptive retries.', error)
+    input.onStatus?.(
+      `第 ${input.chunkIndex}/${input.totalChunks} 段最小音频仍超时，已保留一条可编辑占位字幕。`,
+    )
+    return [buildTimedOutCue(input.range)]
   }
 }
 
@@ -523,68 +705,16 @@ async function transcribeVideoInChunks(
     for (let index = 0; index < chunkRanges.length; index += 1) {
       const range = chunkRanges[index]
       const chunkIndex = index + 1
-      const outputName = `subtitle-audio-${crypto.randomUUID()}.wav`
-
-      try {
-        onStatus?.(`准备第 ${chunkIndex}/${chunkRanges.length} 段音频…`)
-        const code = await ffmpeg.exec([
-          '-ss',
-          toFfmpegTimestamp(range.startMs),
-          '-t',
-          toFfmpegTimestamp(range.endMs - range.startMs),
-          '-i',
-          inputName,
-          '-vn',
-          '-ac',
-          '1',
-          '-ar',
-          '16000',
-          outputName,
-        ])
-
-        if (code !== 0) {
-          throw new Error(`第 ${chunkIndex}/${chunkRanges.length} 段音频提取失败`)
-        }
-
-        const data = await ffmpeg.readFile(outputName)
-        const bytes = toBinaryBytes(data)
-        const audioBlob = new Blob([toArrayBuffer(bytes)], { type: 'audio/wav' })
-        const audioUrl = URL.createObjectURL(audioBlob)
-
-        try {
-          const output = await transcribeChunk(
-            transcriber,
-            audioUrl,
-            chunkIndex,
-            chunkRanges.length,
-            range.endMs - range.startMs,
-            onStatus,
-          )
-
-          const cues = normalizeCues(
-            Array.isArray(output?.chunks) && output.chunks.length > 0
-              ? output.chunks
-              : output?.text
-                ? [
-                    {
-                      text: output.text,
-                      timestamp: [
-                        0,
-                        Math.max(1, Math.round((range.endMs - range.startMs) / 1000)),
-                      ] as [number, number],
-                    },
-                  ]
-                : [],
-            range.endMs - range.startMs,
-          )
-
-          allCues.push(...shiftCues(cues, range.startMs))
-        } finally {
-          URL.revokeObjectURL(audioUrl)
-        }
-      } finally {
-        await ffmpeg.deleteFile(outputName).catch(() => undefined)
-      }
+      const cues = await transcribeRangeAdaptive({
+        ffmpeg,
+        inputName,
+        range,
+        chunkIndex,
+        totalChunks: chunkRanges.length,
+        transcriber,
+        onStatus,
+      })
+      allCues.push(...cues)
     }
   } finally {
     await ffmpeg.deleteFile(inputName).catch(() => undefined)

@@ -434,6 +434,31 @@ function markClipUploaded(
   return next
 }
 
+const runtimeStudyIndexCache = new Map<string, NonNullable<ImportedClip['studyIndex']>>()
+
+function buildSegmentsCacheHash(segments: TranscriptSegment[]) {
+  let hash = 0
+
+  for (const segment of segments) {
+    const value = `${segment.startMs}|${segment.endMs}|${segment.ja}|${segment.zh}`
+    for (let index = 0; index < value.length; index += 1) {
+      hash = Math.imul(hash ^ value.charCodeAt(index), 16777619)
+    }
+  }
+
+  return (hash >>> 0).toString(36)
+}
+
+function getRuntimeStudyIndexCacheKey(clip: ImportedClip) {
+  return [
+    clip.id,
+    clip.subtitleSource ?? 'none',
+    clip.studyIndex?.quality ?? 'none',
+    clip.segments.length,
+    buildSegmentsCacheHash(clip.segments),
+  ].join(':')
+}
+
 function applyStoredIndexQuality(clip: ImportedClip, studyIndex: NonNullable<ImportedClip['studyIndex']>) {
   if (clip.studyIndex?.quality !== 'trusted') {
     return studyIndex
@@ -458,11 +483,19 @@ async function buildRuntimeIndexedClips(importedClips: ImportedClip[]) {
         return clip
       }
 
-      const studyIndex = await buildStudyIndex({
-        videoId: clip.id,
-        segments: clip.segments,
-        subtitleSource: clip.subtitleSource,
-      })
+      const cacheKey = getRuntimeStudyIndexCacheKey(clip)
+      const cachedStudyIndex = runtimeStudyIndexCache.get(cacheKey)
+      const studyIndex =
+        cachedStudyIndex ??
+        (await buildStudyIndex({
+          videoId: clip.id,
+          segments: clip.segments,
+          subtitleSource: clip.subtitleSource,
+        }))
+
+      if (!cachedStudyIndex) {
+        runtimeStudyIndexCache.set(cacheKey, studyIndex)
+      }
 
       return {
         ...clip,
@@ -635,7 +668,7 @@ interface AppStore {
     segments: TranscriptSegment[],
     trusted: boolean,
   ) => Promise<ImportedClip | null>
-  deleteLocalLesson: (lessonId: string) => Promise<boolean>
+  deleteLocalLesson: (lessonId: string, uploadPassword?: string) => Promise<boolean>
   setSliceTask: (payload: SliceTaskState) => void
   setSlicePreviewDraft: (payload: SlicePreviewDraft | null) => void
   clearSliceWorkflow: () => void
@@ -1483,7 +1516,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     return updatedClip
   },
 
-  async deleteLocalLesson(lessonId) {
+  async deleteLocalLesson(lessonId, uploadPassword) {
     const currentClips = get().importedClips
     const directClip = currentClips.find((clip) => clip.id === lessonId)
     const lesson = get().lessons.find((item) => item.id === lessonId)
@@ -1527,7 +1560,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     ]
 
     if (remoteUrls.length > 0) {
-      await deleteSiteVideos(remoteUrls).catch((error) => {
+      await deleteSiteVideos(remoteUrls, uploadPassword).catch((error) => {
         console.warn('Failed to delete site-hosted videos.', error)
       })
     }
@@ -1699,7 +1732,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
     await saveImportedClips(prepared)
 
     if (replacedRemoteUrls.size > 0) {
-      await deleteSiteVideos([...replacedRemoteUrls]).catch((error) => {
+      await deleteSiteVideos([...replacedRemoteUrls], uploadPassword).catch((error) => {
         console.warn('Failed to clean up replaced site-hosted videos.', error)
       })
     }

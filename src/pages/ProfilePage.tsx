@@ -3,7 +3,9 @@ import {
   BookOpen,
   CheckCircle2,
   Flame,
+  HardDrive,
   Link2,
+  RefreshCw,
   Save,
   Search,
   Settings2,
@@ -19,6 +21,11 @@ import { createPortal } from 'react-dom'
 import { sourceAttributions } from '../data/sources'
 import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
+import {
+  deleteSiteVideos,
+  listSiteVideoObjects,
+  type SiteVideoStorageSummary,
+} from '../lib/siteVideoStorage'
 import { ensureBrowserPlayableVideo } from '../lib/videoPlayback'
 import { useAppStore } from '../store/useAppStore'
 import type { ImportedClip, TranscriptSegment } from '../types'
@@ -50,6 +57,22 @@ function formatDuration(ms: number) {
 
 function formatRange(startMs: number, endMs: number) {
   return `${formatDuration(startMs)} - ${formatDuration(endMs)}`
+}
+
+function formatFileSize(bytes: number) {
+  if (!Number.isFinite(bytes) || bytes <= 0) {
+    return '0 B'
+  }
+
+  const units = ['B', 'KB', 'MB', 'GB', 'TB']
+  let value = bytes
+  let unitIndex = 0
+  while (value >= 1024 && unitIndex < units.length - 1) {
+    value /= 1024
+    unitIndex += 1
+  }
+
+  return `${value >= 10 || unitIndex === 0 ? value.toFixed(0) : value.toFixed(1)} ${units[unitIndex]}`
 }
 
 function cloneSegments(segments: TranscriptSegment[]) {
@@ -251,6 +274,8 @@ export function ProfilePage() {
   const [clipFiles, setClipFiles] = useState<File[]>([])
   const [subtitleFiles, setSubtitleFiles] = useState<File[]>([])
   const [siteUploadPassword, setSiteUploadPassword] = useState('')
+  const [storageSummary, setStorageSummary] = useState<SiteVideoStorageSummary | null>(null)
+  const [storageLoading, setStorageLoading] = useState(false)
   const [importingSources, setImportingSources] = useState(false)
   const [busyClipId, setBusyClipId] = useState<string | null>(null)
   const [uploadingClipId, setUploadingClipId] = useState<string | null>(null)
@@ -336,6 +361,18 @@ export function ProfilePage() {
     () => importedClips.filter((clip) => clip.importMode !== 'source'),
     [importedClips],
   )
+  const referencedSiteVideoUrls = useMemo(
+    () =>
+      new Set(
+        importedClips
+          .map((clip) => clip.sourceUrl)
+          .filter((url): url is string => Boolean(url)),
+      ),
+    [importedClips],
+  )
+  const unreferencedSiteVideos = useMemo(() => {
+    return storageSummary?.blobs.filter((blob) => !referencedSiteVideoUrls.has(blob.url)) ?? []
+  }, [referencedSiteVideoUrls, storageSummary])
   const sliceCountMap = useMemo(() => {
     return lessons.reduce<Record<string, number>>((acc, lesson) => {
       const clipId = lesson.originClipId
@@ -392,6 +429,53 @@ export function ProfilePage() {
       grammarTarget: Number(goalForm.grammarTarget) || 0,
       reviewTarget: Number(goalForm.reviewTarget) || 0,
     })
+  }
+
+  const handleRefreshSiteStorage = async () => {
+    setStorageLoading(true)
+    try {
+      const summary = await listSiteVideoObjects(siteUploadPassword.trim() || undefined)
+      setStorageSummary(summary)
+      setStatusText(
+        `站点视频存储：${summary.count} 个文件，占用 ${formatFileSize(summary.totalSize)}。其中 ${summary.blobs.filter((blob) => !referencedSiteVideoUrls.has(blob.url)).length} 个当前学习资料未引用。`,
+      )
+    } catch (error) {
+      setStatusText(error instanceof Error ? error.message : '站点视频存储查询失败。')
+    } finally {
+      setStorageLoading(false)
+    }
+  }
+
+  const handleDeleteUnreferencedSiteVideos = async () => {
+    if (unreferencedSiteVideos.length === 0) {
+      setStatusText('没有发现当前学习资料未引用的站点视频。')
+      return
+    }
+
+    const totalSize = unreferencedSiteVideos.reduce((sum, blob) => sum + blob.size, 0)
+    const confirmed = window.confirm(
+      `确认删除 ${unreferencedSiteVideos.length} 个未关联站点视频，释放约 ${formatFileSize(totalSize)}？`,
+    )
+    if (!confirmed) {
+      return
+    }
+
+    setStorageLoading(true)
+    try {
+      await deleteSiteVideos(
+        unreferencedSiteVideos.map((blob) => blob.url),
+        siteUploadPassword.trim() || undefined,
+      )
+      const summary = await listSiteVideoObjects(siteUploadPassword.trim() || undefined)
+      setStorageSummary(summary)
+      setStatusText(
+        `已清理 ${unreferencedSiteVideos.length} 个未关联站点视频，当前占用 ${formatFileSize(summary.totalSize)}。`,
+      )
+    } catch (error) {
+      setStatusText(error instanceof Error ? error.message : '未关联站点视频清理失败。')
+    } finally {
+      setStorageLoading(false)
+    }
   }
 
   const handleImportSourceVideos = async () => {
@@ -803,7 +887,7 @@ export function ProfilePage() {
       return
     }
 
-    await deleteLocalLesson(clipId)
+    await deleteLocalLesson(clipId, siteUploadPassword.trim() || undefined)
   }
 
   const handleToggleReminder = async () => {
@@ -996,6 +1080,42 @@ export function ProfilePage() {
                 onChange={(event) => setSiteUploadPassword(event.target.value)}
                 placeholder="网站上传密码"
               />
+              <div className={styles.storageTool}>
+                <div className={styles.storageToolHeader}>
+                  <HardDrive size={18} />
+                  <div>
+                    <strong>站点视频存储</strong>
+                    <span>
+                      {storageSummary
+                        ? `${storageSummary.count} 个文件 / ${formatFileSize(storageSummary.totalSize)}`
+                        : '查看 Vercel Blob 里已有整片视频占用'}
+                    </span>
+                  </div>
+                </div>
+                {storageSummary ? (
+                  <p>
+                    当前学习资料未引用 {unreferencedSiteVideos.length} 个站点视频，可清理后再上传新整片。
+                  </p>
+                ) : null}
+                <div className={styles.storageActions}>
+                  <button
+                    className="softButton"
+                    onClick={() => void handleRefreshSiteStorage()}
+                    disabled={storageLoading}
+                  >
+                    <RefreshCw size={16} />
+                    {storageLoading ? '查询中…' : '检查占用'}
+                  </button>
+                  <button
+                    className="softButton"
+                    onClick={() => void handleDeleteUnreferencedSiteVideos()}
+                    disabled={storageLoading || unreferencedSiteVideos.length === 0}
+                  >
+                    <Trash2 size={16} />
+                    清理未关联视频
+                  </button>
+                </div>
+              </div>
             </details>
 
             <p className={styles.helperNote}>

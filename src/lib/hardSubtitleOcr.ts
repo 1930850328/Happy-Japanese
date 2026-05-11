@@ -43,6 +43,7 @@ const OCR_TIMELINE_CUE_RADIUS_MS = 950
 const OCR_MAX_CUE_TARGETS = 36
 const OCR_MAX_TIMELINE_TARGETS = 18
 const OCR_MAX_TOTAL_TARGETS = 54
+const OCR_PREFLIGHT_TARGETS = 6
 const COMMON_SUBTITLE_CHARS =
   '我你他她它们这那哪就样和的是了在有不没吗吧呢啊呀着过给把被从到里上下面中为让但可会能要想说看听来去出见遇知做还都很也再又只真好坏多小大前后现今明天时分秒点自已己然所以因为如果怎么什么为什么谁与同向对等'
 
@@ -772,10 +773,9 @@ export async function enrichCuesWithHardSubtitles(
     const paddleOcr = await getPaddleOcr(onStatus)
     const worker = paddleOcr ? null : await getWorker(onStatus)
 
-    for (let index = 0; index < targets.length; index += 1) {
-      const target = targets[index]
+    const processTarget = async (target: SubtitleTarget, index: number, total: number) => {
       const bucket = bucketSampleTime(target.sampleMs)
-      onStatus?.(`尝试识别画面底部中文字幕…${index + 1}/${targets.length}`)
+      onStatus?.(`尝试识别画面底部中文字幕…${index + 1}/${total}`)
 
       let recognized = recognizedByBucket.get(bucket)
       if (recognized === undefined) {
@@ -799,7 +799,31 @@ export async function enrichCuesWithHardSubtitles(
         } else {
           recognizedByCue.set(target.cue, recognized.text)
         }
+        return true
       }
+
+      return false
+    }
+
+    const preflightTargets =
+      targets.length > OCR_PREFLIGHT_TARGETS ? sampleTargets(targets, OCR_PREFLIGHT_TARGETS) : targets
+    const preflightTargetSet = new Set(preflightTargets)
+    let preflightHits = 0
+
+    for (let index = 0; index < preflightTargets.length; index += 1) {
+      if (await processTarget(preflightTargets[index], index, targets.length)) {
+        preflightHits += 1
+      }
+    }
+
+    if (preflightHits === 0 && targets.length > preflightTargets.length) {
+      onStatus?.('没有检测到稳定的画面中文字幕，已跳过后续 OCR 加速生成。')
+      return { cues, recognizedCount: 0 }
+    }
+
+    const remainingTargets = targets.filter((target) => !preflightTargetSet.has(target))
+    for (let index = 0; index < remainingTargets.length; index += 1) {
+      await processTarget(remainingTargets[index], preflightTargets.length + index, targets.length)
     }
 
     const timelineCues = buildTimelineHardSubtitleCues(timelineMatches)

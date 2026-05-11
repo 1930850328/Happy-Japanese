@@ -5,6 +5,7 @@ const SITE_VIDEO_PREFIX = 'site-videos'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 const VIDEO_UPLOAD_ENDPOINT = '/api/video-upload'
 const VIDEO_DELETE_ENDPOINT = '/api/video-delete'
+const VIDEO_STORAGE_ENDPOINT = '/api/video-storage'
 
 function sanitizeSegment(value: string) {
   return value
@@ -57,10 +58,34 @@ function getApiEndpoint(pathname: string) {
 
 function parseErrorMessage(error: unknown, fallback: string) {
   if (error instanceof Error && error.message.trim()) {
+    if (/quota|Storage quota exceeded|insufficient storage/i.test(error.message)) {
+      return [
+        '站点视频存储额度已满，当前视频仍保留在本地草稿。',
+        '请先在“站点视频存储”里清理未关联旧视频，或到 Vercel 升级 Blob 存储额度后再上传。',
+      ].join('')
+    }
+
     return error.message
   }
 
   return fallback
+}
+
+function buildPasswordHeaders(uploadPassword?: string) {
+  return uploadPassword?.trim()
+    ? {
+        'x-upload-password': uploadPassword.trim(),
+      }
+    : undefined
+}
+
+async function readJsonResponse(response: Response) {
+  const body = (await response.json().catch(() => null)) as { error?: string } | null
+  if (!response.ok) {
+    throw new Error(body?.error || '站内视频存储请求失败。')
+  }
+
+  return body
 }
 
 export interface SiteVideoUploadInput {
@@ -68,6 +93,19 @@ export interface SiteVideoUploadInput {
   title?: string
   uploadPassword?: string
   onUploadProgress?: (event: UploadProgressEvent) => void
+}
+
+export interface SiteVideoObject {
+  url: string
+  pathname: string
+  size: number
+  uploadedAt: string
+}
+
+export interface SiteVideoStorageSummary {
+  blobs: SiteVideoObject[]
+  count: number
+  totalSize: number
 }
 
 export function isManagedSiteVideoUrl(value: string) {
@@ -92,11 +130,7 @@ export async function uploadVideoToSite({
     return await upload(buildSiteVideoPath(file, title), file, {
       access: 'public',
       handleUploadUrl: getApiEndpoint(VIDEO_UPLOAD_ENDPOINT),
-      headers: uploadPassword?.trim()
-        ? {
-            'x-upload-password': uploadPassword.trim(),
-          }
-        : undefined,
+      headers: buildPasswordHeaders(uploadPassword),
       contentType: file.type || undefined,
       multipart: true,
       onUploadProgress,
@@ -106,7 +140,20 @@ export async function uploadVideoToSite({
   }
 }
 
-export async function deleteSiteVideos(urls: string[]) {
+export async function listSiteVideoObjects(uploadPassword?: string) {
+  const response = await fetch(getApiEndpoint(VIDEO_STORAGE_ENDPOINT), {
+    method: 'GET',
+    headers: buildPasswordHeaders(uploadPassword),
+  })
+  const body = (await readJsonResponse(response)) as SiteVideoStorageSummary | null
+  return {
+    blobs: Array.isArray(body?.blobs) ? body.blobs : [],
+    count: Number(body?.count ?? 0),
+    totalSize: Number(body?.totalSize ?? 0),
+  } satisfies SiteVideoStorageSummary
+}
+
+export async function deleteSiteVideos(urls: string[], uploadPassword?: string) {
   const targets = urls.filter(isManagedSiteVideoUrl)
   if (targets.length === 0) {
     return
@@ -116,14 +163,10 @@ export async function deleteSiteVideos(urls: string[]) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...buildPasswordHeaders(uploadPassword),
     },
     body: JSON.stringify({ urls: targets }),
   })
 
-  if (response.ok) {
-    return
-  }
-
-  const body = (await response.json().catch(() => null)) as { error?: string } | null
-  throw new Error(body?.error || '站内视频删除失败。')
+  await readJsonResponse(response)
 }
