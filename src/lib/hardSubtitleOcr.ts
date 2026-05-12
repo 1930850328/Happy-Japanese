@@ -81,6 +81,13 @@ interface PaddleOcrRunner {
 
 const OCR_CROPS: OcrCrop[] = [
   {
+    name: 'subtitle-line-wide-low',
+    leftRatio: 0.08,
+    topRatio: 0.78,
+    widthRatio: 0.84,
+    heightRatio: 0.18,
+  },
+  {
     name: 'subtitle-line-low',
     leftRatio: 0.16,
     topRatio: 0.875,
