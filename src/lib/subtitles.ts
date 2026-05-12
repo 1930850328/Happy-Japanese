@@ -19,14 +19,29 @@ interface BuildStudyDataOptions {
 function parseTimestamp(value: string) {
   const cleaned = value.trim().replace(',', '.')
   const parts = cleaned.split(':')
-  if (parts.length < 3) {
+
+  let hours = 0
+  let minutes = 0
+  let seconds = 0
+
+  if (parts.length >= 3) {
+    hours = Number(parts.at(-3))
+    minutes = Number(parts.at(-2))
+    seconds = Number(parts.at(-1))
+  } else if (parts.length === 2) {
+    minutes = Number(parts[0])
+    seconds = Number(parts[1])
+  } else if (parts.length === 1) {
+    seconds = Number(parts[0])
+  }
+
+  if (![hours, minutes, seconds].every(Number.isFinite)) {
     return 0
   }
 
-  const [hours, minutes, seconds] = parts
   return Math.max(
     0,
-    Math.round((Number(hours) * 3600 + Number(minutes) * 60 + Number(seconds)) * 1000),
+    Math.round((hours * 3600 + minutes * 60 + seconds) * 1000),
   )
 }
 
