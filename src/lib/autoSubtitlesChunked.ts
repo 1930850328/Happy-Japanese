@@ -300,6 +300,90 @@ function normalizeTranscriberOutput(output: TranscriberOutput | undefined, durat
   )
 }
 
+function normalizeForHallucinationCheck(text: string) {
+  return cleanTranscriptText(text)
+    .replace(/[、。！？,.!?'"“”‘’（）()\[\]{}<>「」『』【】・ー〜…\s]/gu, '')
+    .trim()
+}
+
+function escapeRegex(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function hasDominantRepeatedPhrase(parts: string[]) {
+  if (parts.length < 8) {
+    return false
+  }
+
+  const counts = new Map<string, number>()
+  for (const part of parts) {
+    const normalized = normalizeForHallucinationCheck(part)
+    if (normalized.length < 2 || normalized.length > 10) {
+      continue
+    }
+
+    counts.set(normalized, (counts.get(normalized) ?? 0) + 1)
+  }
+
+  return [...counts.values()].some((count) => count >= 6 && count / parts.length >= 0.45)
+}
+
+function hasDenseRepeatedNgram(text: string) {
+  const compact = normalizeForHallucinationCheck(text)
+  if (compact.length < 48) {
+    return false
+  }
+
+  const uniqueRatio = new Set(Array.from(compact)).size / compact.length
+  if (compact.length >= 80 && uniqueRatio <= 0.16) {
+    return true
+  }
+
+  for (let size = 2; size <= 8; size += 1) {
+    const seen = new Set<string>()
+    for (let index = 0; index <= compact.length - size; index += 1) {
+      const gram = compact.slice(index, index + size)
+      if (seen.has(gram) || new Set(Array.from(gram)).size <= 1) {
+        continue
+      }
+
+      seen.add(gram)
+      const matches = compact.match(new RegExp(escapeRegex(gram), 'gu')) ?? []
+      if (matches.length >= 8 && (matches.length * size) / compact.length >= 0.55) {
+        return true
+      }
+    }
+  }
+
+  return false
+}
+
+function isLikelyAsrHallucination(cue: SubtitleCue) {
+  const text = cue.jaText ?? cue.text ?? ''
+  const compact = normalizeForHallucinationCheck(text)
+  if (compact.length < 48) {
+    return false
+  }
+
+  const phraseParts = text
+    .split(/[、。！？,.!?\s]+/u)
+    .map((part) => part.trim())
+    .filter(Boolean)
+
+  return hasDominantRepeatedPhrase(phraseParts) || hasDenseRepeatedNgram(text)
+}
+
+function removeLikelyAsrHallucinations(cues: SubtitleCue[], onStatus?: StatusCallback) {
+  const filtered = cues.filter((cue) => !isLikelyAsrHallucination(cue))
+  const removedCount = cues.length - filtered.length
+
+  if (removedCount > 0) {
+    onStatus?.(`已过滤 ${removedCount} 条低置信度重复字幕，继续整理可用字幕…`)
+  }
+
+  return filtered
+}
+
 function buildTimedOutCue(range: ChunkRange): SubtitleCue {
   return {
     startMs: range.startMs,
@@ -754,7 +838,10 @@ export async function generateStudyDataFromVideo(
     }
 
     const { transcriber, modelLabel } = await getTranscriber(onStatus)
-    const cues = await transcribeVideoInChunks(file, durationMs, transcriber, onStatus)
+    const cues = removeLikelyAsrHallucinations(
+      await transcribeVideoInChunks(file, durationMs, transcriber, onStatus),
+      onStatus,
+    )
     const enrichment = await enrichCuesWithHardSubtitles(file, cues, onStatus)
     const enrichedCues = enrichment.cues
 
