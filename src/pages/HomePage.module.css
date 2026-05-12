@@ -1037,6 +1037,190 @@
     align-items: flex-end;
   }
 
+  .sessionBackdrop {
+    align-items: stretch;
+    padding: 0;
+    background: #070505;
+    backdrop-filter: none;
+  }
+
+  .sessionPanel {
+    position: relative;
+    width: 100vw;
+    height: 100dvh;
+    max-height: none;
+    overflow: hidden;
+    display: block;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: #070505;
+    box-shadow: none;
+  }
+
+  .sessionHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 6;
+    padding: max(12px, env(safe-area-inset-top)) 12px 10px;
+    color: #fffaf4;
+    background: linear-gradient(180deg, rgba(7, 5, 5, 0.82), rgba(7, 5, 5, 0));
+  }
+
+  .sessionHeader h2 {
+    max-width: calc(100vw - 112px);
+    margin-top: 0.35rem;
+    font-size: clamp(1.08rem, 5vw, 1.42rem);
+    line-height: 1.35;
+    color: #fffaf4;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .sessionHeader p {
+    display: none;
+  }
+
+  .sessionHeaderActions {
+    position: absolute;
+    top: max(12px, env(safe-area-inset-top));
+    right: 12px;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .sessionHeaderActions :global(.softButton) {
+    min-width: 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: #fffaf4;
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(10, 8, 8, 0.58);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
+  }
+
+  .sessionHeaderActions :global(.softButton) svg {
+    flex: 0 0 auto;
+  }
+
+  .sessionHeaderActions :global(.softButton) {
+    font-size: 0;
+  }
+
+  .sessionHeaderActions :global(.softButton) svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sessionHeader :global(.chip) {
+    color: rgba(255, 248, 241, 0.86);
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .sessionHeader .favoriteButton {
+    color: #fffaf4;
+    background: rgba(10, 8, 8, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .sessionViewportShell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #070505;
+  }
+
+  .sessionViewportShell :global(.asp-shell),
+  .sessionViewportShell :global(.asp-stage),
+  .sessionViewportShell :global(.asp-host) {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    background: #070505 !important;
+  }
+
+  .sessionViewportShell :global(.asp-host) {
+    max-width: none !important;
+    padding-top: 0 !important;
+    background: #070505;
+  }
+
+  .sessionViewportShell :global(.asp-host video) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .sessionViewportShell :global(.xgplayer-poster) {
+    background-color: #070505 !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+  }
+
+  .sessionViewportShell :global(.asp-floatingTools) {
+    display: none;
+  }
+
+  .sessionViewportShell :global(.asp-subtitleCard) {
+    left: 14px !important;
+    right: 14px !important;
+    bottom: calc(204px + env(safe-area-inset-bottom)) !important;
+    top: auto !important;
+    max-height: 34dvh;
+    overflow: hidden;
+    padding: 0.78rem 0.88rem !important;
+    border-radius: 18px !important;
+    background: rgba(14, 10, 10, 0.58) !important;
+    backdrop-filter: blur(16px);
+  }
+
+  .sessionViewportShell :global(.asp-subtitleJa),
+  .sessionViewportShell :global(.asp-subtitleZh) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    overflow-wrap: anywhere;
+  }
+
+  .sessionViewportShell :global(.asp-subtitleJa) {
+    -webkit-line-clamp: 2;
+  }
+
+  .sessionViewportShell :global(.asp-subtitleZh) {
+    -webkit-line-clamp: 2;
+  }
+
+  .sessionViewportShell :global(.xgplayer-shot),
+  .sessionViewportShell :global(.xgplayer-pip),
+  .sessionViewportShell :global(.xgplayer-cssfullscreen),
+  .sessionViewportShell :global(.xgplayer-controls),
+  .sessionViewportShell :global(.xg-mini-progress) {
+    display: none !important;
+  }
+
+  .activePointRow {
+    display: none;
+  }
+
+  .sessionControls {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 6;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.58rem;
+  }
+
   .drawerBackdrop {
     padding: 0;
   }
@@ -1061,11 +1245,9 @@
     padding: 0.82rem 0.9rem;
   }
 
-  .sessionHeader,
   .drawerHeader,
   .pointList article header,
   .progressMeta,
-  .sessionHeaderActions,
   .cardHeader {
     flex-direction: column;
   }

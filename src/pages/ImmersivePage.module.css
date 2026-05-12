@@ -154,6 +154,34 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+.playerStage :global(.asp-shell),
+.playerStage :global(.asp-stage),
+.playerStage :global(.asp-host) {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  background: #070505 !important;
+}
+
+.playerStage :global(.asp-host) {
+  max-width: none !important;
+  padding-top: 0 !important;
+  background: #070505;
+}
+
+.playerStage :global(.asp-host video) {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.playerStage :global(.xgplayer-poster) {
+  background-color: #070505 !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
 .playerShade {
   position: absolute;
   inset: 0;
@@ -249,6 +277,14 @@
 .infoHeader {
   justify-content: space-between;
   align-items: flex-start;
+}
+
+.infoCard > *,
+.infoHeader > *,
+.lessonHeader > *,
+.currentSentenceCard > *,
+.pointCard > * {
+  min-width: 0;
 }
 
 .lessonHeader {
@@ -410,8 +446,12 @@
 }
 
 @media (max-width: 760px) {
+  .page {
+    background: #070505;
+  }
+
   .pageHeader {
-    padding: 10px 10px 0;
+    padding: max(10px, env(safe-area-inset-top)) 10px 0;
   }
 
   .headerMeta {
@@ -428,18 +468,22 @@
   }
 
   .slideScene {
-    padding: 68px 10px 22px;
+    padding: 0;
   }
 
   .playerStage {
-    width: calc(100vw - 20px);
-    height: calc(100dvh - 98px);
-    border-radius: 28px;
+    width: 100vw;
+    height: 100dvh;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    background: #070505;
+    box-shadow: none;
   }
 
   .actionRail {
     right: 10px;
-    bottom: 162px;
+    bottom: calc(112px + env(safe-area-inset-bottom));
     width: 58px;
   }
 
@@ -455,26 +499,77 @@
   }
 
   .infoCard {
-    left: 10px;
-    right: 76px;
-    bottom: 10px;
-    padding: 0.82rem;
-    border-radius: 20px;
+    display: none;
+  }
+
+  .infoHeader,
+  .focusTag,
+  .lessonDescription,
+  .currentSentenceCard,
+  .pointGrid,
+  .tagRow,
+  .creditLine {
+    display: none;
   }
 
   .lessonHeader {
-    flex-direction: column;
-    gap: 0.55rem;
+    display: block;
   }
 
-  .pointGrid {
-    grid-template-columns: 1fr;
+  .lessonTitle {
+    font-size: clamp(1.05rem, 5vw, 1.34rem);
+    -webkit-line-clamp: 2;
+  }
+
+  .lessonMeta {
+    display: none;
+  }
+
+  .playerStage :global(.asp-floatingTools) {
+    display: none;
+  }
+
+  .playerStage :global(.asp-subtitleCard) {
+    left: 12px !important;
+    right: 78px !important;
+    bottom: calc(128px + env(safe-area-inset-bottom)) !important;
+    top: auto !important;
+    max-height: 34dvh;
+    overflow: hidden;
+    padding: 0.74rem 0.86rem !important;
+    border-radius: 18px !important;
+    background: rgba(14, 10, 10, 0.58) !important;
+    backdrop-filter: blur(16px);
+  }
+
+  .playerStage :global(.asp-subtitleJa),
+  .playerStage :global(.asp-subtitleZh) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    overflow-wrap: anywhere;
+  }
+
+  .playerStage :global(.asp-subtitleJa) {
+    -webkit-line-clamp: 2;
+  }
+
+  .playerStage :global(.asp-subtitleZh) {
+    -webkit-line-clamp: 2;
+  }
+
+  .playerStage :global(.xgplayer-controls) {
+    bottom: env(safe-area-inset-bottom);
+  }
+
+  .playerStage :global(.xgplayer-shot),
+  .playerStage :global(.xgplayer-pip),
+  .playerStage :global(.xgplayer-cssfullscreen) {
+    display: none !important;
   }
 
   .swipeHint {
-    width: calc(100vw - 24px);
-    text-align: center;
-    font-size: 0.84rem;
+    display: none;
   }
 }
 
@@ -485,5 +580,24 @@
 
   .actionRail {
     bottom: 150px;
+  }
+}
+
+@media (max-width: 760px) and (max-height: 760px) {
+  .playerStage {
+    height: 100dvh;
+  }
+
+  .actionRail {
+    bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+
+  .infoCard {
+    max-height: 28dvh;
+  }
+
+  .playerStage :global(.asp-subtitleCard) {
+    bottom: calc(112px + env(safe-area-inset-bottom)) !important;
+    max-height: 30dvh;
   }
 }
