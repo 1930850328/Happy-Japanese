@@ -245,9 +245,9 @@
   line-height: 1.65;
 }
 
-.clipCard {
+.favoriteList .clipCard {
   display: grid;
-  grid-template-columns: 156px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
   gap: 1rem;
   align-items: flex-start;
 }
@@ -262,26 +262,48 @@
 }
 
 .clipMeta {
+  min-width: 0;
   display: grid;
   gap: 0.3rem;
 }
 
 .clipTitleRow {
+  min-width: 0;
   display: flex;
   gap: 0.55rem;
-  align-items: center;
+  align-items: flex-start;
 }
 
+.clipTitleRow svg {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+.clipTitleRow strong {
+  min-width: 0;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.clipMeta span,
 .clipMeta small {
+  min-width: 0;
   color: var(--text-soft);
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 .clipActions {
+  grid-column: 1 / -1;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.65rem;
-  flex-shrink: 0;
+  min-width: 0;
+}
+
+.clipActions > * {
+  flex: 1 1 150px;
+  min-width: 0;
 }
 
 .fileActionButton {
@@ -667,9 +689,23 @@
   align-items: flex-start;
 }
 
+.previewPanelHeader > div {
+  min-width: 0;
+}
+
+.previewPanelHeader > button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
 .previewPanelHeader h2,
 .previewPanelHeader p {
   margin: 0.55rem 0 0;
+}
+
+.previewPanelHeader h2 {
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .previewPanelHeader p,
@@ -820,11 +856,7 @@
     grid-template-columns: 1fr;
   }
 
-  .clipActions {
-    flex-direction: column;
-  }
-
-  .clipCard {
+  .favoriteList .clipCard {
     grid-template-columns: 1fr;
   }
 
@@ -844,6 +876,10 @@
   .previewHeader,
   .previewPanelHeader {
     flex-direction: column;
+  }
+
+  .previewPanelHeader > button {
+    width: 100%;
   }
 
   .previewPosterPlay {
