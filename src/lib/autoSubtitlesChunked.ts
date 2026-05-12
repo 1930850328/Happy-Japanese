@@ -3,6 +3,10 @@ import type { FFmpeg } from '@ffmpeg/ffmpeg'
 import type { KnowledgePoint, TranscriptSegment } from '../types'
 import { getSharedFFmpeg } from './ffmpegRuntime'
 import { enrichCuesWithHardSubtitles } from './hardSubtitleOcr'
+import {
+  applySubtitleEntityCorrectionsToCues,
+  buildSubtitleEntityContext,
+} from './subtitleEntityContext'
 import { buildStudyDataFromCues, parseSubtitleText, type SubtitleCue } from './subtitles'
 
 interface SubtitleGenerationResult {
@@ -816,12 +820,21 @@ export async function generateStudyDataFromVideo(
     const embeddedTrack = await extractEmbeddedSubtitleTrack(file, onStatus)
     if (embeddedTrack) {
       onStatus?.(`已读取${embeddedTrack.label}，正在生成字幕时间轴…`)
+      const embeddedEntityContext = buildSubtitleEntityContext({
+        fileName: file.name,
+        cues: embeddedTrack.cues,
+      })
       const embeddedEnrichment = await enrichCuesWithHardSubtitles(
         file,
-        embeddedTrack.cues,
+        applySubtitleEntityCorrectionsToCues(embeddedTrack.cues, embeddedEntityContext),
         onStatus,
       )
-      const embeddedStudyData = await buildStudyDataFromCues(embeddedEnrichment.cues, {
+      const embeddedCues = applySubtitleEntityCorrectionsToCues(
+        embeddedEnrichment.cues,
+        embeddedEntityContext,
+      )
+      const embeddedStudyData = await buildStudyDataFromCues(embeddedCues, {
+        entityContext: embeddedEntityContext,
         includeKnowledge: false,
       })
 
@@ -838,12 +851,21 @@ export async function generateStudyDataFromVideo(
     }
 
     const { transcriber, modelLabel } = await getTranscriber(onStatus)
-    const cues = removeLikelyAsrHallucinations(
+    const rawCues = removeLikelyAsrHallucinations(
       await transcribeVideoInChunks(file, durationMs, transcriber, onStatus),
       onStatus,
     )
+    const entityContext = buildSubtitleEntityContext({ fileName: file.name, cues: rawCues })
+    const cues = applySubtitleEntityCorrectionsToCues(rawCues, entityContext)
     const enrichment = await enrichCuesWithHardSubtitles(file, cues, onStatus)
-    const enrichedCues = enrichment.cues
+    const enrichedEntityContext = buildSubtitleEntityContext({
+      fileName: file.name,
+      cues: enrichment.cues,
+    })
+    const enrichedCues = applySubtitleEntityCorrectionsToCues(
+      enrichment.cues,
+      enrichedEntityContext,
+    )
 
     if (enrichedCues.length === 0) {
       throw new Error(
@@ -852,7 +874,10 @@ export async function generateStudyDataFromVideo(
     }
 
     onStatus?.(`生成中文字幕与字幕时间轴中…共 ${enrichedCues.length} 条字幕`)
-    const studyData = await buildStudyDataFromCues(enrichedCues, { includeKnowledge: false })
+    const studyData = await buildStudyDataFromCues(enrichedCues, {
+      entityContext: enrichedEntityContext,
+      includeKnowledge: false,
+    })
 
     if (studyData.segments.length === 0) {
       throw new Error(

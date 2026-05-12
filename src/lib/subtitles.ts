@@ -1,5 +1,10 @@
 import type { KnowledgePoint, TranscriptSegment } from '../types'
 import { isUsableChineseSubtitle } from './chineseTranslation'
+import {
+  polishTranslatedSubtitle,
+  protectEntitiesForTranslation,
+  type SubtitleEntityContext,
+} from './subtitleEntityContext'
 import { analyzeJapaneseText, hasReliableMeaning } from './textAnalysis'
 import { translateJapaneseSentences } from './translation'
 
@@ -13,6 +18,7 @@ export interface SubtitleCue {
 }
 
 interface BuildStudyDataOptions {
+  entityContext?: SubtitleEntityContext
   includeKnowledge?: boolean
 }
 
@@ -329,7 +335,7 @@ function resolveSegmentChinese(
   return fallbackZh.trim()
 }
 
-async function resolveChineseLines(cues: SubtitleCue[]) {
+async function resolveChineseLines(cues: SubtitleCue[], entityContext?: SubtitleEntityContext) {
   const missingJapaneseLines = cues
     .filter((cue) => {
       const japaneseLine = cue.jaText ?? cue.text ?? ''
@@ -342,8 +348,23 @@ async function resolveChineseLines(cues: SubtitleCue[]) {
   }
 
   try {
-    const translated = await translateJapaneseSentences(missingJapaneseLines)
-    return new Map(Object.entries(translated))
+    const protectedLines = missingJapaneseLines.map((line) => ({
+      original: line,
+      ...protectEntitiesForTranslation(line, entityContext),
+    }))
+    const translated = await translateJapaneseSentences(
+      protectedLines.map((line) => line.protectedText),
+    )
+    return new Map(
+      protectedLines
+        .map((line) => {
+          const translatedLine = translated[line.protectedText]?.trim()
+          return translatedLine
+            ? [line.original, line.restore(translatedLine)] as const
+            : null
+        })
+        .filter((entry): entry is readonly [string, string] => entry !== null),
+    )
   } catch {
     return new Map<string, string>()
   }
@@ -359,7 +380,7 @@ export async function buildStudyDataFromCues(
   options: BuildStudyDataOptions = {},
 ) {
   const includeKnowledge = options.includeKnowledge ?? true
-  const translatedMap = await resolveChineseLines(cues)
+  const translatedMap = await resolveChineseLines(cues, options.entityContext)
   const knowledgeMap = new Map<string, KnowledgePoint>()
   const segments: TranscriptSegment[] = []
 
@@ -378,6 +399,7 @@ export async function buildStudyDataFromCues(
       analysis?.glossZh ?? buildFallbackChineseLine(jaText),
       cue.zhSource,
     )
+    const polishedZh = polishTranslatedSubtitle(jaText, resolvedZh, options.entityContext)
     const focusTermIds: string[] = []
 
     if (includeKnowledge && analysis) {
@@ -433,7 +455,7 @@ export async function buildStudyDataFromCues(
       ja: jaText,
       kana: analysis?.kana ?? jaText,
       romaji: analysis?.romaji ?? '',
-      zh: resolvedZh,
+      zh: polishedZh,
       focusTermIds,
     })
   }
