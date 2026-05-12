@@ -1098,6 +1098,10 @@ export const useAppStore = create<AppStore>((set, get) => ({
       return clip
     }
 
+    if (clip.importMode === 'raw' && clip.studyIndex?.quality !== 'trusted') {
+      throw new Error('请先预览并确认字幕可信后，再上传整片到站点。')
+    }
+
     const file = await loadClipProcessingFile(clip)
     if (!file) {
       throw new Error('当前浏览器没有找到原视频文件。请重新导入视频后再上传。')

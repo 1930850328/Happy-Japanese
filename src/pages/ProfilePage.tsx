@@ -107,6 +107,10 @@ function isUploadedToSite(clip: ImportedClip) {
   return Boolean(clip.sourceUrl)
 }
 
+function canUploadRawClipToSite(clip: ImportedClip) {
+  return clip.importMode === 'raw' && clip.studyIndex?.quality === 'trusted'
+}
+
 function clampProgress(value: number) {
   return Math.max(0, Math.min(100, Math.round(value)))
 }
@@ -1322,7 +1326,7 @@ export function ProfilePage() {
                         预览/编辑字幕
                       </button>
                     ) : null}
-                    {clip.importMode === 'raw' && !siteUploaded ? (
+                    {canUploadRawClipToSite(clip) && !siteUploaded ? (
                       <button
                         className="softButton primaryButton"
                         onClick={() => void handleUploadClipToSite(clip)}
