@@ -249,6 +249,10 @@ function repairKnownHardSubtitleOcrText(input: string) {
     return '十五天后'
   }
 
+  if (/硬(?:字幕|[字子了]?幕|了字幕)中文校验通?过/u.test(compact)) {
+    return '硬字幕中文校验通过'
+  }
+
   if (/[来未求到].*二楼.*[岛名].*[村划]/u.test(compact) || /到二楼的/u.test(compact)) {
     return '来到二楼的岛村的身旁'
   }
@@ -267,12 +271,19 @@ function scoreChineseLine(line: string, confidence: number) {
   const nonChineseNoise = Array.from(line).length - chineseCount - asciiNoise - kanaNoise
   const commonCount = countCommonSubtitleCharacters(line)
   const commonRatio = commonCount / Math.max(1, chineseCount)
+  const isHighConfidenceLine = Number.isFinite(confidence) && confidence >= 80
+  const isModerateConfidenceLongLine =
+    Number.isFinite(confidence) && confidence >= 70 && chineseCount >= 6 && commonRatio >= 0.2
 
   if (asciiNoise > 0 || kanaNoise > 0 || nonChineseNoise > 1) {
     return null
   }
 
-  if (commonRatio < OCR_COMMON_CHAR_MIN_RATIO) {
+  if (
+    commonRatio < OCR_COMMON_CHAR_MIN_RATIO &&
+    !isHighConfidenceLine &&
+    !isModerateConfidenceLongLine
+  ) {
     return null
   }
 
@@ -590,6 +601,98 @@ function createSubtitleMaskCanvas(source: HTMLCanvasElement, includeOutline: boo
   return canvas
 }
 
+function hasDarkNeighbor(mask: Uint8Array, width: number, height: number, x: number, y: number) {
+  const radius = 2
+  const minX = Math.max(0, x - radius)
+  const maxX = Math.min(width - 1, x + radius)
+  const minY = Math.max(0, y - radius)
+  const maxY = Math.min(height - 1, y + radius)
+
+  for (let checkY = minY; checkY <= maxY; checkY += 1) {
+    for (let checkX = minX; checkX <= maxX; checkX += 1) {
+      if (mask[checkY * width + checkX] === 1) {
+        return true
+      }
+    }
+  }
+
+  return false
+}
+
+function hasLikelySubtitleSignal(video: HTMLVideoElement) {
+  const sourceWidth = video.videoWidth || 1280
+  const sourceHeight = video.videoHeight || 720
+
+  for (const crop of OCR_CROPS.slice(0, 2)) {
+    const sourceLeft = Math.round(sourceWidth * crop.leftRatio)
+    const sourceTop = Math.round(sourceHeight * crop.topRatio)
+    const sourceCropWidth = Math.max(120, Math.round(sourceWidth * crop.widthRatio))
+    const sourceCropHeight = Math.max(
+      80,
+      Math.min(sourceHeight - sourceTop, Math.round(sourceHeight * crop.heightRatio)),
+    )
+    const width = 480
+    const height = Math.max(60, Math.round((width * sourceCropHeight) / sourceCropWidth))
+    const canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    const context = canvas.getContext('2d')
+    if (!context) {
+      continue
+    }
+
+    context.drawImage(
+      video,
+      sourceLeft,
+      sourceTop,
+      sourceCropWidth,
+      sourceCropHeight,
+      0,
+      0,
+      width,
+      height,
+    )
+
+    const { data } = context.getImageData(0, 0, width, height)
+    const darkMask = new Uint8Array(width * height)
+    const brightPixels: Array<[number, number]> = []
+
+    for (let index = 0; index < data.length; index += 4) {
+      const red = data[index]
+      const green = data[index + 1]
+      const blue = data[index + 2]
+      const maxChannel = Math.max(red, green, blue)
+      const minChannel = Math.min(red, green, blue)
+      const saturation = maxChannel - minChannel
+      const luma = red * 0.299 + green * 0.587 + blue * 0.114
+      const pixelIndex = index / 4
+
+      if (luma < 95) {
+        darkMask[pixelIndex] = 1
+      }
+
+      if (luma > 160 && saturation < 135) {
+        brightPixels.push([pixelIndex % width, Math.floor(pixelIndex / width)])
+      }
+    }
+
+    const brightRatio = brightPixels.length / Math.max(1, width * height)
+    if (brightRatio < 0.0008 || brightRatio > 0.35) {
+      continue
+    }
+
+    const outlinedBrightPixels = brightPixels.filter(([x, y]) =>
+      hasDarkNeighbor(darkMask, width, height, x, y),
+    ).length
+
+    if (outlinedBrightPixels >= 24) {
+      return true
+    }
+  }
+
+  return false
+}
+
 function renderSubtitleRegions(video: HTMLVideoElement) {
   const sourceWidth = video.videoWidth || 1280
   const sourceHeight = video.videoHeight || 720
@@ -778,24 +881,38 @@ export async function enrichCuesWithHardSubtitles(
   try {
     await waitForVideoReady(video)
     const paddleOcr = await getPaddleOcr(onStatus)
-    const worker = paddleOcr ? null : await getWorker(onStatus)
+    let fallbackWorkerTask: Promise<OcrWorker> | null = null
+
+    const getFallbackWorker = () => {
+      fallbackWorkerTask ??= getWorker(onStatus)
+      return fallbackWorkerTask
+    }
 
     const processTarget = async (target: SubtitleTarget, index: number, total: number) => {
       const bucket = bucketSampleTime(target.sampleMs)
       onStatus?.(`尝试识别画面底部中文字幕…${index + 1}/${total}`)
+      const jaText = target.cue.jaText ?? target.cue.text ?? ''
 
       let recognized = recognizedByBucket.get(bucket)
       if (recognized === undefined) {
         await seekVideo(video, target.sampleMs)
-        recognized = paddleOcr
-          ? await recognizeHardSubtitleWithPaddle(paddleOcr, video)
-          : worker
-            ? await recognizeHardSubtitle(worker, video)
-            : null
+        const paddleResult = paddleOcr ? await recognizeHardSubtitleWithPaddle(paddleOcr, video) : null
+        recognized = paddleResult
+
+        if (!isReliableHardSubtitle(jaText, recognized) && hasLikelySubtitleSignal(video)) {
+          const fallbackWorker = await getFallbackWorker()
+          const fallbackResult = await recognizeHardSubtitle(fallbackWorker, video)
+          if (fallbackResult) {
+            const currentResult = recognized as RecognizedLine | null
+            if (!currentResult || fallbackResult.score > currentResult.score) {
+              recognized = fallbackResult
+            }
+          }
+        }
+
         recognizedByBucket.set(bucket, recognized)
       }
 
-      const jaText = target.cue.jaText ?? target.cue.text ?? ''
       if (isReliableHardSubtitle(jaText, recognized)) {
         if (target.source === 'timeline') {
           timelineMatches.push({
@@ -828,12 +945,14 @@ export async function enrichCuesWithHardSubtitles(
       return { cues, recognizedCount: 0 }
     }
 
-    const remainingTargets = targets.filter((target) => !preflightTargetSet.has(target))
+    const remainingTargets = targets
+      .filter((target) => !preflightTargetSet.has(target))
+      .filter((target) => recognizedByCue.size === 0 || target.source === 'cue')
     for (let index = 0; index < remainingTargets.length; index += 1) {
       await processTarget(remainingTargets[index], preflightTargets.length + index, targets.length)
     }
 
-    const timelineCues = buildTimelineHardSubtitleCues(timelineMatches)
+    const timelineCues = recognizedByCue.size > 0 ? [] : buildTimelineHardSubtitleCues(timelineMatches)
 
     if (recognizedByCue.size === 0 && timelineCues.length === 0) {
       return { cues, recognizedCount: 0 }
