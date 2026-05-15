@@ -115,6 +115,8 @@ function LessonCard({
 }: LessonCardProps) {
   const previewSegment = lesson.segments[0]
   const leadPoint = lesson.knowledgePoints[0]
+  const previewSentence = previewSegment?.ja ?? lesson.description
+  const knowledgePreview = lesson.knowledgePoints.slice(0, 3)
   const durationText =
     lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒`
 
@@ -123,10 +125,45 @@ function LessonCard({
       <div className={styles.focusMedia}>
         <img className={styles.posterImage} src={lesson.cover} alt={lesson.title} />
         <div className={styles.posterShade} />
-        <span className={styles.durationBadge}>{durationText}</span>
+        <div className={styles.videoTopBar}>
+          <span className={styles.livePill}>今日推荐</span>
+          <span className={styles.durationBadge}>{durationText}</span>
+        </div>
         <button className={styles.playBadge} onClick={() => onStart(lesson.id)} aria-label="播放这段">
           <Play size={24} />
         </button>
+        <div className={styles.videoRail}>
+          <button
+            className={styles.videoRailButton}
+            onClick={() => onFavorite(lesson.id)}
+            aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
+          >
+            {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
+          </button>
+          <button
+            className={styles.videoRailButton}
+            onClick={() => onOpenKnowledge(lesson.id)}
+            aria-label={`查看 ${lesson.title} 的知识点`}
+          >
+            <BookMarked size={18} />
+          </button>
+          {canDelete ? (
+            <button
+              className={`${styles.videoRailButton} ${styles.videoRailDanger}`}
+              onClick={() => onDelete(lesson.id)}
+              aria-label={`删除 ${lesson.title}`}
+            >
+              <Trash2 size={18} />
+            </button>
+          ) : null}
+        </div>
+        <div className={styles.videoCaption}>
+          <strong>{lesson.title}</strong>
+          <span>{previewSentence}</span>
+        </div>
+        <div className={styles.videoScrubber} aria-hidden="true">
+          <span />
+        </div>
       </div>
 
       <div className={styles.focusBody}>
@@ -137,13 +174,23 @@ function LessonCard({
         <h2 className={styles.focusTitle} data-testid="lesson-title">
           {lesson.title}
         </h2>
-        {previewSegment ? (
-          <p className={styles.focusSentence} data-testid="lesson-description">
-            {previewSegment.ja}
-          </p>
-        ) : (
-          <p className={styles.focusSentence}>{lesson.description}</p>
-        )}
+        <p className={styles.focusSentence} data-testid="lesson-description">
+          {previewSentence}
+        </p>
+
+        <div className={styles.videoStats} aria-label="视频信息">
+          <span>{lesson.sourceProvider}</span>
+          <span>{lesson.knowledgePoints.length} 个知识点</span>
+          <span>{lesson.segments.length} 条字幕</span>
+        </div>
+
+        {knowledgePreview.length > 0 ? (
+          <div className={styles.platformTags} aria-label="本段标签">
+            {knowledgePreview.map((point) => (
+              <span key={point.id}>{point.expression}</span>
+            ))}
+          </div>
+        ) : null}
 
         <div className={styles.focusActions}>
           <button
@@ -158,22 +205,6 @@ function LessonCard({
             <BookMarked size={18} />
             详情
           </button>
-          <button
-            className={styles.iconButton}
-            onClick={() => onFavorite(lesson.id)}
-            aria-label={favorite ? `取消收藏 ${lesson.title}` : `收藏 ${lesson.title}`}
-          >
-            {favorite ? <Heart size={18} fill="currentColor" /> : <HeartOff size={18} />}
-          </button>
-          {canDelete ? (
-            <button
-              className={styles.iconButton}
-              onClick={() => onDelete(lesson.id)}
-              aria-label={`删除 ${lesson.title}`}
-            >
-              <Trash2 size={18} />
-            </button>
-          ) : null}
         </div>
       </div>
     </article>
@@ -198,13 +229,15 @@ function LessonQueue({
   return (
     <aside className={styles.queuePanel} aria-label="接下来学习">
       <div className={styles.queueHeader}>
-        <span>接下来</span>
+        <span>相关推荐</span>
         <small>{lessons.length} 段</small>
       </div>
       <div className={styles.queueList}>
         {lessons.map((lesson) => {
           const firstSentence = lesson.segments[0]?.ja ?? lesson.description
           const isActive = lesson.id === activeLessonId
+          const durationText =
+            lesson.sliceLabel ?? `${Math.max(10, Math.round(lesson.durationMs / 1000))} 秒`
 
           return (
             <div
@@ -212,8 +245,14 @@ function LessonQueue({
               className={`${styles.queueItem} ${isActive ? styles.queueItemActive : ''}`}
             >
               <button className={styles.queueMain} onClick={() => onSelect(lesson.id)}>
-                <img src={lesson.cover} alt="" />
-                <span>
+                <span className={styles.queueThumb}>
+                  <img src={lesson.cover} alt="" />
+                  <span className={styles.queueDuration}>{durationText}</span>
+                  <span className={styles.queuePlay}>
+                    <Play size={14} />
+                  </span>
+                </span>
+                <span className={styles.queueCopy}>
                   <strong>{lesson.title}</strong>
                   <small>{firstSentence}</small>
                 </span>
