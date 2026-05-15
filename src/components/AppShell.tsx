@@ -1,5 +1,6 @@
 import { BookOpenText, House, LibraryBig, RotateCcw, UserRound } from 'lucide-react'
 import * as Progress from '@radix-ui/react-progress'
+import { useEffect } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { useAppBootstrap } from '../hooks/useAppBootstrap'
@@ -26,6 +27,12 @@ export function AppShell() {
 
   const progress = getTodayProgress(studyEvents)
   const completionRatio = getGoalCompletionRatio(progress, goal)
+  const totalGoalCount = goal.videosTarget + goal.wordsTarget + goal.grammarTarget + goal.reviewTarget
+  const completedGoalCount =
+    Math.min(progress.video, goal.videosTarget) +
+    Math.min(progress.word, goal.wordsTarget) +
+    Math.min(progress.grammar, goal.grammarTarget) +
+    Math.min(progress.review, goal.reviewTarget)
   const showSliceBanner = sliceTask.status !== 'idle' && Boolean(sliceTask.detail)
   const isImmersiveRoute = location.pathname === '/immersive'
   const sliceBannerText =
@@ -34,6 +41,10 @@ export function AppShell() {
       : sliceTask.status === 'completed'
         ? `视频处理已完成 · ${sliceTask.detail}`
         : `视频处理遇到问题 · ${sliceTask.detail}`
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
   return (
     <div className={`${styles.shell} ${isImmersiveRoute ? styles.shellImmersive : ''}`}>
@@ -69,7 +80,7 @@ export function AppShell() {
           <div className={styles.goalMini} aria-label="今日学习进度">
             <div>
               <span>今日</span>
-              <strong>{progress.video}/{goal.videosTarget} 条</strong>
+              <strong>{completedGoalCount}/{totalGoalCount} 项</strong>
             </div>
             <Progress.Root
               className={styles.goalBar}

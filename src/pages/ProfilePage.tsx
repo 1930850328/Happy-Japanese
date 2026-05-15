@@ -905,10 +905,10 @@ export function ProfilePage() {
     <div className={`${styles.page} fadeIn`}>
       <section className={styles.hero}>
         <div>
-          <span className="chip badgeMint">目标 / 整片索引 / 设置</span>
-          <h1 className="pageTitle">先存整片，再按学习目标截取原句</h1>
+          <span className="chip badgeMint">我的学习空间</span>
+          <h1 className="pageTitle">管理今天的学习节奏</h1>
           <p className="sectionIntro">
-            导入原视频和可选中日字幕后，系统只先记录时间轴、日文和中文。单词、语法和相关切片会在执行学习计划时再动态生成。
+            先看目标和打卡，再按需要导入原片、调整字幕和播放提醒。
           </p>
         </div>
 

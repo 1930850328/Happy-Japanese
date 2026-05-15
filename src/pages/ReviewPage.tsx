@@ -16,6 +16,7 @@ export function ReviewPage() {
   const dueItems = useMemo(() => getDueReviewItems(reviewItems), [reviewItems])
   const upcomingItems = useMemo(() => getUpcomingReviewItems(reviewItems).slice(0, 5), [reviewItems])
   const current = dueItems[0]
+  const nextReviewLabel = upcomingItems[0] ? formatDateLabel(upcomingItems[0].nextReviewAt) : ''
 
   return (
     <div className={`${styles.page} fadeIn`}>
@@ -109,8 +110,12 @@ export function ReviewPage() {
           ) : (
             <div className={styles.emptyState}>
               <RotateCcw size={32} />
-              <strong>今天的复习已经清空啦</strong>
-              <p>去首页看两条视频，或者去速记库加几张卡片进复习吧。</p>
+              <strong>{upcomingItems.length > 0 ? '已排入复习计划' : '今天的复习已经清空啦'}</strong>
+              <p>
+                {upcomingItems.length > 0
+                  ? `新加入的内容会在 ${nextReviewLabel} 出现；这是按记忆间隔安排的，不是添加失败。`
+                  : '去首页看两条视频，或者去速记库加几张卡片进复习吧。'}
+              </p>
             </div>
           )}
         </div>

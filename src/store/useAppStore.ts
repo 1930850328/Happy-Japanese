@@ -961,12 +961,26 @@ export const useAppStore = create<AppStore>((set, get) => ({
       lastStudiedAt: new Date().toISOString(),
     }
     await saveVocabProgress(next)
+    let mergedNext = next
     set((state) => ({
-      vocabProgress: {
-        ...state.vocabProgress,
-        [card.id]: next,
-      },
+      vocabProgress: (() => {
+        const latest = state.vocabProgress[card.id]
+        mergedNext = {
+          ...next,
+          reviewAdded:
+            next.reviewAdded ||
+            latest?.reviewAdded ||
+            state.reviewItems.some((item) => item.sourceId === card.id),
+        }
+        return {
+          ...state.vocabProgress,
+          [card.id]: mergedNext,
+        }
+      })(),
     }))
+    if (mergedNext.reviewAdded !== next.reviewAdded) {
+      await saveVocabProgress(mergedNext)
+    }
 
     await get().recordStudyEvent({
       type: 'word',

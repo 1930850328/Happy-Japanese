@@ -219,21 +219,21 @@
 .actionRail {
   position: absolute;
   right: 14px;
-  bottom: 188px;
+  bottom: 154px;
   z-index: 3;
   display: grid;
-  gap: 10px;
-  width: 68px;
+  gap: 8px;
+  width: 62px;
 }
 
 .actionButton {
   display: grid;
   justify-items: center;
   gap: 0.42rem;
-  width: 68px;
-  min-height: 68px;
-  padding: 0.72rem 0.38rem;
-  border-radius: 22px;
+  width: 62px;
+  min-height: 62px;
+  padding: 0.64rem 0.34rem;
+  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: #fff8f2;
   background: rgba(11, 8, 8, 0.54);
@@ -254,8 +254,10 @@
   bottom: 14px;
   z-index: 3;
   display: grid;
-  gap: 0.8rem;
-  padding: 0.95rem;
+  gap: 0.58rem;
+  max-height: min(48dvh, 390px);
+  overflow: hidden;
+  padding: 0.82rem;
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background:
@@ -355,7 +357,7 @@
 .currentSentenceCard {
   display: grid;
   gap: 0.28rem;
-  padding: 0.8rem 0.9rem;
+  padding: 0.7rem 0.78rem;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -382,7 +384,7 @@
 .pointCard {
   display: grid;
   gap: 0.18rem;
-  padding: 0.72rem 0.76rem;
+  padding: 0.62rem 0.68rem;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -499,7 +501,14 @@
   }
 
   .infoCard {
-    display: none;
+    left: 12px;
+    right: 78px;
+    bottom: calc(72px + env(safe-area-inset-bottom));
+    display: grid;
+    gap: 0.36rem;
+    max-height: 24dvh;
+    padding: 0.68rem 0.78rem;
+    border-radius: 18px;
   }
 
   .infoHeader,

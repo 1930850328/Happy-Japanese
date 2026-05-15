@@ -131,7 +131,7 @@ function ImmersiveSlide({
   }
 
   return (
-    <div className={styles.slideScene}>
+    <div className={styles.slideScene} aria-hidden={!active} inert={!active ? true : undefined}>
       <div className={styles.slideBackdrop} style={buildBackdropStyle(lesson.cover)} />
       <div className={styles.slideNoise} />
 

@@ -16,6 +16,7 @@ export function VocabPage() {
   const [theme, setTheme] = useState('全部')
   const [search, setSearch] = useState('')
   const [flippedIds, setFlippedIds] = useState<Record<string, boolean>>({})
+  const [pendingReviewIds, setPendingReviewIds] = useState<Record<string, boolean>>({})
 
   const deferredSearch = useDeferredValue(search)
   const themes = useMemo(() => ['全部', ...new Set(vocabCards.map((item) => item.theme))], [])
@@ -51,6 +52,19 @@ export function VocabPage() {
       [card.id]: !state[card.id],
     }))
     void touchVocab(card)
+  }
+
+  const handleAddReview = async (card: VocabCard) => {
+    if (pendingReviewIds[card.id] || vocabProgress[card.id]?.reviewAdded) {
+      return
+    }
+
+    setPendingReviewIds((state) => ({ ...state, [card.id]: true }))
+    try {
+      await addVocabToReview(card)
+    } finally {
+      setPendingReviewIds((state) => ({ ...state, [card.id]: false }))
+    }
   }
 
   return (
@@ -133,6 +147,8 @@ export function VocabPage() {
         {filteredCards.map((card) => {
           const progress = vocabProgress[card.id]
           const flipped = !!flippedIds[card.id]
+          const reviewPending = !!pendingReviewIds[card.id]
+          const reviewAdded = reviewPending || !!progress?.reviewAdded
           return (
             <article
               key={card.id}
@@ -172,13 +188,14 @@ export function VocabPage() {
                   </button>
                   <button
                     className="softButton"
+                    disabled={reviewAdded}
                     onClick={(event) => {
                       event.stopPropagation()
-                      void addVocabToReview(card)
+                      void handleAddReview(card)
                     }}
                   >
                     <LibraryBig size={18} />
-                    {progress?.reviewAdded ? '已入复习' : '加入复习'}
+                    {reviewAdded ? '已入复习' : '加入复习'}
                   </button>
                   <button
                     className={`softButton ${progress?.mastered ? 'secondaryButton' : 'primaryButton'}`}

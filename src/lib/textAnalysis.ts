@@ -1,4 +1,4 @@
-import kuromoji, { type IpadicFeatures, type Tokenizer } from 'kuromoji'
+import type { IpadicFeatures, Tokenizer } from 'kuromoji'
 import * as wanakana from 'wanakana'
 
 import { grammarPatterns } from '../data/grammarPatterns'
@@ -8,6 +8,7 @@ import type { GrammarMatch, SavedNote, SentenceAnalysis, TokenAnalysis } from '.
 import { hasJapaneseSpeechSupport } from './speech'
 
 const meaningMap = new Map<string, string>()
+const readingMap = new Map<string, string>()
 export const UNKNOWN_MEANING = '词义待补充'
 const heuristicMeaningMap = new Map<string, string>([
   ['する', '做 / 进行'],
@@ -33,35 +34,101 @@ const heuristicMeaningMap = new Map<string, string>([
   ['使う', '使用'],
   ['できる', '能 / 做到'],
 ])
+const commonReadingEntries: Array<[string, string]> = [
+  ['日本語', 'にほんご'],
+  ['勉強', 'べんきょう'],
+  ['今日', 'きょう'],
+  ['一度', 'いちど'],
+  ['お願い', 'おねがい'],
+  ['お願いします', 'おねがいします'],
+  ['駅', 'えき'],
+  ['どこ', 'どこ'],
+  ['です', 'です'],
+  ['ます', 'ます'],
+  ['ません', 'ません'],
+  ['は', 'わ'],
+  ['へ', 'え'],
+  ['を', 'お'],
+  ['が', 'が'],
+  ['に', 'に'],
+  ['で', 'で'],
+  ['と', 'と'],
+  ['も', 'も'],
+  ['の', 'の'],
+  ['か', 'か'],
+  ['ね', 'ね'],
+  ['よ', 'よ'],
+]
+
+const punctuationRomajiMap = new Map<string, string>([
+  ['、', ','],
+  ['。', '.'],
+  ['，', ','],
+  ['．', '.'],
+  ['？', '?'],
+  ['！', '!'],
+])
+
+function registerReading(surface: string, reading: string) {
+  const normalizedSurface = surface.trim()
+  const normalizedReading = wanakana.toHiragana(reading.trim())
+  if (!normalizedSurface || !normalizedReading) {
+    return
+  }
+
+  readingMap.set(normalizedSurface, normalizedReading)
+}
 
 for (const card of vocabCards) {
   meaningMap.set(card.term, card.meaningZh)
   meaningMap.set(card.reading, card.meaningZh)
+  registerReading(card.term, card.reading)
+  registerReading(card.reading, card.reading)
 }
 
 for (const lesson of videoLessons) {
   for (const point of lesson.knowledgePoints) {
     meaningMap.set(point.expression, point.meaningZh)
     meaningMap.set(point.reading, point.meaningZh)
+    registerReading(point.expression, point.reading)
+    registerReading(point.reading, point.reading)
   }
+}
+
+for (const [surface, reading] of commonReadingEntries) {
+  registerReading(surface, reading)
 }
 
 let tokenizerPromise: Promise<Tokenizer<IpadicFeatures> | null> | null = null
 
 function getTokenizer() {
+  if (typeof window !== 'undefined') {
+    return Promise.resolve(null)
+  }
+
   if (tokenizerPromise) {
     return tokenizerPromise
   }
 
   tokenizerPromise = new Promise((resolve) => {
-    kuromoji.builder({ dicPath: '/dict' }).build((error, tokenizer) => {
-      if (error || !tokenizer) {
-        resolve(null)
-        return
-      }
+    void import('kuromoji')
+      .then((kuromojiModule) => {
+        const kuromojiRuntime = kuromojiModule as typeof kuromojiModule & {
+          default?: typeof kuromojiModule
+        }
+        const kuromojiBuilder = (kuromojiRuntime.default ?? kuromojiRuntime).builder
+        kuromojiBuilder({ dicPath: '/dict' }).build((error, tokenizer) => {
+          if (error || !tokenizer) {
+            resolve(null)
+            return
+          }
 
-      resolve(tokenizer)
-    })
+          resolve(tokenizer)
+        })
+      })
+      .catch(() => {
+        resolve(null)
+      })
   })
 
   return tokenizerPromise
@@ -99,12 +166,26 @@ function resolveMeaning(surface: string, base: string, reading: string, kana: st
   return UNKNOWN_MEANING
 }
 
+function resolveReading(surface: string, reading?: string) {
+  const normalizedReading = reading && reading !== '*' ? wanakana.toHiragana(reading) : ''
+  return readingMap.get(surface) || normalizedReading || surface
+}
+
+function resolveRomaji(surface: string, kana: string) {
+  const punctuation = punctuationRomajiMap.get(surface)
+  if (punctuation) {
+    return punctuation
+  }
+
+  return wanakana.toRomaji(kana || surface)
+}
+
 export function hasReliableMeaning(meaningZh: string) {
   return Boolean(meaningZh && meaningZh.trim() && meaningZh !== UNKNOWN_MEANING)
 }
 
 function createToken(token: IpadicFeatures): TokenAnalysis {
-  const reading = token.reading && token.reading !== '*' ? token.reading : token.surface_form
+  const reading = resolveReading(token.surface_form, token.reading)
   const kana = wanakana.toHiragana(reading)
   const base = token.basic_form && token.basic_form !== '*' ? token.basic_form : token.surface_form
 
@@ -114,33 +195,68 @@ function createToken(token: IpadicFeatures): TokenAnalysis {
     base,
     reading,
     kana,
-    romaji: wanakana.toRomaji(kana || token.surface_form),
+    romaji: resolveRomaji(token.surface_form, kana),
     partOfSpeech: normalizePartOfSpeech(token),
     meaningZh: resolveMeaning(token.surface_form, base, reading, kana),
   }
 }
 
-function createFallbackTokens(text: string) {
-  const chunks =
-    text.match(
-      /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー々]+|[A-Za-z]+|\d+|[^\s]/gu,
-    ) ?? [text]
+function createFallbackToken(surface: string): TokenAnalysis {
+  const reading = resolveReading(surface)
+  const kana = wanakana.toHiragana(reading)
+  const isPunctuation = punctuationRomajiMap.has(surface) || /^[,.!?]$/.test(surface)
 
-  return chunks
-    .filter((chunk) => chunk.trim())
-    .map<TokenAnalysis>((chunk) => {
-      const kana = wanakana.toHiragana(chunk)
-      return {
-        id: crypto.randomUUID(),
-        surface: chunk,
-        base: chunk,
-        reading: chunk,
-        kana,
-        romaji: wanakana.toRomaji(kana || chunk),
-        partOfSpeech: '未分类',
-        meaningZh: resolveMeaning(chunk, chunk, chunk, kana),
-      }
-    })
+  return {
+    id: crypto.randomUUID(),
+    surface,
+    base: surface,
+    reading,
+    kana,
+    romaji: isPunctuation ? punctuationRomajiMap.get(surface) ?? surface : resolveRomaji(surface, kana),
+    partOfSpeech: isPunctuation ? '符号' : '未分类',
+    meaningZh: resolveMeaning(surface, surface, reading, kana),
+  }
+}
+
+function getFallbackLexicon() {
+  return [...readingMap.keys()]
+    .filter((item) => /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー々]/u.test(item))
+    .sort((a, b) => b.length - a.length)
+}
+
+function createFallbackTokens(text: string) {
+  const lexicon = getFallbackLexicon()
+  const tokens: TokenAnalysis[] = []
+  let index = 0
+
+  while (index < text.length) {
+    const rest = text.slice(index)
+    const whitespace = rest.match(/^\s+/u)?.[0]
+    if (whitespace) {
+      index += whitespace.length
+      continue
+    }
+
+    const ascii = rest.match(/^[A-Za-z0-9]+/u)?.[0]
+    if (ascii) {
+      tokens.push(createFallbackToken(ascii))
+      index += ascii.length
+      continue
+    }
+
+    const matched = lexicon.find((item) => rest.startsWith(item))
+    if (matched) {
+      tokens.push(createFallbackToken(matched))
+      index += matched.length
+      continue
+    }
+
+    const [char] = Array.from(rest)
+    tokens.push(createFallbackToken(char))
+    index += char.length
+  }
+
+  return tokens
 }
 
 function matchGrammar(text: string) {
@@ -214,12 +330,20 @@ function buildSentenceKana(text: string, tokens: TokenAnalysis[]) {
 }
 
 function buildSentenceRomaji(tokens: TokenAnalysis[], kana: string) {
-  const joined = tokens
-    .map((token) => token.romaji || wanakana.toRomaji(token.kana || token.surface))
-    .filter(Boolean)
-    .join(' ')
+  const joined = tokens.reduce((acc, token) => {
+    const value = token.romaji || resolveRomaji(token.surface, token.kana)
+    if (!value) {
+      return acc
+    }
 
-  return joined || wanakana.toRomaji(kana)
+    if (/^[,.!?]$/.test(value)) {
+      return `${acc.trimEnd()}${value} `
+    }
+
+    return `${acc}${acc.trim() ? ' ' : ''}${value}`
+  }, '')
+
+  return joined.trim() || wanakana.toRomaji(kana)
 }
 
 async function tokenize(text: string) {
