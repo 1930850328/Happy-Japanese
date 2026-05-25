@@ -118,6 +118,57 @@ export interface VideoLesson {
   feedPriority?: number
 }
 
+export type SongSourceType = 'local' | 'demo' | 'catalog'
+
+export type LyricProvider = 'syncpower' | 'musixmatch' | 'lyricfind' | 'lrclib' | 'manual' | 'demo'
+
+export type SongLyricQuality =
+  | 'licensed_synced'
+  | 'licensed_plain'
+  | 'community_synced'
+  | 'machine_translated'
+  | 'manual_imported'
+  | 'needs_review'
+
+export type LyricSection = 'intro' | 'verse' | 'chorus' | 'bridge' | 'outro'
+
+export interface LyricLine {
+  id: string
+  startMs: number
+  endMs: number
+  ja: string
+  kana: string
+  romaji: string
+  zh: string
+  section?: LyricSection
+  focusTermIds: string[]
+}
+
+export interface SongLesson {
+  id: string
+  sourceType: SongSourceType
+  sourceUrl: string
+  sourcePageUrl?: string
+  previewSearchTerm?: string
+  lyricSearchTerm?: string
+  lyricProvider?: LyricProvider
+  lyricQuality?: SongLyricQuality
+  releaseYear?: number
+  popularityLabel?: string
+  title: string
+  artist: string
+  cover: string
+  theme: string
+  difficulty: DifficultyLevel
+  durationMs: number
+  lyricLines: LyricLine[]
+  knowledgePoints: KnowledgePoint[]
+  tags: string[]
+  description: string
+  creditLine: string
+  quality: StudyIndexQuality
+}
+
 export interface TokenAnalysis {
   id: string
   surface: string

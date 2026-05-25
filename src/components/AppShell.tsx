@@ -1,4 +1,4 @@
-import { BookOpenText, House, LibraryBig, RotateCcw, UserRound } from 'lucide-react'
+import { BookOpenText, House, LibraryBig, Music2, RotateCcw, UserRound } from 'lucide-react'
 import * as Progress from '@radix-ui/react-progress'
 import { useEffect } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
@@ -10,6 +10,7 @@ import styles from './AppShell.module.css'
 
 const navItems = [
   { to: '/', label: '短视频', icon: House },
+  { to: '/songs', label: '歌曲', icon: Music2 },
   { to: '/notes', label: '备注解析', icon: BookOpenText },
   { to: '/review', label: '复习', icon: RotateCcw },
   { to: '/vocab', label: '速记库', icon: LibraryBig },

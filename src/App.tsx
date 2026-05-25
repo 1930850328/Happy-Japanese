@@ -9,6 +9,7 @@ import { ImmersivePage } from './pages/ImmersivePage'
 import { NotesPage } from './pages/NotesPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { ReviewPage } from './pages/ReviewPage'
+import { SongsPage } from './pages/SongsPage'
 import { VocabPage } from './pages/VocabPage'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route element={<AppShell />}>
           <Route index element={<HomePage />} />
           <Route path="/immersive" element={<ImmersivePage />} />
+          <Route path="/songs" element={<SongsPage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/review" element={<ReviewPage />} />
           <Route path="/vocab" element={<VocabPage />} />
