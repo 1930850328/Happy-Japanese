@@ -122,6 +122,10 @@ export type SongSourceType = 'local' | 'demo' | 'catalog'
 
 export type LyricProvider = 'syncpower' | 'musixmatch' | 'lyricfind' | 'lrclib' | 'manual' | 'demo'
 
+export type SongPlaybackProvider = 'appleMusic' | 'localFile' | 'previewOnly' | 'speech'
+
+export type SongPlaybackStatus = 'locked' | 'ready' | 'loading' | 'error'
+
 export type SongLyricQuality =
   | 'licensed_synced'
   | 'licensed_plain'
@@ -149,8 +153,14 @@ export interface SongLesson {
   sourceType: SongSourceType
   sourceUrl: string
   sourcePageUrl?: string
+  previewUrl?: string
   previewSearchTerm?: string
   lyricSearchTerm?: string
+  appleMusicId?: string
+  appleMusicSearchTerm?: string
+  artworkUrl?: string
+  playbackProvider?: SongPlaybackProvider
+  playbackStatus?: SongPlaybackStatus
   lyricProvider?: LyricProvider
   lyricQuality?: SongLyricQuality
   releaseYear?: number

@@ -14,6 +14,7 @@ interface LrcLibRecord {
 }
 
 interface ITunesResult {
+  trackId?: number
   artistName?: string
   trackName?: string
   previewUrl?: string
@@ -126,7 +127,9 @@ export async function fetchApplePreview(song: SongLesson) {
   }
 
   return {
+    appleMusicId: result.trackId ? String(result.trackId) : undefined,
     previewUrl: result.previewUrl,
     sourcePageUrl: result.trackViewUrl,
+    artworkUrl: result.artworkUrl100?.replace('100x100bb', '600x600bb'),
   }
 }

@@ -35,7 +35,8 @@ export function AppShell() {
     Math.min(progress.grammar, goal.grammarTarget) +
     Math.min(progress.review, goal.reviewTarget)
   const showSliceBanner = sliceTask.status !== 'idle' && Boolean(sliceTask.detail)
-  const isImmersiveRoute = location.pathname === '/immersive'
+  const isSongRoute = location.pathname === '/songs'
+  const isImmersiveRoute = location.pathname === '/immersive' || isSongRoute
   const sliceBannerText =
     sliceTask.status === 'running'
       ? `视频处理进行中 · ${sliceTask.percent}% · ${sliceTask.detail}`
