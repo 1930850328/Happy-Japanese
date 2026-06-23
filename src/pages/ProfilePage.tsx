@@ -4,7 +4,6 @@ import {
   CheckCircle2,
   Flame,
   HardDrive,
-  Link2,
   RefreshCw,
   Save,
   Search,
@@ -15,10 +14,9 @@ import {
   Video,
   X,
 } from 'lucide-react'
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { type CSSProperties, type ReactNode, type UIEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { sourceAttributions } from '../data/sources'
 import { countStreak, getMonthCalendar, groupProgressByDate } from '../lib/date'
 import { getCompletedDateSet, getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
 import {
@@ -103,6 +101,19 @@ function findSubtitleForVideo(videoFile: File, subtitleFiles: File[], videoCount
   return subtitleFiles.find((subtitleFile) => fileStem(subtitleFile) === videoStem) ?? null
 }
 
+function uniqueFiles(files: File[]) {
+  const seen = new Set<string>()
+  return files.filter((file) => {
+    const key = fileKey(file)
+    if (seen.has(key)) {
+      return false
+    }
+
+    seen.add(key)
+    return true
+  })
+}
+
 function isUploadedToSite(clip: ImportedClip) {
   return Boolean(clip.sourceUrl)
 }
@@ -114,6 +125,16 @@ function canUploadRawClipToSite(clip: ImportedClip) {
 function clampProgress(value: number) {
   return Math.max(0, Math.min(100, Math.round(value)))
 }
+
+function getReviewRowHeight() {
+  if (typeof window !== 'undefined' && window.matchMedia('(max-width: 980px)').matches) {
+    return 320
+  }
+
+  return 178
+}
+
+const REVIEW_LIST_OVERSCAN = 6
 
 function deriveTaskProgress(message: string, previousPercent: number) {
   const downloadMatch = message.match(/(\d{1,3})%/)
@@ -183,6 +204,64 @@ function SubtitleReviewOverlay({
   onSaveTrusted,
   onClose,
 }: SubtitleReviewOverlayProps) {
+  const listRef = useRef<HTMLDivElement | null>(null)
+  const [virtualMetrics, setVirtualMetrics] = useState({
+    scrollTop: 0,
+    viewportHeight: 560,
+    rowHeight: getReviewRowHeight(),
+  })
+
+  useEffect(() => {
+    const listElement = listRef.current
+    if (!listElement) {
+      return
+    }
+
+    const updateMetrics = () => {
+      setVirtualMetrics((metrics) => ({
+        ...metrics,
+        viewportHeight: listElement.clientHeight || metrics.viewportHeight,
+        rowHeight: getReviewRowHeight(),
+      }))
+    }
+
+    updateMetrics()
+    const resizeObserver = new ResizeObserver(updateMetrics)
+    resizeObserver.observe(listElement)
+    window.addEventListener('resize', updateMetrics)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', updateMetrics)
+    }
+  }, [])
+
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: 0 })
+    setVirtualMetrics((metrics) => ({ ...metrics, scrollTop: 0 }))
+  }, [clip.id, segments.length])
+
+  const handleReviewScroll = (event: UIEvent<HTMLDivElement>) => {
+    const nextScrollTop = event.currentTarget.scrollTop
+    setVirtualMetrics((metrics) =>
+      Math.abs(metrics.scrollTop - nextScrollTop) < 4
+        ? metrics
+        : { ...metrics, scrollTop: nextScrollTop },
+    )
+  }
+
+  const totalRows = segments.length
+  const startIndex = Math.max(
+    0,
+    Math.floor(virtualMetrics.scrollTop / virtualMetrics.rowHeight) - REVIEW_LIST_OVERSCAN,
+  )
+  const visibleCount =
+    Math.ceil(virtualMetrics.viewportHeight / virtualMetrics.rowHeight) +
+    REVIEW_LIST_OVERSCAN * 2
+  const endIndex = Math.min(totalRows, startIndex + visibleCount)
+  const visibleSegments = segments.slice(startIndex, endIndex)
+  const canvasHeight = totalRows * virtualMetrics.rowHeight
+
   return (
     <OverlayPortal>
       <div className={styles.previewBackdrop} role="dialog" aria-modal="true">
@@ -192,7 +271,8 @@ function SubtitleReviewOverlay({
               <span className="chip badgeMint">字幕预览 / 编辑</span>
               <h2>{clip.title}</h2>
               <p>
-                共 {segments.length} 条字幕。保存后会更新字幕时间轴，并清理旧的按需生成切片。
+                共 {segments.length} 条字幕，正在显示 {totalRows === 0 ? 0 : startIndex + 1}-
+                {endIndex} 条。保存后会更新字幕时间轴，并清理旧的按需生成切片。
               </p>
             </div>
             <button className="softButton" onClick={onClose} aria-label="关闭字幕预览编辑">
@@ -216,31 +296,52 @@ function SubtitleReviewOverlay({
             </button>
           </div>
 
-          <div className={styles.reviewList}>
-            {segments.map((segment, index) => (
-              <article key={`${segment.startMs}-${segment.endMs}-${index}`} className={styles.reviewRow}>
-                <div className={styles.reviewTime}>
-                  <strong>{index + 1}</strong>
-                  <span>{formatRange(segment.startMs, segment.endMs)}</span>
-                </div>
-                <label>
-                  <span>日文</span>
-                  <textarea
-                    value={segment.ja}
-                    onChange={(event) => onChange(index, { ja: event.target.value })}
-                    rows={2}
-                  />
-                </label>
-                <label>
-                  <span>中文</span>
-                  <textarea
-                    value={segment.zh}
-                    onChange={(event) => onChange(index, { zh: event.target.value })}
-                    rows={2}
-                  />
-                </label>
-              </article>
-            ))}
+          <div
+            ref={listRef}
+            className={styles.reviewListViewport}
+            data-testid="subtitle-review-window"
+            onScroll={handleReviewScroll}
+            aria-label="字幕预览编辑列表"
+          >
+            <div className={styles.reviewListCanvas} style={{ height: `${canvasHeight}px` }}>
+              {visibleSegments.map((segment, offset) => {
+                const index = startIndex + offset
+                return (
+                  <article
+                    key={`${segment.startMs}-${segment.endMs}-${index}`}
+                    className={`${styles.reviewRow} ${styles.reviewVirtualRow}`}
+                    data-testid="subtitle-review-row"
+                    style={
+                      {
+                        height: `${Math.max(120, virtualMetrics.rowHeight - 12)}px`,
+                        transform: `translateY(${index * virtualMetrics.rowHeight}px)`,
+                      } as CSSProperties
+                    }
+                  >
+                    <div className={styles.reviewTime}>
+                      <strong>{index + 1}</strong>
+                      <span>{formatRange(segment.startMs, segment.endMs)}</span>
+                    </div>
+                    <label>
+                      <span>日文</span>
+                      <textarea
+                        value={segment.ja}
+                        onChange={(event) => onChange(index, { ja: event.target.value })}
+                        rows={2}
+                      />
+                    </label>
+                    <label>
+                      <span>中文</span>
+                      <textarea
+                        value={segment.zh}
+                        onChange={(event) => onChange(index, { zh: event.target.value })}
+                        rows={2}
+                      />
+                    </label>
+                  </article>
+                )
+              })}
+            </div>
           </div>
         </section>
       </div>
@@ -304,6 +405,8 @@ export function ProfilePage() {
   const taskStartedAtRef = useRef(persistedSliceTask.startedAt)
   const lastTaskStatusAtRef = useRef(0)
   const subtitleModelPreloadStartedRef = useRef(false)
+  const clipFileInputRef = useRef<HTMLInputElement | null>(null)
+  const subtitleFileInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
     setGoalForm({
@@ -361,9 +464,24 @@ export function ProfilePage() {
   const scoreMap = groupProgressByDate(studyEvents, goal)
   const calendar = getMonthCalendar(scoreMap, goal)
   const favoriteLessons = lessons.filter((lesson) => favorites.includes(lesson.id))
-  const visibleImportedClips = useMemo(
-    () => importedClips.filter((clip) => clip.importMode !== 'source'),
+  const sourceImportedClips = useMemo(
+    () =>
+      importedClips.filter(
+        (clip) => clip.importMode !== 'source' && clip.importMode !== 'sliced',
+      ),
     [importedClips],
+  )
+  const sliceImportedClips = useMemo(
+    () => importedClips.filter((clip) => clip.importMode === 'sliced'),
+    [importedClips],
+  )
+  const selectedImportRows = useMemo(
+    () =>
+      clipFiles.map((file) => ({
+        file,
+        subtitleFile: findSubtitleForVideo(file, subtitleFiles, clipFiles.length),
+      })),
+    [clipFiles, subtitleFiles],
   )
   const referencedSiteVideoUrls = useMemo(
     () =>
@@ -393,6 +511,17 @@ export function ProfilePage() {
   const reviewingClip = reviewingClipId
     ? importedClips.find((clip) => clip.id === reviewingClipId) ?? null
     : null
+
+  const resetSelectedImportFiles = () => {
+    setClipFiles([])
+    setSubtitleFiles([])
+    if (clipFileInputRef.current) {
+      clipFileInputRef.current.value = ''
+    }
+    if (subtitleFileInputRef.current) {
+      subtitleFileInputRef.current.value = ''
+    }
+  }
 
   const updateTaskStatus = (message: string) => {
     const now = Date.now()
@@ -499,7 +628,12 @@ export function ProfilePage() {
       startedAt,
       updatedAt: startedAt,
     })
-    setTaskProgress({ percent: 4, detail: `正在准备 ${clipFiles.length} 个整片本地处理任务…` })
+    const initialProgress = {
+      percent: 4,
+      detail: `正在准备 ${clipFiles.length} 个整片本地处理任务…`,
+    }
+    taskProgressRef.current = initialProgress
+    setTaskProgress(initialProgress)
 
     try {
       for (const [fileIndex, sourceFile] of clipFiles.entries()) {
@@ -512,9 +646,12 @@ export function ProfilePage() {
             queueStartPercent + fileSharePercent * fileIndex + (percent / 100) * fileSharePercent,
           )
           const detail = `${statusPrefix}${message}`
-          const nextPercent = clampProgress(mappedPercent)
-          taskProgressRef.current = { percent: nextPercent, detail }
-          setTaskProgress({ percent: nextPercent, detail })
+          const nextPercent = clampProgress(
+            Math.max(taskProgressRef.current?.percent ?? queueStartPercent, mappedPercent),
+          )
+          const nextProgress = { percent: nextPercent, detail }
+          taskProgressRef.current = nextProgress
+          setTaskProgress(nextProgress)
           setStatusText(detail)
           setSliceTask({
             status: 'running',
@@ -569,7 +706,9 @@ export function ProfilePage() {
           ? `已入库 ${importedCount} 个视频，${failedFiles.length} 个处理失败：${failedFiles.join('；')}`
           : `已本地入库 ${importedCount} 个视频，并完成字幕草稿/索引。可以先预览编辑字幕，确认后再上传整片。`
 
-      setTaskProgress({ percent: failedFiles.length > 0 ? 99 : 100, detail })
+      const finalProgress = { percent: failedFiles.length > 0 ? 99 : 100, detail }
+      taskProgressRef.current = finalProgress
+      setTaskProgress(finalProgress)
       setStatusText(detail)
       setSliceTask({
         status: failedFiles.length > 0 ? 'error' : 'completed',
@@ -578,13 +717,18 @@ export function ProfilePage() {
         startedAt,
         updatedAt: new Date().toISOString(),
       })
+      if (importedCount > 0) {
+        resetSelectedImportFiles()
+      }
     } catch (error) {
       const detail = error instanceof Error ? error.message : '整片处理或字幕草稿生成失败，请换一组文件重试。'
-      setTaskProgress({ percent: 0, detail })
+      const nextProgress = { percent: taskProgressRef.current?.percent ?? 0, detail }
+      taskProgressRef.current = nextProgress
+      setTaskProgress(nextProgress)
       setStatusText(detail)
       setSliceTask({
         status: 'error',
-        percent: 0,
+        percent: nextProgress.percent,
         detail,
         startedAt,
         updatedAt: new Date().toISOString(),
@@ -613,6 +757,7 @@ export function ProfilePage() {
       startedAt,
       updatedAt: startedAt,
     })
+    taskProgressRef.current = { percent: 72, detail }
     setTaskProgress({ percent: 72, detail })
     setStatusText(detail)
 
@@ -629,7 +774,9 @@ export function ProfilePage() {
             ? '还没有可用的初级语法命中。请先上传日文字幕，或给已有视频生成/校对字幕。'
             : `没有找到「${grammarQuery.trim()}」的原句。可以换一个写法，或先上传更完整的日文字幕。`
 
-      setTaskProgress({ percent: generated.length > 0 ? 100 : 0, detail: nextDetail })
+      const nextProgress = { percent: generated.length > 0 ? 100 : 0, detail: nextDetail }
+      taskProgressRef.current = nextProgress
+      setTaskProgress(nextProgress)
       setStatusText(nextDetail)
       setSliceTask({
         status: generated.length > 0 ? 'completed' : 'error',
@@ -640,11 +787,13 @@ export function ProfilePage() {
       })
     } catch (error) {
       const nextDetail = error instanceof Error ? error.message : '语法切片生成失败，请稍后重试。'
-      setTaskProgress({ percent: 0, detail: nextDetail })
+      const nextProgress = { percent: taskProgressRef.current?.percent ?? 0, detail: nextDetail }
+      taskProgressRef.current = nextProgress
+      setTaskProgress(nextProgress)
       setStatusText(nextDetail)
       setSliceTask({
         status: 'error',
-        percent: 0,
+        percent: nextProgress.percent,
         detail: nextDetail,
         startedAt,
         updatedAt: new Date().toISOString(),
@@ -673,6 +822,7 @@ export function ProfilePage() {
       startedAt,
       updatedAt: startedAt,
     })
+    taskProgressRef.current = { percent: 72, detail }
     setTaskProgress({ percent: 72, detail })
     setStatusText(detail)
 
@@ -689,7 +839,9 @@ export function ProfilePage() {
             ? '还没有可用的初级单词命中。请先上传日文字幕，或给已有视频生成/校对字幕。'
             : `没有找到「${termQuery.trim()}」的原句。可以换一个写法，或先上传更完整的日文字幕。`
 
-      setTaskProgress({ percent: generated.length > 0 ? 100 : 0, detail: nextDetail })
+      const nextProgress = { percent: generated.length > 0 ? 100 : 0, detail: nextDetail }
+      taskProgressRef.current = nextProgress
+      setTaskProgress(nextProgress)
       setStatusText(nextDetail)
       setSliceTask({
         status: generated.length > 0 ? 'completed' : 'error',
@@ -700,11 +852,13 @@ export function ProfilePage() {
       })
     } catch (error) {
       const nextDetail = error instanceof Error ? error.message : '单词切片生成失败，请稍后重试。'
-      setTaskProgress({ percent: 0, detail: nextDetail })
+      const nextProgress = { percent: taskProgressRef.current?.percent ?? 0, detail: nextDetail }
+      taskProgressRef.current = nextProgress
+      setTaskProgress(nextProgress)
       setStatusText(nextDetail)
       setSliceTask({
         status: 'error',
-        percent: 0,
+        percent: nextProgress.percent,
         detail: nextDetail,
         startedAt,
         updatedAt: new Date().toISOString(),
@@ -802,13 +956,19 @@ export function ProfilePage() {
       startedAt,
       updatedAt: startedAt,
     })
+    taskProgressRef.current = { percent: 6, detail: '正在准备自动字幕…' }
     updateTaskStatus('准备自动字幕中…')
     try {
       await generateAutoSubtitles(clipId, (message) => updateTaskStatus(message))
+      const detail = '自动字幕已生成完成，可以先预览编辑字幕，再按学习目标生成切片。'
+      const nextProgress = { percent: 100, detail }
+      taskProgressRef.current = nextProgress
+      setTaskProgress(nextProgress)
+      setStatusText(detail)
       setSliceTask({
         status: 'completed',
         percent: 100,
-        detail: '自动字幕已生成完成，可以先预览编辑字幕，再按学习目标生成切片。',
+        detail,
         startedAt,
         updatedAt: new Date().toISOString(),
       })
@@ -817,9 +977,12 @@ export function ProfilePage() {
         error instanceof Error
           ? error.message
           : '自动字幕生成失败。请稍后重试，或上传字幕文件。'
+      const nextProgress = { percent: taskProgressRef.current?.percent ?? 0, detail }
+      taskProgressRef.current = nextProgress
+      setTaskProgress(nextProgress)
       setSliceTask({
         status: 'error',
-        percent: 0,
+        percent: nextProgress.percent,
         detail,
         startedAt,
         updatedAt: new Date().toISOString(),
@@ -833,10 +996,15 @@ export function ProfilePage() {
   const handleUploadClipToSite = async (clip: ImportedClip) => {
     setUploadingClipId(clip.id)
     const startedAt = new Date().toISOString()
+    const initialDetail = `正在为「${clip.title}」申请站点上传地址…`
+    const initialProgress = { percent: 4, detail: initialDetail }
+    taskProgressRef.current = initialProgress
+    setTaskProgress(initialProgress)
+    setStatusText(initialDetail)
     setSliceTask({
       status: 'running',
-      percent: 6,
-      detail: `正在上传「${clip.title}」到站点…`,
+      percent: initialProgress.percent,
+      detail: initialProgress.detail,
       startedAt,
       updatedAt: startedAt,
     })
@@ -845,9 +1013,13 @@ export function ProfilePage() {
         clip.id,
         siteUploadPassword.trim() || undefined,
         (message, percent = 0) => {
-          const nextPercent = clampProgress(Math.max(6, Math.round(6 + percent * 0.9)))
+          const nextPercent = clampProgress(
+            Math.max(taskProgressRef.current?.percent ?? 4, Math.round(8 + percent * 0.88)),
+          )
+          const nextProgress = { percent: nextPercent, detail: message }
+          taskProgressRef.current = nextProgress
           setStatusText(message)
-          setTaskProgress({ percent: nextPercent, detail: message })
+          setTaskProgress(nextProgress)
           setSliceTask({
             status: nextPercent >= 100 ? 'completed' : 'running',
             percent: nextPercent,
@@ -860,8 +1032,10 @@ export function ProfilePage() {
       const detail = updated
         ? `「${updated.title}」已上传到站点。字幕和索引仍可继续编辑。`
         : '没有找到要上传的视频。'
+      const nextProgress = { percent: 100, detail }
+      taskProgressRef.current = nextProgress
       setStatusText(detail)
-      setTaskProgress({ percent: 100, detail })
+      setTaskProgress(nextProgress)
       setSliceTask({
         status: 'completed',
         percent: 100,
@@ -871,11 +1045,13 @@ export function ProfilePage() {
       })
     } catch (error) {
       const detail = error instanceof Error ? error.message : '整片上传失败，请稍后重试。'
+      const nextProgress = { percent: taskProgressRef.current?.percent ?? 0, detail }
+      taskProgressRef.current = nextProgress
       setStatusText(detail)
-      setTaskProgress({ percent: 99, detail })
+      setTaskProgress(nextProgress)
       setSliceTask({
         status: 'error',
-        percent: 99,
+        percent: nextProgress.percent,
         detail,
         startedAt,
         updatedAt: new Date().toISOString(),
@@ -1027,38 +1203,62 @@ export function ProfilePage() {
           </header>
 
           <div className={styles.primaryImportPanel}>
+            <div className={styles.importSteps} aria-label="整片处理流程">
+              <div className={styles.stepItem}>
+                <span>1</span>
+                <strong>导入本地</strong>
+                <small>先保存到当前浏览器</small>
+              </div>
+              <div className={styles.stepItem}>
+                <span>2</span>
+                <strong>确认字幕</strong>
+                <small>预览、编辑并标记可信</small>
+              </div>
+              <div className={styles.stepItem}>
+                <span>3</span>
+                <strong>上传站点</strong>
+                <small>完成后卡片会显示已上传</small>
+              </div>
+            </div>
+
             <label className={styles.singleUpload}>
               <span>选择原视频</span>
               <input
+                ref={clipFileInputRef}
                 className={styles.fileInput}
                 type="file"
                 accept="video/*,.mp4,.mkv,.mov,.webm,.avi"
                 multiple
-                onChange={(event) => setClipFiles(Array.from(event.target.files ?? []))}
+                onChange={(event) => setClipFiles(uniqueFiles(Array.from(event.target.files ?? [])))}
               />
             </label>
 
             <label className={styles.singleUpload}>
               <span>选择字幕文件（可选）</span>
               <input
+                ref={subtitleFileInputRef}
                 className={styles.fileInput}
                 type="file"
                 accept=".srt,.vtt,.ass,.ssa"
                 multiple
-                onChange={(event) => setSubtitleFiles(Array.from(event.target.files ?? []))}
+                onChange={(event) => setSubtitleFiles(uniqueFiles(Array.from(event.target.files ?? [])))}
               />
             </label>
 
             {clipFiles.length > 0 ? (
-              <div className={styles.selectedFileList}>
-                <strong>已选择 {clipFiles.length} 个视频</strong>
-                <div>
-                  {clipFiles.map((file, index) => (
-                    <span key={`${fileKey(file)}-${index}`} className="chip">
-                      {file.name}
-                    </span>
-                  ))}
-                </div>
+              <div className={styles.selectedImportPlan}>
+                <strong>本次导入队列</strong>
+                {selectedImportRows.map(({ file, subtitleFile }, index) => (
+                  <div key={`${fileKey(file)}-${index}`} className={styles.selectedImportRow}>
+                    <Video size={16} />
+                    <span>{file.name}</span>
+                    <small>
+                      {subtitleFile
+                        ? `字幕：${subtitleFile.name}`
+                        : '未匹配字幕，导入后自动生成草稿'}
+                    </small>
+                  </div>
+                ))}
               </div>
             ) : null}
 
@@ -1127,7 +1327,7 @@ export function ProfilePage() {
             </p>
             {statusText ? <p className={styles.statusNote}>{statusText}</p> : null}
             {taskProgress ? (
-              <div className={styles.progressCard} aria-live="polite">
+              <div className={styles.progressCard} aria-live="polite" role="status">
                 <div className={styles.progressMeta}>
                   <strong>{taskProgress.detail}</strong>
                   <span>{taskProgress.percent}%</span>
@@ -1139,7 +1339,9 @@ export function ProfilePage() {
                   />
                 </div>
                 <small className={styles.progressHint}>
-                  导入阶段只建立整片字幕时间轴；确认字幕后再上传整片，学习切片会在你选择单词或语法执行计划时生成。
+                  {uploadingClipId
+                    ? '上传完成后，视频卡片会显示“站点已上传”，本地草稿会自动切换为站点视频。'
+                    : '导入完成后会出现一张整片卡片；先确认字幕，再上传整片。学习切片会单独收纳，不会混在上传列表里。'}
                 </small>
               </div>
             ) : null}
@@ -1160,97 +1362,109 @@ export function ProfilePage() {
             </div>
           </div>
 
-          <div className={styles.studyPlannerPanel}>
+          {sourceImportedClips.length > 0 ? (
+            <div className={styles.studyPlannerPanel}>
+              <div>
+                <span className="chip badgeMint">按需生成</span>
+                <h3 className={styles.subTitle}>从整片字幕里动态找单词和语法原句</h3>
+                <p className={styles.previewSummary}>
+                  初级单词会在执行时匹配现有 N5/N4 词卡；初级语法会在执行时检索 N5/N4 常见语法。指定检索可以直接输入想学的词或语法。
+                </p>
+              </div>
+
+              <div className={styles.plannerGroup}>
+                <strong>单词</strong>
+                <div className={styles.plannerActions}>
+                  <button
+                    className="softButton primaryButton"
+                    onClick={() => void handleGenerateTermBatch('beginner')}
+                    disabled={generatingTerm}
+                  >
+                    <BookOpen size={18} />
+                    {generatingTerm ? '正在生成…' : '生成初级单词切片'}
+                  </button>
+                  <label className={styles.grammarSearchBox}>
+                    <Search size={18} />
+                    <input
+                      value={termQuery}
+                      onChange={(event) => setTermQuery(event.target.value)}
+                      placeholder="输入特定单词"
+                    />
+                  </label>
+                  <button
+                    className="softButton"
+                    onClick={() => void handleGenerateTermBatch('specific')}
+                    disabled={generatingTerm}
+                  >
+                    <Sparkles size={18} />
+                    检索并生成
+                  </button>
+                </div>
+              </div>
+
+              <div className={styles.plannerGroup}>
+                <strong>语法</strong>
+                <div className={styles.plannerActions}>
+                  <button
+                    className="softButton primaryButton"
+                    onClick={() => void handleGenerateGrammarBatch('beginner')}
+                    disabled={generatingGrammar}
+                  >
+                    <BookOpen size={18} />
+                    {generatingGrammar ? '正在生成…' : '生成初级语法切片'}
+                  </button>
+                  <label className={styles.grammarSearchBox}>
+                    <Search size={18} />
+                    <input
+                      value={grammarQuery}
+                      onChange={(event) => setGrammarQuery(event.target.value)}
+                      placeholder="输入特定语法"
+                    />
+                  </label>
+                  <button
+                    className="softButton"
+                    onClick={() => void handleGenerateGrammarBatch('specific')}
+                    disabled={generatingGrammar}
+                  >
+                    <Sparkles size={18} />
+                    检索并生成
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          <div className={styles.clipSectionHeader}>
             <div>
-              <span className="chip badgeMint">按需生成</span>
-              <h3 className={styles.subTitle}>从整片字幕里动态找单词和语法原句</h3>
-              <p className={styles.previewSummary}>
-                初级单词会在执行时匹配现有 N5/N4 词卡；初级语法会在执行时检索 N5/N4 常见语法。指定检索可以直接输入想学的词或语法。
-              </p>
+              <span className="chip badgeMint">整片视频</span>
+              <h3 className={styles.subTitle}>需要确认字幕和上传的原片</h3>
             </div>
-
-            <div className={styles.plannerGroup}>
-              <strong>单词</strong>
-              <div className={styles.plannerActions}>
-                <button
-                  className="softButton primaryButton"
-                  onClick={() => void handleGenerateTermBatch('beginner')}
-                  disabled={generatingTerm}
-                >
-                  <BookOpen size={18} />
-                  {generatingTerm ? '正在生成…' : '生成初级单词切片'}
-                </button>
-                <label className={styles.grammarSearchBox}>
-                  <Search size={18} />
-                  <input
-                    value={termQuery}
-                    onChange={(event) => setTermQuery(event.target.value)}
-                    placeholder="输入特定单词"
-                  />
-                </label>
-                <button
-                  className="softButton"
-                  onClick={() => void handleGenerateTermBatch('specific')}
-                  disabled={generatingTerm}
-                >
-                  <Sparkles size={18} />
-                  检索并生成
-                </button>
-              </div>
-            </div>
-
-            <div className={styles.plannerGroup}>
-              <strong>语法</strong>
-              <div className={styles.plannerActions}>
-                <button
-                  className="softButton primaryButton"
-                  onClick={() => void handleGenerateGrammarBatch('beginner')}
-                  disabled={generatingGrammar}
-                >
-                  <BookOpen size={18} />
-                  {generatingGrammar ? '正在生成…' : '生成初级语法切片'}
-                </button>
-                <label className={styles.grammarSearchBox}>
-                  <Search size={18} />
-                  <input
-                    value={grammarQuery}
-                    onChange={(event) => setGrammarQuery(event.target.value)}
-                    placeholder="输入特定语法"
-                  />
-                </label>
-                <button
-                  className="softButton"
-                  onClick={() => void handleGenerateGrammarBatch('specific')}
-                  disabled={generatingGrammar}
-                >
-                  <Sparkles size={18} />
-                  检索并生成
-                </button>
-              </div>
-            </div>
+            <span>{sourceImportedClips.length} 个整片</span>
           </div>
 
-          <div className={styles.favoriteList}>
-            {visibleImportedClips.map((clip) => {
+          <div className={styles.favoriteList} data-testid="source-clip-list">
+            {sourceImportedClips.map((clip) => {
               const siteUploaded = isUploadedToSite(clip)
               const clipStatus =
-                clip.importMode === 'sliced'
-                  ? `已导入切片 / ${clip.sourceAnimeTitle ?? '页面切片'}`
-                  : clip.studyIndex
-                    ? `${clip.studyIndex.quality === 'trusted' ? '已确认字幕时间轴' : '已建立字幕草稿时间轴'} / ${siteUploaded ? '已上传' : '本地草稿'}`
+                clip.studyIndex
+                  ? `${clip.studyIndex.quality === 'trusted' ? '已确认字幕时间轴' : '已建立字幕草稿时间轴'} / ${siteUploaded ? '站点已上传' : '本地草稿'}`
                   : clip.subtitleSource === 'auto'
                     ? '已自动生成双语字幕'
                     : clip.subtitleSource === 'manual'
                       ? `已绑定字幕 / ${clip.subtitleFileName}`
                       : '还没有字幕'
+              const subtitleBadge = clip.studyIndex
+                ? clip.studyIndex.quality === 'trusted'
+                  ? '字幕可信'
+                  : '字幕待确认'
+                : clip.subtitleSource === 'manual'
+                  ? '外部字幕'
+                  : clip.subtitleSource === 'auto'
+                    ? '自动字幕'
+                    : '无字幕'
               const clipSummary =
-                clip.importMode === 'sliced'
-                  ? `片段区间 ${formatRange(
-                      clip.clipStartMs ?? 0,
-                      clip.clipEndMs ?? (clip.clipStartMs ?? 0) + clip.durationMs,
-                    )}`
-                  : clip.studyIndex
-                    ? `字幕时间轴包含 ${clip.studyIndex.summary.cueCount} 条字幕；已按目标生成 ${sliceCountMap[clip.id] ?? 0} 条切片。单词和语法会在执行计划时动态匹配。${siteUploaded ? '整片已上传到站点。' : '整片还在本地，确认字幕后可上传。'}`
+                clip.studyIndex
+                  ? `字幕时间轴包含 ${clip.studyIndex.summary.cueCount} 条字幕；已生成 ${sliceCountMap[clip.id] ?? 0} 条学习切片。${siteUploaded ? '整片已上传到站点。' : '整片还在本地，确认字幕后可上传。'}`
                   : '当前还没有字幕时间轴，可以上传字幕或重新生成自动字幕。'
 
               return (
@@ -1264,8 +1478,20 @@ export function ProfilePage() {
                     <span>
                       {clip.theme} / {clipStatus}
                     </span>
+                    <div className={styles.clipBadges}>
+                      <span
+                        className={`${styles.clipBadge} ${
+                          siteUploaded ? styles.clipBadgeUploaded : styles.clipBadgeDraft
+                        }`}
+                      >
+                        {siteUploaded ? '站点已上传' : '本地草稿'}
+                      </span>
+                      <span className={styles.clipBadge}>{subtitleBadge}</span>
+                    </div>
                     <small>{clipSummary}</small>
-                    {busyClipId === clip.id ? <small>{statusText}</small> : null}
+                    {busyClipId === clip.id || uploadingClipId === clip.id ? (
+                      <small>{statusText}</small>
+                    ) : null}
                   </div>
 
                   <div className={styles.clipActions}>
@@ -1336,6 +1562,15 @@ export function ProfilePage() {
                         {uploadingClipId === clip.id ? '上传中…' : '上传整片到站点'}
                       </button>
                     ) : null}
+                    {canUploadRawClipToSite(clip) && siteUploaded ? (
+                      <span className={styles.uploadedState}>
+                        <CheckCircle2 size={16} />
+                        已上传到站点
+                      </span>
+                    ) : null}
+                    {clip.importMode === 'raw' && clip.studyIndex && !siteUploaded && !canUploadRawClipToSite(clip) ? (
+                      <span className={styles.uploadGate}>先确认字幕，再上传整片</span>
+                    ) : null}
                     <button
                       className="softButton"
                       onClick={() => void handleDeleteImportedClip(clip.id, clip.title)}
@@ -1349,24 +1584,56 @@ export function ProfilePage() {
                 </article>
               )
             })}
-            {visibleImportedClips.length === 0 ? (
+            {sourceImportedClips.length === 0 ? (
               <p className={styles.placeholder}>导入后的视频会先暂存在当前浏览器；确认字幕后再上传整片到网站存储。</p>
             ) : null}
           </div>
+
+          {sliceImportedClips.length > 0 ? (
+            <details className={styles.sliceArchive}>
+              <summary data-testid="generated-slice-summary">
+                已生成/导入的学习切片 {sliceImportedClips.length} 条
+              </summary>
+              <div className={styles.sliceArchiveList}>
+                {sliceImportedClips.map((clip) => (
+                  <article key={clip.id} className={styles.sliceArchiveItem}>
+                    <div>
+                      <strong>{clip.title}</strong>
+                      <span>
+                        {clip.sourceAnimeTitle ?? clip.theme} /{' '}
+                        {formatRange(
+                          clip.clipStartMs ?? 0,
+                          clip.clipEndMs ?? (clip.clipStartMs ?? 0) + clip.durationMs,
+                        )}
+                      </span>
+                    </div>
+                    <button
+                      className="softButton"
+                      onClick={() => void handleDeleteImportedClip(clip.id, clip.title)}
+                      aria-label={`删除 ${clip.title}`}
+                    >
+                      <Trash2 size={16} />
+                      删除
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </details>
+          ) : null}
         </div>
         <div className={`${styles.card} glassCard`}>
           <header className={styles.cardHeader}>
             <div>
-              <span className="chip badgePink">Settings</span>
-              <h2>Tune the subtitle experience</h2>
+              <span className="chip badgePink">播放设置</span>
+              <h2>字幕和提醒</h2>
             </div>
           </header>
 
           <div className={styles.settingList}>
             <button className={styles.settingItem} onClick={() => void handleToggleReminder()}>
               <div>
-                <strong>Study reminder</strong>
-                <span>Current: {settings.remindersEnabled ? 'On' : 'Off'}</span>
+                <strong>学习提醒</strong>
+                <span>当前：{settings.remindersEnabled ? '开启' : '关闭'}</span>
               </div>
               <BellRing size={18} />
             </button>
@@ -1378,9 +1645,9 @@ export function ProfilePage() {
               }
             >
               <div>
-                <strong>Playback knowledge</strong>
+                <strong>播放时显示知识点</strong>
                 <span>
-                  Current: {settings.showPlaybackKnowledge ? 'Show grammar hints' : 'Subtitles only'}
+                  当前：{settings.showPlaybackKnowledge ? '显示单词和语法提示' : '只显示字幕'}
                 </span>
               </div>
               <Sparkles size={18} />
@@ -1391,8 +1658,8 @@ export function ProfilePage() {
               onClick={() => void updateSettings({ showRomaji: !settings.showRomaji })}
             >
               <div>
-                <strong>Romaji</strong>
-                <span>Current: {settings.showRomaji ? 'Show' : 'Hide'}</span>
+                <strong>罗马音</strong>
+                <span>当前：{settings.showRomaji ? '显示' : '隐藏'}</span>
               </div>
               <Settings2 size={18} />
             </button>
@@ -1404,8 +1671,8 @@ export function ProfilePage() {
               }
             >
               <div>
-                <strong>Japanese subtitle</strong>
-                <span>Current: {settings.showJapaneseSubtitle ? 'Show' : 'Hide'}</span>
+                <strong>日文字幕</strong>
+                <span>当前：{settings.showJapaneseSubtitle ? '显示' : '隐藏'}</span>
               </div>
               <Settings2 size={18} />
             </button>
@@ -1417,37 +1684,14 @@ export function ProfilePage() {
               }
             >
               <div>
-                <strong>Chinese subtitle</strong>
-                <span>Current: {settings.showChineseSubtitle ? 'Show' : 'Hide'}</span>
+                <strong>中文字幕</strong>
+                <span>当前：{settings.showChineseSubtitle ? '显示' : '隐藏'}</span>
               </div>
               <Settings2 size={18} />
             </button>
           </div>
         </div>
 
-        <div className={`${styles.card} glassCard`}>
-          <header className={styles.cardHeader}>
-            <div>
-              <span className="chip badgeMint">Sources</span>
-              <h2>Credits and attributions</h2>
-            </div>
-          </header>
-
-          <div className={styles.sourceList}>
-            {sourceAttributions.map((source) => (
-              <a key={source.id} href={source.href} target="_blank" rel="noreferrer">
-                <div>
-                  <strong>{source.title}</strong>
-                  <span>
-                    {source.provider} / {source.license}
-                  </span>
-                  <small>{source.note}</small>
-                </div>
-                <Link2 size={16} />
-              </a>
-            ))}
-          </div>
-        </div>
       </section>
 
       {reviewingClip ? (

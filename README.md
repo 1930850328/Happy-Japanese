@@ -144,6 +144,41 @@ R2 Bucket 还需要配置 CORS，允许你的网站域名直接 `PUT` 视频到 
 - 旧版本里“只存在浏览器 Blob、还没有站内 URL”的本地视频，当前不会自动上传迁移；这类老数据需要重新导入一次
 - 站内上传 API 走的是 `api/video-upload.mjs` / `api/video-delete.mjs`，本地如果只跑 `npm run dev`，这两条接口不会由 Vite 直接托管；要测试上传请用已部署站点或 `vercel dev`
 
+## 歌曲资源上传到 TOS
+
+歌曲学习页支持导入完整音频和 LRC / SRT / VTT / TXT 歌词。生产环境会优先把音频和歌词直传到火山引擎 TOS，浏览器只保存一个云端档案 ID；如果 TOS API 暂不可用，会退回到当前浏览器的 IndexedDB 本地缓存。
+
+需要在 Vercel 项目里配置：
+
+- `TOS_S3_ENDPOINT`，例如 `https://tos-s3-cn-beijing.volces.com`
+- `TOS_REGION`
+- `TOS_ACCESS_KEY_ID`
+- `TOS_SECRET_ACCESS_KEY`
+- `TOS_BUCKET`
+- `TOS_FORCE_PATH_STYLE`（可选，默认 `false`；火山 TOS S3 兼容访问使用虚拟主机风格）
+
+TOS Bucket 需要配置 CORS，允许站点域名把文件直传到预签名地址。示例：
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://你的域名.com", "http://localhost:4173"],
+    "AllowedMethods": ["PUT", "GET", "HEAD"],
+    "AllowedHeaders": ["*"],
+    "ExposeHeaders": ["ETag"]
+  }
+]
+```
+
+歌曲上传链路：
+
+1. 前端向 `api/song-upload.mjs` 申请 TOS 预签名上传地址
+2. 浏览器把完整音频和歌词文件直接 `PUT` 到 TOS
+3. 前端向 `api/song-assets.mjs` 保存歌曲元数据索引
+4. 进入歌曲页时，`api/song-assets.mjs` 为音频生成临时播放地址，播放器用站内实现播放
+
+本地如果只跑 `npm run dev`，Vite 不会托管 Vercel API；要完整测试 TOS 上传请使用已部署站点或 `vercel dev`。未配置 TOS 时，歌曲页仍可用本地缓存完成导入和播放。
+
 ## 内容说明
 
 - 默认公开视频素材来自公开资源

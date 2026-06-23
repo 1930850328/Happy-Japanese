@@ -1,16 +1,13 @@
 import {
-  AlertCircle,
   BookOpenText,
   Captions,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
-  ExternalLink,
   Gauge,
   Headphones,
   LibraryBig,
   ListMusic,
-  Lock,
   Maximize2,
   Minimize2,
   Pause,
@@ -20,6 +17,7 @@ import {
   Search,
   Settings2,
   Sparkles,
+  Trash2,
   Upload,
   Volume2,
 } from 'lucide-react'
@@ -30,12 +28,19 @@ import { toast } from 'sonner'
 import { songLessons } from '../data/songLessons'
 import { parseLyrics } from '../lib/lyrics'
 import {
-  getAppleMusicPlaybackSnapshot,
-  pauseAppleMusic,
-  playAppleMusicSong,
-  seekAppleMusic,
-} from '../lib/musicProviders/appleMusicProvider'
-import { fetchApplePreview, fetchCommunitySyncedLyrics } from '../lib/songProviders'
+  createLocalSongAssetId,
+  deleteStoredSongAsset,
+  listStoredSongAssets,
+  saveStoredSongAsset,
+  type StoredSongAsset,
+} from '../lib/songAssetStorage'
+import {
+  deleteSiteSongAsset,
+  listSiteSongAssets,
+  type SiteSongAsset,
+  updateSiteSongLyrics,
+  uploadSongToSite,
+} from '../lib/siteSongStorage'
 import { speakJapanese } from '../lib/speech'
 import { analyzeJapaneseText, hasReliableMeaning } from '../lib/textAnalysis'
 import { useAppStore } from '../store/useAppStore'
@@ -43,6 +48,8 @@ import type { LyricLine, SentenceAnalysis, SongLesson, TokenAnalysis } from '../
 import styles from './SongsPage.module.css'
 
 const playbackRates = [0.75, 1, 1.25]
+const demoSongs = songLessons.filter((song) => song.sourceType === 'demo')
+const fallbackSongId = demoSongs[0]?.id ?? songLessons[0]?.id ?? ''
 const beginnerParticles = new Map([
   ['は', '主题'],
   ['が', '主语'],
@@ -124,39 +131,123 @@ function createImportedCover(title: string, artist: string) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
 }
 
-function buildImportedSong({
-  title,
-  artist,
-  sourceUrl,
-  lyricLines,
-}: {
+interface ImportedSongAsset {
+  id: string
+  storage: 'site' | 'local'
   title: string
   artist: string
+  cover: string
   sourceUrl: string
+  durationMs: number
+  audioFileName: string
+  audioFileType: string
+  audioSize: number
+  lyricFileName?: string
+  lyricText?: string
   lyricLines: LyricLine[]
-}): SongLesson {
-  const durationMs = Math.max(30000, lyricLines.at(-1)?.endMs ?? 0)
+  importedAt: string
+  updatedAt: string
+  siteAsset?: SiteSongAsset
+  localAsset?: StoredSongAsset
+}
+
+function buildImportedSong(asset: ImportedSongAsset): SongLesson {
+  const durationMs = Math.max(30000, asset.durationMs, asset.lyricLines.at(-1)?.endMs ?? 0)
   return {
-    id: 'song-local-session',
+    id: asset.id,
     sourceType: 'local',
-    sourceUrl,
-    title,
-    artist,
-    cover: createImportedCover(title, artist),
+    sourceUrl: asset.sourceUrl,
+    title: asset.title,
+    artist: asset.artist,
+    cover: asset.cover,
     theme: '我的歌曲',
     difficulty: 'Custom',
     durationMs,
-    lyricLines,
+    lyricLines: asset.lyricLines,
     knowledgePoints: [],
-    tags: ['本地导入', lyricLines.length > 0 ? '双语歌词' : '等待歌词'],
+    tags: ['本地导入', asset.lyricLines.length > 0 ? '双语歌词' : '等待歌词'],
     description: '本地整首歌曲学习会话。',
-    creditLine: '仅在当前设备会话中学习。',
+    creditLine: asset.storage === 'site' ? '保存在 TOS 云端歌曲资源包。' : '保存在当前浏览器的本地歌曲资源包。',
     playbackProvider: 'localFile',
-    playbackStatus: sourceUrl ? 'ready' : 'locked',
+    playbackStatus: asset.sourceUrl ? 'ready' : 'loading',
     lyricProvider: 'manual',
-    lyricQuality: lyricLines.length > 0 ? 'manual_imported' : 'needs_review',
-    quality: lyricLines.length > 0 ? 'draft' : 'blocked',
+    lyricQuality: asset.lyricLines.length > 0 ? 'manual_imported' : 'needs_review',
+    quality: asset.lyricLines.length > 0 ? 'draft' : 'blocked',
   }
+}
+
+function buildSiteImportedAsset(asset: SiteSongAsset): ImportedSongAsset {
+  return {
+    id: asset.id,
+    storage: 'site',
+    title: asset.title,
+    artist: asset.artist,
+    cover: asset.cover,
+    sourceUrl: asset.sourceUrl,
+    durationMs: asset.durationMs,
+    audioFileName: asset.audioFileName,
+    audioFileType: asset.audioFileType,
+    audioSize: asset.audioSize,
+    lyricFileName: asset.lyricFileName,
+    lyricLines: asset.lyricLines,
+    importedAt: asset.importedAt,
+    updatedAt: asset.updatedAt,
+    siteAsset: asset,
+  }
+}
+
+function buildLocalImportedAsset(asset: StoredSongAsset, sourceUrl: string): ImportedSongAsset {
+  return {
+    id: asset.id,
+    storage: 'local',
+    title: asset.title,
+    artist: asset.artist,
+    cover: asset.cover,
+    sourceUrl,
+    durationMs: asset.durationMs,
+    audioFileName: asset.audioFileName,
+    audioFileType: asset.audioFileType,
+    audioSize: asset.audioSize,
+    lyricFileName: asset.lyricFileName,
+    lyricText: asset.lyricText,
+    lyricLines: asset.lyricLines,
+    importedAt: asset.importedAt,
+    updatedAt: asset.updatedAt,
+    localAsset: asset,
+  }
+}
+
+function stripFileExtension(fileName: string) {
+  return fileName.replace(/\.[^.]+$/, '').trim()
+}
+
+function formatFileSize(bytes: number) {
+  if (bytes < 1024 * 1024) {
+    return `${Math.max(1, Math.round(bytes / 1024))} KB`
+  }
+
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`
+}
+
+function readMediaDurationMs(file: File) {
+  return new Promise<number>((resolve) => {
+    const url = URL.createObjectURL(file)
+    const audio = document.createElement('audio')
+    let settled = false
+    const finish = (durationMs = 0) => {
+      if (settled) return
+      settled = true
+      window.clearTimeout(timeout)
+      URL.revokeObjectURL(url)
+      resolve(Number.isFinite(durationMs) ? Math.round(durationMs) : 0)
+    }
+    const timeout = window.setTimeout(() => finish(), 4500)
+
+    audio.preload = 'metadata'
+    audio.addEventListener('loadedmetadata', () => finish(audio.duration * 1000), { once: true })
+    audio.addEventListener('error', () => finish(), { once: true })
+    audio.src = url
+  })
 }
 
 function resolveTokenMeaning(token: TokenAnalysis) {
@@ -188,13 +279,10 @@ function getLyricQualityLabel(song: SongLesson) {
   return '等待歌词'
 }
 
-function getPlaybackLabel(song: SongLesson, appleError: string) {
+function getPlaybackLabel(song: SongLesson) {
   if (song.playbackProvider === 'localFile') return '本地整首音频'
   if (song.playbackProvider === 'speech') return '逐句发音'
-  if (song.playbackProvider === 'appleMusic') {
-    return appleError ? '需配置 MusicKit' : 'Apple Music 整首'
-  }
-  return '播放源待确认'
+  return '等待音频'
 }
 
 function renderTokenRail(tokens: TokenAnalysis[], beginnerMode: boolean) {
@@ -224,16 +312,19 @@ export function SongsPage() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const uploadedUrlRef = useRef('')
   const activeLyricRowRef = useRef<HTMLButtonElement | null>(null)
 
   const immersiveMode = searchParams.get('mode') === 'immersive'
-  const [customSong, setCustomSong] = useState<SongLesson | null>(null)
-  const [catalogSongs, setCatalogSongs] = useState<Record<string, SongLesson>>({})
-  const [activeSongId, setActiveSongId] = useState(songLessons[0]?.id ?? '')
-  const [selectedLineId, setSelectedLineId] = useState(songLessons[0]?.lyricLines[0]?.id ?? '')
+  const [siteAssets, setSiteAssets] = useState<SiteSongAsset[]>([])
+  const [storedAssets, setStoredAssets] = useState<StoredSongAsset[]>([])
+  const [assetUrls, setAssetUrls] = useState<Record<string, string>>({})
+  const [pendingLyricFile, setPendingLyricFile] = useState<File | null>(null)
+  const [pendingLyricLines, setPendingLyricLines] = useState<LyricLine[]>([])
+  const [pendingLyricText, setPendingLyricText] = useState('')
+  const [pendingLyricFileName, setPendingLyricFileName] = useState('')
+  const [activeSongId, setActiveSongId] = useState(fallbackSongId)
+  const [selectedLineId, setSelectedLineId] = useState(demoSongs[0]?.lyricLines[0]?.id ?? '')
   const [currentMs, setCurrentMs] = useState(0)
-  const [appleDurationMs, setAppleDurationMs] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [lineLoop, setLineLoop] = useState(false)
   const [beginnerMode, setBeginnerMode] = useState(true)
@@ -242,20 +333,25 @@ export function SongsPage() {
   const [showRomaji, setShowRomaji] = useState(false)
   const [showZh, setShowZh] = useState(true)
   const [learningOpen, setLearningOpen] = useState(false)
-  const [loadingSongId, setLoadingSongId] = useState('')
-  const [metadataLoadingId, setMetadataLoadingId] = useState('')
+  const [assetsLoading, setAssetsLoading] = useState(true)
+  const [importing, setImporting] = useState(false)
   const [loadError, setLoadError] = useState('')
-  const [appleError, setAppleError] = useState('')
   const [importTitle, setImportTitle] = useState('我的日语歌')
   const [importArtist, setImportArtist] = useState('本地音频')
   const [analysis, setAnalysis] = useState<SentenceAnalysis | null>(null)
   const [analyzing, setAnalyzing] = useState(false)
 
+  const importedAssets = useMemo(() => {
+    const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)
+    const localImportedAssets = storedAssets.map((asset) => buildLocalImportedAsset(asset, assetUrls[asset.id] ?? ''))
+    return [...siteImportedAssets, ...localImportedAssets]
+  }, [assetUrls, siteAssets, storedAssets])
+  const assetById = useMemo(() => new Map(importedAssets.map((asset) => [asset.id, asset])), [importedAssets])
   const songs = useMemo(() => {
-    const hydratedCatalog = songLessons.map((song) => catalogSongs[song.id] ?? song)
-    return customSong ? [customSong, ...hydratedCatalog] : hydratedCatalog
-  }, [catalogSongs, customSong])
+    return [...importedAssets.map(buildImportedSong), ...demoSongs]
+  }, [importedAssets])
   const activeSong = songs.find((song) => song.id === activeSongId) ?? songs[0]
+  const activeAsset = activeSong ? assetById.get(activeSong.id) ?? null : null
   const displayCover = activeSong?.artworkUrl || activeSong?.cover
 
   const lineByTime = useMemo(() => {
@@ -277,7 +373,7 @@ export function SongsPage() {
 
   const learnedLineCount = activeSong?.lyricLines.filter((line) => line.endMs <= currentMs).length ?? 0
   const totalLineCount = activeSong?.lyricLines.length ?? 0
-  const durationMs = activeSong?.playbackProvider === 'appleMusic' && appleDurationMs ? appleDurationMs : activeSong?.durationMs ?? 0
+  const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
   const displayTokens = analysis?.tokens.filter(hasDisplayableMeaning) ?? []
   const lineProgressRatio =
@@ -285,19 +381,67 @@ export function SongsPage() {
       ? Math.max(0, Math.min(1, (currentMs - activeLine.startMs) / (activeLine.endMs - activeLine.startMs)))
       : 0
 
-  useEffect(() => {
-    return () => {
-      if (uploadedUrlRef.current) URL.revokeObjectURL(uploadedUrlRef.current)
+  async function refreshSongAssets(nextActiveId?: string) {
+    setAssetsLoading(true)
+    try {
+      const [siteResult, localAssets] = await Promise.allSettled([
+        listSiteSongAssets(),
+        listStoredSongAssets(),
+      ])
+      const nextSiteAssets = siteResult.status === 'fulfilled' ? siteResult.value : []
+      const nextLocalAssets = localAssets.status === 'fulfilled' ? localAssets.value : []
+      const nextAssets = [...nextSiteAssets, ...nextLocalAssets]
+
+      setSiteAssets(nextSiteAssets)
+      setStoredAssets(nextLocalAssets)
+
+      if (siteResult.status === 'rejected') {
+        setLoadError(siteResult.reason instanceof Error ? siteResult.reason.message : 'TOS 歌曲资源加载失败')
+      } else {
+        setLoadError('')
+      }
+
+      if (localAssets.status === 'rejected') {
+        toast.error(localAssets.reason instanceof Error ? localAssets.reason.message : '本地歌曲缓存读取失败')
+      }
+
+      if (nextActiveId) {
+        setActiveSongId(nextActiveId)
+      } else if (nextAssets.length > 0 && !nextAssets.some((asset) => asset.id === activeSongId)) {
+        setActiveSongId(nextAssets[0].id)
+      }
+    } catch (error) {
+      setLoadError(error instanceof Error ? error.message : '本地歌曲资源读取失败')
+    } finally {
+      setAssetsLoading(false)
     }
+  }
+
+  useEffect(() => {
+    void refreshSongAssets()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
+    const entries = storedAssets.map((asset) => [asset.id, URL.createObjectURL(asset.audioBlob)] as const)
+    setAssetUrls(Object.fromEntries(entries))
+
+    return () => {
+      entries.forEach(([, url]) => URL.revokeObjectURL(url))
+    }
+  }, [storedAssets])
+
+  useEffect(() => {
+    if (songs.length > 0 && !songs.some((song) => song.id === activeSongId)) {
+      setActiveSongId(songs[0].id)
+    }
+  }, [activeSongId, songs])
+
+  useEffect(() => {
     setCurrentMs(0)
-    setAppleDurationMs(0)
     setPlaying(false)
     setSelectedLineId(activeSong?.lyricLines[0]?.id ?? '')
     setAnalysis(null)
-    setAppleError('')
   }, [activeSong?.id])
 
   useEffect(() => {
@@ -336,92 +480,8 @@ export function SongsPage() {
     }
   }, [activeLine?.ja, notes])
 
-  useEffect(() => {
-    if (!playing || activeSong?.playbackProvider !== 'appleMusic') {
-      return
-    }
-
-    const timer = window.setInterval(() => {
-      void getAppleMusicPlaybackSnapshot()
-        .then((snapshot) => {
-          setCurrentMs(snapshot.currentMs)
-          if (snapshot.durationMs) setAppleDurationMs(snapshot.durationMs)
-          setPlaying(snapshot.playing)
-        })
-        .catch(() => undefined)
-    }, 700)
-
-    return () => window.clearInterval(timer)
-  }, [activeSong?.playbackProvider, playing])
-
-  const patchCatalogSong = (songId: string, patch: Partial<SongLesson>) => {
-    setCatalogSongs((state) => {
-      const base = state[songId] ?? songLessons.find((song) => song.id === songId)
-      if (!base) return state
-      return {
-        ...state,
-        [songId]: {
-          ...base,
-          ...patch,
-        },
-      }
-    })
-  }
-
-  const hydrateSongAssets = async (song: SongLesson) => {
-    if (song.sourceType !== 'catalog') return
-
-    const currentSong = catalogSongs[song.id] ?? song
-    if (!currentSong.appleMusicId && metadataLoadingId !== song.id) {
-      setMetadataLoadingId(song.id)
-      void fetchApplePreview(currentSong)
-        .then((metadata) => {
-          if (!metadata) return
-          patchCatalogSong(song.id, {
-            appleMusicId: metadata.appleMusicId,
-            previewUrl: metadata.previewUrl,
-            sourcePageUrl: metadata.sourcePageUrl,
-            artworkUrl: metadata.artworkUrl,
-            playbackStatus: metadata.appleMusicId ? 'ready' : 'locked',
-          })
-        })
-        .catch(() => undefined)
-        .finally(() => setMetadataLoadingId(''))
-    }
-
-    if (currentSong.lyricLines.length > 0 || loadingSongId === song.id) return
-
-    setLoadingSongId(song.id)
-    setLoadError('')
-    try {
-      const lyrics = await fetchCommunitySyncedLyrics(currentSong)
-      patchCatalogSong(song.id, {
-        lyricLines: lyrics.lyricLines,
-        knowledgePoints: lyrics.knowledgePoints,
-        creditLine: lyrics.creditLine,
-        lyricProvider: 'lrclib',
-        lyricQuality: 'community_synced',
-        quality: 'draft',
-        tags: [...new Set([...currentSong.tags, '社区同步歌词', '学习翻译'])],
-      })
-      setSelectedLineId(lyrics.lyricLines[0]?.id ?? '')
-    } catch (error) {
-      setLoadError(error instanceof Error ? error.message : '同步歌词加载失败')
-    } finally {
-      setLoadingSongId('')
-    }
-  }
-
-  useEffect(() => {
-    if (activeSong?.sourceType === 'catalog') {
-      void hydrateSongAssets(activeSong)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSong?.id])
-
   const handleSelectSong = (song: SongLesson) => {
     setActiveSongId(song.id)
-    if (song.sourceType === 'catalog') void hydrateSongAssets(catalogSongs[song.id] ?? song)
   }
 
   const seekToLine = (line: LyricLine, shouldPlay = false) => {
@@ -430,12 +490,11 @@ export function SongsPage() {
 
     if (activeSong?.playbackProvider === 'localFile' && audioRef.current && activeSong.sourceUrl) {
       audioRef.current.currentTime = line.startMs / 1000
-      if (shouldPlay) void handlePlayPause()
-      return
-    }
-
-    if (activeSong?.playbackProvider === 'appleMusic' && playing) {
-      void seekAppleMusic(line.startMs / 1000).catch(() => undefined)
+      if (shouldPlay) {
+        void audioRef.current.play().then(() => setPlaying(true)).catch((error: unknown) => {
+          toast.error(error instanceof Error ? error.message : '本地音频播放失败')
+        })
+      }
       return
     }
 
@@ -463,22 +522,8 @@ export function SongsPage() {
       return
     }
 
-    if (activeSong.playbackProvider === 'appleMusic') {
-      if (playing) {
-        await pauseAppleMusic().catch(() => undefined)
-        setPlaying(false)
-        return
-      }
-
-      try {
-        setAppleError('')
-        await playAppleMusicSong(activeSong)
-        setPlaying(true)
-      } catch (error) {
-        const message = error instanceof Error ? error.message : 'Apple Music 播放失败'
-        setAppleError(message)
-        toast.error(message)
-      }
+    if (activeSong.playbackProvider === 'localFile') {
+      toast.error('请先导入音频文件')
       return
     }
 
@@ -502,51 +547,160 @@ export function SongsPage() {
     setCurrentMs(nextMs)
   }
 
-  const handleMediaUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files?.[0]
+  const handleMediaUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const input = event.currentTarget
+    const file = input.files?.[0]
     if (!file) return
 
-    if (uploadedUrlRef.current) URL.revokeObjectURL(uploadedUrlRef.current)
-
-    const nextUrl = URL.createObjectURL(file)
-    uploadedUrlRef.current = nextUrl
+    setImporting(true)
+    input.value = ''
     const title = importTitle.trim() || file.name.replace(/\.[^.]+$/, '')
     const artist = importArtist.trim() || '本地音频'
-    const nextSong = buildImportedSong({
-      title,
-      artist,
-      sourceUrl: nextUrl,
-      lyricLines: customSong?.lyricLines ?? [],
-    })
-    setImportTitle(title)
-    setImportArtist(artist)
-    setCustomSong(nextSong)
-    setActiveSongId(nextSong.id)
-    toast.success('本地整首音频已载入')
+    const durationMs = await readMediaDurationMs(file)
+    const lyricDurationMs = pendingLyricLines.at(-1)?.endMs ?? 0
+    const cover = createImportedCover(title, artist)
+    const lyricsFile =
+      pendingLyricFile ??
+      (pendingLyricText && pendingLyricFileName
+        ? new File([pendingLyricText], pendingLyricFileName, { type: 'text/plain; charset=utf-8' })
+        : undefined)
+    const now = new Date().toISOString()
+
+    try {
+      const siteAsset = await uploadSongToSite({
+        audioFile: file,
+        lyricsFile,
+        title,
+        artist,
+        cover,
+        durationMs: Math.max(durationMs, lyricDurationMs),
+        lyricLines: pendingLyricLines,
+      })
+      await refreshSongAssets(siteAsset.id)
+      setImportTitle(title)
+      setImportArtist(artist)
+      setPendingLyricFile(null)
+      setPendingLyricLines([])
+      setPendingLyricText('')
+      setPendingLyricFileName('')
+      setSelectedLineId(siteAsset.lyricLines[0]?.id ?? '')
+      toast.success(`已保存到 TOS：${title}`)
+    } catch (error) {
+      const asset: StoredSongAsset = {
+        id: createLocalSongAssetId(),
+        title,
+        artist,
+        cover,
+        audioBlob: file,
+        audioFileName: file.name,
+        audioFileType: file.type || 'audio/mpeg',
+        audioSize: file.size,
+        durationMs: Math.max(durationMs, lyricDurationMs),
+        lyricFileName: pendingLyricFileName || undefined,
+        lyricText: pendingLyricText || undefined,
+        lyricLines: pendingLyricLines,
+        importedAt: now,
+        updatedAt: now,
+      }
+
+      try {
+        await saveStoredSongAsset(asset)
+        await refreshSongAssets(asset.id)
+        setImportTitle(title)
+        setImportArtist(artist)
+        setPendingLyricFile(null)
+        setPendingLyricLines([])
+        setPendingLyricText('')
+        setPendingLyricFileName('')
+        setSelectedLineId(asset.lyricLines[0]?.id ?? '')
+        toast.success(`TOS 暂不可用，已保存到本地浏览器：${title}`)
+      } catch (localError) {
+        toast.error(localError instanceof Error ? localError.message : error instanceof Error ? error.message : '歌曲保存失败')
+      }
+    } finally {
+      setImporting(false)
+    }
   }
 
   const handleLyricsUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files?.[0]
+    const input = event.currentTarget
+    const file = input.files?.[0]
     if (!file) return
 
-    const lyricLines = parseLyrics(await file.text(), file.name)
+    const lyricText = await file.text()
+    const lyricLines = parseLyrics(lyricText, file.name)
+    input.value = ''
     if (lyricLines.length === 0) {
       toast.error('没有识别到可用歌词')
       return
     }
 
-    const title = importTitle.trim() || customSong?.title || file.name.replace(/\.[^.]+$/, '')
-    const artist = importArtist.trim() || customSong?.artist || '本地音频'
-    const nextSong = buildImportedSong({
-      title,
-      artist,
-      sourceUrl: customSong?.sourceUrl ?? '',
+    if (!activeAsset) {
+      setPendingLyricFile(file)
+      setPendingLyricLines(lyricLines)
+      setPendingLyricText(lyricText)
+      setPendingLyricFileName(file.name)
+      setImportTitle((current) => current.trim() || stripFileExtension(file.name))
+      setSelectedLineId(lyricLines[0].id)
+      toast.success(`歌词已暂存：${lyricLines.length} 行，继续导入音频即可保存`)
+      return
+    }
+
+    if (activeAsset.storage === 'site' && activeAsset.siteAsset) {
+      try {
+        const nextAsset = await updateSiteSongLyrics({
+          song: activeAsset.siteAsset,
+          lyricsFile: file,
+          lyricLines,
+        })
+        await refreshSongAssets(nextAsset.id)
+        setSelectedLineId(lyricLines[0].id)
+        toast.success(`已为 ${nextAsset.title} 保存云端歌词`)
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : '云端歌词保存失败')
+      }
+      return
+    }
+
+    if (!activeAsset.localAsset) {
+      toast.error('当前歌曲暂时不能绑定歌词')
+      return
+    }
+
+    const nextAsset: StoredSongAsset = {
+      ...activeAsset.localAsset,
+      durationMs: Math.max(activeAsset.durationMs, lyricLines.at(-1)?.endMs ?? 0),
+      lyricFileName: file.name,
+      lyricText,
       lyricLines,
-    })
-    setCustomSong(nextSong)
-    setActiveSongId(nextSong.id)
-    setSelectedLineId(lyricLines[0].id)
-    toast.success(`已导入 ${lyricLines.length} 行双语歌词`)
+      updatedAt: new Date().toISOString(),
+    }
+
+    try {
+      await saveStoredSongAsset(nextAsset)
+      await refreshSongAssets(nextAsset.id)
+      setSelectedLineId(lyricLines[0].id)
+      toast.success(`已为 ${nextAsset.title} 保存 ${lyricLines.length} 行歌词`)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : '歌词保存失败')
+    }
+  }
+
+  const handleDeleteSong = async (song: SongLesson) => {
+    const asset = assetById.get(song.id)
+    if (!asset) return
+
+    try {
+      if (asset.storage === 'site') {
+        await deleteSiteSongAsset(song.id)
+      } else {
+        await deleteStoredSongAsset(song.id)
+      }
+      await refreshSongAssets()
+      toast.success(`已删除 ${song.title}`)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : '歌曲删除失败')
+    }
   }
 
   const handleAddReview = async () => {
@@ -571,19 +725,15 @@ export function SongsPage() {
 
   if (!activeSong) return null
 
-  const loadingCurrentSong = loadingSongId === activeSong.id
-  const metadataLoading = metadataLoadingId === activeSong.id
+  const loadingCurrentSong = assetsLoading || importing
   const canUseNativeAudio = activeSong.playbackProvider === 'localFile' && Boolean(activeSong.sourceUrl)
-  const playLabel =
-    activeSong.playbackProvider === 'appleMusic'
-      ? playing
-        ? '暂停'
-        : '登录播放整首'
-      : canUseNativeAudio
-        ? playing
-          ? '暂停'
-          : '播放'
-        : '听当前句'
+  const playLabel = canUseNativeAudio ? (playing ? '暂停' : '播放') : '听当前句'
+  const sourceSummary = activeAsset
+    ? `${activeAsset.storage === 'site' ? 'TOS 云端' : '本地缓存'} · ${activeAsset.audioFileName} · ${formatFileSize(activeAsset.audioSize)}`
+    : activeSong.sourceType === 'demo'
+      ? '演示素材'
+      : '本地资源包'
+  const lyricSummary = activeSong.lyricLines.length > 0 ? `${activeSong.lyricLines.length} 句歌词` : '等待歌词'
 
   return (
     <div className={`${styles.page} ${immersiveMode ? styles.pageImmersive : ''}`}>
@@ -610,48 +760,68 @@ export function SongsPage() {
 
             <div className={styles.catalogHeader}>
               <div>
-                <span>热门近年</span>
-                <strong>歌曲</strong>
+                <span>TOS / 本地资源包</span>
+                <strong>我的歌曲</strong>
               </div>
-              <button type="button" aria-label="刷新当前歌曲资料" onClick={() => void hydrateSongAssets(activeSong)}>
+              <button type="button" aria-label="刷新歌曲资源" onClick={() => void refreshSongAssets()}>
                 <RefreshCw size={16} />
               </button>
             </div>
 
             <div className={styles.songList}>
-              {songs.map((song) => (
-                <button
-                  key={song.id}
-                  className={`${styles.songItem} ${song.id === activeSong.id ? styles.songItemActive : ''}`}
-                  onClick={() => handleSelectSong(song)}
-                >
-                  <img src={song.artworkUrl || song.cover} alt="" />
-                  <span>
-                    <strong>{song.title}</strong>
-                    <small>
-                      {song.artist}
-                      {song.releaseYear ? ` · ${song.releaseYear}` : ''}
-                    </small>
-                  </span>
-                  <em>{song.playbackProvider === 'appleMusic' ? '整首' : song.lyricLines.length ? `${song.lyricLines.length} 句` : '导入'}</em>
-                </button>
-              ))}
+              {songs.map((song) => {
+                const importedAsset = assetById.get(song.id)
+                return (
+                  <div key={song.id} className={`${styles.songItemShell} ${song.id === activeSong.id ? styles.songItemShellActive : ''}`}>
+                    <button
+                      className={styles.songItem}
+                      onClick={() => handleSelectSong(song)}
+                    >
+                      <img src={song.artworkUrl || song.cover} alt="" />
+                      <span>
+                        <strong>{song.title}</strong>
+                        <small>
+                          {song.artist}
+                          {song.releaseYear ? ` · ${song.releaseYear}` : ''}
+                        </small>
+                      </span>
+                      <em>{importedAsset ? (song.lyricLines.length ? `${song.lyricLines.length} 句` : '待歌词') : '示例'}</em>
+                    </button>
+                    {importedAsset ? (
+                      <button
+                        className={styles.songDeleteButton}
+                        type="button"
+                        aria-label={`删除 ${song.title}`}
+                        onClick={() => void handleDeleteSong(song)}
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    ) : null}
+                  </div>
+                )
+              })}
             </div>
 
             <div className={styles.importDock}>
               <div>
                 <strong>本地整首歌</strong>
-                <small>上传音频和双语歌词后可离线学习</small>
+                <small>优先上传到 TOS；接口不可用时保存在当前浏览器</small>
               </div>
               <div className={styles.importFields}>
                 <input aria-label="导入歌名" value={importTitle} onChange={(event) => setImportTitle(event.target.value)} />
                 <input aria-label="导入歌手" value={importArtist} onChange={(event) => setImportArtist(event.target.value)} />
               </div>
+              {pendingLyricLines.length > 0 ? (
+                <div className={styles.pendingImport}>
+                  <CheckCircle2 size={15} />
+                  <span>{pendingLyricFileName} · {pendingLyricLines.length} 行，等待音频</span>
+                </div>
+              ) : null}
               <div className={styles.importActions}>
                 <label>
                   <Upload size={16} />
-                  音频
-                  <input hidden type="file" accept="audio/*,video/*" onChange={handleMediaUpload} />
+                  {importing ? '保存中' : '音频'}
+                  <input hidden type="file" accept="audio/*,video/*" disabled={importing} onChange={(event) => void handleMediaUpload(event)} />
                 </label>
                 <label>
                   <Captions size={16} />
@@ -674,8 +844,8 @@ export function SongsPage() {
               </button>
             </div>
             <div className={styles.sourcePill}>
-              <span>来源：{getLyricQualityLabel(activeSong)}</span>
-              <strong>{loadingCurrentSong ? '同步中' : '质量：待校对'}</strong>
+              <span>来源：{sourceSummary}</span>
+              <strong>{loadingCurrentSong ? '处理中' : lyricSummary}</strong>
             </div>
             <button className={styles.immersiveButton} type="button" onClick={() => setImmersiveMode(!immersiveMode)}>
               {immersiveMode ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
@@ -687,13 +857,13 @@ export function SongsPage() {
             <img className={styles.heroCover} src={displayCover} alt={activeSong.title} />
             <div className={styles.heroMeta}>
               <div className={styles.statusBadges}>
-                <span className={activeSong.appleMusicId ? styles.statusReady : styles.statusMuted}>
-                  {metadataLoading ? <RefreshCw size={14} /> : activeSong.appleMusicId ? <CheckCircle2 size={14} /> : <Lock size={14} />}
-                  {getPlaybackLabel(activeSong, appleError)}
+                <span className={canUseNativeAudio || activeSong.playbackProvider === 'speech' ? styles.statusReady : styles.statusMuted}>
+                  {loadingCurrentSong ? <RefreshCw size={14} /> : <CheckCircle2 size={14} />}
+                  {getPlaybackLabel(activeSong)}
                 </span>
                 <span className={loadingCurrentSong ? styles.statusSyncing : styles.statusReady}>
                   {loadingCurrentSong ? <RefreshCw size={14} /> : <Captions size={14} />}
-                  {loadingCurrentSong ? '歌词同步中' : getLyricQualityLabel(activeSong)}
+                  {loadingCurrentSong ? '资源处理中' : getLyricQualityLabel(activeSong)}
                 </span>
               </div>
               <h1>{activeSong.title}</h1>
@@ -712,12 +882,6 @@ export function SongsPage() {
                   <dd>{activeSong.difficulty}</dd>
                 </div>
               </dl>
-              {appleError ? (
-                <p className={styles.warningText}>
-                  <AlertCircle size={16} />
-                  {appleError}
-                </p>
-              ) : null}
               <div className={styles.heroActions}>
                 <button className={styles.primaryPlay} onClick={() => void handlePlayPause()}>
                   {playing ? <Pause size={20} /> : <Play size={20} />}
@@ -727,12 +891,6 @@ export function SongsPage() {
                   <LibraryBig size={18} />
                   加入复习
                 </button>
-                {activeSong.sourcePageUrl ? (
-                  <a href={activeSong.sourcePageUrl} target="_blank" rel="noreferrer">
-                    <ExternalLink size={18} />
-                    打开歌曲
-                  </a>
-                ) : null}
               </div>
             </div>
           </section>
@@ -785,8 +943,8 @@ export function SongsPage() {
             ) : (
               <div className={styles.emptyLyrics}>
                 {loadingCurrentSong ? <RefreshCw size={24} /> : <Headphones size={24} />}
-                <strong>{loadingCurrentSong ? '正在同步歌词' : loadError || '等待双语歌词'}</strong>
-                <span>热门歌曲会先加载同步歌词；也可以上传 LRC/SRT/VTT。</span>
+                <strong>{loadingCurrentSong ? '正在处理本地资源' : loadError || '等待双语歌词'}</strong>
+                <span>选择一首本地歌后上传 LRC/SRT/VTT，歌词会和音频一起保存。</span>
               </div>
             )}
 

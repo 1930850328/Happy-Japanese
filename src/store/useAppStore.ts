@@ -1400,6 +1400,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       subtitleSource: 'manual',
       includeOccurrences: false,
     })
+    const isUploadedClip = Boolean(clip.sourceUrl)
     const updatedClip: ImportedClip = {
       ...clip,
       subtitleFileName: subtitleFile.name,
@@ -1426,8 +1427,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
       ),
       description:
         '这部整片已绑定外部字幕，后续单词和语法切片会从中日字幕时间轴动态生成。',
-      creditLine:
-        '视频文件保存在网站存储中；字幕来自你上传的外部字幕文件，学习切片会直接播放原视频的对应时间段。',
+      creditLine: isUploadedClip
+        ? '视频文件保存在网站存储中；字幕来自你上传的外部字幕文件，学习切片会直接播放原视频的对应时间段。'
+        : '视频仍暂存在当前浏览器；字幕来自你上传的外部字幕文件，确认字幕后可以上传整片到站点存储。',
     }
     const generatedChildIds = collectGeneratedStudyChildIds(get().importedClips, clipId)
 
@@ -1790,6 +1792,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       subtitleSource: 'auto',
       includeOccurrences: false,
     })
+    const isUploadedClip = Boolean(clip.sourceUrl)
 
     const updatedClip: ImportedClip = {
       ...clip,
@@ -1799,13 +1802,14 @@ export const useAppStore = create<AppStore>((set, get) => ({
           : '自动生成字幕',
       subtitleSource: 'auto',
       studyIndex,
-      sourceProvider: `站内视频 + 字幕解析 (${studyData.modelLabel})`,
+      sourceProvider: `${isUploadedClip ? '站内视频' : '本地原片'} + 字幕解析 (${studyData.modelLabel})`,
       segments: studyData.segments,
       knowledgePoints: studyData.knowledgePoints,
       description:
         '系统已优先尝试提取视频自带字幕轨，再尝试识别画面底部硬字幕；必要时才自动识别日语时间轴字幕，并补充学习向中文字幕。',
-      creditLine:
-        '视频文件保存在网站存储中；自动字幕仅供个人学习校对使用，首次运行会下载并缓存本地语音识别模型。',
+      creditLine: isUploadedClip
+        ? '视频文件保存在网站存储中；自动字幕仅供个人学习校对使用，首次运行会下载并缓存本地语音识别模型。'
+        : '视频仍暂存在当前浏览器；自动字幕仅供个人学习校对使用，确认字幕后可以上传整片到站点存储。',
       tags: mergeTags(
         [ ...clip.tags.filter((tag) => tag !== '待生成字幕' && tag !== '外部字幕' && tag !== '字幕已确认') ],
         ['自动字幕', '字幕时间轴', '字幕待校对'],

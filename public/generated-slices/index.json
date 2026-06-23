@@ -1,5 +1,13 @@
 [
   {
+    "slug": "manual-japanese-samples",
+    "animeTitle": "日语测试样例",
+    "episodeTitle": "本地短片补充包",
+    "manifestPath": "/generated-slices/manual-japanese-samples/manifest.json",
+    "generatedAt": "2026-05-13T09:22:39Z",
+    "clipCount": 3
+  },
+  {
     "slug": "generated-wikimedia-inkscape-editing",
     "animeTitle": "Wikimedia Commons: Inkscape",
     "episodeTitle": "画像編集の基本",
