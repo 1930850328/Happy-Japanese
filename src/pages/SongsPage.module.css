@@ -1572,10 +1572,6 @@
   }
 }
 
-.immersiveStudyHint {
-  display: none;
-}
-
 .page.pageImmersive {
   --immersive-player-height: 112px;
   height: 100vh;
@@ -1808,8 +1804,8 @@
   isolation: isolate;
   grid-column: 2;
   grid-row: 2;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 1.15rem;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
   min-height: 0;
   overflow: hidden;
   padding: clamp(1.2rem, 3.8vh, 3rem) 0 clamp(1rem, 2.5vh, 1.5rem);
@@ -1858,14 +1854,15 @@
 .pageImmersive .lyricQueue {
   position: relative;
   display: grid;
-  align-content: center;
-  gap: 1.35rem;
+  align-content: start;
+  gap: 1.08rem;
   width: min(760px, 100%);
   max-height: none;
   min-height: 0;
   height: 100%;
-  padding: 1.4rem 0;
+  padding: min(24vh, 13rem) 0 min(28vh, 15rem);
   overflow: auto;
+  scroll-padding-block: 45%;
   scrollbar-width: none;
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%);
@@ -1876,15 +1873,39 @@
 }
 
 .pageImmersive .lyricRow {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0.26rem;
-  padding: 0;
+  padding: 0.28rem 0 0.28rem 1.1rem;
   border: 0;
   background: transparent;
   color: rgba(255, 250, 244, 0.28);
+  opacity: 0.66;
   text-align: left;
   text-shadow: 0 10px 34px rgba(0, 0, 0, 0.34);
+  transform: translateX(0);
+  transition:
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.pageImmersive .lyricRow::before {
+  position: absolute;
+  top: 0.32rem;
+  bottom: 0.32rem;
+  left: 0;
+  width: 3px;
+  border-radius: 999px;
+  content: '';
+  background: #ff6a55;
+  opacity: 0;
+  box-shadow: 0 0 18px rgba(255, 106, 85, 0.4);
+  transform: scaleY(0.72);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .pageImmersive .lyricTime {
@@ -1920,41 +1941,26 @@
 
 .pageImmersive .lyricRowActive {
   color: #fffaf4;
+  opacity: 1;
+  transform: translateX(0.35rem);
+}
+
+.pageImmersive .lyricRowActive::before {
+  opacity: 1;
+  transform: scaleY(1);
 }
 
 .pageImmersive .lyricRowActive .lyricTextStack strong {
+  color: #fffaf4;
   font-size: clamp(1.3rem, 1.9vw, 1.65rem);
+  text-shadow:
+    0 0 18px rgba(255, 250, 244, 0.12),
+    0 10px 34px rgba(0, 0, 0, 0.34);
 }
 
 .pageImmersive .lyricRowActive .lyricTextStack small {
   color: rgba(255, 250, 244, 0.94);
   font-size: clamp(1.1rem, 1.65vw, 1.45rem);
-}
-
-.pageImmersive .immersiveStudyHint {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.72rem;
-  align-items: center;
-  width: min(760px, 100%);
-  min-height: 54px;
-  padding: 0.68rem 0.82rem;
-  border: 1px solid rgba(124, 230, 213, 0.22);
-  border-radius: 8px;
-  background: rgba(10, 14, 17, 0.2);
-  color: rgba(255, 250, 244, 0.74);
-  backdrop-filter: blur(12px);
-}
-
-.pageImmersive .immersiveStudyHint strong {
-  color: #7ce6d5;
-}
-
-.pageImmersive .immersiveStudyHint span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .pageImmersive .learningDrawerButton {

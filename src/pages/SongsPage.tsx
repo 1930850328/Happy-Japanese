@@ -435,22 +435,8 @@ export function SongsPage() {
   }, [activeSong, selectedLineId])
 
   const activeLine = lineByTime ?? selectedLine ?? activeSong?.lyricLines[0] ?? null
-  const activeKnowledge = useMemo(() => {
-    if (!activeSong || !activeLine) return []
-    return activeSong.knowledgePoints.filter((point) => activeLine.focusTermIds.includes(point.id))
-  }, [activeLine, activeSong])
-
   const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
-  const displayTokens = analysis?.tokens.filter(hasDisplayableMeaning) ?? []
-  const immersiveHintToken = displayTokens[0]
-  const immersiveHintKnowledge = activeKnowledge[0]
-  const immersiveHintTitle = immersiveHintToken?.surface ?? immersiveHintKnowledge?.expression ?? activeLine?.ja ?? '当前句'
-  const immersiveHintText = immersiveHintToken
-    ? `${immersiveHintToken.kana ? `${immersiveHintToken.kana} · ` : ''}${resolveTokenMeaning(immersiveHintToken)}`
-    : immersiveHintKnowledge
-      ? immersiveHintKnowledge.meaningZh
-      : activeLine?.zh
 
   const clearSpeechPlaybackTimer = () => {
     if (speechPlaybackTimerRef.current === null) return
@@ -1107,12 +1093,6 @@ export function SongsPage() {
               </div>
             )}
 
-            {activeLine && immersiveHintText ? (
-              <div className={styles.immersiveStudyHint}>
-                <strong>{immersiveHintTitle}</strong>
-                <span>{immersiveHintText}</span>
-              </div>
-            ) : null}
           </section>
         </main>
 
