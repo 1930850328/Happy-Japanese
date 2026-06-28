@@ -1,9 +1,14 @@
-import type { LyricLine } from '../types'
+import { upload as uploadBlob } from '@vercel/blob/client'
+
+import type { LyricLine, LyricProvider, SongLyricQuality } from '../types'
 
 const PROFILE_STORAGE_KEY = 'yuru-nihongo-cloud-profile-id'
 const SONG_UPLOAD_ENDPOINT = '/api/song-upload'
+const SONG_BLOB_UPLOAD_ENDPOINT = '/api/song-blob-upload'
+const SONG_SERVER_UPLOAD_ENDPOINT = '/api/song-upload-server'
 const SONG_ASSETS_ENDPOINT = '/api/song-assets'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
+const SERVER_UPLOAD_CHUNK_SIZE = 2 * 1024 * 1024
 
 export interface SiteSongAsset {
   id: string
@@ -11,15 +16,20 @@ export interface SiteSongAsset {
   artist: string
   cover: string
   durationMs: number
-  audioObjectKey: string
+  storageProvider?: 'tos' | 'vercel-blob'
+  audioObjectKey?: string
+  audioUrl?: string
   audioFileName: string
   audioFileType: string
   audioSize: number
   lyricObjectKey?: string
+  lyricUrl?: string
   lyricFileName?: string
   lyricFileType?: string
   lyricSize?: number
   lyricLines: LyricLine[]
+  lyricProvider?: LyricProvider
+  lyricQuality?: SongLyricQuality
   importedAt: string
   updatedAt: string
   sourceUrl: string
@@ -48,6 +58,8 @@ interface SongUploadInput {
   cover: string
   durationMs: number
   lyricLines: LyricLine[]
+  lyricProvider?: LyricProvider
+  lyricQuality?: SongLyricQuality
 }
 
 interface SongLyricsUpdateInput {
@@ -153,6 +165,7 @@ function uploadFileToSignedUrl(ticket: UploadTicket, file: File) {
     const xhr = new XMLHttpRequest()
     xhr.open('PUT', ticket.uploadUrl)
     xhr.setRequestHeader('Content-Type', ticket.contentType || file.type || 'application/octet-stream')
+    xhr.timeout = 45_000
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
         resolve()
@@ -163,8 +176,159 @@ function uploadFileToSignedUrl(ticket: UploadTicket, file: File) {
     }
     xhr.onerror = () => reject(new Error('TOS upload network error.'))
     xhr.onabort = () => reject(new Error('TOS upload aborted.'))
+    xhr.ontimeout = () => reject(new Error('TOS upload timed out.'))
     xhr.send(file)
   })
+}
+
+async function uploadFileThroughServer(ticket: UploadTicket, file: File) {
+  const params = new URLSearchParams({
+    profileId: getProfileId(),
+    objectKey: ticket.objectKey,
+    contentType: ticket.contentType || file.type || 'application/octet-stream',
+  })
+  const response = await fetch(`${getApiEndpoint(SONG_SERVER_UPLOAD_ENDPOINT)}?${params.toString()}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': ticket.contentType || file.type || 'application/octet-stream',
+    },
+    body: file,
+  })
+
+  await readJsonResponse(response, '歌曲服务端上传失败')
+}
+
+async function uploadFileThroughServerChunks(ticket: UploadTicket, file: File) {
+  const profileId = getProfileId()
+  const contentType = ticket.contentType || file.type || 'application/octet-stream'
+  const chunks: Array<{ objectKey: string; size: number }> = []
+  const totalChunks = Math.ceil(file.size / SERVER_UPLOAD_CHUNK_SIZE)
+
+  for (let index = 0; index < totalChunks; index += 1) {
+    const start = index * SERVER_UPLOAD_CHUNK_SIZE
+    const end = Math.min(file.size, start + SERVER_UPLOAD_CHUNK_SIZE)
+    const blob = file.slice(start, end)
+    const params = new URLSearchParams({
+      mode: 'chunk',
+      profileId,
+      objectKey: ticket.objectKey,
+      chunkIndex: String(index),
+    })
+
+    const response = await fetch(`${getApiEndpoint(SONG_SERVER_UPLOAD_ENDPOINT)}?${params.toString()}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/octet-stream',
+      },
+      body: blob,
+    })
+    const body = await readJsonResponse(response, 'Song chunk upload failed.') as {
+      objectKey?: string
+      size?: number
+    }
+
+    if (!body.objectKey) {
+      throw new Error('Song chunk upload did not return an object key.')
+    }
+
+    chunks.push({
+      objectKey: body.objectKey,
+      size: Math.max(0, Math.round(Number(body.size ?? blob.size))),
+    })
+  }
+
+  const finalizeResponse = await fetch(`${getApiEndpoint(SONG_SERVER_UPLOAD_ENDPOINT)}?mode=finalize`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      profileId,
+      objectKey: ticket.objectKey,
+      contentType,
+      size: file.size,
+      chunks,
+    }),
+  })
+
+  await readJsonResponse(finalizeResponse, 'Song chunk upload finalization failed.')
+}
+
+async function uploadFileToBlob(ticket: UploadTicket, file: File) {
+  const blob = await uploadBlob(ticket.objectKey, file, {
+    access: 'public',
+    handleUploadUrl: getApiEndpoint(SONG_BLOB_UPLOAD_ENDPOINT),
+    contentType: ticket.contentType || file.type || 'application/octet-stream',
+    multipart: file.size > 64 * 1024 * 1024,
+  })
+
+  return {
+    url: blob.url,
+    pathname: blob.pathname,
+    contentType: blob.contentType,
+  }
+}
+
+async function uploadSongFiles(ticket: UploadTicketResponse, audioFile?: File, lyricsFile?: File) {
+  if (audioFile && !ticket.tickets.audio) {
+    throw new Error('歌曲上传没有返回音频上传地址。')
+  }
+
+  try {
+    if (audioFile && ticket.tickets.audio) {
+      await uploadFileToSignedUrl(ticket.tickets.audio, audioFile)
+    }
+    if (lyricsFile && ticket.tickets.lyrics) {
+      await uploadFileToSignedUrl(ticket.tickets.lyrics, lyricsFile)
+    }
+
+    return {
+      storageProvider: 'tos' as const,
+    }
+  } catch {
+    try {
+      if (audioFile && ticket.tickets.audio) {
+        await uploadFileThroughServer(ticket.tickets.audio, audioFile)
+      }
+      if (lyricsFile && ticket.tickets.lyrics) {
+        await uploadFileThroughServer(ticket.tickets.lyrics, lyricsFile)
+      }
+
+      return {
+        storageProvider: 'tos' as const,
+      }
+    } catch {
+      // Fall through to Blob when direct browser PUT and server-side TOS upload are both unavailable.
+    }
+
+    try {
+      if (audioFile && ticket.tickets.audio) {
+        await uploadFileThroughServerChunks(ticket.tickets.audio, audioFile)
+      }
+      if (lyricsFile && ticket.tickets.lyrics) {
+        await uploadFileThroughServer(ticket.tickets.lyrics, lyricsFile)
+      }
+
+      return {
+        storageProvider: 'tos' as const,
+      }
+    } catch {
+      // Fall through to Blob when chunked TOS upload is also unavailable.
+    }
+
+    const audioBlob = audioFile && ticket.tickets.audio
+      ? await uploadFileToBlob(ticket.tickets.audio, audioFile)
+      : undefined
+    const lyricBlob = lyricsFile && ticket.tickets.lyrics
+      ? await uploadFileToBlob(ticket.tickets.lyrics, lyricsFile)
+      : undefined
+
+    return {
+      storageProvider: 'vercel-blob' as const,
+      audioUrl: audioBlob?.url,
+      lyricUrl: lyricBlob?.url,
+    }
+  }
 }
 
 async function saveSongAsset(song: Omit<SiteSongAsset, 'sourceUrl'>) {
@@ -208,6 +372,8 @@ export async function uploadSongToSite({
   cover,
   durationMs,
   lyricLines,
+  lyricProvider,
+  lyricQuality,
 }: SongUploadInput) {
   const ticket = await createUploadTicket({
     audioFile,
@@ -218,10 +384,7 @@ export async function uploadSongToSite({
     throw new Error('歌曲上传没有返回音频上传地址。')
   }
 
-  await uploadFileToSignedUrl(ticket.tickets.audio, audioFile)
-  if (lyricsFile && ticket.tickets.lyrics) {
-    await uploadFileToSignedUrl(ticket.tickets.lyrics, lyricsFile)
-  }
+  const uploadResult = await uploadSongFiles(ticket, audioFile, lyricsFile)
 
   const now = new Date().toISOString()
   return await saveSongAsset({
@@ -230,15 +393,20 @@ export async function uploadSongToSite({
     artist,
     cover,
     durationMs,
-    audioObjectKey: ticket.tickets.audio.objectKey,
+    storageProvider: uploadResult.storageProvider,
+    audioObjectKey: uploadResult.storageProvider === 'tos' ? ticket.tickets.audio.objectKey : undefined,
+    audioUrl: uploadResult.audioUrl,
     audioFileName: audioFile.name,
     audioFileType: getFileContentType(audioFile, 'audio/mpeg'),
     audioSize: audioFile.size,
-    lyricObjectKey: ticket.tickets.lyrics?.objectKey,
+    lyricObjectKey: uploadResult.storageProvider === 'tos' ? ticket.tickets.lyrics?.objectKey : undefined,
+    lyricUrl: uploadResult.lyricUrl,
     lyricFileName: lyricsFile?.name,
     lyricFileType: lyricsFile ? getFileContentType(lyricsFile, 'text/plain; charset=utf-8') : undefined,
     lyricSize: lyricsFile?.size,
     lyricLines,
+    lyricProvider,
+    lyricQuality,
     importedAt: now,
     updatedAt: now,
   })
@@ -258,10 +426,12 @@ export async function updateSiteSongLyrics({
     throw new Error('歌词上传没有返回上传地址。')
   }
 
-  await uploadFileToSignedUrl(ticket.tickets.lyrics, lyricsFile)
+  const uploadResult = await uploadSongFiles(ticket, undefined, lyricsFile)
   return await saveSongAsset({
     ...song,
-    lyricObjectKey: ticket.tickets.lyrics.objectKey,
+    storageProvider: uploadResult.storageProvider === 'vercel-blob' ? 'vercel-blob' : song.storageProvider,
+    lyricObjectKey: uploadResult.storageProvider === 'tos' ? ticket.tickets.lyrics.objectKey : song.lyricObjectKey,
+    lyricUrl: uploadResult.lyricUrl ?? song.lyricUrl,
     lyricFileName: lyricsFile.name,
     lyricFileType: getFileContentType(lyricsFile, 'text/plain; charset=utf-8'),
     lyricSize: lyricsFile.size,

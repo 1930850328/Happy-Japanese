@@ -10,6 +10,12 @@ const VIDEO_BLOB_TOKEN_ENV_NAMES = [
   ...SHARED_BLOB_TOKEN_ENV_NAMES,
 ]
 
+const SONG_BLOB_TOKEN_ENV_NAMES = [
+  'SONG_READ_WRITE_TOKEN',
+  'SONG_BLOB_READ_WRITE_TOKEN',
+  ...SHARED_BLOB_TOKEN_ENV_NAMES,
+]
+
 const APP_STATE_BLOB_TOKEN_ENV_NAMES = [
   'APP_STATE_READ_WRITE_TOKEN',
   'APP_STATE_BLOB_READ_WRITE_TOKEN',
@@ -40,6 +46,10 @@ export function resolveVideoBlobToken() {
   return resolveFromNames(VIDEO_BLOB_TOKEN_ENV_NAMES)
 }
 
+export function resolveSongBlobToken() {
+  return resolveFromNames(SONG_BLOB_TOKEN_ENV_NAMES)
+}
+
 export function resolveAppStateBlobToken() {
   return resolveFromNames(APP_STATE_BLOB_TOKEN_ENV_NAMES)
 }
@@ -63,6 +73,10 @@ function requireToken(names, label) {
 
 export function requireVideoBlobToken() {
   return requireToken(VIDEO_BLOB_TOKEN_ENV_NAMES, 'video')
+}
+
+export function requireSongBlobToken() {
+  return requireToken(SONG_BLOB_TOKEN_ENV_NAMES, 'song')
 }
 
 export function requireAppStateBlobToken() {

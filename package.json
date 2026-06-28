@@ -33,6 +33,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.3.3",
     "anime-study-player": "https://codeload.github.com/1930850328/anime-study-player/tar.gz/1cd7047",
+    "crypto-js": "^4.2.0",
     "dayjs": "^1.11.20",
     "google-translate-api-x": "^10.7.2",
     "idb": "^8.0.3",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@playwright/test": "^1.59.1",
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

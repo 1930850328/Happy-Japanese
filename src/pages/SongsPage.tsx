@@ -27,6 +27,8 @@ import { toast } from 'sonner'
 
 import { songLessons } from '../data/songLessons'
 import { parseLyrics } from '../lib/lyrics'
+import { decodeNcmAudio, isNcmFile } from '../lib/ncmAudio'
+import { matchNeteaseSongForUpload } from '../lib/neteaseSongProvider'
 import {
   createLocalSongAssetId,
   deleteStoredSongAsset,
@@ -44,7 +46,7 @@ import {
 import { speakJapanese } from '../lib/speech'
 import { analyzeJapaneseText, hasReliableMeaning } from '../lib/textAnalysis'
 import { useAppStore } from '../store/useAppStore'
-import type { LyricLine, SentenceAnalysis, SongLesson, TokenAnalysis } from '../types'
+import type { LyricLine, LyricProvider, SentenceAnalysis, SongLesson, SongLyricQuality, TokenAnalysis } from '../types'
 import styles from './SongsPage.module.css'
 
 const playbackRates = [0.75, 1, 1.25]
@@ -145,6 +147,8 @@ interface ImportedSongAsset {
   lyricFileName?: string
   lyricText?: string
   lyricLines: LyricLine[]
+  lyricProvider?: LyricProvider
+  lyricQuality?: SongLyricQuality
   importedAt: string
   updatedAt: string
   siteAsset?: SiteSongAsset
@@ -170,8 +174,8 @@ function buildImportedSong(asset: ImportedSongAsset): SongLesson {
     creditLine: asset.storage === 'site' ? '保存在 TOS 云端歌曲资源包。' : '保存在当前浏览器的本地歌曲资源包。',
     playbackProvider: 'localFile',
     playbackStatus: asset.sourceUrl ? 'ready' : 'loading',
-    lyricProvider: 'manual',
-    lyricQuality: asset.lyricLines.length > 0 ? 'manual_imported' : 'needs_review',
+    lyricProvider: asset.lyricProvider ?? 'manual',
+    lyricQuality: asset.lyricQuality ?? (asset.lyricLines.length > 0 ? 'manual_imported' : 'needs_review'),
     quality: asset.lyricLines.length > 0 ? 'draft' : 'blocked',
   }
 }
@@ -190,6 +194,8 @@ function buildSiteImportedAsset(asset: SiteSongAsset): ImportedSongAsset {
     audioSize: asset.audioSize,
     lyricFileName: asset.lyricFileName,
     lyricLines: asset.lyricLines,
+    lyricProvider: asset.lyricProvider,
+    lyricQuality: asset.lyricQuality,
     importedAt: asset.importedAt,
     updatedAt: asset.updatedAt,
     siteAsset: asset,
@@ -211,6 +217,8 @@ function buildLocalImportedAsset(asset: StoredSongAsset, sourceUrl: string): Imp
     lyricFileName: asset.lyricFileName,
     lyricText: asset.lyricText,
     lyricLines: asset.lyricLines,
+    lyricProvider: asset.lyricProvider,
+    lyricQuality: asset.lyricQuality,
     importedAt: asset.importedAt,
     updatedAt: asset.updatedAt,
     localAsset: asset,
@@ -219,6 +227,11 @@ function buildLocalImportedAsset(asset: StoredSongAsset, sourceUrl: string): Imp
 
 function stripFileExtension(fileName: string) {
   return fileName.replace(/\.[^.]+$/, '').trim()
+}
+
+function createGeneratedLyricFileName(title: string) {
+  const safeTitle = title.replace(/[<>:"/\\|?*\u0000-\u001f]/g, '').trim().slice(0, 80)
+  return `${safeTitle || 'lyrics'}.netease.lrc`
 }
 
 function formatFileSize(bytes: number) {
@@ -270,6 +283,7 @@ function isBeginnerToken(token: TokenAnalysis) {
 }
 
 function getLyricQualityLabel(song: SongLesson) {
+  if (song.lyricProvider === 'netease') return '网易云同步歌词'
   if (song.lyricQuality === 'licensed_synced') return '授权同步歌词'
   if (song.lyricQuality === 'licensed_plain') return '授权歌词'
   if (song.lyricQuality === 'community_synced') return '社区同步歌词'
@@ -336,8 +350,8 @@ export function SongsPage() {
   const [assetsLoading, setAssetsLoading] = useState(true)
   const [importing, setImporting] = useState(false)
   const [loadError, setLoadError] = useState('')
-  const [importTitle, setImportTitle] = useState('我的日语歌')
-  const [importArtist, setImportArtist] = useState('本地音频')
+  const [importTitle, setImportTitle] = useState('')
+  const [importArtist, setImportArtist] = useState('')
   const [analysis, setAnalysis] = useState<SentenceAnalysis | null>(null)
   const [analyzing, setAnalyzing] = useState(false)
 
@@ -554,27 +568,78 @@ export function SongsPage() {
 
     setImporting(true)
     input.value = ''
-    const title = importTitle.trim() || file.name.replace(/\.[^.]+$/, '')
-    const artist = importArtist.trim() || '本地音频'
-    const durationMs = await readMediaDurationMs(file)
-    const lyricDurationMs = pendingLyricLines.at(-1)?.endMs ?? 0
-    const cover = createImportedCover(title, artist)
-    const lyricsFile =
+    let audioFile = file
+    let ncmInfo: Awaited<ReturnType<typeof decodeNcmAudio>> | null = null
+
+    if (isNcmFile(file)) {
+      try {
+        ncmInfo = await decodeNcmAudio(file)
+        audioFile = ncmInfo.file
+        toast.success(`已转换 NCM：${ncmInfo.file.name}`)
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'NCM 文件转换失败')
+        setImporting(false)
+        return
+      }
+    }
+
+    let title = importTitle.trim() || ncmInfo?.title || audioFile.name.replace(/\.[^.]+$/, '')
+    let artist = importArtist.trim() || ncmInfo?.artist || '本地音频'
+    const durationMs = await readMediaDurationMs(audioFile)
+    let cover = ncmInfo?.cover || createImportedCover(title, artist)
+    let lyricLines = pendingLyricLines
+    let lyricText = pendingLyricText
+    let lyricFileName = pendingLyricFileName
+    let lyricProvider: LyricProvider | undefined = pendingLyricLines.length > 0 ? 'manual' : undefined
+    let lyricQuality: SongLyricQuality | undefined = pendingLyricLines.length > 0 ? 'manual_imported' : undefined
+    let lyricsFile: File | undefined =
       pendingLyricFile ??
       (pendingLyricText && pendingLyricFileName
         ? new File([pendingLyricText], pendingLyricFileName, { type: 'text/plain; charset=utf-8' })
         : undefined)
+
+    if (lyricLines.length === 0) {
+      toast.message('正在自动匹配歌词和封面')
+      try {
+        const match = await matchNeteaseSongForUpload({
+          title,
+          artist,
+          durationMs,
+        })
+
+        if (match) {
+          title = importTitle.trim() || match.title || title
+          artist = importArtist.trim() || match.artist || artist
+          cover = match.cover || cover
+          lyricLines = match.lyricLines
+          lyricText = match.rawLyricText
+          lyricFileName = createGeneratedLyricFileName(title)
+          lyricsFile = new File([lyricText], lyricFileName, { type: 'text/plain; charset=utf-8' })
+          lyricProvider = 'netease'
+          lyricQuality = 'community_synced'
+          toast.success(`已匹配网易云歌词：${match.title}`)
+        } else {
+          toast.warning('没有自动匹配到可用同步歌词，仍会保存音频')
+        }
+      } catch (error) {
+        toast.warning(error instanceof Error ? error.message : '自动匹配歌词失败，仍会保存音频')
+      }
+    }
+
+    const lyricDurationMs = lyricLines.at(-1)?.endMs ?? 0
     const now = new Date().toISOString()
 
     try {
       const siteAsset = await uploadSongToSite({
-        audioFile: file,
+        audioFile,
         lyricsFile,
         title,
         artist,
         cover,
         durationMs: Math.max(durationMs, lyricDurationMs),
-        lyricLines: pendingLyricLines,
+        lyricLines,
+        lyricProvider,
+        lyricQuality,
       })
       await refreshSongAssets(siteAsset.id)
       setImportTitle(title)
@@ -591,14 +656,16 @@ export function SongsPage() {
         title,
         artist,
         cover,
-        audioBlob: file,
-        audioFileName: file.name,
-        audioFileType: file.type || 'audio/mpeg',
-        audioSize: file.size,
+        audioBlob: audioFile,
+        audioFileName: audioFile.name,
+        audioFileType: audioFile.type || 'audio/mpeg',
+        audioSize: audioFile.size,
         durationMs: Math.max(durationMs, lyricDurationMs),
-        lyricFileName: pendingLyricFileName || undefined,
-        lyricText: pendingLyricText || undefined,
-        lyricLines: pendingLyricLines,
+        lyricFileName: lyricFileName || undefined,
+        lyricText: lyricText || undefined,
+        lyricLines,
+        lyricProvider,
+        lyricQuality,
         importedAt: now,
         updatedAt: now,
       }
@@ -808,8 +875,18 @@ export function SongsPage() {
                 <small>优先上传到 TOS；接口不可用时保存在当前浏览器</small>
               </div>
               <div className={styles.importFields}>
-                <input aria-label="导入歌名" value={importTitle} onChange={(event) => setImportTitle(event.target.value)} />
-                <input aria-label="导入歌手" value={importArtist} onChange={(event) => setImportArtist(event.target.value)} />
+                <input
+                  aria-label="导入歌名"
+                  placeholder="自动识别歌名"
+                  value={importTitle}
+                  onChange={(event) => setImportTitle(event.target.value)}
+                />
+                <input
+                  aria-label="导入歌手"
+                  placeholder="自动识别歌手"
+                  value={importArtist}
+                  onChange={(event) => setImportArtist(event.target.value)}
+                />
               </div>
               {pendingLyricLines.length > 0 ? (
                 <div className={styles.pendingImport}>
@@ -821,7 +898,7 @@ export function SongsPage() {
                 <label>
                   <Upload size={16} />
                   {importing ? '保存中' : '音频'}
-                  <input hidden type="file" accept="audio/*,video/*" disabled={importing} onChange={(event) => void handleMediaUpload(event)} />
+                  <input hidden type="file" accept="audio/*,video/*,.ncm" disabled={importing} onChange={(event) => void handleMediaUpload(event)} />
                 </label>
                 <label>
                   <Captions size={16} />

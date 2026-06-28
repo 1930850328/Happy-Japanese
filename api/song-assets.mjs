@@ -1,6 +1,5 @@
 import {
   assertSongObjectKeyForProfile,
-  createTosDownloadUrl,
   deleteTosObjects,
   readSongIndex,
   sanitizeProfileId,
@@ -57,18 +56,87 @@ function readLyricLines(value) {
     .filter((line) => line.ja)
 }
 
+function readLyricProvider(value) {
+  const provider = readString(value, 40)
+  return ['syncpower', 'musixmatch', 'lyricfind', 'lrclib', 'netease', 'manual', 'demo'].includes(provider)
+    ? provider
+    : undefined
+}
+
+function readLyricQuality(value) {
+  const quality = readString(value, 40)
+  return [
+    'licensed_synced',
+    'licensed_plain',
+    'community_synced',
+    'machine_translated',
+    'manual_imported',
+    'needs_review',
+  ].includes(quality)
+    ? quality
+    : undefined
+}
+
+function readStorageProvider(value, fallback) {
+  const provider = readString(value, 40, fallback)
+  return ['tos', 'vercel-blob'].includes(provider) ? provider : fallback
+}
+
+function readRemoteUrl(value) {
+  const url = readString(value, 2000)
+  if (!url) {
+    return undefined
+  }
+
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') {
+      throw new Error('Remote song asset URLs must use https.')
+    }
+  } catch {
+    throw new Error('Invalid remote song asset URL.')
+  }
+
+  return url
+}
+
+function getRequestOrigin(req) {
+  const protocol = readString(req.headers?.['x-forwarded-proto'], 20, 'https') || 'https'
+  const host = readString(req.headers?.['x-forwarded-host'] || req.headers?.host, 240)
+  return host ? `${protocol}://${host}` : ''
+}
+
+function createSongStreamUrl(origin, profileId, song) {
+  const params = new URLSearchParams({
+    profileId,
+    objectKey: song.audioObjectKey,
+    contentType: song.audioFileType,
+  })
+  const pathname = `/api/song-stream?${params.toString()}`
+  return origin ? `${origin}${pathname}` : pathname
+}
+
 function normalizeSongRecord(profileId, input) {
   const id = sanitizeSongId(input?.id)
   if (!id) {
     throw new Error('Missing song id.')
   }
 
-  const audioObjectKey = assertSongObjectKeyForProfile(profileId, input.audioObjectKey)
+  const audioUrl = readRemoteUrl(input.audioUrl)
+  const lyricUrl = readRemoteUrl(input.lyricUrl)
+  const audioObjectKey = input.audioObjectKey
+    ? assertSongObjectKeyForProfile(profileId, input.audioObjectKey)
+    : undefined
   const lyricObjectKey = input.lyricObjectKey
     ? assertSongObjectKeyForProfile(profileId, input.lyricObjectKey)
     : undefined
+  if (!audioObjectKey && !audioUrl) {
+    throw new Error('Missing song audio asset.')
+  }
+
   const now = new Date().toISOString()
   const lyricLines = readLyricLines(input.lyricLines)
+  const storageProvider = readStorageProvider(input.storageProvider, audioUrl ? 'vercel-blob' : 'tos')
 
   return {
     id,
@@ -76,37 +144,47 @@ function normalizeSongRecord(profileId, input) {
     artist: readString(input.artist, 120, '本地音频') || '本地音频',
     cover: readString(input.cover, 180_000),
     durationMs: Math.max(0, Math.round(Number(input.durationMs ?? 0))),
+    storageProvider,
     audioObjectKey,
+    audioUrl,
     audioFileName: readString(input.audioFileName, 240, 'audio'),
     audioFileType: readString(input.audioFileType, 120, 'audio/mpeg') || 'audio/mpeg',
     audioSize: Math.max(0, Math.round(Number(input.audioSize ?? 0))),
     lyricObjectKey,
+    lyricUrl,
     lyricFileName: input.lyricFileName ? readString(input.lyricFileName, 240) : undefined,
     lyricFileType: input.lyricFileType ? readString(input.lyricFileType, 120) : undefined,
     lyricSize: input.lyricSize ? Math.max(0, Math.round(Number(input.lyricSize))) : undefined,
     lyricLines,
+    lyricProvider: readLyricProvider(input.lyricProvider),
+    lyricQuality: readLyricQuality(input.lyricQuality),
     importedAt: readString(input.importedAt, 40, now) || now,
     updatedAt: readString(input.updatedAt, 40, now) || now,
   }
 }
 
-async function attachPlaybackUrl(song) {
+async function attachPlaybackUrl(profileId, origin, song) {
+  if (song.audioUrl) {
+    return {
+      ...song,
+      sourceUrl: song.audioUrl,
+    }
+  }
+
   return {
     ...song,
-    sourceUrl: await createTosDownloadUrl({
-      objectKey: song.audioObjectKey,
-      contentType: song.audioFileType,
-    }),
+    sourceUrl: createSongStreamUrl(origin, profileId, song),
   }
 }
 
-async function listSongs(profileId, res) {
+async function listSongs(profileId, req, res) {
   const index = await readSongIndex(profileId)
+  const origin = getRequestOrigin(req)
   const songs = await Promise.all(
     index.songs
       .slice()
       .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt))
-      .map(attachPlaybackUrl),
+      .map((song) => attachPlaybackUrl(profileId, origin, song)),
   )
 
   res.status(200).json({
@@ -119,6 +197,7 @@ async function listSongs(profileId, res) {
 async function upsertSong(profileId, req, res) {
   const body = readBody(req)
   const song = normalizeSongRecord(profileId, body.song)
+  const origin = getRequestOrigin(req)
   const index = await readSongIndex(profileId)
   const existingIndex = index.songs.findIndex((item) => item.id === song.id)
   const nextSongs = index.songs.slice()
@@ -135,7 +214,7 @@ async function upsertSong(profileId, req, res) {
   })
 
   res.status(200).json({
-    song: await attachPlaybackUrl(song),
+    song: await attachPlaybackUrl(profileId, origin, song),
   })
 }
 
@@ -193,7 +272,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'GET') {
-      await listSongs(profileId, res)
+      await listSongs(profileId, req, res)
       return
     }
 

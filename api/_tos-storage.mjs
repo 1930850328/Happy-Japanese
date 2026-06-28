@@ -1,6 +1,7 @@
 import {
   DeleteObjectCommand,
   GetObjectCommand,
+  HeadObjectCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3'
@@ -8,6 +9,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import crypto from 'node:crypto'
 
 export const TOS_SONG_PREFIX = 'song-assets/'
+export const TOS_CHUNK_MANIFEST_CONTENT_TYPE = 'application/vnd.yuru-nihongo.chunked-audio+json'
 
 const INDEX_FILE_NAME = 'index.json'
 const UPLOAD_URL_EXPIRES_SECONDS = 15 * 60
@@ -171,6 +173,16 @@ export function assertSongObjectKeyForProfile(profileId, key) {
   return normalizedKey
 }
 
+export function createSongChunkObjectKey({ profileId, objectKey, chunkIndex }) {
+  const parentKey = assertSongObjectKeyForProfile(profileId, objectKey)
+  const index = Number(chunkIndex)
+  if (!Number.isInteger(index) || index < 0 || index > 100_000) {
+    throw new Error('Invalid upload chunk index.')
+  }
+
+  return `${parentKey}.chunks/${String(index).padStart(6, '0')}.part`
+}
+
 function isMissingObjectError(error) {
   return ['NoSuchKey', 'NotFound', 'NoSuchBucket'].includes(error?.name) || error?.$metadata?.httpStatusCode === 404
 }
@@ -280,6 +292,51 @@ export async function createTosDownloadUrl({ objectKey, contentType }) {
   return getSignedUrl(client, command, {
     expiresIn: PLAYBACK_URL_EXPIRES_SECONDS,
   })
+}
+
+export async function getTosObject({ profileId, objectKey, contentType, range }) {
+  const config = getTosConfig()
+  const client = getTosClient(config)
+  const key = assertSongObjectKeyForProfile(profileId, objectKey)
+
+  return await client.send(
+    new GetObjectCommand({
+      Bucket: config.bucket,
+      Key: key,
+      Range: range || undefined,
+      ResponseContentType: contentType || undefined,
+    }),
+  )
+}
+
+export async function headTosObject({ profileId, objectKey }) {
+  const config = getTosConfig()
+  const client = getTosClient(config)
+  const key = assertSongObjectKeyForProfile(profileId, objectKey)
+
+  return await client.send(
+    new HeadObjectCommand({
+      Bucket: config.bucket,
+      Key: key,
+    }),
+  )
+}
+
+export async function putTosObject({ profileId, objectKey, contentType, body }) {
+  const config = getTosConfig()
+  const client = getTosClient(config)
+  const key = assertSongObjectKeyForProfile(profileId, objectKey)
+
+  await client.send(
+    new PutObjectCommand({
+      Bucket: config.bucket,
+      Key: key,
+      Body: body,
+      ContentType: contentType || 'application/octet-stream',
+    }),
+  )
+
+  return key
 }
 
 export async function deleteTosObjects(objectKeys) {

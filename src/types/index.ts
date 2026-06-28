@@ -120,7 +120,7 @@ export interface VideoLesson {
 
 export type SongSourceType = 'local' | 'demo' | 'catalog'
 
-export type LyricProvider = 'syncpower' | 'musixmatch' | 'lyricfind' | 'lrclib' | 'manual' | 'demo'
+export type LyricProvider = 'syncpower' | 'musixmatch' | 'lyricfind' | 'lrclib' | 'netease' | 'manual' | 'demo'
 
 export type SongPlaybackProvider = 'appleMusic' | 'localFile' | 'previewOnly' | 'speech'
 
