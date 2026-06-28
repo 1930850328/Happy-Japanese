@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>听歌学日语产品设计稿</title>
+    <style>
+      :root {
+        --bg: #171316;
+        --panel: rgba(255, 250, 244, 0.08);
+        --panel-strong: rgba(255, 250, 244, 0.13);
+        --line: rgba(255, 250, 244, 0.12);
+        --text: #fffaf4;
+        --muted: rgba(255, 250, 244, 0.58);
+        --faint: rgba(255, 250, 244, 0.32);
+        --accent: #ff674f;
+        --mint: #70decd;
+        --gold: #ffd48c;
+        --green: #9be38f;
+        --ink: #101716;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #0e1010;
+        color: var(--text);
+        font-family:
+          "Noto Sans SC",
+          "Noto Sans JP",
+          Inter,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      .deck {
+        display: grid;
+        gap: 32px;
+        padding: 32px;
+      }
+
+      .screen {
+        position: relative;
+        display: grid;
+        grid-template-rows: 72px minmax(0, 1fr) 104px;
+        width: 1440px;
+        height: 900px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 250, 244, 0.08);
+        background:
+          linear-gradient(110deg, rgba(91, 41, 53, 0.95), rgba(28, 20, 29, 0.98) 42%, rgba(13, 15, 18, 0.98)),
+          var(--bg);
+      }
+
+      .screen::before {
+        position: absolute;
+        inset: 72px 0 104px;
+        content: "";
+        background:
+          linear-gradient(90deg, rgba(255, 103, 79, 0.12), transparent 34%),
+          linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.28));
+        pointer-events: none;
+      }
+
+      .topbar {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 0 48px;
+      }
+
+      .topbar .brand {
+        justify-self: center;
+        text-align: center;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .brand span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .icon-button,
+      .pill,
+      .tab,
+      .control,
+      .chip,
+      .mini-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 250, 244, 0.07);
+        color: var(--text);
+        font-weight: 760;
+      }
+
+      .icon-button {
+        width: 36px;
+        height: 36px;
+      }
+
+      .pill {
+        justify-self: end;
+        min-height: 36px;
+        padding: 0 14px;
+        gap: 8px;
+        color: rgba(255, 250, 244, 0.76);
+      }
+
+      .main {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(390px, 44%) minmax(0, 1fr);
+        min-height: 0;
+        padding: 0 56px 0 72px;
+        gap: 54px;
+      }
+
+      .recordSide {
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        gap: 22px;
+        min-width: 0;
+      }
+
+      .record {
+        position: relative;
+        width: min(500px, 35vw);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background:
+          repeating-radial-gradient(circle at center, #070808 0 7px, #101313 8px 11px),
+          #080909;
+        box-shadow:
+          inset 0 0 0 13px rgba(255, 255, 255, 0.03),
+          0 34px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .record::before {
+        position: absolute;
+        inset: 12%;
+        border-radius: 50%;
+        content: "";
+        background: linear-gradient(115deg, rgba(255, 255, 255, 0.14), transparent 30%);
+        mix-blend-mode: screen;
+      }
+
+      .needle {
+        position: absolute;
+        top: 44px;
+        right: 88px;
+        width: 185px;
+        height: 16px;
+        border-radius: 999px;
+        background: #fffaf4;
+        transform: rotate(46deg);
+        transform-origin: 86% 50%;
+        box-shadow: 14px 14px 0 rgba(255, 255, 255, 0.08);
+      }
+
+      .needle::before {
+        position: absolute;
+        right: -12px;
+        top: -10px;
+        width: 36px;
+        height: 36px;
+        border: 7px solid #fffaf4;
+        border-radius: 50%;
+        content: "";
+        background: #291d2a;
+      }
+
+      .cover {
+        position: absolute;
+        inset: 30%;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background:
+          linear-gradient(135deg, #f7e6bf, #b8dec9 52%, #2d5149),
+          #f7e6bf;
+        color: #274238;
+        font-size: 64px;
+        font-weight: 900;
+      }
+
+      .songTitle {
+        display: grid;
+        gap: 6px;
+        text-align: center;
+      }
+
+      .songTitle strong {
+        max-width: 520px;
+        overflow: hidden;
+        font-size: 26px;
+        font-weight: 950;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .songTitle span {
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 680;
+      }
+
+      .learningSide {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 18px;
+        min-height: 0;
+        padding: 32px 0 24px;
+      }
+
+      .tabs {
+        display: inline-flex;
+        width: fit-content;
+        padding: 4px;
+        gap: 4px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 250, 244, 0.09);
+      }
+
+      .tab {
+        min-height: 34px;
+        min-width: 72px;
+        padding: 0 14px;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+      }
+
+      .tab.active {
+        background: rgba(255, 250, 244, 0.18);
+        color: var(--text);
+      }
+
+      .lyrics {
+        position: relative;
+        display: grid;
+        align-content: start;
+        gap: 24px;
+        width: min(760px, 100%);
+        min-height: 0;
+        padding: 112px 0 132px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%);
+      }
+
+      .lyricLine {
+        position: relative;
+        display: grid;
+        gap: 8px;
+        padding-left: 18px;
+        color: rgba(255, 250, 244, 0.32);
+        opacity: 0.72;
+      }
+
+      .lyricLine::before {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        left: 0;
+        width: 3px;
+        border-radius: 999px;
+        content: "";
+        background: transparent;
+      }
+
+      .lyricLine strong {
+        font-size: 22px;
+        font-weight: 950;
+        line-height: 1.24;
+      }
+
+      .lyricLine span {
+        color: inherit;
+        font-size: 18px;
+        font-weight: 760;
+      }
+
+      .lyricLine.current {
+        color: var(--text);
+        opacity: 1;
+      }
+
+      .lyricLine.current::before {
+        background: var(--accent);
+        box-shadow: 0 0 18px rgba(255, 103, 79, 0.45);
+      }
+
+      .lyricLine.current strong {
+        font-size: 30px;
+      }
+
+      .wordRow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .word {
+        position: relative;
+        display: inline-grid;
+        justify-items: center;
+        min-width: 42px;
+        padding: 4px 8px 6px;
+        border-radius: 8px;
+        color: var(--text);
+        background: rgba(255, 250, 244, 0.08);
+        box-shadow: inset 0 -2px 0 rgba(255, 103, 79, 0.42);
+      }
+
+      .word .reading {
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 820;
+        line-height: 1;
+      }
+
+      .word.particle {
+        box-shadow: inset 0 -2px 0 rgba(112, 222, 205, 0.55);
+      }
+
+      .word.grammar {
+        background: rgba(255, 212, 140, 0.13);
+        box-shadow: inset 0 -2px 0 rgba(255, 212, 140, 0.8);
+      }
+
+      .learningStrip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .chip {
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 8px;
+        color: rgba(255, 250, 244, 0.84);
+        font-size: 13px;
+      }
+
+      .chip.mint {
+        border-color: rgba(112, 222, 205, 0.34);
+        color: var(--mint);
+      }
+
+      .chip.gold {
+        border-color: rgba(255, 212, 140, 0.36);
+        color: var(--gold);
+      }
+
+      .asideCard,
+      .popover,
+      .grammarPanel,
+      .summaryCard {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(12, 15, 17, 0.62);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(18px);
+      }
+
+      .asideCard {
+        position: absolute;
+        right: 58px;
+        bottom: 138px;
+        display: grid;
+        gap: 10px;
+        width: 330px;
+        padding: 16px;
+      }
+
+      .asideCard header,
+      .popover header,
+      .grammarPanel header,
+      .summaryCard header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .asideCard strong,
+      .popover strong,
+      .grammarPanel strong,
+      .summaryCard strong {
+        font-size: 16px;
+      }
+
+      .asideCard p,
+      .popover p,
+      .grammarPanel p,
+      .summaryCard p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .mini-button {
+        min-height: 30px;
+        padding: 0 10px;
+        color: var(--text);
+        font-size: 12px;
+      }
+
+      .popover {
+        position: absolute;
+        right: 250px;
+        top: 266px;
+        z-index: 4;
+        display: grid;
+        gap: 12px;
+        width: 360px;
+        padding: 16px;
+      }
+
+      .popover::before {
+        position: absolute;
+        left: -8px;
+        top: 64px;
+        width: 16px;
+        height: 16px;
+        content: "";
+        background: rgba(12, 15, 17, 0.78);
+        border-left: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        transform: rotate(45deg);
+      }
+
+      .wordTitle {
+        display: grid;
+        gap: 2px;
+      }
+
+      .wordTitle b {
+        color: var(--gold);
+        font-size: 28px;
+      }
+
+      .wordTitle span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .kv {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .kv b {
+        color: var(--text);
+      }
+
+      .grammarLayout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: 28px;
+        min-height: 0;
+      }
+
+      .grammarPanel {
+        align-self: center;
+        display: grid;
+        gap: 14px;
+        padding: 18px;
+      }
+
+      .formula {
+        display: grid;
+        gap: 8px;
+        padding: 14px;
+        border-radius: 8px;
+        background: rgba(255, 212, 140, 0.1);
+        color: var(--gold);
+        font-size: 15px;
+        font-weight: 860;
+      }
+
+      .mapLine {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .mapLine span {
+        padding: 5px 9px;
+        border-radius: 8px;
+        background: rgba(255, 250, 244, 0.08);
+        color: rgba(255, 250, 244, 0.86);
+        font-size: 13px;
+        font-weight: 760;
+      }
+
+      .footer {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr) 360px;
+        align-items: center;
+        gap: 24px;
+        padding: 0 48px;
+        border-top: 1px solid rgba(255, 250, 244, 0.08);
+        background: rgba(9, 9, 12, 0.74);
+      }
+
+      .nowPlaying {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr);
+        gap: 12px;
+        align-items: center;
+      }
+
+      .thumb {
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f7e6bf, #9ccbb6);
+        color: #274238;
+        font-weight: 950;
+      }
+
+      .nowPlaying strong,
+      .nowPlaying span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .nowPlaying span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .transport {
+        display: grid;
+        grid-template-columns: auto auto auto minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .control {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+      }
+
+      .progress {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 250, 244, 0.13);
+      }
+
+      .progress i {
+        display: block;
+        width: 52%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--accent);
+      }
+
+      .tools {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .summaryMain {
+        display: grid;
+        grid-template-columns: 370px minmax(0, 1fr);
+        gap: 34px;
+        padding: 24px 58px;
+      }
+
+      .summaryHero {
+        display: grid;
+        align-content: center;
+        gap: 18px;
+      }
+
+      .summaryHero h1 {
+        margin: 0;
+        font-size: 42px;
+        line-height: 1.12;
+      }
+
+      .summaryHero p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .summaryGrid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        align-content: center;
+      }
+
+      .summaryCard {
+        display: grid;
+        gap: 12px;
+        min-height: 166px;
+        padding: 16px;
+      }
+
+      .termList,
+      .grammarList {
+        display: grid;
+        gap: 8px;
+      }
+
+      .termItem,
+      .grammarItem {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+        padding: 9px 10px;
+        border-radius: 8px;
+        background: rgba(255, 250, 244, 0.06);
+      }
+
+      .termItem b,
+      .grammarItem b {
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .termItem span,
+      .grammarItem span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .badge {
+        min-width: 42px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        background: rgba(112, 222, 205, 0.13);
+        color: var(--mint);
+        text-align: center;
+        font-size: 12px;
+        font-weight: 820;
+      }
+
+      .screenTitle {
+        position: absolute;
+        left: 22px;
+        top: 16px;
+        z-index: 5;
+        color: rgba(255, 250, 244, 0.42);
+        font-size: 12px;
+        letter-spacing: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="deck">
+      <section class="screen" id="screen-word-mode">
+        <div class="screenTitle">01 / 沉浸听歌：词汇模式</div>
+        <header class="topbar">
+          <div class="icon-button">⌄</div>
+          <div class="brand">
+            <strong>听歌学日语</strong>
+            <span>播放中 · 词汇学习</span>
+          </div>
+          <div class="pill">播放器模式</div>
+        </header>
+        <section class="main">
+          <aside class="recordSide">
+            <div class="record">
+              <div class="needle"></div>
+              <div class="cover">♪</div>
+            </div>
+            <div class="songTitle">
+              <strong>ワールドイズマイン</strong>
+              <span>ryo (supercell), 早見沙織</span>
+            </div>
+          </aside>
+          <section class="learningSide">
+            <div class="tabs">
+              <div class="tab">歌词</div>
+              <div class="tab active">词汇</div>
+              <div class="tab">语法</div>
+              <div class="tab">跟读</div>
+            </div>
+            <div class="lyrics">
+              <div class="lyricLine">
+                <strong>そういう扱い心得てよね</strong>
+                <span>这种礼仪可要好好记在心上</span>
+              </div>
+              <div class="lyricLine current">
+                <div class="wordRow">
+                  <span class="word"><span class="reading">きみ</span>君</span>
+                  <span class="word particle"><span class="reading">と</span>と</span>
+                  <span class="word grammar"><span class="reading">ある</span>歩け</span>
+                  <span class="word grammar"><span class="reading">ば</span>ば</span>
+                  <span class="word"><span class="reading">こわ</span>こわく</span>
+                  <span class="word grammar"><span class="reading">ない</span>ない</span>
+                </div>
+                <span>只要和你一起走，我就不害怕</span>
+                <div class="learningStrip">
+                  <span class="chip mint">词汇 4</span>
+                  <span class="chip gold">语法 2</span>
+                  <span class="chip">可加入复习</span>
+                </div>
+              </div>
+              <div class="lyricLine">
+                <strong>手を取って「おひめさま」って</strong>
+                <span>牵起我的手 称我「公主殿下」</span>
+              </div>
+              <div class="lyricLine">
+                <strong>わがままなんて言ってないんだから</strong>
+                <span>我才不是任性地乱说话呢</span>
+              </div>
+            </div>
+          </section>
+          <article class="asideCard">
+            <header>
+              <strong>本句学习</strong>
+              <span class="chip mint">自动解析</span>
+            </header>
+            <p>歌词播放到当前句时，只展示这一句的词汇、助词和语法结构。用户不离开音乐流，也能知道每个日语片段对应什么。</p>
+          </article>
+        </section>
+        <footer class="footer">
+          <div class="nowPlaying">
+            <div class="thumb">♪</div>
+            <div>
+              <strong>ワールドイズマイン</strong>
+              <span>ryo (supercell), 早見沙織</span>
+            </div>
+          </div>
+          <div class="transport">
+            <div class="control">↻</div>
+            <div class="control">◀</div>
+            <div class="control">▶</div>
+            <div class="progress"><i></i></div>
+            <span>1:00 / 3:46</span>
+          </div>
+          <div class="tools">
+            <div class="mini-button">遮挡</div>
+            <div class="mini-button">跟读</div>
+            <div class="mini-button">加入复习</div>
+          </div>
+        </footer>
+      </section>
+
+      <section class="screen" id="screen-word-popover">
+        <div class="screenTitle">02 / 点词学习：词义浮层</div>
+        <header class="topbar">
+          <div class="icon-button">⌄</div>
+          <div class="brand">
+            <strong>听歌学日语</strong>
+            <span>播放中 · 点词学习</span>
+          </div>
+          <div class="pill">播放器模式</div>
+        </header>
+        <section class="main">
+          <aside class="recordSide">
+            <div class="record">
+              <div class="needle"></div>
+              <div class="cover">♪</div>
+            </div>
+            <div class="songTitle">
+              <strong>ワールドイズマイン</strong>
+              <span>当前选中：歩けば</span>
+            </div>
+          </aside>
+          <section class="learningSide">
+            <div class="tabs">
+              <div class="tab">歌词</div>
+              <div class="tab active">词汇</div>
+              <div class="tab">语法</div>
+              <div class="tab">跟读</div>
+            </div>
+            <div class="lyrics">
+              <div class="lyricLine">
+                <strong>そういう扱い心得てよね</strong>
+                <span>这种礼仪可要好好记在心上</span>
+              </div>
+              <div class="lyricLine current">
+                <div class="wordRow">
+                  <span class="word"><span class="reading">きみ</span>君</span>
+                  <span class="word particle"><span class="reading">と</span>と</span>
+                  <span class="word grammar"><span class="reading">ある</span>歩け</span>
+                  <span class="word grammar"><span class="reading">ば</span>ば</span>
+                  <span class="word"><span class="reading">こわ</span>こわく</span>
+                  <span class="word grammar"><span class="reading">ない</span>ない</span>
+                </div>
+                <span>只要和你一起走，我就不害怕</span>
+              </div>
+              <div class="lyricLine">
+                <strong>手を取って「おひめさま」って</strong>
+                <span>牵起我的手 称我「公主殿下」</span>
+              </div>
+            </div>
+          </section>
+          <article class="popover">
+            <header>
+              <div class="wordTitle">
+                <b>歩けば</b>
+                <span>あるけば · 条件形</span>
+              </div>
+              <div class="mini-button">加入复习</div>
+            </header>
+            <div class="kv"><span>原形</span><b>歩く</b></div>
+            <div class="kv"><span>词性</span><b>动词 · 五段</b></div>
+            <div class="kv"><span>本句意思</span><b>如果走 / 只要一起走</b></div>
+            <p>这里不是单独背单词，而是把它放回歌词里：君と歩けば = 如果和你一起走。</p>
+          </article>
+        </section>
+        <footer class="footer">
+          <div class="nowPlaying">
+            <div class="thumb">♪</div>
+            <div><strong>ワールドイズマイン</strong><span>词汇浮层不会打断播放</span></div>
+          </div>
+          <div class="transport">
+            <div class="control">↻</div>
+            <div class="control">◀</div>
+            <div class="control">▶</div>
+            <div class="progress"><i></i></div>
+            <span>1:00 / 3:46</span>
+          </div>
+          <div class="tools">
+            <div class="mini-button">慢速本句</div>
+            <div class="mini-button">收藏词</div>
+          </div>
+        </footer>
+      </section>
+
+      <section class="screen" id="screen-grammar-mode">
+        <div class="screenTitle">03 / 语法模式：结构映射</div>
+        <header class="topbar">
+          <div class="icon-button">⌄</div>
+          <div class="brand">
+            <strong>听歌学日语</strong>
+            <span>播放中 · 语法学习</span>
+          </div>
+          <div class="pill">播放器模式</div>
+        </header>
+        <section class="main">
+          <aside class="recordSide">
+            <div class="record">
+              <div class="needle"></div>
+              <div class="cover">♪</div>
+            </div>
+            <div class="songTitle">
+              <strong>ワールドイズマイン</strong>
+              <span>当前语法：ば 条件形</span>
+            </div>
+          </aside>
+          <section class="learningSide">
+            <div class="tabs">
+              <div class="tab">歌词</div>
+              <div class="tab">词汇</div>
+              <div class="tab active">语法</div>
+              <div class="tab">跟读</div>
+            </div>
+            <div class="grammarLayout">
+              <div class="lyrics">
+                <div class="lyricLine">
+                  <strong>そういう扱い心得てよね</strong>
+                  <span>这种礼仪可要好好记在心上</span>
+                </div>
+                <div class="lyricLine current">
+                  <strong>君と <span class="word grammar">歩けば</span> こわくない</strong>
+                  <span>只要和你一起走，我就不害怕</span>
+                  <div class="learningStrip">
+                    <span class="chip gold">ば 条件形</span>
+                    <span class="chip mint">ない 否定</span>
+                  </div>
+                </div>
+                <div class="lyricLine">
+                  <strong>手を取って「おひめさま」って</strong>
+                  <span>牵起我的手 称我「公主殿下」</span>
+                </div>
+              </div>
+              <article class="grammarPanel">
+                <header>
+                  <strong>ば 条件形</strong>
+                  <span class="badge">N4</span>
+                </header>
+                <div class="formula">
+                  <span>动词假定形 + ば</span>
+                  <span>歩く → 歩け + ば</span>
+                </div>
+                <p>表示「如果……」「只要……」。歌词里不是硬背规则，而是直接映射到当前句。</p>
+                <div class="mapLine">
+                  <span>君と</span>
+                  <span>歩けば</span>
+                  <span>こわくない</span>
+                </div>
+                <p>句子理解：只要和你一起走，就不会害怕。</p>
+              </article>
+            </div>
+          </section>
+        </section>
+        <footer class="footer">
+          <div class="nowPlaying">
+            <div class="thumb">♪</div>
+            <div><strong>ワールドイズマイン</strong><span>语法模式只解释当前句</span></div>
+          </div>
+          <div class="transport">
+            <div class="control">↻</div>
+            <div class="control">◀</div>
+            <div class="control">▶</div>
+            <div class="progress"><i></i></div>
+            <span>1:00 / 3:46</span>
+          </div>
+          <div class="tools">
+            <div class="mini-button">加入语法复习</div>
+            <div class="mini-button">下一语法</div>
+          </div>
+        </footer>
+      </section>
+
+      <section class="screen" id="screen-song-summary">
+        <div class="screenTitle">04 / 歌后总结：复习入口</div>
+        <header class="topbar">
+          <div class="icon-button">⌄</div>
+          <div class="brand">
+            <strong>听歌学日语</strong>
+            <span>本歌学习总结</span>
+          </div>
+          <div class="pill">继续播放</div>
+        </header>
+        <section class="summaryMain">
+          <aside class="summaryHero">
+            <div class="record">
+              <div class="cover">♪</div>
+            </div>
+            <h1>这首歌学到了什么</h1>
+            <p>歌曲结束后自动汇总用户点过、听过、停留过的词汇和语法，形成可复习的轻量学习包。</p>
+          </aside>
+          <section class="summaryGrid">
+            <article class="summaryCard">
+              <header><strong>重点词汇</strong><span class="badge">12</span></header>
+              <div class="termList">
+                <div class="termItem"><b>扱い</b><span>对待 / 礼仪</span></div>
+                <div class="termItem"><b>心得る</b><span>理解并记住</span></div>
+                <div class="termItem"><b>わがまま</b><span>任性</span></div>
+              </div>
+            </article>
+            <article class="summaryCard">
+              <header><strong>语法结构</strong><span class="badge">5</span></header>
+              <div class="grammarList">
+                <div class="grammarItem"><b>ば 条件形</b><span>如果 / 只要</span></div>
+                <div class="grammarItem"><b>ている</b><span>正在 / 状态持续</span></div>
+                <div class="grammarItem"><b>んだから</b><span>解释理由</span></div>
+              </div>
+            </article>
+            <article class="summaryCard">
+              <header><strong>待复习</strong><span class="badge">8</span></header>
+              <p>自动生成「听音选词」「歌词填空」「语法判断」三种卡片。复习内容来自这首歌，不需要用户手动整理。</p>
+              <div class="mini-button">开始 3 分钟复习</div>
+            </article>
+            <article class="summaryCard">
+              <header><strong>下一次听歌</strong><span class="badge">推荐</span></header>
+              <p>根据本歌命中的词汇和语法，推荐相似难度歌曲，避免用户学完一首之后不知道听什么。</p>
+              <div class="mini-button">播放相似歌曲</div>
+            </article>
+          </section>
+        </section>
+        <footer class="footer">
+          <div class="nowPlaying">
+            <div class="thumb">♪</div>
+            <div><strong>ワールドイズマイン</strong><span>学习包已生成</span></div>
+          </div>
+          <div class="transport">
+            <div class="control">↻</div>
+            <div class="control">▶</div>
+            <div class="progress"><i></i></div>
+            <span>已完成</span>
+          </div>
+          <div class="tools">
+            <div class="mini-button">导出复习</div>
+            <div class="mini-button">回到歌词</div>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>
