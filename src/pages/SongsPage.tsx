@@ -1,5 +1,4 @@
 import {
-  BookOpenText,
   Captions,
   CheckCircle2,
   ChevronDown,
@@ -235,14 +234,6 @@ function createGeneratedLyricFileName(title: string) {
   return `${safeTitle || 'lyrics'}.netease.lrc`
 }
 
-function formatFileSize(bytes: number) {
-  if (bytes < 1024 * 1024) {
-    return `${Math.max(1, Math.round(bytes / 1024))} KB`
-  }
-
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`
-}
-
 function readMediaDurationMs(file: File) {
   return new Promise<number>((resolve) => {
     const url = URL.createObjectURL(file)
@@ -300,6 +291,11 @@ function getPlaybackLabel(song: SongLesson) {
   return '等待音频'
 }
 
+function getArtistLabel(song: SongLesson) {
+  if (song.sourceType === 'demo' && song.artist === 'YuruNihongo Original') return '原创示例'
+  return song.artist
+}
+
 function renderTokenRail(tokens: TokenAnalysis[], beginnerMode: boolean) {
   const displayTokens = tokens.filter(hasDisplayableMeaning).slice(0, 9)
   if (displayTokens.length === 0) return null
@@ -354,7 +350,7 @@ export function SongsPage() {
   const [importTitle, setImportTitle] = useState('')
   const [importArtist, setImportArtist] = useState('')
   const [analysis, setAnalysis] = useState<SentenceAnalysis | null>(null)
-  const [analyzing, setAnalyzing] = useState(false)
+  const [, setAnalyzing] = useState(false)
 
   const importedAssets = useMemo(() => {
     const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)
@@ -386,8 +382,6 @@ export function SongsPage() {
     return activeSong.knowledgePoints.filter((point) => activeLine.focusTermIds.includes(point.id))
   }, [activeLine, activeSong])
 
-  const learnedLineCount = activeSong?.lyricLines.filter((line) => line.endMs <= currentMs).length ?? 0
-  const totalLineCount = activeSong?.lyricLines.length ?? 0
   const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
   const displayTokens = analysis?.tokens.filter(hasDisplayableMeaning) ?? []
@@ -804,12 +798,12 @@ export function SongsPage() {
   const loadingCurrentSong = assetsLoading || importing
   const canUseNativeAudio = activeSong.playbackProvider === 'localFile' && Boolean(activeSong.sourceUrl)
   const playLabel = canUseNativeAudio ? (playing ? '暂停' : '播放') : '听当前句'
-  const sourceSummary = activeAsset
-    ? `${activeAsset.storage === 'site' ? 'TOS 云端' : '本地缓存'} · ${activeAsset.audioFileName} · ${formatFileSize(activeAsset.audioSize)}`
-    : activeSong.sourceType === 'demo'
-      ? '演示素材'
-      : '本地资源包'
-  const lyricSummary = activeSong.lyricLines.length > 0 ? `${activeSong.lyricLines.length} 句歌词` : '等待歌词'
+  const importedSongCount = songs.filter((song) => assetById.has(song.id)).length
+  const totalLineCount = activeSong.lyricLines.length
+  const learnedLineCount = activeSong.lyricLines.filter((line) => line.endMs <= currentMs).length
+  const learnedPercent = totalLineCount ? Math.min(100, (learnedLineCount / totalLineCount) * 100) : 0
+  const shelfSongs = songs.slice(0, 6)
+  const resourceLabel = activeAsset ? '音频、歌词、封面已就绪' : activeSong.sourceType === 'demo' ? '示例歌曲，可直接体验' : '等待导入'
 
   return (
     <div className={`${styles.page} ${immersiveMode ? styles.pageImmersive : ''}`}>
@@ -819,8 +813,8 @@ export function SongsPage() {
         {!immersiveMode ? (
           <aside className={styles.catalogRail}>
             <div className={styles.brand}>
-              <strong>Yuru<span>Nihongo</span></strong>
-              <small>歌で学ぶ</small>
+              <strong>悠<span>日语</span></strong>
+              <small>用歌曲学日语</small>
             </div>
 
             <nav className={styles.songNav} aria-label="歌曲模块导航">
@@ -836,7 +830,7 @@ export function SongsPage() {
 
             <div className={styles.catalogHeader}>
               <div>
-                <span>TOS / 本地资源包</span>
+                <span>{importedSongCount > 0 ? `${importedSongCount} 首已导入` : '上传后自动整理'}</span>
                 <strong>我的歌曲</strong>
               </div>
               <button type="button" aria-label="刷新歌曲资源" onClick={() => void refreshSongAssets()}>
@@ -857,11 +851,10 @@ export function SongsPage() {
                       <span>
                         <strong>{song.title}</strong>
                         <small>
-                          {song.artist}
+                          {getArtistLabel(song)}
                           {song.releaseYear ? ` · ${song.releaseYear}` : ''}
                         </small>
                       </span>
-                      <em>{importedAsset ? (song.lyricLines.length ? `${song.lyricLines.length} 句` : '待歌词') : '示例'}</em>
                     </button>
                     {importedAsset ? (
                       <button
@@ -880,8 +873,8 @@ export function SongsPage() {
 
             <div className={styles.importDock}>
               <div>
-                <strong>本地整首歌</strong>
-                <small>优先上传到 TOS；接口不可用时保存在当前浏览器</small>
+                <strong>导入歌曲</strong>
+                <small>上传音频后自动匹配歌词和封面</small>
               </div>
               <div className={styles.importFields}>
                 <input
@@ -938,8 +931,8 @@ export function SongsPage() {
               )}
             </div>
             <div className={styles.sourcePill}>
-              <span>来源：{sourceSummary}</span>
-              <strong>{loadingCurrentSong ? '处理中' : lyricSummary}</strong>
+              <strong>歌曲库</strong>
+              <span>{importing ? '正在整理导入资源' : '选择歌曲后开始学习'}</span>
             </div>
             <button className={styles.immersiveButton} type="button" onClick={() => setImmersiveMode(!immersiveMode)}>
               {immersiveMode ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
@@ -961,7 +954,7 @@ export function SongsPage() {
                 </span>
               </div>
               <h1>{activeSong.title}</h1>
-              <p>{activeSong.artist}</p>
+              <p>{getArtistLabel(activeSong)}</p>
               <dl>
                 <div>
                   <dt>流派</dt>
@@ -1031,7 +1024,7 @@ export function SongsPage() {
                   <span>{getSectionLabel(activeLine.section)}</span>
                   <strong>{activeLine.ja}</strong>
                   {showZh ? <p>{activeLine.zh}</p> : null}
-                  {analysis ? renderTokenRail(analysis.tokens, beginnerMode) : null}
+                  {immersiveMode && analysis ? renderTokenRail(analysis.tokens, beginnerMode) : null}
                   {showKana ? <small>{activeLine.kana}</small> : null}
                   {showRomaji ? <small>{activeLine.romaji}</small> : null}
                   <div className={styles.lineProgress}>
@@ -1054,24 +1047,26 @@ export function SongsPage() {
               </div>
             )}
 
-            <div className={styles.lyricQueue}>
-              {activeSong.lyricLines.map((line) => {
-                const active = activeLine?.id === line.id
-                return (
-                  <button
-                    key={line.id}
-                    ref={active ? activeLyricRowRef : undefined}
-                    className={`${styles.lyricRow} ${active ? styles.lyricRowActive : ''}`}
-                    onClick={() => seekToLine(line)}
-                    onDoubleClick={() => seekToLine(line, true)}
-                  >
-                    <span>{formatTime(line.startMs)}</span>
-                    <strong>{line.ja}</strong>
-                    {showZh ? <small>{line.zh}</small> : null}
-                  </button>
-                )
-              })}
-            </div>
+            {immersiveMode ? (
+              <div className={styles.lyricQueue}>
+                {activeSong.lyricLines.map((line) => {
+                  const active = activeLine?.id === line.id
+                  return (
+                    <button
+                      key={line.id}
+                      ref={active ? activeLyricRowRef : undefined}
+                      className={`${styles.lyricRow} ${active ? styles.lyricRowActive : ''}`}
+                      onClick={() => seekToLine(line)}
+                      onDoubleClick={() => seekToLine(line, true)}
+                    >
+                      <span>{formatTime(line.startMs)}</span>
+                      <strong>{line.ja}</strong>
+                      {showZh ? <small>{line.zh}</small> : null}
+                    </button>
+                  )
+                })}
+              </div>
+            ) : null}
 
             {activeLine && immersiveHintText ? (
               <div className={styles.immersiveStudyHint}>
@@ -1079,95 +1074,56 @@ export function SongsPage() {
                 <span>{immersiveHintText}</span>
               </div>
             ) : null}
+
+            {!immersiveMode ? (
+              <>
+                <aside className={styles.homeAssistPanel}>
+                  <article>
+                    <span>学习进度</span>
+                    <strong>{learnedLineCount}/{totalLineCount || 0}</strong>
+                    <div className={styles.homeProgress}>
+                      <i style={{ width: `${learnedPercent}%` }} />
+                    </div>
+                  </article>
+                  <article>
+                    <span>资源状态</span>
+                    <strong>{activeAsset ? '已就绪' : '可播放'}</strong>
+                    <small>{resourceLabel}</small>
+                  </article>
+                  <button type="button" onClick={() => setImmersiveMode(true)}>
+                    <Maximize2 size={16} />
+                    进入沉浸学习
+                  </button>
+                </aside>
+
+                <section className={styles.homeShelf}>
+                  <header>
+                    <div>
+                      <strong>推荐歌曲</strong>
+                      <span>继续听这些内容</span>
+                    </div>
+                  </header>
+                  <div className={styles.homeShelfList}>
+                    {shelfSongs.map((song) => (
+                      <button key={song.id} type="button" onClick={() => handleSelectSong(song)} className={song.id === activeSong.id ? styles.homeShelfActive : ''}>
+                        <img src={song.artworkUrl || song.cover} alt="" />
+                        <strong>{song.title}</strong>
+                        <span>{getArtistLabel(song)}</span>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              </>
+            ) : null}
           </section>
         </main>
 
-        {!immersiveMode ? (
-          <aside className={styles.studyRail}>
-            <div className={styles.studyHeader}>
-              <button className={styles.studyHeaderActive}>学习ノート</button>
-              <button>AI 解说</button>
-            </div>
-            <section className={styles.studyCard}>
-              <header>
-                <span>キーワード</span>
-                <strong>{displayTokens.length}</strong>
-              </header>
-              <div className={styles.tokenGrid}>
-                {displayTokens.length > 0 ? (
-                  displayTokens.slice(0, 7).map((token) => (
-                    <article key={token.id} className={beginnerMode && isBeginnerToken(token) ? styles.beginnerTokenCard : ''}>
-                      <strong>{token.surface}</strong>
-                      <span>{token.kana}</span>
-                      <small>{resolveTokenMeaning(token)}</small>
-                    </article>
-                  ))
-                ) : (
-                  <p className="sectionIntro">{analysis ? '这句暂无可确认单词。' : '选中一句歌词后显示单词。'}</p>
-                )}
-              </div>
-            </section>
-
-            <section className={styles.studyCard}>
-              <header>
-                <span>文法ノート</span>
-                <strong>{analysis?.grammarMatches.length ?? 0}</strong>
-              </header>
-              <div className={styles.grammarHints}>
-                {analysis?.grammarMatches.slice(0, 3).map((grammar) => (
-                  <article key={grammar.id}>
-                    <strong>{grammar.pattern}</strong>
-                    <span>{grammar.meaningZh}</span>
-                    <small>{grammar.explanationZh}</small>
-                  </article>
-                ))}
-                {analysis && analysis.grammarMatches.length === 0 ? <p className="sectionIntro">这句暂无命中的固定语法。</p> : null}
-              </div>
-            </section>
-
-            <section className={styles.studyCard}>
-              <header>
-                <span>学习进度</span>
-                <strong>{learnedLineCount}/{totalLineCount}</strong>
-              </header>
-              <div className={styles.songProgress}>
-                <div style={{ width: `${totalLineCount ? (learnedLineCount / totalLineCount) * 100 : 0}%` }} />
-              </div>
-              <div className={styles.quickStats}>
-                <article>
-                  <small>解析</small>
-                  <strong>{analyzing ? '进行中' : '已就绪'}</strong>
-                </article>
-                <article>
-                  <small>知识点</small>
-                  <strong>{activeSong.knowledgePoints.length}</strong>
-                </article>
-              </div>
-            </section>
-
-            <section className={styles.studyCard}>
-              <header>
-                <span>保存候补</span>
-                <BookOpenText size={18} />
-              </header>
-              <div className={styles.knowledgeList}>
-                {(activeKnowledge.length > 0 ? activeKnowledge : activeSong.knowledgePoints.slice(0, 2)).map((point) => (
-                  <article key={point.id}>
-                    <strong>{point.expression}</strong>
-                    <span>{point.meaningZh}</span>
-                    <p>{point.explanationZh}</p>
-                  </article>
-                ))}
-                {activeSong.knowledgePoints.length === 0 ? <p className="sectionIntro">导入歌曲的表达会通过句子解析辅助学习。</p> : null}
-              </div>
-            </section>
-          </aside>
-        ) : (
+        {immersiveMode ? (
           <button className={styles.learningDrawerButton} onClick={() => setLearningOpen((value) => !value)}>
             <Sparkles size={18} />
             学习
           </button>
-        )}
+        ) : null}
       </section>
 
       {immersiveMode && learningOpen ? (
@@ -1194,7 +1150,7 @@ export function SongsPage() {
           <img src={displayCover} alt="" />
           <span>
             <strong>{activeSong.title}</strong>
-            <small>{activeSong.artist}</small>
+            <small>{getArtistLabel(activeSong)}</small>
           </span>
         </div>
         <div className={styles.transport}>

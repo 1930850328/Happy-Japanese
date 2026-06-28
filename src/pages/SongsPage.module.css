@@ -918,6 +918,575 @@
   background: rgba(218, 239, 235, 0.9);
 }
 
+.page:not(.pageImmersive) {
+  padding-bottom: 92px;
+  color: #17201d;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(240, 71, 50, 0.11), transparent 28%),
+    radial-gradient(circle at 78% 22%, rgba(15, 118, 110, 0.12), transparent 26%),
+    linear-gradient(135deg, #f6f7f5 0%, #eef4f1 48%, #f7f3ef 100%);
+}
+
+.page:not(.pageImmersive) .backgroundGlow {
+  opacity: 0.14;
+  filter: blur(58px) saturate(1.12);
+  transform: scale(1.04);
+}
+
+.page:not(.pageImmersive) .backgroundGlow::after {
+  background: linear-gradient(90deg, rgba(246, 247, 245, 0.96), rgba(246, 247, 245, 0.74));
+}
+
+.page:not(.pageImmersive) .musicApp {
+  grid-template-columns: 292px minmax(0, 1fr);
+  height: calc(100vh - 92px);
+  min-height: calc(100vh - 92px);
+  border-color: rgba(23, 32, 29, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .catalogRail {
+  background: rgba(252, 253, 252, 0.88);
+  backdrop-filter: blur(22px);
+}
+
+.page:not(.pageImmersive) .catalogRail {
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding: 1.2rem 0.92rem 0.95rem;
+}
+
+.page:not(.pageImmersive) .brand strong {
+  font-size: 1.32rem;
+}
+
+.page:not(.pageImmersive) .songNav {
+  gap: 0.12rem;
+  padding: 0.18rem 0;
+}
+
+.page:not(.pageImmersive) .songNav a,
+.page:not(.pageImmersive) .songNav span {
+  min-height: 38px;
+  border-radius: 8px;
+}
+
+.page:not(.pageImmersive) .searchBox,
+.page:not(.pageImmersive) .importDock,
+.page:not(.pageImmersive) .importFields input,
+.page:not(.pageImmersive) .importActions label,
+.page:not(.pageImmersive) .catalogHeader button,
+.page:not(.pageImmersive) .navigationButtons button,
+.page:not(.pageImmersive) .immersiveButton,
+.page:not(.pageImmersive) .heroActions button,
+.page:not(.pageImmersive) .heroActions a,
+.page:not(.pageImmersive) .tokenRail span,
+.page:not(.pageImmersive) .tokenGrid article,
+.page:not(.pageImmersive) .grammarHints article,
+.page:not(.pageImmersive) .knowledgeList article,
+.page:not(.pageImmersive) .quickStats article {
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .catalogHeader span {
+  font-size: 0.78rem;
+}
+
+.page:not(.pageImmersive) .catalogHeader strong {
+  font-size: 1.16rem;
+}
+
+.page:not(.pageImmersive) .songList {
+  gap: 0.42rem;
+  padding-right: 0.16rem;
+}
+
+.page:not(.pageImmersive) .songItemShell {
+  grid-template-columns: minmax(0, 1fr) 32px;
+  border-radius: 8px;
+}
+
+.page:not(.pageImmersive) .songItemShellActive {
+  border-color: transparent;
+  background: #17201d;
+}
+
+.page:not(.pageImmersive) .songItem {
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 0.66rem;
+  min-height: 58px;
+  padding: 0.42rem;
+}
+
+.page:not(.pageImmersive) .songItem img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .songItemShellActive .songItem strong {
+  color: #fffaf4;
+}
+
+.page:not(.pageImmersive) .songItemShellActive .songItem small {
+  color: rgba(255, 250, 244, 0.62);
+}
+
+.page:not(.pageImmersive) .songItemShellActive .songDeleteButton {
+  color: rgba(255, 250, 244, 0.7);
+}
+
+.page:not(.pageImmersive) .importDock {
+  gap: 0.62rem;
+  padding: 0.82rem;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.page:not(.pageImmersive) .importDock > div:first-child {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.page:not(.pageImmersive) .importFields {
+  display: none;
+}
+
+.page:not(.pageImmersive) .importActions label {
+  min-height: 36px;
+  font-weight: 750;
+}
+
+.page:not(.pageImmersive) .stage {
+  background: transparent;
+}
+
+.page:not(.pageImmersive) .topBar {
+  min-height: 64px;
+  padding: 0.86rem 1.35rem 0.72rem;
+}
+
+.page:not(.pageImmersive) .sourcePill {
+  flex: 1;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.page:not(.pageImmersive) .sourcePill strong {
+  color: #17201d;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.page:not(.pageImmersive) .sourcePill span {
+  color: #697470;
+}
+
+.page:not(.pageImmersive) .albumHero {
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 1.28rem;
+  min-height: 196px;
+  padding: 1.28rem 1.45rem;
+  border-color: rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(circle at 16% 24%, rgba(240, 71, 50, 0.34), transparent 34%),
+    linear-gradient(135deg, #1b2320 0%, #26312c 54%, #314642 100%);
+  color: #fffaf4;
+}
+
+.page:not(.pageImmersive) .albumHero::after {
+  background:
+    radial-gradient(circle at 18% 44%, rgba(255, 255, 255, 0.12), transparent 28%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent 58%);
+}
+
+.page:not(.pageImmersive) .heroCover {
+  width: 140px;
+  border-radius: 8px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+}
+
+.page:not(.pageImmersive) .statusBadges,
+.page:not(.pageImmersive) .heroMeta dl {
+  display: none;
+}
+
+.page:not(.pageImmersive) .heroMeta {
+  gap: 0.64rem;
+}
+
+.page:not(.pageImmersive) .heroMeta h1 {
+  display: -webkit-box;
+  max-width: 100%;
+  color: #fffaf4;
+  font-size: clamp(1.64rem, 2.65vw, 2.56rem);
+  line-height: 1.08;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.page:not(.pageImmersive) .heroMeta p {
+  color: rgba(255, 250, 244, 0.7);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page:not(.pageImmersive) .heroActions {
+  gap: 0.52rem;
+}
+
+.page:not(.pageImmersive) .heroActions button,
+.page:not(.pageImmersive) .heroActions a {
+  min-height: 40px;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fffaf4;
+}
+
+.page:not(.pageImmersive) .heroActions .primaryPlay {
+  background: #f04732;
+}
+
+.page:not(.pageImmersive) .lyricStage {
+  grid-template-columns: minmax(0, 1.15fr) minmax(250px, 0.85fr);
+  grid-template-rows: auto minmax(152px, 1fr) auto;
+  align-items: stretch;
+  gap: 0.72rem;
+  padding: 0.66rem 1.45rem 0.72rem;
+  background: rgba(255, 255, 255, 0.74);
+  overflow: hidden;
+}
+
+.page:not(.pageImmersive) .lyricTabs {
+  grid-column: 1 / -1;
+  min-height: 42px;
+  gap: 0.36rem;
+  border-bottom: 0;
+}
+
+.page:not(.pageImmersive) .lyricTabs button {
+  min-height: 34px;
+  padding: 0 0.72rem;
+  border: 1px solid rgba(23, 32, 29, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #596560;
+  font-size: 0.86rem;
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .lyricTabs .tabActive {
+  color: #fffaf4;
+  background: #17201d;
+  border-color: #17201d;
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .focusLyrics {
+  grid-column: 1;
+  grid-row: 2;
+  place-items: stretch;
+  min-height: 152px;
+  text-align: left;
+}
+
+.page:not(.pageImmersive) .sideLyric {
+  display: none;
+}
+
+.page:not(.pageImmersive) .activeLyric {
+  justify-items: start;
+  align-content: start;
+  width: 100%;
+  max-width: 100%;
+  gap: 0.56rem;
+  padding-top: 0.18rem;
+}
+
+.page:not(.pageImmersive) .activeLyric > span {
+  color: #0f766e;
+}
+
+.page:not(.pageImmersive) .activeLyric > strong,
+.page:not(.pageImmersive) .activeLyric p,
+.page:not(.pageImmersive) .activeLyric small {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page:not(.pageImmersive) .activeLyric > strong {
+  color: #17201d;
+  font-size: clamp(1.44rem, 2.18vw, 2.08rem);
+  line-height: 1.18;
+}
+
+.page:not(.pageImmersive) .activeLyric p {
+  font-size: clamp(0.96rem, 1.25vw, 1.08rem);
+}
+
+.page:not(.pageImmersive) .tokenRail {
+  justify-content: flex-start;
+  gap: 0.46rem;
+  max-height: 82px;
+  overflow: hidden;
+}
+
+.page:not(.pageImmersive) .tokenRail span {
+  min-width: 76px;
+  padding: 0.46rem 0.58rem;
+}
+
+.page:not(.pageImmersive) .lineProgress {
+  width: min(520px, 100%);
+  height: 6px;
+}
+
+.homeAssistPanel {
+  display: none;
+}
+
+.page:not(.pageImmersive) .homeAssistPanel {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.48rem;
+  align-self: stretch;
+  min-height: 0;
+}
+
+.page:not(.pageImmersive) .homeAssistPanel article,
+.page:not(.pageImmersive) .homeAssistPanel button {
+  display: grid;
+  align-content: center;
+  gap: 0.18rem;
+  min-height: 0;
+  padding: 0.58rem 0.72rem;
+  border: 1px solid rgba(23, 32, 29, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .homeAssistPanel span,
+.page:not(.pageImmersive) .homeAssistPanel small,
+.page:not(.pageImmersive) .homeShelf span {
+  color: #697470;
+}
+
+.page:not(.pageImmersive) .homeAssistPanel strong {
+  font-size: 1.08rem;
+}
+
+.page:not(.pageImmersive) .homeAssistPanel button {
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  border: 0;
+  background: #17201d;
+  color: #fffaf4;
+  font-weight: 850;
+}
+
+.homeProgress {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(23, 32, 29, 0.1);
+}
+
+.homeProgress i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f04732, #f7a55a);
+}
+
+.homeShelf {
+  display: none;
+}
+
+.page:not(.pageImmersive) .homeShelf {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: grid;
+  gap: 0.42rem;
+  min-width: 0;
+}
+
+.page:not(.pageImmersive) .homeShelf header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.page:not(.pageImmersive) .homeShelf header div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.page:not(.pageImmersive) .homeShelf header strong {
+  font-size: 1.05rem;
+}
+
+.page:not(.pageImmersive) .homeShelfList {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(168px, 1fr);
+  gap: 0.58rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.page:not(.pageImmersive) .homeShelfList button {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.55rem;
+  min-width: 0;
+  padding: 0.32rem;
+  border: 1px solid rgba(23, 32, 29, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.74);
+  text-align: left;
+}
+
+.page:not(.pageImmersive) .homeShelfList img {
+  grid-row: 1 / span 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .homeShelfList strong,
+.page:not(.pageImmersive) .homeShelfList span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page:not(.pageImmersive) .homeShelfList strong {
+  color: #17201d;
+}
+
+.page:not(.pageImmersive) .homeShelfActive img {
+  outline: 3px solid rgba(240, 71, 50, 0.22);
+}
+
+.page:not(.pageImmersive) .studyRail {
+  gap: 0.7rem;
+  padding: 1rem 0.92rem 0.95rem;
+}
+
+.page:not(.pageImmersive) .studyHeader {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.32rem;
+  min-height: 38px;
+  border-bottom: 0;
+}
+
+.page:not(.pageImmersive) .studyHeader button {
+  border-radius: 8px;
+}
+
+.page:not(.pageImmersive) .studyHeader .studyHeaderActive {
+  color: #fffaf4;
+  background: #17201d;
+  box-shadow: none;
+}
+
+.page:not(.pageImmersive) .studyCard {
+  gap: 0.62rem;
+  padding-top: 0.18rem;
+}
+
+.page:not(.pageImmersive) .tokenGrid,
+.page:not(.pageImmersive) .grammarHints,
+.page:not(.pageImmersive) .knowledgeList {
+  gap: 0.42rem;
+}
+
+.page:not(.pageImmersive) .tokenGrid article,
+.page:not(.pageImmersive) .grammarHints article,
+.page:not(.pageImmersive) .knowledgeList article,
+.page:not(.pageImmersive) .quickStats article {
+  padding: 0.62rem 0.68rem;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.page:not(.pageImmersive) .knowledgeList p {
+  margin: 0.18rem 0 0;
+}
+
+.page:not(.pageImmersive) .playerBar {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 92px;
+  padding: 0.82rem 1.45rem;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 -18px 42px rgba(17, 24, 22, 0.08);
+}
+
+@media (max-width: 1120px) {
+  .page:not(.pageImmersive) .musicApp {
+    grid-template-columns: 270px minmax(0, 1fr);
+  }
+
+  .page:not(.pageImmersive) .studyRail {
+    display: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .page:not(.pageImmersive) .musicApp {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page:not(.pageImmersive) .albumHero {
+    grid-template-columns: 124px minmax(0, 1fr);
+    min-height: 178px;
+  }
+
+  .page:not(.pageImmersive) .heroCover {
+    width: 124px;
+  }
+}
+
+@media (max-width: 680px) {
+  .page:not(.pageImmersive) .albumHero {
+    grid-template-columns: 92px minmax(0, 1fr);
+    min-height: 150px;
+    padding: 1rem;
+  }
+
+  .page:not(.pageImmersive) .heroCover {
+    width: 92px;
+  }
+
+  .page:not(.pageImmersive) .sourcePill {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
 .immersiveStudyHint {
   display: none;
 }
