@@ -2,6 +2,7 @@ import {
   BookOpenText,
   Captions,
   CheckCircle2,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Gauge,
@@ -390,6 +391,14 @@ export function SongsPage() {
   const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
   const displayTokens = analysis?.tokens.filter(hasDisplayableMeaning) ?? []
+  const immersiveHintToken = displayTokens[0]
+  const immersiveHintKnowledge = activeKnowledge[0]
+  const immersiveHintTitle = immersiveHintToken?.surface ?? immersiveHintKnowledge?.expression ?? activeLine?.ja ?? '当前句'
+  const immersiveHintText = immersiveHintToken
+    ? `${immersiveHintToken.kana ? `${immersiveHintToken.kana} · ` : ''}${resolveTokenMeaning(immersiveHintToken)}`
+    : immersiveHintKnowledge
+      ? immersiveHintKnowledge.meaningZh
+      : activeLine?.zh
   const lineProgressRatio =
     activeLine && activeLine.endMs > activeLine.startMs
       ? Math.max(0, Math.min(1, (currentMs - activeLine.startMs) / (activeLine.endMs - activeLine.startMs)))
@@ -913,12 +922,20 @@ export function SongsPage() {
         <main className={styles.stage}>
           <header className={styles.topBar}>
             <div className={styles.navigationButtons}>
-              <button type="button" aria-label="上一首">
-                <ChevronLeft size={18} />
-              </button>
-              <button type="button" aria-label="下一首">
-                <ChevronRight size={18} />
-              </button>
+              {immersiveMode ? (
+                <button type="button" aria-label="退出沉浸模式" onClick={() => setImmersiveMode(false)}>
+                  <ChevronDown size={22} />
+                </button>
+              ) : (
+                <>
+                  <button type="button" aria-label="上一首">
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button type="button" aria-label="下一首">
+                    <ChevronRight size={18} />
+                  </button>
+                </>
+              )}
             </div>
             <div className={styles.sourcePill}>
               <span>来源：{sourceSummary}</span>
@@ -926,7 +943,7 @@ export function SongsPage() {
             </div>
             <button className={styles.immersiveButton} type="button" onClick={() => setImmersiveMode(!immersiveMode)}>
               {immersiveMode ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-              {immersiveMode ? '退出沉浸' : '沉浸学习'}
+              {immersiveMode ? '播放器模式' : '沉浸学习'}
             </button>
           </header>
 
@@ -974,19 +991,31 @@ export function SongsPage() {
 
           <section className={styles.lyricStage}>
             <div className={styles.lyricTabs}>
-              <button className={styles.tabActive}>同步歌词</button>
-              <button className={showKana ? styles.tabActive : ''} onClick={() => setShowKana((value) => !value)}>
-                假名
-              </button>
-              <button className={showRomaji ? styles.tabActive : ''} onClick={() => setShowRomaji((value) => !value)}>
-                罗马音
-              </button>
-              <button className={showZh ? styles.tabActive : ''} onClick={() => setShowZh((value) => !value)}>
-                译文
-              </button>
-              <button className={beginnerMode ? styles.tabActive : ''} onClick={() => setBeginnerMode((value) => !value)}>
-                新手高亮
-              </button>
+              {immersiveMode ? (
+                <>
+                  <button className={styles.tabActive}>歌词</button>
+                  <button type="button" onClick={() => setLearningOpen(true)}>
+                    学习
+                  </button>
+                  <button type="button">相似推荐</button>
+                </>
+              ) : (
+                <>
+                  <button className={styles.tabActive}>同步歌词</button>
+                  <button className={showKana ? styles.tabActive : ''} onClick={() => setShowKana((value) => !value)}>
+                    假名
+                  </button>
+                  <button className={showRomaji ? styles.tabActive : ''} onClick={() => setShowRomaji((value) => !value)}>
+                    罗马音
+                  </button>
+                  <button className={showZh ? styles.tabActive : ''} onClick={() => setShowZh((value) => !value)}>
+                    译文
+                  </button>
+                  <button className={beginnerMode ? styles.tabActive : ''} onClick={() => setBeginnerMode((value) => !value)}>
+                    新手高亮
+                  </button>
+                </>
+              )}
             </div>
 
             {activeLine ? (
@@ -1043,6 +1072,13 @@ export function SongsPage() {
                 )
               })}
             </div>
+
+            {activeLine && immersiveHintText ? (
+              <div className={styles.immersiveStudyHint}>
+                <strong>{immersiveHintTitle}</strong>
+                <span>{immersiveHintText}</span>
+              </div>
+            ) : null}
           </section>
         </main>
 

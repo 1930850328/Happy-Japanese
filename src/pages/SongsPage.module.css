@@ -918,6 +918,426 @@
   background: rgba(218, 239, 235, 0.9);
 }
 
+.immersiveStudyHint {
+  display: none;
+}
+
+.pageImmersive {
+  min-height: 100vh;
+  overflow: hidden;
+  color: #fffaf4;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 91, 76, 0.2), transparent 30%),
+    radial-gradient(circle at 74% 74%, rgba(114, 224, 209, 0.1), transparent 30%),
+    linear-gradient(135deg, #382737, #211723 48%, #111015);
+}
+
+.pageImmersive .backgroundGlow {
+  opacity: 0.28;
+  filter: blur(46px) saturate(1.18) contrast(0.94);
+  transform: scale(1.08);
+}
+
+.pageImmersive .backgroundGlow::after {
+  background:
+    linear-gradient(90deg, rgba(18, 15, 20, 0.28), rgba(18, 15, 20, 0.06) 46%, rgba(18, 15, 20, 0.42)),
+    linear-gradient(180deg, rgba(18, 15, 20, 0.18), rgba(18, 15, 20, 0.72));
+}
+
+.pageImmersive .musicApp {
+  min-height: calc(100vh - 112px);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pageImmersive .stage {
+  grid-template-columns: minmax(440px, 46vw) minmax(580px, 1fr);
+  grid-template-rows: 74px minmax(0, 1fr);
+  column-gap: clamp(2.2rem, 5vw, 5rem);
+  min-height: calc(100vh - 112px);
+  padding: 0 clamp(2.4rem, 5vw, 5.2rem) 0 clamp(2rem, 4vw, 4.5rem);
+  background: transparent;
+}
+
+.pageImmersive .topBar {
+  position: relative;
+  grid-column: 1 / -1;
+  min-height: 74px;
+  padding: 0;
+  color: rgba(255, 250, 244, 0.82);
+}
+
+.pageImmersive .topBar::before,
+.pageImmersive .topBar::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.pageImmersive .topBar::before {
+  top: 0.9rem;
+  content: '听歌学日语';
+  color: #fffaf4;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.pageImmersive .topBar::after {
+  top: 2.35rem;
+  content: '播放中 · 歌词学习';
+  color: rgba(255, 250, 244, 0.52);
+  font-size: 0.76rem;
+}
+
+.pageImmersive .navigationButtons {
+  position: absolute;
+  top: 0.86rem;
+  left: 0;
+  z-index: 3;
+  gap: 0;
+}
+
+.pageImmersive .navigationButtons button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fffaf4;
+}
+
+.pageImmersive .sourcePill {
+  display: none;
+}
+
+.pageImmersive .immersiveButton {
+  position: absolute;
+  top: 0.95rem;
+  right: 0;
+  z-index: 3;
+  min-height: 36px;
+  padding: 0 0.78rem;
+  border-color: rgba(255, 250, 244, 0.1);
+  background: rgba(255, 250, 244, 0.07);
+  color: rgba(255, 250, 244, 0.74);
+}
+
+.pageImmersive .albumHero {
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  justify-items: center;
+  gap: 1.5rem;
+  min-height: 0;
+  padding: 0 0 2rem;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: #fffaf4;
+}
+
+.pageImmersive .albumHero::after {
+  position: absolute;
+  top: calc(50% - 4.6rem);
+  left: 50%;
+  z-index: 0;
+  width: min(430px, 32vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  content: '';
+  transform: translate(-50%, -50%);
+  background:
+    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.04) 0 2px, transparent 2px 7px),
+    radial-gradient(circle, #0c0c0e 0 24%, #08080a 25% 72%, #26212b 73% 100%);
+  box-shadow:
+    inset 0 0 0 16px rgba(255, 255, 255, 0.035),
+    inset 0 0 0 22px rgba(0, 0, 0, 0.2),
+    0 28px 76px rgba(0, 0, 0, 0.44);
+  pointer-events: none;
+}
+
+.pageImmersive .albumHero::before {
+  position: absolute;
+  top: calc(50% - 17rem);
+  left: calc(50% + 2rem);
+  z-index: 3;
+  width: min(205px, 15vw);
+  height: 9px;
+  border-radius: 999px;
+  content: '';
+  transform: rotate(48deg);
+  transform-origin: 0 50%;
+  background: #f8f4ee;
+  box-shadow:
+    -14px -8px 0 10px transparent,
+    0 5px 18px rgba(0, 0, 0, 0.32);
+}
+
+.pageImmersive .heroCover {
+  z-index: 2;
+  width: min(250px, 18vw);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 11px #0b0b0d,
+    0 0 0 13px rgba(255, 255, 255, 0.06),
+    0 18px 42px rgba(0, 0, 0, 0.34);
+}
+
+.pageImmersive .heroMeta {
+  z-index: 2;
+  justify-items: center;
+  max-width: min(460px, 34vw);
+  gap: 0.38rem;
+  text-align: center;
+}
+
+.pageImmersive .statusBadges,
+.pageImmersive .heroMeta dl,
+.pageImmersive .heroActions {
+  display: none;
+}
+
+.pageImmersive .heroMeta h1 {
+  max-width: 100%;
+  color: #fffaf4;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pageImmersive .heroMeta p {
+  max-width: 100%;
+  color: rgba(255, 250, 244, 0.58);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pageImmersive .lyricStage {
+  position: relative;
+  isolation: isolate;
+  grid-column: 2;
+  grid-row: 2;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 1.15rem;
+  min-height: 0;
+  padding: clamp(2rem, 5vh, 4rem) 0 2rem;
+  background: transparent;
+}
+
+.pageImmersive .lyricStage::before {
+  position: absolute;
+  inset: 3.2rem -5.4rem 4.8rem -5.2rem;
+  z-index: -1;
+  content: '';
+  background: radial-gradient(ellipse at 52% 48%, rgba(9, 10, 14, 0.38) 0%, rgba(9, 10, 14, 0.28) 42%, rgba(9, 10, 14, 0.12) 62%, transparent 78%);
+  filter: blur(18px);
+  pointer-events: none;
+}
+
+.pageImmersive .lyricTabs {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 40px;
+  gap: 0.25rem;
+  padding: 0.28rem;
+  border: 1px solid rgba(255, 250, 244, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 250, 244, 0.1);
+}
+
+.pageImmersive .lyricTabs button {
+  min-height: 31px;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  color: rgba(255, 250, 244, 0.54);
+  box-shadow: none;
+  font-size: 0.9rem;
+}
+
+.pageImmersive .lyricTabs .tabActive {
+  color: #fffaf4;
+  background: rgba(255, 250, 244, 0.16);
+}
+
+.pageImmersive .focusLyrics {
+  display: none;
+}
+
+.pageImmersive .lyricQueue {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 1.35rem;
+  width: min(760px, 100%);
+  max-height: none;
+  min-height: 0;
+  padding: 1.4rem 0;
+  overflow: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.pageImmersive .lyricQueue::-webkit-scrollbar {
+  display: none;
+}
+
+.pageImmersive .lyricRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.26rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 250, 244, 0.28);
+  text-align: left;
+  text-shadow: 0 10px 34px rgba(0, 0, 0, 0.34);
+}
+
+.pageImmersive .lyricRow span {
+  display: none;
+}
+
+.pageImmersive .lyricRow strong,
+.pageImmersive .lyricRow small {
+  grid-column: auto;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pageImmersive .lyricRow strong {
+  font-size: clamp(1.1rem, 1.65vw, 1.45rem);
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.pageImmersive .lyricRow small {
+  margin-top: 0;
+  color: inherit;
+  font-size: clamp(1rem, 1.45vw, 1.28rem);
+  font-weight: 750;
+  line-height: 1.26;
+}
+
+.pageImmersive .lyricRowActive {
+  color: #fffaf4;
+}
+
+.pageImmersive .lyricRowActive strong {
+  font-size: clamp(1.3rem, 1.9vw, 1.65rem);
+}
+
+.pageImmersive .lyricRowActive small {
+  color: rgba(255, 250, 244, 0.94);
+  font-size: clamp(1.1rem, 1.65vw, 1.45rem);
+}
+
+.pageImmersive .immersiveStudyHint {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.72rem;
+  align-items: center;
+  width: min(760px, 100%);
+  min-height: 54px;
+  padding: 0.68rem 0.82rem;
+  border: 1px solid rgba(124, 230, 213, 0.22);
+  border-radius: 8px;
+  background: rgba(10, 14, 17, 0.2);
+  color: rgba(255, 250, 244, 0.74);
+  backdrop-filter: blur(12px);
+}
+
+.pageImmersive .immersiveStudyHint strong {
+  color: #7ce6d5;
+}
+
+.pageImmersive .immersiveStudyHint span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pageImmersive .learningDrawerButton {
+  top: auto;
+  right: 1.25rem;
+  bottom: 8.6rem;
+  border-color: rgba(255, 250, 244, 0.12);
+  background: rgba(255, 250, 244, 0.08);
+  color: rgba(255, 250, 244, 0.86);
+  box-shadow: none;
+}
+
+.pageImmersive .playerBar {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  grid-template-columns: minmax(240px, 380px) auto minmax(240px, 1fr) auto;
+  min-height: 112px;
+  padding: 1rem 3rem 1.22rem;
+  border: 0;
+  border-top: 1px solid rgba(255, 250, 244, 0.08);
+  border-radius: 0;
+  background: rgba(13, 11, 16, 0.62);
+  color: rgba(255, 250, 244, 0.82);
+  box-shadow: none;
+}
+
+.pageImmersive .playerBar::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34%;
+  height: 3px;
+  content: '';
+  background: linear-gradient(90deg, #ff604b, #ffb56b);
+}
+
+.pageImmersive .barSong img {
+  box-shadow: none;
+}
+
+.pageImmersive .barSong small,
+.pageImmersive .barTimeline,
+.pageImmersive .barTools {
+  color: rgba(255, 250, 244, 0.58);
+}
+
+.pageImmersive .transport .barPlay {
+  color: #fffaf4;
+  background: rgba(255, 250, 244, 0.14);
+  box-shadow: none;
+}
+
+.pageImmersive .transport button,
+.pageImmersive .barTools button,
+.pageImmersive .rateGroup {
+  border-color: transparent;
+  background: transparent;
+  color: rgba(255, 250, 244, 0.78);
+}
+
+.pageImmersive .barTools .controlActive,
+.pageImmersive .transport .controlActive,
+.pageImmersive .rateGroup .rateActive {
+  color: #fffaf4;
+  background: rgba(255, 250, 244, 0.13);
+}
+
+.pageImmersive .barTimeline div {
+  background: rgba(255, 250, 244, 0.12);
+}
+
 @media (max-width: 1120px) {
   .musicApp {
     grid-template-columns: 250px minmax(0, 1fr);
