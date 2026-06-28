@@ -669,6 +669,7 @@
   max-height: 170px;
   overflow: auto;
   display: grid;
+  align-content: start;
   gap: 0.24rem;
   padding-right: 0.25rem;
 }
@@ -677,7 +678,7 @@
   display: grid;
   grid-template-columns: 46px minmax(0, 1fr);
   gap: 0.7rem;
-  align-items: center;
+  align-items: start;
   padding: 0.48rem 0.6rem;
   border: 1px solid transparent;
   border-radius: 10px;
@@ -685,19 +686,31 @@
   text-align: left;
 }
 
-.lyricRow span {
+.lyricTime {
   color: #f04732;
   font-size: 0.78rem;
+  line-height: 1.35;
 }
 
-.lyricRow strong,
-.lyricRow small {
+.lyricTextStack {
+  grid-column: 2;
+  display: grid;
+  gap: 0.16rem;
+  min-width: 0;
+}
+
+.lyricTextStack strong,
+.lyricTextStack small {
+  min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.lyricRow small {
-  grid-column: 2;
-  margin-top: -0.1rem;
+.lyricTextStack strong {
+  align-self: start;
+}
+
+.lyricTextStack small {
+  margin-top: 0;
 }
 
 .lyricRowActive {
@@ -1264,35 +1277,52 @@
   min-height: clamp(280px, 42vh, 520px);
   max-height: none;
   gap: 0.42rem;
-  padding: 0.3rem 0 0.7rem;
+  padding: 0.3rem 0 7.8rem;
   overflow: auto;
+  scroll-padding-block: 45%;
   scrollbar-width: thin;
 }
 
 .page:not(.pageImmersive) .lyricRow {
   grid-template-columns: 54px minmax(0, 1fr);
-  gap: 0.82rem;
-  min-height: 62px;
-  padding: 0.68rem 0.82rem;
+  column-gap: 0.82rem;
+  row-gap: 0.22rem;
+  height: max-content;
+  min-height: 76px;
+  padding: 0.82rem 1rem;
   border-color: rgba(23, 32, 29, 0.06);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.64);
+  overflow: visible;
 }
 
-.page:not(.pageImmersive) .lyricRow span {
+.page:not(.pageImmersive) .lyricTime {
   color: #8a9691;
+  padding-top: 0.08rem;
+  line-height: 1.35;
 }
 
-.page:not(.pageImmersive) .lyricRow strong {
+.page:not(.pageImmersive) .lyricTextStack {
+  gap: 0.22rem;
+}
+
+.page:not(.pageImmersive) .lyricTextStack strong {
   color: #17201d;
   font-size: clamp(1.02rem, 1.32vw, 1.28rem);
   line-height: 1.34;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
-.page:not(.pageImmersive) .lyricRow small {
+.page:not(.pageImmersive) .lyricTextStack small {
   color: #697470;
   font-size: clamp(0.88rem, 1.08vw, 1.02rem);
   line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.page:not(.pageImmersive) .lyricTextStack small + small {
+  margin-top: 0.08rem;
 }
 
 .page:not(.pageImmersive) .lyricRowActive {
@@ -1300,7 +1330,7 @@
   background: #fff4f0;
 }
 
-.page:not(.pageImmersive) .lyricRowActive strong {
+.page:not(.pageImmersive) .lyricRowActive .lyricTextStack strong {
   color: #f04732;
 }
 
@@ -1857,27 +1887,30 @@
   text-shadow: 0 10px 34px rgba(0, 0, 0, 0.34);
 }
 
-.pageImmersive .lyricRow span {
+.pageImmersive .lyricTime {
   display: none;
 }
 
-.pageImmersive .lyricRow strong,
-.pageImmersive .lyricRow small {
+.pageImmersive .lyricTextStack {
   grid-column: auto;
   max-width: 100%;
+}
+
+.pageImmersive .lyricTextStack strong,
+.pageImmersive .lyricTextStack small {
   overflow: hidden;
   overflow-wrap: normal;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.pageImmersive .lyricRow strong {
+.pageImmersive .lyricTextStack strong {
   font-size: clamp(1.1rem, 1.65vw, 1.45rem);
   font-weight: 900;
   line-height: 1.25;
 }
 
-.pageImmersive .lyricRow small {
+.pageImmersive .lyricTextStack small {
   margin-top: 0;
   color: inherit;
   font-size: clamp(1rem, 1.45vw, 1.28rem);
@@ -1889,11 +1922,11 @@
   color: #fffaf4;
 }
 
-.pageImmersive .lyricRowActive strong {
+.pageImmersive .lyricRowActive .lyricTextStack strong {
   font-size: clamp(1.3rem, 1.9vw, 1.65rem);
 }
 
-.pageImmersive .lyricRowActive small {
+.pageImmersive .lyricRowActive .lyricTextStack small {
   color: rgba(255, 250, 244, 0.94);
   font-size: clamp(1.1rem, 1.65vw, 1.45rem);
 }

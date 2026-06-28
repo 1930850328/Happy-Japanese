@@ -556,12 +556,16 @@ export function SongsPage() {
     const row = activeLyricRowRef.current
     const container = row?.parentElement
     if (row && container) {
+      const rowRect = row.getBoundingClientRect()
+      const containerRect = container.getBoundingClientRect()
+      const rowMiddle = rowRect.top - containerRect.top + container.scrollTop + rowRect.height / 2
+      const targetTop = rowMiddle - container.clientHeight / 2
       container.scrollTo({
-        top: Math.max(0, row.offsetTop - container.clientHeight / 2),
+        top: Math.max(0, targetTop),
         behavior: 'smooth',
       })
     }
-  }, [activeLine?.id])
+  }, [activeLine?.id, showKana, showRomaji, showZh])
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.playbackRate = playbackRate
@@ -1084,11 +1088,13 @@ export function SongsPage() {
                       onClick={() => seekToLine(line)}
                       onDoubleClick={() => seekToLine(line, true)}
                     >
-                      <span>{formatTime(line.startMs)}</span>
-                      <strong>{line.ja}</strong>
-                      {showZh ? <small>{line.zh}</small> : null}
-                      {showKana ? <small>{line.kana}</small> : null}
-                      {showRomaji ? <small>{line.romaji}</small> : null}
+                      <span className={styles.lyricTime}>{formatTime(line.startMs)}</span>
+                      <span className={styles.lyricTextStack}>
+                        <strong>{line.ja}</strong>
+                        {showZh ? <small>{line.zh}</small> : null}
+                        {showKana ? <small>{line.kana}</small> : null}
+                        {showRomaji ? <small>{line.romaji}</small> : null}
+                      </span>
                     </button>
                   )
                 })}
