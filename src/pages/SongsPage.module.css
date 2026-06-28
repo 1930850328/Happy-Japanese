@@ -297,11 +297,13 @@
 }
 
 .importActions {
+  display: grid;
   gap: 0.5rem;
 }
 
 .importActions label {
-  flex: 1;
+  justify-content: center;
+  width: 100%;
   cursor: pointer;
 }
 
@@ -387,6 +389,10 @@
   content: '';
   background: linear-gradient(90deg, rgba(240, 71, 50, 0.05), transparent 44%);
   pointer-events: none;
+}
+
+.vinylDisc {
+  display: contents;
 }
 
 .heroCover {
@@ -1154,11 +1160,11 @@
 }
 
 .page:not(.pageImmersive) .lyricStage {
-  grid-template-columns: minmax(0, 1.15fr) minmax(250px, 0.85fr);
-  grid-template-rows: auto minmax(152px, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   align-items: stretch;
   gap: 0.72rem;
-  padding: 0.66rem 1.45rem 0.72rem;
+  padding: 0.66rem 1.45rem 1.05rem;
   background: rgba(255, 255, 255, 0.74);
   overflow: hidden;
 }
@@ -1247,6 +1253,55 @@
 .page:not(.pageImmersive) .lineProgress {
   width: min(520px, 100%);
   height: 6px;
+}
+
+.page:not(.pageImmersive) .lyricQueue {
+  grid-column: 1;
+  grid-row: 2;
+  align-content: start;
+  width: 100%;
+  height: 100%;
+  min-height: clamp(280px, 42vh, 520px);
+  max-height: none;
+  gap: 0.42rem;
+  padding: 0.3rem 0 0.7rem;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.page:not(.pageImmersive) .lyricRow {
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 0.82rem;
+  min-height: 62px;
+  padding: 0.68rem 0.82rem;
+  border-color: rgba(23, 32, 29, 0.06);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.page:not(.pageImmersive) .lyricRow span {
+  color: #8a9691;
+}
+
+.page:not(.pageImmersive) .lyricRow strong {
+  color: #17201d;
+  font-size: clamp(1.02rem, 1.32vw, 1.28rem);
+  line-height: 1.34;
+}
+
+.page:not(.pageImmersive) .lyricRow small {
+  color: #697470;
+  font-size: clamp(0.88rem, 1.08vw, 1.02rem);
+  line-height: 1.35;
+}
+
+.page:not(.pageImmersive) .lyricRowActive {
+  border-color: rgba(240, 71, 50, 0.2);
+  background: #fff4f0;
+}
+
+.page:not(.pageImmersive) .lyricRowActive strong {
+  color: #f04732;
 }
 
 .homeAssistPanel {
@@ -1491,8 +1546,11 @@
   display: none;
 }
 
-.pageImmersive {
+.page.pageImmersive {
+  --immersive-player-height: 112px;
+  height: 100vh;
   min-height: 100vh;
+  padding: 0;
   overflow: hidden;
   color: #fffaf4;
   background:
@@ -1514,7 +1572,9 @@
 }
 
 .pageImmersive .musicApp {
-  min-height: calc(100vh - 112px);
+  height: calc(100vh - var(--immersive-player-height));
+  min-height: 0;
+  overflow: hidden;
   border: 0;
   background: transparent;
   box-shadow: none;
@@ -1524,8 +1584,10 @@
   grid-template-columns: minmax(440px, 46vw) minmax(580px, 1fr);
   grid-template-rows: 74px minmax(0, 1fr);
   column-gap: clamp(2.2rem, 5vw, 5rem);
-  min-height: calc(100vh - 112px);
+  height: calc(100vh - var(--immersive-player-height));
+  min-height: 0;
   padding: 0 clamp(2.4rem, 5vw, 5.2rem) 0 clamp(2rem, 4vw, 4.5rem);
+  overflow: hidden;
   background: transparent;
 }
 
@@ -1594,67 +1656,90 @@
 }
 
 .pageImmersive .albumHero {
+  --record-size: min(470px, 34vw, calc(100vh - 260px));
+  --cover-size: clamp(150px, 16vw, 220px);
   position: relative;
   grid-column: 1;
   grid-row: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--record-size) auto;
   align-content: center;
   justify-items: center;
-  gap: 1.5rem;
+  gap: clamp(1rem, 2vh, 1.55rem);
   min-height: 0;
-  padding: 0 0 2rem;
+  padding: 0 0 clamp(1.2rem, 3vh, 2rem);
   overflow: visible;
   border: 0;
   background: transparent;
   color: #fffaf4;
 }
 
-.pageImmersive .albumHero::after {
-  position: absolute;
-  top: calc(50% - 4.6rem);
-  left: 50%;
-  z-index: 0;
-  width: min(430px, 32vw);
+.pageImmersive .vinylDisc {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--record-size);
   aspect-ratio: 1;
   border-radius: 50%;
+  isolation: isolate;
+}
+
+.pageImmersive .vinylDisc::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   content: '';
-  transform: translate(-50%, -50%);
+  border-radius: inherit;
   background:
-    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.04) 0 2px, transparent 2px 7px),
-    radial-gradient(circle, #0c0c0e 0 24%, #08080a 25% 72%, #26212b 73% 100%);
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.16) 0 1.1%, transparent 1.2% 18%),
+    conic-gradient(from 18deg, rgba(255, 255, 255, 0.065) 0deg 12deg, transparent 15deg 108deg, rgba(255, 255, 255, 0.04) 116deg 128deg, transparent 132deg 360deg),
+    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.055) 0 1px, rgba(255, 255, 255, 0.014) 1px 2px, transparent 2px 8px),
+    radial-gradient(circle, #111214 0 17%, #050607 18% 72%, #201d25 73% 100%);
   box-shadow:
-    inset 0 0 0 16px rgba(255, 255, 255, 0.035),
-    inset 0 0 0 22px rgba(0, 0, 0, 0.2),
-    0 28px 76px rgba(0, 0, 0, 0.44);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 0 0 16px rgba(255, 255, 255, 0.025),
+    inset 0 0 34px rgba(255, 255, 255, 0.05),
+    0 30px 86px rgba(0, 0, 0, 0.5);
+  animation: vinylRecordSpin 18s linear infinite;
+  animation-play-state: paused;
   pointer-events: none;
 }
 
-.pageImmersive .albumHero::before {
+.pageImmersive .vinylDisc::after {
   position: absolute;
-  top: calc(50% - 17rem);
-  left: calc(50% + 2rem);
+  top: 13%;
+  left: 58%;
   z-index: 3;
-  width: min(205px, 15vw);
+  width: 34%;
   height: 9px;
   border-radius: 999px;
   content: '';
-  transform: rotate(48deg);
+  transform: rotate(47deg);
   transform-origin: 0 50%;
-  background: #f8f4ee;
+  background: linear-gradient(90deg, #fffaf4 0 84%, #e9e4df 84% 100%);
   box-shadow:
-    -14px -8px 0 10px transparent,
-    0 5px 18px rgba(0, 0, 0, 0.32);
+    -8px -7px 0 8px rgba(255, 250, 244, 0.9),
+    0 5px 18px rgba(0, 0, 0, 0.36);
 }
 
 .pageImmersive .heroCover {
   z-index: 2;
-  width: min(250px, 18vw);
+  width: var(--cover-size);
   border-radius: 50%;
   box-shadow:
-    0 0 0 11px #0b0b0d,
-    0 0 0 13px rgba(255, 255, 255, 0.06),
+    0 0 0 11px #09090a,
+    0 0 0 13px rgba(255, 255, 255, 0.07),
     0 18px 42px rgba(0, 0, 0, 0.34);
+  transform-origin: center;
+  animation: vinylCoverSpin 18s linear infinite;
+  animation-play-state: paused;
+}
+
+.pageImmersive.pagePlaying .vinylDisc::before,
+.pageImmersive.pagePlaying .heroCover {
+  animation-play-state: running;
 }
 
 .pageImmersive .heroMeta {
@@ -1696,7 +1781,8 @@
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 1.15rem;
   min-height: 0;
-  padding: clamp(2rem, 5vh, 4rem) 0 2rem;
+  overflow: hidden;
+  padding: clamp(1.2rem, 3.8vh, 3rem) 0 clamp(1rem, 2.5vh, 1.5rem);
   background: transparent;
 }
 
@@ -1747,6 +1833,7 @@
   width: min(760px, 100%);
   max-height: none;
   min-height: 0;
+  height: 100%;
   padding: 1.4rem 0;
   overflow: auto;
   scrollbar-width: none;
@@ -1852,7 +1939,8 @@
   right: 0;
   bottom: 0;
   grid-template-columns: minmax(240px, 380px) auto minmax(240px, 1fr) auto;
-  min-height: 112px;
+  height: var(--immersive-player-height);
+  min-height: var(--immersive-player-height);
   padding: 1rem 3rem 1.22rem;
   border: 0;
   border-top: 1px solid rgba(255, 250, 244, 0.08);
@@ -1905,6 +1993,26 @@
 
 .pageImmersive .barTimeline div {
   background: rgba(255, 250, 244, 0.12);
+}
+
+@keyframes vinylRecordSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes vinylCoverSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 1120px) {

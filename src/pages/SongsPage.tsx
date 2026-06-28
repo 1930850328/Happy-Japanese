@@ -26,9 +26,8 @@ import { NavLink, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { songLessons } from '../data/songLessons'
-import { parseLyrics } from '../lib/lyrics'
 import { decodeNcmAudio, isNcmFile } from '../lib/ncmAudio'
-import { matchNeteaseSongForUpload } from '../lib/neteaseSongProvider'
+import { type MatchedNeteaseSong, matchNeteaseSongForUpload } from '../lib/neteaseSongProvider'
 import {
   createLocalSongAssetId,
   deleteStoredSongAsset,
@@ -40,7 +39,6 @@ import {
   deleteSiteSongAsset,
   listSiteSongAssets,
   type SiteSongAsset,
-  updateSiteSongLyrics,
   uploadSongToSite,
 } from '../lib/siteSongStorage'
 import { speakJapanese } from '../lib/speech'
@@ -99,14 +97,6 @@ function formatTime(ms: number) {
   const minutes = Math.floor(totalSeconds / 60)
   const seconds = totalSeconds % 60
   return `${minutes}:${String(seconds).padStart(2, '0')}`
-}
-
-function getSectionLabel(section: LyricLine['section']) {
-  if (section === 'chorus') return '副歌'
-  if (section === 'bridge') return '桥段'
-  if (section === 'intro') return '前奏'
-  if (section === 'outro') return '尾声'
-  return '主歌'
 }
 
 function createImportedCover(title: string, artist: string) {
@@ -234,6 +224,83 @@ function createGeneratedLyricFileName(title: string) {
   return `${safeTitle || 'lyrics'}.netease.lrc`
 }
 
+function normalizeDedupeText(value: string) {
+  return value
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/\.[a-z0-9]+$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function normalizeMatchText(value: string) {
+  return normalizeDedupeText(value)
+    .replace(/[([{【（].*?[)\]}】）]/g, ' ')
+    .replace(/[^\p{L}\p{N}\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]+/gu, '')
+}
+
+function hasTextOverlap(left: string, right: string) {
+  const leftText = normalizeMatchText(left)
+  const rightText = normalizeMatchText(right)
+  if (!leftText || !rightText) return false
+  return leftText.includes(rightText) || rightText.includes(leftText)
+}
+
+function getAudioDedupeKey(fileName: string, fileSize: number) {
+  const normalizedName = normalizeDedupeText(fileName)
+  return normalizedName && fileSize > 0 ? `${normalizedName}:${fileSize}` : ''
+}
+
+function getImportedAssetDedupeKey(asset: Pick<ImportedSongAsset, 'audioFileName' | 'audioSize' | 'title' | 'artist'>) {
+  const audioKey = getAudioDedupeKey(asset.audioFileName, asset.audioSize)
+  if (audioKey) return `audio:${audioKey}`
+  return `meta:${normalizeDedupeText(asset.title)}:${normalizeDedupeText(asset.artist)}`
+}
+
+function dedupeImportedAssets(assets: ImportedSongAsset[]) {
+  const seen = new Set<string>()
+  return assets.filter((asset) => {
+    const key = getImportedAssetDedupeKey(asset)
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+}
+
+function findDuplicateImportedAsset(
+  assets: ImportedSongAsset[],
+  candidate: {
+    audioFileName: string
+    audioSize: number
+    title: string
+    artist: string
+    durationMs: number
+  },
+) {
+  const audioKey = getAudioDedupeKey(candidate.audioFileName, candidate.audioSize)
+  const audioDuplicate = audioKey
+    ? assets.find((asset) => getAudioDedupeKey(asset.audioFileName, asset.audioSize) === audioKey)
+    : undefined
+  if (audioDuplicate) return audioDuplicate
+
+  const candidateTitle = normalizeDedupeText(candidate.title)
+  const candidateArtist = normalizeDedupeText(candidate.artist)
+  if (!candidateTitle || !candidateArtist) return undefined
+
+  return assets.find((asset) => {
+    const sameSong = normalizeDedupeText(asset.title) === candidateTitle && normalizeDedupeText(asset.artist) === candidateArtist
+    const closeDuration = !candidate.durationMs || !asset.durationMs || Math.abs(asset.durationMs - candidate.durationMs) <= 2500
+    return sameSong && closeDuration
+  })
+}
+
+function isUsableNeteaseMatch(input: { title: string; artist: string; durationMs: number }, match: MatchedNeteaseSong) {
+  const titleMatches = hasTextOverlap(input.title, match.title)
+  const artistMatches = hasTextOverlap(input.artist, match.artist)
+  const durationMatches = !input.durationMs || !match.durationMs || Math.abs(input.durationMs - match.durationMs) <= 7000
+  return titleMatches && (artistMatches || durationMatches)
+}
+
 function readMediaDurationMs(file: File) {
   return new Promise<number>((resolve) => {
     const url = URL.createObjectURL(file)
@@ -324,15 +391,12 @@ export function SongsPage() {
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const activeLyricRowRef = useRef<HTMLButtonElement | null>(null)
+  const speechPlaybackTimerRef = useRef<number | null>(null)
 
   const immersiveMode = searchParams.get('mode') === 'immersive'
   const [siteAssets, setSiteAssets] = useState<SiteSongAsset[]>([])
   const [storedAssets, setStoredAssets] = useState<StoredSongAsset[]>([])
   const [assetUrls, setAssetUrls] = useState<Record<string, string>>({})
-  const [pendingLyricFile, setPendingLyricFile] = useState<File | null>(null)
-  const [pendingLyricLines, setPendingLyricLines] = useState<LyricLine[]>([])
-  const [pendingLyricText, setPendingLyricText] = useState('')
-  const [pendingLyricFileName, setPendingLyricFileName] = useState('')
   const [activeSongId, setActiveSongId] = useState(fallbackSongId)
   const [selectedLineId, setSelectedLineId] = useState(demoSongs[0]?.lyricLines[0]?.id ?? '')
   const [currentMs, setCurrentMs] = useState(0)
@@ -347,22 +411,19 @@ export function SongsPage() {
   const [assetsLoading, setAssetsLoading] = useState(true)
   const [importing, setImporting] = useState(false)
   const [loadError, setLoadError] = useState('')
-  const [importTitle, setImportTitle] = useState('')
-  const [importArtist, setImportArtist] = useState('')
   const [analysis, setAnalysis] = useState<SentenceAnalysis | null>(null)
   const [, setAnalyzing] = useState(false)
 
   const importedAssets = useMemo(() => {
     const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)
     const localImportedAssets = storedAssets.map((asset) => buildLocalImportedAsset(asset, assetUrls[asset.id] ?? ''))
-    return [...siteImportedAssets, ...localImportedAssets]
+    return dedupeImportedAssets([...siteImportedAssets, ...localImportedAssets])
   }, [assetUrls, siteAssets, storedAssets])
   const assetById = useMemo(() => new Map(importedAssets.map((asset) => [asset.id, asset])), [importedAssets])
   const songs = useMemo(() => {
-    return [...importedAssets.map(buildImportedSong), ...demoSongs]
+    return importedAssets.length > 0 ? importedAssets.map(buildImportedSong) : demoSongs
   }, [importedAssets])
   const activeSong = songs.find((song) => song.id === activeSongId) ?? songs[0]
-  const activeAsset = activeSong ? assetById.get(activeSong.id) ?? null : null
   const displayCover = activeSong?.artworkUrl || activeSong?.cover
 
   const lineByTime = useMemo(() => {
@@ -374,9 +435,6 @@ export function SongsPage() {
   }, [activeSong, selectedLineId])
 
   const activeLine = lineByTime ?? selectedLine ?? activeSong?.lyricLines[0] ?? null
-  const activeIndex = activeSong?.lyricLines.findIndex((line) => line.id === activeLine?.id) ?? -1
-  const previousLine = activeIndex > 0 ? activeSong?.lyricLines[activeIndex - 1] : null
-  const nextLine = activeIndex >= 0 ? activeSong?.lyricLines[activeIndex + 1] : null
   const activeKnowledge = useMemo(() => {
     if (!activeSong || !activeLine) return []
     return activeSong.knowledgePoints.filter((point) => activeLine.focusTermIds.includes(point.id))
@@ -393,10 +451,34 @@ export function SongsPage() {
     : immersiveHintKnowledge
       ? immersiveHintKnowledge.meaningZh
       : activeLine?.zh
-  const lineProgressRatio =
-    activeLine && activeLine.endMs > activeLine.startMs
-      ? Math.max(0, Math.min(1, (currentMs - activeLine.startMs) / (activeLine.endMs - activeLine.startMs)))
-      : 0
+
+  const clearSpeechPlaybackTimer = () => {
+    if (speechPlaybackTimerRef.current === null) return
+    window.clearTimeout(speechPlaybackTimerRef.current)
+    speechPlaybackTimerRef.current = null
+  }
+
+  const stopSpeechPreview = () => {
+    clearSpeechPlaybackTimer()
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel()
+    }
+    setPlaying(false)
+  }
+
+  const playSpeechPreview = (text: string) => {
+    const started = speakJapanese(text)
+    if (!started) return false
+
+    clearSpeechPlaybackTimer()
+    setPlaying(true)
+    const estimatedDurationMs = Math.min(8000, Math.max(1500, text.length * 170))
+    speechPlaybackTimerRef.current = window.setTimeout(() => {
+      speechPlaybackTimerRef.current = null
+      setPlaying(false)
+    }, estimatedDurationMs)
+    return true
+  }
 
   async function refreshSongAssets(nextActiveId?: string) {
     setAssetsLoading(true)
@@ -455,11 +537,20 @@ export function SongsPage() {
   }, [activeSongId, songs])
 
   useEffect(() => {
+    clearSpeechPlaybackTimer()
     setCurrentMs(0)
     setPlaying(false)
     setSelectedLineId(activeSong?.lyricLines[0]?.id ?? '')
     setAnalysis(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSong?.id])
+
+  useEffect(() => {
+    return () => {
+      clearSpeechPlaybackTimer()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const row = activeLyricRowRef.current
@@ -506,6 +597,7 @@ export function SongsPage() {
     setCurrentMs(line.startMs)
 
     if (activeSong?.playbackProvider === 'localFile' && audioRef.current && activeSong.sourceUrl) {
+      clearSpeechPlaybackTimer()
       audioRef.current.currentTime = line.startMs / 1000
       if (shouldPlay) {
         void audioRef.current.play().then(() => setPlaying(true)).catch((error: unknown) => {
@@ -515,13 +607,14 @@ export function SongsPage() {
       return
     }
 
-    if (shouldPlay) speakJapanese(line.ja)
+    if (shouldPlay) playSpeechPreview(line.ja)
   }
 
   const handlePlayPause = async () => {
     if (!activeSong) return
 
     if (activeSong.playbackProvider === 'localFile' && activeSong.sourceUrl) {
+      clearSpeechPlaybackTimer()
       const audio = audioRef.current
       if (!audio) return
 
@@ -544,7 +637,12 @@ export function SongsPage() {
       return
     }
 
-    if (activeLine) speakJapanese(activeLine.ja)
+    if (playing) {
+      stopSpeechPreview()
+      return
+    }
+
+    if (activeLine) playSpeechPreview(activeLine.ja)
   }
 
   const handleTimeUpdate = () => {
@@ -564,73 +662,81 @@ export function SongsPage() {
     setCurrentMs(nextMs)
   }
 
-  const handleMediaUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    const input = event.currentTarget
-    const file = input.files?.[0]
-    if (!file) return
-
-    setImporting(true)
-    input.value = ''
+  const importMediaFile = async (file: File, knownAssets: ImportedSongAsset[]) => {
     let audioFile = file
     let ncmInfo: Awaited<ReturnType<typeof decodeNcmAudio>> | null = null
 
     if (isNcmFile(file)) {
-      try {
-        ncmInfo = await decodeNcmAudio(file)
-        audioFile = ncmInfo.file
-        toast.success(`已转换 NCM：${ncmInfo.file.name}`)
-      } catch (error) {
-        toast.error(error instanceof Error ? error.message : 'NCM 文件转换失败')
-        setImporting(false)
-        return
+      ncmInfo = await decodeNcmAudio(file)
+      audioFile = ncmInfo.file
+    }
+
+    let title = ncmInfo?.title || stripFileExtension(audioFile.name)
+    let artist = ncmInfo?.artist || '本地音频'
+    const durationMs = await readMediaDurationMs(audioFile)
+    let cover = ncmInfo?.cover || createImportedCover(title, artist)
+    let lyricLines: LyricLine[] = []
+    let lyricText = ''
+    let lyricFileName = ''
+    let lyricProvider: LyricProvider | undefined
+    let lyricQuality: SongLyricQuality | undefined
+    let lyricsFile: File | undefined
+
+    const duplicateBeforeMatch = findDuplicateImportedAsset(knownAssets, {
+      audioFileName: audioFile.name,
+      audioSize: audioFile.size,
+      title,
+      artist,
+      durationMs,
+    })
+    if (duplicateBeforeMatch) {
+      return {
+        status: 'skipped' as const,
+        id: duplicateBeforeMatch.id,
+        title: duplicateBeforeMatch.title,
+        firstLineId: duplicateBeforeMatch.lyricLines[0]?.id ?? '',
       }
     }
 
-    let title = importTitle.trim() || ncmInfo?.title || audioFile.name.replace(/\.[^.]+$/, '')
-    let artist = importArtist.trim() || ncmInfo?.artist || '本地音频'
-    const durationMs = await readMediaDurationMs(audioFile)
-    let cover = ncmInfo?.cover || createImportedCover(title, artist)
-    let lyricLines = pendingLyricLines
-    let lyricText = pendingLyricText
-    let lyricFileName = pendingLyricFileName
-    let lyricProvider: LyricProvider | undefined = pendingLyricLines.length > 0 ? 'manual' : undefined
-    let lyricQuality: SongLyricQuality | undefined = pendingLyricLines.length > 0 ? 'manual_imported' : undefined
-    let lyricsFile: File | undefined =
-      pendingLyricFile ??
-      (pendingLyricText && pendingLyricFileName
-        ? new File([pendingLyricText], pendingLyricFileName, { type: 'text/plain; charset=utf-8' })
-        : undefined)
+    try {
+      const matchInput = { title, artist, durationMs }
+      const match = await matchNeteaseSongForUpload(matchInput)
 
-    if (lyricLines.length === 0) {
-      toast.message('正在自动匹配歌词和封面')
-      try {
-        const match = await matchNeteaseSongForUpload({
-          title,
-          artist,
-          durationMs,
-        })
+      if (match && isUsableNeteaseMatch(matchInput, match)) {
+        title = ncmInfo?.title || match.title || title
+        artist = ncmInfo?.artist || match.artist || artist
+        cover = match.cover || cover
+        lyricLines = match.lyricLines
+        lyricText = match.rawLyricText
+        lyricFileName = createGeneratedLyricFileName(title)
+        lyricsFile = new File([lyricText], lyricFileName, { type: 'text/plain; charset=utf-8' })
+        lyricProvider = 'netease'
+        lyricQuality = 'community_synced'
+      } else if (match) {
+        toast.warning(`${title} 的歌词匹配结果不一致，已跳过自动绑定`)
+      }
+    } catch (error) {
+      toast.warning(error instanceof Error ? error.message : `${title} 自动匹配歌词失败，仍会保存音频`)
+    }
 
-        if (match) {
-          title = importTitle.trim() || match.title || title
-          artist = importArtist.trim() || match.artist || artist
-          cover = match.cover || cover
-          lyricLines = match.lyricLines
-          lyricText = match.rawLyricText
-          lyricFileName = createGeneratedLyricFileName(title)
-          lyricsFile = new File([lyricText], lyricFileName, { type: 'text/plain; charset=utf-8' })
-          lyricProvider = 'netease'
-          lyricQuality = 'community_synced'
-          toast.success(`已匹配网易云歌词：${match.title}`)
-        } else {
-          toast.warning('没有自动匹配到可用同步歌词，仍会保存音频')
-        }
-      } catch (error) {
-        toast.warning(error instanceof Error ? error.message : '自动匹配歌词失败，仍会保存音频')
+    const duplicateAfterMatch = findDuplicateImportedAsset(knownAssets, {
+      audioFileName: audioFile.name,
+      audioSize: audioFile.size,
+      title,
+      artist,
+      durationMs,
+    })
+    if (duplicateAfterMatch) {
+      return {
+        status: 'skipped' as const,
+        id: duplicateAfterMatch.id,
+        title: duplicateAfterMatch.title,
+        firstLineId: duplicateAfterMatch.lyricLines[0]?.id ?? '',
       }
     }
 
     const lyricDurationMs = lyricLines.at(-1)?.endMs ?? 0
-    const now = new Date().toISOString()
+    const finalDurationMs = Math.max(durationMs, lyricDurationMs)
 
     try {
       const siteAsset = await uploadSongToSite({
@@ -639,21 +745,20 @@ export function SongsPage() {
         title,
         artist,
         cover,
-        durationMs: Math.max(durationMs, lyricDurationMs),
+        durationMs: finalDurationMs,
         lyricLines,
         lyricProvider,
         lyricQuality,
       })
-      await refreshSongAssets(siteAsset.id)
-      setImportTitle(title)
-      setImportArtist(artist)
-      setPendingLyricFile(null)
-      setPendingLyricLines([])
-      setPendingLyricText('')
-      setPendingLyricFileName('')
-      setSelectedLineId(siteAsset.lyricLines[0]?.id ?? '')
-      toast.success(`已保存到 TOS：${title}`)
+      return {
+        status: 'imported' as const,
+        id: siteAsset.id,
+        title,
+        firstLineId: siteAsset.lyricLines[0]?.id ?? '',
+        asset: buildSiteImportedAsset(siteAsset),
+      }
     } catch (error) {
+      const now = new Date().toISOString()
       const asset: StoredSongAsset = {
         id: createLocalSongAssetId(),
         title,
@@ -663,7 +768,7 @@ export function SongsPage() {
         audioFileName: audioFile.name,
         audioFileType: audioFile.type || 'audio/mpeg',
         audioSize: audioFile.size,
-        durationMs: Math.max(durationMs, lyricDurationMs),
+        durationMs: finalDurationMs,
         lyricFileName: lyricFileName || undefined,
         lyricText: lyricText || undefined,
         lyricLines,
@@ -675,84 +780,69 @@ export function SongsPage() {
 
       try {
         await saveStoredSongAsset(asset)
-        await refreshSongAssets(asset.id)
-        setImportTitle(title)
-        setImportArtist(artist)
-        setPendingLyricFile(null)
-        setPendingLyricLines([])
-        setPendingLyricText('')
-        setPendingLyricFileName('')
-        setSelectedLineId(asset.lyricLines[0]?.id ?? '')
-        toast.success(`TOS 暂不可用，已保存到本地浏览器：${title}`)
+        return {
+          status: 'imported' as const,
+          id: asset.id,
+          title,
+          firstLineId: asset.lyricLines[0]?.id ?? '',
+          asset: buildLocalImportedAsset(asset, ''),
+        }
       } catch (localError) {
-        toast.error(localError instanceof Error ? localError.message : error instanceof Error ? error.message : '歌曲保存失败')
+        throw localError instanceof Error ? localError : error
       }
-    } finally {
-      setImporting(false)
     }
   }
 
-  const handleLyricsUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleMediaUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget
-    const file = input.files?.[0]
-    if (!file) return
+    const files = Array.from(input.files ?? [])
+    if (files.length === 0) return
 
-    const lyricText = await file.text()
-    const lyricLines = parseLyrics(lyricText, file.name)
+    setImporting(true)
     input.value = ''
-    if (lyricLines.length === 0) {
-      toast.error('没有识别到可用歌词')
-      return
-    }
 
-    if (!activeAsset) {
-      setPendingLyricFile(file)
-      setPendingLyricLines(lyricLines)
-      setPendingLyricText(lyricText)
-      setPendingLyricFileName(file.name)
-      setImportTitle((current) => current.trim() || stripFileExtension(file.name))
-      setSelectedLineId(lyricLines[0].id)
-      toast.success(`歌词已暂存：${lyricLines.length} 行，继续导入音频即可保存`)
-      return
-    }
+    let knownAssets = [...importedAssets]
+    let firstActiveId = ''
+    let firstLineId = ''
+    let importedCount = 0
+    let skippedCount = 0
+    let failedCount = 0
 
-    if (activeAsset.storage === 'site' && activeAsset.siteAsset) {
+    for (const file of files) {
       try {
-        const nextAsset = await updateSiteSongLyrics({
-          song: activeAsset.siteAsset,
-          lyricsFile: file,
-          lyricLines,
-        })
-        await refreshSongAssets(nextAsset.id)
-        setSelectedLineId(lyricLines[0].id)
-        toast.success(`已为 ${nextAsset.title} 保存云端歌词`)
+        const result = await importMediaFile(file, knownAssets)
+        if (!firstActiveId) {
+          firstActiveId = result.id
+          firstLineId = result.firstLineId
+        }
+
+        if (result.status === 'imported') {
+          importedCount += 1
+          knownAssets = dedupeImportedAssets([...knownAssets, result.asset])
+        } else {
+          skippedCount += 1
+        }
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : '云端歌词保存失败')
+        failedCount += 1
+        toast.error(error instanceof Error ? `${file.name}：${error.message}` : `${file.name} 导入失败`)
       }
-      return
-    }
-
-    if (!activeAsset.localAsset) {
-      toast.error('当前歌曲暂时不能绑定歌词')
-      return
-    }
-
-    const nextAsset: StoredSongAsset = {
-      ...activeAsset.localAsset,
-      durationMs: Math.max(activeAsset.durationMs, lyricLines.at(-1)?.endMs ?? 0),
-      lyricFileName: file.name,
-      lyricText,
-      lyricLines,
-      updatedAt: new Date().toISOString(),
     }
 
     try {
-      await saveStoredSongAsset(nextAsset)
-      await refreshSongAssets(nextAsset.id)
-      setSelectedLineId(lyricLines[0].id)
-      toast.success(`已为 ${nextAsset.title} 保存 ${lyricLines.length} 行歌词`)
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : '歌词保存失败')
+      await refreshSongAssets(firstActiveId || undefined)
+      if (firstLineId) setSelectedLineId(firstLineId)
+
+      if (importedCount > 0) {
+        toast.success(`已导入 ${importedCount} 首歌曲`)
+      }
+      if (skippedCount > 0) {
+        toast.message(`已跳过 ${skippedCount} 首重复歌曲`)
+      }
+      if (failedCount > 0 && importedCount === 0 && skippedCount === 0) {
+        toast.error('没有歌曲导入成功')
+      }
+    } finally {
+      setImporting(false)
     }
   }
 
@@ -798,15 +888,10 @@ export function SongsPage() {
   const loadingCurrentSong = assetsLoading || importing
   const canUseNativeAudio = activeSong.playbackProvider === 'localFile' && Boolean(activeSong.sourceUrl)
   const playLabel = canUseNativeAudio ? (playing ? '暂停' : '播放') : '听当前句'
-  const importedSongCount = songs.filter((song) => assetById.has(song.id)).length
-  const totalLineCount = activeSong.lyricLines.length
-  const learnedLineCount = activeSong.lyricLines.filter((line) => line.endMs <= currentMs).length
-  const learnedPercent = totalLineCount ? Math.min(100, (learnedLineCount / totalLineCount) * 100) : 0
-  const shelfSongs = songs.slice(0, 6)
-  const resourceLabel = activeAsset ? '音频、歌词、封面已就绪' : activeSong.sourceType === 'demo' ? '示例歌曲，可直接体验' : '等待导入'
+  const importedSongCount = importedAssets.length
 
   return (
-    <div className={`${styles.page} ${immersiveMode ? styles.pageImmersive : ''}`}>
+    <div className={`${styles.page} ${immersiveMode ? styles.pageImmersive : ''} ${playing ? styles.pagePlaying : ''}`}>
       <div className={styles.backgroundGlow} style={{ backgroundImage: `url(${displayCover})` }} />
 
       <section className={styles.musicApp}>
@@ -876,36 +961,11 @@ export function SongsPage() {
                 <strong>导入歌曲</strong>
                 <small>上传音频后自动匹配歌词和封面</small>
               </div>
-              <div className={styles.importFields}>
-                <input
-                  aria-label="导入歌名"
-                  placeholder="自动识别歌名"
-                  value={importTitle}
-                  onChange={(event) => setImportTitle(event.target.value)}
-                />
-                <input
-                  aria-label="导入歌手"
-                  placeholder="自动识别歌手"
-                  value={importArtist}
-                  onChange={(event) => setImportArtist(event.target.value)}
-                />
-              </div>
-              {pendingLyricLines.length > 0 ? (
-                <div className={styles.pendingImport}>
-                  <CheckCircle2 size={15} />
-                  <span>{pendingLyricFileName} · {pendingLyricLines.length} 行，等待音频</span>
-                </div>
-              ) : null}
               <div className={styles.importActions}>
                 <label>
                   <Upload size={16} />
-                  {importing ? '保存中' : '音频'}
-                  <input hidden type="file" accept="audio/*,video/*,.ncm" disabled={importing} onChange={(event) => void handleMediaUpload(event)} />
-                </label>
-                <label>
-                  <Captions size={16} />
-                  歌词
-                  <input hidden type="file" accept=".lrc,.srt,.vtt,.txt" onChange={(event) => void handleLyricsUpload(event)} />
+                  {importing ? '导入中' : '选择音频'}
+                  <input hidden multiple type="file" accept="audio/*,video/*,.ncm" disabled={importing} onChange={(event) => void handleMediaUpload(event)} />
                 </label>
               </div>
             </div>
@@ -941,7 +1001,9 @@ export function SongsPage() {
           </header>
 
           <section className={styles.albumHero}>
-            <img className={styles.heroCover} src={displayCover} alt={activeSong.title} />
+            <div className={styles.vinylDisc}>
+              <img className={styles.heroCover} src={displayCover} alt={activeSong.title} />
+            </div>
             <div className={styles.heroMeta}>
               <div className={styles.statusBadges}>
                 <span className={canUseNativeAudio || activeSong.playbackProvider === 'speech' ? styles.statusReady : styles.statusMuted}>
@@ -994,7 +1056,6 @@ export function SongsPage() {
                 </>
               ) : (
                 <>
-                  <button className={styles.tabActive}>同步歌词</button>
                   <button className={showKana ? styles.tabActive : ''} onClick={() => setShowKana((value) => !value)}>
                     假名
                   </button>
@@ -1011,43 +1072,7 @@ export function SongsPage() {
               )}
             </div>
 
-            {activeLine ? (
-              <div className={styles.focusLyrics}>
-                {previousLine ? (
-                  <button className={styles.sideLyric} onClick={() => seekToLine(previousLine)}>
-                    <strong>{previousLine.ja}</strong>
-                    {showZh ? <small>{previousLine.zh}</small> : null}
-                  </button>
-                ) : null}
-
-                <div className={styles.activeLyric}>
-                  <span>{getSectionLabel(activeLine.section)}</span>
-                  <strong>{activeLine.ja}</strong>
-                  {showZh ? <p>{activeLine.zh}</p> : null}
-                  {immersiveMode && analysis ? renderTokenRail(analysis.tokens, beginnerMode) : null}
-                  {showKana ? <small>{activeLine.kana}</small> : null}
-                  {showRomaji ? <small>{activeLine.romaji}</small> : null}
-                  <div className={styles.lineProgress}>
-                    <div style={{ width: `${lineProgressRatio * 100}%` }} />
-                  </div>
-                </div>
-
-                {nextLine ? (
-                  <button className={styles.sideLyric} onClick={() => seekToLine(nextLine)}>
-                    <strong>{nextLine.ja}</strong>
-                    {showZh ? <small>{nextLine.zh}</small> : null}
-                  </button>
-                ) : null}
-              </div>
-            ) : (
-              <div className={styles.emptyLyrics}>
-                {loadingCurrentSong ? <RefreshCw size={24} /> : <Headphones size={24} />}
-                <strong>{loadingCurrentSong ? '正在处理本地资源' : loadError || '等待双语歌词'}</strong>
-                <span>选择一首本地歌后上传 LRC/SRT/VTT，歌词会和音频一起保存。</span>
-              </div>
-            )}
-
-            {immersiveMode ? (
+            {activeSong.lyricLines.length > 0 ? (
               <div className={styles.lyricQueue}>
                 {activeSong.lyricLines.map((line) => {
                   const active = activeLine?.id === line.id
@@ -1062,58 +1087,25 @@ export function SongsPage() {
                       <span>{formatTime(line.startMs)}</span>
                       <strong>{line.ja}</strong>
                       {showZh ? <small>{line.zh}</small> : null}
+                      {showKana ? <small>{line.kana}</small> : null}
+                      {showRomaji ? <small>{line.romaji}</small> : null}
                     </button>
                   )
                 })}
               </div>
-            ) : null}
+            ) : (
+              <div className={styles.emptyLyrics}>
+                {loadingCurrentSong ? <RefreshCw size={24} /> : <Headphones size={24} />}
+                <strong>{loadingCurrentSong ? '正在处理本地资源' : loadError || '等待双语歌词'}</strong>
+                <span>导入音频后会自动匹配歌词和封面。</span>
+              </div>
+            )}
 
             {activeLine && immersiveHintText ? (
               <div className={styles.immersiveStudyHint}>
                 <strong>{immersiveHintTitle}</strong>
                 <span>{immersiveHintText}</span>
               </div>
-            ) : null}
-
-            {!immersiveMode ? (
-              <>
-                <aside className={styles.homeAssistPanel}>
-                  <article>
-                    <span>学习进度</span>
-                    <strong>{learnedLineCount}/{totalLineCount || 0}</strong>
-                    <div className={styles.homeProgress}>
-                      <i style={{ width: `${learnedPercent}%` }} />
-                    </div>
-                  </article>
-                  <article>
-                    <span>资源状态</span>
-                    <strong>{activeAsset ? '已就绪' : '可播放'}</strong>
-                    <small>{resourceLabel}</small>
-                  </article>
-                  <button type="button" onClick={() => setImmersiveMode(true)}>
-                    <Maximize2 size={16} />
-                    进入沉浸学习
-                  </button>
-                </aside>
-
-                <section className={styles.homeShelf}>
-                  <header>
-                    <div>
-                      <strong>推荐歌曲</strong>
-                      <span>继续听这些内容</span>
-                    </div>
-                  </header>
-                  <div className={styles.homeShelfList}>
-                    {shelfSongs.map((song) => (
-                      <button key={song.id} type="button" onClick={() => handleSelectSong(song)} className={song.id === activeSong.id ? styles.homeShelfActive : ''}>
-                        <img src={song.artworkUrl || song.cover} alt="" />
-                        <strong>{song.title}</strong>
-                        <span>{getArtistLabel(song)}</span>
-                      </button>
-                    ))}
-                  </div>
-                </section>
-              </>
             ) : null}
           </section>
         </main>
@@ -1160,7 +1152,7 @@ export function SongsPage() {
           <button className={styles.barPlay} onClick={() => void handlePlayPause()}>
             {playing ? <Pause size={22} /> : <Play size={22} />}
           </button>
-          <button aria-label="发音" onClick={() => activeLine && speakJapanese(activeLine.ja)}>
+          <button aria-label="发音" onClick={() => activeLine && playSpeechPreview(activeLine.ja)}>
             <Volume2 size={18} />
           </button>
         </div>
