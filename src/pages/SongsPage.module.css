@@ -1812,16 +1812,6 @@
   background: transparent;
 }
 
-.pageImmersive .lyricStage::before {
-  position: absolute;
-  inset: 3.2rem -5.4rem 4.8rem -5.2rem;
-  z-index: -1;
-  content: '';
-  background: radial-gradient(ellipse at 52% 48%, rgba(9, 10, 14, 0.38) 0%, rgba(9, 10, 14, 0.28) 42%, rgba(9, 10, 14, 0.12) 62%, transparent 78%);
-  filter: blur(18px);
-  pointer-events: none;
-}
-
 .pageImmersive .lyricTabs {
   display: inline-flex;
   width: fit-content;
@@ -1873,11 +1863,10 @@
 }
 
 .pageImmersive .lyricRow {
-  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0.26rem;
-  padding: 0.28rem 0 0.28rem 1.1rem;
+  padding: 0.28rem 0;
   border: 0;
   background: transparent;
   color: rgba(255, 250, 244, 0.28);
@@ -1887,23 +1876,6 @@
   transform: translateX(0);
   transition:
     color 180ms ease,
-    opacity 180ms ease,
-    transform 180ms ease;
-}
-
-.pageImmersive .lyricRow::before {
-  position: absolute;
-  top: 0.32rem;
-  bottom: 0.32rem;
-  left: 0;
-  width: 3px;
-  border-radius: 999px;
-  content: '';
-  background: #ff6a55;
-  opacity: 0;
-  box-shadow: 0 0 18px rgba(255, 106, 85, 0.4);
-  transform: scaleY(0.72);
-  transition:
     opacity 180ms ease,
     transform 180ms ease;
 }
@@ -1942,12 +1914,7 @@
 .pageImmersive .lyricRowActive {
   color: #fffaf4;
   opacity: 1;
-  transform: translateX(0.35rem);
-}
-
-.pageImmersive .lyricRowActive::before {
-  opacity: 1;
-  transform: scaleY(1);
+  transform: none;
 }
 
 .pageImmersive .lyricRowActive .lyricTextStack strong {
@@ -1961,6 +1928,33 @@
 .pageImmersive .lyricRowActive .lyricTextStack small {
   color: rgba(255, 250, 244, 0.94);
   font-size: clamp(1.1rem, 1.65vw, 1.45rem);
+}
+
+.lyricWordLine {
+  display: inline;
+}
+
+.lyricWord {
+  display: inline;
+  border-radius: 0.28em;
+  padding: 0 0.035em;
+  transition:
+    background 140ms ease,
+    color 140ms ease,
+    text-shadow 140ms ease;
+}
+
+.lyricWordActive {
+  background: linear-gradient(180deg, transparent 52%, rgba(255, 89, 68, 0.18) 52%);
+  color: #12211d;
+}
+
+.pageImmersive .lyricWordActive {
+  background: linear-gradient(180deg, transparent 52%, rgba(255, 250, 244, 0.18) 52%);
+  color: #fffdf8;
+  text-shadow:
+    0 0 18px rgba(255, 250, 244, 0.2),
+    0 10px 34px rgba(0, 0, 0, 0.36);
 }
 
 .pageImmersive .learningDrawerButton {

@@ -1,6 +1,7 @@
 const SEARCH_URL = 'https://music.163.com/api/search/get'
 const DETAIL_URL = 'https://music.163.com/api/song/detail/'
 const LYRIC_URL = 'https://music.163.com/api/song/lyric'
+const LYRIC_NEW_URL = 'https://music.163.com/api/song/lyric/v1'
 
 const NETEASE_HEADERS = {
   'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -158,18 +159,36 @@ async function fetchSongDetails(ids) {
 }
 
 async function fetchLyrics(id) {
-  const url = `${LYRIC_URL}?os=pc&id=${encodeURIComponent(id)}&lv=-1&kv=-1&tv=-1`
-  const body = await fetchJson(url, {
-    method: 'GET',
-    headers: {
-      'content-type': undefined,
-    },
-  })
+  const legacyUrl = `${LYRIC_URL}?os=pc&id=${encodeURIComponent(id)}&lv=-1&kv=-1&tv=-1`
+  const modernUrl = `${LYRIC_NEW_URL}?id=${encodeURIComponent(id)}&cp=false&tv=0&lv=0&rv=0&kv=0&yv=0&ytv=0&yrv=0`
+  const [legacyResult, modernResult] = await Promise.allSettled([
+    fetchJson(legacyUrl, {
+      method: 'GET',
+      headers: {
+        'content-type': undefined,
+      },
+    }),
+    fetchJson(modernUrl, {
+      method: 'GET',
+      headers: {
+        'content-type': undefined,
+      },
+    }),
+  ])
+
+  if (legacyResult.status === 'rejected' && modernResult.status === 'rejected') {
+    throw legacyResult.reason
+  }
+
+  const legacyBody = legacyResult.status === 'fulfilled' ? legacyResult.value : {}
+  const modernBody = modernResult.status === 'fulfilled' ? modernResult.value : {}
 
   return {
-    lrc: readString(body?.lrc?.lyric, 500_000),
-    tlyric: readString(body?.tlyric?.lyric, 500_000),
-    romalrc: readString(body?.romalrc?.lyric, 500_000),
+    lrc: readString(legacyBody?.lrc?.lyric || modernBody?.lrc?.lyric, 500_000),
+    tlyric: readString(legacyBody?.tlyric?.lyric || modernBody?.tlyric?.lyric, 500_000),
+    romalrc: readString(legacyBody?.romalrc?.lyric || modernBody?.romalrc?.lyric, 500_000),
+    yrc: readString(modernBody?.yrc?.lyric || modernBody?.yrc?.yrcContent, 500_000),
+    klyric: readString(modernBody?.klyric?.lyric, 500_000),
   }
 }
 
@@ -206,6 +225,8 @@ function toMatchRecord(song, detail, lyrics, score) {
     lrc: lyrics.lrc,
     tlyric: lyrics.tlyric,
     romalrc: lyrics.romalrc,
+    yrc: lyrics.yrc,
+    klyric: lyrics.klyric,
   }
 }
 
@@ -247,7 +268,7 @@ async function findBestMatch(request) {
   return toMatchRecord(
     fallback.song,
     detailMap.get(String(fallback.song.id)),
-    { lrc: '', tlyric: '', romalrc: '' },
+    { lrc: '', tlyric: '', romalrc: '', yrc: '', klyric: '' },
     fallback.score,
   )
 }

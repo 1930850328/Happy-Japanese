@@ -1,5 +1,5 @@
 import { buildStudyDataFromCues } from './subtitles'
-import type { LyricLine, TranscriptSegment } from '../types'
+import type { LyricLine, LyricWordTiming, TranscriptSegment } from '../types'
 
 const NETEASE_MATCH_ENDPOINT = '/api/netease-song-match'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
@@ -21,6 +21,8 @@ interface NeteaseMatchRecord {
   lrc: string
   tlyric?: string
   romalrc?: string
+  yrc?: string
+  klyric?: string
 }
 
 interface NeteaseMatchResponse {
@@ -31,6 +33,13 @@ interface NeteaseMatchResponse {
 interface ParsedLrcLine {
   startMs: number
   text: string
+}
+
+interface ParsedYrcLine {
+  startMs: number
+  endMs: number
+  text: string
+  wordTimings: LyricWordTiming[]
 }
 
 export interface MatchedNeteaseSong {
@@ -133,6 +142,75 @@ function parseLrc(text: string) {
   return lines.sort((left, right) => left.startMs - right.startMs)
 }
 
+function stripYrcText(value: string) {
+  return value
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, ' ')
+}
+
+function resolveYrcWordStartMs(lineStartMs: number, lineEndMs: number, value: number) {
+  const looksAbsolute = value >= lineStartMs - 500 && value <= lineEndMs + 500
+  return looksAbsolute ? value : lineStartMs + value
+}
+
+function parseYrc(text: string) {
+  const lines: ParsedYrcLine[] = []
+  const linePattern = /^\[(\d+),(\d+)\](.*)$/
+  const wordPattern = /\((\d+),(\d+)(?:,\d+)?\)([^()]*)/g
+
+  for (const rawLine of text.split(/\r?\n/)) {
+    const lineMatch = rawLine.match(linePattern)
+    if (!lineMatch) {
+      continue
+    }
+
+    const lineStartMs = Number(lineMatch[1])
+    const lineDurationMs = Number(lineMatch[2])
+    if (!Number.isFinite(lineStartMs) || !Number.isFinite(lineDurationMs)) {
+      continue
+    }
+
+    const lineEndMs = Math.max(lineStartMs + 1200, lineStartMs + lineDurationMs)
+    const wordTimings: LyricWordTiming[] = []
+    let textValue = ''
+    wordPattern.lastIndex = 0
+
+    for (const wordMatch of lineMatch[3].matchAll(wordPattern)) {
+      const rawStartMs = Number(wordMatch[1])
+      const rawDurationMs = Number(wordMatch[2])
+      const wordText = stripYrcText(wordMatch[3])
+      if (!Number.isFinite(rawStartMs) || !Number.isFinite(rawDurationMs) || !wordText) {
+        continue
+      }
+
+      const startMs = resolveYrcWordStartMs(lineStartMs, lineEndMs, rawStartMs)
+      const endMs = Math.max(startMs + 60, Math.min(lineEndMs, startMs + Math.max(60, rawDurationMs)))
+      const cleanText = wordText.trim() ? wordText : ' '
+      textValue += cleanText
+      wordTimings.push({
+        id: `yrc-${lines.length + 1}-${wordTimings.length + 1}`,
+        text: cleanText,
+        startMs,
+        endMs,
+      })
+    }
+
+    const cleanLineText = textValue.replace(/\s+/g, ' ').trim()
+    if (!cleanLineText || wordTimings.length === 0) {
+      continue
+    }
+
+    lines.push({
+      startMs: lineStartMs,
+      endMs: lineEndMs,
+      text: cleanLineText,
+      wordTimings,
+    })
+  }
+
+  return lines.sort((left, right) => left.startMs - right.startMs)
+}
+
 function findTranslatedLine(startMs: number, translatedLines: ParsedLrcLine[]) {
   let bestLine: ParsedLrcLine | null = null
   let bestGap = Number.POSITIVE_INFINITY
@@ -161,16 +239,48 @@ function segmentToLyricLine(segment: TranscriptSegment, index: number): LyricLin
   }
 }
 
+function findYrcLine(startMs: number, yrcLines: ParsedYrcLine[]) {
+  let bestLine: ParsedYrcLine | null = null
+  let bestGap = Number.POSITIVE_INFINITY
+
+  for (const line of yrcLines) {
+    const gap = Math.abs(line.startMs - startMs)
+    if (gap < bestGap) {
+      bestLine = line
+      bestGap = gap
+    }
+  }
+
+  return bestLine && bestGap <= 900 ? bestLine : null
+}
+
+function attachYrcWordTimings(line: LyricLine, yrcLine: ParsedYrcLine | null) {
+  if (!yrcLine) {
+    return {
+      ...line,
+      timingQuality: 'line' as const,
+    }
+  }
+
+  return {
+    ...line,
+    wordTimings: yrcLine.wordTimings,
+    timingQuality: 'word' as const,
+  }
+}
+
 async function buildLyricLinesFromNetease(match: NeteaseMatchRecord) {
   const rawLines = parseLrc(match.lrc)
-  if (rawLines.length === 0) {
+  const yrcLines = match.yrc ? parseYrc(match.yrc) : []
+  const sourceLines = rawLines.length > 0 ? rawLines : yrcLines
+  if (sourceLines.length === 0) {
     return []
   }
 
   const translatedLines = match.tlyric ? parseLrc(match.tlyric) : []
-  const cues = rawLines.map((line, index, all) => {
+  const cues = sourceLines.map((line, index, all) => {
     const nextStartMs = all[index + 1]?.startMs
-    const fallbackEndMs = line.startMs + 4200
+    const fallbackEndMs = 'endMs' in line ? line.endMs : line.startMs + 4200
 
     return {
       startMs: line.startMs,
@@ -184,11 +294,15 @@ async function buildLyricLinesFromNetease(match: NeteaseMatchRecord) {
   const studyData = await buildStudyDataFromCues(cues, {
     includeKnowledge: false,
   })
-  return studyData.segments.map(segmentToLyricLine)
+  return studyData.segments.map((segment, index) => {
+    const line = segmentToLyricLine(segment, index)
+    return attachYrcWordTimings(line, findYrcLine(segment.startMs, yrcLines))
+  })
 }
 
 function createRawLyricText(match: NeteaseMatchRecord) {
   const blocks = [
+    match.yrc?.trim() ? `[yrc]\n${match.yrc.trim()}` : '',
     match.lrc.trim(),
     match.tlyric?.trim() ? `[translation]\n${match.tlyric.trim()}` : '',
     match.romalrc?.trim() ? `[romaji]\n${match.romalrc.trim()}` : '',

@@ -136,6 +136,15 @@ export type SongLyricQuality =
 
 export type LyricSection = 'intro' | 'verse' | 'chorus' | 'bridge' | 'outro'
 
+export type LyricTimingQuality = 'word' | 'line-estimated' | 'line'
+
+export interface LyricWordTiming {
+  id: string
+  text: string
+  startMs: number
+  endMs: number
+}
+
 export interface LyricLine {
   id: string
   startMs: number
@@ -146,6 +155,8 @@ export interface LyricLine {
   zh: string
   section?: LyricSection
   focusTermIds: string[]
+  wordTimings?: LyricWordTiming[]
+  timingQuality?: LyricTimingQuality
 }
 
 export interface SongLesson {

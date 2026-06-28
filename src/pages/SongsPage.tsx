@@ -44,7 +44,15 @@ import {
 import { speakJapanese } from '../lib/speech'
 import { analyzeJapaneseText, hasReliableMeaning } from '../lib/textAnalysis'
 import { useAppStore } from '../store/useAppStore'
-import type { LyricLine, LyricProvider, SentenceAnalysis, SongLesson, SongLyricQuality, TokenAnalysis } from '../types'
+import type {
+  LyricLine,
+  LyricProvider,
+  LyricWordTiming,
+  SentenceAnalysis,
+  SongLesson,
+  SongLyricQuality,
+  TokenAnalysis,
+} from '../types'
 import styles from './SongsPage.module.css'
 
 const playbackRates = [0.75, 1, 1.25]
@@ -220,7 +228,11 @@ function stripFileExtension(fileName: string) {
 }
 
 function createGeneratedLyricFileName(title: string) {
-  const safeTitle = title.replace(/[<>:"/\\|?*\u0000-\u001f]/g, '').trim().slice(0, 80)
+  const safeTitle = Array.from(title.replace(/[<>:"/\\|?*]/g, ''))
+    .filter((char) => char.charCodeAt(0) > 31)
+    .join('')
+    .trim()
+    .slice(0, 80)
   return `${safeTitle || 'lyrics'}.netease.lrc`
 }
 
@@ -332,6 +344,179 @@ function hasDisplayableMeaning(token: TokenAnalysis) {
   return Boolean(resolveTokenMeaning(token))
 }
 
+interface LyricWordPart {
+  id: string
+  text: string
+  tokenIndex?: number
+  startMs?: number
+  endMs?: number
+}
+
+interface TimedTextRange {
+  startOffset: number
+  endOffset: number
+  startMs: number
+  endMs: number
+}
+
+function createFallbackLyricWordParts(text: string) {
+  const parts: LyricWordPart[] = []
+  const tokenPattern = /[\u3040-\u30ff\u3400-\u9fff々〆〤ー]+|[A-Za-z0-9]+|[^\s]/gu
+  let cursor = 0
+  let tokenIndex = 0
+
+  for (const match of text.matchAll(tokenPattern)) {
+    const value = match[0]
+    const index = match.index ?? cursor
+    if (index > cursor) {
+      parts.push({ id: `gap-${parts.length}`, text: text.slice(cursor, index) })
+    }
+    parts.push({ id: `token-${tokenIndex}`, text: value, tokenIndex })
+    tokenIndex += 1
+    cursor = index + value.length
+  }
+
+  if (cursor < text.length) {
+    parts.push({ id: `tail-${parts.length}`, text: text.slice(cursor) })
+  }
+
+  return parts.length > 0 ? parts : [{ id: 'text', text }]
+}
+
+function buildTimedTextRanges(text: string, timings: LyricWordTiming[] = []) {
+  const ranges: TimedTextRange[] = []
+  let cursor = 0
+
+  timings.forEach((timing) => {
+    const value = timing.text
+    if (!value || timing.endMs <= timing.startMs) return
+
+    const start = text.indexOf(value, cursor)
+    const startOffset = start >= 0 ? start : cursor
+    const endOffset = Math.min(text.length, startOffset + value.length)
+    if (endOffset <= startOffset) return
+
+    ranges.push({
+      startOffset,
+      endOffset,
+      startMs: timing.startMs,
+      endMs: timing.endMs,
+    })
+    cursor = endOffset
+  })
+
+  return ranges
+}
+
+function getTimingForTextRange(startOffset: number, endOffset: number, ranges: TimedTextRange[]) {
+  const overlapping = ranges.filter((range) => range.startOffset < endOffset && range.endOffset > startOffset)
+  if (overlapping.length === 0) return {}
+
+  return {
+    startMs: Math.min(...overlapping.map((range) => range.startMs)),
+    endMs: Math.max(...overlapping.map((range) => range.endMs)),
+  }
+}
+
+function buildTimingOnlyLyricWordParts(text: string, timings: LyricWordTiming[]) {
+  const parts: LyricWordPart[] = []
+  const ranges = buildTimedTextRanges(text, timings)
+  let cursor = 0
+
+  timings.forEach((timing, index) => {
+    const range = ranges[index]
+    if (!range) return
+
+    if (range.startOffset > cursor) {
+      parts.push({ id: `gap-${parts.length}`, text: text.slice(cursor, range.startOffset) })
+    }
+
+    parts.push({
+      id: `timed-${index}-${range.startOffset}`,
+      text: text.slice(range.startOffset, range.endOffset),
+      tokenIndex: index,
+      startMs: timing.startMs,
+      endMs: timing.endMs,
+    })
+    cursor = range.endOffset
+  })
+
+  if (cursor < text.length) {
+    parts.push({ id: `tail-${parts.length}`, text: text.slice(cursor) })
+  }
+
+  return parts.length > 0 ? parts : createFallbackLyricWordParts(text)
+}
+
+function buildLyricWordParts(text: string, tokens: TokenAnalysis[], timings: LyricWordTiming[] = []) {
+  if (tokens.length === 0 && timings.length > 0) return buildTimingOnlyLyricWordParts(text, timings)
+  if (tokens.length === 0) return createFallbackLyricWordParts(text)
+
+  const parts: LyricWordPart[] = []
+  const timedRanges = buildTimedTextRanges(text, timings)
+  let cursor = 0
+  let tokenIndex = 0
+
+  tokens.forEach((token) => {
+    const surface = token.surface.trim()
+    if (!surface) return
+
+    const start = text.indexOf(surface, cursor)
+    if (start < 0) return
+
+    if (start > cursor) {
+      parts.push({ id: `gap-${parts.length}`, text: text.slice(cursor, start) })
+    }
+
+    parts.push({
+      id: `token-${tokenIndex}-${start}`,
+      text: text.slice(start, start + surface.length),
+      tokenIndex,
+      ...getTimingForTextRange(start, start + surface.length, timedRanges),
+    })
+    tokenIndex += 1
+    cursor = start + surface.length
+  })
+
+  if (cursor < text.length) {
+    parts.push({ id: `tail-${parts.length}`, text: text.slice(cursor) })
+  }
+
+  return tokenIndex > 0 ? parts : createFallbackLyricWordParts(text)
+}
+
+function getActiveLyricWordIndex(line: LyricLine | null, currentMs: number, parts: LyricWordPart[]) {
+  const timedParts = parts.filter((part) => (
+    part.tokenIndex !== undefined &&
+    typeof part.startMs === 'number' &&
+    typeof part.endMs === 'number' &&
+    part.endMs > part.startMs
+  ))
+
+  if (line && timedParts.length > 0) {
+    const currentPart = timedParts.find((part) => currentMs >= part.startMs! && currentMs < part.endMs!)
+    if (currentPart?.tokenIndex !== undefined) return currentPart.tokenIndex
+
+    const previousPart = timedParts
+      .slice()
+      .reverse()
+      .find((part) => currentMs >= part.endMs! && currentMs < line.endMs)
+    if (previousPart?.tokenIndex !== undefined) return previousPart.tokenIndex
+
+    const nextPart = timedParts.find((part) => currentMs < part.startMs!)
+    if (nextPart?.tokenIndex !== undefined) return nextPart.tokenIndex
+
+    return -1
+  }
+
+  const wordCount = parts.reduce((count, part) => (part.tokenIndex === undefined ? count : count + 1), 0)
+  if (!line || wordCount === 0) return -1
+
+  const durationMs = Math.max(1200, line.endMs - line.startMs)
+  const ratio = Math.min(0.999, Math.max(0, (currentMs - line.startMs) / durationMs))
+  return Math.min(wordCount - 1, Math.floor(ratio * wordCount))
+}
+
 function isBeginnerToken(token: TokenAnalysis) {
   return (
     beginnerParticles.has(token.surface) ||
@@ -437,6 +622,15 @@ export function SongsPage() {
   const activeLine = lineByTime ?? selectedLine ?? activeSong?.lyricLines[0] ?? null
   const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
+  const activeLyricWordParts = useMemo(() => {
+    if (!activeLine) return []
+    const tokens = analysis?.input === activeLine.ja ? analysis.tokens : []
+    return buildLyricWordParts(activeLine.ja, tokens, activeLine.wordTimings)
+  }, [activeLine, analysis])
+  const activeLyricWordIndex = useMemo(
+    () => getActiveLyricWordIndex(activeLine, currentMs, activeLyricWordParts),
+    [activeLine, activeLyricWordParts, currentMs],
+  )
 
   const clearSpeechPlaybackTimer = () => {
     if (speechPlaybackTimerRef.current === null) return
@@ -535,7 +729,6 @@ export function SongsPage() {
     return () => {
       clearSpeechPlaybackTimer()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -873,6 +1066,27 @@ export function SongsPage() {
     setSearchParams(nextParams, { replace: true })
   }
 
+  const renderLyricJapanese = (line: LyricLine, active: boolean) => {
+    if (!active || activeLyricWordParts.length === 0) return line.ja
+
+    return (
+      <span className={styles.lyricWordLine}>
+        {activeLyricWordParts.map((part) => {
+          if (part.tokenIndex === undefined) {
+            return <span key={part.id}>{part.text}</span>
+          }
+
+          const isCurrentWord = part.tokenIndex === activeLyricWordIndex
+          return (
+            <span key={part.id} className={`${styles.lyricWord} ${isCurrentWord ? styles.lyricWordActive : ''}`}>
+              {part.text}
+            </span>
+          )
+        })}
+      </span>
+    )
+  }
+
   if (!activeSong) return null
 
   const loadingCurrentSong = assetsLoading || importing
@@ -1076,7 +1290,7 @@ export function SongsPage() {
                     >
                       <span className={styles.lyricTime}>{formatTime(line.startMs)}</span>
                       <span className={styles.lyricTextStack}>
-                        <strong>{line.ja}</strong>
+                        <strong>{renderLyricJapanese(line, active)}</strong>
                         {showZh ? <small>{line.zh}</small> : null}
                         {showKana ? <small>{line.kana}</small> : null}
                         {showRomaji ? <small>{line.romaji}</small> : null}

@@ -34,6 +34,32 @@ function readString(value, maxLength, fallback = '') {
   return String(value ?? fallback).trim().slice(0, maxLength)
 }
 
+function readLyricWordTimings(value) {
+  if (!Array.isArray(value)) {
+    return undefined
+  }
+
+  const timings = value
+    .map((word, index) => {
+      const startMs = Math.max(0, Math.round(Number(word?.startMs ?? 0)))
+      const endMs = Math.max(0, Math.round(Number(word?.endMs ?? 0)))
+      return {
+        id: readString(word?.id, 100, `word-${index + 1}`),
+        text: readString(word?.text, 200),
+        startMs,
+        endMs,
+      }
+    })
+    .filter((word) => word.text && word.endMs > word.startMs)
+
+  return timings.length > 0 ? timings : undefined
+}
+
+function readLyricTimingQuality(value) {
+  const quality = readString(value, 40)
+  return ['word', 'line-estimated', 'line'].includes(quality) ? quality : undefined
+}
+
 function readLyricLines(value) {
   if (!Array.isArray(value)) {
     return []
@@ -52,6 +78,8 @@ function readLyricLines(value) {
       focusTermIds: Array.isArray(line?.focusTermIds)
         ? line.focusTermIds.map((item) => readString(item, 80)).filter(Boolean)
         : [],
+      wordTimings: readLyricWordTimings(line?.wordTimings),
+      timingQuality: readLyricTimingQuality(line?.timingQuality),
     }))
     .filter((line) => line.ja)
 }
