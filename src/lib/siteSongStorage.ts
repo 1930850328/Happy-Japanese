@@ -1,8 +1,8 @@
 import { upload as uploadBlob } from '@vercel/blob/client'
 
 import type { LyricLine, LyricProvider, SongLyricQuality, SongStudyIndex } from '../types'
+import { getCloudProfileId } from './cloudProfile'
 
-const PROFILE_STORAGE_KEY = 'yuru-nihongo-cloud-profile-id'
 const SONG_UPLOAD_ENDPOINT = '/api/song-upload'
 const SONG_BLOB_UPLOAD_ENDPOINT = '/api/song-blob-upload'
 const SONG_SERVER_UPLOAD_ENDPOINT = '/api/song-upload-server'
@@ -79,25 +79,6 @@ function isBrowser() {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 }
 
-function sanitizeProfileId(value: string) {
-  return value.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '').slice(0, 64)
-}
-
-function getProfileId() {
-  if (!isBrowser()) {
-    return 'server'
-  }
-
-  const current = sanitizeProfileId(window.localStorage.getItem(PROFILE_STORAGE_KEY) || '')
-  if (current) {
-    return current
-  }
-
-  const next = sanitizeProfileId(crypto.randomUUID())
-  window.localStorage.setItem(PROFILE_STORAGE_KEY, next)
-  return next
-}
-
 function getApiEndpoint(pathname: string) {
   if (!isBrowser()) {
     return pathname
@@ -138,7 +119,7 @@ async function createUploadTicket({
   audioFile?: File
   lyricsFile?: File
 }) {
-  const profileId = getProfileId()
+  const profileId = getCloudProfileId()
   const response = await fetch(getApiEndpoint(SONG_UPLOAD_ENDPOINT), {
     method: 'POST',
     headers: {
@@ -190,7 +171,7 @@ function uploadFileToSignedUrl(ticket: UploadTicket, file: File) {
 
 async function uploadFileThroughServer(ticket: UploadTicket, file: File) {
   const params = new URLSearchParams({
-    profileId: getProfileId(),
+    profileId: getCloudProfileId(),
     objectKey: ticket.objectKey,
     contentType: ticket.contentType || file.type || 'application/octet-stream',
   })
@@ -206,7 +187,7 @@ async function uploadFileThroughServer(ticket: UploadTicket, file: File) {
 }
 
 async function uploadFileThroughServerChunks(ticket: UploadTicket, file: File) {
-  const profileId = getProfileId()
+  const profileId = getCloudProfileId()
   const contentType = ticket.contentType || file.type || 'application/octet-stream'
   const chunks: Array<{ objectKey: string; size: number }> = []
   const totalChunks = Math.ceil(file.size / SERVER_UPLOAD_CHUNK_SIZE)
@@ -339,7 +320,7 @@ async function uploadSongFiles(ticket: UploadTicketResponse, audioFile?: File, l
 }
 
 async function saveSongAsset(song: Omit<SiteSongAsset, 'sourceUrl'>) {
-  const profileId = getProfileId()
+  const profileId = getCloudProfileId()
   const response = await fetch(getApiEndpoint(SONG_ASSETS_ENDPOINT), {
     method: 'PUT',
     headers: {
@@ -360,7 +341,7 @@ async function saveSongAsset(song: Omit<SiteSongAsset, 'sourceUrl'>) {
 }
 
 export async function listSiteSongAssets() {
-  const profileId = getProfileId()
+  const profileId = getCloudProfileId()
   const response = await fetch(
     `${getApiEndpoint(SONG_ASSETS_ENDPOINT)}?profileId=${encodeURIComponent(profileId)}`,
     {
@@ -463,7 +444,7 @@ export async function updateSiteSongStudyIndex({
 }
 
 export async function deleteSiteSongAsset(songId: string) {
-  const profileId = getProfileId()
+  const profileId = getCloudProfileId()
   const response = await fetch(getApiEndpoint(SONG_ASSETS_ENDPOINT), {
     method: 'DELETE',
     headers: {

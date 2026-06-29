@@ -10,10 +10,10 @@ import type {
   StudyEvent,
   VocabProgress,
 } from '../types'
+import { getCloudProfileId } from './cloudProfile'
 
 const DB_NAME = 'yuru-nihongo-db'
 const DB_VERSION = 2
-const PROFILE_STORAGE_KEY = 'yuru-nihongo-cloud-profile-id'
 const STATE_ENDPOINT = '/api/app-state'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 const LOCAL_VIDEO_KEY_PREFIX = 'local-video:'
@@ -67,25 +67,6 @@ const MAX_REMOTE_COVER_LENGTH = 160_000
 
 function isBrowser() {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
-}
-
-function sanitizeProfileId(value: string) {
-  return value.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '').slice(0, 64)
-}
-
-function getProfileId() {
-  if (!isBrowser()) {
-    return 'server'
-  }
-
-  const current = sanitizeProfileId(window.localStorage.getItem(PROFILE_STORAGE_KEY) || '')
-  if (current) {
-    return current
-  }
-
-  const next = sanitizeProfileId(crypto.randomUUID())
-  window.localStorage.setItem(PROFILE_STORAGE_KEY, next)
-  return next
 }
 
 function getStateEndpoint() {
@@ -400,7 +381,7 @@ async function ensureStateLoaded() {
   }
 
   loadTask = (async () => {
-    const profileId = getProfileId()
+    const profileId = getCloudProfileId()
     let remote: RemoteAppState | null = null
     try {
       remote = await fetchRemoteState(profileId)
