@@ -25,7 +25,14 @@ import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { NavLink, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
+import { LyricLearningLine } from '../components/songLearning/LyricLearningLine'
 import { songLessons } from '../data/songLessons'
+import {
+  getNextStudyStage,
+  getStudyStageLabel,
+  isOccurrenceFocusedForStage,
+  studyStageOptions,
+} from '../lib/learningStagePolicy'
 import { decodeNcmAudio, isNcmFile } from '../lib/ncmAudio'
 import { type MatchedNeteaseSong, matchNeteaseSongForUpload } from '../lib/neteaseSongProvider'
 import {
@@ -39,66 +46,32 @@ import {
   deleteSiteSongAsset,
   listSiteSongAssets,
   type SiteSongAsset,
+  updateSiteSongStudyIndex,
   uploadSongToSite,
 } from '../lib/siteSongStorage'
 import { speakJapanese } from '../lib/speech'
-import { analyzeJapaneseText, hasReliableMeaning } from '../lib/textAnalysis'
+import {
+  buildSongStudyIndex,
+  getActiveSongStudyPartId,
+  isSongStudyIndexFresh,
+  songKnowledgeToKnowledgePoint,
+} from '../lib/songStudyIndex'
 import { useAppStore } from '../store/useAppStore'
 import type {
   LyricLine,
   LyricProvider,
-  LyricWordTiming,
-  SentenceAnalysis,
+  SongKnowledge,
   SongLesson,
   SongLyricQuality,
-  TokenAnalysis,
+  SongStudyIndex,
+  SongStudyOccurrence,
+  StudyStage,
 } from '../types'
 import styles from './SongsPage.module.css'
 
 const playbackRates = [0.75, 1, 1.25]
 const demoSongs = songLessons.filter((song) => song.sourceType === 'demo')
 const fallbackSongId = demoSongs[0]?.id ?? songLessons[0]?.id ?? ''
-const beginnerParticles = new Map([
-  ['は', '主题'],
-  ['が', '主语'],
-  ['を', '宾语'],
-  ['に', '时间/方向'],
-  ['へ', '方向'],
-  ['で', '地点/方式'],
-  ['と', '和/引用'],
-  ['の', '的'],
-  ['も', '也'],
-  ['から', '从/因为'],
-  ['まで', '到'],
-  ['より', '比'],
-  ['ね', '语气'],
-  ['よ', '提醒'],
-])
-const beginnerWords = new Set([
-  '私',
-  '僕',
-  '君',
-  '今日',
-  '明日',
-  '昨日',
-  '人',
-  '心',
-  '声',
-  '夢',
-  '夜',
-  '朝',
-  '好き',
-  '見る',
-  '聞く',
-  '言う',
-  '行く',
-  '来る',
-  'いる',
-  'ある',
-  'ない',
-  'なる',
-  'する',
-])
 
 function formatTime(ms: number) {
   const totalSeconds = Math.max(0, Math.floor(ms / 1000))
@@ -147,6 +120,7 @@ interface ImportedSongAsset {
   lyricLines: LyricLine[]
   lyricProvider?: LyricProvider
   lyricQuality?: SongLyricQuality
+  studyIndex?: SongStudyIndex
   importedAt: string
   updatedAt: string
   siteAsset?: SiteSongAsset
@@ -166,6 +140,7 @@ function buildImportedSong(asset: ImportedSongAsset): SongLesson {
     difficulty: 'Custom',
     durationMs,
     lyricLines: asset.lyricLines,
+    studyIndex: asset.studyIndex,
     knowledgePoints: [],
     tags: ['本地导入', asset.lyricLines.length > 0 ? '双语歌词' : '等待歌词'],
     description: '本地整首歌曲学习会话。',
@@ -194,6 +169,7 @@ function buildSiteImportedAsset(asset: SiteSongAsset): ImportedSongAsset {
     lyricLines: asset.lyricLines,
     lyricProvider: asset.lyricProvider,
     lyricQuality: asset.lyricQuality,
+    studyIndex: asset.studyIndex,
     importedAt: asset.importedAt,
     updatedAt: asset.updatedAt,
     siteAsset: asset,
@@ -217,6 +193,7 @@ function buildLocalImportedAsset(asset: StoredSongAsset, sourceUrl: string): Imp
     lyricLines: asset.lyricLines,
     lyricProvider: asset.lyricProvider,
     lyricQuality: asset.lyricQuality,
+    studyIndex: asset.studyIndex,
     importedAt: asset.importedAt,
     updatedAt: asset.updatedAt,
     localAsset: asset,
@@ -334,198 +311,6 @@ function readMediaDurationMs(file: File) {
   })
 }
 
-function resolveTokenMeaning(token: TokenAnalysis) {
-  const particle = beginnerParticles.get(token.surface)
-  if (particle) return particle
-  return hasReliableMeaning(token.meaningZh) ? token.meaningZh : null
-}
-
-function hasDisplayableMeaning(token: TokenAnalysis) {
-  return Boolean(resolveTokenMeaning(token))
-}
-
-interface LyricWordPart {
-  id: string
-  text: string
-  tokenIndex?: number
-  startMs?: number
-  endMs?: number
-}
-
-interface TimedTextRange {
-  startOffset: number
-  endOffset: number
-  startMs: number
-  endMs: number
-}
-
-function createFallbackLyricWordParts(text: string) {
-  const parts: LyricWordPart[] = []
-  const tokenPattern = /[\u3040-\u30ff\u3400-\u9fff々〆〤ー]+|[A-Za-z0-9]+|[^\s]/gu
-  let cursor = 0
-  let tokenIndex = 0
-
-  for (const match of text.matchAll(tokenPattern)) {
-    const value = match[0]
-    const index = match.index ?? cursor
-    if (index > cursor) {
-      parts.push({ id: `gap-${parts.length}`, text: text.slice(cursor, index) })
-    }
-    parts.push({ id: `token-${tokenIndex}`, text: value, tokenIndex })
-    tokenIndex += 1
-    cursor = index + value.length
-  }
-
-  if (cursor < text.length) {
-    parts.push({ id: `tail-${parts.length}`, text: text.slice(cursor) })
-  }
-
-  return parts.length > 0 ? parts : [{ id: 'text', text }]
-}
-
-function buildTimedTextRanges(text: string, timings: LyricWordTiming[] = []) {
-  const ranges: TimedTextRange[] = []
-  let cursor = 0
-
-  timings.forEach((timing) => {
-    const value = timing.text
-    if (!value || timing.endMs <= timing.startMs) return
-
-    const start = text.indexOf(value, cursor)
-    const startOffset = start >= 0 ? start : cursor
-    const endOffset = Math.min(text.length, startOffset + value.length)
-    if (endOffset <= startOffset) return
-
-    ranges.push({
-      startOffset,
-      endOffset,
-      startMs: timing.startMs,
-      endMs: timing.endMs,
-    })
-    cursor = endOffset
-  })
-
-  return ranges
-}
-
-function getTimingForTextRange(startOffset: number, endOffset: number, ranges: TimedTextRange[]) {
-  const overlapping = ranges.filter((range) => range.startOffset < endOffset && range.endOffset > startOffset)
-  if (overlapping.length === 0) return {}
-
-  return {
-    startMs: Math.min(...overlapping.map((range) => range.startMs)),
-    endMs: Math.max(...overlapping.map((range) => range.endMs)),
-  }
-}
-
-function buildTimingOnlyLyricWordParts(text: string, timings: LyricWordTiming[]) {
-  const parts: LyricWordPart[] = []
-  const ranges = buildTimedTextRanges(text, timings)
-  let cursor = 0
-
-  timings.forEach((timing, index) => {
-    const range = ranges[index]
-    if (!range) return
-
-    if (range.startOffset > cursor) {
-      parts.push({ id: `gap-${parts.length}`, text: text.slice(cursor, range.startOffset) })
-    }
-
-    parts.push({
-      id: `timed-${index}-${range.startOffset}`,
-      text: text.slice(range.startOffset, range.endOffset),
-      tokenIndex: index,
-      startMs: timing.startMs,
-      endMs: timing.endMs,
-    })
-    cursor = range.endOffset
-  })
-
-  if (cursor < text.length) {
-    parts.push({ id: `tail-${parts.length}`, text: text.slice(cursor) })
-  }
-
-  return parts.length > 0 ? parts : createFallbackLyricWordParts(text)
-}
-
-function buildLyricWordParts(text: string, tokens: TokenAnalysis[], timings: LyricWordTiming[] = []) {
-  if (tokens.length === 0 && timings.length > 0) return buildTimingOnlyLyricWordParts(text, timings)
-  if (tokens.length === 0) return createFallbackLyricWordParts(text)
-
-  const parts: LyricWordPart[] = []
-  const timedRanges = buildTimedTextRanges(text, timings)
-  let cursor = 0
-  let tokenIndex = 0
-
-  tokens.forEach((token) => {
-    const surface = token.surface.trim()
-    if (!surface) return
-
-    const start = text.indexOf(surface, cursor)
-    if (start < 0) return
-
-    if (start > cursor) {
-      parts.push({ id: `gap-${parts.length}`, text: text.slice(cursor, start) })
-    }
-
-    parts.push({
-      id: `token-${tokenIndex}-${start}`,
-      text: text.slice(start, start + surface.length),
-      tokenIndex,
-      ...getTimingForTextRange(start, start + surface.length, timedRanges),
-    })
-    tokenIndex += 1
-    cursor = start + surface.length
-  })
-
-  if (cursor < text.length) {
-    parts.push({ id: `tail-${parts.length}`, text: text.slice(cursor) })
-  }
-
-  return tokenIndex > 0 ? parts : createFallbackLyricWordParts(text)
-}
-
-function getActiveLyricWordIndex(line: LyricLine | null, currentMs: number, parts: LyricWordPart[]) {
-  const timedParts = parts.filter((part) => (
-    part.tokenIndex !== undefined &&
-    typeof part.startMs === 'number' &&
-    typeof part.endMs === 'number' &&
-    part.endMs > part.startMs
-  ))
-
-  if (line && timedParts.length > 0) {
-    const currentPart = timedParts.find((part) => currentMs >= part.startMs! && currentMs < part.endMs!)
-    if (currentPart?.tokenIndex !== undefined) return currentPart.tokenIndex
-
-    const previousPart = timedParts
-      .slice()
-      .reverse()
-      .find((part) => currentMs >= part.endMs! && currentMs < line.endMs)
-    if (previousPart?.tokenIndex !== undefined) return previousPart.tokenIndex
-
-    const nextPart = timedParts.find((part) => currentMs < part.startMs!)
-    if (nextPart?.tokenIndex !== undefined) return nextPart.tokenIndex
-
-    return -1
-  }
-
-  const wordCount = parts.reduce((count, part) => (part.tokenIndex === undefined ? count : count + 1), 0)
-  if (!line || wordCount === 0) return -1
-
-  const durationMs = Math.max(1200, line.endMs - line.startMs)
-  const ratio = Math.min(0.999, Math.max(0, (currentMs - line.startMs) / durationMs))
-  return Math.min(wordCount - 1, Math.floor(ratio * wordCount))
-}
-
-function isBeginnerToken(token: TokenAnalysis) {
-  return (
-    beginnerParticles.has(token.surface) ||
-    beginnerWords.has(token.surface) ||
-    beginnerWords.has(token.base) ||
-    /助詞|助動詞/.test(token.partOfSpeech)
-  )
-}
-
 function getLyricQualityLabel(song: SongLesson) {
   if (song.lyricProvider === 'netease') return '网易云同步歌词'
   if (song.lyricQuality === 'licensed_synced') return '授权同步歌词'
@@ -548,34 +333,14 @@ function getArtistLabel(song: SongLesson) {
   return song.artist
 }
 
-function renderTokenRail(tokens: TokenAnalysis[], beginnerMode: boolean) {
-  const displayTokens = tokens.filter(hasDisplayableMeaning).slice(0, 9)
-  if (displayTokens.length === 0) return null
-
-  return (
-    <div className={styles.tokenRail} aria-label="单词对照">
-      {displayTokens.map((token) => {
-        const beginner = beginnerMode && isBeginnerToken(token)
-        const meaning = resolveTokenMeaning(token)
-        return (
-          <span key={token.id} className={beginner ? styles.tokenRailBeginner : ''}>
-            <strong>{token.surface}</strong>
-            <small>{meaning}</small>
-          </span>
-        )
-      })}
-    </div>
-  )
-}
-
 export function SongsPage() {
-  const notes = useAppStore((state) => state.notes)
   const addSentenceToReview = useAppStore((state) => state.addSentenceToReview)
+  const addKnowledgeToReview = useAppStore((state) => state.addKnowledgeToReview)
   const recordStudyEvent = useAppStore((state) => state.recordStudyEvent)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const activeLyricRowRef = useRef<HTMLButtonElement | null>(null)
+  const activeLyricRowRef = useRef<HTMLDivElement | null>(null)
   const speechPlaybackTimerRef = useRef<number | null>(null)
 
   const immersiveMode = searchParams.get('mode') === 'immersive'
@@ -587,7 +352,7 @@ export function SongsPage() {
   const [currentMs, setCurrentMs] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [lineLoop, setLineLoop] = useState(false)
-  const [beginnerMode, setBeginnerMode] = useState(true)
+  const [studyStage, setStudyStage] = useState<StudyStage>('beginner')
   const [playbackRate, setPlaybackRate] = useState(1)
   const [showKana, setShowKana] = useState(false)
   const [showRomaji, setShowRomaji] = useState(false)
@@ -596,8 +361,8 @@ export function SongsPage() {
   const [assetsLoading, setAssetsLoading] = useState(true)
   const [importing, setImporting] = useState(false)
   const [loadError, setLoadError] = useState('')
-  const [analysis, setAnalysis] = useState<SentenceAnalysis | null>(null)
-  const [, setAnalyzing] = useState(false)
+  const [studyIndexes, setStudyIndexes] = useState<Record<string, SongStudyIndex>>({})
+  const [indexingSongIds, setIndexingSongIds] = useState<Record<string, boolean>>({})
 
   const importedAssets = useMemo(() => {
     const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)
@@ -610,6 +375,16 @@ export function SongsPage() {
   }, [importedAssets])
   const activeSong = songs.find((song) => song.id === activeSongId) ?? songs[0]
   const displayCover = activeSong?.artworkUrl || activeSong?.cover
+  const activeAsset = activeSong ? assetById.get(activeSong.id) : undefined
+  const activeStudyIndex = activeSong
+    ? studyIndexes[activeSong.id] ?? activeSong.studyIndex ?? activeAsset?.studyIndex
+    : undefined
+  const activeStudyLineById = useMemo(() => {
+    return new Map((activeStudyIndex?.lines ?? []).map((line) => [line.lineId, line]))
+  }, [activeStudyIndex])
+  const activeOccurrenceById = useMemo(() => {
+    return new Map((activeStudyIndex?.occurrences ?? []).map((occurrence) => [occurrence.id, occurrence]))
+  }, [activeStudyIndex])
 
   const lineByTime = useMemo(() => {
     return activeSong?.lyricLines.find((line) => currentMs >= line.startMs && currentMs < line.endMs) ?? null
@@ -620,17 +395,28 @@ export function SongsPage() {
   }, [activeSong, selectedLineId])
 
   const activeLine = lineByTime ?? selectedLine ?? activeSong?.lyricLines[0] ?? null
+  const activeStudyLine = activeLine ? activeStudyLineById.get(activeLine.id) : undefined
   const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
-  const activeLyricWordParts = useMemo(() => {
-    if (!activeLine) return []
-    const tokens = analysis?.input === activeLine.ja ? analysis.tokens : []
-    return buildLyricWordParts(activeLine.ja, tokens, activeLine.wordTimings)
-  }, [activeLine, analysis])
-  const activeLyricWordIndex = useMemo(
-    () => getActiveLyricWordIndex(activeLine, currentMs, activeLyricWordParts),
-    [activeLine, activeLyricWordParts, currentMs],
+  const activeStudyPartId = useMemo(
+    () => getActiveSongStudyPartId(activeStudyLine, currentMs),
+    [activeStudyLine, currentMs],
   )
+  const activeKnowledgeItems = useMemo(() => {
+    if (!activeStudyIndex || !activeStudyLine) return []
+
+    const seenKnowledgeIds = new Set<string>()
+    return activeStudyLine.occurrenceIds
+      .map((id) => activeOccurrenceById.get(id))
+      .filter((occurrence): occurrence is SongStudyOccurrence => Boolean(occurrence))
+      .filter((occurrence) => isOccurrenceFocusedForStage(occurrence, activeStudyIndex, studyStage))
+      .map((occurrence) => activeStudyIndex.knowledge[occurrence.knowledgeId])
+      .filter((knowledge): knowledge is SongKnowledge => {
+        if (!knowledge || seenKnowledgeIds.has(knowledge.id)) return false
+        seenKnowledgeIds.add(knowledge.id)
+        return true
+      })
+  }, [activeOccurrenceById, activeStudyIndex, activeStudyLine, studyStage])
 
   const clearSpeechPlaybackTimer = () => {
     if (speechPlaybackTimerRef.current === null) return
@@ -658,6 +444,34 @@ export function SongsPage() {
       setPlaying(false)
     }, estimatedDurationMs)
     return true
+  }
+
+  const persistSongStudyIndex = async (index: SongStudyIndex) => {
+    const asset = assetById.get(index.songId)
+    if (!asset) return
+
+    try {
+      if (asset.storage === 'site' && asset.siteAsset) {
+        const updated = await updateSiteSongStudyIndex({
+          song: asset.siteAsset,
+          studyIndex: index,
+        })
+        setSiteAssets((current) => current.map((item) => (item.id === updated.id ? updated : item)))
+        return
+      }
+
+      if (asset.storage === 'local' && asset.localAsset) {
+        const updated: StoredSongAsset = {
+          ...asset.localAsset,
+          studyIndex: index,
+          updatedAt: new Date().toISOString(),
+        }
+        await saveStoredSongAsset(updated)
+        setStoredAssets((current) => current.map((item) => (item.id === updated.id ? updated : item)))
+      }
+    } catch (error) {
+      toast.warning(error instanceof Error ? error.message : '学习索引保存失败，本次会先使用临时索引')
+    }
   }
 
   async function refreshSongAssets(nextActiveId?: string) {
@@ -721,7 +535,6 @@ export function SongsPage() {
     setCurrentMs(0)
     setPlaying(false)
     setSelectedLineId(activeSong?.lyricLines[0]?.id ?? '')
-    setAnalysis(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSong?.id])
 
@@ -751,25 +564,53 @@ export function SongsPage() {
   }, [playbackRate])
 
   useEffect(() => {
-    if (!activeLine?.ja) {
-      setAnalysis(null)
+    if (!activeSong || activeSong.lyricLines.length === 0) {
+      return
+    }
+
+    const existingIndex = studyIndexes[activeSong.id] ?? activeSong.studyIndex ?? activeAsset?.studyIndex
+    if (isSongStudyIndexFresh(existingIndex, activeSong.id, activeSong.lyricLines)) {
+      if (!studyIndexes[activeSong.id] && existingIndex) {
+        setStudyIndexes((current) => ({
+          ...current,
+          [activeSong.id]: existingIndex,
+        }))
+      }
       return
     }
 
     let ignore = false
-    setAnalyzing(true)
-    void analyzeJapaneseText(activeLine.ja, notes)
-      .then((next) => {
-        if (!ignore) setAnalysis(next)
+    setIndexingSongIds((current) => ({ ...current, [activeSong.id]: true }))
+    void buildSongStudyIndex({
+      songId: activeSong.id,
+      lyricLines: activeSong.lyricLines,
+      quality: activeSong.quality,
+    })
+      .then((index) => {
+        if (ignore) return
+
+        setStudyIndexes((current) => ({
+          ...current,
+          [activeSong.id]: index,
+        }))
+        void persistSongStudyIndex(index)
+      })
+      .catch((error: unknown) => {
+        if (!ignore) {
+          toast.warning(error instanceof Error ? error.message : '学习索引生成失败')
+        }
       })
       .finally(() => {
-        if (!ignore) setAnalyzing(false)
+        if (!ignore) {
+          setIndexingSongIds((current) => ({ ...current, [activeSong.id]: false }))
+        }
       })
 
     return () => {
       ignore = true
     }
-  }, [activeLine?.ja, notes])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeAsset?.studyIndex, activeSong, studyIndexes])
 
   const handleSelectSong = (song: SongLesson) => {
     setActiveSongId(song.id)
@@ -933,17 +774,48 @@ export function SongsPage() {
         lyricProvider,
         lyricQuality,
       })
+      let indexedSiteAsset = siteAsset
+      if (siteAsset.lyricLines.length > 0) {
+        try {
+          const studyIndex = await buildSongStudyIndex({
+            songId: siteAsset.id,
+            lyricLines: siteAsset.lyricLines,
+            quality: 'draft',
+          })
+          indexedSiteAsset = await updateSiteSongStudyIndex({
+            song: siteAsset,
+            studyIndex,
+          })
+        } catch (indexError) {
+          toast.warning(indexError instanceof Error ? indexError.message : `${title} 学习索引生成失败`)
+        }
+      }
+
       return {
         status: 'imported' as const,
-        id: siteAsset.id,
+        id: indexedSiteAsset.id,
         title,
-        firstLineId: siteAsset.lyricLines[0]?.id ?? '',
-        asset: buildSiteImportedAsset(siteAsset),
+        firstLineId: indexedSiteAsset.lyricLines[0]?.id ?? '',
+        asset: buildSiteImportedAsset(indexedSiteAsset),
       }
     } catch (error) {
       const now = new Date().toISOString()
+      const localAssetId = createLocalSongAssetId()
+      let studyIndex: SongStudyIndex | undefined
+      if (lyricLines.length > 0) {
+        try {
+          studyIndex = await buildSongStudyIndex({
+            songId: localAssetId,
+            lyricLines,
+            quality: 'draft',
+          })
+        } catch (indexError) {
+          toast.warning(indexError instanceof Error ? indexError.message : `${title} 学习索引生成失败`)
+        }
+      }
+
       const asset: StoredSongAsset = {
-        id: createLocalSongAssetId(),
+        id: localAssetId,
         title,
         artist,
         cover,
@@ -957,6 +829,7 @@ export function SongsPage() {
         lyricLines,
         lyricProvider,
         lyricQuality,
+        studyIndex,
         importedAt: now,
         updatedAt: now,
       }
@@ -1059,32 +932,29 @@ export function SongsPage() {
     toast.success('这句歌词已加入复习')
   }
 
+  const handleAddKnowledgeReview = async (knowledge: SongKnowledge) => {
+    if (!activeSong) return
+
+    const sourceId = `song:${activeSong.id}:knowledge:${knowledge.id}`
+    const addedCount = await addKnowledgeToReview(
+      [songKnowledgeToKnowledgePoint(knowledge)],
+      sourceId,
+      activeSong.id,
+    )
+    await recordStudyEvent({
+      type: knowledge.kind,
+      sourceId,
+      title: knowledge.expression,
+      dedupeKey: `song-knowledge-review:${activeSong.id}:${knowledge.id}`,
+    })
+    toast.success(addedCount > 0 ? '已加入学习' : '复习库里已经有这个知识点')
+  }
+
   const setImmersiveMode = (next: boolean) => {
     const nextParams = new URLSearchParams(searchParams)
     if (next) nextParams.set('mode', 'immersive')
     else nextParams.delete('mode')
     setSearchParams(nextParams, { replace: true })
-  }
-
-  const renderLyricJapanese = (line: LyricLine, active: boolean) => {
-    if (!active || activeLyricWordParts.length === 0) return line.ja
-
-    return (
-      <span className={styles.lyricWordLine}>
-        {activeLyricWordParts.map((part) => {
-          if (part.tokenIndex === undefined) {
-            return <span key={part.id}>{part.text}</span>
-          }
-
-          const isCurrentWord = part.tokenIndex === activeLyricWordIndex
-          return (
-            <span key={part.id} className={`${styles.lyricWord} ${isCurrentWord ? styles.lyricWordActive : ''}`}>
-              {part.text}
-            </span>
-          )
-        })}
-      </span>
-    )
   }
 
   if (!activeSong) return null
@@ -1269,11 +1139,23 @@ export function SongsPage() {
                   <button className={showZh ? styles.tabActive : ''} onClick={() => setShowZh((value) => !value)}>
                     译文
                   </button>
-                  <button className={beginnerMode ? styles.tabActive : ''} onClick={() => setBeginnerMode((value) => !value)}>
-                    新手高亮
-                  </button>
                 </>
               )}
+              <div className={styles.stageTabs} aria-label="学习阶段">
+                {studyStageOptions.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={studyStage === option.id ? styles.tabActive : ''}
+                    onClick={() => setStudyStage(option.id)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+              {activeSong && indexingSongIds[activeSong.id] ? (
+                <span className={styles.indexingBadge}>学习索引生成中</span>
+              ) : null}
             </div>
 
             {activeSong.lyricLines.length > 0 ? (
@@ -1281,21 +1163,32 @@ export function SongsPage() {
                 {activeSong.lyricLines.map((line) => {
                   const active = activeLine?.id === line.id
                   return (
-                    <button
+                    <LyricLearningLine
                       key={line.id}
-                      ref={active ? activeLyricRowRef : undefined}
-                      className={`${styles.lyricRow} ${active ? styles.lyricRowActive : ''}`}
-                      onClick={() => seekToLine(line)}
-                      onDoubleClick={() => seekToLine(line, true)}
-                    >
-                      <span className={styles.lyricTime}>{formatTime(line.startMs)}</span>
-                      <span className={styles.lyricTextStack}>
-                        <strong>{renderLyricJapanese(line, active)}</strong>
-                        {showZh ? <small>{line.zh}</small> : null}
-                        {showKana ? <small>{line.kana}</small> : null}
-                        {showRomaji ? <small>{line.romaji}</small> : null}
-                      </span>
-                    </button>
+                      rowRef={active ? activeLyricRowRef : undefined}
+                      line={line}
+                      studyLine={activeStudyLineById.get(line.id)}
+                      studyIndex={activeStudyIndex}
+                      occurrenceById={activeOccurrenceById}
+                      active={active}
+                      activePartId={active ? activeStudyPartId : ''}
+                      studyStage={studyStage}
+                      showZh={showZh}
+                      showKana={showKana}
+                      showRomaji={showRomaji}
+                      timeLabel={formatTime(line.startMs)}
+                      classes={{
+                        row: styles.lyricRow,
+                        rowActive: styles.lyricRowActive,
+                        time: styles.lyricTime,
+                        textStack: styles.lyricTextStack,
+                        wordLine: styles.lyricWordLine,
+                        word: styles.lyricWord,
+                        wordActive: styles.lyricWordActive,
+                      }}
+                      onSeek={seekToLine}
+                      onAddKnowledge={handleAddKnowledgeReview}
+                    />
                   )
                 })}
               </div>
@@ -1321,8 +1214,24 @@ export function SongsPage() {
       {immersiveMode && learningOpen ? (
         <aside className={styles.immersiveDrawer}>
           <button onClick={() => setLearningOpen(false)}>关闭</button>
-          <h2>当前句学习</h2>
-          {analysis ? renderTokenRail(analysis.tokens, beginnerMode) : <p>暂无解析</p>}
+          <h2>{getStudyStageLabel(studyStage)}学习</h2>
+          {activeKnowledgeItems.length > 0 ? (
+            <div className={styles.tokenRail} aria-label="当前句学习点">
+              {activeKnowledgeItems.map((knowledge) => (
+                <button
+                  key={knowledge.id}
+                  type="button"
+                  className={knowledge.kind === 'grammar' ? styles.tokenRailGrammar : styles.tokenRailBeginner}
+                  onClick={() => void handleAddKnowledgeReview(knowledge)}
+                >
+                  <strong>{knowledge.expression}</strong>
+                  <small>{knowledge.meaningZh}</small>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <p>当前句暂无这个阶段的学习点</p>
+          )}
         </aside>
       ) : null}
 
@@ -1367,8 +1276,9 @@ export function SongsPage() {
           <button className={showZh ? styles.controlActive : ''} onClick={() => setShowZh((value) => !value)}>
             <Captions size={17} />
           </button>
-          <button className={beginnerMode ? styles.controlActive : ''} onClick={() => setBeginnerMode((value) => !value)}>
+          <button className={styles.controlActive} onClick={() => setStudyStage((value) => getNextStudyStage(value))}>
             <Sparkles size={17} />
+            {getStudyStageLabel(studyStage)}
           </button>
           <div className={styles.rateGroup}>
             <Gauge size={15} />

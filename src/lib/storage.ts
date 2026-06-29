@@ -61,6 +61,7 @@ interface RemoteAppState {
 let cachedState: RemoteAppState | null = null
 let loadTask: Promise<RemoteAppState> | null = null
 let writeTask: Promise<void> = Promise.resolve()
+let remoteStateUnavailable = false
 
 const MAX_REMOTE_COVER_LENGTH = 160_000
 
@@ -315,6 +316,38 @@ async function loadLegacyState(profileId: string) {
   }
 }
 
+async function persistLegacyState(state: RemoteAppState) {
+  if (!isBrowser()) {
+    return
+  }
+
+  const db = await getLegacyDb()
+  await Promise.all([
+    db.clear('favorites'),
+    db.clear('notes'),
+    db.clear('goals'),
+    db.clear('study_events'),
+    db.clear('review_items'),
+    db.clear('review_logs'),
+    db.clear('vocab_progress'),
+    db.clear('imported_clips'),
+    db.clear('app_settings'),
+  ])
+
+  const sanitized = sanitizeState(state)
+  await Promise.all([
+    ...sanitized.favorites.map((item) => db.put('favorites', item)),
+    ...sanitized.notes.map((item) => db.put('notes', item)),
+    sanitized.goal ? db.put('goals', sanitized.goal) : Promise.resolve(),
+    ...sanitized.studyEvents.map((item) => db.put('study_events', item)),
+    ...sanitized.reviewItems.map((item) => db.put('review_items', item)),
+    ...sanitized.reviewLogs.map((item) => db.put('review_logs', item)),
+    ...sanitized.vocabProgress.map((item) => db.put('vocab_progress', item)),
+    ...sanitized.importedClips.map((item) => db.put('imported_clips', item)),
+    sanitized.settings ? db.put('app_settings', sanitized.settings) : Promise.resolve(),
+  ])
+}
+
 async function fetchRemoteState(profileId: string) {
   const response = await fetch(`${getStateEndpoint()}?profileId=${encodeURIComponent(profileId)}`, {
     cache: 'no-store',
@@ -368,7 +401,14 @@ async function ensureStateLoaded() {
 
   loadTask = (async () => {
     const profileId = getProfileId()
-    const remote = await fetchRemoteState(profileId)
+    let remote: RemoteAppState | null = null
+    try {
+      remote = await fetchRemoteState(profileId)
+      remoteStateUnavailable = false
+    } catch {
+      remoteStateUnavailable = true
+    }
+
     if (remote) {
       cachedState = {
         ...createEmptyState(profileId),
@@ -380,7 +420,11 @@ async function ensureStateLoaded() {
 
     const migrated = await loadLegacyState(profileId)
     const initial = migrated ?? createEmptyState(profileId)
-    await persistRemoteState(initial)
+    if (remoteStateUnavailable) {
+      await persistLegacyState(initial)
+    } else {
+      await persistRemoteState(initial)
+    }
     cachedState = initial
     return cachedState
   })()
@@ -402,7 +446,16 @@ async function updateState(mutator: (state: RemoteAppState) => void) {
     next.updatedAt = new Date().toISOString()
 
     const snapshot = cloneState(next)
-    await persistRemoteState(snapshot)
+    if (remoteStateUnavailable) {
+      await persistLegacyState(snapshot)
+    } else {
+      try {
+        await persistRemoteState(snapshot)
+      } catch {
+        remoteStateUnavailable = true
+        await persistLegacyState(snapshot)
+      }
+    }
     cachedState = next
     nextState = next
   })

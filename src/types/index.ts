@@ -134,6 +134,112 @@ export type SongLyricQuality =
   | 'manual_imported'
   | 'needs_review'
 
+export type StudyStage = 'beginner' | 'intermediate' | 'advanced'
+
+export type SongKnowledgeKind = 'word' | 'grammar'
+
+export type SongKnowledgeSourceKind =
+  | 'curated-vocab'
+  | 'grammar-registry'
+  | 'tokenizer'
+  | 'lyric-context'
+  | 'heuristic'
+
+export interface SongKnowledgeSource {
+  kind: SongKnowledgeSourceKind
+  label: string
+  license?: string
+  url?: string
+}
+
+interface SongKnowledgeBase {
+  id: string
+  kind: SongKnowledgeKind
+  expression: string
+  reading: string
+  meaningZh: string
+  explanationZh: string
+  exampleJa: string
+  exampleZh: string
+  stage: StudyStage
+  confidence: number
+  sources: SongKnowledgeSource[]
+}
+
+export interface SongWordKnowledge extends SongKnowledgeBase {
+  kind: 'word'
+  lemma: string
+  kana: string
+  romaji: string
+  partOfSpeech: string
+}
+
+export interface SongGrammarKnowledge extends SongKnowledgeBase {
+  kind: 'grammar'
+  grammarId: string
+  pattern: string
+}
+
+export type SongKnowledge = SongWordKnowledge | SongGrammarKnowledge
+
+export interface SongStudyOccurrence {
+  id: string
+  kind: SongKnowledgeKind
+  lineId: string
+  knowledgeId: string
+  text: string
+  startOffset: number
+  endOffset: number
+  startMs?: number
+  endMs?: number
+  stage: StudyStage
+  confidence: number
+}
+
+export interface SongStudyLinePart {
+  id: string
+  text: string
+  startOffset: number
+  endOffset: number
+  wordOccurrenceId?: string
+  grammarOccurrenceIds: string[]
+  startMs?: number
+  endMs?: number
+}
+
+export interface SongStudyLine {
+  lineId: string
+  startMs: number
+  endMs: number
+  ja: string
+  zh: string
+  parts: SongStudyLinePart[]
+  occurrenceIds: string[]
+}
+
+export interface SongStudyIndex {
+  version: 1
+  songId: string
+  lyricVersion: string
+  status: 'ready' | 'empty' | 'failed'
+  quality: StudyIndexQuality
+  generatedAt: string
+  lines: SongStudyLine[]
+  occurrences: SongStudyOccurrence[]
+  knowledge: Record<string, SongKnowledge>
+  stagePlans: Record<StudyStage, {
+    focusOccurrenceIds: string[]
+  }>
+  summary: {
+    lineCount: number
+    wordCount: number
+    grammarCount: number
+    beginnerCount: number
+    intermediateCount: number
+    advancedCount: number
+  }
+}
+
 export type LyricSection = 'intro' | 'verse' | 'chorus' | 'bridge' | 'outro'
 
 export type LyricTimingQuality = 'word' | 'line-estimated' | 'line'
@@ -183,6 +289,7 @@ export interface SongLesson {
   difficulty: DifficultyLevel
   durationMs: number
   lyricLines: LyricLine[]
+  studyIndex?: SongStudyIndex
   knowledgePoints: KnowledgePoint[]
   tags: string[]
   description: string

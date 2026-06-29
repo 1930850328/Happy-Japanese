@@ -1,6 +1,36 @@
+import { readFileSync } from 'node:fs'
+import { join, relative } from 'node:path'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin, type ViteDevServer } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+
+function rawKuromojiDictPlugin(): Plugin {
+  return {
+    name: 'raw-kuromoji-dict',
+    configureServer(server: ViteDevServer) {
+      const dictRoot = join(process.cwd(), 'public', 'dict')
+
+      server.middlewares.use('/dict', (request, response, next) => {
+        const pathname = decodeURIComponent(request.url?.split('?')[0] ?? '').replace(/^\/+/, '')
+        if (!pathname.endsWith('.dat.gz')) {
+          next()
+          return
+        }
+
+        const filePath = join(dictRoot, pathname)
+        if (relative(dictRoot, filePath).startsWith('..')) {
+          next()
+          return
+        }
+
+        response.statusCode = 200
+        response.setHeader('Content-Type', 'application/octet-stream')
+        response.setHeader('Cache-Control', 'no-cache')
+        response.end(readFileSync(filePath))
+      })
+    },
+  }
+}
 
 export default defineConfig({
   build: {
@@ -24,6 +54,7 @@ export default defineConfig({
     exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util', '@huggingface/transformers'],
   },
   plugins: [
+    rawKuromojiDictPlugin(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',

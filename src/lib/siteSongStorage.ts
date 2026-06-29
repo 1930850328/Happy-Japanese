@@ -1,6 +1,6 @@
 import { upload as uploadBlob } from '@vercel/blob/client'
 
-import type { LyricLine, LyricProvider, SongLyricQuality } from '../types'
+import type { LyricLine, LyricProvider, SongLyricQuality, SongStudyIndex } from '../types'
 
 const PROFILE_STORAGE_KEY = 'yuru-nihongo-cloud-profile-id'
 const SONG_UPLOAD_ENDPOINT = '/api/song-upload'
@@ -30,6 +30,7 @@ export interface SiteSongAsset {
   lyricLines: LyricLine[]
   lyricProvider?: LyricProvider
   lyricQuality?: SongLyricQuality
+  studyIndex?: SongStudyIndex
   importedAt: string
   updatedAt: string
   sourceUrl: string
@@ -60,12 +61,18 @@ interface SongUploadInput {
   lyricLines: LyricLine[]
   lyricProvider?: LyricProvider
   lyricQuality?: SongLyricQuality
+  studyIndex?: SongStudyIndex
 }
 
 interface SongLyricsUpdateInput {
   song: SiteSongAsset
   lyricsFile: File
   lyricLines: LyricLine[]
+}
+
+interface SongStudyIndexUpdateInput {
+  song: SiteSongAsset
+  studyIndex: SongStudyIndex
 }
 
 function isBrowser() {
@@ -374,6 +381,7 @@ export async function uploadSongToSite({
   lyricLines,
   lyricProvider,
   lyricQuality,
+  studyIndex,
 }: SongUploadInput) {
   const ticket = await createUploadTicket({
     audioFile,
@@ -407,6 +415,7 @@ export async function uploadSongToSite({
     lyricLines,
     lyricProvider,
     lyricQuality,
+    studyIndex,
     importedAt: now,
     updatedAt: now,
   })
@@ -436,7 +445,19 @@ export async function updateSiteSongLyrics({
     lyricFileType: getFileContentType(lyricsFile, 'text/plain; charset=utf-8'),
     lyricSize: lyricsFile.size,
     lyricLines,
+    studyIndex: undefined,
     durationMs: Math.max(song.durationMs, lyricLines.at(-1)?.endMs ?? 0),
+    updatedAt: new Date().toISOString(),
+  })
+}
+
+export async function updateSiteSongStudyIndex({
+  song,
+  studyIndex,
+}: SongStudyIndexUpdateInput) {
+  return await saveSongAsset({
+    ...song,
+    studyIndex,
     updatedAt: new Date().toISOString(),
   })
 }

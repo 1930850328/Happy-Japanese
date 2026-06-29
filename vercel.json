@@ -2,6 +2,21 @@
   "installCommand": "corepack enable && corepack prepare pnpm@10.26.2 --activate && pnpm install --frozen-lockfile",
   "buildCommand": "corepack enable && pnpm run build",
   "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/dict/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "identity"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

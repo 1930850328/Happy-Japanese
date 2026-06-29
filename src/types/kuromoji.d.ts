@@ -29,3 +29,8 @@ declare module 'kuromoji' {
 
   export default kuromoji
 }
+
+declare module 'kuromoji/build/kuromoji.js' {
+  export * from 'kuromoji'
+  export { default } from 'kuromoji'
+}

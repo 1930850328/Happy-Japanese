@@ -1,6 +1,6 @@
 import { openDB } from 'idb'
 
-import type { LyricLine, LyricProvider, SongLyricQuality } from '../types'
+import type { LyricLine, LyricProvider, SongLyricQuality, SongStudyIndex } from '../types'
 
 const DB_NAME = 'yuru-nihongo-song-assets'
 const DB_VERSION = 1
@@ -22,6 +22,7 @@ export interface StoredSongAsset {
   lyricLines: LyricLine[]
   lyricProvider?: LyricProvider
   lyricQuality?: SongLyricQuality
+  studyIndex?: SongStudyIndex
   importedAt: string
   updatedAt: string
 }

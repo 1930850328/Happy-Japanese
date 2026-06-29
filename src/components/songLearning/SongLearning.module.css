@@ -1,0 +1,186 @@
+.knowledgeToken {
+  display: inline-grid;
+  grid-auto-flow: row;
+  justify-items: center;
+  vertical-align: baseline;
+  min-width: 1.2em;
+  margin: 0 0.03em;
+  padding: 0.03em 0.12em 0.08em;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1.1;
+  cursor: help;
+}
+
+.knowledgeToken:hover,
+.knowledgeToken:focus-visible {
+  outline: none;
+  background: rgba(11, 122, 112, 0.1);
+}
+
+.knowledgeToken small {
+  display: block;
+  max-width: 7.5em;
+  margin-top: 0.12rem;
+  color: currentColor;
+  font-size: 0.58em;
+  font-weight: 650;
+  line-height: 1.05;
+  opacity: 0.62;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.knowledgeTokenFocus {
+  background: linear-gradient(180deg, transparent 54%, rgba(13, 113, 105, 0.14) 54%);
+}
+
+.hoverCard {
+  position: fixed;
+  z-index: 80;
+  width: min(360px, calc(100vw - 24px));
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.72rem;
+  border: 1px solid rgba(17, 24, 22, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 18px 48px rgba(17, 24, 22, 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.knowledgeBlock {
+  display: grid;
+  gap: 0.58rem;
+}
+
+.knowledgeBlock + .knowledgeBlock {
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(17, 24, 22, 0.08);
+}
+
+.knowledgeBlock header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.knowledgeBlock header span {
+  padding: 0.18rem 0.42rem;
+  border-radius: 999px;
+  background: #eef7f3;
+  color: #0d7169;
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.knowledgeBlock header strong {
+  min-width: 0;
+  color: #101917;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.knowledgeBlock dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.42rem;
+  margin: 0;
+}
+
+.knowledgeBlock dl div {
+  min-width: 0;
+  padding: 0.44rem 0.48rem;
+  border-radius: 9px;
+  background: #f6f8f7;
+}
+
+.knowledgeBlock dt {
+  color: #77817d;
+  font-size: 0.68rem;
+  font-weight: 650;
+}
+
+.knowledgeBlock dd {
+  min-width: 0;
+  margin: 0.12rem 0 0;
+  color: #14201d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.knowledgeBlock p {
+  margin: 0;
+  color: #3d4945;
+  font-size: 0.86rem;
+  line-height: 1.48;
+}
+
+.knowledgeBlock blockquote {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding: 0.58rem 0.66rem;
+  border-left: 3px solid rgba(13, 113, 105, 0.28);
+  border-radius: 9px;
+  background: #fbfcfb;
+}
+
+.knowledgeBlock blockquote span {
+  color: #141e1b;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.knowledgeBlock blockquote small {
+  color: #697672;
+  font-size: 0.76rem;
+  line-height: 1.42;
+}
+
+.knowledgeBlock footer {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.knowledgeBlock footer small {
+  min-width: 0;
+  color: #7b8581;
+  font-size: 0.72rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.knowledgeBlock footer button {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 0.72rem;
+  border: 1px solid rgba(13, 113, 105, 0.16);
+  border-radius: 9px;
+  background: #0d7169;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+@media (max-width: 720px) {
+  .knowledgeToken small {
+    max-width: 5.5em;
+    white-space: normal;
+  }
+
+  .knowledgeBlock dl {
+    grid-template-columns: 1fr;
+  }
+}

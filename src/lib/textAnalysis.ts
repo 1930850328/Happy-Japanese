@@ -102,22 +102,23 @@ for (const [surface, reading] of commonReadingEntries) {
 let tokenizerPromise: Promise<Tokenizer<IpadicFeatures> | null> | null = null
 
 function getTokenizer() {
-  if (typeof window !== 'undefined') {
-    return Promise.resolve(null)
-  }
-
   if (tokenizerPromise) {
     return tokenizerPromise
   }
 
   tokenizerPromise = new Promise((resolve) => {
-    void import('kuromoji')
+    const nodeKuromojiModule = 'kuromoji'
+    const loadKuromoji = typeof window === 'undefined'
+      ? import(/* @vite-ignore */ nodeKuromojiModule)
+      : import('kuromoji/build/kuromoji.js')
+
+    void loadKuromoji
       .then((kuromojiModule) => {
         const kuromojiRuntime = kuromojiModule as typeof kuromojiModule & {
           default?: typeof kuromojiModule
         }
         const kuromojiBuilder = (kuromojiRuntime.default ?? kuromojiRuntime).builder
-        kuromojiBuilder({ dicPath: '/dict' }).build((error, tokenizer) => {
+        kuromojiBuilder({ dicPath: '/dict' }).build((error: Error | null, tokenizer: Tokenizer<IpadicFeatures>) => {
           if (error || !tokenizer) {
             resolve(null)
             return

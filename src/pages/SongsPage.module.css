@@ -531,6 +531,18 @@
   box-shadow: inset 0 -2px 0 #f04732;
 }
 
+.stageTabs {
+  display: inline-flex;
+  gap: 0.28rem;
+  align-items: center;
+}
+
+.indexingBadge {
+  color: #68746f;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
 .focusLyrics {
   display: grid;
   place-items: center;
@@ -614,7 +626,8 @@
   gap: 0.7rem;
 }
 
-.tokenRail span {
+.tokenRail span,
+.tokenRail button {
   display: grid;
   gap: 0.16rem;
   min-width: 82px;
@@ -622,6 +635,9 @@
   border: 1px solid rgba(17, 24, 22, 0.09);
   border-radius: 13px;
   background: #fff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   box-shadow: 0 8px 20px rgba(17, 24, 22, 0.04);
 }
 
@@ -638,6 +654,11 @@
 .tokenRail .tokenRailBeginner {
   border-color: rgba(240, 71, 50, 0.22);
   background: #fff4f0;
+}
+
+.tokenRail .tokenRailGrammar {
+  border-color: rgba(13, 113, 105, 0.2);
+  background: #eef8f5;
 }
 
 .emptyLyrics {
@@ -684,6 +705,12 @@
   border-radius: 10px;
   background: transparent;
   text-align: left;
+  cursor: pointer;
+}
+
+.lyricRow:focus-visible {
+  outline: 2px solid rgba(13, 113, 105, 0.32);
+  outline-offset: 2px;
 }
 
 .lyricTime {
@@ -1187,6 +1214,10 @@
   min-height: 42px;
   gap: 0.36rem;
   border-bottom: 0;
+}
+
+.page:not(.pageImmersive) .stageTabs {
+  margin-left: auto;
 }
 
 .page:not(.pageImmersive) .lyricTabs button {
@@ -1832,6 +1863,16 @@
   font-size: 0.9rem;
 }
 
+.pageImmersive .stageTabs {
+  margin-left: 0.2rem;
+  padding-left: 0.28rem;
+  border-left: 1px solid rgba(255, 250, 244, 0.1);
+}
+
+.pageImmersive .indexingBadge {
+  color: rgba(255, 250, 244, 0.58);
+}
+
 .pageImmersive .lyricTabs .tabActive {
   color: #fffaf4;
   background: rgba(255, 250, 244, 0.16);
@@ -2088,6 +2129,10 @@
     border-right: 0;
     border-top: 1px solid rgba(17, 24, 22, 0.08);
     border-bottom: 0;
+  }
+
+  .page:not(.pageImmersive) .catalogRail {
+    display: none;
   }
 
   .pageImmersive .catalogRail {

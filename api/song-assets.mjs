@@ -105,6 +105,95 @@ function readLyricQuality(value) {
     : undefined
 }
 
+function readStudyIndexQuality(value) {
+  const quality = readString(value, 40)
+  return ['trusted', 'draft', 'blocked'].includes(quality) ? quality : 'draft'
+}
+
+function readStudyIndexStatus(value) {
+  const status = readString(value, 40)
+  return ['ready', 'empty', 'failed'].includes(status) ? status : 'ready'
+}
+
+function sanitizeJsonValue(value, depth = 0) {
+  if (depth > 8) {
+    return undefined
+  }
+
+  if (value === null || typeof value === 'boolean') {
+    return value
+  }
+
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : undefined
+  }
+
+  if (typeof value === 'string') {
+    return readString(value, 2000)
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .slice(0, 3000)
+      .map((item) => sanitizeJsonValue(item, depth + 1))
+      .filter((item) => item !== undefined)
+  }
+
+  if (typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value)
+        .slice(0, 5000)
+        .map(([key, item]) => [readString(key, 120), sanitizeJsonValue(item, depth + 1)])
+        .filter(([key, item]) => key && item !== undefined),
+    )
+  }
+
+  return undefined
+}
+
+function readSongStudyIndex(value, songId) {
+  if (!value || typeof value !== 'object' || Number(value.version) !== 1) {
+    return undefined
+  }
+
+  const clean = sanitizeJsonValue(value)
+  if (!clean || typeof clean !== 'object' || Array.isArray(clean)) {
+    return undefined
+  }
+
+  return {
+    ...clean,
+    version: 1,
+    songId,
+    lyricVersion: readString(clean.lyricVersion, 120),
+    status: readStudyIndexStatus(clean.status),
+    quality: readStudyIndexQuality(clean.quality),
+    generatedAt: readString(clean.generatedAt, 40, new Date().toISOString()),
+    lines: Array.isArray(clean.lines) ? clean.lines : [],
+    occurrences: Array.isArray(clean.occurrences) ? clean.occurrences : [],
+    knowledge: clean.knowledge && typeof clean.knowledge === 'object' && !Array.isArray(clean.knowledge)
+      ? clean.knowledge
+      : {},
+    stagePlans: clean.stagePlans && typeof clean.stagePlans === 'object' && !Array.isArray(clean.stagePlans)
+      ? clean.stagePlans
+      : {
+          beginner: { focusOccurrenceIds: [] },
+          intermediate: { focusOccurrenceIds: [] },
+          advanced: { focusOccurrenceIds: [] },
+        },
+    summary: clean.summary && typeof clean.summary === 'object' && !Array.isArray(clean.summary)
+      ? clean.summary
+      : {
+          lineCount: 0,
+          wordCount: 0,
+          grammarCount: 0,
+          beginnerCount: 0,
+          intermediateCount: 0,
+          advancedCount: 0,
+        },
+  }
+}
+
 function readStorageProvider(value, fallback) {
   const provider = readString(value, 40, fallback)
   return ['tos', 'vercel-blob'].includes(provider) ? provider : fallback
@@ -186,6 +275,7 @@ function normalizeSongRecord(profileId, input) {
     lyricLines,
     lyricProvider: readLyricProvider(input.lyricProvider),
     lyricQuality: readLyricQuality(input.lyricQuality),
+    studyIndex: readSongStudyIndex(input.studyIndex, id),
     importedAt: readString(input.importedAt, 40, now) || now,
     updatedAt: readString(input.updatedAt, 40, now) || now,
   }
