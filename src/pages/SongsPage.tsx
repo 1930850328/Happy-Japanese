@@ -807,51 +807,19 @@ export function SongsPage() {
         lyricQuality,
         onProgress,
       })
-      let indexedSiteAsset = siteAsset
-      if (siteAsset.lyricLines.length > 0) {
-        try {
-          const studyIndex = await buildSongStudyIndex({
-            songId: siteAsset.id,
-            title: siteAsset.title,
-            artist: siteAsset.artist,
-            lyricLines: siteAsset.lyricLines,
-            quality: 'draft',
-          })
-          indexedSiteAsset = await updateSiteSongStudyIndex({
-            song: siteAsset,
-            studyIndex,
-          })
-        } catch (indexError) {
-          toast.warning(indexError instanceof Error ? indexError.message : `${title} 学习索引生成失败`)
-        }
-      }
-
       onProgress('导入完成', 100)
       return {
         status: 'imported' as const,
-        id: indexedSiteAsset.id,
+        id: siteAsset.id,
         title,
-        firstLineId: indexedSiteAsset.lyricLines[0]?.id ?? '',
-        asset: buildSiteImportedAsset(indexedSiteAsset),
+        firstLineId: siteAsset.lyricLines[0]?.id ?? '',
+        asset: buildSiteImportedAsset(siteAsset),
       }
     } catch (error) {
       onProgress('云端暂不可用，正在保存到本机', 82)
+      toast.warning(error instanceof Error ? `云端保存失败：${error.message}` : '云端保存失败，正在保存到本机')
       const now = new Date().toISOString()
       const localAssetId = createLocalSongAssetId()
-      let studyIndex: SongStudyIndex | undefined
-      if (lyricLines.length > 0) {
-        try {
-          studyIndex = await buildSongStudyIndex({
-            songId: localAssetId,
-            title,
-            artist,
-            lyricLines,
-            quality: 'draft',
-          })
-        } catch (indexError) {
-          toast.warning(indexError instanceof Error ? indexError.message : `${title} 学习索引生成失败`)
-        }
-      }
 
       const asset: StoredSongAsset = {
         id: localAssetId,
@@ -868,7 +836,6 @@ export function SongsPage() {
         lyricLines,
         lyricProvider,
         lyricQuality,
-        studyIndex,
         importedAt: now,
         updatedAt: now,
       }

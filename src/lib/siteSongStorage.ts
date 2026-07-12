@@ -9,6 +9,8 @@ const SONG_SERVER_UPLOAD_ENDPOINT = '/api/song-upload-server'
 const SONG_ASSETS_ENDPOINT = '/api/song-assets'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 const SERVER_UPLOAD_CHUNK_SIZE = 2 * 1024 * 1024
+const SERVER_FULL_UPLOAD_LIMIT = 3 * 1024 * 1024
+const UPLOAD_RETRY_COUNT = 3
 const SONG_LIST_CACHE_PREFIX = 'yuru-nihongo-song-list:'
 
 export interface SiteSongAsset {
@@ -220,7 +222,23 @@ async function uploadFileThroughServer(ticket: UploadTicket, file: File) {
   await readJsonResponse(response, '歌曲服务端上传失败')
 }
 
-async function uploadFileThroughServerChunks(ticket: UploadTicket, file: File) {
+async function retryUpload<T>(operation: () => Promise<T>) {
+  let lastError: unknown
+  for (let attempt = 1; attempt <= UPLOAD_RETRY_COUNT; attempt += 1) {
+    try {
+      return await operation()
+    } catch (error) {
+      lastError = error
+    }
+  }
+  throw lastError
+}
+
+async function uploadFileThroughServerChunks(
+  ticket: UploadTicket,
+  file: File,
+  onProgress?: (completedChunks: number, totalChunks: number) => void,
+) {
   const profileId = getCloudProfileId()
   const contentType = ticket.contentType || file.type || 'application/octet-stream'
   const chunks: Array<{ objectKey: string; size: number }> = []
@@ -237,17 +255,19 @@ async function uploadFileThroughServerChunks(ticket: UploadTicket, file: File) {
       chunkIndex: String(index),
     })
 
-    const response = await fetch(`${getApiEndpoint(SONG_SERVER_UPLOAD_ENDPOINT)}?${params.toString()}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/octet-stream',
-      },
-      body: blob,
+    const body = await retryUpload(async () => {
+      const response = await fetch(`${getApiEndpoint(SONG_SERVER_UPLOAD_ENDPOINT)}?${params.toString()}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/octet-stream',
+        },
+        body: blob,
+      })
+      return await readJsonResponse(response, 'Song chunk upload failed.') as {
+        objectKey?: string
+        size?: number
+      }
     })
-    const body = await readJsonResponse(response, 'Song chunk upload failed.') as {
-      objectKey?: string
-      size?: number
-    }
 
     if (!body.objectKey) {
       throw new Error('Song chunk upload did not return an object key.')
@@ -257,23 +277,25 @@ async function uploadFileThroughServerChunks(ticket: UploadTicket, file: File) {
       objectKey: body.objectKey,
       size: Math.max(0, Math.round(Number(body.size ?? blob.size))),
     })
+    onProgress?.(index + 1, totalChunks)
   }
 
-  const finalizeResponse = await fetch(`${getApiEndpoint(SONG_SERVER_UPLOAD_ENDPOINT)}?mode=finalize`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      profileId,
-      objectKey: ticket.objectKey,
-      contentType,
-      size: file.size,
-      chunks,
-    }),
+  await retryUpload(async () => {
+    const finalizeResponse = await fetch(`${getApiEndpoint(SONG_SERVER_UPLOAD_ENDPOINT)}?mode=finalize`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        profileId,
+        objectKey: ticket.objectKey,
+        contentType,
+        size: file.size,
+        chunks,
+      }),
+    })
+    await readJsonResponse(finalizeResponse, 'Song chunk upload finalization failed.')
   })
-
-  await readJsonResponse(finalizeResponse, 'Song chunk upload finalization failed.')
 }
 
 async function uploadFileToBlob(ticket: UploadTicket, file: File) {
@@ -318,6 +340,9 @@ async function uploadSongFiles(
   } catch {
     onProgress?.('直传未完成，正在切换备用线路', 60)
     try {
+      if (audioFile && audioFile.size > SERVER_FULL_UPLOAD_LIMIT) {
+        throw new Error('Audio is too large for the full server upload route.')
+      }
       if (audioFile && ticket.tickets.audio) {
         await uploadFileThroughServer(ticket.tickets.audio, audioFile)
       }
@@ -335,7 +360,9 @@ async function uploadSongFiles(
 
     try {
       if (audioFile && ticket.tickets.audio) {
-        await uploadFileThroughServerChunks(ticket.tickets.audio, audioFile)
+        await uploadFileThroughServerChunks(ticket.tickets.audio, audioFile, (completed, total) => {
+          onProgress?.(`正在分片上传音频 ${completed}/${total}`, 68 + Math.round((completed / total) * 24))
+        })
       }
       if (lyricsFile && ticket.tickets.lyrics) {
         await uploadFileThroughServer(ticket.tickets.lyrics, lyricsFile)

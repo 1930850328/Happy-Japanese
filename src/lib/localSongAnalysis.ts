@@ -23,8 +23,9 @@ export interface LocalSongAnalysis {
 }
 
 const workerUrl = String(import.meta.env.VITE_SONG_ANALYSIS_URL || 'http://127.0.0.1:4319').replace(/\/$/, '')
+const pendingAnalyses = new Map<string, Promise<LocalSongAnalysis>>()
 
-export async function analyzeSongWithLocalCodex(songId: string, lyricLines: LyricLine[], title = '', artist = '') {
+async function requestSongAnalysis(songId: string, lyricLines: LyricLine[], title: string, artist: string) {
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), 8 * 60 * 1000)
   try {
@@ -58,4 +59,16 @@ export async function analyzeSongWithLocalCodex(songId: string, lyricLines: Lyri
   } finally {
     window.clearTimeout(timeout)
   }
+}
+
+export function analyzeSongWithLocalCodex(songId: string, lyricLines: LyricLine[], title = '', artist = '') {
+  const existing = pendingAnalyses.get(songId)
+  if (existing) return existing
+
+  const request = requestSongAnalysis(songId, lyricLines, title, artist)
+  pendingAnalyses.set(songId, request)
+  void request.finally(() => {
+    if (pendingAnalyses.get(songId) === request) pendingAnalyses.delete(songId)
+  }).catch(() => {})
+  return request
 }
