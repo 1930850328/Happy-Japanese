@@ -254,17 +254,19 @@ function normalizeSongRecord(profileId, input) {
   const now = new Date().toISOString()
   const lyricLines = readLyricLines(input.lyricLines)
   const storageProvider = readStorageProvider(input.storageProvider, audioUrl ? 'vercel-blob' : 'tos')
+  const audioFileName = readString(input.audioFileName, 240, 'audio')
+  const fileTitle = audioFileName.replace(/\.[^.]+$/, '').trim()
 
   return {
     id,
-    title: readString(input.title, 120, '我的日语歌') || '我的日语歌',
+    title: readString(input.title, 120, fileTitle || '未命名歌曲') || fileTitle || '未命名歌曲',
     artist: readString(input.artist, 120, '本地音频') || '本地音频',
     cover: readString(input.cover, 180_000),
     durationMs: Math.max(0, Math.round(Number(input.durationMs ?? 0))),
     storageProvider,
     audioObjectKey,
     audioUrl,
-    audioFileName: readString(input.audioFileName, 240, 'audio'),
+    audioFileName,
     audioFileType: readString(input.audioFileType, 120, 'audio/mpeg') || 'audio/mpeg',
     audioSize: Math.max(0, Math.round(Number(input.audioSize ?? 0))),
     lyricObjectKey,

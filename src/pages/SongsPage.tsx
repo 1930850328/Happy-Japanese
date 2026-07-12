@@ -127,13 +127,27 @@ interface ImportedSongAsset {
   localAsset?: StoredSongAsset
 }
 
+interface ImportProgress {
+  fileName: string
+  current: number
+  total: number
+  message: string
+  percent: number
+}
+
+function getImportedAssetTitle(asset: Pick<ImportedSongAsset, 'title' | 'audioFileName'>) {
+  if (asset.title !== '我的日语歌') return asset.title
+  const fileTitle = asset.audioFileName.replace(/\.[^.]+$/, '').trim()
+  return fileTitle && fileTitle.toLowerCase() !== 'audio' ? fileTitle : '未命名歌曲'
+}
+
 function buildImportedSong(asset: ImportedSongAsset): SongLesson {
   const durationMs = Math.max(30000, asset.durationMs, asset.lyricLines.at(-1)?.endMs ?? 0)
   return {
     id: asset.id,
     sourceType: 'local',
     sourceUrl: asset.sourceUrl,
-    title: asset.title,
+    title: getImportedAssetTitle(asset),
     artist: asset.artist,
     cover: asset.cover,
     theme: '我的歌曲',
@@ -360,6 +374,8 @@ export function SongsPage() {
   const [learningOpen, setLearningOpen] = useState(false)
   const [assetsLoading, setAssetsLoading] = useState(true)
   const [importing, setImporting] = useState(false)
+  const [importProgress, setImportProgress] = useState<ImportProgress | null>(null)
+  const [deletingSongIds, setDeletingSongIds] = useState<Set<string>>(() => new Set())
   const [loadError, setLoadError] = useState('')
   const [studyIndexes, setStudyIndexes] = useState<Record<string, SongStudyIndex>>({})
   const [indexingSongIds, setIndexingSongIds] = useState<Record<string, boolean>>({})
@@ -371,8 +387,9 @@ export function SongsPage() {
   }, [assetUrls, siteAssets, storedAssets])
   const assetById = useMemo(() => new Map(importedAssets.map((asset) => [asset.id, asset])), [importedAssets])
   const songs = useMemo(() => {
+    if (assetsLoading) return []
     return importedAssets.length > 0 ? importedAssets.map(buildImportedSong) : demoSongs
-  }, [importedAssets])
+  }, [assetsLoading, importedAssets])
   const activeSong = songs.find((song) => song.id === activeSongId) ?? songs[0]
   const displayCover = activeSong?.artworkUrl || activeSong?.cover
   const activeAsset = activeSong ? assetById.get(activeSong.id) : undefined
@@ -686,11 +703,17 @@ export function SongsPage() {
     setCurrentMs(nextMs)
   }
 
-  const importMediaFile = async (file: File, knownAssets: ImportedSongAsset[]) => {
+  const importMediaFile = async (
+    file: File,
+    knownAssets: ImportedSongAsset[],
+    onProgress: (message: string, percent: number) => void,
+  ) => {
+    onProgress('正在读取音频信息', 6)
     let audioFile = file
     let ncmInfo: Awaited<ReturnType<typeof decodeNcmAudio>> | null = null
 
     if (isNcmFile(file)) {
+      onProgress('正在解析 NCM 音频', 10)
       ncmInfo = await decodeNcmAudio(file)
       audioFile = ncmInfo.file
     }
@@ -698,6 +721,7 @@ export function SongsPage() {
     let title = ncmInfo?.title || stripFileExtension(audioFile.name)
     let artist = ncmInfo?.artist || '本地音频'
     const durationMs = await readMediaDurationMs(audioFile)
+    onProgress('音频信息读取完成', 20)
     let cover = ncmInfo?.cover || createImportedCover(title, artist)
     let lyricLines: LyricLine[] = []
     let lyricText = ''
@@ -723,6 +747,7 @@ export function SongsPage() {
     }
 
     try {
+      onProgress('正在匹配歌词和封面', 28)
       const matchInput = { title, artist, durationMs }
       const match = await matchNeteaseSongForUpload(matchInput)
 
@@ -773,6 +798,7 @@ export function SongsPage() {
         lyricLines,
         lyricProvider,
         lyricQuality,
+        onProgress,
       })
       let indexedSiteAsset = siteAsset
       if (siteAsset.lyricLines.length > 0) {
@@ -791,6 +817,7 @@ export function SongsPage() {
         }
       }
 
+      onProgress('导入完成', 100)
       return {
         status: 'imported' as const,
         id: indexedSiteAsset.id,
@@ -799,6 +826,7 @@ export function SongsPage() {
         asset: buildSiteImportedAsset(indexedSiteAsset),
       }
     } catch (error) {
+      onProgress('云端暂不可用，正在保存到本机', 82)
       const now = new Date().toISOString()
       const localAssetId = createLocalSongAssetId()
       let studyIndex: SongStudyIndex | undefined
@@ -836,6 +864,7 @@ export function SongsPage() {
 
       try {
         await saveStoredSongAsset(asset)
+        onProgress('已保存到本机', 100)
         return {
           status: 'imported' as const,
           id: asset.id,
@@ -864,9 +893,20 @@ export function SongsPage() {
     let skippedCount = 0
     let failedCount = 0
 
-    for (const file of files) {
+    for (const [index, file] of files.entries()) {
+      const reportProgress = (message: string, percent: number) => {
+        setImportProgress((current) => ({
+          fileName: file.name,
+          current: index + 1,
+          total: files.length,
+          message,
+          percent: current?.fileName === file.name
+            ? Math.max(current.percent, Math.max(0, Math.min(100, percent)))
+            : Math.max(0, Math.min(100, percent)),
+        }))
+      }
       try {
-        const result = await importMediaFile(file, knownAssets)
+        const result = await importMediaFile(file, knownAssets, reportProgress)
         if (!firstActiveId) {
           firstActiveId = result.id
           firstLineId = result.firstLineId
@@ -885,6 +925,7 @@ export function SongsPage() {
     }
 
     try {
+      setImportProgress((current) => current ? { ...current, message: '正在刷新歌曲列表', percent: 100 } : current)
       await refreshSongAssets(firstActiveId || undefined)
       if (firstLineId) setSelectedLineId(firstLineId)
 
@@ -899,12 +940,20 @@ export function SongsPage() {
       }
     } finally {
       setImporting(false)
+      setImportProgress(null)
     }
   }
 
   const handleDeleteSong = async (song: SongLesson) => {
     const asset = assetById.get(song.id)
-    if (!asset) return
+    if (!asset || deletingSongIds.has(song.id)) return
+
+    setDeletingSongIds((current) => new Set(current).add(song.id))
+    if (asset.storage === 'site') {
+      setSiteAssets((current) => current.filter((item) => item.id !== song.id))
+    } else {
+      setStoredAssets((current) => current.filter((item) => item.id !== song.id))
+    }
 
     try {
       if (asset.storage === 'site') {
@@ -912,10 +961,20 @@ export function SongsPage() {
       } else {
         await deleteStoredSongAsset(song.id)
       }
-      await refreshSongAssets()
       toast.success(`已删除 ${song.title}`)
     } catch (error) {
+      if (asset.storage === 'site' && asset.siteAsset) {
+        setSiteAssets((current) => [asset.siteAsset!, ...current.filter((item) => item.id !== song.id)])
+      } else if (asset.localAsset) {
+        setStoredAssets((current) => [asset.localAsset!, ...current.filter((item) => item.id !== song.id)])
+      }
       toast.error(error instanceof Error ? error.message : '歌曲删除失败')
+    } finally {
+      setDeletingSongIds((current) => {
+        const next = new Set(current)
+        next.delete(song.id)
+        return next
+      })
     }
   }
 
@@ -957,7 +1016,48 @@ export function SongsPage() {
     setSearchParams(nextParams, { replace: true })
   }
 
-  if (!activeSong) return null
+  if (assetsLoading || !activeSong) {
+    return (
+      <div className={styles.page} aria-busy="true" aria-label="正在加载歌曲库">
+        <section className={styles.musicApp}>
+          <aside className={styles.catalogRail}>
+            <div className={styles.brand}>
+              <strong>悠<span>日语</span></strong>
+              <small>用歌曲学日语</small>
+            </div>
+            <nav className={styles.songNav} aria-label="歌曲模块导航">
+              <NavLink to="/">发现</NavLink>
+              <span>歌曲</span>
+              <NavLink to="/review">复习库</NavLink>
+            </nav>
+            <label className={styles.searchBox}>
+              <Search size={16} />
+              <input aria-label="搜索歌曲" placeholder="搜索歌曲 / 歌手" disabled />
+            </label>
+            <div className={styles.catalogLoading}>
+              <div className={styles.catalogLoadingTitle}>
+                <RefreshCw size={16} />
+                <strong>正在加载歌曲</strong>
+              </div>
+              {[0, 1, 2].map((item) => <span key={item} className={styles.songLoadingRow} />)}
+            </div>
+          </aside>
+          <main className={styles.stage}>
+            <header className={styles.topBar}>
+              <div />
+              <div className={styles.sourcePill}><strong>歌曲库</strong><span>正在同步歌曲资源</span></div>
+              <div />
+            </header>
+            <div className={styles.stageLoading}>
+              <RefreshCw size={28} />
+              <strong>正在加载你的歌曲库</strong>
+              <span>马上就好…</span>
+            </div>
+          </main>
+        </section>
+      </div>
+    )
+  }
 
   const loadingCurrentSong = assetsLoading || importing
   const canUseNativeAudio = activeSong.playbackProvider === 'localFile' && Boolean(activeSong.sourceUrl)
@@ -993,7 +1093,7 @@ export function SongsPage() {
                 <strong>我的歌曲</strong>
               </div>
               <button type="button" aria-label="刷新歌曲资源" onClick={() => void refreshSongAssets()}>
-                <RefreshCw size={16} />
+                <RefreshCw size={16} className={assetsLoading ? styles.spinning : undefined} />
               </button>
             </div>
 
@@ -1042,6 +1142,18 @@ export function SongsPage() {
                   <input hidden multiple type="file" accept="audio/*,video/*,.ncm" disabled={importing} onChange={(event) => void handleMediaUpload(event)} />
                 </label>
               </div>
+              {importProgress ? (
+                <div className={styles.importProgress} role="status" aria-live="polite">
+                  <div>
+                    <strong>{importProgress.message}</strong>
+                    <span>{importProgress.current}/{importProgress.total} · {importProgress.percent}%</span>
+                  </div>
+                  <small title={importProgress.fileName}>{importProgress.fileName}</small>
+                  <span className={styles.importProgressTrack}>
+                    <span style={{ width: `${importProgress.percent}%` }} />
+                  </span>
+                </div>
+              ) : null}
             </div>
           </aside>
         ) : null}

@@ -327,6 +327,105 @@
   white-space: nowrap;
 }
 
+.importProgress {
+  display: grid;
+  gap: 0.42rem;
+  padding: 0.72rem;
+  border-radius: 12px;
+  background: #eaf7f2;
+  color: #245f50;
+}
+
+.importProgress > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+}
+
+.importProgress > div span,
+.importProgress small {
+  color: #52756b;
+  font-size: 0.7rem;
+}
+
+.importProgress small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.importProgressTrack {
+  display: block;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(36, 95, 80, 0.14);
+}
+
+.importProgressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #31a483;
+  transition: width 180ms ease;
+}
+
+.catalogLoading {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+}
+
+.catalogLoadingTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #53605c;
+}
+
+.catalogLoadingTitle svg,
+.stageLoading svg,
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+.songLoadingRow {
+  min-height: 62px;
+  border-radius: 13px;
+  background: linear-gradient(90deg, #f0f3f2 25%, #f8f9f9 42%, #f0f3f2 62%);
+  background-size: 300% 100%;
+  animation: shimmer 1.35s ease-in-out infinite;
+}
+
+.stageLoading {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.65rem;
+  min-height: 420px;
+  color: #54615d;
+}
+
+.stageLoading strong {
+  color: #25302d;
+  font-size: 1.12rem;
+}
+
+.stageLoading span {
+  color: #7b8783;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
 .stage {
   min-width: 0;
   display: grid;

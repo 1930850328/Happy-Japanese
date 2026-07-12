@@ -62,6 +62,7 @@ interface SongUploadInput {
   lyricProvider?: LyricProvider
   lyricQuality?: SongLyricQuality
   studyIndex?: SongStudyIndex
+  onProgress?: (message: string, percent: number) => void
 }
 
 interface SongLyricsUpdateInput {
@@ -148,7 +149,7 @@ async function createUploadTicket({
   return await readJsonResponse(response, '歌曲上传凭证创建失败') as unknown as UploadTicketResponse
 }
 
-function uploadFileToSignedUrl(ticket: UploadTicket, file: File) {
+function uploadFileToSignedUrl(ticket: UploadTicket, file: File, onProgress?: (percent: number) => void) {
   return new Promise<void>((resolve, reject) => {
     const xhr = new XMLHttpRequest()
     xhr.open('PUT', ticket.uploadUrl)
@@ -165,6 +166,11 @@ function uploadFileToSignedUrl(ticket: UploadTicket, file: File) {
     xhr.onerror = () => reject(new Error('TOS upload network error.'))
     xhr.onabort = () => reject(new Error('TOS upload aborted.'))
     xhr.ontimeout = () => reject(new Error('TOS upload timed out.'))
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && event.total > 0) {
+        onProgress?.(Math.round((event.loaded / event.total) * 100))
+      }
+    }
     xhr.send(file)
   })
 }
@@ -257,16 +263,24 @@ async function uploadFileToBlob(ticket: UploadTicket, file: File) {
   }
 }
 
-async function uploadSongFiles(ticket: UploadTicketResponse, audioFile?: File, lyricsFile?: File) {
+async function uploadSongFiles(
+  ticket: UploadTicketResponse,
+  audioFile?: File,
+  lyricsFile?: File,
+  onProgress?: (message: string, percent: number) => void,
+) {
   if (audioFile && !ticket.tickets.audio) {
     throw new Error('歌曲上传没有返回音频上传地址。')
   }
 
   try {
     if (audioFile && ticket.tickets.audio) {
-      await uploadFileToSignedUrl(ticket.tickets.audio, audioFile)
+      await uploadFileToSignedUrl(ticket.tickets.audio, audioFile, (percent) => {
+        onProgress?.(`正在上传音频 ${percent}%`, percent)
+      })
     }
     if (lyricsFile && ticket.tickets.lyrics) {
+      onProgress?.('正在上传歌词', 96)
       await uploadFileToSignedUrl(ticket.tickets.lyrics, lyricsFile)
     }
 
@@ -274,6 +288,7 @@ async function uploadSongFiles(ticket: UploadTicketResponse, audioFile?: File, l
       storageProvider: 'tos' as const,
     }
   } catch {
+    onProgress?.('直传未完成，正在切换备用线路', 60)
     try {
       if (audioFile && ticket.tickets.audio) {
         await uploadFileThroughServer(ticket.tickets.audio, audioFile)
@@ -286,6 +301,7 @@ async function uploadSongFiles(ticket: UploadTicketResponse, audioFile?: File, l
         storageProvider: 'tos' as const,
       }
     } catch {
+      onProgress?.('正在尝试分片上传', 68)
       // Fall through to Blob when direct browser PUT and server-side TOS upload are both unavailable.
     }
 
@@ -301,6 +317,7 @@ async function uploadSongFiles(ticket: UploadTicketResponse, audioFile?: File, l
         storageProvider: 'tos' as const,
       }
     } catch {
+      onProgress?.('正在切换备用存储', 76)
       // Fall through to Blob when chunked TOS upload is also unavailable.
     }
 
@@ -363,7 +380,9 @@ export async function uploadSongToSite({
   lyricProvider,
   lyricQuality,
   studyIndex,
+  onProgress,
 }: SongUploadInput) {
+  onProgress?.('正在创建上传任务', 42)
   const ticket = await createUploadTicket({
     audioFile,
     lyricsFile,
@@ -373,9 +392,13 @@ export async function uploadSongToSite({
     throw new Error('歌曲上传没有返回音频上传地址。')
   }
 
-  const uploadResult = await uploadSongFiles(ticket, audioFile, lyricsFile)
+  onProgress?.('正在上传音频', 48)
+  const uploadResult = await uploadSongFiles(ticket, audioFile, lyricsFile, (message, percent) => {
+    onProgress?.(message, 48 + Math.round(percent * 0.42))
+  })
 
   const now = new Date().toISOString()
+  onProgress?.('正在保存歌曲信息', 92)
   return await saveSongAsset({
     id: ticket.songId,
     title,
