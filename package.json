@@ -16,7 +16,8 @@
     "prepare:content": "node ./scripts/prepare-content.mjs",
     "slicer:help": "node ./packages/anime-learning-slicer/src/cli.mjs --help",
     "ingest:video": "node ./scripts/ingest-video.mjs",
-    "watch:video-inbox": "node ./scripts/watch-video-inbox.mjs"
+    "watch:video-inbox": "node ./scripts/watch-video-inbox.mjs",
+    "worker:song-analysis": "node ./scripts/song-analysis-worker.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.940.0",
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@openai/codex": "^0.144.1",
     "@playwright/test": "^1.59.1",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^24.12.0",

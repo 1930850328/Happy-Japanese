@@ -261,7 +261,7 @@ export function LyricLearningLine({
         <span className={classes.time}>{timeLabel}</span>
         <span className={classes.textStack}>
           <strong>{renderJapanese()}</strong>
-          {showZh ? <small>{line.zh}</small> : null}
+          {showZh ? <small>{studyLine?.zh || line.zh}</small> : null}
           {showKana ? <small>{line.kana}</small> : null}
           {showRomaji ? <small>{line.romaji}</small> : null}
         </span>

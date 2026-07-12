@@ -605,6 +605,8 @@ export function SongsPage() {
     setIndexingSongIds((current) => ({ ...current, [activeSong.id]: true }))
     void buildSongStudyIndex({
       songId: activeSong.id,
+      title: activeSong.title,
+      artist: activeSong.artist,
       lyricLines: activeSong.lyricLines,
       quality: activeSong.quality,
     })
@@ -810,6 +812,8 @@ export function SongsPage() {
         try {
           const studyIndex = await buildSongStudyIndex({
             songId: siteAsset.id,
+            title: siteAsset.title,
+            artist: siteAsset.artist,
             lyricLines: siteAsset.lyricLines,
             quality: 'draft',
           })
@@ -839,6 +843,8 @@ export function SongsPage() {
         try {
           studyIndex = await buildSongStudyIndex({
             songId: localAssetId,
+            title,
+            artist,
             lyricLines,
             quality: 'draft',
           })
@@ -1271,7 +1277,7 @@ export function SongsPage() {
                 ))}
               </div>
               {activeSong && indexingSongIds[activeSong.id] ? (
-                <span className={styles.indexingBadge}>学习索引生成中</span>
+                <span className={styles.indexingBadge}>本地 Codex 正在分析歌词（约 1–3 分钟）</span>
               ) : null}
             </div>
 

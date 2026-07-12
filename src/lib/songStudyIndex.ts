@@ -10,8 +10,8 @@ import type {
   StudyIndexQuality,
   StudyStage,
 } from '../types'
-import { createGrammarKnowledge, createWordKnowledge, mergeSongKnowledge } from './knowledgeRepository'
-import { analyzeJapaneseText } from './textAnalysis'
+import { toRomaji } from 'wanakana'
+import { analyzeSongWithLocalCodex } from './localSongAnalysis'
 
 interface TextTimingRange {
   startOffset: number
@@ -22,6 +22,8 @@ interface TextTimingRange {
 
 interface BuildSongStudyIndexInput {
   songId: string
+  title?: string
+  artist?: string
   lyricLines: LyricLine[]
   quality?: StudyIndexQuality
 }
@@ -49,7 +51,7 @@ export function createSongLyricVersion(lyricLines: LyricLine[]) {
     ].join(':'))
     .join('|')
 
-  return `lyrics-v2:${lyricLines.length}:${hashText(signature)}`
+  return `lyrics-codex-v3:${lyricLines.length}:${hashText(signature)}`
 }
 
 export function isSongStudyIndexFresh(index: SongStudyIndex | undefined, songId: string, lyricLines: LyricLine[]) {
@@ -212,6 +214,8 @@ function buildSummary(lines: SongStudyLine[], occurrences: SongStudyOccurrence[]
 
 export async function buildSongStudyIndex({
   songId,
+  title,
+  artist,
   lyricLines,
   quality = 'draft',
 }: BuildSongStudyIndexInput): Promise<SongStudyIndex> {
@@ -219,58 +223,60 @@ export async function buildSongStudyIndex({
   const lines: SongStudyLine[] = []
   const occurrences: SongStudyOccurrence[] = []
   const knowledge: Record<string, SongKnowledge> = {}
+  const analysis = await analyzeSongWithLocalCodex(songId, lyricLines, title, artist)
+  const analysisByLineId = new Map(analysis.lines.map((line) => [line.lineId, line]))
 
   for (const [lineIndex, line] of lyricLines.entries()) {
     const ja = line.ja.trim()
     if (!ja) continue
 
-    const analysis = await analyzeJapaneseText(ja)
+    const lineAnalysis = analysisByLineId.get(line.id)
     const lineOccurrences: SongStudyOccurrence[] = []
     const timingRanges = buildTimedTextRanges(line.ja, line.wordTimings)
-    let tokenCursor = 0
+    let itemCursor = 0
 
-    for (const [tokenIndex, token] of analysis.tokens.entries()) {
-      const range = findTextRange(line.ja, token.surface, tokenCursor)
+    for (const [itemIndex, item] of (lineAnalysis?.items ?? []).entries()) {
+      const range = findTextRange(line.ja, item.expression, itemCursor)
       if (!range) continue
-
-      tokenCursor = range.endOffset
-      const wordKnowledge = createWordKnowledge(token, line)
-      if (!wordKnowledge) continue
-
-      knowledge[wordKnowledge.id] = mergeSongKnowledge(knowledge[wordKnowledge.id], wordKnowledge)
-      const occurrence: SongStudyOccurrence = {
-        id: `${songId}:${line.id}:word-${tokenIndex + 1}`,
-        kind: 'word',
-        lineId: line.id,
-        knowledgeId: wordKnowledge.id,
-        text: line.ja.slice(range.startOffset, range.endOffset),
-        ...range,
-        ...getTimingForRange(range.startOffset, range.endOffset, timingRanges),
-        stage: wordKnowledge.stage,
-        confidence: wordKnowledge.confidence,
+      itemCursor = range.endOffset
+      const knowledgeId = `codex:${item.kind}:${hashText(`${item.expression}:${item.meaningZh}`)}`
+      const baseKnowledge = {
+        id: knowledgeId,
+        expression: item.expression,
+        reading: item.reading,
+        meaningZh: item.meaningZh,
+        explanationZh: item.explanationZh,
+        exampleJa: line.ja,
+        exampleZh: lineAnalysis?.translationZh || line.zh,
+        stage: item.stage,
+        confidence: item.confidence,
+        sources: [{ kind: 'codex-local' as const, label: 'Codex 本地歌词分析' }],
       }
-      lineOccurrences.push(occurrence)
-      occurrences.push(occurrence)
-    }
-
-    let grammarCursor = 0
-    for (const [matchIndex, match] of analysis.grammarMatches.entries()) {
-      const range = findTextRange(line.ja, match.matchedText, grammarCursor)
-      if (!range) continue
-
-      grammarCursor = range.endOffset
-      const grammarKnowledge = createGrammarKnowledge(match, line)
-      knowledge[grammarKnowledge.id] = mergeSongKnowledge(knowledge[grammarKnowledge.id], grammarKnowledge)
+      knowledge[knowledgeId] = item.kind === 'word'
+        ? {
+            ...baseKnowledge,
+            kind: 'word',
+            lemma: item.expression,
+            kana: item.reading,
+            romaji: toRomaji(item.reading),
+            partOfSpeech: '词语 / 固定搭配',
+          }
+        : {
+            ...baseKnowledge,
+            kind: 'grammar',
+            grammarId: knowledgeId,
+            pattern: item.expression,
+          }
       const occurrence: SongStudyOccurrence = {
-        id: `${songId}:${line.id}:grammar-${match.id}-${matchIndex + 1}`,
-        kind: 'grammar',
+        id: `${songId}:${line.id}:${item.kind}-${itemIndex + 1}`,
+        kind: item.kind,
         lineId: line.id,
-        knowledgeId: grammarKnowledge.id,
+        knowledgeId,
         text: line.ja.slice(range.startOffset, range.endOffset),
         ...range,
         ...getTimingForRange(range.startOffset, range.endOffset, timingRanges),
-        stage: grammarKnowledge.stage,
-        confidence: grammarKnowledge.confidence,
+        stage: item.stage,
+        confidence: item.confidence,
       }
       lineOccurrences.push(occurrence)
       occurrences.push(occurrence)
@@ -281,7 +287,7 @@ export async function buildSongStudyIndex({
       startMs: line.startMs,
       endMs: line.endMs,
       ja: line.ja,
-      zh: line.zh,
+      zh: lineAnalysis?.translationZh || line.zh,
       parts: createLineParts({ songId, line, lineOccurrences }),
       occurrenceIds: lineOccurrences.map((occurrence) => occurrence.id),
     })
