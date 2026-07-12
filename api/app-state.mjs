@@ -1,6 +1,7 @@
-import { BlobNotFoundError, get, put } from '@vercel/blob'
+import { BlobNotFoundError, get } from '@vercel/blob'
 
-import { requireAppStateBlobToken } from './_blob-token.mjs'
+import { resolveAppStateBlobToken } from './_blob-token.mjs'
+import { readAppState, writeAppState } from './_tos-storage.mjs'
 
 const STATE_PREFIX = 'app-state'
 
@@ -56,6 +57,19 @@ async function readBlobJson(pathname, token) {
   return JSON.parse(text)
 }
 
+async function readLegacyBlobState(profileId) {
+  const token = resolveAppStateBlobToken()
+  if (!token) return null
+
+  try {
+    return await readBlobJson(getStatePath(profileId), token)
+  } catch (error) {
+    if (error instanceof BlobNotFoundError) return null
+    console.warn('Legacy Vercel Blob app state is unavailable; using TOS.', error)
+    return null
+  }
+}
+
 export default async function handler(req, res) {
   setCors(res)
 
@@ -65,8 +79,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    const token = requireAppStateBlobToken()
-
     if (req.method === 'GET') {
       const profileId = readProfileId(req)
       if (!profileId) {
@@ -74,7 +86,13 @@ export default async function handler(req, res) {
         return
       }
 
-      const state = await readBlobJson(getStatePath(profileId), token)
+      let state = await readAppState(profileId)
+      if (!state) {
+        state = await readLegacyBlobState(profileId)
+        if (state) {
+          state = await writeAppState(profileId, state)
+        }
+      }
       if (!state) {
         res.status(404).json({ error: 'State not found.' })
         return
@@ -103,14 +121,7 @@ export default async function handler(req, res) {
         updatedAt: new Date().toISOString(),
       }
 
-      await put(getStatePath(profileId), JSON.stringify(payload), {
-        access: 'private',
-        token,
-        addRandomSuffix: false,
-        allowOverwrite: true,
-        contentType: 'application/json; charset=utf-8',
-        cacheControlMaxAge: 60,
-      })
+      await writeAppState(profileId, payload)
 
       res.status(200).json({ ok: true })
       return

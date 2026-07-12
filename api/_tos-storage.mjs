@@ -10,13 +10,16 @@ import crypto from 'node:crypto'
 
 export const TOS_SONG_PREFIX = 'song-assets/'
 export const TOS_CHUNK_MANIFEST_CONTENT_TYPE = 'application/vnd.yuru-nihongo.chunked-audio+json'
+export const TOS_APP_STATE_PREFIX = `${TOS_SONG_PREFIX}app-state/`
 
 const INDEX_FILE_NAME = 'index.json'
 const UPLOAD_URL_EXPIRES_SECONDS = 15 * 60
 const PLAYBACK_URL_EXPIRES_SECONDS = 60 * 60
+const SONG_INDEX_CACHE_TTL_MS = 60 * 1000
 
 let cachedClient
 let cachedClientKey = ''
+const songIndexCache = new Map()
 
 function readEnv(name) {
   const value = process.env[name]
@@ -153,6 +156,12 @@ export function getSongIndexKey(profileId) {
   return `${getProfilePrefix(profileId)}/${INDEX_FILE_NAME}`
 }
 
+function getAppStateKey(profileId) {
+  const normalizedProfileId = sanitizeProfileId(profileId)
+  if (!normalizedProfileId) throw new Error('Missing profileId.')
+  return `${TOS_APP_STATE_PREFIX}profiles/${normalizedProfileId}.json`
+}
+
 export function createSongObjectKey({ profileId, songId, kind, fileName }) {
   const safeKind = String(kind ?? '').trim().toLowerCase()
   if (!['audio', 'lyrics', 'cover'].includes(safeKind)) {
@@ -201,6 +210,12 @@ async function bodyToText(body) {
 }
 
 export async function readSongIndex(profileId) {
+  const normalizedProfileId = sanitizeProfileId(profileId)
+  const cached = songIndexCache.get(normalizedProfileId)
+  if (cached && Date.now() - cached.cachedAt < SONG_INDEX_CACHE_TTL_MS) {
+    return cached.value
+  }
+
   const config = getTosConfig()
   const client = getTosClient(config)
 
@@ -213,22 +228,26 @@ export async function readSongIndex(profileId) {
     )
     const raw = await bodyToText(result.Body)
     const parsed = JSON.parse(raw)
-    return {
+    const value = {
       version: 1,
-      profileId: sanitizeProfileId(profileId),
+      profileId: normalizedProfileId,
       updatedAt: '',
       songs: [],
       ...parsed,
       songs: Array.isArray(parsed?.songs) ? parsed.songs : [],
     }
+    songIndexCache.set(normalizedProfileId, { cachedAt: Date.now(), value })
+    return value
   } catch (error) {
     if (isMissingObjectError(error)) {
-      return {
+      const value = {
         version: 1,
-        profileId: sanitizeProfileId(profileId),
+        profileId: normalizedProfileId,
         updatedAt: new Date().toISOString(),
         songs: [],
       }
+      songIndexCache.set(normalizedProfileId, { cachedAt: Date.now(), value })
+      return value
     }
 
     throw error
@@ -249,6 +268,47 @@ export async function writeSongIndex(profileId, index) {
     new PutObjectCommand({
       Bucket: config.bucket,
       Key: getSongIndexKey(profileId),
+      Body: JSON.stringify(payload),
+      ContentType: 'application/json; charset=utf-8',
+    }),
+  )
+
+  songIndexCache.set(sanitizeProfileId(profileId), { cachedAt: Date.now(), value: payload })
+  return payload
+}
+
+export async function readAppState(profileId) {
+  const config = getTosConfig()
+  const client = getTosClient(config)
+
+  try {
+    const result = await client.send(
+      new GetObjectCommand({
+        Bucket: config.bucket,
+        Key: getAppStateKey(profileId),
+      }),
+    )
+    return JSON.parse(await bodyToText(result.Body))
+  } catch (error) {
+    if (isMissingObjectError(error)) return null
+    throw error
+  }
+}
+
+export async function writeAppState(profileId, state) {
+  const config = getTosConfig()
+  const client = getTosClient(config)
+  const payload = {
+    ...state,
+    version: 1,
+    profileId: sanitizeProfileId(profileId),
+    updatedAt: new Date().toISOString(),
+  }
+
+  await client.send(
+    new PutObjectCommand({
+      Bucket: config.bucket,
+      Key: getAppStateKey(profileId),
       Body: JSON.stringify(payload),
       ContentType: 'application/json; charset=utf-8',
     }),

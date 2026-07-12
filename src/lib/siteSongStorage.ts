@@ -9,6 +9,7 @@ const SONG_SERVER_UPLOAD_ENDPOINT = '/api/song-upload-server'
 const SONG_ASSETS_ENDPOINT = '/api/song-assets'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 const SERVER_UPLOAD_CHUNK_SIZE = 2 * 1024 * 1024
+const SONG_LIST_CACHE_PREFIX = 'yuru-nihongo-song-list:'
 
 export interface SiteSongAsset {
   id: string
@@ -34,6 +35,33 @@ export interface SiteSongAsset {
   importedAt: string
   updatedAt: string
   sourceUrl: string
+}
+
+function getSongListCacheKey() {
+  return `${SONG_LIST_CACHE_PREFIX}${getCloudProfileId()}`
+}
+
+export function readCachedSiteSongAssets(): SiteSongAsset[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(getSongListCacheKey()) || '[]') as unknown
+    return Array.isArray(parsed) ? parsed as SiteSongAsset[] : []
+  } catch {
+    return []
+  }
+}
+
+function cacheSiteSongAssets(songs: SiteSongAsset[]) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(getSongListCacheKey(), JSON.stringify(songs))
+  } catch {
+    // The network remains authoritative when browser storage is unavailable or full.
+  }
+}
+
+function cacheSiteSongAsset(song: SiteSongAsset) {
+  cacheSiteSongAssets([song, ...readCachedSiteSongAssets().filter((item) => item.id !== song.id)])
 }
 
 interface UploadTicket {
@@ -354,6 +382,7 @@ async function saveSongAsset(song: Omit<SiteSongAsset, 'sourceUrl'>) {
     throw new Error('歌曲元数据保存后没有返回歌曲资源。')
   }
 
+  cacheSiteSongAsset(body.song)
   return body.song
 }
 
@@ -361,12 +390,11 @@ export async function listSiteSongAssets() {
   const profileId = getCloudProfileId()
   const response = await fetch(
     `${getApiEndpoint(SONG_ASSETS_ENDPOINT)}?profileId=${encodeURIComponent(profileId)}`,
-    {
-      cache: 'no-store',
-    },
   )
   const body = await readJsonResponse(response, '歌曲资源加载失败') as { songs?: SiteSongAsset[] }
-  return Array.isArray(body.songs) ? body.songs : []
+  const songs = Array.isArray(body.songs) ? body.songs : []
+  cacheSiteSongAssets(songs)
+  return songs
 }
 
 export async function uploadSongToSite({
@@ -480,4 +508,5 @@ export async function deleteSiteSongAsset(songId: string) {
   })
 
   await readJsonResponse(response, '歌曲资源删除失败')
+  cacheSiteSongAssets(readCachedSiteSongAssets().filter((song) => song.id !== songId))
 }

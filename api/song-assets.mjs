@@ -307,6 +307,7 @@ async function listSongs(profileId, req, res) {
       .map((song) => attachPlaybackUrl(profileId, origin, song)),
   )
 
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300')
   res.status(200).json({
     profileId,
     songs,

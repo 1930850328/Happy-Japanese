@@ -45,6 +45,7 @@ import {
 import {
   deleteSiteSongAsset,
   listSiteSongAssets,
+  readCachedSiteSongAssets,
   type SiteSongAsset,
   updateSiteSongStudyIndex,
   uploadSongToSite,
@@ -358,7 +359,8 @@ export function SongsPage() {
   const speechPlaybackTimerRef = useRef<number | null>(null)
 
   const immersiveMode = searchParams.get('mode') === 'immersive'
-  const [siteAssets, setSiteAssets] = useState<SiteSongAsset[]>([])
+  const initialSiteAssets = useMemo(() => readCachedSiteSongAssets(), [])
+  const [siteAssets, setSiteAssets] = useState<SiteSongAsset[]>(initialSiteAssets)
   const [storedAssets, setStoredAssets] = useState<StoredSongAsset[]>([])
   const [assetUrls, setAssetUrls] = useState<Record<string, string>>({})
   const [activeSongId, setActiveSongId] = useState(fallbackSongId)
@@ -372,7 +374,7 @@ export function SongsPage() {
   const [showRomaji, setShowRomaji] = useState(false)
   const [showZh, setShowZh] = useState(true)
   const [learningOpen, setLearningOpen] = useState(false)
-  const [assetsLoading, setAssetsLoading] = useState(true)
+  const [assetsLoading, setAssetsLoading] = useState(initialSiteAssets.length === 0)
   const [importing, setImporting] = useState(false)
   const [importProgress, setImportProgress] = useState<ImportProgress | null>(null)
   const [deletingSongIds, setDeletingSongIds] = useState<Set<string>>(() => new Set())
@@ -492,7 +494,7 @@ export function SongsPage() {
   }
 
   async function refreshSongAssets(nextActiveId?: string) {
-    setAssetsLoading(true)
+    if (siteAssets.length === 0 && storedAssets.length === 0) setAssetsLoading(true)
     try {
       const [siteResult, localAssets] = await Promise.allSettled([
         listSiteSongAssets(),
