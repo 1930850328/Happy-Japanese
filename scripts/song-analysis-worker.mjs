@@ -12,6 +12,8 @@ const REQUEST_TIMEOUT_MS = 8 * 60 * 1000
 
 const allowedOrigins = new Set([
   'https://yuru-nihongo-study.vercel.app',
+  'https://www.hxf-yuri.cn',
+  'https://hxf-yuri.cn',
   ...String(process.env.SONG_ANALYSIS_ORIGINS || '')
     .split(',')
     .map((origin) => origin.trim())
