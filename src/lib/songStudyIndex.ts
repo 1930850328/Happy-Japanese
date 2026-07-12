@@ -11,7 +11,7 @@ import type {
   StudyStage,
 } from '../types'
 import { toRomaji } from 'wanakana'
-import { analyzeSongWithLocalCodex } from './localSongAnalysis'
+import { analyzeSongWithLocalCodex, type LocalSongAnalysisProgress } from './localSongAnalysis'
 
 interface TextTimingRange {
   startOffset: number
@@ -26,6 +26,7 @@ interface BuildSongStudyIndexInput {
   artist?: string
   lyricLines: LyricLine[]
   quality?: StudyIndexQuality
+  onProgress?: (progress: LocalSongAnalysisProgress) => void
 }
 
 const studyStages: StudyStage[] = ['beginner', 'intermediate', 'advanced']
@@ -218,12 +219,13 @@ export async function buildSongStudyIndex({
   artist,
   lyricLines,
   quality = 'draft',
+  onProgress,
 }: BuildSongStudyIndexInput): Promise<SongStudyIndex> {
   const lyricVersion = createSongLyricVersion(lyricLines)
   const lines: SongStudyLine[] = []
   const occurrences: SongStudyOccurrence[] = []
   const knowledge: Record<string, SongKnowledge> = {}
-  const analysis = await analyzeSongWithLocalCodex(songId, lyricLines, title, artist)
+  const analysis = await analyzeSongWithLocalCodex(songId, lyricLines, title, artist, onProgress)
   const analysisByLineId = new Map(analysis.lines.map((line) => [line.lineId, line]))
 
   for (const [lineIndex, line] of lyricLines.entries()) {

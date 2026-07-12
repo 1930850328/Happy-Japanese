@@ -8,7 +8,8 @@ const PORT = Number.parseInt(process.env.SONG_ANALYSIS_PORT || '4319', 10)
 const CODEX_ENTRY = fileURLToPath(new URL('../node_modules/@openai/codex/bin/codex.js', import.meta.url))
 const MAX_BODY_BYTES = 1024 * 1024
 const MAX_LINES = 250
-const REQUEST_TIMEOUT_MS = 8 * 60 * 1000
+const REQUEST_TIMEOUT_MS = 5 * 60 * 1000
+const DEFAULT_CODEX_MODEL = 'gpt-5.6-luna'
 
 const allowedOrigins = new Set([
   'https://yuru-nihongo-study.vercel.app',
@@ -192,12 +193,37 @@ class CodexAppServer {
     this.nextId = 1
     this.pending = new Map()
     this.turns = new Map()
+    this.jobs = new Map()
+    this.currentJob = null
     this.analysisQueue = Promise.resolve()
+  }
+
+  updateJob(job, phase, message) {
+    job.phase = phase
+    job.message = message
+    job.updatedAt = Date.now()
+  }
+
+  getJobSnapshot(job) {
+    const queuedJobs = [...this.jobs.values()].filter((item) => item.phase === 'queued')
+    const queueIndex = queuedJobs.indexOf(job)
+    return {
+      songId: job.songId,
+      phase: job.phase,
+      message: job.message,
+      elapsedMs: Date.now() - job.createdAt,
+      queuePosition: queueIndex >= 0 ? queueIndex + 1 : 0,
+      model: process.env.CODEX_MODEL || DEFAULT_CODEX_MODEL,
+    }
+  }
+
+  listJobs() {
+    return [...this.jobs.values()].map((job) => this.getJobSnapshot(job))
   }
 
   async ensureStarted() {
     if (this.child && !this.child.killed) return
-    const child = spawn(process.execPath, [CODEX_ENTRY, 'app-server', '--listen', 'stdio://'], {
+    const child = spawn(process.execPath, [CODEX_ENTRY, 'app-server', '--listen', 'stdio://', '--disable', 'remote_plugin'], {
       cwd: process.cwd(),
       env: process.env,
       stdio: ['pipe', 'pipe', 'pipe'],
@@ -205,7 +231,16 @@ class CodexAppServer {
     })
     this.child = child
     createInterface({ input: child.stdout }).on('line', (line) => this.handleLine(line))
-    child.stderr.on('data', (chunk) => process.stderr.write(`[codex] ${chunk}`))
+    child.stderr.on('data', (chunk) => {
+      const value = String(chunk)
+      if (this.currentJob && value.includes('stream disconnected')) {
+        this.updateJob(this.currentJob, 'reconnecting', 'Codex 连接中断，正在自动重试')
+      }
+      if (this.currentJob && value.includes('falling back to HTTP')) {
+        this.updateJob(this.currentJob, 'analyzing', '已切换到 HTTP，正在生成歌词解析')
+      }
+      process.stderr.write(`[codex] ${chunk}`)
+    })
     child.once('exit', (code, signal) => this.handleExit(code, signal))
     await this.request('initialize', {
       clientInfo: { name: 'happy-japanese-song-worker', title: 'Happy Japanese Song Worker', version: '1.0.0' },
@@ -235,6 +270,7 @@ class CodexAppServer {
     if (!turn) return
     if (message.method === 'item/completed' && message.params?.item?.type === 'agentMessage') {
       turn.messages.push(message.params.item.text || '')
+      if (this.currentJob) this.updateJob(this.currentJob, 'generating', 'Codex 已生成结果，正在接收内容')
     }
     if (message.method === 'turn/completed') {
       this.turns.delete(turnId)
@@ -277,39 +313,71 @@ class CodexAppServer {
   }
 
   analyze(input) {
+    const existing = this.jobs.get(input.songId)
+    if (existing) return existing.promise
+
+    const job = {
+      songId: input.songId,
+      phase: 'queued',
+      message: '任务已进入队列',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      promise: null,
+    }
     const task = async () => {
-      await this.ensureStarted()
-      const threadResult = await this.request('thread/start', {
-        cwd: process.cwd(),
-        ephemeral: true,
-        approvalPolicy: 'never',
-        sandbox: 'read-only',
-        ...(process.env.CODEX_MODEL ? { model: process.env.CODEX_MODEL } : {}),
-      })
-      const threadId = threadResult?.thread?.id
-      if (!threadId) throw new Error('Codex 未创建分析线程')
-      const turnResult = await this.request('turn/start', {
-        threadId,
-        input: [{ type: 'text', text: createPrompt(input) }],
-        outputSchema,
-      })
-      const turnId = turnResult?.turn?.id
-      if (!turnId) throw new Error('Codex 未开始分析')
-      const text = await new Promise((resolve, reject) => {
-        const timer = setTimeout(() => {
-          this.turns.delete(turnId)
-          reject(new Error('Codex 歌词分析超时'))
-        }, REQUEST_TIMEOUT_MS)
-        this.turns.set(turnId, {
-          messages: [],
-          resolve: (value) => { clearTimeout(timer); resolve(value) },
-          reject: (error) => { clearTimeout(timer); reject(error) },
+      this.currentJob = job
+      try {
+        this.updateJob(job, 'starting', '正在启动本地 Codex')
+        await this.ensureStarted()
+        this.updateJob(job, 'preparing', '正在创建歌词分析任务')
+        const threadResult = await this.request('thread/start', {
+          cwd: process.cwd(),
+          ephemeral: true,
+          approvalPolicy: 'never',
+          sandbox: 'read-only',
+          model: process.env.CODEX_MODEL || DEFAULT_CODEX_MODEL,
         })
-      })
-      return validateAnalysis(parseJsonMessage(text), input)
+        const threadId = threadResult?.thread?.id
+        if (!threadId) throw new Error('Codex 未创建分析线程')
+        this.updateJob(job, 'analyzing', 'Codex 正在理解整首歌词')
+        const turnResult = await this.request('turn/start', {
+          threadId,
+          input: [{ type: 'text', text: createPrompt(input) }],
+          model: process.env.CODEX_MODEL || DEFAULT_CODEX_MODEL,
+          effort: 'low',
+          summary: 'none',
+          outputSchema,
+        })
+        const turnId = turnResult?.turn?.id
+        if (!turnId) throw new Error('Codex 未开始分析')
+        const text = await new Promise((resolve, reject) => {
+          const timer = setTimeout(() => {
+            this.turns.delete(turnId)
+            reject(new Error('Codex 歌词分析超过 5 分钟，任务已终止'))
+          }, REQUEST_TIMEOUT_MS)
+          this.turns.set(turnId, {
+            messages: [],
+            resolve: (value) => { clearTimeout(timer); resolve(value) },
+            reject: (error) => { clearTimeout(timer); reject(error) },
+          })
+        })
+        this.updateJob(job, 'validating', '正在校验翻译、词义和语法')
+        return validateAnalysis(parseJsonMessage(text), input)
+      } finally {
+        if (this.currentJob === job) this.currentJob = null
+      }
     }
     const result = this.analysisQueue.then(task, task)
+    job.promise = result
+    this.jobs.set(input.songId, job)
     this.analysisQueue = result.catch(() => {})
+    void result.then(() => {
+      this.updateJob(job, 'completed', '分析完成')
+      setTimeout(() => this.jobs.get(input.songId) === job && this.jobs.delete(input.songId), 30_000)
+    }).catch((error) => {
+      this.updateJob(job, 'failed', error instanceof Error ? error.message : '歌词分析失败')
+      setTimeout(() => this.jobs.get(input.songId) === job && this.jobs.delete(input.songId), 30_000)
+    })
     return result
   }
 }
@@ -321,10 +389,15 @@ const server = createServer(async (request, response) => {
   const origin = request.headers.origin
   if (origin && !isAllowedOrigin(origin)) return sendJson(response, 403, { error: '不允许的来源' })
   if (request.method === 'OPTIONS') return sendJson(response, 204, {})
-  if (request.method === 'GET' && request.url === '/health') {
-    return sendJson(response, 200, { ok: true, provider: 'codex-app-server', busy: codex.turns.size > 0 })
+  const requestUrl = new URL(request.url || '/', `http://${HOST}:${PORT}`)
+  if (request.method === 'GET' && requestUrl.pathname === '/health') {
+    return sendJson(response, 200, { ok: true, provider: 'codex-app-server', busy: codex.jobs.size > 0, jobs: codex.listJobs() })
   }
-  if (request.method === 'POST' && request.url === '/analyze') {
+  if (request.method === 'GET' && requestUrl.pathname === '/status') {
+    const job = codex.jobs.get(requestUrl.searchParams.get('songId') || '')
+    return sendJson(response, 200, job ? codex.getJobSnapshot(job) : { phase: 'idle', message: '等待任务' })
+  }
+  if (request.method === 'POST' && requestUrl.pathname === '/analyze') {
     try {
       const input = normalizeInput(await readJsonBody(request))
       const analysis = await codex.analyze(input)

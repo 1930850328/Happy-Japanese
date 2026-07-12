@@ -27,6 +27,7 @@ import { toast } from 'sonner'
 
 import { LyricLearningLine } from '../components/songLearning/LyricLearningLine'
 import { songLessons } from '../data/songLessons'
+import type { LocalSongAnalysisProgress } from '../lib/localSongAnalysis'
 import {
   getNextStudyStage,
   getStudyStageLabel,
@@ -73,6 +74,15 @@ import styles from './SongsPage.module.css'
 const playbackRates = [0.75, 1, 1.25]
 const demoSongs = songLessons.filter((song) => song.sourceType === 'demo')
 const fallbackSongId = demoSongs[0]?.id ?? songLessons[0]?.id ?? ''
+
+function formatAnalysisProgress(progress: LocalSongAnalysisProgress | undefined) {
+  if (!progress) return '正在启动本地 Codex'
+  const elapsed = typeof progress.elapsedMs === 'number'
+    ? ` · ${Math.max(1, Math.floor(progress.elapsedMs / 60_000))} 分钟`
+    : ''
+  const queue = progress.queuePosition ? `（队列第 ${progress.queuePosition} 个）` : ''
+  return `${progress.message}${queue}${elapsed}`
+}
 
 function formatTime(ms: number) {
   const totalSeconds = Math.max(0, Math.floor(ms / 1000))
@@ -381,6 +391,7 @@ export function SongsPage() {
   const [loadError, setLoadError] = useState('')
   const [studyIndexes, setStudyIndexes] = useState<Record<string, SongStudyIndex>>({})
   const [indexingSongIds, setIndexingSongIds] = useState<Record<string, boolean>>({})
+  const [analysisProgressBySongId, setAnalysisProgressBySongId] = useState<Record<string, LocalSongAnalysisProgress>>({})
 
   const importedAssets = useMemo(() => {
     const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)
@@ -603,12 +614,20 @@ export function SongsPage() {
 
     let ignore = false
     setIndexingSongIds((current) => ({ ...current, [activeSong.id]: true }))
+    setAnalysisProgressBySongId((current) => ({
+      ...current,
+      [activeSong.id]: { phase: 'connecting', message: '正在连接本地歌词分析服务' },
+    }))
     void buildSongStudyIndex({
       songId: activeSong.id,
       title: activeSong.title,
       artist: activeSong.artist,
       lyricLines: activeSong.lyricLines,
       quality: activeSong.quality,
+      onProgress: (progress) => {
+        if (ignore) return
+        setAnalysisProgressBySongId((current) => ({ ...current, [activeSong.id]: progress }))
+      },
     })
       .then((index) => {
         if (ignore) return
@@ -1244,7 +1263,7 @@ export function SongsPage() {
                 ))}
               </div>
               {activeSong && indexingSongIds[activeSong.id] ? (
-                <span className={styles.indexingBadge}>本地 Codex 正在分析歌词（约 1–3 分钟）</span>
+                <span className={styles.indexingBadge}>{formatAnalysisProgress(analysisProgressBySongId[activeSong.id])}</span>
               ) : null}
             </div>
 
