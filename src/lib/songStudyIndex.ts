@@ -49,7 +49,7 @@ export function createSongLyricVersion(lyricLines: LyricLine[]) {
     ].join(':'))
     .join('|')
 
-  return `lyrics:${lyricLines.length}:${hashText(signature)}`
+  return `lyrics-v2:${lyricLines.length}:${hashText(signature)}`
 }
 
 export function isSongStudyIndexFresh(index: SongStudyIndex | undefined, songId: string, lyricLines: LyricLine[]) {
@@ -177,10 +177,19 @@ function createLineParts({
 
 function buildStagePlans(occurrences: SongStudyOccurrence[]) {
   return studyStages.reduce<SongStudyIndex['stagePlans']>((acc, stage) => {
+    const stageOccurrences = occurrences.filter((occurrence) => occurrence.stage === stage)
+    const focusOccurrenceIds = [...new Set(stageOccurrences.map((occurrence) => occurrence.lineId))]
+      .flatMap((lineId) => stageOccurrences
+        .filter((occurrence) => occurrence.lineId === lineId)
+        .sort((left, right) => {
+          if (left.kind !== right.kind) return left.kind === 'grammar' ? -1 : 1
+          if (left.confidence !== right.confidence) return right.confidence - left.confidence
+          return (right.endOffset - right.startOffset) - (left.endOffset - left.startOffset)
+        })
+        .slice(0, 4)
+        .map((occurrence) => occurrence.id))
     acc[stage] = {
-      focusOccurrenceIds: occurrences
-        .filter((occurrence) => occurrence.stage === stage)
-        .map((occurrence) => occurrence.id),
+      focusOccurrenceIds,
     }
     return acc
   }, {

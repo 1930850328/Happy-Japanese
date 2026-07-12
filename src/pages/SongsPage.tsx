@@ -395,8 +395,11 @@ export function SongsPage() {
   const activeSong = songs.find((song) => song.id === activeSongId) ?? songs[0]
   const displayCover = activeSong?.artworkUrl || activeSong?.cover
   const activeAsset = activeSong ? assetById.get(activeSong.id) : undefined
-  const activeStudyIndex = activeSong
+  const activeStudyIndexCandidate = activeSong
     ? studyIndexes[activeSong.id] ?? activeSong.studyIndex ?? activeAsset?.studyIndex
+    : undefined
+  const activeStudyIndex = activeSong && isSongStudyIndexFresh(activeStudyIndexCandidate, activeSong.id, activeSong.lyricLines)
+    ? activeStudyIndexCandidate
     : undefined
   const activeStudyLineById = useMemo(() => {
     return new Map((activeStudyIndex?.lines ?? []).map((line) => [line.lineId, line]))

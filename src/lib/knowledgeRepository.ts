@@ -118,7 +118,7 @@ function getWordStage(token: TokenAnalysis, card: VocabCard | null): StudyStage 
     return 'beginner'
   }
 
-  if (card?.level === 'N5') {
+  if (card?.level === 'N5' || (!card && hasReliableMeaning(token.meaningZh))) {
     return 'beginner'
   }
 
@@ -182,12 +182,13 @@ function mergeSources(left: SongKnowledgeSource[], right: SongKnowledgeSource[])
 
 export function createWordKnowledge(token: TokenAnalysis, line: LyricLine): SongWordKnowledge | null {
   const surface = token.surface.trim()
-  if (!surface || isPunctuationToken(token) || !hasJapaneseText(surface)) {
+  if (!surface || isPunctuationToken(token) || isGrammarFunctionToken(token) || !hasJapaneseText(surface)) {
     return null
   }
 
   const card = findCuratedVocab(token)
   const meaningZh = getWordMeaning(token, card)
+  if (!hasReliableMeaning(meaningZh)) return null
   const stage = getWordStage(token, card)
   const lemma = token.base || surface
   const knowledgeKey = normalizeKnowledgeKey(`${lemma}:${token.partOfSpeech || 'word'}`)

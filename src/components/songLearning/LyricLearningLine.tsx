@@ -1,6 +1,7 @@
 import { type FocusEvent, type KeyboardEvent, type MouseEvent, type Ref, useEffect, useMemo, useRef, useState } from 'react'
 
 import { isOccurrenceFocusedForStage } from '../../lib/learningStagePolicy'
+import { hasReliableMeaning } from '../../lib/textAnalysis'
 import type {
   LyricLine,
   SongKnowledge,
@@ -63,7 +64,7 @@ function getPartKnowledgeItems(
     .map((id) => occurrenceById.get(id))
     .filter((occurrence): occurrence is SongStudyOccurrence => Boolean(occurrence))
     .map((occurrence) => studyIndex.knowledge[occurrence.knowledgeId])
-    .filter((knowledge): knowledge is SongKnowledge => Boolean(knowledge))
+    .filter((knowledge): knowledge is SongKnowledge => Boolean(knowledge && hasReliableMeaning(knowledge.meaningZh)))
 }
 
 function getPrimaryMeaning(items: SongKnowledge[]) {
@@ -238,7 +239,7 @@ export function LyricLearningLine({
               onMouseLeave={scheduleHideCard}
             >
               <span>{part.text}</span>
-              {meaning ? <small>{meaning}</small> : null}
+              {focused && meaning ? <small>{meaning}</small> : null}
             </button>
           )
         })}

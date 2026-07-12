@@ -2,6 +2,30 @@ import type { GrammarPattern } from '../types'
 
 export const grammarPatterns: GrammarPattern[] = [
   {
+    id: 'de-ichiban',
+    pattern: 'で一番',
+    label: '范围最高级 Nで一番',
+    meaningZh: '在……中最……',
+    explanationZh: '用「で」限定比较范围，再用「一番」表示其中程度最高。',
+    level: 'N5',
+  },
+  {
+    id: 'souiu',
+    pattern: 'そういう',
+    label: '指示表达 そういう',
+    meaningZh: '那样的 / 这种',
+    explanationZh: '指代前文提到的性质或做法，后面通常接名词。',
+    level: 'N4',
+  },
+  {
+    id: 'ki-ga-tsuku',
+    pattern: '気が付く',
+    label: '固定搭配 気が付く',
+    meaningZh: '注意到 / 察觉到',
+    explanationZh: '固定搭配，表示发现之前没有留意到的事情。',
+    level: 'N4',
+  },
+  {
     id: 'desu',
     pattern: 'です',
     label: '判断句 です',

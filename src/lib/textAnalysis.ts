@@ -11,6 +11,43 @@ const meaningMap = new Map<string, string>()
 const readingMap = new Map<string, string>()
 export const UNKNOWN_MEANING = '词义待补充'
 const heuristicMeaningMap = new Map<string, string>([
+  ['世界', '世界'],
+  ['一番', '最 / 第一'],
+  ['姫', '公主'],
+  ['姫様', '公主殿下'],
+  ['さま', '对人的尊称'],
+  ['扱い', '对待方式 / 待遇'],
+  ['心得', '规矩 / 心得'],
+  ['いつも', '总是 / 平时'],
+  ['違う', '不同 / 不一样'],
+  ['髪形', '发型'],
+  ['髪型', '发型'],
+  ['気', '心思 / 注意'],
+  ['付く', '注意到 / 察觉'],
+  ['気が付く', '注意到 / 察觉'],
+  ['ちゃんと', '好好地 / 认真地'],
+  ['靴', '鞋'],
+  ['全部', '全部'],
+  ['最後', '最后'],
+  ['最初', '最初 / 一开始'],
+  ['本当', '真的 / 真正'],
+  ['自分', '自己'],
+  ['今', '现在'],
+  ['人', '人'],
+  ['心', '心 / 心情'],
+  ['声', '声音'],
+  ['夢', '梦想'],
+  ['君', '你'],
+  ['私', '我'],
+  ['僕', '我（男性自称）'],
+  ['好き', '喜欢'],
+  ['嫌い', '讨厌'],
+  ['大切', '重要 / 珍贵'],
+  ['強い', '强 / 坚强'],
+  ['弱い', '弱 / 脆弱'],
+  ['新しい', '新的'],
+  ['同じ', '相同'],
+  ['違い', '差异 / 不同'],
   ['する', '做 / 进行'],
   ['なる', '变成 / 成为'],
   ['ある', '有 / 存在'],
@@ -157,11 +194,6 @@ function resolveMeaning(surface: string, base: string, reading: string, kana: st
   const heuristic = heuristicMeaningMap.get(base) ?? heuristicMeaningMap.get(surface)
   if (heuristic) {
     return heuristic
-  }
-
-  const hanGuess = (base.match(/[\p{Script=Han}]+/gu) || []).join('')
-  if (hanGuess) {
-    return hanGuess
   }
 
   return UNKNOWN_MEANING
