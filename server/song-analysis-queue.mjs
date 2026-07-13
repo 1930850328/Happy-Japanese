@@ -69,17 +69,17 @@ export function createSongAnalysisQueue() {
 }
 
 const stateProgress = {
-  waiting: { phase: 'queued', message: '任务已进入云端分析队列' },
+  waiting: { phase: 'queued', message: '任务已进入云端学习信息队列' },
   'waiting-children': { phase: 'queued', message: '任务正在等待依赖完成' },
-  delayed: { phase: 'retrying', message: '分析失败，正在等待自动重试' },
+  delayed: { phase: 'retrying', message: '生成失败，正在等待自动重试' },
   active: { phase: 'starting', message: '云端 Worker 已领取任务' },
-  completed: { phase: 'completed', message: '分析完成' },
-  failed: { phase: 'failed', message: '分析失败' },
-  paused: { phase: 'queued', message: '分析队列暂时暂停' },
+  completed: { phase: 'completed', message: '学习信息生成完成' },
+  failed: { phase: 'failed', message: '学习信息生成失败' },
+  paused: { phase: 'queued', message: '学习信息队列暂时暂停' },
 }
 
 function normalizeProgress(progress, state) {
-  const fallback = stateProgress[state] ?? { phase: state, message: '正在处理歌曲分析任务' }
+  const fallback = stateProgress[state] ?? { phase: state, message: '正在处理学习信息任务' }
   if (!progress || typeof progress !== 'object' || Array.isArray(progress)) return fallback
   return {
     ...fallback,
@@ -100,7 +100,7 @@ export async function getSongAnalysisJobSnapshot(job) {
       elapsedMs: Math.max(0, Date.now() - startedAt),
     },
     ...(state === 'completed' ? { result: job.returnvalue } : {}),
-    ...(state === 'failed' ? { error: job.failedReason || '歌曲分析失败' } : {}),
+    ...(state === 'failed' ? { error: job.failedReason || '学习信息生成失败' } : {}),
   }
 }
 

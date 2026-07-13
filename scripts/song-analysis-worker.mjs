@@ -1,7 +1,10 @@
 import { Worker } from 'bullmq'
 
 import { CodexSongAnalyzer } from '../server/codex-song-analyzer.mjs'
-import { sendSongAnalysisResult } from '../server/song-analysis-callback.mjs'
+import {
+  sendSongAnalysisFailure,
+  sendSongAnalysisResult,
+} from '../server/song-analysis-callback.mjs'
 import { normalizeSongAnalysisInput } from '../server/song-analysis-contract.mjs'
 import {
   getSongAnalysisQueuePrefix,
@@ -26,7 +29,7 @@ const worker = new Worker(
       await job.updateData({ ...input, completedAnalysis: analysis })
     }
     if (input.profileId) {
-      await job.updateProgress({ phase: 'saving', message: '分析完成，正在保存学习索引' })
+      await job.updateProgress({ phase: 'saving', message: '学习信息生成完成，正在保存' })
       await sendSongAnalysisResult({ jobId: job.id, input, analysis })
     }
     return analysis
@@ -53,6 +56,11 @@ worker.on('completed', (job) => {
 })
 worker.on('failed', (job, error) => {
   console.error(`[song-analysis-worker] failed ${job?.id || 'unknown'}: ${error.message}`)
+  const attempts = Number(job?.opts?.attempts ?? 1)
+  if (job?.data?.profileId && job.attemptsMade >= attempts) {
+    void sendSongAnalysisFailure({ jobId: job.id, input: job.data, error })
+      .catch((callbackError) => console.error('[song-analysis-worker] failed to persist terminal failure', callbackError))
+  }
 })
 worker.on('error', (error) => {
   console.error('[song-analysis-worker] worker error', error)

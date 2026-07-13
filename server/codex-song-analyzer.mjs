@@ -55,19 +55,13 @@ function configuredModel() {
 }
 
 function createPrompt(input) {
-  return `你是一名严谨的日语教师。请结合整首歌的上下文，把歌词制作成面向中文母语学习者的高质量学习索引。
+  return `Run song learning generation through the $generate-song-learning-info skill.
 
-硬性要求：
-1. 每行给出自然、准确的简体中文翻译；不要逐字硬译，也不要凭空补剧情。
-2. 每行只挑 1-4 个真正值得学习的词、固定搭配或语法；助词只有在构成明确语法时才选。
-3. expression 必须是该行日文中的连续原文，不能改写。
-4. meaningZh 必须是该上下文里的明确中文义，禁止“词义待补充”“待确认”等占位内容，禁止把日文原样当中文释义。
-5. explanationZh 要说明它在本句中的用法或语感，不能只重复释义。
-6. reading 用平假名。confidence 只表示你对当前上下文判断的信心；低于 0.8 的条目不要输出。
-7. 保留每一个 lineId，顺序与输入一致。只输出符合所给 JSON Schema 的 JSON。
-8. 不要调用任何工具，不要访问文件或网络。
+The API and Worker wrapper only provide runtime input JSON and the output schema. All translation, learning-point selection, and explanation strategy must come from the skill rather than this wrapper prompt.
 
-输入：
+Return only JSON that conforms to the supplied schema.
+
+Runtime input:
 ${JSON.stringify(input)}`
 }
 
@@ -160,7 +154,7 @@ export class CodexSongAnalyzer {
       if (value.includes('stream disconnected')) {
         void this.updateProgress('reconnecting', 'Codex 连接中断，正在自动重试')
       } else if (value.includes('falling back to HTTP')) {
-        void this.updateProgress('analyzing', '已切换连接方式，正在生成歌词解析')
+        void this.updateProgress('analyzing', '已切换连接方式，正在生成学习信息')
       }
       process.stderr.write(`[codex] ${chunk}`)
     })
@@ -242,7 +236,7 @@ export class CodexSongAnalyzer {
     try {
       await this.updateProgress('starting', '正在启动云端 Codex Agent')
       await this.ensureStarted()
-      await this.updateProgress('preparing', '正在创建歌词分析任务')
+      await this.updateProgress('preparing', '正在创建学习信息生成任务')
       const model = configuredModel()
       const threadResult = await this.request('thread/start', {
         cwd: process.cwd(),
@@ -254,7 +248,7 @@ export class CodexSongAnalyzer {
       const threadId = threadResult?.thread?.id
       if (!threadId) throw new Error('Codex 未创建分析线程')
 
-      await this.updateProgress('analyzing', 'Codex 正在理解整首歌词')
+      await this.updateProgress('analyzing', 'Codex 正在理解整首歌词并生成学习信息')
       const turnResult = await this.request('turn/start', {
         threadId,
         input: [{ type: 'text', text: createPrompt(input) }],
@@ -269,7 +263,7 @@ export class CodexSongAnalyzer {
       const text = await new Promise((resolve, reject) => {
         const timer = setTimeout(() => {
           this.turns.delete(turnId)
-          reject(new Error('Codex 歌词分析超时，任务已终止'))
+          reject(new Error('Codex 学习信息生成超时，任务已终止'))
         }, requestTimeoutMs())
         this.turns.set(turnId, {
           messages: [],

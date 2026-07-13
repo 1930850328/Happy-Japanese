@@ -21,6 +21,7 @@ RUN pnpm install --frozen-lockfile --prod
 
 COPY --chown=node:node scripts/song-analysis-worker*.mjs ./scripts/
 COPY --chown=node:node server ./server
+COPY --chown=node:node .agents/skills/generate-song-learning-info ./.agents/skills/generate-song-learning-info
 
 VOLUME ["/data/codex"]
 CMD ["node", "scripts/song-analysis-worker-bootstrap.mjs"]

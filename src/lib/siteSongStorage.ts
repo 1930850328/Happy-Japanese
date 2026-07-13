@@ -37,7 +37,7 @@ export interface SiteSongAsset {
   analysis?: {
     jobId?: string
     lyricVersion: string
-    status: 'queued' | 'ready' | 'failed'
+    status: 'pending' | 'queued' | 'ready' | 'failed'
     error?: string
     updatedAt: string
   }

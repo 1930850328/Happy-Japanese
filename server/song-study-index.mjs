@@ -207,7 +207,7 @@ export function buildSongStudyIndexFromAnalysis({
         exampleZh: lineAnalysis?.translationZh || line.zh,
         stage: item.stage,
         confidence: item.confidence,
-        sources: [{ kind: 'codex-agent', label: 'Codex Agent 歌词分析' }],
+        sources: [{ kind: 'codex-agent', label: 'Codex Agent 学习信息生成' }],
       }
       knowledge[knowledgeId] = item.kind === 'word'
         ? {

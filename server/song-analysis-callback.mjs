@@ -6,13 +6,14 @@ import {
 } from './song-study-index.mjs'
 
 export const SONG_ANALYSIS_CALLBACK_TYPE = 'song-analysis.completed'
+export const SONG_ANALYSIS_FAILURE_CALLBACK_TYPE = 'song-analysis.failed'
 
 function assertAnalysisResult(analysis, input) {
   if (!analysis || typeof analysis !== 'object' || analysis.version !== 1) {
-    throw new Error('歌曲分析回调结果格式不正确')
+    throw new Error('学习信息回调结果格式不正确')
   }
   if (analysis.songId !== input.songId || !Array.isArray(analysis.lines)) {
-    throw new Error('歌曲分析回调与任务不匹配')
+    throw new Error('学习信息回调与任务不匹配')
   }
   return analysis
 }
@@ -26,8 +27,8 @@ export async function persistSongAnalysisResult({
 }) {
   const input = normalizeSongAnalysisInput(rawInput)
   const analysis = assertAnalysisResult(rawAnalysis, input)
-  if (!input.profileId) throw new Error('歌曲分析回调缺少 profileId')
-  if (jobId !== createSongAnalysisJobId(input)) throw new Error('歌曲分析回调任务 ID 不匹配')
+  if (!input.profileId) throw new Error('学习信息回调缺少 profileId')
+  if (jobId !== createSongAnalysisJobId(input)) throw new Error('学习信息回调任务 ID 不匹配')
 
   const index = await readSongIndex(input.profileId)
   const songIndex = index.songs.findIndex((song) => song.id === input.songId)
@@ -72,6 +73,51 @@ export async function persistSongAnalysisResult({
   return { persisted: true, studyIndex }
 }
 
+export async function persistSongAnalysisFailure({
+  jobId,
+  input: rawInput,
+  error,
+  readSongIndex,
+  writeSongIndex,
+}) {
+  const input = normalizeSongAnalysisInput(rawInput)
+  if (!input.profileId) throw new Error('学习信息失败回调缺少 profileId')
+  if (jobId !== createSongAnalysisJobId(input)) throw new Error('学习信息失败回调任务 ID 不匹配')
+
+  const index = await readSongIndex(input.profileId)
+  const songIndex = index.songs.findIndex((song) => song.id === input.songId)
+  if (songIndex < 0) return { persisted: false, reason: 'song-not-found' }
+
+  const song = index.songs[songIndex]
+  const lyricVersion = createSongLyricVersion(song.lyricLines)
+  if (lyricVersion !== createSongLyricVersion(input.lyricLines)) {
+    return { persisted: false, reason: 'stale-lyrics' }
+  }
+  if (song.analysis?.status === 'ready') {
+    return { persisted: false, reason: 'already-ready' }
+  }
+
+  const message = String(error || '学习信息生成失败').trim().slice(0, 500) || '学习信息生成失败'
+  if (song.analysis?.status === 'failed' && song.analysis?.jobId === jobId && song.analysis?.error === message) {
+    return { persisted: true, duplicate: true }
+  }
+
+  const now = new Date().toISOString()
+  const songs = index.songs.slice()
+  songs[songIndex] = {
+    ...song,
+    analysis: {
+      jobId,
+      lyricVersion,
+      status: 'failed',
+      error: message,
+      updatedAt: now,
+    },
+  }
+  await writeSongIndex(input.profileId, { ...index, songs })
+  return { persisted: true }
+}
+
 function callbackConfig() {
   const url = process.env.SONG_ANALYSIS_CALLBACK_URL?.trim()
   const secret = process.env.SONG_ANALYSIS_CALLBACK_SECRET?.trim()
@@ -98,7 +144,30 @@ export async function sendSongAnalysisResult({ jobId, input, analysis, fetchImpl
   })
   const body = await response.json().catch(() => null)
   if (!response.ok) {
-    throw new Error(body?.error || `歌曲分析结果保存失败 (${response.status})`)
+    throw new Error(body?.error || `学习信息结果保存失败 (${response.status})`)
+  }
+  return body
+}
+
+export async function sendSongAnalysisFailure({ jobId, input, error, fetchImpl = fetch }) {
+  if (!input.profileId) return { persisted: false, reason: 'local-song' }
+  const { url, secret } = callbackConfig()
+  const response = await fetchImpl(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${secret}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      type: SONG_ANALYSIS_FAILURE_CALLBACK_TYPE,
+      jobId,
+      input,
+      error: error instanceof Error ? error.message : String(error || '学习信息生成失败'),
+    }),
+  })
+  const body = await response.json().catch(() => null)
+  if (!response.ok) {
+    throw new Error(body?.error || `学习信息失败状态保存失败 (${response.status})`)
   }
   return body
 }

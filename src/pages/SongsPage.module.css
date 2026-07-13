@@ -271,6 +271,9 @@
   color: #f04732;
   font-size: 0.76rem;
   font-style: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .importDock {

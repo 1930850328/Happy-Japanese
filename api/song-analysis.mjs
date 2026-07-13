@@ -1,9 +1,16 @@
 import { createHash, timingSafeEqual } from 'node:crypto'
 
-import { readSongIndex, writeSongIndex } from './_tos-storage.mjs'
 import {
+  readSongIndex,
+  sanitizeProfileId,
+  sanitizeSongId,
+  writeSongIndex,
+} from './_tos-storage.mjs'
+import {
+  persistSongAnalysisFailure,
   persistSongAnalysisResult,
   SONG_ANALYSIS_CALLBACK_TYPE,
+  SONG_ANALYSIS_FAILURE_CALLBACK_TYPE,
 } from '../server/song-analysis-callback.mjs'
 import {
   createSongAnalysisJobId,
@@ -12,11 +19,19 @@ import {
   SongAnalysisInputError,
 } from '../server/song-analysis-contract.mjs'
 import {
+  createStoredSongAnalysisInput,
+  updateSongLearningGenerationStatus,
+} from '../server/song-analysis-lifecycle.mjs'
+import {
   createSongAnalysisQueue,
   enqueueSongAnalysis,
   getSongAnalysisJobSnapshot,
   getSongAnalysisWorkerHeartbeatKey,
 } from '../server/song-analysis-queue.mjs'
+import {
+  createSongLyricVersion,
+  isSongStudyIndexFresh,
+} from '../server/song-study-index.mjs'
 
 const defaultAllowedOrigins = new Set([
   'https://hxf-yuri.cn',
@@ -91,7 +106,7 @@ async function enforceRateLimit(queue, req) {
   const result = await transaction.exec()
   const count = Number(result?.[0]?.[1] ?? 0)
   if (count > maxRequests) {
-    throw new HttpError(429, '歌曲分析请求过于频繁，请稍后再试')
+    throw new HttpError(429, '学习信息生成请求过于频繁，请稍后再试')
   }
 }
 
@@ -106,33 +121,118 @@ async function handleGet(req, res, queue) {
     res.status(200).json({ ok: true, workerAvailable: await workerIsAvailable(queue) })
     return
   }
-  if (!isSongAnalysisJobId(jobId)) throw new HttpError(400, '无效的歌曲分析任务 ID')
+  if (!isSongAnalysisJobId(jobId)) throw new HttpError(400, '无效的学习信息任务 ID')
 
   const job = await queue.getJob(jobId)
-  if (!job) throw new HttpError(404, '歌曲分析任务不存在或结果已过期')
+  if (!job) throw new HttpError(404, '学习信息任务不存在或结果已过期')
   res.status(200).json(await getSongAnalysisJobSnapshot(job))
 }
 
+function isStoredSongGenerationRequest(body) {
+  return Boolean(body?.profileId && body?.songId && !Array.isArray(body?.lyricLines))
+}
+
+async function readStoredSongGeneration(body) {
+  const profileId = sanitizeProfileId(body.profileId)
+  const songId = sanitizeSongId(body.songId)
+  if (!profileId) throw new HttpError(400, '缺少 profileId')
+  if (!songId) throw new HttpError(400, '缺少 songId')
+
+  const index = await readSongIndex(profileId)
+  const song = index.songs.find((item) => item.id === songId)
+  if (!song) throw new HttpError(404, '歌曲不存在')
+  if (!Array.isArray(song.lyricLines) || song.lyricLines.length === 0) {
+    throw new HttpError(400, '歌曲还没有可用于生成学习信息的歌词')
+  }
+
+  const input = createStoredSongAnalysisInput(profileId, song)
+  return {
+    profileId,
+    song,
+    input,
+    jobId: createSongAnalysisJobId(input),
+    lyricVersion: createSongLyricVersion(song.lyricLines),
+  }
+}
+
+async function updateStoredGenerationStatus(generation, status, error) {
+  return await updateSongLearningGenerationStatus({
+    profileId: generation.profileId,
+    songId: generation.song.id,
+    jobId: generation.jobId,
+    lyricVersion: generation.lyricVersion,
+    status,
+    error,
+    readSongIndex,
+    writeSongIndex,
+  })
+}
+
 async function handlePost(req, res, queue, body) {
-  const input = normalizeSongAnalysisInput(body)
+  const storedGeneration = isStoredSongGenerationRequest(body)
+    ? await readStoredSongGeneration(body)
+    : null
+  const input = storedGeneration?.input ?? normalizeSongAnalysisInput(body)
   const jobId = createSongAnalysisJobId(input)
   const existing = await queue.getJob(jobId)
   if (existing) {
     const state = await existing.getState()
-    if (state === 'failed') {
+    if (state === 'failed' && !storedGeneration) {
       await enforceRateLimit(queue, req)
-      if (!await workerIsAvailable(queue)) throw new HttpError(503, '歌曲分析 Worker 暂未上线')
+      if (!await workerIsAvailable(queue)) throw new HttpError(503, '学习信息 Worker 暂未上线')
       await existing.retry('failed')
+    }
+    if (storedGeneration) {
+      if (state === 'failed') {
+        await updateStoredGenerationStatus(storedGeneration, 'failed', existing.failedReason || '学习信息生成失败')
+      } else if (state !== 'completed') {
+        await updateStoredGenerationStatus(storedGeneration, 'queued')
+      }
     }
     const snapshot = await getSongAnalysisJobSnapshot(existing)
     res.status(snapshot.state === 'completed' ? 200 : 202).json(snapshot)
     return
   }
 
+  if (
+    storedGeneration
+    && isSongStudyIndexFresh(storedGeneration.song.studyIndex, storedGeneration.song.id, storedGeneration.song.lyricLines)
+  ) {
+    res.status(200).json({
+      jobId,
+      state: 'completed',
+      persisted: true,
+      progress: { phase: 'completed', message: '学习信息已保存' },
+    })
+    return
+  }
+
   await enforceRateLimit(queue, req)
-  if (!await workerIsAvailable(queue)) throw new HttpError(503, '歌曲分析 Worker 暂未上线')
-  const { job } = await enqueueSongAnalysis(queue, input)
-  res.status(202).json(await getSongAnalysisJobSnapshot(job))
+  if (!await workerIsAvailable(queue)) throw new HttpError(503, '学习信息 Worker 暂未上线')
+  if (storedGeneration) {
+    const statusUpdate = await updateStoredGenerationStatus(storedGeneration, 'queued')
+    if (!statusUpdate.updated) {
+      if (statusUpdate.reason === 'already-ready') {
+        res.status(200).json({
+          jobId,
+          state: 'completed',
+          persisted: true,
+          progress: { phase: 'completed', message: '学习信息已保存' },
+        })
+        return
+      }
+      throw new HttpError(409, '歌曲或歌词已更新，请按最新内容重新创建学习信息任务')
+    }
+  }
+  try {
+    const { job } = await enqueueSongAnalysis(queue, input)
+    res.status(202).json(await getSongAnalysisJobSnapshot(job))
+  } catch (error) {
+    if (storedGeneration) {
+      await updateStoredGenerationStatus(storedGeneration, 'pending', '任务暂未进入队列，将在下次打开页面时重试')
+    }
+    throw error
+  }
 }
 
 function callbackIsAuthorized(req) {
@@ -147,17 +247,25 @@ function callbackIsAuthorized(req) {
 
 async function handleAnalysisCallback(req, res, body) {
   if (!process.env.SONG_ANALYSIS_CALLBACK_SECRET?.trim()) {
-    throw new HttpError(503, '歌曲分析回调尚未配置')
+    throw new HttpError(503, '学习信息回调尚未配置')
   }
-  if (!callbackIsAuthorized(req)) throw new HttpError(401, '歌曲分析回调鉴权失败')
+  if (!callbackIsAuthorized(req)) throw new HttpError(401, '学习信息回调鉴权失败')
 
-  const result = await persistSongAnalysisResult({
-    jobId: String(body.jobId || ''),
-    input: body.input,
-    analysis: body.analysis,
-    readSongIndex,
-    writeSongIndex,
-  })
+  const result = body.type === SONG_ANALYSIS_FAILURE_CALLBACK_TYPE
+    ? await persistSongAnalysisFailure({
+        jobId: String(body.jobId || ''),
+        input: body.input,
+        error: body.error,
+        readSongIndex,
+        writeSongIndex,
+      })
+    : await persistSongAnalysisResult({
+        jobId: String(body.jobId || ''),
+        input: body.input,
+        analysis: body.analysis,
+        readSongIndex,
+        writeSongIndex,
+      })
   res.status(200).json({ ok: true, ...result })
 }
 
@@ -175,7 +283,7 @@ export default async function handler(req, res) {
   let queue
   try {
     const body = req.method === 'POST' ? readBody(req) : null
-    if (body?.type === SONG_ANALYSIS_CALLBACK_TYPE) {
+    if ([SONG_ANALYSIS_CALLBACK_TYPE, SONG_ANALYSIS_FAILURE_CALLBACK_TYPE].includes(body?.type)) {
       await handleAnalysisCallback(req, res, body)
       return
     }
@@ -199,7 +307,7 @@ export default async function handler(req, res) {
           : 500
     if (statusCode >= 500) console.error('[song-analysis-api]', error)
     res.status(statusCode).json({
-      error: error instanceof Error ? error.message : '歌曲分析请求失败',
+      error: error instanceof Error ? error.message : '学习信息请求失败',
     })
   } finally {
     await queue?.close().catch(() => undefined)

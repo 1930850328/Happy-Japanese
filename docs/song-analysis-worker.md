@@ -1,20 +1,21 @@
-# 云端 Codex 歌词分析 Worker
+# 云端 Codex 学习信息 Worker
 
-歌曲学习索引使用独立的常驻 Worker 执行 Codex Agent。浏览器不连接用户电脑，也不要求用户拉取项目或运行命令。
+歌曲导入只保存音频、歌词和元数据。学习信息由独立的常驻 Worker 异步执行 Codex Agent 生成；浏览器不连接用户电脑，也不要求用户拉取项目或运行命令。
 
 ## 运行链路
 
 ```text
 hxf-yuri.cn
-  -> /api/song-analysis
+  -> /api/song-assets 保存歌曲并立即返回
+  -> 独立调用 /api/song-analysis 创建或恢复任务
   -> Redis / BullMQ
   -> song-analysis Worker
-  -> Codex app-server（stdio）
-  -> Redis 中的任务结果
-  -> 前端轮询并保存学习索引
+  -> Codex app-server（stdio）加载 generate-song-learning-info skill
+  -> 回调 /api/song-analysis 保存学习索引到 TOS
+  -> 前端轮询进度并刷新歌曲数据
 ```
 
-Vercel API 只负责校验、限流、去重、入队和查询。Worker 使用只读、无工具的临时 Codex 线程分析歌词，并继续执行中文释义、原文匹配和置信度校验。
+歌曲保存接口不连接 Redis。独立的学习信息接口负责读取 TOS 中的权威歌词、限流、去重、入队和查询。Worker 使用只读临时 Codex 线程，通过项目内 skill 生成内容，再执行中文释义、原文匹配和置信度校验。
 
 ## 必要环境变量
 
@@ -135,7 +136,7 @@ SONG_ANALYSIS_REDIS_URL=rediss://default:password@external-host:6379
 SONG_ANALYSIS_QUEUE_PREFIX=happy-japanese
 ```
 
-免费 Key Value 不保证重启后保留队列数据，适合个人使用和初期验证；需要持久化时再升级为付费实例。
+免费 Key Value 不保证重启后保留队列数据。歌曲记录会持久化确定性任务 ID，页面重新打开时会根据 TOS 中的歌词恢复丢失任务；需要队列本身持久化时再升级为付费实例。
 
 检查线上 API 是否看到 Worker：
 
@@ -148,7 +149,9 @@ curl https://hxf-yuri.cn/api/song-analysis
 ## 任务语义
 
 - 任务 ID 根据规范化歌词内容生成，相同歌曲与歌词不会重复调用 Agent。
+- 导入成功后立即结束导入状态，学习信息任务在独立链路中自动启动。
+- 页面刷新会根据歌曲记录恢复轮询；Redis 丢失任务时会用同一个任务 ID 重新入队。
 - 已完成结果默认在 Redis 保留 7 天，并受最大结果数限制。
-- 失败任务由 BullMQ 自动重试；用户再次提交失败任务时可以重新入队。
+- 失败任务由 BullMQ 自动重试，最终失败状态通过 Worker 回调保存到歌曲记录。
 - 单个 Worker 串行执行 Codex。需要更多并发时增加 Worker 副本，不在同一 Codex 进程中并发执行。
-- Worker 任务使用 `approvalPolicy: never`、`sandbox: read-only` 和临时线程，并禁止 Agent 使用工具或网络。
+- Worker 任务使用 `approvalPolicy: never`、`sandbox: read-only` 和临时线程。学习策略只维护在 `.agents/skills/generate-song-learning-info/SKILL.md`，运行时包装层只传输入和输出 Schema。

@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { persistSongAnalysisResult } from '../song-analysis-callback.mjs'
+import {
+  persistSongAnalysisFailure,
+  persistSongAnalysisResult,
+} from '../song-analysis-callback.mjs'
 import { createSongAnalysisJobId, normalizeSongAnalysisInput } from '../song-analysis-contract.mjs'
 
 const lyricLines = [{
@@ -94,4 +97,43 @@ test('does not let a stale Worker result overwrite changed lyrics', async () => 
 
   assert.deepEqual(result, { persisted: false, reason: 'stale-lyrics' })
   assert.equal(writes, 0)
+})
+
+test('persists a terminal Worker failure without overwriting a completed result', async () => {
+  let stored = {
+    version: 1,
+    profileId: 'profile-a',
+    songs: [{
+      id: 'song-1',
+      lyricLines,
+      analysis: {
+        jobId: createSongAnalysisJobId(input),
+        lyricVersion: 'pending',
+        status: 'queued',
+        updatedAt: '2026-01-01T00:00:00.000Z',
+      },
+    }],
+  }
+  const dependencies = {
+    readSongIndex: async () => stored,
+    writeSongIndex: async (_profileId, next) => { stored = next },
+  }
+
+  const first = await persistSongAnalysisFailure({
+    jobId: createSongAnalysisJobId(input),
+    input,
+    error: 'Codex 暂时不可用',
+    ...dependencies,
+  })
+  const second = await persistSongAnalysisFailure({
+    jobId: createSongAnalysisJobId(input),
+    input,
+    error: 'Codex 暂时不可用',
+    ...dependencies,
+  })
+
+  assert.equal(first.persisted, true)
+  assert.equal(second.duplicate, true)
+  assert.equal(stored.songs[0].analysis.status, 'failed')
+  assert.equal(stored.songs[0].analysis.error, 'Codex 暂时不可用')
 })

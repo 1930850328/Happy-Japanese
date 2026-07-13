@@ -1,4 +1,5 @@
 import type { LyricLine, StudyStage } from '../types'
+import { getCloudProfileId } from './cloudProfile'
 
 export interface SongAnalysisItem {
   expression: string
@@ -47,7 +48,10 @@ const pendingAnalyses = new Map<string, {
   promise: Promise<SongAnalysis>
   listeners: Set<(progress: SongAnalysisProgress) => void>
 }>()
-const pendingJobResults = new Map<string, Promise<SongAnalysis>>()
+const pendingSiteGenerations = new Map<string, {
+  promise: Promise<void>
+  listeners: Set<(progress: SongAnalysisProgress) => void>
+}>()
 
 function hashText(value: string) {
   let hash = 2166136261
@@ -76,14 +80,14 @@ function waitForNextPoll(signal: AbortSignal) {
 async function readJobResponse(response: Response) {
   const body = await response.json().catch(() => null) as SongAnalysisJobResponse | null
   if (!response.ok) {
-    throw new Error(body?.error || `歌曲分析请求失败 (${response.status})`)
+    throw new Error(body?.error || `学习信息请求失败 (${response.status})`)
   }
   return body ?? {}
 }
 
 function consumeJobResponse(body: SongAnalysisJobResponse, notify: (progress: SongAnalysisProgress) => void) {
   if (body.progress) notify(body.progress)
-  if (body.state === 'failed') throw new Error(body.error || '歌曲分析失败')
+  if (body.state === 'failed') throw new Error(body.error || '学习信息生成失败')
   if (body.state === 'completed' && body.result?.lines) return body.result
   return null
 }
@@ -98,7 +102,7 @@ async function requestSongAnalysis(
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), requestTimeoutMs)
   try {
-    notify({ phase: 'connecting', message: '正在连接云端歌词分析服务' })
+    notify({ phase: 'connecting', message: '正在连接云端学习信息服务' })
     const initial = await readJobResponse(await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -112,7 +116,7 @@ async function requestSongAnalysis(
     }))
     const initialResult = consumeJobResponse(initial, notify)
     if (initialResult) return initialResult
-    if (!initial.jobId) throw new Error('歌曲分析服务没有返回任务 ID')
+    if (!initial.jobId) throw new Error('学习信息服务没有返回任务 ID')
 
     while (!controller.signal.aborted) {
       await waitForNextPoll(controller.signal)
@@ -128,10 +132,10 @@ async function requestSongAnalysis(
     throw new DOMException('Aborted', 'AbortError')
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
-      throw new Error('云端 Codex 歌词分析等待超时')
+      throw new Error('云端 Codex 学习信息生成等待超时')
     }
     if (error instanceof TypeError) {
-      throw new Error('云端歌词分析服务暂时不可用，请稍后重试')
+      throw new Error('云端学习信息服务暂时不可用，请稍后重试')
     }
     throw error
   } finally {
@@ -139,28 +143,43 @@ async function requestSongAnalysis(
   }
 }
 
-async function pollSongAnalysisJob(
-  jobId: string,
+async function requestSiteSongLearningGeneration(
+  profileId: string,
+  songId: string,
   notify: (progress: SongAnalysisProgress) => void,
 ) {
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), requestTimeoutMs)
   try {
+    notify({ phase: 'submitting', message: '歌曲已保存，正在创建学习信息任务' })
+    let status = await readJobResponse(await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ profileId, songId }),
+      signal: controller.signal,
+    }))
+
     while (!controller.signal.aborted) {
+      if (status.progress) notify(status.progress)
+      if (status.state === 'failed') throw new Error(status.error || '学习信息生成失败')
+      if (status.state === 'completed') return
+      if (!status.jobId) throw new Error('学习信息服务没有返回任务 ID')
+
+      await waitForNextPoll(controller.signal)
       const statusUrl = new URL(endpoint, window.location.href)
-      statusUrl.searchParams.set('jobId', jobId)
-      const status = await readJobResponse(await fetch(statusUrl, {
+      statusUrl.searchParams.set('jobId', status.jobId)
+      status = await readJobResponse(await fetch(statusUrl, {
         headers: { Accept: 'application/json' },
         signal: controller.signal,
       }))
-      const result = consumeJobResponse(status, notify)
-      if (result) return result
-      await waitForNextPoll(controller.signal)
     }
     throw new DOMException('Aborted', 'AbortError')
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
-      throw new Error('云端 Codex 歌词分析等待超时')
+      throw new Error('云端学习信息生成等待超时')
+    }
+    if (error instanceof TypeError) {
+      throw new Error('云端学习信息服务暂时不可用，请稍后重试')
     }
     throw error
   } finally {
@@ -168,17 +187,26 @@ async function pollSongAnalysisJob(
   }
 }
 
-export function waitForSongAnalysisJob(
-  jobId: string,
+export function generateSiteSongLearningInfo(
+  songId: string,
   onProgress?: (progress: SongAnalysisProgress) => void,
 ) {
-  const existing = pendingJobResults.get(jobId)
-  if (existing) return existing
+  const profileId = getCloudProfileId()
+  const key = `${profileId}:${songId}`
+  const existing = pendingSiteGenerations.get(key)
+  if (existing) {
+    if (onProgress) existing.listeners.add(onProgress)
+    return existing.promise
+  }
 
-  const request = pollSongAnalysisJob(jobId, onProgress ?? (() => undefined))
-  pendingJobResults.set(jobId, request)
+  const listeners = new Set<(progress: SongAnalysisProgress) => void>()
+  if (onProgress) listeners.add(onProgress)
+  const request = requestSiteSongLearningGeneration(profileId, songId, (progress) => {
+    listeners.forEach((listener) => listener(progress))
+  })
+  pendingSiteGenerations.set(key, { promise: request, listeners })
   void request.finally(() => {
-    if (pendingJobResults.get(jobId) === request) pendingJobResults.delete(jobId)
+    if (pendingSiteGenerations.get(key)?.promise === request) pendingSiteGenerations.delete(key)
   }).catch(() => {})
   return request
 }

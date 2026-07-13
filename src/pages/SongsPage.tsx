@@ -27,7 +27,7 @@ import { toast } from 'sonner'
 
 import { LyricLearningLine } from '../components/songLearning/LyricLearningLine'
 import { songLessons } from '../data/songLessons'
-import { waitForSongAnalysisJob, type SongAnalysisProgress } from '../lib/songAnalysis'
+import { generateSiteSongLearningInfo, type SongAnalysisProgress } from '../lib/songAnalysis'
 import {
   getNextStudyStage,
   getStudyStageLabel,
@@ -76,9 +76,14 @@ const demoSongs = songLessons.filter((song) => song.sourceType === 'demo')
 const fallbackSongId = demoSongs[0]?.id ?? songLessons[0]?.id ?? ''
 
 function formatAnalysisProgress(progress: SongAnalysisProgress | undefined) {
-  if (!progress) return '正在提交云端分析任务'
-  const elapsed = typeof progress.elapsedMs === 'number'
-    ? ` · ${Math.max(1, Math.floor(progress.elapsedMs / 60_000))} 分钟`
+  if (!progress) return '正在提交学习信息任务'
+  const elapsedSeconds = typeof progress.elapsedMs === 'number'
+    ? Math.max(1, Math.floor(progress.elapsedMs / 1000))
+    : 0
+  const elapsed = elapsedSeconds > 0
+    ? elapsedSeconds < 60
+      ? ` · ${elapsedSeconds} 秒`
+      : ` · ${Math.floor(elapsedSeconds / 60)} 分钟`
     : ''
   const queue = progress.queuePosition ? `（队列第 ${progress.queuePosition} 个）` : ''
   return `${progress.message}${queue}${elapsed}`
@@ -367,6 +372,7 @@ export function SongsPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const activeLyricRowRef = useRef<HTMLDivElement | null>(null)
   const speechPlaybackTimerRef = useRef<number | null>(null)
+  const trackedSiteGenerationKeysRef = useRef<Set<string>>(new Set())
 
   const immersiveMode = searchParams.get('mode') === 'immersive'
   const initialSiteAssets = useMemo(() => readCachedSiteSongAssets(), [])
@@ -549,6 +555,71 @@ export function SongsPage() {
   }, [])
 
   useEffect(() => {
+    siteAssets.forEach((asset) => {
+      if (asset.lyricLines.length === 0 || isSongStudyIndexFresh(asset.studyIndex, asset.id, asset.lyricLines)) {
+        return
+      }
+
+      const analysis = asset.analysis
+      if (analysis?.status === 'failed' || analysis?.status === 'ready') {
+        setIndexingSongIds((current) => ({ ...current, [asset.id]: false }))
+        setAnalysisProgressBySongId((current) => ({
+          ...current,
+          [asset.id]: {
+            phase: 'failed',
+            message: analysis.error || '学习信息生成结果不完整，请重新保存歌词后重试',
+          },
+        }))
+        return
+      }
+
+      const taskKey = `${asset.id}:${analysis?.jobId || analysis?.lyricVersion || 'pending'}`
+      if (trackedSiteGenerationKeysRef.current.has(taskKey)) return
+      trackedSiteGenerationKeysRef.current.add(taskKey)
+
+      setIndexingSongIds((current) => ({ ...current, [asset.id]: true }))
+      setAnalysisProgressBySongId((current) => ({
+        ...current,
+        [asset.id]: analysis?.status === 'queued'
+          ? { phase: 'queued', message: '正在恢复后台学习信息任务' }
+          : { phase: 'pending', message: '歌曲已保存，正在启动后台学习信息任务' },
+      }))
+
+      void generateSiteSongLearningInfo(asset.id, (progress) => {
+        setAnalysisProgressBySongId((current) => ({ ...current, [asset.id]: progress }))
+      })
+        .then(async () => {
+          setAnalysisProgressBySongId((current) => ({
+            ...current,
+            [asset.id]: { phase: 'completed', message: '学习信息已生成并保存' },
+          }))
+          try {
+            const nextSiteAssets = await listSiteSongAssets()
+            setSiteAssets(nextSiteAssets)
+            const updated = nextSiteAssets.find((item) => item.id === asset.id)
+            if (updated?.studyIndex) {
+              setStudyIndexes((current) => ({ ...current, [asset.id]: updated.studyIndex! }))
+            }
+          } catch (error) {
+            toast.warning(error instanceof Error ? error.message : '学习信息已生成，但歌曲列表刷新失败')
+          }
+        })
+        .catch((error: unknown) => {
+          setAnalysisProgressBySongId((current) => ({
+            ...current,
+            [asset.id]: {
+              phase: 'failed',
+              message: error instanceof Error ? error.message : '后台学习信息生成失败',
+            },
+          }))
+        })
+        .finally(() => {
+          setIndexingSongIds((current) => ({ ...current, [asset.id]: false }))
+        })
+    })
+  }, [siteAssets])
+
+  useEffect(() => {
     const entries = storedAssets.map((asset) => [asset.id, URL.createObjectURL(asset.audioBlob)] as const)
     setAssetUrls(Object.fromEntries(entries))
 
@@ -612,56 +683,13 @@ export function SongsPage() {
       return
     }
 
-    const siteAnalysis = activeAsset?.storage === 'site' ? activeAsset.siteAsset?.analysis : undefined
-    if (siteAnalysis?.jobId) {
-      let ignore = false
-      setIndexingSongIds((current) => ({ ...current, [activeSong.id]: true }))
-      setAnalysisProgressBySongId((current) => ({
-        ...current,
-        [activeSong.id]: siteAnalysis.status === 'failed'
-          ? { phase: 'failed', message: siteAnalysis.error || '云端歌词分析失败' }
-          : { phase: 'queued', message: '云端 Worker 正在分析并保存学习索引' },
-      }))
-
-      if (siteAnalysis.status === 'queued') {
-        void waitForSongAnalysisJob(siteAnalysis.jobId, (progress) => {
-          if (!ignore) setAnalysisProgressBySongId((current) => ({ ...current, [activeSong.id]: progress }))
-        })
-          .then(async () => {
-            const nextSiteAssets = await listSiteSongAssets()
-            if (ignore) return
-            setSiteAssets(nextSiteAssets)
-            const updated = nextSiteAssets.find((item) => item.id === activeSong.id)
-            if (updated?.studyIndex) {
-              setStudyIndexes((current) => ({ ...current, [activeSong.id]: updated.studyIndex! }))
-            }
-          })
-          .catch((error: unknown) => {
-            if (!ignore) toast.warning(error instanceof Error ? error.message : '云端歌词分析失败')
-          })
-          .finally(() => {
-            if (!ignore) setIndexingSongIds((current) => ({ ...current, [activeSong.id]: false }))
-          })
-      } else {
-        if (siteAnalysis.status === 'ready') {
-          setAnalysisProgressBySongId((current) => ({
-            ...current,
-            [activeSong.id]: { phase: 'failed', message: '学习索引保存结果不完整，请重新保存歌词后重试' },
-          }))
-        }
-        setIndexingSongIds((current) => ({ ...current, [activeSong.id]: false }))
-      }
-
-      return () => {
-        ignore = true
-      }
-    }
+    if (activeAsset?.storage === 'site') return
 
     let ignore = false
     setIndexingSongIds((current) => ({ ...current, [activeSong.id]: true }))
     setAnalysisProgressBySongId((current) => ({
       ...current,
-      [activeSong.id]: { phase: 'connecting', message: '正在连接云端歌词分析服务' },
+      [activeSong.id]: { phase: 'connecting', message: '正在连接云端学习信息服务' },
     }))
     void buildSongStudyIndex({
       songId: activeSong.id,
@@ -967,8 +995,9 @@ export function SongsPage() {
     }
 
     try {
-      setImportProgress((current) => current ? { ...current, message: '正在刷新歌曲列表', percent: 100 } : current)
-      await refreshSongAssets(firstActiveId || undefined)
+      setSiteAssets(knownAssets.flatMap((asset) => asset.siteAsset ? [asset.siteAsset] : []))
+      setStoredAssets(knownAssets.flatMap((asset) => asset.localAsset ? [asset.localAsset] : []))
+      if (firstActiveId) setActiveSongId(firstActiveId)
       if (firstLineId) setSelectedLineId(firstLineId)
 
       if (importedCount > 0) {
@@ -1142,6 +1171,14 @@ export function SongsPage() {
             <div className={styles.songList}>
               {songs.map((song) => {
                 const importedAsset = assetById.get(song.id)
+                const generationProgress = analysisProgressBySongId[song.id]
+                const generationStatus = importedAsset?.siteAsset?.analysis?.status
+                const showGenerationStatus = Boolean(
+                  indexingSongIds[song.id]
+                  || generationProgress?.phase === 'failed'
+                  || generationStatus === 'pending'
+                  || generationStatus === 'queued',
+                )
                 return (
                   <div key={song.id} className={`${styles.songItemShell} ${song.id === activeSong.id ? styles.songItemShellActive : ''}`}>
                     <button
@@ -1155,6 +1192,11 @@ export function SongsPage() {
                           {getArtistLabel(song)}
                           {song.releaseYear ? ` · ${song.releaseYear}` : ''}
                         </small>
+                        {showGenerationStatus ? (
+                          <em title={formatAnalysisProgress(generationProgress)}>
+                            {formatAnalysisProgress(generationProgress)}
+                          </em>
+                        ) : null}
                       </span>
                     </button>
                     {importedAsset ? (
@@ -1307,7 +1349,9 @@ export function SongsPage() {
                   </button>
                 ))}
               </div>
-              {activeSong && indexingSongIds[activeSong.id] ? (
+              {activeSong && analysisProgressBySongId[activeSong.id] && (
+                indexingSongIds[activeSong.id] || analysisProgressBySongId[activeSong.id].phase === 'failed'
+              ) ? (
                 <span className={styles.indexingBadge}>{formatAnalysisProgress(analysisProgressBySongId[activeSong.id])}</span>
               ) : null}
             </div>
