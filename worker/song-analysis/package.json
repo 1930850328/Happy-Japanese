@@ -1,0 +1,11 @@
+{
+  "name": "happy-japanese-song-analysis-worker",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@10.26.2",
+  "dependencies": {
+    "@openai/codex": "0.144.1",
+    "bullmq": "5.65.1"
+  }
+}

@@ -13,11 +13,11 @@ RUN corepack enable \
 WORKDIR /app
 USER node
 
-COPY --chown=node:node package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --chown=node:node worker/song-analysis/package.json worker/song-analysis/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod
 
 COPY --chown=node:node scripts/song-analysis-worker.mjs ./scripts/song-analysis-worker.mjs
 COPY --chown=node:node server ./server
 
 VOLUME ["/data/codex"]
-CMD ["pnpm", "worker:song-analysis"]
+CMD ["node", "scripts/song-analysis-worker.mjs"]
