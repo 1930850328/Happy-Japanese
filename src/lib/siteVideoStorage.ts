@@ -1,7 +1,6 @@
 const SITE_VIDEO_PREFIX = 'site-videos'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 const VIDEO_UPLOAD_ENDPOINT = '/api/video-upload'
-const VIDEO_DELETE_ENDPOINT = '/api/video-delete'
 const VIDEO_STORAGE_ENDPOINT = '/api/video-storage'
 
 function sanitizeSegment(value: string) {
@@ -253,7 +252,7 @@ export async function deleteSiteVideos(urls: string[], uploadPassword?: string) 
     return
   }
 
-  const response = await fetch(getApiEndpoint(VIDEO_DELETE_ENDPOINT), {
+  const response = await fetch(getApiEndpoint(VIDEO_STORAGE_ENDPOINT), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
