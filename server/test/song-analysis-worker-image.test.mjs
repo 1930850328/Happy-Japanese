@@ -22,7 +22,7 @@ test('song analysis Worker image installs only its server runtime dependencies',
   assert.match(dockerfile, /CMD \["node", "scripts\/song-analysis-worker-bootstrap\.mjs"\]/u)
 })
 
-test('song analysis Worker bootstraps Codex auth once onto persistent storage', async () => {
+test('song analysis Worker synchronizes rotated Codex auth onto persistent storage', async () => {
   const root = await mkdtemp(join(tmpdir(), 'song-worker-auth-'))
   const codexHome = join(root, 'codex')
   const secretPath = join(root, 'secret.json')
@@ -33,6 +33,6 @@ test('song analysis Worker bootstraps Codex auth once onto persistent storage', 
   assert.equal((await stat(join(codexHome, 'auth.json'))).mode & 0o777, 0o600)
 
   await writeFile(secretPath, '{"auth_mode":"changed"}')
-  assert.equal(await bootstrapCodexAuth({ codexHome, secretPath }), false)
-  assert.equal(await readFile(join(codexHome, 'auth.json'), 'utf8'), '{"auth_mode":"chatgpt"}')
+  assert.equal(await bootstrapCodexAuth({ codexHome, secretPath }), true)
+  assert.equal(await readFile(join(codexHome, 'auth.json'), 'utf8'), '{"auth_mode":"changed"}')
 })

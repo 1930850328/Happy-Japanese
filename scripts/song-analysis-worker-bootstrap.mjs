@@ -1,5 +1,4 @@
 import { chmod, copyFile, mkdir } from 'node:fs/promises'
-import { constants } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 const DEFAULT_SECRET_PATH = '/etc/secrets/codex-auth.json'
@@ -12,12 +11,12 @@ export async function bootstrapCodexAuth({
 
   try {
     await mkdir(codexHome, { recursive: true })
-    await copyFile(secretPath, `${codexHome}/auth.json`, constants.COPYFILE_EXCL)
+    await copyFile(secretPath, `${codexHome}/auth.json`)
     await chmod(`${codexHome}/auth.json`, 0o600)
-    console.log('[song-analysis-worker] initialized Codex authentication on persistent storage')
+    console.log('[song-analysis-worker] synchronized Codex authentication to persistent storage')
     return true
   } catch (error) {
-    if (error?.code === 'EEXIST' || error?.code === 'ENOENT') return false
+    if (error?.code === 'ENOENT') return false
     throw error
   }
 }
