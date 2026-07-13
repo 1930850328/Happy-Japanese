@@ -17,7 +17,6 @@ services:
     dockerfilePath: ./Dockerfile.song-analysis-worker
     dockerContext: .
     autoDeployTrigger: commit
-    maxShutdownDelaySeconds: 300
     disk:
       name: codex-auth
       mountPath: /data/codex
