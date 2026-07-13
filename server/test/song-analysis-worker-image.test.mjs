@@ -17,6 +17,7 @@ test('song analysis Worker image installs only its server runtime dependencies',
   })
 
   const dockerfile = await readFile(dockerfileUrl, 'utf8')
+  assert.match(dockerfile, /apt-get install -y --no-install-recommends ca-certificates/u)
   assert.match(dockerfile, /COPY --chown=node:node worker\/song-analysis\/package\.json worker\/song-analysis\/pnpm-lock\.yaml \.\//u)
   assert.doesNotMatch(dockerfile, /COPY[^\n]*package\.json pnpm-lock\.yaml pnpm-workspace\.yaml/u)
   assert.match(dockerfile, /CMD \["node", "scripts\/song-analysis-worker-bootstrap\.mjs"\]/u)

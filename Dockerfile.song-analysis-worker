@@ -5,7 +5,10 @@ ENV PATH=$PNPM_HOME:$PATH
 ENV NODE_ENV=production
 ENV CODEX_HOME=/data/codex
 
-RUN corepack enable \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates \
+  && rm -rf /var/lib/apt/lists/* \
+  && corepack enable \
   && corepack prepare pnpm@10.26.2 --activate \
   && mkdir -p /app /data/codex \
   && chown -R node:node /app /data/codex
