@@ -87,6 +87,8 @@ npm run ingest:video -- --input ./episode01.mp4 --asrModel onnx-community/whispe
 
 项目已包含 `vercel.json`，支持 SPA 路由刷新。
 
+歌曲的 Codex 学习索引由独立常驻 Worker 异步生成，不再要求访问者运行本地服务。队列、Worker、Codex 登录和 Docker 部署说明见 [云端 Codex 歌词分析 Worker](./docs/song-analysis-worker.md)。
+
 ```bash
 npm run build
 ```

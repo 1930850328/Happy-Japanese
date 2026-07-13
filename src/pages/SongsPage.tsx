@@ -27,7 +27,7 @@ import { toast } from 'sonner'
 
 import { LyricLearningLine } from '../components/songLearning/LyricLearningLine'
 import { songLessons } from '../data/songLessons'
-import type { LocalSongAnalysisProgress } from '../lib/localSongAnalysis'
+import type { SongAnalysisProgress } from '../lib/songAnalysis'
 import {
   getNextStudyStage,
   getStudyStageLabel,
@@ -75,8 +75,8 @@ const playbackRates = [0.75, 1, 1.25]
 const demoSongs = songLessons.filter((song) => song.sourceType === 'demo')
 const fallbackSongId = demoSongs[0]?.id ?? songLessons[0]?.id ?? ''
 
-function formatAnalysisProgress(progress: LocalSongAnalysisProgress | undefined) {
-  if (!progress) return '正在启动本地 Codex'
+function formatAnalysisProgress(progress: SongAnalysisProgress | undefined) {
+  if (!progress) return '正在提交云端分析任务'
   const elapsed = typeof progress.elapsedMs === 'number'
     ? ` · ${Math.max(1, Math.floor(progress.elapsedMs / 60_000))} 分钟`
     : ''
@@ -391,7 +391,7 @@ export function SongsPage() {
   const [loadError, setLoadError] = useState('')
   const [studyIndexes, setStudyIndexes] = useState<Record<string, SongStudyIndex>>({})
   const [indexingSongIds, setIndexingSongIds] = useState<Record<string, boolean>>({})
-  const [analysisProgressBySongId, setAnalysisProgressBySongId] = useState<Record<string, LocalSongAnalysisProgress>>({})
+  const [analysisProgressBySongId, setAnalysisProgressBySongId] = useState<Record<string, SongAnalysisProgress>>({})
 
   const importedAssets = useMemo(() => {
     const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)

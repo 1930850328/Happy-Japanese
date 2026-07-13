@@ -144,7 +144,7 @@ export type SongKnowledgeSourceKind =
   | 'tokenizer'
   | 'lyric-context'
   | 'heuristic'
-  | 'codex-local'
+  | 'codex-agent'
 
 export interface SongKnowledgeSource {
   kind: SongKnowledgeSourceKind

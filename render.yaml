@@ -1,0 +1,38 @@
+services:
+  - type: keyvalue
+    name: happy-japanese-song-queue
+    plan: free
+    region: singapore
+    maxmemoryPolicy: noeviction
+    persistenceMode: off
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: Vercel serverless functions
+
+  - type: worker
+    name: happy-japanese-song-worker
+    runtime: docker
+    plan: starter
+    region: singapore
+    dockerfilePath: ./Dockerfile.song-analysis-worker
+    dockerContext: .
+    autoDeployTrigger: commit
+    maxShutdownDelaySeconds: 300
+    disk:
+      name: codex-auth
+      mountPath: /data/codex
+      sizeGB: 1
+    envVars:
+      - key: SONG_ANALYSIS_REDIS_URL
+        fromService:
+          type: keyvalue
+          name: happy-japanese-song-queue
+          property: connectionString
+      - key: SONG_ANALYSIS_QUEUE_PREFIX
+        value: happy-japanese
+      - key: SONG_ANALYSIS_AGENT_TIMEOUT_MS
+        value: "300000"
+      - key: SONG_ANALYSIS_JOB_ATTEMPTS
+        value: "2"
+      - key: SONG_ANALYSIS_RETRY_DELAY_MS
+        value: "5000"

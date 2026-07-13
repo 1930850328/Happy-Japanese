@@ -1,0 +1,12 @@
+.git
+.vercel
+dist
+node_modules
+test-results
+api
+docs
+public
+src
+tests
+*.local
+*.log

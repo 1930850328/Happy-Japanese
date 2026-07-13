@@ -11,7 +11,7 @@ import type {
   StudyStage,
 } from '../types'
 import { toRomaji } from 'wanakana'
-import { analyzeSongWithLocalCodex, type LocalSongAnalysisProgress } from './localSongAnalysis'
+import { analyzeSongWithAgent, type SongAnalysisProgress } from './songAnalysis'
 
 interface TextTimingRange {
   startOffset: number
@@ -26,7 +26,7 @@ interface BuildSongStudyIndexInput {
   artist?: string
   lyricLines: LyricLine[]
   quality?: StudyIndexQuality
-  onProgress?: (progress: LocalSongAnalysisProgress) => void
+  onProgress?: (progress: SongAnalysisProgress) => void
 }
 
 const studyStages: StudyStage[] = ['beginner', 'intermediate', 'advanced']
@@ -225,7 +225,7 @@ export async function buildSongStudyIndex({
   const lines: SongStudyLine[] = []
   const occurrences: SongStudyOccurrence[] = []
   const knowledge: Record<string, SongKnowledge> = {}
-  const analysis = await analyzeSongWithLocalCodex(songId, lyricLines, title, artist, onProgress)
+  const analysis = await analyzeSongWithAgent(songId, lyricLines, title, artist, onProgress)
   const analysisByLineId = new Map(analysis.lines.map((line) => [line.lineId, line]))
 
   for (const [lineIndex, line] of lyricLines.entries()) {
@@ -252,7 +252,7 @@ export async function buildSongStudyIndex({
         exampleZh: lineAnalysis?.translationZh || line.zh,
         stage: item.stage,
         confidence: item.confidence,
-        sources: [{ kind: 'codex-local' as const, label: 'Codex 本地歌词分析' }],
+        sources: [{ kind: 'codex-agent' as const, label: 'Codex Agent 歌词分析' }],
       }
       knowledge[knowledgeId] = item.kind === 'word'
         ? {

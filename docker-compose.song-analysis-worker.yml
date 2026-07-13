@@ -1,0 +1,15 @@
+services:
+  song-analysis-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.song-analysis-worker
+    image: happy-japanese-song-worker:latest
+    restart: unless-stopped
+    env_file:
+      - worker.env
+    volumes:
+      - happy-japanese-codex:/data/codex
+
+volumes:
+  happy-japanese-codex:
+    name: happy-japanese-codex
