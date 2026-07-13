@@ -1,4 +1,5 @@
 import { buildStudyDataFromCues } from './subtitles'
+import { parseKrcWordTimedLines } from './krcLyrics'
 import type { LyricLine, LyricWordTiming, TranscriptSegment } from '../types'
 
 const NETEASE_MATCH_ENDPOINT = '/api/netease-song-match'
@@ -23,6 +24,7 @@ interface NeteaseMatchRecord {
   romalrc?: string
   yrc?: string
   klyric?: string
+  krc?: string
 }
 
 interface NeteaseMatchResponse {
@@ -272,7 +274,9 @@ function attachYrcWordTimings(line: LyricLine, yrcLine: ParsedYrcLine | null) {
 async function buildLyricLinesFromNetease(match: NeteaseMatchRecord) {
   const rawLines = parseLrc(match.lrc)
   const yrcLines = match.yrc ? parseYrc(match.yrc) : []
-  const sourceLines = rawLines.length > 0 ? rawLines : yrcLines
+  const krcLines = match.krc ? parseKrcWordTimedLines(match.krc) : []
+  const wordTimedLines = yrcLines.length > 0 ? yrcLines : krcLines
+  const sourceLines = rawLines.length > 0 ? rawLines : wordTimedLines
   if (sourceLines.length === 0) {
     return []
   }
@@ -296,13 +300,14 @@ async function buildLyricLinesFromNetease(match: NeteaseMatchRecord) {
   })
   return studyData.segments.map((segment, index) => {
     const line = segmentToLyricLine(segment, index)
-    return attachYrcWordTimings(line, findYrcLine(segment.startMs, yrcLines))
+    return attachYrcWordTimings(line, findYrcLine(segment.startMs, wordTimedLines))
   })
 }
 
 function createRawLyricText(match: NeteaseMatchRecord) {
   const blocks = [
     match.yrc?.trim() ? `[yrc]\n${match.yrc.trim()}` : '',
+    match.krc?.trim() ? `[krc]\n${match.krc.trim()}` : '',
     match.lrc.trim(),
     match.tlyric?.trim() ? `[translation]\n${match.tlyric.trim()}` : '',
     match.romalrc?.trim() ? `[romaji]\n${match.romalrc.trim()}` : '',

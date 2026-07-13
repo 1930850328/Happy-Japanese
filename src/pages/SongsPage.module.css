@@ -1465,7 +1465,7 @@
 }
 
 .page:not(.pageImmersive) .lyricRowActive .lyricTextStack strong {
-  color: #f04732;
+  color: #17201d;
 }
 
 .homeAssistPanel {
@@ -2099,7 +2099,7 @@
 
 .lyricWordActive {
   background: linear-gradient(180deg, transparent 52%, rgba(255, 89, 68, 0.18) 52%);
-  color: #12211d;
+  color: #f04732;
 }
 
 .pageImmersive .lyricWordActive {

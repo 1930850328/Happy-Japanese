@@ -4,6 +4,7 @@ import { isOccurrenceFocusedForStage } from '../../lib/learningStagePolicy'
 import { hasReliableMeaning } from '../../lib/textAnalysis'
 import type {
   LyricLine,
+  LyricWordTiming,
   SongKnowledge,
   SongStudyIndex,
   SongStudyLine,
@@ -34,7 +35,7 @@ interface LyricLearningLineProps {
   studyIndex?: SongStudyIndex
   occurrenceById: Map<string, SongStudyOccurrence>
   active: boolean
-  activePartId: string
+  currentMs?: number
   studyStage: StudyStage
   showZh: boolean
   showKana: boolean
@@ -44,6 +45,69 @@ interface LyricLearningLineProps {
   rowRef?: Ref<HTMLDivElement>
   onSeek: (line: LyricLine, shouldPlay?: boolean) => void
   onAddKnowledge: (knowledge: SongKnowledge) => Promise<void>
+}
+
+interface TimedLyricFragment {
+  id: string
+  text: string
+  startOffset: number
+  endOffset: number
+  timing?: LyricWordTiming
+}
+
+function buildTimedLyricFragments(line: LyricLine): TimedLyricFragment[] {
+  const fragments: TimedLyricFragment[] = []
+  let cursor = 0
+
+  for (const timing of line.wordTimings ?? []) {
+    if (!timing.text || timing.endMs <= timing.startMs) continue
+
+    let text = timing.text
+    let startOffset = line.ja.indexOf(text, cursor)
+    if (startOffset < 0 && text.trim() !== text) {
+      text = text.trim()
+      startOffset = line.ja.indexOf(text, cursor)
+    }
+    if (!text || startOffset < cursor) continue
+
+    if (startOffset > cursor) {
+      fragments.push({
+        id: `${line.id}:gap-${cursor}`,
+        text: line.ja.slice(cursor, startOffset),
+        startOffset: cursor,
+        endOffset: startOffset,
+      })
+    }
+
+    const endOffset = Math.min(line.ja.length, startOffset + text.length)
+    if (endOffset <= startOffset) continue
+    fragments.push({
+      id: timing.id,
+      text: line.ja.slice(startOffset, endOffset),
+      startOffset,
+      endOffset,
+      timing,
+    })
+    cursor = endOffset
+  }
+
+  if (cursor < line.ja.length) {
+    fragments.push({
+      id: `${line.id}:gap-${cursor}`,
+      text: line.ja.slice(cursor),
+      startOffset: cursor,
+      endOffset: line.ja.length,
+    })
+  }
+
+  return fragments.length > 0
+    ? fragments
+    : [{
+        id: `${line.id}:untimed`,
+        text: line.ja,
+        startOffset: 0,
+        endOffset: line.ja.length,
+      }]
 }
 
 function getPartOccurrenceIds(part: SongStudyLine['parts'][number]) {
@@ -147,7 +211,7 @@ export function LyricLearningLine({
   studyIndex,
   occurrenceById,
   active,
-  activePartId,
+  currentMs,
   studyStage,
   showZh,
   showKana,
@@ -165,6 +229,7 @@ export function LyricLearningLine({
     if (!studyIndex) return new Set<string>()
     return new Set(studyIndex.stagePlans[studyStage]?.focusOccurrenceIds ?? [])
   }, [studyIndex, studyStage])
+  const timedFragments = useMemo(() => buildTimedLyricFragments(line), [line])
 
   const clearHideTimer = () => {
     if (hideTimerRef.current === null) return
@@ -197,9 +262,42 @@ export function LyricLearningLine({
     onSeek(line, event.shiftKey)
   }
 
+  const renderTimedRange = (startOffset: number, endOffset: number) => {
+    return timedFragments.flatMap((fragment) => {
+      const overlapStart = Math.max(startOffset, fragment.startOffset)
+      const overlapEnd = Math.min(endOffset, fragment.endOffset)
+      if (overlapEnd <= overlapStart) return []
+
+      const text = fragment.text.slice(
+        overlapStart - fragment.startOffset,
+        overlapEnd - fragment.startOffset,
+      )
+      const isCurrentWord = Boolean(
+        active &&
+        currentMs !== undefined &&
+        fragment.timing &&
+        currentMs >= fragment.timing.startMs &&
+        currentMs < fragment.timing.endMs,
+      )
+
+      return [(
+        <span
+          key={`${fragment.id}:${overlapStart}`}
+          className={isCurrentWord ? classes.wordActive : undefined}
+          data-lyric-word={fragment.timing ? 'timed' : 'untimed'}
+          data-start-ms={fragment.timing?.startMs}
+          data-end-ms={fragment.timing?.endMs}
+          aria-current={isCurrentWord ? 'true' : undefined}
+        >
+          {text}
+        </span>
+      )]
+    })
+  }
+
   const renderJapanese = () => {
     if (!studyLine || !studyIndex) {
-      return line.ja
+      return <span className={classes.wordLine}>{renderTimedRange(0, line.ja.length)}</span>
     }
 
     return (
@@ -214,11 +312,10 @@ export function LyricLearningLine({
               isOccurrenceFocusedForStage(occurrence, studyIndex, studyStage)
             )
           })
-          const current = active && part.id === activePartId
           const meaning = getPrimaryMeaning(items)
 
           if (items.length === 0) {
-            return <span key={part.id}>{part.text}</span>
+            return <span key={part.id}>{renderTimedRange(part.startOffset, part.endOffset)}</span>
           }
 
           return (
@@ -229,7 +326,6 @@ export function LyricLearningLine({
                 classes.word,
                 styles.knowledgeToken,
                 focused ? styles.knowledgeTokenFocus : '',
-                current ? classes.wordActive : '',
               ].filter(Boolean).join(' ')}
               aria-label={`${part.text}：${meaning}`}
               onClick={(event) => event.stopPropagation()}
@@ -238,7 +334,7 @@ export function LyricLearningLine({
               onMouseEnter={(event) => showKnowledge(event, items)}
               onMouseLeave={scheduleHideCard}
             >
-              <span>{part.text}</span>
+              <span>{renderTimedRange(part.startOffset, part.endOffset)}</span>
               {focused && meaning ? <small>{meaning}</small> : null}
             </button>
           )

@@ -54,7 +54,6 @@ import {
 import { speakJapanese } from '../lib/speech'
 import {
   buildSongStudyIndex,
-  getActiveSongStudyPartId,
   isSongStudyIndexFresh,
   songKnowledgeToKnowledgePoint,
 } from '../lib/songStudyIndex'
@@ -62,6 +61,7 @@ import { useAppStore } from '../store/useAppStore'
 import type {
   LyricLine,
   LyricProvider,
+  LyricWordTiming,
   SongKnowledge,
   SongLesson,
   SongLyricQuality,
@@ -74,6 +74,58 @@ import styles from './SongsPage.module.css'
 const playbackRates = [0.75, 1, 1.25]
 const demoSongs = songLessons.filter((song) => song.sourceType === 'demo')
 const fallbackSongId = demoSongs[0]?.id ?? songLessons[0]?.id ?? ''
+const WORD_TIMING_CACHE_KEY = 'yuru-nihongo-song-word-timings:v2'
+
+interface LineWordTimingOverride {
+  sourceText: string
+  wordTimings: LyricWordTiming[]
+}
+
+type SongWordTimingOverrides = Record<string, Record<string, LineWordTimingOverride>>
+
+function readWordTimingCache(): SongWordTimingOverrides {
+  if (typeof window === 'undefined') return {}
+  try {
+    const value = JSON.parse(window.localStorage.getItem(WORD_TIMING_CACHE_KEY) || '{}') as unknown
+    return value && typeof value === 'object' && !Array.isArray(value)
+      ? value as SongWordTimingOverrides
+      : {}
+  } catch {
+    return {}
+  }
+}
+
+function writeWordTimingCache(value: SongWordTimingOverrides) {
+  try {
+    window.localStorage.setItem(WORD_TIMING_CACHE_KEY, JSON.stringify(value))
+  } catch {
+    // The in-memory timings remain available when browser storage is unavailable or full.
+  }
+}
+
+function normalizeLyricText(value: string) {
+  return value.normalize('NFKC').replace(/\s+/gu, '').trim()
+}
+
+function matchWordTimings(sourceLines: LyricLine[], timedLines: LyricLine[]) {
+  const matches: Record<string, LineWordTimingOverride> = {}
+  const candidates = timedLines.filter((line) => line.wordTimings && line.wordTimings.length > 0)
+
+  for (const line of sourceLines) {
+    const timedLine = candidates
+      .filter((candidate) => Math.abs(candidate.startMs - line.startMs) <= 900)
+      .sort((left, right) => Math.abs(left.startMs - line.startMs) - Math.abs(right.startMs - line.startMs))
+      .find((candidate) => normalizeLyricText(candidate.ja) === normalizeLyricText(line.ja))
+    if (timedLine?.wordTimings) {
+      matches[line.id] = {
+        sourceText: line.ja,
+        wordTimings: timedLine.wordTimings,
+      }
+    }
+  }
+
+  return matches
+}
 
 function formatAnalysisProgress(progress: SongAnalysisProgress | undefined) {
   if (!progress) return '正在提交学习信息任务'
@@ -373,6 +425,7 @@ export function SongsPage() {
   const activeLyricRowRef = useRef<HTMLDivElement | null>(null)
   const speechPlaybackTimerRef = useRef<number | null>(null)
   const trackedSiteGenerationKeysRef = useRef<Set<string>>(new Set())
+  const timingEnrichmentKeysRef = useRef<Set<string>>(new Set())
 
   const immersiveMode = searchParams.get('mode') === 'immersive'
   const initialSiteAssets = useMemo(() => readCachedSiteSongAssets(), [])
@@ -398,6 +451,7 @@ export function SongsPage() {
   const [studyIndexes, setStudyIndexes] = useState<Record<string, SongStudyIndex>>({})
   const [indexingSongIds, setIndexingSongIds] = useState<Record<string, boolean>>({})
   const [analysisProgressBySongId, setAnalysisProgressBySongId] = useState<Record<string, SongAnalysisProgress>>({})
+  const [wordTimingOverrides, setWordTimingOverrides] = useState<SongWordTimingOverrides>(readWordTimingCache)
 
   const importedAssets = useMemo(() => {
     const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)
@@ -437,10 +491,6 @@ export function SongsPage() {
   const activeStudyLine = activeLine ? activeStudyLineById.get(activeLine.id) : undefined
   const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
-  const activeStudyPartId = useMemo(
-    () => getActiveSongStudyPartId(activeStudyLine, currentMs),
-    [activeStudyLine, currentMs],
-  )
   const activeKnowledgeItems = useMemo(() => {
     if (!activeStudyIndex || !activeStudyLine) return []
 
@@ -666,6 +716,70 @@ export function SongsPage() {
   useEffect(() => {
     if (audioRef.current) audioRef.current.playbackRate = playbackRate
   }, [playbackRate])
+
+  useEffect(() => {
+    if (!activeSong || activeSong.playbackProvider !== 'localFile') return
+    if (activeSong.lyricLines.some((line) => line.wordTimings && line.wordTimings.length > 0)) return
+    const cachedTimings = wordTimingOverrides[activeSong.id]
+    if (cachedTimings && activeSong.lyricLines.some((line) => (
+      cachedTimings[line.id]?.sourceText === line.ja
+    ))) return
+
+    const enrichmentKey = `${activeSong.id}:${activeSong.title}:${activeSong.durationMs}`
+    if (timingEnrichmentKeysRef.current.has(enrichmentKey)) return
+    timingEnrichmentKeysRef.current.add(enrichmentKey)
+
+    void matchNeteaseSongForUpload({
+      title: activeSong.title,
+      artist: activeSong.artist,
+      durationMs: activeSong.durationMs,
+    }).then((match) => {
+      if (!match) return
+      const timings = matchWordTimings(activeSong.lyricLines, match.lyricLines)
+      if (Object.keys(timings).length === 0) return
+
+      setWordTimingOverrides((current) => {
+        const next = { ...current, [activeSong.id]: timings }
+        writeWordTimingCache(next)
+        return next
+      })
+    }).catch(() => {
+      // Line-level lyrics continue to work when no exact word-timing source is available.
+    })
+  }, [activeSong, wordTimingOverrides])
+
+  useEffect(() => {
+    if (!playing || activeSong?.playbackProvider !== 'localFile') return
+
+    let frameId = 0
+    let lastPublishedMs = -1
+    const syncPlaybackClock = () => {
+      const audio = audioRef.current
+      if (!audio || audio.paused || audio.ended) return
+
+      const nextMs = Math.round(audio.currentTime * 1000)
+      const playbackLine = activeSong.lyricLines.find((line) => (
+        nextMs >= line.startMs && nextMs < line.endMs
+      )) ?? null
+
+      if (lineLoop && playbackLine && nextMs >= playbackLine.endMs - 40) {
+        audio.currentTime = playbackLine.startMs / 1000
+        setCurrentMs(playbackLine.startMs)
+        lastPublishedMs = playbackLine.startMs
+      } else if (lastPublishedMs < 0 || Math.abs(nextMs - lastPublishedMs) >= 24) {
+        if (playbackLine) {
+          setSelectedLineId((current) => current === playbackLine.id ? current : playbackLine.id)
+        }
+        setCurrentMs(nextMs)
+        lastPublishedMs = nextMs
+      }
+
+      frameId = window.requestAnimationFrame(syncPlaybackClock)
+    }
+
+    frameId = window.requestAnimationFrame(syncPlaybackClock)
+    return () => window.cancelAnimationFrame(frameId)
+  }, [activeSong, lineLoop, playing])
 
   useEffect(() => {
     if (!activeSong || activeSong.lyricLines.length === 0) {
@@ -1360,16 +1474,20 @@ export function SongsPage() {
               <div className={styles.lyricQueue}>
                 {activeSong.lyricLines.map((line) => {
                   const active = activeLine?.id === line.id
+                  const timingOverride = wordTimingOverrides[activeSong.id]?.[line.id]
+                  const wordTimings = line.wordTimings ?? (
+                    timingOverride?.sourceText === line.ja ? timingOverride.wordTimings : undefined
+                  )
                   return (
                     <LyricLearningLine
                       key={line.id}
                       rowRef={active ? activeLyricRowRef : undefined}
-                      line={line}
+                      line={wordTimings ? { ...line, wordTimings, timingQuality: 'word' } : line}
                       studyLine={activeStudyLineById.get(line.id)}
                       studyIndex={activeStudyIndex}
                       occurrenceById={activeOccurrenceById}
                       active={active}
-                      activePartId={active ? activeStudyPartId : ''}
+                      currentMs={active ? currentMs : undefined}
                       studyStage={studyStage}
                       showZh={showZh}
                       showKana={showKana}

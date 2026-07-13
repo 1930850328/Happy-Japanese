@@ -1,7 +1,16 @@
+import { inflateSync } from 'node:zlib'
+
 const SEARCH_URL = 'https://music.163.com/api/search/get'
 const DETAIL_URL = 'https://music.163.com/api/song/detail/'
 const LYRIC_URL = 'https://music.163.com/api/song/lyric'
 const LYRIC_NEW_URL = 'https://music.163.com/api/song/lyric/v1'
+const KUGOU_SEARCH_URL = 'https://songsearch.kugou.com/song_search_v2'
+const KUGOU_LYRIC_SEARCH_URL = 'https://lyrics.kugou.com/search'
+const KUGOU_LYRIC_DOWNLOAD_URL = 'https://lyrics.kugou.com/download'
+const KRC_XOR_KEY = Buffer.from([
+  0x40, 0x47, 0x61, 0x77, 0x5e, 0x32, 0x74, 0x47,
+  0x51, 0x36, 0x31, 0x2d, 0xce, 0xd2, 0x6e, 0x69,
+])
 
 const NETEASE_HEADERS = {
   'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -123,6 +132,99 @@ async function fetchJson(url, options = {}) {
   return JSON.parse(text)
 }
 
+async function fetchKugouJson(url) {
+  const response = await fetch(url, {
+    headers: {
+      referer: 'https://www.kugou.com/',
+      'user-agent': NETEASE_HEADERS['user-agent'],
+    },
+  })
+  if (!response.ok) {
+    throw new Error(`Kugou request failed with status ${response.status}.`)
+  }
+  return JSON.parse(await response.text())
+}
+
+function stripSearchMarkup(value) {
+  return readString(value, 240).replace(/<[^>]+>/gu, '').trim()
+}
+
+export function decodeKrcContent(value) {
+  const bytes = Buffer.from(readString(value, 1_000_000), 'base64')
+  if (bytes.length <= 4 || bytes.subarray(0, 4).toString('ascii') !== 'krc1') return ''
+
+  const payload = Buffer.from(bytes.subarray(4))
+  for (let index = 0; index < payload.length; index += 1) {
+    payload[index] ^= KRC_XOR_KEY[index % KRC_XOR_KEY.length]
+  }
+  return readString(inflateSync(payload).toString('utf8'), 500_000)
+}
+
+async function fetchKugouWordLyrics(request) {
+  const query = new URLSearchParams({
+    keyword: `${request.title} ${request.artist}`.trim(),
+    page: '1',
+    pagesize: '12',
+    userid: '-1',
+    platform: 'WebFilter',
+    tag: 'em',
+    filter: '2',
+    iscorrection: '1',
+    privilege_filter: '0',
+  })
+  const search = await fetchKugouJson(`${KUGOU_SEARCH_URL}?${query}`)
+  const songs = Array.isArray(search?.data?.lists) ? search.data.lists : []
+  const candidates = songs
+    .map((song) => {
+      const title = stripSearchMarkup(song?.SongName)
+      const artist = stripSearchMarkup(song?.SingerName)
+      const durationMs = Math.max(0, Math.round(Number(song?.Duration ?? 0) * 1000))
+      const durationGap = Math.abs(durationMs - request.durationMs)
+      const durationScore = request.durationMs > 0 && durationMs > 0
+        ? durationGap <= 2500 ? 28 : durationGap <= 8000 ? 16 : -20
+        : 0
+      return {
+        title,
+        artist,
+        durationMs,
+        hash: readString(song?.FileHash, 80),
+        score: scoreTextMatch(title, request.title) + scoreTextMatch(artist, request.artist) + durationScore,
+      }
+    })
+    .filter((song) => song.hash && song.score >= 60)
+    .sort((left, right) => right.score - left.score)
+
+  for (const song of candidates.slice(0, 3)) {
+    const lyricSearchQuery = new URLSearchParams({
+      ver: '1',
+      man: 'yes',
+      client: 'pc',
+      keyword: song.title,
+      duration: String(song.durationMs),
+      hash: song.hash,
+    })
+    const lyricSearch = await fetchKugouJson(`${KUGOU_LYRIC_SEARCH_URL}?${lyricSearchQuery}`)
+    const lyricCandidate = Array.isArray(lyricSearch?.candidates)
+      ? lyricSearch.candidates.find((item) => item?.id && item?.accesskey)
+      : null
+    if (!lyricCandidate) continue
+
+    const downloadQuery = new URLSearchParams({
+      ver: '1',
+      client: 'pc',
+      id: String(lyricCandidate.id),
+      accesskey: String(lyricCandidate.accesskey),
+      fmt: 'krc',
+      charset: 'utf8',
+    })
+    const download = await fetchKugouJson(`${KUGOU_LYRIC_DOWNLOAD_URL}?${downloadQuery}`)
+    const krc = decodeKrcContent(download?.content)
+    if (krc.includes('<') && /^\[\d+,\d+\]/mu.test(krc)) return krc
+  }
+
+  return ''
+}
+
 async function searchSongs(keyword) {
   const payload = new URLSearchParams({
     s: keyword,
@@ -227,6 +329,7 @@ function toMatchRecord(song, detail, lyrics, score) {
     romalrc: lyrics.romalrc,
     yrc: lyrics.yrc,
     klyric: lyrics.klyric,
+    krc: lyrics.krc || '',
   }
 }
 
@@ -256,7 +359,15 @@ async function findBestMatch(request) {
   for (const item of scoredSongs) {
     const lyrics = await fetchLyrics(item.song.id)
     if (lyrics.lrc.trim()) {
-      return toMatchRecord(item.song, detailMap.get(String(item.song.id)), lyrics, item.score + 16)
+      let krc = ''
+      if (!lyrics.yrc && !lyrics.klyric) {
+        try {
+          krc = await fetchKugouWordLyrics(request)
+        } catch {
+          // Line-timed NetEase lyrics remain usable when the word-timing fallback is unavailable.
+        }
+      }
+      return toMatchRecord(item.song, detailMap.get(String(item.song.id)), { ...lyrics, krc }, item.score + 16)
     }
   }
 
@@ -268,7 +379,7 @@ async function findBestMatch(request) {
   return toMatchRecord(
     fallback.song,
     detailMap.get(String(fallback.song.id)),
-    { lrc: '', tlyric: '', romalrc: '', yrc: '', klyric: '' },
+    { lrc: '', tlyric: '', romalrc: '', yrc: '', klyric: '', krc: '' },
     fallback.score,
   )
 }
