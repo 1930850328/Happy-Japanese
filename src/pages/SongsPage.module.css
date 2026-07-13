@@ -1440,6 +1440,7 @@
 }
 
 .page:not(.pageImmersive) .lyricTextStack strong {
+  display: block;
   color: #17201d;
   font-size: clamp(1.02rem, 1.32vw, 1.28rem);
   line-height: 1.34;
@@ -2075,6 +2076,15 @@
 
 .lyricWordLine {
   display: inline;
+}
+
+.page:not(.pageImmersive) .lyricWordLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 0.08em;
+  row-gap: 0.28rem;
+  width: 100%;
 }
 
 .lyricWord {

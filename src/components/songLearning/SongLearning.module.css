@@ -1,8 +1,10 @@
 .knowledgeToken {
-  display: inline-grid;
-  grid-auto-flow: row;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
   justify-items: center;
-  vertical-align: baseline;
+  vertical-align: top;
   min-width: 1.2em;
   margin: 0 0.03em;
   padding: 0.03em 0.12em 0.08em;
@@ -23,15 +25,16 @@
 
 .knowledgeToken small {
   display: block;
-  max-width: 7.5em;
+  max-width: 14em;
   margin-top: 0.12rem;
   color: currentColor;
   font-size: 0.58em;
   font-weight: 650;
-  line-height: 1.05;
+  line-height: 1.16;
   opacity: 0.62;
   text-align: center;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .knowledgeTokenFocus {
@@ -176,8 +179,7 @@
 
 @media (max-width: 720px) {
   .knowledgeToken small {
-    max-width: 5.5em;
-    white-space: normal;
+    max-width: 10em;
   }
 
   .knowledgeBlock dl {
