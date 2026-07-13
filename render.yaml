@@ -29,6 +29,10 @@ services:
           property: connectionString
       - key: SONG_ANALYSIS_QUEUE_PREFIX
         value: happy-japanese
+      - key: SONG_ANALYSIS_CALLBACK_URL
+        value: https://hxf-yuri.cn/api/song-analysis
+      - key: SONG_ANALYSIS_CALLBACK_SECRET
+        sync: false
       - key: SONG_ANALYSIS_AGENT_TIMEOUT_MS
         value: "300000"
       - key: SONG_ANALYSIS_JOB_ATTEMPTS

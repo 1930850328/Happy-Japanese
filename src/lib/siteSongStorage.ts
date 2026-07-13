@@ -34,6 +34,13 @@ export interface SiteSongAsset {
   lyricProvider?: LyricProvider
   lyricQuality?: SongLyricQuality
   studyIndex?: SongStudyIndex
+  analysis?: {
+    jobId?: string
+    lyricVersion: string
+    status: 'queued' | 'ready' | 'failed'
+    error?: string
+    updatedAt: string
+  }
   importedAt: string
   updatedAt: string
   sourceUrl: string

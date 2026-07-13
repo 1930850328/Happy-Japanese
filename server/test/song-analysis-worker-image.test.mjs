@@ -14,6 +14,7 @@ test('song analysis Worker image installs only its server runtime dependencies',
   assert.deepEqual(runtimePackage.dependencies, {
     '@openai/codex': '0.144.1',
     bullmq: '5.65.1',
+    wanakana: '5.3.1',
   })
 
   const dockerfile = await readFile(dockerfileUrl, 'utf8')

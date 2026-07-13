@@ -6,6 +6,18 @@ import {
   sanitizeSongId,
   writeSongIndex,
 } from './_tos-storage.mjs'
+import {
+  createSongAnalysisJobId,
+  normalizeSongAnalysisInput,
+} from '../server/song-analysis-contract.mjs'
+import {
+  createSongAnalysisQueue,
+  enqueueSongAnalysis,
+} from '../server/song-analysis-queue.mjs'
+import {
+  createSongLyricVersion,
+  isSongStudyIndexFresh,
+} from '../server/song-study-index.mjs'
 
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -307,7 +319,7 @@ async function listSongs(profileId, req, res) {
       .map((song) => attachPlaybackUrl(profileId, origin, song)),
   )
 
-  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300')
+  res.setHeader('Cache-Control', 'no-store')
   res.status(200).json({
     profileId,
     songs,
@@ -317,11 +329,53 @@ async function listSongs(profileId, req, res) {
 
 async function upsertSong(profileId, req, res) {
   const body = readBody(req)
-  const song = normalizeSongRecord(profileId, body.song)
+  let song = normalizeSongRecord(profileId, body.song)
   const origin = getRequestOrigin(req)
   const index = await readSongIndex(profileId)
   const existingIndex = index.songs.findIndex((item) => item.id === song.id)
+  const existingSong = existingIndex >= 0 ? index.songs[existingIndex] : undefined
   const nextSongs = index.songs.slice()
+
+  if (!song.studyIndex && isSongStudyIndexFresh(existingSong?.studyIndex, song.id, song.lyricLines)) {
+    song = { ...song, studyIndex: existingSong.studyIndex }
+  }
+
+  const needsAnalysis = song.lyricLines.length > 0 && !isSongStudyIndexFresh(
+    song.studyIndex,
+    song.id,
+    song.lyricLines,
+  )
+  const analysisInput = needsAnalysis
+    ? normalizeSongAnalysisInput({
+        profileId,
+        songId: song.id,
+        title: song.title,
+        artist: song.artist,
+        lyricLines: song.lyricLines,
+      })
+    : null
+  const analysisJobId = analysisInput ? createSongAnalysisJobId(analysisInput) : undefined
+  if (analysisInput) {
+    song = {
+      ...song,
+      analysis: {
+        jobId: analysisJobId,
+        lyricVersion: createSongLyricVersion(song.lyricLines),
+        status: 'queued',
+        updatedAt: new Date().toISOString(),
+      },
+    }
+  } else if (song.studyIndex) {
+    song = {
+      ...song,
+      analysis: {
+        jobId: existingSong?.analysis?.jobId,
+        lyricVersion: song.studyIndex.lyricVersion,
+        status: 'ready',
+        updatedAt: existingSong?.analysis?.updatedAt || song.studyIndex.generatedAt,
+      },
+    }
+  }
 
   if (existingIndex >= 0) {
     nextSongs[existingIndex] = song
@@ -333,6 +387,33 @@ async function upsertSong(profileId, req, res) {
     ...index,
     songs: nextSongs,
   })
+
+  if (analysisInput) {
+    let queue
+    try {
+      queue = createSongAnalysisQueue()
+      const { job } = await enqueueSongAnalysis(queue, analysisInput)
+      if (await job.getState() === 'failed') await job.retry('failed')
+    } catch (error) {
+      console.error('[song-assets] failed to enqueue song analysis', error)
+      song = {
+        ...song,
+        analysis: {
+          ...song.analysis,
+          status: 'failed',
+          error: '歌曲分析任务创建失败，请重新保存歌词后重试',
+          updatedAt: new Date().toISOString(),
+        },
+      }
+      const latest = await readSongIndex(profileId)
+      await writeSongIndex(profileId, {
+        ...latest,
+        songs: latest.songs.map((item) => (item.id === song.id ? song : item)),
+      })
+    } finally {
+      await queue?.close().catch(() => undefined)
+    }
+  }
 
   res.status(200).json({
     song: await attachPlaybackUrl(profileId, origin, song),

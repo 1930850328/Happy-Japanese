@@ -1,6 +1,7 @@
 import { Worker } from 'bullmq'
 
 import { CodexSongAnalyzer } from '../server/codex-song-analyzer.mjs'
+import { sendSongAnalysisResult } from '../server/song-analysis-callback.mjs'
 import { normalizeSongAnalysisInput } from '../server/song-analysis-contract.mjs'
 import {
   getSongAnalysisQueuePrefix,
@@ -17,7 +18,18 @@ const worker = new Worker(
   SONG_ANALYSIS_QUEUE_NAME,
   async (job) => {
     const input = normalizeSongAnalysisInput(job.data)
-    return analyzer.analyze(input, (progress) => job.updateProgress(progress))
+    const analysis = job.data.completedAnalysis ?? await analyzer.analyze(
+      input,
+      (progress) => job.updateProgress(progress),
+    )
+    if (!job.data.completedAnalysis) {
+      await job.updateData({ ...input, completedAnalysis: analysis })
+    }
+    if (input.profileId) {
+      await job.updateProgress({ phase: 'saving', message: '分析完成，正在保存学习索引' })
+      await sendSongAnalysisResult({ jobId: job.id, input, analysis })
+    }
+    return analysis
   },
   {
     connection: getSongAnalysisRedisConnection({ blocking: true }),

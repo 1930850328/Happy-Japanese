@@ -1,5 +1,10 @@
-import { createHash } from 'node:crypto'
+import { createHash, timingSafeEqual } from 'node:crypto'
 
+import { readSongIndex, writeSongIndex } from './_tos-storage.mjs'
+import {
+  persistSongAnalysisResult,
+  SONG_ANALYSIS_CALLBACK_TYPE,
+} from '../server/song-analysis-callback.mjs'
 import {
   createSongAnalysisJobId,
   isSongAnalysisJobId,
@@ -108,8 +113,8 @@ async function handleGet(req, res, queue) {
   res.status(200).json(await getSongAnalysisJobSnapshot(job))
 }
 
-async function handlePost(req, res, queue) {
-  const input = normalizeSongAnalysisInput(readBody(req))
+async function handlePost(req, res, queue, body) {
+  const input = normalizeSongAnalysisInput(body)
   const jobId = createSongAnalysisJobId(input)
   const existing = await queue.getJob(jobId)
   if (existing) {
@@ -130,6 +135,32 @@ async function handlePost(req, res, queue) {
   res.status(202).json(await getSongAnalysisJobSnapshot(job))
 }
 
+function callbackIsAuthorized(req) {
+  const expected = process.env.SONG_ANALYSIS_CALLBACK_SECRET?.trim() || ''
+  const authorization = String(req.headers.authorization || '')
+  const provided = authorization.startsWith('Bearer ') ? authorization.slice(7) : ''
+  if (!expected || !provided) return false
+  const expectedBuffer = Buffer.from(expected)
+  const providedBuffer = Buffer.from(provided)
+  return expectedBuffer.length === providedBuffer.length && timingSafeEqual(expectedBuffer, providedBuffer)
+}
+
+async function handleAnalysisCallback(req, res, body) {
+  if (!process.env.SONG_ANALYSIS_CALLBACK_SECRET?.trim()) {
+    throw new HttpError(503, '歌曲分析回调尚未配置')
+  }
+  if (!callbackIsAuthorized(req)) throw new HttpError(401, '歌曲分析回调鉴权失败')
+
+  const result = await persistSongAnalysisResult({
+    jobId: String(body.jobId || ''),
+    input: body.input,
+    analysis: body.analysis,
+    readSongIndex,
+    writeSongIndex,
+  })
+  res.status(200).json({ ok: true, ...result })
+}
+
 export default async function handler(req, res) {
   setHeaders(req, res)
   if (req.method === 'OPTIONS') {
@@ -143,13 +174,18 @@ export default async function handler(req, res) {
 
   let queue
   try {
+    const body = req.method === 'POST' ? readBody(req) : null
+    if (body?.type === SONG_ANALYSIS_CALLBACK_TYPE) {
+      await handleAnalysisCallback(req, res, body)
+      return
+    }
     queue = createSongAnalysisQueue()
     if (req.method === 'GET') {
       await handleGet(req, res, queue)
       return
     }
     if (req.method === 'POST') {
-      await handlePost(req, res, queue)
+      await handlePost(req, res, queue, body)
       return
     }
     res.status(405).json({ error: 'Method not allowed' })

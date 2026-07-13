@@ -47,6 +47,7 @@ const pendingAnalyses = new Map<string, {
   promise: Promise<SongAnalysis>
   listeners: Set<(progress: SongAnalysisProgress) => void>
 }>()
+const pendingJobResults = new Map<string, Promise<SongAnalysis>>()
 
 function hashText(value: string) {
   let hash = 2166136261
@@ -136,6 +137,50 @@ async function requestSongAnalysis(
   } finally {
     window.clearTimeout(timeout)
   }
+}
+
+async function pollSongAnalysisJob(
+  jobId: string,
+  notify: (progress: SongAnalysisProgress) => void,
+) {
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), requestTimeoutMs)
+  try {
+    while (!controller.signal.aborted) {
+      const statusUrl = new URL(endpoint, window.location.href)
+      statusUrl.searchParams.set('jobId', jobId)
+      const status = await readJobResponse(await fetch(statusUrl, {
+        headers: { Accept: 'application/json' },
+        signal: controller.signal,
+      }))
+      const result = consumeJobResponse(status, notify)
+      if (result) return result
+      await waitForNextPoll(controller.signal)
+    }
+    throw new DOMException('Aborted', 'AbortError')
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new Error('云端 Codex 歌词分析等待超时')
+    }
+    throw error
+  } finally {
+    window.clearTimeout(timeout)
+  }
+}
+
+export function waitForSongAnalysisJob(
+  jobId: string,
+  onProgress?: (progress: SongAnalysisProgress) => void,
+) {
+  const existing = pendingJobResults.get(jobId)
+  if (existing) return existing
+
+  const request = pollSongAnalysisJob(jobId, onProgress ?? (() => undefined))
+  pendingJobResults.set(jobId, request)
+  void request.finally(() => {
+    if (pendingJobResults.get(jobId) === request) pendingJobResults.delete(jobId)
+  }).catch(() => {})
+  return request
 }
 
 export function analyzeSongWithAgent(

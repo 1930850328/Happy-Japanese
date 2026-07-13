@@ -6,6 +6,7 @@
   "packageManager": "pnpm@10.26.2",
   "dependencies": {
     "@openai/codex": "0.144.1",
-    "bullmq": "5.65.1"
+    "bullmq": "5.65.1",
+    "wanakana": "5.3.1"
   }
 }

@@ -27,7 +27,7 @@ import { toast } from 'sonner'
 
 import { LyricLearningLine } from '../components/songLearning/LyricLearningLine'
 import { songLessons } from '../data/songLessons'
-import type { SongAnalysisProgress } from '../lib/songAnalysis'
+import { waitForSongAnalysisJob, type SongAnalysisProgress } from '../lib/songAnalysis'
 import {
   getNextStudyStage,
   getStudyStageLabel,
@@ -612,11 +612,56 @@ export function SongsPage() {
       return
     }
 
+    const siteAnalysis = activeAsset?.storage === 'site' ? activeAsset.siteAsset?.analysis : undefined
+    if (siteAnalysis?.jobId) {
+      let ignore = false
+      setIndexingSongIds((current) => ({ ...current, [activeSong.id]: true }))
+      setAnalysisProgressBySongId((current) => ({
+        ...current,
+        [activeSong.id]: siteAnalysis.status === 'failed'
+          ? { phase: 'failed', message: siteAnalysis.error || '云端歌词分析失败' }
+          : { phase: 'queued', message: '云端 Worker 正在分析并保存学习索引' },
+      }))
+
+      if (siteAnalysis.status === 'queued') {
+        void waitForSongAnalysisJob(siteAnalysis.jobId, (progress) => {
+          if (!ignore) setAnalysisProgressBySongId((current) => ({ ...current, [activeSong.id]: progress }))
+        })
+          .then(async () => {
+            const nextSiteAssets = await listSiteSongAssets()
+            if (ignore) return
+            setSiteAssets(nextSiteAssets)
+            const updated = nextSiteAssets.find((item) => item.id === activeSong.id)
+            if (updated?.studyIndex) {
+              setStudyIndexes((current) => ({ ...current, [activeSong.id]: updated.studyIndex! }))
+            }
+          })
+          .catch((error: unknown) => {
+            if (!ignore) toast.warning(error instanceof Error ? error.message : '云端歌词分析失败')
+          })
+          .finally(() => {
+            if (!ignore) setIndexingSongIds((current) => ({ ...current, [activeSong.id]: false }))
+          })
+      } else {
+        if (siteAnalysis.status === 'ready') {
+          setAnalysisProgressBySongId((current) => ({
+            ...current,
+            [activeSong.id]: { phase: 'failed', message: '学习索引保存结果不完整，请重新保存歌词后重试' },
+          }))
+        }
+        setIndexingSongIds((current) => ({ ...current, [activeSong.id]: false }))
+      }
+
+      return () => {
+        ignore = true
+      }
+    }
+
     let ignore = false
     setIndexingSongIds((current) => ({ ...current, [activeSong.id]: true }))
     setAnalysisProgressBySongId((current) => ({
       ...current,
-      [activeSong.id]: { phase: 'connecting', message: '正在连接本地歌词分析服务' },
+      [activeSong.id]: { phase: 'connecting', message: '正在连接云端歌词分析服务' },
     }))
     void buildSongStudyIndex({
       songId: activeSong.id,

@@ -2,9 +2,31 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import {
+  enqueueSongAnalysis,
   getSongAnalysisJobSnapshot,
   getSongAnalysisRedisConnection,
 } from '../song-analysis-queue.mjs'
+
+const analysisInput = {
+  songId: 'song-1',
+  title: '曲名',
+  artist: '歌手',
+  lyricLines: [{ id: 'line-1', ja: '君が好き', zh: '我喜欢你' }],
+}
+
+test('does not add a second BullMQ job for the same song lyrics', async () => {
+  const existing = { id: 'existing-job' }
+  let additions = 0
+  const queue = {
+    getJob: async () => existing,
+    add: async () => { additions += 1 },
+  }
+
+  const result = await enqueueSongAnalysis(queue, analysisInput)
+
+  assert.deepEqual(result, { created: false, job: existing })
+  assert.equal(additions, 0)
+})
 
 test('uses fail-fast Redis retries for API producers and blocking retries for Workers', () => {
   const previous = process.env.SONG_ANALYSIS_REDIS_URL
