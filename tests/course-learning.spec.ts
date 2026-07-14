@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 
 import { courseLessons, courseNodeMap, courseStages } from '../src/data/courseCatalog'
 import { advanceCourseForLiteracy, createEmptyCourseState, isLessonAvailable, prepareCourseQuestions, startCourseAtStage, submitLessonAttempt } from '../src/lib/courseEngine'
+import { selectStudyBatch, type VocabularyEntry } from '../src/lib/curriculumContent'
 import { getLiteracyReadiness, isStableLiteracyItem, recordLiteracyAnswer, recordReadingAttempt } from '../src/lib/literacyEngine'
 
 async function answerQuestions(page: Page, answersByPrompt: Record<string, string>, count: number) {
@@ -65,6 +66,13 @@ async function useCourseProfile(page: Page, profileId: string) {
 
 test('new learner can finish the first course and resume the next step after reload', async ({ page }) => {
   await useCourseProfile(page, 'course-new-learner')
+  await page.route('https://yuru-nihongo-study.vercel.app/api/translate', async (route) => {
+    const body = route.request().postDataJSON() as { texts?: string[] }
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({ translations: (body.texts ?? []).map((text) => `中文：${text}`) }),
+    })
+  })
   await page.goto('/')
 
   await expect(page.getByRole('heading', { name: /不再收藏知识/ })).toBeVisible()
@@ -99,6 +107,12 @@ test('new learner can finish the first course and resume the next step after rel
   await page.reload()
   await expect(page.getByRole('heading', { name: '沿着一条路，今天再前进一步' })).toBeVisible()
   await expect(page.getByText('读出か行').first()).toBeVisible()
+
+  await page.getByRole('link', { name: '能力训练' }).click()
+  await expect(page.getByRole('heading', { name: '先理解，再遮住回忆' })).toBeVisible()
+  await expect(page.getByTestId('literacy-practice')).toContainText('假名读音')
+  await page.getByRole('button', { name: /遮住答案，开始回忆/ }).click()
+  await expect(page.getByRole('heading', { name: '看到日语，说出意思' })).toBeVisible()
 })
 
 test('a fresh installation creates its own cloud profile instead of sharing another learner state', async ({ page, browser }) => {
@@ -161,10 +175,10 @@ test('answer positions change and one immediate lesson cannot become stable mast
 })
 
 test('the main curriculum remains complete, sequential and assessment-ready', () => {
-  expect(courseLessons).toHaveLength(84)
+  expect(courseLessons).toHaveLength(54)
   expect(new Set(courseLessons.map((lesson) => lesson.id)).size).toBe(courseLessons.length)
   expect(courseStages.map((stage) => courseLessons.filter((lesson) => lesson.level === stage.id).length))
-    .toEqual([17, 15, 13, 13, 13, 13])
+    .toEqual([17, 9, 7, 7, 7, 7])
 
   courseLessons.forEach((lesson, index) => {
     expect(lesson.order).toBe(index + 1)
@@ -174,6 +188,41 @@ test('the main curriculum remains complete, sequential and assessment-ready', ()
     expect(lesson.questions.every((question) => question.options.length === 4)).toBe(true)
     expect(lesson.prerequisiteLessonIds).toEqual(index === 0 ? [] : [courseLessons[index - 1].id])
   })
+})
+
+test('curriculum quality keeps lessons connected, task-based and free of listening requirements', () => {
+  expect(courseStages.every((stage) => stage.canDo.length > 12 && stage.evidence.length > 12)).toBe(true)
+  expect([...courseNodeMap.values()].some((node) => node.kind === ('listening' as never))).toBe(false)
+
+  const integratedLessons = courseLessons.filter((lesson) => lesson.id.includes('-module-'))
+  expect(integratedLessons).toHaveLength(20)
+  integratedLessons.forEach((lesson) => {
+    expect(lesson.nodeIds.length).toBeGreaterThanOrEqual(2)
+    expect(lesson.examples.length).toBeGreaterThanOrEqual(2)
+    expect(lesson.questions.length).toBeGreaterThanOrEqual(6)
+    expect(lesson.mission.length).toBeGreaterThan(12)
+    expect(lesson.transferTask.length).toBeGreaterThan(12)
+  })
+  expect([...courseNodeMap.values()].every((node) => node.prerequisiteNodeIds.length > 0 || node.id === 'kana.hiragana')).toBe(true)
+})
+
+test('ability training unlocks content with course progress instead of exposing the whole level', () => {
+  const entries: VocabularyEntry[] = Array.from({ length: 20 }, (_, index) => ({
+    id: `word-${index}`,
+    level: 'N5',
+    term: `词${index}`,
+    reading: `ことば${index}`,
+    meaningEn: `word ${index}`,
+  }))
+  const locked = selectStudyBatch(entries, 'vocabulary', 'foundation', [], 20, new Date('2026-07-14'), {
+    currentLevel: 'foundation', stageProgressRatio: 0, learnedTexts: [], learnedPatterns: [],
+  })
+  const partlyUnlocked = selectStudyBatch(entries, 'vocabulary', 'foundation', [], 20, new Date('2026-07-14'), {
+    currentLevel: 'foundation', stageProgressRatio: 0.25, learnedTexts: [], learnedPatterns: [],
+  })
+
+  expect(locked).toHaveLength(0)
+  expect(partlyUnlocked).toHaveLength(5)
 })
 
 test('literacy mastery requires delayed recall instead of repeated same-session answers', () => {

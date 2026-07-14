@@ -12,7 +12,7 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { courseLessonMap } from '../data/courseCatalog'
+import { courseLessonMap, courseLessons, courseNodeMap } from '../data/courseCatalog'
 import { readingPassages } from '../data/readingCurriculum'
 import {
   loadGrammar,
@@ -48,8 +48,8 @@ const kindLabels: Record<LiteracyItemKind, string> = {
 
 const levelRank: Record<Exclude<CourseLevel, 'foundation'>, number> = { N5: 1, N4: 2, N3: 3, N2: 4, N1: 5 }
 
-function getItemFront(item: CurriculumEntry) {
-  if ('term' in item) return item.term
+function getItemFront(item: CurriculumEntry, level?: CourseLevel) {
+  if ('term' in item) return level === 'foundation' ? item.reading || item.term : item.term
   if ('character' in item) return item.character
   return localizeGrammarPattern(item.title.replace(/\s*\([^)]*\)\s*$/, ''))
 }
@@ -102,11 +102,13 @@ export function LiteracyPage() {
   const [tab, setTab] = useState<StudyTab>('vocabulary')
   const [batch, setBatch] = useState<CurriculumEntry[]>([])
   const [meanings, setMeanings] = useState<Record<string, string>>({})
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [loadedScopeKey, setLoadedScopeKey] = useState('')
   const [loadError, setLoadError] = useState('')
   const [reloadKey, setReloadKey] = useState(0)
   const [questionIndex, setQuestionIndex] = useState(0)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
+  const [introducedItemIds, setIntroducedItemIds] = useState<Set<string>>(() => new Set())
   const [readingAnswers, setReadingAnswers] = useState<Array<number | null>>([null, null])
   const [showReading, setShowReading] = useState(false)
   const [showTranslation, setShowTranslation] = useState(false)
@@ -119,14 +121,43 @@ export function LiteracyPage() {
   const activeLesson = courseState.profile ? courseLessonMap.get(courseState.profile.activeLessonId) : undefined
   const currentLevel: CourseLevel = activeLesson?.level ?? 'foundation'
   const contentLevel = currentLevel === 'foundation' ? 'N5' : currentLevel
+  const currentStageLessons = useMemo(
+    () => courseLessons.filter((lesson) => lesson.level === currentLevel),
+    [currentLevel],
+  )
+  const completedLessonIds = useMemo(
+    () => new Set(courseState.lessonProgress
+      .filter((item) => item.status === 'completed' || item.status === 'placed')
+      .map((item) => item.lessonId)),
+    [courseState.lessonProgress],
+  )
+  const stageProgressRatio = currentStageLessons.length === 0
+    ? 0
+    : currentStageLessons.filter((lesson) => completedLessonIds.has(lesson.id)).length / currentStageLessons.length
+  const curriculumScope = useMemo(() => {
+    const learnedLessons = courseLessons.filter((lesson) => completedLessonIds.has(lesson.id))
+    const learnedNodes = learnedLessons.flatMap((lesson) => lesson.nodeIds)
+      .map((nodeId) => courseNodeMap.get(nodeId))
+      .filter((node) => Boolean(node))
+    return {
+      currentLevel,
+      stageProgressRatio,
+      learnedTexts: learnedLessons.flatMap((lesson) => lesson.examples.flatMap((example) => [example.ja, example.reading])),
+      learnedPatterns: learnedNodes.flatMap((node) => [node?.title ?? '', node?.reading ?? '']),
+    }
+  }, [completedLessonIds, currentLevel, stageProgressRatio])
+  const curriculumScopeKey = `${tab}:${currentLevel}:${completedLessonIds.size}:${stageProgressRatio.toFixed(4)}:${reloadKey}`
+  const batchReady = loadedScopeKey === curriculumScopeKey
   const readiness = useMemo(
     () => getLiteracyReadiness(courseState, currentLevel),
     [courseState, currentLevel],
   )
-  const availablePassages = useMemo(
-    () => readingPassages.filter((item) => levelRank[item.level] <= levelRank[contentLevel]),
-    [contentLevel],
-  )
+  const availablePassages = useMemo(() => {
+    const lowerLevel = readingPassages.filter((item) => levelRank[item.level] < levelRank[contentLevel])
+    const currentLevelPassages = readingPassages.filter((item) => item.level === contentLevel)
+    const unlockedCount = Math.ceil(currentLevelPassages.length * stageProgressRatio)
+    return [...lowerLevel, ...currentLevelPassages.slice(0, unlockedCount)]
+  }, [contentLevel, stageProgressRatio])
   const eligibleAttempts = courseState.literacy.readingAttempts.filter((item) => levelRank[item.level === 'foundation' ? 'N5' : item.level] <= levelRank[contentLevel])
   const passedPassageIds = new Set(eligibleAttempts.filter((item) => item.accuracy >= .8 && !item.usedReadingAid && !item.usedTranslationAid).map((item) => item.passageId))
   const suggestedPassage = availablePassages.find((item) => !passedPassageIds.has(item.id))
@@ -148,6 +179,7 @@ export function LiteracyPage() {
     let cancelled = false
     setLoading(true)
     setLoadError('')
+    setLoadedScopeKey('')
     setQuestionIndex(0)
     setSelectedOption(null)
 
@@ -160,6 +192,8 @@ export function LiteracyPage() {
           currentLevel,
           courseState.literacy.itemProgress,
           getDailyLimit(tab),
+          new Date(),
+          curriculumScope,
         )
         const sources = nextBatch.map(getMeaningSource)
         const translated = await translateTexts(sources, 'en')
@@ -174,9 +208,13 @@ export function LiteracyPage() {
         }
         setBatch(nextBatch.filter((item) => translatedById[item.id]))
         setMeanings(translatedById)
+        setLoadedScopeKey(curriculumScopeKey)
       })
       .catch((error) => {
-        if (!cancelled) setLoadError(error instanceof Error ? error.message : '学习内容加载失败，请稍后重试。')
+        if (!cancelled) {
+          setLoadError(error instanceof Error ? error.message : '学习内容加载失败，请稍后重试。')
+          setLoadedScopeKey(curriculumScopeKey)
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -186,18 +224,22 @@ export function LiteracyPage() {
   // A submitted answer updates the persisted progress. Keep the current session stable;
   // a new tab visit or explicit reload will use the latest scheduling data.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentLevel, reloadKey, tab])
+  }, [currentLevel, curriculumScope, curriculumScopeKey, reloadKey, tab])
 
   const currentItem = batch[questionIndex]
+  const currentItemProgress = currentItem
+    ? courseState.literacy.itemProgress.find((item) => item.itemId === currentItem.id)
+    : undefined
+  const needsIntroduction = Boolean(currentItem && !currentItemProgress && !introducedItemIds.has(currentItem.id))
   const reverseQuestion = questionIndex % 2 === 1
   const options = useMemo(() => {
     if (!currentItem) return []
     const candidates = batch.slice(0, 6)
-    const values = reverseQuestion ? candidates.map(getItemFront) : candidates.map((item) => meanings[item.id]).filter(Boolean)
-    const correct = reverseQuestion ? getItemFront(currentItem) : meanings[currentItem.id]
+    const values = reverseQuestion ? candidates.map((item) => getItemFront(item, currentLevel)) : candidates.map((item) => meanings[item.id]).filter(Boolean)
+    const correct = reverseQuestion ? getItemFront(currentItem, currentLevel) : meanings[currentItem.id]
     return shuffleOptions([correct, ...values.filter((value) => value !== correct).slice(0, 3)], questionIndex + currentItem.id.length)
-  }, [batch, currentItem, meanings, questionIndex, reverseQuestion])
-  const correctOption = currentItem ? (reverseQuestion ? getItemFront(currentItem) : meanings[currentItem.id]) : ''
+  }, [batch, currentItem, currentLevel, meanings, questionIndex, reverseQuestion])
+  const correctOption = currentItem ? (reverseQuestion ? getItemFront(currentItem, currentLevel) : meanings[currentItem.id]) : ''
 
   const chooseOption = async (option: string) => {
     if (!currentItem || selectedOption) return
@@ -258,7 +300,7 @@ export function LiteracyPage() {
         </div>
         <div className={`${styles.levelSummary} glassCard`}>
           <small>当前训练级别</small>
-          <strong>{currentLevel === 'foundation' ? '入门 · N5 素材' : currentLevel}</strong>
+          <strong>{currentLevel === 'foundation' ? '入门 · 已学范围' : currentLevel}</strong>
           <span>{readiness.ready ? '五项能力已达标' : '继续补齐未达标能力'}</span>
         </div>
       </section>
@@ -301,7 +343,6 @@ export function LiteracyPage() {
           {passage ? <>
             <header className={styles.studyHeader}>
               <div><small>{passage.level} 分级阅读</small><h2>{passage.title}</h2></div>
-              <button className="softButton" type="button" onClick={() => speakJapanese(passage.text)}><Volume2 size={18} />听原文</button>
             </header>
             <div className={styles.readingText} lang="ja">{passage.text}</div>
             <div className={styles.aidActions}>
@@ -341,35 +382,52 @@ export function LiteracyPage() {
               onClick={() => void submitReading()}
             >提交理解检测<ChevronRight size={18} /></button>}
             <Link className={styles.originalLink} to="/notes"><BookOpenText size={18} /><span><strong>已经有想读的日语原文？</strong><small>进入原文阅读器，粘贴任意文章逐句解析</small></span><ChevronRight size={18} /></Link>
-          </> : <p>当前级别的阅读材料正在准备中。</p>}
+          </> : <div className={styles.lockedPractice}>
+            <BookOpenText size={28} />
+            <strong>先完成一课，再解锁对应阅读</strong>
+            <p>这里不会提前塞给你尚未学过的文章。每完成一段主课程，阅读材料会按当前进度逐步开放。</p>
+            {activeLesson ? <Link className="softButton primaryButton" to={`/learn/${activeLesson.id}`}>回到当前主课<ChevronRight size={18} /></Link> : null}
+          </div>}
         </section>
       ) : (
         <section className={`${styles.studyCard} glassCard`} data-testid="literacy-practice">
-          {loading ? <div className={styles.loading}><LoaderCircle className={styles.spin} /><strong>正在准备全中文学习内容…</strong></div> : null}
-          {loadError ? <div className={styles.loading}><strong>{loadError}</strong><button className="softButton" onClick={() => setReloadKey((key) => key + 1)}>重新加载</button></div> : null}
-          {!loading && !loadError && currentItem ? <>
+          {loading || !batchReady ? <div className={styles.loading}><LoaderCircle className={styles.spin} /><strong>正在按主课进度准备学习内容…</strong></div> : null}
+          {batchReady && loadError ? <div className={styles.loading}><strong>{loadError}</strong><button className="softButton" onClick={() => setReloadKey((key) => key + 1)}>重新加载</button></div> : null}
+          {batchReady && !loading && !loadError && currentItem ? <>
             <header className={styles.studyHeader}>
-              <div><small>{kindLabels[tab]} · {questionIndex + 1}/{batch.length}</small><h2>{reverseQuestion ? '看到中文，想起日语' : '看到日语，说出意思'}</h2></div>
+              <div><small>{kindLabels[tab]} · {questionIndex + 1}/{batch.length}</small><h2>{needsIntroduction ? '先理解，再遮住回忆' : reverseQuestion ? '看到中文，想起日语' : '看到日语，说出意思'}</h2></div>
               <span className="chip badgeMint">{currentItem.level}</span>
             </header>
-            <div className={styles.prompt} lang={reverseQuestion ? 'zh-CN' : 'ja'}>
-              {reverseQuestion ? meanings[currentItem.id] : getItemFront(currentItem)}
-              {!reverseQuestion && 'term' in currentItem ? <button aria-label="朗读词汇" onClick={() => speakJapanese(currentItem.term)}><Volume2 size={20} /></button> : null}
+            <div className={styles.prompt} lang={!needsIntroduction && reverseQuestion ? 'zh-CN' : 'ja'}>
+              {!needsIntroduction && reverseQuestion ? meanings[currentItem.id] : getItemFront(currentItem, currentLevel)}
+              {(needsIntroduction || !reverseQuestion) && 'term' in currentItem ? <button aria-label="朗读词汇" onClick={() => speakJapanese(currentItem.reading || currentItem.term)}><Volume2 size={20} /></button> : null}
             </div>
-            <div className={styles.optionGrid}>
+            {needsIntroduction ? <div className={styles.introduction}>
+              <ItemDetail item={currentItem} meaningZh={meanings[currentItem.id]} foundation={currentLevel === 'foundation'} />
+              <p>先把日语形式、读音和意思连起来。点击后答案会遮住，再从记忆中找回来。</p>
+              <button className="softButton primaryButton" type="button" onClick={() => setIntroducedItemIds((items) => new Set(items).add(currentItem.id))}>
+                遮住答案，开始回忆<ChevronRight size={18} />
+              </button>
+            </div> : <div className={styles.optionGrid}>
               {options.map((option) => {
                 const chosen = selectedOption === option
                 const correct = option === correctOption
                 const stateClass = selectedOption ? correct ? styles.correctOption : chosen ? styles.wrongOption : styles.dimOption : ''
                 return <button key={option} type="button" className={stateClass} disabled={Boolean(selectedOption)} onClick={() => void chooseOption(option)}>{option}</button>
               })}
-            </div>
-            {selectedOption ? <div className={styles.feedback}>
+            </div>}
+            {!needsIntroduction && selectedOption ? <div className={styles.feedback}>
               <div><Sparkles size={20} /><strong>{selectedOption === correctOption ? '答对了' : `正确答案：${correctOption}`}</strong></div>
-              <ItemDetail item={currentItem} meaningZh={meanings[currentItem.id]} />
+              <ItemDetail item={currentItem} meaningZh={meanings[currentItem.id]} foundation={currentLevel === 'foundation'} />
               {questionIndex < batch.length - 1 ? <button className="softButton primaryButton" onClick={nextQuestion}>下一题<ChevronRight size={18} /></button> : <div className={styles.finishMessage}><strong>今日这一组已完成</strong><span>今天答对只是第一次编码；系统会在遗忘点再次提问，隔天仍答对才算稳定掌握。</span></div>}
             </div> : null}
           </> : null}
+          {batchReady && !loading && !loadError && !currentItem ? <div className={styles.lockedPractice}>
+            <BrainCircuit size={28} />
+            <strong>这类知识还没有学到</strong>
+            <p>训练只会出现主课程已经解锁的内容。先完成当前主课，这里会自动接上对应的词汇、汉字和语法。</p>
+            {activeLesson ? <Link className="softButton primaryButton" to={`/learn/${activeLesson.id}`}>继续主课<ChevronRight size={18} /></Link> : null}
+          </div> : null}
         </section>
       )}
 
@@ -381,10 +439,10 @@ export function LiteracyPage() {
   )
 }
 
-function ItemDetail({ item, meaningZh }: { item: CurriculumEntry; meaningZh: string }) {
+function ItemDetail({ item, meaningZh, foundation = false }: { item: CurriculumEntry; meaningZh: string; foundation?: boolean }) {
   if ('term' in item) {
     const entry = item as VocabularyEntry
-    return <div className={styles.detail}><span>读音</span><strong>{entry.reading || entry.term}</strong><p>{meaningZh}</p></div>
+    return <div className={styles.detail}><span>{foundation ? '假名读音' : '读音'}</span><strong>{entry.reading || entry.term}</strong><p>{meaningZh}</p>{foundation && entry.term !== entry.reading ? <small>以后会遇到的常见写法：{entry.term}</small> : null}</div>
   }
   if ('character' in item) {
     const entry = item as KanjiEntry

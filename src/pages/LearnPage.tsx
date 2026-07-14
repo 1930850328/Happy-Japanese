@@ -78,6 +78,7 @@ export function LearnPage() {
   const activeLessonProgress = activeLesson ? getLessonProgress(courseState, activeLesson.id) : undefined
   const awaitingStageReadiness = activeLessonProgress?.status === 'completed' && !literacyReadiness.ready
   const fullPathComplete = completion.ratio >= 1 && literacyReadiness.ready
+  const activeStage = courseStages.find((stage) => stage.id === literacyLevel)
 
   useEffect(() => {
     if (activeLesson) setExpandedStageId(activeLesson.level)
@@ -181,7 +182,7 @@ export function LearnPage() {
                 <ul>
                   <li><Check size={17} />系统决定今天最值得学什么</li>
                   <li><Check size={17} />答题结果决定何时再次出现</li>
-                  <li><Check size={17} />歌曲和番剧负责把知识变成真实语境</li>
+                  <li><Check size={17} />每课都在新句子和短文中完成迁移</li>
                   <li><Check size={17} />所有进度都落在一张长期能力地图上</li>
                 </ul>
               </div>
@@ -212,7 +213,7 @@ export function LearnPage() {
           <span className="chip badgeMint">今日学习</span>
           <h1 className="pageTitle">沿着一条路，今天再前进一步</h1>
           <p className="sectionIntro">
-            先处理遗忘风险，再完成当前主课。学过的内容会持续回到新的句子和歌曲里。
+            先处理遗忘风险，再学主课、练配套知识、读一篇当前难度的短文。每一步都服务于可验证的阅读成果。
           </p>
         </div>
         <div className={`${styles.levelCard} glassCard`}>
@@ -222,6 +223,35 @@ export function LearnPage() {
           <small>这是主干进度，不等于考试准备度</small>
           <div><i style={{ width: `${completion.ratio * 100}%` }} /></div>
         </div>
+      </section>
+
+      <section className={`${styles.dailyRoute} glassCard`} aria-label="今天按顺序完成">
+        <header>
+          <div>
+            <span className="chip badgePeach">今天按这个顺序</span>
+            <h2>不用自己拼计划，完成一条学习闭环</h2>
+          </div>
+          <strong>{activeStage?.label} · {activeStage?.title}</strong>
+        </header>
+        <div className={styles.dailySteps}>
+          <Link to="/learn/review" className={dueMastery.length === 0 ? styles.stepDone : ''}>
+            <span>{dueMastery.length === 0 ? <Check size={17} /> : '1'}</span>
+            <div><strong>到期复习</strong><small>{dueMastery.length === 0 ? '今天已清空' : `${dueMastery.length} 项接近遗忘点`}</small></div>
+          </Link>
+          <Link to={activeLesson ? `/learn/${activeLesson.id}` : '/'} className={activeLessonProgress?.status === 'completed' ? styles.stepDone : ''}>
+            <span>{activeLessonProgress?.status === 'completed' ? <Check size={17} /> : '2'}</span>
+            <div><strong>当前主课</strong><small>{activeLesson?.title ?? '主课已完成'}</small></div>
+          </Link>
+          <Link to="/literacy">
+            <span>3</span>
+            <div><strong>配套知识训练</strong><small>只练已经解锁的词汇、汉字和语法</small></div>
+          </Link>
+          <Link to="/literacy">
+            <span>4</span>
+            <div><strong>短文迁移</strong><small>不用翻译证明今天真的读懂了</small></div>
+          </Link>
+        </div>
+        <p><strong>本阶段成果：</strong>{activeStage?.canDo} <span>验收方式：{activeStage?.evidence}</span></p>
       </section>
 
       <section className={styles.todayGrid} aria-label="今日学习路径">
@@ -268,7 +298,7 @@ export function LearnPage() {
           </div>
           <Link to="/literacy">查看训练详情 <ChevronRight size={17} /></Link>
         </header>
-        <p>课程单元完成只是学过；以下五项同时达到目标，才算能够稳定运用并进入下一阶段。</p>
+        <p>{activeStage?.canDo} 以下五项同时达到目标，才算能够稳定运用并进入下一阶段。</p>
         <div className={styles.readinessGrid}>
           {literacyReadiness.dimensions.map((item) => {
             const ratio = item.target === 0 ? 1 : Math.min(item.value / item.target, 1)
@@ -287,7 +317,7 @@ export function LearnPage() {
             <span className="chip badgePeach">长期路线</span>
             <h2>从入门到 N1 的课程地图</h2>
           </div>
-          <p>通过检测才会推进；N1 准备还要求词汇、汉字、听读和模拟题持续达标，不用课数冒充能力。</p>
+          <p>每阶段都写明“能读懂什么”和“怎样证明”，通过检测才会推进，不用课数冒充能力。</p>
         </header>
 
         <div className={styles.stageList}>
@@ -301,6 +331,7 @@ export function LearnPage() {
                     <span>{stage.label}</span>
                     <h3>{stage.title}</h3>
                     <p>{stage.description}</p>
+                    <div className={styles.stageOutcome}><strong>完成后</strong><span>{stage.canDo}</span><small>验收：{stage.evidence}</small></div>
                   </div>
                   <div className={styles.stageActions}>
                     <strong>{progress.completed}/{progress.total}</strong>

@@ -91,6 +91,13 @@
   line-height: 1.55;
 }
 
+.canDoCard p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
 .learningLayout {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(250px, 0.7fr);
@@ -263,6 +270,43 @@
   padding: 1.1rem 1.2rem;
 }
 
+.transferCard {
+  padding: 1.1rem 1.2rem;
+  border-color: rgba(77, 128, 107, .24);
+  background: rgba(240, 247, 243, .72);
+}
+
+.transferCard > div {
+  display: flex;
+  align-items: flex-start;
+  gap: .8rem;
+}
+
+.transferCard svg {
+  flex-shrink: 0;
+  color: #4d806b;
+}
+
+.transferCard div div {
+  display: grid;
+  gap: .35rem;
+}
+
+.transferCard small {
+  color: #4d806b;
+  font-weight: 700;
+}
+
+.transferCard strong {
+  line-height: 1.55;
+}
+
+.transferCard p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
 .startPractice svg {
   flex-shrink: 0;
   color: #4d806b;
@@ -384,7 +428,6 @@
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #75a38a, #efb58f);
-  transition: width 220ms ease;
 }
 
 .practiceBody {

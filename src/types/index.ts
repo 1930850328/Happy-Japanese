@@ -507,7 +507,6 @@ export type CourseNodeKind =
   | 'kana'
   | 'vocabulary'
   | 'grammar'
-  | 'listening'
   | 'reading'
   | 'strategy'
 
@@ -556,6 +555,9 @@ export interface CourseLesson {
   examples: CourseExample[]
   questions: CourseQuestion[]
   songSearchTerms: string[]
+  moduleTitle: string
+  mission: string
+  transferTask: string
 }
 
 export interface CourseStage {
@@ -563,6 +565,8 @@ export interface CourseStage {
   label: string
   title: string
   description: string
+  canDo: string
+  evidence: string
   lessonIds: string[]
 }
 

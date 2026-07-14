@@ -23,7 +23,7 @@ const specs: CurriculumSpec[] = [
   { id: 'permission', level: 'N5', kind: 'grammar', title: '许可与禁止', form: 'てもいい・てはいけない', meaning: '询问或给予许可，并说明禁止事项', explanation: 'て形加もいい表示可以，加はいけない表示不可以。', example: 'ここで写真を撮ってもいいです。', reading: 'ここで しゃしんを とっても いいです。', zh: '可以在这里拍照。' },
   { id: 'comparison', level: 'N5', kind: 'grammar', title: '比较两个事物', form: 'より・ほうが・いちばん', meaning: '表达两者比较和最高程度', explanation: 'AよりBのほうが表示B比A更……；范围内最高用いちばん。', example: '電車より自転車のほうが速いです。', reading: 'でんしゃより じてんしゃの ほうが はやいです。', zh: '自行车比电车更快。' },
   { id: 'daily-words', level: 'N5', kind: 'vocabulary', title: '建立日常高频词群', form: '家族・学校・食事・交通', meaning: '在家庭、学校、饮食与出行场景中调用基础词汇', explanation: '词汇不按孤立清单背诵，而按能完成的生活任务成组学习。', example: '家族と駅の近くで晩ご飯を食べます。', reading: 'かぞくと えきの ちかくで ばんごはんを たべます。', zh: '和家人在车站附近吃晚饭。' },
-  { id: 'sequence-listening', level: 'N5', kind: 'listening', title: '听懂行动顺序', form: 'まず・それから・最後に', meaning: '从顺序词中抓住先做什么、再做什么', explanation: '初级听力先抓顺序和动作，不必逐字翻译整段。', example: 'まず切符を買って、それから電車に乗ります。', reading: 'まず きっぷを かって、それから でんしゃに のります。', zh: '先买票，然后坐电车。' },
+  { id: 'sequence-reading', level: 'N5', kind: 'reading', title: '读懂行动顺序', form: 'まず・それから・最後に', meaning: '从顺序词中抓住先做什么、再做什么', explanation: '阅读步骤说明时先抓顺序词和动作，不必逐字翻译整段。', example: 'まず切符を買って、それから電車に乗ります。', reading: 'まず きっぷを かって、それから でんしゃに のります。', zh: '先买票，然后坐电车。' },
 
   { id: 'plain-form', level: 'N4', kind: 'grammar', title: '掌握普通形', form: '辞书形・ない形・た形', meaning: '在朋友交流和复合句中使用普通形', explanation: '普通形不是不礼貌，而是句中连接和亲近关系中的基础形式。', example: '明日は家にいる。', reading: 'あしたは いえに いる。', zh: '明天在家。' },
   { id: 'thought-quote', level: 'N4', kind: 'grammar', title: '转述想法和话语', form: 'と思う・と言う', meaning: '表达自己的判断或转述别人说的话', explanation: '普通形后接と思う；引用内容后接と言う。', example: 'この方法がいいと思います。', reading: 'この ほうほうが いいと おもいます。', zh: '我觉得这个方法不错。' },
@@ -34,7 +34,7 @@ const specs: CurriculumSpec[] = [
   { id: 'simultaneous', level: 'N4', kind: 'grammar', title: '同时进行两个动作', form: 'ながら', meaning: '同一主体一边做前项一边做后项', explanation: '主要动作通常放在句尾，ながら前使用ます形词干。', example: '音楽を聞きながら勉強します。', reading: 'おんがくを ききながら べんきょうします。', zh: '一边听音乐一边学习。' },
   { id: 'excess-ease', level: 'N4', kind: 'grammar', title: '表达过度与难易', form: 'すぎる・やすい・にくい', meaning: '评价动作或状态过度，以及事情容易或难以进行', explanation: '词干后接すぎる、やすい、にくい，形成新的复合表达。', example: 'この説明は長すぎて、分かりにくいです。', reading: 'この せつめいは ながすぎて、わかりにくいです。', zh: '这个说明太长，很难理解。' },
   { id: 'paragraph-links', level: 'N4', kind: 'reading', title: '跟随段落连接词', form: 'しかし・だから・例えば', meaning: '识别转折、因果和举例在段落中的作用', explanation: '先判断连接词角色，再决定后句是反转、结论还是例子。', example: '便利です。しかし、少し高いです。', reading: 'べんりです。しかし、すこし たかいです。', zh: '很方便。但是有点贵。' },
-  { id: 'request-intent', level: 'N4', kind: 'listening', title: '听懂请求真正要做什么', form: '〜てくれませんか', meaning: '从礼貌表达中抓住对方要求的具体行动', explanation: '听力题先锁定动作和截止条件，再处理礼貌词尾。', example: '明日までに送ってくれませんか。', reading: 'あしたまでに おくってくれませんか。', zh: '能在明天之前发给我吗？' },
+  { id: 'request-intent', level: 'N4', kind: 'reading', title: '读懂礼貌请求', form: '〜てくれませんか', meaning: '从礼貌表达中抓住对方要求的具体行动', explanation: '阅读邮件和留言时先锁定动作与截止条件，再理解礼貌词尾。', example: '明日までに送ってくれませんか。', reading: 'あしたまでに おくってくれませんか。', zh: '能在明天之前发给我吗？' },
 
   { id: 'appearance', level: 'N3', kind: 'grammar', title: '根据外观作判断', form: 'そうだ', meaning: '根据眼前迹象判断似乎要发生或呈现某状态', explanation: '样态そうだ来自直接观察，不等于转述消息的そうだ。', example: '雨が降りそうです。', reading: 'あめが ふりそうです。', zh: '看起来要下雨。' },
   { id: 'hearsay', level: 'N3', kind: 'grammar', title: '转述听来的信息', form: '〜そうだ・ということだ', meaning: '标明信息来自传闻或他人说明', explanation: '转述时保留普通形，再说明消息来源，避免当作自己的直接判断。', example: '天気予報によると、明日は雪だそうです。', reading: 'てんきよほうによると、あしたは ゆきだそうです。', zh: '据天气预报说，明天会下雪。' },
@@ -56,7 +56,7 @@ const specs: CurriculumSpec[] = [
   { id: 'negative-risk', level: 'N2', kind: 'grammar', title: '指出负面风险', form: 'かねない', meaning: '说明某种不好的结果有发生可能', explanation: 'かねない只用于说话人认为不理想的可能结果。', example: 'このままでは事故が起こりかねない。', reading: 'このままでは じこが おこりかねない。', zh: '这样下去可能会发生事故。' },
   { id: 'despite', level: 'N2', kind: 'grammar', title: '表达与条件相反的结果', form: 'にもかかわらず', meaning: '前项事实成立，但后项没有出现通常预期的结果', explanation: '正式语体中常用于客观说明强烈逆接。', example: '雨にもかかわらず、多くの人が集まった。', reading: 'あめにもかかわらず、おおくの ひとが あつまった。', zh: '尽管下雨，还是来了很多人。' },
   { id: 'formal-notice', level: 'N2', kind: 'reading', title: '读懂正式通知', form: 'につき・に際して', meaning: '从公告中识别原因、适用时间和行动要求', explanation: '正式通知优先提取对象、时间、原因和必须采取的动作。', example: '工事中につき、この道は通行できません。', reading: 'こうじちゅうにつき、この みちは つうこうできません。', zh: '因施工中，此路无法通行。' },
-  { id: 'speaker-stance', level: 'N2', kind: 'listening', title: '判断说话人的保留态度', form: '確かに〜が・とはいえ', meaning: '听出说话人先承认一部分，再提出真正立场', explanation: '答案通常落在让步后的转折，而不是开头承认的信息。', example: '確かに便利ですが、今すぐ必要とは思いません。', reading: 'たしかに べんりですが、いますぐ ひつようとは おもいません。', zh: '确实方便，但我不觉得现在马上需要。' },
+  { id: 'author-stance', level: 'N2', kind: 'reading', title: '判断作者的保留态度', form: '確かに〜が・とはいえ', meaning: '读出作者先承认一部分，再提出真正立场', explanation: '作者的落点通常在让步后的转折，而不是开头承认的信息。', example: '確かに便利ですが、今すぐ必要とは思いません。', reading: 'たしかに べんりですが、いますぐ ひつようとは おもいません。', zh: '确实方便，但我不觉得现在马上需要。' },
 
   { id: 'not-worthy', level: 'N1', kind: 'grammar', title: '评价不值得讨论', form: 'に足りない・に足る', meaning: '判断某事不值得或足以成为评价对象', explanation: '常见于正式评论，に足る表示值得，に足りない表示不足以。', example: 'その意見は検討するに足る。', reading: 'その いけんは けんとうするに たる。', zh: '那个意见值得研究。' },
   { id: 'paired-extremes', level: 'N1', kind: 'grammar', title: '并列鲜明特征', form: 'といい〜といい', meaning: '列举两个代表性方面并作整体评价', explanation: '列举的两项不是全部，而是用来支持后面的总体判断。', example: '色といい形といい、実に美しい。', reading: 'いろといい かたちといい、じつに うつくしい。', zh: '无论颜色还是形状，都非常漂亮。' },
@@ -95,7 +95,46 @@ function questionsFor(spec: CurriculumSpec): CourseQuestion[] {
   ]
 }
 
-export const expansionNodes: CourseNode[] = specs.map((spec) => ({
+interface CourseModuleSpec {
+  id: string
+  level: Exclude<CourseLevel, 'foundation'>
+  title: string
+  canDo: string
+  mission: string
+  transferTask: string
+  specIds: string[]
+}
+
+const modules: CourseModuleSpec[] = [
+  { id: 'n5-find-things', level: 'N5', title: '在车站找到人和物', canDo: '能够读懂物品指示、时间和人数信息。', mission: '看懂会合消息，确认“什么、几点、几个人”。', transferTask: '阅读一条新的会合消息，圈出物品、时间和人数。', specIds: ['demonstratives', 'time-counters'] },
+  { id: 'n5-tell-yesterday', level: 'N5', title: '写下昨天发生的事', canDo: '能够说明过去做了什么，以及当时是什么状态。', mission: '用过去式写一则三句话的小日记。', transferTask: '在新日记中区分动作过去式和形容词过去式。', specIds: ['past-tense', 'adjective-change'] },
+  { id: 'n5-make-plan', level: 'N5', title: '和朋友商量周末计划', canDo: '能够表达愿望、发出邀请并确认许可。', mission: '读懂一段周末安排，判断双方最后决定做什么。', transferTask: '为一个新场景选择合适的愿望、邀请和许可表达。', specIds: ['desire', 'invitation', 'permission'] },
+  { id: 'n5-follow-route', level: 'N5', title: '比较路线并照步骤行动', canDo: '能够比较选择，并按顺序读懂简单行动说明。', mission: '从两条路线中选出合适方案，再按文字步骤到达目的地。', transferTask: '阅读一段新路线，找出比较结论和三个先后动作。', specIds: ['comparison', 'daily-words', 'sequence-reading'] },
+
+  { id: 'n4-share-opinion', level: 'N4', title: '在留言中说明想法', canDo: '能够读懂普通形，并区分想法、转述与计划。', mission: '从朋友留言中还原“谁认为、谁说、谁打算做什么”。', transferTask: '给新留言中的判断、引用和计划分别做标记。', specIds: ['plain-form', 'thought-quote', 'intention-plan'] },
+  { id: 'n4-prepare-task', level: 'N4', title: '为一个目标提前准备', canDo: '能够读懂行动目的、尝试和事前准备。', mission: '阅读活动准备清单，判断每个动作为什么现在要做。', transferTask: '把新清单中的动作分为“目的、尝试、提前准备”。', specIds: ['purpose', 'try-action'] },
+  { id: 'n4-describe-help', level: 'N4', title: '说明谁帮助了谁', canDo: '能够追踪给予视角，并理解同时发生的动作。', mission: '读懂一则互助日记，判断帮助的方向与主要动作。', transferTask: '在新段落中找出受益者，并区分主动作与伴随动作。', specIds: ['giving-receiving', 'simultaneous'] },
+  { id: 'n4-read-request', level: 'N4', title: '读懂评价和工作请求', canDo: '能够理解难易评价、段落转折和礼貌请求。', mission: '阅读一封工作邮件，找出问题、转折和最终要求。', transferTask: '从新邮件中提取截止时间、具体动作和作者评价。', specIds: ['excess-ease', 'paragraph-links', 'request-intent'] },
+
+  { id: 'n3-weigh-evidence', level: 'N3', title: '区分观察、传闻和推断', canDo: '能够判断一项信息来自眼前迹象、他人消息还是语境推断。', mission: '阅读三条信息，给每个判断标出证据来源。', transferTask: '在新短文中区分样态、传闻和推测，说明判断依据。', specIds: ['appearance', 'hearsay', 'seeming'] },
+  { id: 'n3-judge-action', level: 'N3', title: '判断预期、责任与阶段', canDo: '能够读懂有根据的预期、规范评价和动作阶段。', mission: '阅读项目记录，判断事情应该怎样、现在进展到哪里。', transferTask: '从新记录中找出推理依据、规范判断和动作阶段。', specIds: ['expectation', 'advice-duty', 'action-phase'] },
+  { id: 'n3-explain-result', level: 'N3', title: '解释事情为何发生', canDo: '能够区分目的、原因、手段和依据。', mission: '阅读事件说明，把每个结果连接到正确的原因或手段。', transferTask: '为新段落画出“原因或目的 → 手段 → 结果”关系。', specIds: ['cause-purpose', 'means-cause'] },
+  { id: 'n3-follow-topic', level: 'N3', title: '追踪段落话题和省略', canDo: '能够还原话题、身份、指示词与被省略主语。', mission: '在一段普通文章中持续追踪“谁在谈什么”。', transferTask: '给新段落中的それ、このこと和省略主语写出指代对象。', specIds: ['topic-role', 'omission-reading'] },
+
+  { id: 'n2-test-conclusion', level: 'N2', title: '判断结论有多确定', canDo: '能够区分自然结论、强烈推断和转述归纳。', mission: '阅读一则分析，给每个结论标出确定度与信息来源。', transferTask: '在新文章中区分作者推断、事实归纳与引用信息。', specIds: ['reason-boundary', 'strong-inference', 'definition-hearsay'] },
+  { id: 'n2-follow-change', level: 'N2', title: '读懂变化与行动前提', canDo: '能够理解同步变化，并判断行动前必须完成什么。', mission: '阅读制度变更说明，找出变化链和执行顺序。', transferTask: '从新说明中画出“变化 → 伴随结果”和“前提 → 行动”。', specIds: ['parallel-change', 'basis-step'] },
+  { id: 'n2-assess-risk', level: 'N2', title: '评估例外、递进和风险', canDo: '能够读懂最低条件、预期反转与负面可能。', mission: '阅读风险提示，判断问题比预想更轻还是更严重。', transferTask: '在新段落中标出最低项、逆预期事实和风险结论。', specIds: ['minimum-extreme', 'negative-risk', 'despite'] },
+  { id: 'n2-read-policy', level: 'N2', title: '读懂正式通知的真正立场', canDo: '能够从正式材料中提取要求，并识别作者让步后的立场。', mission: '阅读通知与简短评论，分别提取适用对象、行动要求和最终观点。', transferTask: '为新材料写一行摘要：谁、因为什么、必须做什么、作者怎么看。', specIds: ['formal-notice', 'author-stance'] },
+
+  { id: 'n1-evaluate-worth', level: 'N1', title: '读懂正式评价的尺度', canDo: '能够理解“是否值得”的判断，并从列举特征推出整体评价。', mission: '阅读一段评论，找出评价对象、尺度和支撑特征。', transferTask: '在新评论中区分评价结论与用于支撑结论的代表性特征。', specIds: ['not-worthy', 'paired-extremes'] },
+  { id: 'n1-trace-development', level: 'N1', title: '追踪事件扩展与情感强调', canDo: '能够读懂事件从起点扩展，以及作者强烈强调的感受。', mission: '阅读活动报道，找出扩展起点和带感情色彩的评价。', transferTask: '从新报道中标出事件起点、后续展开和作者情感强度。', specIds: ['starting-point', 'emotional-emphasis'] },
+  { id: 'n1-read-empathy', level: 'N1', title: '理解推断、共情和唯一判断', canDo: '能够区分理性推断、情感不忍和“别无他选”的强判断。', mission: '阅读人物评论，解释作者为何能推断、为何不忍、为何只认可一个选择。', transferTask: '给新段落中的三类判断分别写出证据或情感来源。', specIds: ['easy-inference', 'cannot-bear', 'only-choice'] },
+  { id: 'n1-unpack-literary', level: 'N1', title: '拆解凝练书面表达', canDo: '能够读懂正式禁止、瞬间连续与预期反转。', mission: '阅读一段凝练叙述，恢复被压缩的时间关系和作者预期。', transferTask: '把新原文改写成普通日语，再说明禁止、先后和反转关系。', specIds: ['strong-prohibition', 'instant-sequence', 'expectation-reversal'] },
+]
+
+const specMap = new Map(specs.map((spec) => [spec.id, spec]))
+
+export const expansionNodes: CourseNode[] = specs.map((spec, index) => ({
   id: `core.${spec.level.toLowerCase()}.${spec.id}`,
   kind: spec.kind,
   level: spec.level,
@@ -103,21 +142,27 @@ export const expansionNodes: CourseNode[] = specs.map((spec) => ({
   reading: spec.form,
   meaningZh: spec.meaning,
   explanationZh: spec.explanation,
-  prerequisiteNodeIds: [],
+  prerequisiteNodeIds: index === 0 ? ['grammar.te'] : [`core.${specs[index - 1].level.toLowerCase()}.${specs[index - 1].id}`],
 }))
 
-export const expansionLessons: CourseLesson[] = specs.map((spec, index) => ({
-  id: `${spec.level.toLowerCase()}-core-${spec.id}`,
-  level: spec.level,
+export const expansionLessons: CourseLesson[] = modules.map((module, index) => {
+  const moduleSpecs = module.specIds.map((id) => specMap.get(id)).filter((item): item is CurriculumSpec => Boolean(item))
+  return {
+  id: `${module.level.toLowerCase()}-module-${module.id.replace(/^n\d-/, '')}`,
+  level: module.level,
   order: 1_000 + index,
-  title: spec.title,
-  canDo: spec.meaning,
-  description: `通过讲解、主动回忆和新题检测掌握「${spec.form}」。`,
-  durationMinutes: 14,
+  title: module.title,
+  canDo: module.canDo,
+  description: module.mission,
+  durationMinutes: 18,
   prerequisiteLessonIds: [],
-  nodeIds: [`core.${spec.level.toLowerCase()}.${spec.id}`],
-  explanation: [spec.explanation, `先理解「${spec.form}」在句子中的作用，再用自己的话说出例句。`],
-  examples: [{ ja: spec.example, reading: spec.reading, zh: spec.zh }],
-  questions: questionsFor(spec),
-  songSearchTerms: [spec.form.split('・')[0]],
-}))
+  nodeIds: moduleSpecs.map((spec) => `core.${spec.level.toLowerCase()}.${spec.id}`),
+  explanation: moduleSpecs.flatMap((spec) => [`「${spec.form}」：${spec.explanation}`]),
+  examples: moduleSpecs.map((spec) => ({ ja: spec.example, reading: spec.reading, zh: spec.zh, note: spec.meaning })),
+  questions: moduleSpecs.flatMap(questionsFor),
+  songSearchTerms: [],
+  moduleTitle: module.title,
+  mission: module.mission,
+  transferTask: module.transferTask,
+  }
+})

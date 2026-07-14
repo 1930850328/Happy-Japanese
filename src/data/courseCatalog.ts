@@ -49,6 +49,9 @@ function lesson(
     examples,
     questions,
     songSearchTerms,
+    moduleTitle: level === 'foundation' ? '文字与第一批句子' : `${level} 核心能力`,
+    mission: canDo,
+    transferTask: '不看讲解完成新题，并在新的句子中认出和使用本课知识。',
   }
 }
 
@@ -136,7 +139,7 @@ export const courseNodes: CourseNode[] = [
   { id: 'reading.argument', kind: 'reading', level: 'N2', title: '论点与依据', meaningZh: '区分作者的主张、例子、让步和结论', explanationZh: '长文理解的关键是识别信息角色，而不是平均用力翻译每一句。', prerequisiteNodeIds: ['reading.reference'] },
   { id: 'grammar.niitatte', kind: 'grammar', level: 'N1', title: 'に至って', meaningZh: '直到发展到某个严重或最终阶段', explanationZh: '正式书面表达，突出过程达到某个阶段后才出现判断或行动。', prerequisiteNodeIds: ['grammar.monono'] },
   { id: 'grammar.nakutewaokanai', kind: 'grammar', level: 'N1', title: 'なくてはおかない', meaningZh: '必然会引发某种结果', explanationZh: '表达某事具有强烈作用，势必让人产生反应或让结果发生。', prerequisiteNodeIds: ['grammar.niitatte'] },
-  { id: 'listening.inference', kind: 'listening', level: 'N1', title: '态度与言外之意', meaningZh: '根据语气、转折和省略判断真正意图', explanationZh: '高级听力常不直接说结论，需要综合语气和上下文推断。', prerequisiteNodeIds: ['reading.argument'] },
+  { id: 'reading.inference', kind: 'reading', level: 'N1', title: '态度与言外之意', meaningZh: '根据转折、措辞和省略判断作者真正意图', explanationZh: '高级文章常不直接写出结论，需要综合措辞和上下文完成推断。', prerequisiteNodeIds: ['reading.argument'] },
   ...expansionNodes,
 ]
 
@@ -160,7 +163,7 @@ const anchorLessons: CourseLesson[] = [
   lesson('n2-reading', 'N2', 16, '处理抽象长文', '能够沿着论证结构定位答案。', '不再依赖逐句翻译完成阅读。', ['n2-exception-argument'], ['reading.argument'], ['先用连接词和段落首尾定位论证结构。', '题目问作者观点时，不能把引用对象的观点当成作者观点。'], [{ ja: '一見すると非効率に思える。だが、長期的には大きな効果をもたらす。', reading: 'いっけんすると ひこうりつに おもえる。だが、ちょうきてきには おおきな こうかを もたらす。', zh: '乍看低效，但长期会带来巨大效果。' }], [question('n2rd-1', 'reading.argument', 'comprehension', '作者引用反对意见后用「しかし」继续，通常是为了？', ['回应或反驳反对意见', '结束文章', '证明自己同意反对者', '说明时间顺序'], 0, '让步后转折通常进入作者回应。'), question('n2rd-2', 'reading.argument', 'comprehension', '问“作者最想说什么”时应优先看？', ['反复出现并被结论重申的主张', '最生僻的单词', '第一个例子', '文章里最长的句子'], 0, '核心主张会得到多处支撑并在结论收束。'), question('n2rd-3', 'reading.argument', 'usage', '遇到陌生词时，哪种策略更有效？', ['先判断它在论证中的作用', '立即放弃整段', '只按汉字中文义理解', '忽略前后连接词'], 0, '即使不知道精确词义，也能通过结构和上下文判断作用。')]),
   lesson('n1-formal', 'N1', 17, '理解高级书面语的阶段变化', '能够理解正式文章中“发展到某阶段”的表达。', '进入 N1 正式论述语体。', ['n2-reading'], ['grammar.niitatte'], ['に至って表示事态经过过程，终于达到某个阶段。', '常与初めて、ようやく等共同突出行动或认识来得较晚。'], [{ ja: '事態が深刻になるに至って、ようやく対策が取られた。', reading: 'じたいが しんこくに なるに いたって、ようやく たいさくが とられた。', zh: '直到事态变得严重，才终于采取对策。' }], [question('n1i-1', 'grammar.niitatte', 'meaning', '「問題が表面化するに至って」表示？', ['发展到问题公开显现的阶段', '为了隐藏问题', '问题从未发生', '问题已经自动解决'], 0, 'に至って突出过程达到某阶段。'), question('n1i-2', 'grammar.niitatte', 'usage', '哪一句最自然？', ['被害が拡大するに至って、調査が始まった。', '被害を至って、調査です。', '被害が拡大に至るを始まった。', '被害に調査を至って。'], 0, '动词辞书形加に至って可作时间阶段背景。'), question('n1i-3', 'grammar.niitatte', 'comprehension', '这种表达经常暗含什么评价？', ['行动或认识出现得较晚', '事情毫无过程', '只是日常习惯', '说话人正在请求许可'], 0, '达到严重阶段才行动，常暗含“为时较晚”。')]),
   lesson('n1-consequence', 'N1', 18, '判断强烈影响与必然结果', '能够理解高级表达中的因果力度。', '辨别事实、推测和强烈必然判断。', ['n1-formal'], ['grammar.nakutewaokanai'], ['なくてはおかない表示某事力量很强，必然引发反应或结果。', '主体常是事件、作品、言论等具有影响力的事物。'], [{ ja: 'その作品は見る者を感動させなくてはおかない。', reading: 'その さくひんは みるものを かんどうさせなくては おかない。', zh: '那部作品必然会打动观众。' }], [question('n1n-1', 'grammar.nakutewaokanai', 'meaning', '「人々を驚かせなくてはおかない」表示？', ['势必让人们吃惊', '不允许人们吃惊', '人们必须假装吃惊', '以前没人吃惊'], 0, '表示具有必然引发惊讶的力量。'), question('n1n-2', 'grammar.nakutewaokanai', 'usage', '哪一句语义最符合这一表达？', ['その知らせは社会に影響を与えなくてはおかない。', '私は毎朝起きなくてはおかない。', '窓を開けなくてはおかないですか。', '本を読まなくてはおかない予定だ。'], 0, '它适合描述某事必然产生影响，不用于普通个人义务。'), question('n1n-3', 'grammar.nakutewaokanai', 'comprehension', '它与「なければならない」的主要区别是？', ['前者说必然影响，后者说义务', '两者完全相同', '前者只表示过去', '后者只用于动物'], 0, '不要被相似形式迷惑：语义功能不同。')]),
-  lesson('n1-inference', 'N1', 19, '听懂没有直接说出的结论', '能够根据转折、语气和省略推断说话人意图。', '完成从语言知识到高级理解策略的连接。', ['n1-consequence'], ['listening.inference'], ['高级听力常先承认一部分，再用语气或转折表达真正立场。', '注意结尾犹豫、否定问句和省略，它们可能比字面词义更关键。'], [{ ja: '悪くはないんですが、今回はちょっと……。', reading: 'わるくは ないんですが、こんかいは ちょっと……。', zh: '倒也不是不好，不过这次有点……', note: '实际意图通常是委婉拒绝。' }], [question('n1l-1', 'listening.inference', 'comprehension', '对方说「今回はちょっと……」最可能的意图是？', ['委婉拒绝', '明确赞成', '要求再来一次', '没有听见'], 0, 'ちょっと后省略负面结论，是常见委婉拒绝。'), question('n1l-2', 'listening.inference', 'comprehension', '「行けないこともない」通常表示？', ['并非完全不能去，但有保留', '绝对不能去', '一定会去', '已经去过'], 0, '双重否定保留可能性，但语气并不积极。'), question('n1l-3', 'listening.inference', 'usage', '推断说话人意图时最不应该只依赖？', ['单个关键词的字面义', '转折位置', '语气和停顿', '前后对话目的'], 0, '高级听力需要综合上下文，单个词容易误导。')]),
+  lesson('n1-inference', 'N1', 19, '读出没有直接写出的结论', '能够根据转折、措辞和省略推断作者意图。', '完成从语言知识到高级阅读策略的连接。', ['n1-consequence'], ['reading.inference'], ['高级文章常先承认一部分，再用转折或留白表达真正立场。', '注意委婉措辞、双重否定和省略，它们可能比单个词的字面义更关键。'], [{ ja: '悪くはないんですが、今回はちょっと……。', reading: 'わるくは ないんですが、こんかいは ちょっと……。', zh: '倒也不是不好，不过这次有点……', note: '在邮件或对话文字中，实际意图通常是委婉拒绝。' }], [question('n1l-1', 'reading.inference', 'comprehension', '文字中出现「今回はちょっと……」最可能的意图是？', ['委婉拒绝', '明确赞成', '要求再来一次', '没有看见'], 0, 'ちょっと后省略负面结论，是常见委婉拒绝。'), question('n1l-2', 'reading.inference', 'comprehension', '「行けないこともない」通常表示？', ['并非完全不能去，但有保留', '绝对不能去', '一定会去', '已经去过'], 0, '双重否定保留可能性，但态度并不积极。'), question('n1l-3', 'reading.inference', 'usage', '推断作者意图时最不应该只依赖？', ['单个关键词的字面义', '转折位置', '委婉措辞', '前后文目的'], 0, '高级阅读需要综合上下文，单个词容易误导。')]),
 ]
 
 const levelOrder: CourseLevel[] = ['foundation', 'N5', 'N4', 'N3', 'N2', 'N1']
@@ -176,12 +179,12 @@ export const courseLessons: CourseLesson[] = orderedLessons.map((item, index) =>
 }))
 
 const stageMeta: Array<Omit<CourseStage, 'lessonIds'>> = [
-  { id: 'foundation', label: '入门', title: '建立日语感觉', description: '声音、文字与最基础句子。' },
-  { id: 'N5', label: 'N5 基础', title: '开始独立表达', description: '日常动作、地点、描述与请求。' },
-  { id: 'N4', label: 'N4 进阶', title: '连接完整意思', description: '能力、原因、义务、经历与条件。' },
-  { id: 'N3', label: 'N3 中级', title: '读懂语气和上下文', description: '部分否定、变化与段落结构。' },
-  { id: 'N2', label: 'N2 高级', title: '处理正式长文', description: '让步、例外与抽象论证。' },
-  { id: 'N1', label: 'N1 冲刺', title: '理解复杂表达', description: '高级书面语、必然结果与言外之意。' },
+  { id: 'foundation', label: '入门', title: '独立读出日语', description: '假名、基础词和第一批完整句子。', canDo: '不靠罗马音读出假名和熟悉短词，并理解最基础判断句。', evidence: '遮住读音拼读新词，独立读懂两篇微型短文。' },
+  { id: 'N5', label: 'N5 基础', title: '读懂日常信息', description: '个人信息、日程、地点、动作与请求。', canDo: '读懂自我介绍、菜单、时间表、标识和简短消息。', evidence: '完成日常信息任务，并无辅助读懂 N5 短文。' },
+  { id: 'N4', label: 'N4 进阶', title: '跟上连续叙述', description: '计划、原因、经历、条件与段落连接。', canDo: '读懂日记、邮件和有明确前因后果的生活叙述。', evidence: '还原事件顺序和原因，并无辅助读懂 N4 连贯短文。' },
+  { id: 'N3', label: 'N3 中级', title: '读懂上下文关系', description: '推断、指代、省略、观点与信息来源。', canDo: '抓住普通文章的主旨、指代和作者基本态度。', evidence: '标出段落关系，并在有限查词下解释文章主旨。' },
+  { id: 'N2', label: 'N2 高级', title: '处理正式论述', description: '让步、风险、规则、依据与抽象论证。', canDo: '读懂新闻、说明文和评论中的主张、依据与保留。', evidence: '还原论证结构，并区分事实、例子和作者结论。' },
+  { id: 'N1', label: 'N1 冲刺', title: '解释复杂原文', description: '高级书面语、隐含立场、抽象观点与文体差异。', canDo: '准确解释社论、评论和文学片段中的逻辑与细微态度。', evidence: '无辅助完成长文理解，并用中文复述论点、语气和隐含前提。' },
 ]
 
 export const courseStages: CourseStage[] = stageMeta.map((stage) => ({

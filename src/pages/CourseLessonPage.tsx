@@ -6,8 +6,8 @@ import {
   CheckCircle2,
   CircleX,
   Clock3,
-  Headphones,
   Lightbulb,
+  Music2,
   RotateCcw,
   Sparkles,
   Volume2,
@@ -146,7 +146,7 @@ export function CourseLessonPage() {
         <>
           <section className={styles.lessonHero}>
             <div>
-              <span className="chip badgeMint">第 {lesson.order} 单元</span>
+              <span className="chip badgeMint">{lesson.moduleTitle} · 第 {lesson.order} 课</span>
               <h1>{lesson.title}</h1>
               <p>{lesson.description}</p>
             </div>
@@ -154,6 +154,7 @@ export function CourseLessonPage() {
               <TargetIcon />
               <small>完成后你能够</small>
               <strong>{lesson.canDo}</strong>
+              <p>{lesson.mission}</p>
             </div>
           </section>
 
@@ -206,7 +207,7 @@ export function CourseLessonPage() {
             <aside className={styles.nodeColumn}>
               {nodes.map((node) => node ? (
                 <article key={node.id} className={`${styles.nodeCard} glassCard`}>
-                  <span>{node.kind === 'grammar' ? '语法' : node.kind === 'kana' ? '文字' : node.kind === 'reading' ? '阅读' : node.kind === 'listening' ? '听力' : '知识'}</span>
+                  <span>{node.kind === 'grammar' ? '语法' : node.kind === 'kana' ? '文字' : node.kind === 'reading' ? '阅读策略' : node.kind === 'vocabulary' ? '词汇群' : '学习策略'}</span>
                   <h3>{node.title}</h3>
                   {node.reading ? <small>{node.reading}</small> : null}
                   <strong>{node.meaningZh}</strong>
@@ -214,6 +215,17 @@ export function CourseLessonPage() {
                 </article>
               ) : null)}
             </aside>
+          </section>
+
+          <section className={`${styles.transferCard} glassCard`}>
+            <div>
+              <BookOpenCheck size={24} />
+              <div>
+                <small>本课迁移任务</small>
+                <strong>{lesson.transferTask}</strong>
+                <p>检测会换成没有见过的句子；能把规则带到新语境，才算真正理解。</p>
+              </div>
+            </div>
           </section>
 
           <section className={`${styles.startPractice} glassCard`}>
@@ -352,7 +364,7 @@ export function CourseLessonPage() {
             <Link className="softButton" to="/"><ArrowLeft size={18} />回到学习路径</Link>
             {lesson.songSearchTerms.length > 0 ? (
               <Link className="softButton" to={`/songs?focus=${encodeURIComponent(lesson.songSearchTerms[0])}`}>
-                <Headphones size={18} />用歌曲巩固（可选）
+                <Music2 size={18} />在歌曲中找本课表达（可选）
               </Link>
             ) : null}
           </div>

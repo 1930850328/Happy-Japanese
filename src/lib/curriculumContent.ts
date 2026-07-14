@@ -32,6 +32,13 @@ export interface GrammarEntry {
 
 export type CurriculumEntry = VocabularyEntry | KanjiEntry | GrammarEntry
 
+export interface CurriculumStudyScope {
+  currentLevel: CourseLevel
+  stageProgressRatio: number
+  learnedTexts: string[]
+  learnedPatterns: string[]
+}
+
 const cache = new Map<string, Promise<unknown>>()
 const levelRank = new Map<CourseLevel, number>([
   ['foundation', 0],
@@ -80,11 +87,25 @@ export function selectStudyBatch<T extends CurriculumEntry>(
   progress: LiteracyItemProgress[],
   limit: number,
   now = new Date(),
+  scope?: CurriculumStudyScope,
 ) {
   const effectiveLevel = currentLevel === 'foundation' ? 'N5' : currentLevel
   const allowedRank = levelRank.get(effectiveLevel) ?? 1
   const progressMap = new Map(progress.filter((item) => item.kind === kind).map((item) => [item.itemId, item]))
-  const eligible = entries.filter((entry) => (levelRank.get(entry.level) ?? 99) <= allowedRank)
+  const entriesAtCurrentLevel = entries.filter((entry) => entry.level === effectiveLevel)
+  const unlockedCurrentCount = scope
+    ? Math.ceil(entriesAtCurrentLevel.length * Math.max(0, Math.min(scope.stageProgressRatio, 1)))
+    : entriesAtCurrentLevel.length
+  const unlockedCurrentIds = new Set(entriesAtCurrentLevel.slice(0, unlockedCurrentCount).map((entry) => entry.id))
+  const eligible = entries.filter((entry) => {
+    const rank = levelRank.get(entry.level) ?? 99
+    if (rank > allowedRank) return false
+    if (!scope || rank < allowedRank) return true
+    if (scope.currentLevel === 'foundation' && kind !== 'vocabulary') {
+      return progressMap.has(entry.id)
+    }
+    return unlockedCurrentIds.has(entry.id) || progressMap.has(entry.id) || entryMatchesLearnedScope(entry, scope)
+  })
   const due = eligible
     .filter((entry) => {
       const item = progressMap.get(entry.id)
@@ -98,7 +119,10 @@ export function selectStudyBatch<T extends CurriculumEntry>(
   const daySeed = now.toISOString().slice(0, 10)
   const unseen = eligible
     .filter((entry) => !progressMap.has(entry.id))
-    .sort((left, right) => hash(`${daySeed}:${left.id}`) - hash(`${daySeed}:${right.id}`))
+    .sort((left, right) => {
+      const relevance = Number(entryMatchesLearnedScope(right, scope)) - Number(entryMatchesLearnedScope(left, scope))
+      return relevance || hash(`${daySeed}:${left.id}`) - hash(`${daySeed}:${right.id}`)
+    })
   const learning = eligible
     .filter((entry) => {
       const item = progressMap.get(entry.id)
@@ -109,4 +133,23 @@ export function selectStudyBatch<T extends CurriculumEntry>(
   return [...due, ...unseen, ...learning]
     .filter((entry, index, items) => items.findIndex((item) => item.id === entry.id) === index)
     .slice(0, limit)
+}
+
+function normalizedJapaneseParts(values: string[]) {
+  return values.flatMap((value) => value
+    .replace(/[A-Za-z（）()\s]/g, '')
+    .split(/[・／/、。〜～]+/)
+    .map((item) => item.trim())
+    .filter((item) => item.length >= 2))
+}
+
+function entryMatchesLearnedScope(entry: CurriculumEntry, scope?: CurriculumStudyScope) {
+  if (!scope) return false
+  const learnedText = scope.learnedTexts.join('\n')
+  if ('term' in entry) {
+    return learnedText.includes(entry.term) || (entry.reading.length >= 2 && learnedText.includes(entry.reading))
+  }
+  if ('character' in entry) return learnedText.includes(entry.character)
+  const title = entry.title.replace(/\s*\([^)]*\)\s*$/, '').replace(/\s/g, '')
+  return normalizedJapaneseParts(scope.learnedPatterns).some((pattern) => title.includes(pattern) || pattern.includes(title))
 }

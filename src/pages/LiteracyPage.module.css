@@ -24,6 +24,9 @@
 .studyCard { min-height: 460px; padding: clamp(1.15rem,3vw,2rem); display: grid; align-content: start; gap: 1.25rem; }
 .studyHeader small { color: var(--text-soft); }
 .loading { min-height: 380px; display: grid; place-items: center; align-content: center; gap: 1rem; color: var(--text-soft); }
+.lockedPractice { min-height: 360px; display: grid; place-items: center; align-content: center; gap: .7rem; text-align: center; }
+.lockedPractice svg { color: #4d806b; }
+.lockedPractice p { max-width: 560px; margin: 0; color: var(--text-soft); line-height: 1.75; }
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .prompt { min-height: 130px; padding: 1rem; display: flex; align-items: center; justify-content: center; gap: .65rem; border-radius: 24px; background: linear-gradient(135deg,rgba(232,244,237,.9),rgba(255,244,235,.85)); font-family: var(--font-ui); font-size: clamp(1.7rem,5vw,3.2rem); font-weight: 700; text-align: center; }
@@ -38,8 +41,12 @@
 .feedback > div:first-child { display: flex; align-items: center; gap: .5rem; }
 .detail { padding: 1rem; display: grid; gap: .4rem; border: 1px solid rgba(77,128,107,.2); border-radius: 14px; background: rgba(235,244,239,.72); }
 .detail span, .detail p { color: var(--text-soft); }
+.detail small { color: var(--text-soft); }
 .detail p, .detail blockquote { margin: 0; }
 .detail blockquote { padding-top: .35rem; font-family: var(--font-jp); }
+.introduction { display: grid; gap: .85rem; }
+.introduction > p { margin: 0; color: var(--text-soft); line-height: 1.7; }
+.introduction > button { width: fit-content; }
 .finishMessage { padding: 1rem; display: grid !important; gap: .35rem !important; border-radius: 14px; background: rgba(247,231,207,.72); }
 .finishMessage span { color: var(--text-soft); line-height: 1.7; }
 .readingText { padding: clamp(1.1rem,3vw,1.8rem); border-radius: 20px; background: rgba(248,246,238,.78); font-family: var(--font-jp); font-size: clamp(1.08rem,2vw,1.28rem); line-height: 2.2; }
