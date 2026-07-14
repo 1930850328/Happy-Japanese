@@ -244,6 +244,7 @@ export interface SongStudyIndex {
 export type LyricSection = 'intro' | 'verse' | 'chorus' | 'bridge' | 'outro'
 
 export type LyricTimingQuality = 'word' | 'line-estimated' | 'line'
+export type LyricWordTimingSource = 'netease-yrc' | 'amll-ttml' | 'kugou-krc'
 
 export interface LyricWordTiming {
   id: string
@@ -264,6 +265,7 @@ export interface LyricLine {
   focusTermIds: string[]
   wordTimings?: LyricWordTiming[]
   timingQuality?: LyricTimingQuality
+  wordTimingSource?: LyricWordTimingSource
 }
 
 export interface SongLesson {

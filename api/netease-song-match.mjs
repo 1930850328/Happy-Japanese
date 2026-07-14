@@ -4,6 +4,7 @@ const SEARCH_URL = 'https://music.163.com/api/search/get'
 const DETAIL_URL = 'https://music.163.com/api/song/detail/'
 const LYRIC_URL = 'https://music.163.com/api/song/lyric'
 const LYRIC_NEW_URL = 'https://music.163.com/api/song/lyric/v1'
+const AMLL_TTML_URL = 'https://raw.githubusercontent.com/amll-dev/amll-ttml-db/main/ncm-lyrics'
 const KUGOU_SEARCH_URL = 'https://songsearch.kugou.com/song_search_v2'
 const KUGOU_LYRIC_SEARCH_URL = 'https://lyrics.kugou.com/search'
 const KUGOU_LYRIC_DOWNLOAD_URL = 'https://lyrics.kugou.com/download'
@@ -130,6 +131,28 @@ async function fetchJson(url, options = {}) {
   }
 
   return JSON.parse(text)
+}
+
+async function fetchAmllTtml(id) {
+  const response = await fetch(`${AMLL_TTML_URL}/${encodeURIComponent(id)}.ttml`, {
+    headers: {
+      accept: 'application/ttml+xml, application/xml, text/xml, text/plain',
+      'user-agent': NETEASE_HEADERS['user-agent'],
+    },
+  })
+  if (response.status === 404) return ''
+  if (!response.ok) throw new Error(`AMLL request failed with status ${response.status}.`)
+
+  const text = await response.text()
+  return text.includes('<tt') && text.includes('<p') ? readString(text, 1_000_000) : ''
+}
+
+export function selectCompatibleYrc(lyrics) {
+  const yrc = readString(lyrics?.yrc, 500_000)
+  if (/^\[\d+,\d+\].*\(\d+,\d+/mu.test(yrc)) return yrc
+
+  const klyric = readString(lyrics?.klyric, 500_000)
+  return /^\[\d+,\d+\].*\(\d+,\d+/mu.test(klyric) ? klyric : ''
 }
 
 async function fetchKugouJson(url) {
@@ -329,7 +352,9 @@ function toMatchRecord(song, detail, lyrics, score) {
     romalrc: lyrics.romalrc,
     yrc: lyrics.yrc,
     klyric: lyrics.klyric,
+    ttml: lyrics.ttml || '',
     krc: lyrics.krc || '',
+    wordTimingSource: lyrics.wordTimingSource,
   }
 }
 
@@ -359,15 +384,36 @@ async function findBestMatch(request) {
   for (const item of scoredSongs) {
     const lyrics = await fetchLyrics(item.song.id)
     if (lyrics.lrc.trim()) {
+      const yrc = selectCompatibleYrc(lyrics)
+      let ttml = ''
       let krc = ''
-      if (!lyrics.yrc && !lyrics.klyric) {
+      if (!yrc) {
+        try {
+          ttml = await fetchAmllTtml(item.song.id)
+        } catch {
+          // The remaining providers can still provide word timings.
+        }
+      }
+      if (!yrc && !ttml) {
         try {
           krc = await fetchKugouWordLyrics(request)
         } catch {
           // Line-timed NetEase lyrics remain usable when the word-timing fallback is unavailable.
         }
       }
-      return toMatchRecord(item.song, detailMap.get(String(item.song.id)), { ...lyrics, krc }, item.score + 16)
+      const wordTimingSource = yrc
+        ? 'netease-yrc'
+        : ttml
+          ? 'amll-ttml'
+          : krc
+            ? 'kugou-krc'
+            : undefined
+      return toMatchRecord(
+        item.song,
+        detailMap.get(String(item.song.id)),
+        { ...lyrics, yrc, ttml, krc, wordTimingSource },
+        item.score + 16,
+      )
     }
   }
 
@@ -379,7 +425,7 @@ async function findBestMatch(request) {
   return toMatchRecord(
     fallback.song,
     detailMap.get(String(fallback.song.id)),
-    { lrc: '', tlyric: '', romalrc: '', yrc: '', klyric: '', krc: '' },
+    { lrc: '', tlyric: '', romalrc: '', yrc: '', klyric: '', ttml: '', krc: '' },
     fallback.score,
   )
 }

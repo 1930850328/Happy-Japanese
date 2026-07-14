@@ -113,6 +113,11 @@ interface SongStudyIndexUpdateInput {
   studyIndex: SongStudyIndex
 }
 
+interface SongWordTimingsUpdateInput {
+  song: SiteSongAsset
+  lyricLines: LyricLine[]
+}
+
 function isBrowser() {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 }
@@ -524,6 +529,18 @@ export async function updateSiteSongStudyIndex({
   return await saveSongAsset({
     ...song,
     studyIndex,
+    updatedAt: new Date().toISOString(),
+  })
+}
+
+export async function updateSiteSongWordTimings({
+  song,
+  lyricLines,
+}: SongWordTimingsUpdateInput) {
+  return await saveSongAsset({
+    ...song,
+    lyricLines,
+    studyIndex: undefined,
     updatedAt: new Date().toISOString(),
   })
 }

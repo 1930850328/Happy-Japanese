@@ -655,6 +655,20 @@
   font-weight: 650;
 }
 
+.timingBadge {
+  padding: 0.26rem 0.52rem;
+  border-radius: 999px;
+  color: #23614c;
+  background: rgba(56, 142, 106, 0.1);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.timingBadgeDegraded {
+  color: #806336;
+  background: rgba(184, 137, 63, 0.12);
+}
+
 .focusLyrics {
   display: grid;
   place-items: center;
@@ -2107,14 +2121,32 @@
     text-shadow 140ms ease;
 }
 
-.lyricWordActive {
-  background: linear-gradient(180deg, transparent 52%, rgba(255, 89, 68, 0.18) 52%);
+.lyricWordPassed {
   color: #f04732;
 }
 
+.lyricWordActive {
+  --lyric-word-active-color: #f04732;
+  --lyric-word-pending-color: #17201d;
+  background: linear-gradient(
+    90deg,
+    var(--lyric-word-active-color) 0,
+    var(--lyric-word-active-color) var(--lyric-word-progress),
+    var(--lyric-word-pending-color) var(--lyric-word-progress),
+    var(--lyric-word-pending-color) 100%
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.pageImmersive .lyricWordPassed {
+  color: #ffd36a;
+}
+
 .pageImmersive .lyricWordActive {
-  background: linear-gradient(180deg, transparent 52%, rgba(255, 250, 244, 0.18) 52%);
-  color: #fffdf8;
+  --lyric-word-active-color: #ffd36a;
+  --lyric-word-pending-color: #fffaf4;
   text-shadow:
     0 0 18px rgba(255, 250, 244, 0.2),
     0 10px 34px rgba(0, 0, 0, 0.36);

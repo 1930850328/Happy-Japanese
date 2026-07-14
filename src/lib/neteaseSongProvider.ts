@@ -1,6 +1,7 @@
 import { buildStudyDataFromCues } from './subtitles'
 import { parseKrcWordTimedLines } from './krcLyrics'
-import type { LyricLine, LyricWordTiming, TranscriptSegment } from '../types'
+import { parseTtmlWordTimedLines } from './ttmlLyrics.mjs'
+import type { LyricLine, LyricWordTiming, LyricWordTimingSource, TranscriptSegment } from '../types'
 
 const NETEASE_MATCH_ENDPOINT = '/api/netease-song-match'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
@@ -24,7 +25,9 @@ interface NeteaseMatchRecord {
   romalrc?: string
   yrc?: string
   klyric?: string
+  ttml?: string
   krc?: string
+  wordTimingSource?: LyricWordTimingSource
 }
 
 interface NeteaseMatchResponse {
@@ -241,11 +244,17 @@ function segmentToLyricLine(segment: TranscriptSegment, index: number): LyricLin
   }
 }
 
-function findYrcLine(startMs: number, yrcLines: ParsedYrcLine[]) {
+function normalizeLyricMatchText(value: string) {
+  return value.normalize('NFKC').toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu, '')
+}
+
+function findWordTimedLine(startMs: number, text: string, timedLines: ParsedYrcLine[]) {
   let bestLine: ParsedYrcLine | null = null
   let bestGap = Number.POSITIVE_INFINITY
+  const normalizedText = normalizeLyricMatchText(text)
 
-  for (const line of yrcLines) {
+  for (const line of timedLines) {
+    if (normalizeLyricMatchText(line.text) !== normalizedText) continue
     const gap = Math.abs(line.startMs - startMs)
     if (gap < bestGap) {
       bestLine = line
@@ -256,8 +265,12 @@ function findYrcLine(startMs: number, yrcLines: ParsedYrcLine[]) {
   return bestLine && bestGap <= 900 ? bestLine : null
 }
 
-function attachYrcWordTimings(line: LyricLine, yrcLine: ParsedYrcLine | null) {
-  if (!yrcLine) {
+function attachWordTimings(
+  line: LyricLine,
+  timedLine: ParsedYrcLine | null,
+  wordTimingSource: LyricWordTimingSource | undefined,
+) {
+  if (!timedLine || !wordTimingSource) {
     return {
       ...line,
       timingQuality: 'line' as const,
@@ -266,16 +279,29 @@ function attachYrcWordTimings(line: LyricLine, yrcLine: ParsedYrcLine | null) {
 
   return {
     ...line,
-    wordTimings: yrcLine.wordTimings,
+    wordTimings: timedLine.wordTimings,
     timingQuality: 'word' as const,
+    wordTimingSource,
   }
 }
 
 async function buildLyricLinesFromNetease(match: NeteaseMatchRecord) {
   const rawLines = parseLrc(match.lrc)
   const yrcLines = match.yrc ? parseYrc(match.yrc) : []
+  const ttmlLines = match.ttml ? parseTtmlWordTimedLines(match.ttml) : []
   const krcLines = match.krc ? parseKrcWordTimedLines(match.krc) : []
-  const wordTimedLines = yrcLines.length > 0 ? yrcLines : krcLines
+  const wordTimedLines = yrcLines.length > 0
+    ? yrcLines
+    : ttmlLines.length > 0
+      ? ttmlLines
+      : krcLines
+  const wordTimingSource = yrcLines.length > 0
+    ? 'netease-yrc'
+    : ttmlLines.length > 0
+      ? 'amll-ttml'
+      : krcLines.length > 0
+        ? 'kugou-krc'
+        : undefined
   const sourceLines = rawLines.length > 0 ? rawLines : wordTimedLines
   if (sourceLines.length === 0) {
     return []
@@ -300,7 +326,11 @@ async function buildLyricLinesFromNetease(match: NeteaseMatchRecord) {
   })
   return studyData.segments.map((segment, index) => {
     const line = segmentToLyricLine(segment, index)
-    return attachYrcWordTimings(line, findYrcLine(segment.startMs, wordTimedLines))
+    return attachWordTimings(
+      line,
+      findWordTimedLine(segment.startMs, segment.ja, wordTimedLines),
+      wordTimingSource,
+    )
   })
 }
 

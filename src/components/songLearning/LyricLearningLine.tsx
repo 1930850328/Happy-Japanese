@@ -1,4 +1,14 @@
-import { type FocusEvent, type KeyboardEvent, type MouseEvent, type Ref, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  type CSSProperties,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type Ref,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import { isOccurrenceFocusedForStage } from '../../lib/learningStagePolicy'
 import { hasReliableMeaning } from '../../lib/textAnalysis'
@@ -21,6 +31,7 @@ interface SongPageLyricClasses {
   wordLine: string
   word: string
   wordActive: string
+  wordPassed: string
 }
 
 interface HoverCardState {
@@ -279,11 +290,26 @@ export function LyricLearningLine({
         currentMs >= fragment.timing.startMs &&
         currentMs < fragment.timing.endMs,
       )
+      const isPassedWord = Boolean(
+        active &&
+        currentMs !== undefined &&
+        fragment.timing &&
+        currentMs >= fragment.timing.endMs,
+      )
+      const wordProgress = isCurrentWord && fragment.timing && currentMs !== undefined
+        ? Math.max(0, Math.min(1, (
+            currentMs - fragment.timing.startMs
+          ) / Math.max(1, fragment.timing.endMs - fragment.timing.startMs)))
+        : 0
+      const wordStyle = isCurrentWord
+        ? { '--lyric-word-progress': `${Math.round(wordProgress * 100)}%` } as CSSProperties
+        : undefined
 
       return [(
         <span
           key={`${fragment.id}:${overlapStart}`}
-          className={isCurrentWord ? classes.wordActive : undefined}
+          className={isCurrentWord ? classes.wordActive : isPassedWord ? classes.wordPassed : undefined}
+          style={wordStyle}
           data-lyric-word={fragment.timing ? 'timed' : 'untimed'}
           data-start-ms={fragment.timing?.startMs}
           data-end-ms={fragment.timing?.endMs}

@@ -62,6 +62,11 @@ function readLyricTimingQuality(value) {
   return ['word', 'line-estimated', 'line'].includes(quality) ? quality : undefined
 }
 
+function readLyricWordTimingSource(value) {
+  const source = readString(value, 40)
+  return ['netease-yrc', 'amll-ttml', 'kugou-krc'].includes(source) ? source : undefined
+}
+
 function readLyricLines(value) {
   if (!Array.isArray(value)) {
     return []
@@ -82,6 +87,7 @@ function readLyricLines(value) {
         : [],
       wordTimings: readLyricWordTimings(line?.wordTimings),
       timingQuality: readLyricTimingQuality(line?.timingQuality),
+      wordTimingSource: readLyricWordTimingSource(line?.wordTimingSource),
     }))
     .filter((line) => line.ja)
 }

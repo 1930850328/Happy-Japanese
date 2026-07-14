@@ -49,6 +49,7 @@ import {
   readCachedSiteSongAssets,
   type SiteSongAsset,
   updateSiteSongStudyIndex,
+  updateSiteSongWordTimings,
   uploadSongToSite,
 } from '../lib/siteSongStorage'
 import { speakJapanese } from '../lib/speech'
@@ -62,6 +63,7 @@ import type {
   LyricLine,
   LyricProvider,
   LyricWordTiming,
+  LyricWordTimingSource,
   SongKnowledge,
   SongLesson,
   SongLyricQuality,
@@ -79,6 +81,7 @@ const WORD_TIMING_CACHE_KEY = 'yuru-nihongo-song-word-timings:v2'
 interface LineWordTimingOverride {
   sourceText: string
   wordTimings: LyricWordTiming[]
+  wordTimingSource?: LyricWordTimingSource
 }
 
 type SongWordTimingOverrides = Record<string, Record<string, LineWordTimingOverride>>
@@ -120,6 +123,7 @@ function matchWordTimings(sourceLines: LyricLine[], timedLines: LyricLine[]) {
       matches[line.id] = {
         sourceText: line.ja,
         wordTimings: timedLine.wordTimings,
+        wordTimingSource: timedLine.wordTimingSource,
       }
     }
   }
@@ -505,6 +509,33 @@ export function SongsPage() {
   const activeStudyLine = activeLine ? activeStudyLineById.get(activeLine.id) : undefined
   const durationMs = activeSong?.durationMs ?? 0
   const progressRatio = durationMs ? Math.min(1, currentMs / durationMs) : 0
+  const activeTimingStatus = useMemo(() => {
+    if (!activeSong || activeSong.lyricLines.length === 0) return null
+    const sources = new Set<LyricWordTimingSource>()
+    let timedLineCount = 0
+    for (const line of activeSong.lyricLines) {
+      const override = wordTimingOverrides[activeSong.id]?.[line.id]
+      const hasOverride = override?.sourceText === line.ja && override.wordTimings.length > 0
+      if ((line.wordTimings?.length ?? 0) > 0 || hasOverride) {
+        timedLineCount += 1
+        const source = line.wordTimingSource ?? override?.wordTimingSource
+        if (source) sources.add(source)
+      }
+    }
+
+    if (timedLineCount === 0) return { label: '仅逐行同步', degraded: true }
+    const sourceLabels: Record<LyricWordTimingSource, string> = {
+      'netease-yrc': '网易云',
+      'amll-ttml': 'AMLL',
+      'kugou-krc': '酷狗',
+    }
+    const sourceLabel = [...sources].map((source) => sourceLabels[source]).join(' + ')
+    const coverageLabel = timedLineCount === activeSong.lyricLines.length ? '逐词同步' : '部分逐词同步'
+    return {
+      label: sourceLabel ? `${coverageLabel} · ${sourceLabel}` : coverageLabel,
+      degraded: timedLineCount !== activeSong.lyricLines.length,
+    }
+  }, [activeSong, wordTimingOverrides])
   const activeKnowledgeItems = useMemo(() => {
     if (!activeStudyIndex || !activeStudyLine) return []
 
@@ -771,10 +802,44 @@ export function SongsPage() {
         writeWordTimingCache(next)
         return next
       })
+
+      const enrichedLines = activeSong.lyricLines.map((line) => {
+        const timing = timings[line.id]
+        return timing?.sourceText === line.ja
+          ? {
+              ...line,
+              wordTimings: timing.wordTimings,
+              timingQuality: 'word' as const,
+              wordTimingSource: timing.wordTimingSource,
+            }
+          : line
+      })
+      if (activeAsset?.siteAsset) {
+        void updateSiteSongWordTimings({
+          song: activeAsset.siteAsset,
+          lyricLines: enrichedLines,
+        }).then((updated) => {
+          setSiteAssets((current) => current.map((asset) => asset.id === updated.id ? updated : asset))
+        }).catch((error: unknown) => {
+          toast.warning(error instanceof Error ? error.message : '逐词时间轴保存失败')
+        })
+      } else if (activeAsset?.localAsset) {
+        const updated: StoredSongAsset = {
+          ...activeAsset.localAsset,
+          lyricLines: enrichedLines,
+          studyIndex: undefined,
+          updatedAt: new Date().toISOString(),
+        }
+        void saveStoredSongAsset(updated).then(() => {
+          setStoredAssets((current) => current.map((asset) => asset.id === updated.id ? updated : asset))
+        }).catch((error: unknown) => {
+          toast.warning(error instanceof Error ? error.message : '本地逐词时间轴保存失败')
+        })
+      }
     }).catch(() => {
       // Line-level lyrics continue to work when no exact word-timing source is available.
     })
-  }, [activeSong, wordTimingOverrides])
+  }, [activeAsset, activeSong, wordTimingOverrides])
 
   useEffect(() => {
     if (!playing || activeSong?.playbackProvider !== 'localFile') return
@@ -1501,6 +1566,11 @@ export function SongsPage() {
                   </button>
                 ))}
               </div>
+              {activeTimingStatus ? (
+                <span className={`${styles.timingBadge} ${activeTimingStatus.degraded ? styles.timingBadgeDegraded : ''}`}>
+                  {activeTimingStatus.label}
+                </span>
+              ) : null}
               {activeSong && analysisProgressBySongId[activeSong.id] && (
                 indexingSongIds[activeSong.id] || analysisProgressBySongId[activeSong.id].phase === 'failed'
               ) ? (
@@ -1520,7 +1590,12 @@ export function SongsPage() {
                     <LyricLearningLine
                       key={line.id}
                       rowRef={active ? activeLyricRowRef : undefined}
-                      line={wordTimings ? { ...line, wordTimings, timingQuality: 'word' } : line}
+                      line={wordTimings ? {
+                        ...line,
+                        wordTimings,
+                        timingQuality: 'word',
+                        wordTimingSource: line.wordTimingSource ?? timingOverride?.wordTimingSource,
+                      } : line}
                       studyLine={activeStudyLineById.get(line.id)}
                       studyIndex={activeStudyIndex}
                       occurrenceById={activeOccurrenceById}
@@ -1539,6 +1614,7 @@ export function SongsPage() {
                         wordLine: styles.lyricWordLine,
                         word: styles.lyricWord,
                         wordActive: styles.lyricWordActive,
+                        wordPassed: styles.lyricWordPassed,
                       }}
                       onSeek={seekToLine}
                       onAddKnowledge={handleAddKnowledgeReview}
