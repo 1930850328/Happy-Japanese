@@ -1,0 +1,603 @@
+.page {
+  display: grid;
+  gap: 1.3rem;
+}
+
+.loading {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+}
+
+.topBar,
+.lessonMeta,
+.lessonHero,
+.contentCard header,
+.startPractice,
+.startPractice > div,
+.practiceCard > header > div,
+.practiceCard footer > div,
+.resultActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topBar,
+.lessonHero,
+.startPractice,
+.practiceCard footer {
+  justify-content: space-between;
+}
+
+.lessonMeta span {
+  padding: 0.28rem 0.55rem;
+  border-radius: 9px;
+  background: rgba(201, 222, 210, 0.6);
+  color: #3e6c58;
+  font-weight: 700;
+}
+
+.lessonMeta small {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-soft);
+}
+
+.lessonHero {
+  padding: clamp(1.3rem, 4vw, 2.7rem);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 93% 12%, rgba(201, 222, 210, 0.62), transparent 35%),
+    linear-gradient(135deg, rgba(255, 252, 247, 0.96), rgba(248, 245, 237, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.86);
+  box-shadow: var(--shadow-sm);
+}
+
+.lessonHero h1 {
+  margin: 0.7rem 0 0.55rem;
+  font-family: var(--font-ui);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.lessonHero p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 1.05rem;
+}
+
+.canDoCard {
+  width: min(340px, 100%);
+  padding: 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.targetIcon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(201, 222, 210, 0.65);
+}
+
+.canDoCard small {
+  color: var(--text-soft);
+}
+
+.canDoCard strong {
+  line-height: 1.55;
+}
+
+.learningLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(250px, 0.7fr);
+  align-items: start;
+  gap: 1rem;
+}
+
+.mainColumn,
+.nodeColumn {
+  display: grid;
+  gap: 1rem;
+}
+
+.nodeColumn {
+  position: sticky;
+  top: 1rem;
+}
+
+.contentCard,
+.nodeCard {
+  padding: 1.25rem;
+}
+
+.contentCard header h2 {
+  margin: 0;
+  font-family: var(--font-ui);
+}
+
+.contentCard header {
+  justify-content: space-between;
+}
+
+.contentHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.readingToggle {
+  min-height: 40px;
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  color: #3e6c58;
+  background: rgba(201, 222, 210, 0.5);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.readingToggle:focus-visible {
+  outline: 3px solid rgba(77, 128, 107, 0.35);
+  outline-offset: 2px;
+}
+
+.hiddenReading {
+  color: #4d806b !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.contentCard header svg {
+  color: #4d806b;
+}
+
+.explanationList,
+.exampleList {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.explanationList article {
+  padding: 0.9rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  border-radius: 16px;
+  background: rgba(245, 244, 236, 0.72);
+}
+
+.explanationList span {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(201, 222, 210, 0.72);
+  font-weight: 700;
+}
+
+.explanationList p {
+  margin: 0;
+  line-height: 1.75;
+}
+
+.exampleList article {
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.exampleList button {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(201, 222, 210, 0.55);
+  color: var(--text);
+}
+
+.exampleList article > div {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.exampleList strong {
+  font-size: 1.15rem;
+}
+
+.exampleList span,
+.exampleList small {
+  color: var(--text-soft);
+}
+
+.exampleList p {
+  margin: 0;
+}
+
+.exampleList small {
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  background: rgba(248, 230, 215, 0.55);
+  line-height: 1.6;
+}
+
+.nodeCard > span {
+  color: #4d806b;
+  font-weight: 700;
+}
+
+.nodeCard h3 {
+  margin: 0.55rem 0 0.25rem;
+  font-family: var(--font-ui);
+}
+
+.nodeCard small {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--text-soft);
+}
+
+.nodeCard > strong {
+  display: block;
+  line-height: 1.55;
+}
+
+.nodeCard p {
+  margin: 0.55rem 0 0;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.startPractice {
+  padding: 1.1rem 1.2rem;
+}
+
+.startPractice svg {
+  flex-shrink: 0;
+  color: #4d806b;
+}
+
+.startPractice p {
+  margin: 0.3rem 0 0;
+  color: var(--text-soft);
+}
+
+.startPractice > div {
+  align-items: flex-start;
+  flex: 1;
+}
+
+.startPractice > div > div {
+  width: min(620px, 100%);
+}
+
+.recallInput {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.recallInput span {
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.recallInput input {
+  min-height: 46px;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 11px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.recallInput input:focus-visible {
+  outline: 3px solid rgba(77, 128, 107, 0.28);
+  outline-offset: 2px;
+}
+
+.recallActions {
+  margin-top: 0.65rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.revealButton {
+  min-height: 44px;
+  padding: 0.55rem;
+  color: var(--text-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.recallSuccess,
+.recallRetry,
+.recallReference {
+  margin-top: 0.65rem !important;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+}
+
+.recallReference p {
+  margin: 0 0 0.6rem;
+  color: inherit;
+}
+
+.recallSuccess {
+  color: #315f4e !important;
+  background: rgba(223, 241, 231, 0.72);
+}
+
+.recallRetry,
+.recallReference {
+  color: #815442 !important;
+  background: rgba(255, 235, 226, 0.78);
+}
+
+.practiceCard {
+  width: min(840px, 100%);
+  min-height: 580px;
+  margin: 2vh auto;
+  padding: clamp(1.2rem, 4vw, 2rem);
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+}
+
+.practiceCard > header {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.practiceCard > header > div {
+  justify-content: space-between;
+}
+
+.practiceCard > header small {
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.practiceProgress {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(46, 63, 55, 0.08);
+}
+
+.practiceProgress i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #75a38a, #efb58f);
+  transition: width 220ms ease;
+}
+
+.practiceBody {
+  display: grid;
+  gap: 1rem;
+}
+
+.practiceBody > small {
+  color: #4d806b;
+  font-weight: 700;
+}
+
+.practiceBody h2 {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(1.45rem, 3vw, 2.25rem);
+  line-height: 1.45;
+}
+
+.context {
+  margin: 0;
+  padding: 0.9rem;
+  border-radius: 14px;
+  background: rgba(245, 244, 236, 0.72);
+}
+
+.answerGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.answerGrid button {
+  min-height: 70px;
+  padding: 0.85rem 1rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  text-align: left;
+}
+
+.answerGrid button:not(:disabled):hover {
+  border-color: rgba(77, 128, 107, 0.52);
+  transform: translateY(-1px);
+}
+
+.answerGrid button > span {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(201, 222, 210, 0.58);
+  font-weight: 700;
+}
+
+.answerCorrect {
+  border-color: rgba(77, 128, 107, 0.64) !important;
+  background: rgba(223, 241, 231, 0.9) !important;
+}
+
+.answerWrong {
+  border-color: rgba(202, 104, 91, 0.55) !important;
+  background: rgba(255, 234, 229, 0.9) !important;
+}
+
+.answerMuted {
+  opacity: 0.58;
+}
+
+.practiceCard footer {
+  margin-top: auto;
+  padding: 1rem;
+  border-radius: 16px;
+}
+
+.practiceCard footer p {
+  margin: 0.25rem 0 0;
+  line-height: 1.6;
+}
+
+.feedbackCorrect {
+  background: rgba(223, 241, 231, 0.78);
+}
+
+.feedbackWrong {
+  background: rgba(255, 235, 226, 0.82);
+}
+
+.resultCard {
+  width: min(760px, 100%);
+  min-height: 520px;
+  margin: 2vh auto;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.answerReview {
+  width: min(620px, 100%);
+  display: grid;
+  gap: 0.55rem;
+  text-align: left;
+}
+
+.answerReview article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.65rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+}
+
+.answerReview article > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+}
+
+.answerReview strong,
+.answerReview p {
+  display: block;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.answerReview p {
+  margin-top: 0.2rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.reviewCorrect {
+  background: rgba(223, 241, 231, 0.68);
+}
+
+.reviewWrong {
+  background: rgba(255, 235, 226, 0.78);
+}
+
+.resultIconPassed,
+.resultIconRetry {
+  width: 80px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+}
+
+.resultIconPassed {
+  background: rgba(201, 222, 210, 0.72);
+  color: #3e725b;
+}
+
+.resultIconRetry {
+  background: rgba(248, 213, 193, 0.75);
+  color: #9b634c;
+}
+
+.resultCard h1 {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.resultCard > p {
+  max-width: 600px;
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.75;
+}
+
+.resultActions {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.resultCard > small {
+  color: var(--text-soft);
+}
+
+@media (max-width: 760px) {
+  .lessonHero,
+  .startPractice,
+  .practiceCard footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .learningLayout,
+  .answerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .nodeColumn {
+    position: static;
+  }
+
+  .lessonMeta small {
+    display: none;
+  }
+
+  .practiceCard {
+    min-height: calc(100vh - 130px);
+  }
+}

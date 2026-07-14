@@ -501,6 +501,158 @@ export interface TodayProgress {
   review: number
 }
 
+export type CourseLevel = 'foundation' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1'
+
+export type CourseNodeKind =
+  | 'kana'
+  | 'vocabulary'
+  | 'grammar'
+  | 'listening'
+  | 'reading'
+  | 'strategy'
+
+export interface CourseNode {
+  id: string
+  kind: CourseNodeKind
+  level: CourseLevel
+  title: string
+  reading?: string
+  meaningZh: string
+  explanationZh: string
+  prerequisiteNodeIds: string[]
+}
+
+export interface CourseExample {
+  ja: string
+  reading: string
+  zh: string
+  note?: string
+}
+
+export type CourseQuestionKind = 'meaning' | 'reading' | 'usage' | 'comprehension'
+
+export interface CourseQuestion {
+  id: string
+  nodeId: string
+  kind: CourseQuestionKind
+  prompt: string
+  context?: string
+  options: string[]
+  answerIndex: number
+  explanationZh: string
+}
+
+export interface CourseLesson {
+  id: string
+  level: CourseLevel
+  order: number
+  title: string
+  canDo: string
+  description: string
+  durationMinutes: number
+  prerequisiteLessonIds: string[]
+  nodeIds: string[]
+  explanation: string[]
+  examples: CourseExample[]
+  questions: CourseQuestion[]
+  songSearchTerms: string[]
+}
+
+export interface CourseStage {
+  id: CourseLevel
+  label: string
+  title: string
+  description: string
+  lessonIds: string[]
+}
+
+export type CoursePlacement = 'new' | 'foundation' | 'elementary' | 'intermediate' | 'advanced'
+
+export interface CourseProfile {
+  target: 'N1'
+  placement: CoursePlacement
+  activeLessonId: string
+  startedAt: string
+}
+
+export type CourseLessonStatus = 'available' | 'in_progress' | 'completed' | 'placed'
+
+export interface CourseLessonProgress {
+  lessonId: string
+  status: CourseLessonStatus
+  attempts: number
+  bestScore: number
+  lastStudiedAt?: string
+  completedAt?: string
+}
+
+export type CourseMasteryState = 'learning' | 'reviewing' | 'stable' | 'at_risk'
+
+export interface CourseMastery {
+  nodeId: string
+  state: CourseMasteryState
+  confidence: number
+  stabilityHours: number
+  correctCount: number
+  incorrectCount: number
+  nextReviewAt: string
+  lastReviewedAt: string
+}
+
+export type CourseEvidenceSource = 'lesson' | 'review' | 'placement'
+
+export interface CourseEvidence {
+  id: string
+  nodeId: string
+  questionId: string
+  lessonId?: string
+  source: CourseEvidenceSource
+  correct: boolean
+  elapsedMs: number
+  createdAt: string
+}
+
+export type LiteracyItemKind = 'vocabulary' | 'kanji' | 'grammar'
+
+export interface LiteracyItemProgress {
+  itemId: string
+  kind: LiteracyItemKind
+  level: Exclude<CourseLevel, 'foundation'>
+  confidence: number
+  stabilityHours: number
+  correctCount: number
+  incorrectCount: number
+  lastReviewedAt: string
+  nextReviewAt: string
+  meaningZh?: string
+}
+
+export interface ReadingAttempt {
+  id: string
+  passageId: string
+  level: CourseLevel
+  accuracy: number
+  charactersPerMinute: number
+  usedReadingAid: boolean
+  usedTranslationAid: boolean
+  completedAt: string
+}
+
+export interface LiteracyState {
+  itemProgress: LiteracyItemProgress[]
+  readingAttempts: ReadingAttempt[]
+}
+
+export interface CourseState {
+  version: 1
+  profile?: CourseProfile
+  lessonProgress: CourseLessonProgress[]
+  mastery: CourseMastery[]
+  evidence: CourseEvidence[]
+  literacy: LiteracyState
+  updatedAt: string
+}
+
 export interface CalendarCell {
   key: string
   date: Date

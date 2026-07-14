@@ -1,0 +1,71 @@
+.page { display: grid; gap: 1.25rem; }
+.hero { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1rem .35rem; }
+.hero > div:first-child { max-width: 760px; }
+.levelSummary { min-width: 250px; padding: 1.2rem; display: grid; gap: .45rem; }
+.levelSummary small, .levelSummary span { color: var(--text-soft); }
+.levelSummary strong { font-family: var(--font-ui); font-size: 1.45rem; }
+.readinessCard { padding: 1.25rem; display: grid; gap: 1rem; }
+.readinessCard header, .studyHeader { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.readinessCard h2, .studyHeader h2 { margin: .55rem 0 0; font-family: var(--font-ui); }
+.ready, .notReady { padding: .5rem .7rem; display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; font-weight: 700; }
+.ready { background: rgba(191, 226, 205, .7); color: #275d43; }
+.notReady { background: rgba(247, 218, 191, .72); color: #7d4b27; }
+.dimensionGrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .7rem; }
+.dimensionGrid article { padding: .85rem; display: grid; gap: .65rem; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.55); }
+.dimensionGrid article > div { display: grid; gap: .25rem; }
+.dimensionGrid span { color: var(--text-soft); font-size: .82rem; }
+.dimensionGrid strong { font-size: .9rem; }
+.dimensionGrid i { height: 7px; overflow: hidden; border-radius: 999px; background: rgba(46,63,55,.08); }
+.dimensionGrid b { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#83ad97,#edb792); }
+.tabs { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .65rem; }
+.tabs button { padding: .85rem; display: grid; gap: .25rem; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,.58); color: var(--text); text-align: left; }
+.tabs button:hover, .activeTab { border-color: rgba(77,128,107,.5) !important; background: rgba(226,241,232,.86) !important; }
+.tabs small { color: var(--text-soft); }
+.studyCard { min-height: 460px; padding: clamp(1.15rem,3vw,2rem); display: grid; align-content: start; gap: 1.25rem; }
+.studyHeader small { color: var(--text-soft); }
+.loading { min-height: 380px; display: grid; place-items: center; align-content: center; gap: 1rem; color: var(--text-soft); }
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.prompt { min-height: 130px; padding: 1rem; display: flex; align-items: center; justify-content: center; gap: .65rem; border-radius: 24px; background: linear-gradient(135deg,rgba(232,244,237,.9),rgba(255,244,235,.85)); font-family: var(--font-ui); font-size: clamp(1.7rem,5vw,3.2rem); font-weight: 700; text-align: center; }
+.prompt button { width: 42px; height: 42px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255,255,255,.7); color: var(--text); }
+.optionGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+.optionGrid button { min-height: 64px; padding: .9rem; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,.75); color: var(--text); font-size: 1rem; }
+.optionGrid button:not(:disabled):hover { transform: translateY(-1px); border-color: rgba(77,128,107,.5); }
+.correctOption { border-color: #69a382 !important; background: rgba(211,239,222,.85) !important; color: #275d43 !important; }
+.wrongOption { border-color: #d18474 !important; background: rgba(249,220,214,.82) !important; color: #7c3329 !important; }
+.dimOption { opacity: .55; }
+.feedback { display: grid; gap: .85rem; }
+.feedback > div:first-child { display: flex; align-items: center; gap: .5rem; }
+.detail { padding: 1rem; display: grid; gap: .4rem; border: 1px solid rgba(77,128,107,.2); border-radius: 14px; background: rgba(235,244,239,.72); }
+.detail span, .detail p { color: var(--text-soft); }
+.detail p, .detail blockquote { margin: 0; }
+.detail blockquote { padding-top: .35rem; font-family: var(--font-jp); }
+.finishMessage { padding: 1rem; display: grid !important; gap: .35rem !important; border-radius: 14px; background: rgba(247,231,207,.72); }
+.finishMessage span { color: var(--text-soft); line-height: 1.7; }
+.readingText { padding: clamp(1.1rem,3vw,1.8rem); border-radius: 20px; background: rgba(248,246,238,.78); font-family: var(--font-jp); font-size: clamp(1.08rem,2vw,1.28rem); line-height: 2.2; }
+.aidActions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.aidActions small { color: var(--text-soft); }
+.aidPanel { margin: 0; padding: 1rem; border-radius: 14px; background: rgba(231,241,247,.72); line-height: 1.9; }
+.readingQuestions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
+.readingQuestions fieldset { margin: 0; padding: 1rem; display: grid; gap: .55rem; border: 1px solid var(--line); border-radius: 16px; }
+.readingQuestions legend { padding: 0 .35rem; font-weight: 700; }
+.readingQuestions label { padding: .6rem .7rem; display: flex; align-items: center; gap: .55rem; border-radius: 10px; background: rgba(255,255,255,.65); }
+.readingQuestions p { margin: .25rem 0 0; color: var(--text-soft); line-height: 1.6; }
+.passResult, .practiceResult { padding: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1rem; border-radius: 16px; }
+.passResult { background: rgba(211,239,222,.82); }
+.practiceResult { background: rgba(249,227,202,.82); }
+.passResult span, .practiceResult span { flex: 1; min-width: 240px; color: var(--text-soft); }
+.originalLink { padding: 1rem; display: flex; align-items: center; gap: .85rem; border: 1px solid var(--line); border-radius: 16px; color: var(--text); background: rgba(255,255,255,.58); }
+.originalLink span { flex: 1; display: grid; gap: .25rem; }
+.originalLink small { color: var(--text-soft); }
+.sourceNote { display: flex; justify-content: center; flex-wrap: wrap; gap: .4rem; color: var(--text-soft); font-size: .82rem; }
+.sourceNote a { color: #3e725c; text-decoration: underline; }
+@media (max-width: 980px) { .dimensionGrid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 720px) {
+  .hero, .readinessCard header, .studyHeader { align-items: stretch; flex-direction: column; }
+  .levelSummary { min-width: 0; }
+  .dimensionGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .optionGrid, .readingQuestions { grid-template-columns: 1fr; }
+  .studyCard { min-height: 420px; padding: 1rem; }
+}

@@ -125,10 +125,10 @@ export function NotesPage() {
     <div className={`${styles.page} fadeIn`}>
       <section className={styles.hero}>
         <div>
-          <span className="chip badgePink">备注翻译工具</span>
-          <h1 className="pageTitle">把“看懂一点”变成“记住一句”</h1>
+          <span className="chip badgePink">任意日语原文阅读器</span>
+          <h1 className="pageTitle">把想读的日语原文，真正读懂</h1>
           <p className="sectionIntro">
-            粘贴任意日语句子或单词，立刻得到学习向解析、假名、罗马音和可编辑备注。
+            粘贴新闻、小说、网页或生活中遇到的任意日语，逐句查看中文提示、读音、词汇和语法，并把难点送入复习。
           </p>
         </div>
         <div className={`${styles.heroCard} glassCard`}>
@@ -148,7 +148,7 @@ export function NotesPage() {
           <div className={styles.panelHeader}>
             <div>
               <span className="chip badgePeach">输入</span>
-              <h2>贴一句，马上拆给你看</h2>
+              <h2>粘贴原文，马上开始精读</h2>
             </div>
             <button
               className="softButton primaryButton"

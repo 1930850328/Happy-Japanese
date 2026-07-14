@@ -57,7 +57,7 @@ function getEndpoint() {
   return `${origin}/api/translate`
 }
 
-async function fetchTranslationBatch(batch: string[]) {
+async function fetchTranslationBatch(batch: string[], from: string) {
   const controller = new AbortController()
   const timeoutId = window.setTimeout(() => controller.abort(), TRANSLATION_BATCH_TIMEOUT_MS)
 
@@ -70,7 +70,7 @@ async function fetchTranslationBatch(batch: string[]) {
       signal: controller.signal,
       body: JSON.stringify({
         texts: batch,
-        from: 'ja',
+        from,
         to: 'zh-CN',
       }),
     })
@@ -86,18 +86,19 @@ async function fetchTranslationBatch(batch: string[]) {
   }
 }
 
-export async function translateJapaneseSentences(texts: string[]) {
+export async function translateTexts(texts: string[], from = 'ja') {
   loadCacheFromStorage()
 
   const normalized = [...new Set(texts.map((item) => item.trim()).filter(Boolean))]
-  const missing = normalized.filter((item) => !translationCache.has(item))
+  const cacheKey = (item: string) => `${from}:${item}`
+  const missing = normalized.filter((item) => !translationCache.has(cacheKey(item)))
 
   for (let index = 0; index < missing.length; index += TRANSLATION_BATCH_SIZE) {
     const batch = missing.slice(index, index + TRANSLATION_BATCH_SIZE)
     let translations: string[] = []
 
     try {
-      translations = await fetchTranslationBatch(batch)
+      translations = await fetchTranslationBatch(batch, from)
     } catch {
       break
     }
@@ -105,7 +106,7 @@ export async function translateJapaneseSentences(texts: string[]) {
     batch.forEach((item, batchIndex) => {
       const translated = translations[batchIndex]?.trim()
       if (translated) {
-        translationCache.set(item, translated)
+        translationCache.set(cacheKey(item), translated)
       }
     })
   }
@@ -115,10 +116,14 @@ export async function translateJapaneseSentences(texts: string[]) {
   }
 
   return normalized.reduce<Record<string, string>>((acc, item) => {
-    const value = translationCache.get(item)
+    const value = translationCache.get(cacheKey(item))
     if (value) {
       acc[item] = value
     }
     return acc
   }, {})
+}
+
+export function translateJapaneseSentences(texts: string[]) {
+  return translateTexts(texts, 'ja')
 }

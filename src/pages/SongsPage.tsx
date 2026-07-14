@@ -428,6 +428,7 @@ export function SongsPage() {
   const timingEnrichmentKeysRef = useRef<Set<string>>(new Set())
 
   const immersiveMode = searchParams.get('mode') === 'immersive'
+  const courseFocus = searchParams.get('focus')?.trim() ?? ''
   const initialSiteAssets = useMemo(() => readCachedSiteSongAssets(), [])
   const [siteAssets, setSiteAssets] = useState<SiteSongAsset[]>(initialSiteAssets)
   const [storedAssets, setStoredAssets] = useState<StoredSongAsset[]>([])
@@ -452,6 +453,7 @@ export function SongsPage() {
   const [indexingSongIds, setIndexingSongIds] = useState<Record<string, boolean>>({})
   const [analysisProgressBySongId, setAnalysisProgressBySongId] = useState<Record<string, SongAnalysisProgress>>({})
   const [wordTimingOverrides, setWordTimingOverrides] = useState<SongWordTimingOverrides>(readWordTimingCache)
+  const [songQuery, setSongQuery] = useState(courseFocus)
 
   const importedAssets = useMemo(() => {
     const siteImportedAssets = siteAssets.map(buildSiteImportedAsset)
@@ -463,6 +465,18 @@ export function SongsPage() {
     if (assetsLoading) return []
     return importedAssets.length > 0 ? importedAssets.map(buildImportedSong) : demoSongs
   }, [assetsLoading, importedAssets])
+  const visibleSongs = useMemo(() => {
+    const query = songQuery.trim().toLocaleLowerCase()
+    if (!query) return songs
+    return songs.filter((song) => {
+      const searchable = [
+        song.title,
+        song.artist,
+        ...song.lyricLines.flatMap((line) => [line.ja, line.kana, line.zh]),
+      ].join('\n').toLocaleLowerCase()
+      return searchable.includes(query)
+    })
+  }, [songQuery, songs])
   const activeSong = songs.find((song) => song.id === activeSongId) ?? songs[0]
   const displayCover = activeSong?.artworkUrl || activeSong?.cover
   const activeAsset = activeSong ? assetById.get(activeSong.id) : undefined
@@ -683,6 +697,20 @@ export function SongsPage() {
       setActiveSongId(songs[0].id)
     }
   }, [activeSongId, songs])
+
+  useEffect(() => {
+    if (!courseFocus || songs.length === 0) return
+    setSongQuery(courseFocus)
+    const match = songs.find((song) => song.lyricLines.some((line) =>
+      [line.ja, line.kana, line.zh].some((value) => value.includes(courseFocus)),
+    ))
+    if (!match) return
+    const line = match.lyricLines.find((item) =>
+      [item.ja, item.kana, item.zh].some((value) => value.includes(courseFocus)),
+    )
+    setActiveSongId(match.id)
+    if (line) setSelectedLineId(line.id)
+  }, [courseFocus, songs])
 
   useEffect(() => {
     clearSpeechPlaybackTimer()
@@ -1269,7 +1297,12 @@ export function SongsPage() {
 
             <label className={styles.searchBox}>
               <Search size={16} />
-              <input aria-label="搜索歌曲" placeholder="搜索歌曲 / 歌手" />
+              <input
+                aria-label="搜索歌曲"
+                placeholder="搜索歌曲、歌手或歌词"
+                value={songQuery}
+                onChange={(event) => setSongQuery(event.target.value)}
+              />
             </label>
 
             <div className={styles.catalogHeader}>
@@ -1283,7 +1316,7 @@ export function SongsPage() {
             </div>
 
             <div className={styles.songList}>
-              {songs.map((song) => {
+              {visibleSongs.map((song) => {
                 const importedAsset = assetById.get(song.id)
                 const generationProgress = analysisProgressBySongId[song.id]
                 const generationStatus = importedAsset?.siteAsset?.analysis?.status
@@ -1326,6 +1359,11 @@ export function SongsPage() {
                   </div>
                 )
               })}
+              {visibleSongs.length === 0 ? (
+                <p className={styles.catalogEmpty}>
+                  当前歌曲库还没有出现“{songQuery}”。这不会影响主课，之后导入更多歌曲时系统会继续匹配。
+                </p>
+              ) : null}
             </div>
 
             <div className={styles.importDock}>

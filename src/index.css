@@ -206,10 +206,10 @@ iframe {
 }
 
 .fadeIn {
-  animation: fadeInUp 420ms ease both;
+  animation: appFadeInUp 420ms ease both;
 }
 
-@keyframes fadeInUp {
+@keyframes appFadeInUp {
   from {
     opacity: 0;
     transform: translateY(10px);

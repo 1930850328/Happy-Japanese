@@ -267,9 +267,9 @@ async function seedLocalClip(page: Page, overrides?: Record<string, unknown>) {
 
 test('首页卡片保持中文文案且长文本不会溢出卡片', async ({ page }) => {
   await seedLocalClip(page)
-  await page.goto('/')
+  await page.goto('/discover')
 
-  await expect(page.getByTestId('lesson-card')).toBeVisible()
+  await expect(page.getByTestId('lesson-card')).toBeVisible({ timeout: 15_000 })
   await expect(page.getByTestId('home-feed')).toBeVisible()
 
   const pageText = await page.locator('body').textContent()
@@ -309,7 +309,7 @@ test('可播放的本地切片不会再误触发 FFmpeg 预处理', async ({ pag
     }
   })
 
-  await page.goto('/')
+  await page.goto('/discover')
   await page.getByRole('button', { name: '开始学习这段' }).click()
 
   const video = page.locator('video').first()

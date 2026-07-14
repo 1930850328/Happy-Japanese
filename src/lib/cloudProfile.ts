@@ -1,5 +1,4 @@
 export const CLOUD_PROFILE_STORAGE_KEY = 'yuru-nihongo-cloud-profile-id'
-export const DEFAULT_CLOUD_PROFILE_ID = 'f8a180c6-9f54-461d-9647-f072183d3814'
 
 export function sanitizeCloudProfileId(value: string) {
   return value.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '').slice(0, 64)
@@ -15,7 +14,17 @@ export function getCloudProfileId() {
     return current
   }
 
-  const next = sanitizeCloudProfileId(DEFAULT_CLOUD_PROFILE_ID)
+  const next = createCloudProfileId()
   window.localStorage.setItem(CLOUD_PROFILE_STORAGE_KEY, next)
   return next
+}
+
+function createCloudProfileId() {
+  if (typeof crypto.randomUUID === 'function') {
+    return sanitizeCloudProfileId(crypto.randomUUID())
+  }
+
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+  const randomPart = [...bytes].map((value) => value.toString(16).padStart(2, '0')).join('')
+  return `profile-${randomPart}`
 }

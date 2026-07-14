@@ -2,6 +2,7 @@ import { openDB } from 'idb'
 
 import type {
   AppSettings,
+  CourseState,
   DailyGoal,
   ImportedClip,
   ReviewItem,
@@ -13,10 +14,11 @@ import type {
 import { getCloudProfileId } from './cloudProfile'
 
 const DB_NAME = 'yuru-nihongo-db'
-const DB_VERSION = 2
+const DB_VERSION = 3
 const STATE_ENDPOINT = '/api/app-state'
 const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 const LOCAL_VIDEO_KEY_PREFIX = 'local-video:'
+const STATE_REQUEST_TIMEOUT_MS = 8_000
 
 type StoreName =
   | 'favorites'
@@ -28,6 +30,7 @@ type StoreName =
   | 'vocab_progress'
   | 'imported_clips'
   | 'app_settings'
+  | 'course_state'
   | 'video_blobs'
 
 export interface FavoriteRecord {
@@ -56,6 +59,7 @@ interface RemoteAppState {
   vocabProgress: VocabProgress[]
   importedClips: ImportedClip[]
   settings?: AppSettings
+  courseState?: CourseState
 }
 
 let cachedState: RemoteAppState | null = null
@@ -151,7 +155,8 @@ function hasAnyLegacyData(state: Omit<RemoteAppState, 'version' | 'profileId' | 
       state.vocabProgress.length ||
       state.importedClips.length ||
       state.goal ||
-      state.settings,
+      state.settings ||
+      state.courseState,
   )
 }
 
@@ -171,6 +176,16 @@ async function readJsonResponse(response: Response) {
   }
 }
 
+async function fetchState(input: RequestInfo | URL, init?: RequestInit) {
+  const controller = new AbortController()
+  const timeoutId = window.setTimeout(() => controller.abort(), STATE_REQUEST_TIMEOUT_MS)
+  try {
+    return await fetch(input, { ...init, signal: controller.signal })
+  } finally {
+    window.clearTimeout(timeoutId)
+  }
+}
+
 async function getLegacyDb() {
   return openDB(DB_NAME, DB_VERSION, {
     upgrade(db) {
@@ -184,6 +199,7 @@ async function getLegacyDb() {
         ['vocab_progress', 'id'],
         ['imported_clips', 'id'],
         ['app_settings', 'id'],
+        ['course_state', 'id'],
         ['video_blobs', 'id'],
       ]
 
@@ -256,7 +272,7 @@ async function loadLegacyState(profileId: string) {
   }
 
   const db = await getLegacyDb()
-  const [favorites, notes, goal, studyEvents, reviewItems, reviewLogs, vocabProgress, importedClips, settings] =
+  const [favorites, notes, goal, studyEvents, reviewItems, reviewLogs, vocabProgress, importedClips, settings, courseState] =
     await Promise.all([
       db.getAll('favorites') as Promise<FavoriteRecord[]>,
       db.getAll('notes') as Promise<SavedNote[]>,
@@ -267,11 +283,16 @@ async function loadLegacyState(profileId: string) {
       db.getAll('vocab_progress') as Promise<VocabProgress[]>,
       db.getAll('imported_clips') as Promise<ImportedClip[]>,
       db.get('app_settings', 'settings') as Promise<AppSettings | undefined>,
+      db.get('course_state', 'course-state') as Promise<(CourseState & { id: string }) | undefined>,
     ])
 
   const serializableClips = importedClips
     .map(sanitizeImportedClip)
     .filter((clip) => clip.sourceUrl || !clip.sourceIdOrBlobKey.startsWith('blob-'))
+  const normalizedCourseState = courseState ? { ...courseState } : undefined
+  if (normalizedCourseState) {
+    delete (normalizedCourseState as Partial<CourseState> & { id?: string }).id
+  }
 
   const legacy = {
     favorites,
@@ -283,6 +304,7 @@ async function loadLegacyState(profileId: string) {
     vocabProgress,
     importedClips: serializableClips,
     settings,
+    courseState: normalizedCourseState,
   }
 
   if (!hasAnyLegacyData(legacy)) {
@@ -313,6 +335,7 @@ async function persistLegacyState(state: RemoteAppState) {
     db.clear('vocab_progress'),
     db.clear('imported_clips'),
     db.clear('app_settings'),
+    db.clear('course_state'),
   ])
 
   const sanitized = sanitizeState(state)
@@ -326,11 +349,14 @@ async function persistLegacyState(state: RemoteAppState) {
     ...sanitized.vocabProgress.map((item) => db.put('vocab_progress', item)),
     ...sanitized.importedClips.map((item) => db.put('imported_clips', item)),
     sanitized.settings ? db.put('app_settings', sanitized.settings) : Promise.resolve(),
+    sanitized.courseState
+      ? db.put('course_state', { ...sanitized.courseState, id: 'course-state' })
+      : Promise.resolve(),
   ])
 }
 
 async function fetchRemoteState(profileId: string) {
-  const response = await fetch(`${getStateEndpoint()}?profileId=${encodeURIComponent(profileId)}`, {
+  const response = await fetchState(`${getStateEndpoint()}?profileId=${encodeURIComponent(profileId)}`, {
     cache: 'no-store',
   })
 
@@ -352,7 +378,7 @@ async function fetchRemoteState(profileId: string) {
 }
 
 async function persistRemoteState(state: RemoteAppState) {
-  const response = await fetch(getStateEndpoint(), {
+  const response = await fetchState(getStateEndpoint(), {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -401,12 +427,19 @@ async function ensureStateLoaded() {
 
     const migrated = await loadLegacyState(profileId)
     const initial = migrated ?? createEmptyState(profileId)
-    if (remoteStateUnavailable) {
-      await persistLegacyState(initial)
-    } else {
-      await persistRemoteState(initial)
-    }
     cachedState = initial
+    writeTask = writeTask.catch(() => undefined).then(async () => {
+      if (remoteStateUnavailable) {
+        await persistLegacyState(initial)
+        return
+      }
+      try {
+        await persistRemoteState(initial)
+      } catch {
+        remoteStateUnavailable = true
+        await persistLegacyState(initial)
+      }
+    })
     return cachedState
   })()
 
@@ -615,5 +648,15 @@ export async function loadSettings() {
 export async function saveSettings(settings: AppSettings) {
   await updateState((state) => {
     state.settings = settings
+  })
+}
+
+export async function loadCourseState() {
+  return (await ensureStateLoaded()).courseState
+}
+
+export async function saveCourseState(courseState: CourseState) {
+  await updateState((state) => {
+    state.courseState = courseState
   })
 }

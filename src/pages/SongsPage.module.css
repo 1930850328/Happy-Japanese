@@ -192,6 +192,16 @@
   overflow: auto;
 }
 
+.catalogEmpty {
+  margin: 0;
+  padding: 0.85rem;
+  border-radius: 12px;
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
 .songItemShell {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 34px;

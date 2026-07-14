@@ -33,7 +33,7 @@ function buildEmptyRemoteState() {
 }
 
 async function useCleanProfile(page: Page) {
-  const state = buildEmptyRemoteState()
+  let state = buildEmptyRemoteState()
 
   await page.addInitScript(() => {
     window.localStorage.setItem('yuru-nihongo-cloud-profile-id', 'ux-regression')
@@ -48,6 +48,8 @@ async function useCleanProfile(page: Page) {
       return
     }
 
+    const body = route.request().postDataJSON() as { state?: ReturnType<typeof buildEmptyRemoteState> }
+    if (body.state) state = body.state
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({ ok: true }),
@@ -81,7 +83,7 @@ test('review page explains newly scheduled review items instead of saying they d
   await expect(card).toHaveCount(1)
   await card.getByRole('button', { name: '加入复习' }).click()
 
-  await page.getByRole('link', { name: '复习' }).click()
+  await page.goto('/review')
   await expect(page.getByText('已排入复习计划')).toBeVisible()
   await expect(page.getByText('今天的复习已经清空啦')).toHaveCount(0)
   await expect(page.getByText('ありがとう')).toBeVisible()

@@ -94,7 +94,7 @@ export default async function handler(req, res) {
         }
       }
       if (!state) {
-        res.status(404).json({ error: 'State not found.' })
+        res.status(200).json({ state: null })
         return
       }
 
@@ -130,7 +130,7 @@ export default async function handler(req, res) {
     res.status(405).json({ error: 'Method not allowed' })
   } catch (error) {
     if (error instanceof BlobNotFoundError) {
-      res.status(404).json({ error: 'State not found.' })
+      res.status(200).json({ state: null })
       return
     }
 

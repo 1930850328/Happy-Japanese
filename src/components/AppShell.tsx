@@ -1,19 +1,20 @@
-import { BookOpenText, House, LibraryBig, Music2, RotateCcw, UserRound } from 'lucide-react'
+import { BookOpenText, BrainCircuit, GraduationCap, Music2, RotateCcw, UserRound } from 'lucide-react'
 import * as Progress from '@radix-ui/react-progress'
 import { useEffect } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { useAppBootstrap } from '../hooks/useAppBootstrap'
-import { getGoalCompletionRatio, getTodayProgress } from '../lib/selectors'
+import { getCourseCompletion } from '../lib/courseEngine'
 import { useAppStore } from '../store/useAppStore'
+import { useCourseStore } from '../store/useCourseStore'
 import styles from './AppShell.module.css'
 
 const navItems = [
-  { to: '/', label: '短视频', icon: House },
+  { to: '/', label: '今日学习', icon: GraduationCap },
+  { to: '/literacy', label: '能力训练', icon: BrainCircuit },
+  { to: '/notes', label: '原文阅读', icon: BookOpenText },
+  { to: '/learn/review', label: '复习', icon: RotateCcw },
   { to: '/songs', label: '歌曲', icon: Music2 },
-  { to: '/notes', label: '备注解析', icon: BookOpenText },
-  { to: '/review', label: '复习', icon: RotateCcw },
-  { to: '/vocab', label: '速记库', icon: LibraryBig },
   { to: '/profile', label: '我的', icon: UserRound },
 ]
 
@@ -21,19 +22,14 @@ export function AppShell() {
   useAppBootstrap()
   const location = useLocation()
 
-  const studyEvents = useAppStore((state) => state.studyEvents)
-  const goal = useAppStore((state) => state.goal)
   const initialized = useAppStore((state) => state.initialized)
   const sliceTask = useAppStore((state) => state.sliceTask)
+  const courseInitialized = useCourseStore((state) => state.initialized)
+  const courseState = useCourseStore((state) => state.courseState)
+  const initializeCourse = useCourseStore((state) => state.initialize)
 
-  const progress = getTodayProgress(studyEvents)
-  const completionRatio = getGoalCompletionRatio(progress, goal)
-  const totalGoalCount = goal.videosTarget + goal.wordsTarget + goal.grammarTarget + goal.reviewTarget
-  const completedGoalCount =
-    Math.min(progress.video, goal.videosTarget) +
-    Math.min(progress.word, goal.wordsTarget) +
-    Math.min(progress.grammar, goal.grammarTarget) +
-    Math.min(progress.review, goal.reviewTarget)
+  const courseCompletion = getCourseCompletion(courseState)
+  const completionRatio = courseCompletion.ratio
   const showSliceBanner = sliceTask.status !== 'idle' && Boolean(sliceTask.detail)
   const isSongRoute = location.pathname === '/songs'
   const isImmersiveRoute = location.pathname === '/immersive' || isSongRoute
@@ -47,6 +43,10 @@ export function AppShell() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
+
+  useEffect(() => {
+    void initializeCourse()
+  }, [initializeCourse])
 
   return (
     <div className={`${styles.shell} ${isImmersiveRoute ? styles.shellImmersive : ''}`}>
@@ -68,9 +68,11 @@ export function AppShell() {
                   key={item.to}
                   to={item.to}
                   end={item.to === '/'}
-                  className={({ isActive }) =>
-                    `${styles.navItem} ${isActive ? styles.navItemActive : ''}`
-                  }
+                  className={({ isActive }) => `${styles.navItem} ${
+                    isActive || (item.to === '/' && location.pathname.startsWith('/learn/') && location.pathname !== '/learn/review')
+                      ? styles.navItemActive
+                      : ''
+                  }`}
                 >
                   <Icon size={18} />
                   <span>{item.label}</span>
@@ -81,8 +83,8 @@ export function AppShell() {
 
           <div className={styles.goalMini} aria-label="今日学习进度">
             <div>
-              <span>今日</span>
-              <strong>{completedGoalCount}/{totalGoalCount} 项</strong>
+              <span>主课程</span>
+              <strong>{courseState.profile ? `${courseCompletion.completed}/${courseCompletion.total} 课` : '尚未开始'}</strong>
             </div>
             <Progress.Root
               className={styles.goalBar}
@@ -95,10 +97,10 @@ export function AppShell() {
               />
             </Progress.Root>
             <small>
-              {initialized
+              {initialized && courseInitialized
                 ? completionRatio >= 1
                   ? '已完成'
-                  : `${Math.round(completionRatio * 100)}%`
+                  : courseState.profile ? `${Math.round(completionRatio * 100)}%` : '开始课程'
                 : '载入中'}
             </small>
           </div>
@@ -113,7 +115,7 @@ export function AppShell() {
                 <strong>YuruNihongo</strong>
                 <span>今天也轻松学一点</span>
               </div>
-              <span className="chip badgeMint">{Math.round(completionRatio * 100)}%</span>
+              <span className="chip badgeMint">{courseState.profile ? `${Math.round(completionRatio * 100)}%` : '开始'}</span>
             </div>
             {showSliceBanner ? (
               <NavLink
@@ -143,9 +145,11 @@ export function AppShell() {
                 key={item.to}
                 to={item.to}
                 end={item.to === '/'}
-                className={({ isActive }) =>
-                  `${styles.bottomItem} ${isActive ? styles.bottomItemActive : ''}`
-                }
+                className={({ isActive }) => `${styles.bottomItem} ${
+                  isActive || (item.to === '/' && location.pathname.startsWith('/learn/') && location.pathname !== '/learn/review')
+                    ? styles.bottomItemActive
+                    : ''
+                }`}
               >
                 <Icon size={18} />
                 <span>{item.label}</span>
