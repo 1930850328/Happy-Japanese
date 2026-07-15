@@ -1,11 +1,19 @@
-import { ArrowLeft, ArrowRight, BrainCircuit, Check, CircleX, Clock3, RotateCcw, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BrainCircuit, Check, CircleX, Clock3, RotateCcw, ShieldCheck, Volume2 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 
 import { courseLessons, courseNodeMap } from '../data/courseCatalog'
-import { getDueCourseMastery, prepareCourseQuestions } from '../lib/courseEngine'
+import {
+  getCourseQuestionDimension,
+  getCourseQuestionInteraction,
+  getDueCourseDimension,
+  getDueCourseMastery,
+  isCourseQuestionCorrect,
+  prepareCourseQuestions,
+} from '../lib/courseEngine'
+import { speakJapanese } from '../lib/speech'
 import { useCourseStore } from '../store/useCourseStore'
-import type { CourseQuestion } from '../types'
+import type { CourseLearningDimension, CourseQuestion } from '../types'
 import styles from './CourseReviewPage.module.css'
 
 function questionsForNode(nodeId: string) {
@@ -19,6 +27,17 @@ function masteryLabel(state: string) {
   return '学习中'
 }
 
+function dimensionLabel(dimension: CourseLearningDimension) {
+  const labels: Record<CourseLearningDimension, string> = {
+    recognition: '看字认音',
+    listening: '听音辨字',
+    recall: '主动回忆',
+    production: '完整拼读',
+    transfer: '新组合迁移',
+  }
+  return labels[dimension]
+}
+
 export function CourseReviewPage() {
   const initialized = useCourseStore((state) => state.initialized)
   const courseState = useCourseStore((state) => state.courseState)
@@ -28,7 +47,10 @@ export function CourseReviewPage() {
   const due = useMemo(() => getDueCourseMastery(courseState), [courseState])
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null)
   const [question, setQuestion] = useState<CourseQuestion | null>(null)
+  const [activeDimension, setActiveDimension] = useState<ReturnType<typeof getDueCourseDimension>>(undefined)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [inputAnswer, setInputAnswer] = useState('')
+  const [answerCorrect, setAnswerCorrect] = useState<boolean | null>(null)
   const [questionStartedAt, setQuestionStartedAt] = useState(() => Date.now())
   const [reviewedCount, setReviewedCount] = useState(0)
 
@@ -38,10 +60,17 @@ export function CourseReviewPage() {
 
   useEffect(() => {
     if (activeNodeId || due.length === 0) return
-    const nodeId = due[0].nodeId
-    const candidates = questionsForNode(nodeId)
+    const mastery = due[0]
+    const nodeId = mastery.nodeId
+    const dimension = getDueCourseDimension(mastery)
+    const allCandidates = questionsForNode(nodeId)
+    const dimensionCandidates = allCandidates.filter((item) =>
+      !dimension || getCourseQuestionDimension(item) === dimension,
+    )
+    const candidates = dimensionCandidates.length > 0 ? dimensionCandidates : allCandidates
     const attempts = courseState.evidence.filter((item) => item.nodeId === nodeId).length
     setActiveNodeId(nodeId)
+    setActiveDimension(dimension)
     const prepared = prepareCourseQuestions(candidates, `${nodeId}:${attempts}`)
     setQuestion(prepared[attempts % Math.max(prepared.length, 1)] ?? null)
     setQuestionStartedAt(Date.now())
@@ -50,14 +79,17 @@ export function CourseReviewPage() {
   if (!initialized) return <div className={`${styles.loading} glassCard`}>正在准备复习…</div>
   if (!courseState.profile) return <Navigate replace to="/" />
 
-  const answer = async (optionIndex: number) => {
-    if (!question || selectedIndex !== null) return
-    setSelectedIndex(optionIndex)
+  const answer = async (response: string | number) => {
+    if (!question || answerCorrect !== null) return
+    const correct = isCourseQuestionCorrect(question, response)
+    setAnswerCorrect(correct)
     await saveReviewAnswer({
       questionId: question.id,
       nodeId: question.nodeId,
-      correct: optionIndex === question.answerIndex,
+      correct,
       elapsedMs: Math.max(300, Date.now() - questionStartedAt),
+      dimension: getCourseQuestionDimension(question),
+      response: String(response),
     })
     setReviewedCount((count) => count + 1)
   }
@@ -72,16 +104,24 @@ export function CourseReviewPage() {
       return
     }
     const candidates = questionsForNode(nextNode.nodeId)
+    const dimension = getDueCourseDimension(nextNode)
+    const matchedCandidates = candidates.filter((item) =>
+      !dimension || getCourseQuestionDimension(item) === dimension,
+    )
     const attempts = useCourseStore.getState().courseState.evidence.filter((item) => item.nodeId === nextNode.nodeId).length
     setActiveNodeId(nextNode.nodeId)
-    const prepared = prepareCourseQuestions(candidates, `${nextNode.nodeId}:${attempts}`)
+    setActiveDimension(dimension)
+    const prepared = prepareCourseQuestions(matchedCandidates.length > 0 ? matchedCandidates : candidates, `${nextNode.nodeId}:${attempts}`)
     setQuestion(prepared[attempts % Math.max(prepared.length, 1)] ?? null)
     setSelectedIndex(null)
+    setInputAnswer('')
+    setAnswerCorrect(null)
     setQuestionStartedAt(Date.now())
   }
 
   const sortedMastery = [...courseState.mastery].sort((a, b) => a.confidence - b.confidence)
   const currentNode = activeNodeId ? courseNodeMap.get(activeNodeId) : undefined
+  const interaction = question ? getCourseQuestionInteraction(question) : 'choice'
 
   return (
     <div className={`${styles.page} fadeIn`}>
@@ -104,32 +144,57 @@ export function CourseReviewPage() {
             <small><Clock3 size={15} />已完成 {reviewedCount} 项</small>
           </div>
           <small>{currentNode.title}</small>
+          {activeDimension ? <span className={styles.dimensionBadge}>{dimensionLabel(activeDimension)}</span> : null}
           {question.context ? <p className={styles.context}>{question.context}</p> : null}
           <h2>{question.prompt}</h2>
-          <div className={styles.answerGrid}>
-            {question.options.map((option, index) => {
-              const correct = index === question.answerIndex
-              const selected = index === selectedIndex
-              return (
-                <button
-                  key={option}
-                  data-option-value={option}
-                  disabled={selectedIndex !== null}
-                  className={selectedIndex === null ? '' : correct ? styles.correct : selected ? styles.wrong : styles.muted}
-                  onClick={() => void answer(index)}
-                >
-                  <span>{String.fromCharCode(65 + index)}</span>
-                  {option}
-                  {selectedIndex !== null && correct ? <Check size={18} /> : null}
-                  {selectedIndex !== null && selected && !correct ? <CircleX size={18} /> : null}
-                </button>
-              )
-            })}
-          </div>
-          {selectedIndex !== null ? (
-            <footer className={selectedIndex === question.answerIndex ? styles.feedbackCorrect : styles.feedbackWrong}>
+          {interaction === 'listening_choice' ? (
+            <button className={styles.audioPrompt} type="button" onClick={() => speakJapanese(question.audioText ?? '')}>
+              <Volume2 size={24} />播放声音
+            </button>
+          ) : null}
+          {interaction === 'input' ? (
+            <div className={styles.constructedAnswer}>
+              <input
+                autoFocus
+                value={inputAnswer}
+                disabled={answerCorrect !== null}
+                onChange={(event) => setInputAnswer(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' && inputAnswer.trim() && answerCorrect === null) void answer(inputAnswer)
+                }}
+                placeholder="输入罗马音，不区分大小写"
+              />
+              <button className="softButton primaryButton" disabled={!inputAnswer.trim() || answerCorrect !== null} onClick={() => void answer(inputAnswer)}>检查答案</button>
+            </div>
+          ) : (
+            <div className={styles.answerGrid}>
+              {question.options.map((option, index) => {
+                const correct = index === question.answerIndex
+                const selected = index === selectedIndex
+                return (
+                  <button
+                    key={option}
+                    data-option-value={option}
+                    disabled={answerCorrect !== null}
+                    className={answerCorrect === null ? '' : correct ? styles.correct : selected ? styles.wrong : styles.muted}
+                    onClick={() => {
+                      setSelectedIndex(index)
+                      void answer(index)
+                    }}
+                  >
+                    <span>{String.fromCharCode(65 + index)}</span>
+                    {option}
+                    {answerCorrect !== null && correct ? <Check size={18} /> : null}
+                    {answerCorrect !== null && selected && !correct ? <CircleX size={18} /> : null}
+                  </button>
+                )
+              })}
+            </div>
+          )}
+          {answerCorrect !== null ? (
+            <footer className={answerCorrect ? styles.feedbackCorrect : styles.feedbackWrong}>
               <div>
-                <strong>{selectedIndex === question.answerIndex ? '这次记住了' : '这项会更早回来'}</strong>
+                <strong>{answerCorrect ? '这次独立找回来了' : '这项会更早回来'}</strong>
                 <p>{question.explanationZh}</p>
               </div>
               <button className="softButton primaryButton" onClick={continueReview}>

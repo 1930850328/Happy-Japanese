@@ -16,9 +16,20 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 
 import { courseLessonMap, courseLessons, courseNodeMap } from '../data/courseCatalog'
-import { COURSE_POLICY, getLessonProgress, isLessonAvailable, prepareCourseQuestions, type CourseAnswerResult } from '../lib/courseEngine'
+import {
+  COURSE_POLICY,
+  getCourseQuestionAnswer,
+  getCourseQuestionDimension,
+  getCourseQuestionInteraction,
+  getLessonProgress,
+  isCourseQuestionCorrect,
+  isLessonAvailable,
+  prepareAdaptiveLessonQuestions,
+  type CourseAnswerResult,
+} from '../lib/courseEngine'
 import { speakJapanese } from '../lib/speech'
 import { useCourseStore } from '../store/useCourseStore'
+import type { CourseLearningDimension } from '../types'
 import styles from './CourseLessonPage.module.css'
 
 type LessonPhase = 'learn' | 'practice' | 'result'
@@ -34,6 +45,8 @@ export function CourseLessonPage() {
   const [phase, setPhase] = useState<LessonPhase>('learn')
   const [questionIndex, setQuestionIndex] = useState(0)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [inputAnswer, setInputAnswer] = useState('')
+  const [answerCorrect, setAnswerCorrect] = useState<boolean | null>(null)
   const [answers, setAnswers] = useState<CourseAnswerResult[]>([])
   const [questionStartedAt, setQuestionStartedAt] = useState(() => Date.now())
   const [resultScore, setResultScore] = useState(0)
@@ -44,17 +57,18 @@ export function CourseLessonPage() {
   const [recallAnswer, setRecallAnswer] = useState('')
   const [recallChecked, setRecallChecked] = useState(false)
   const [recallRevealed, setRecallRevealed] = useState(false)
-  const [recallSelfReported, setRecallSelfReported] = useState(false)
 
   useEffect(() => {
     void initialize()
   }, [initialize])
 
-  const preparedQuestions = useMemo(
-    () => lesson ? prepareCourseQuestions(lesson.questions, `${lesson.id}:${attemptNumber}`) : [],
-    [attemptNumber, lesson],
+  const baseQuestions = useMemo(
+    () => lesson ? prepareAdaptiveLessonQuestions(lesson, courseState, `${lesson.id}:${attemptNumber}`) : [],
+    [attemptNumber, courseState, lesson],
   )
-  const currentQuestion = preparedQuestions[questionIndex]
+  const [sessionQuestions, setSessionQuestions] = useState(baseQuestions)
+  const currentQuestion = sessionQuestions[questionIndex]
+  const currentInteraction = currentQuestion ? getCourseQuestionInteraction(currentQuestion) : 'choice'
   const existingProgress = lesson ? getLessonProgress(courseState, lesson.id) : undefined
   const nextLesson = lesson ? courseLessons.find((item) => item.order > lesson.order) : undefined
   const nodes = useMemo(
@@ -65,12 +79,19 @@ export function CourseLessonPage() {
   const recallExample = lesson?.examples[0]
   const expectedRecallAnswer = recallExample ? (isKanaLesson ? recallExample.reading : recallExample.ja) : ''
   const recallSucceeded = recallChecked && normalizeRecall(recallAnswer) === normalizeRecall(expectedRecallAnswer)
-  const recallCompleted = recallSucceeded || recallSelfReported
+  const recallCompleted = recallSucceeded
+
+  useEffect(() => {
+    if (phase !== 'learn') return
+    setSessionQuestions(baseQuestions)
+  }, [baseQuestions, phase])
 
   useEffect(() => {
     setPhase('learn')
     setQuestionIndex(0)
     setSelectedIndex(null)
+    setInputAnswer('')
+    setAnswerCorrect(null)
     setAnswers([])
     setResultScore(0)
     setPassed(false)
@@ -80,7 +101,6 @@ export function CourseLessonPage() {
     setRecallAnswer('')
     setRecallChecked(false)
     setRecallRevealed(false)
-    setRecallSelfReported(false)
     setQuestionStartedAt(Date.now())
   }, [lessonId])
 
@@ -91,30 +111,54 @@ export function CourseLessonPage() {
   if (!courseState.profile) return <Navigate replace to="/" />
   if (!isLessonAvailable(courseState, lesson.id)) return <Navigate replace to="/" />
 
+  const recordAnswer = (response: string | number) => {
+    if (answerCorrect !== null || !currentQuestion) return
+    const correct = isCourseQuestionCorrect(currentQuestion, response)
+    setAnswerCorrect(correct)
+    setAnswers((items) => [...items, {
+      questionId: currentQuestion.id,
+      nodeId: currentQuestion.nodeId,
+      correct,
+      elapsedMs: Math.max(300, Date.now() - questionStartedAt),
+      dimension: getCourseQuestionDimension(currentQuestion),
+      assisted: currentQuestion.sessionRole === 'remediation',
+      response: String(response),
+    }])
+
+    if (!correct && sessionQuestions.length < baseQuestions.length * 2) {
+      setSessionQuestions((items) => [
+        ...items,
+        { ...currentQuestion, sessionRole: 'remediation' },
+      ])
+    }
+  }
+
   const chooseAnswer = (optionIndex: number) => {
-    if (selectedIndex !== null || !currentQuestion) return
+    if (selectedIndex !== null) return
     setSelectedIndex(optionIndex)
-    setAnswers((items) => [
-      ...items,
-      {
-        questionId: currentQuestion.id,
-        nodeId: currentQuestion.nodeId,
-        correct: optionIndex === currentQuestion.answerIndex,
-        elapsedMs: Math.max(300, Date.now() - questionStartedAt),
-      },
-    ])
+    recordAnswer(optionIndex)
+  }
+
+  const submitInputAnswer = () => {
+    if (!inputAnswer.trim()) return
+    recordAnswer(inputAnswer)
   }
 
   const advanceQuestion = async () => {
-    if (questionIndex < preparedQuestions.length - 1) {
+    if (questionIndex < sessionQuestions.length - 1) {
       setQuestionIndex((index) => index + 1)
       setSelectedIndex(null)
+      setInputAnswer('')
+      setAnswerCorrect(null)
       setQuestionStartedAt(Date.now())
       return
     }
 
     setSaving(true)
-    const score = answers.filter((answer) => answer.correct).length / preparedQuestions.length
+    const independentLessonAnswers = answers.filter((answer) =>
+      !answer.assisted && lesson.nodeIds.includes(answer.nodeId),
+    )
+    const score = independentLessonAnswers.filter((answer) => answer.correct).length / independentLessonAnswers.length
     const next = await saveLessonAttempt(lesson.id, answers)
     const progress = getLessonProgress(next, lesson.id)
     setResultScore(score)
@@ -128,6 +172,8 @@ export function CourseLessonPage() {
     setAttemptNumber((number) => number + 1)
     setQuestionIndex(0)
     setSelectedIndex(null)
+    setInputAnswer('')
+    setAnswerCorrect(null)
     setAnswers([])
     setQuestionStartedAt(Date.now())
   }
@@ -227,9 +273,14 @@ export function CourseLessonPage() {
               <div>
                 <small>本课迁移任务</small>
                 <strong>{lesson.transferTask}</strong>
-                <p>检测会换成没有见过的句子；能把规则带到新语境，才算真正理解。</p>
+                <p>检测会覆盖识别、听辨、回忆、输出和迁移；能把规则带到新语境，才算真正理解。</p>
               </div>
             </div>
+            {lesson.requiredDimensions?.length ? (
+              <div className={styles.dimensionPath} aria-label="本课训练维度">
+                {lesson.requiredDimensions.map((dimension) => <span key={dimension}>{dimensionLabel(dimension)}</span>)}
+              </div>
+            ) : null}
           </section>
 
           <section className={`${styles.startPractice} glassCard`}>
@@ -271,10 +322,7 @@ export function CourseLessonPage() {
                 ) : null}
                 {recallRevealed ? (
                   <div className={styles.recallReference}>
-                    <p>参考答案：<strong>{expectedRecallAnswer}</strong>。先跟读，再遮住答案自己说一遍。</p>
-                    <button type="button" className="softButton" onClick={() => setRecallSelfReported(true)}>
-                      {recallSelfReported ? '已完成口头回忆' : '我已经遮住答案说了一遍'}
-                    </button>
+                    <p>参考答案：<strong>{expectedRecallAnswer}</strong>。看过答案后仍需遮住它并正确输入，查看答案本身不计作掌握证据。</p>
                   </div>
                 ) : null}
               </div>
@@ -297,52 +345,79 @@ export function CourseLessonPage() {
         <section className={`${styles.practiceCard} glassCard`} data-testid="course-practice">
           <header>
             <div>
-              <span className="chip badgePeach">掌握检测</span>
-              <small>{questionIndex + 1}/{preparedQuestions.length}</small>
+              <span className="chip badgePeach">
+                {currentQuestion.sessionRole === 'retention' ? '旧知识穿插' : currentQuestion.sessionRole === 'remediation' ? '错题重学' : '掌握检测'}
+              </span>
+              <small>{questionIndex + 1}/{sessionQuestions.length}</small>
             </div>
             <div className={styles.practiceProgress}>
-              <i style={{ width: `${((questionIndex + 1) / preparedQuestions.length) * 100}%` }} />
+              <i style={{ width: `${((questionIndex + 1) / sessionQuestions.length) * 100}%` }} />
             </div>
           </header>
 
           <div className={styles.practiceBody}>
-            <small>{currentQuestion.kind === 'comprehension' ? '理解题' : currentQuestion.kind === 'usage' ? '用法题' : currentQuestion.kind === 'reading' ? '读音题' : '含义题'}</small>
+            <small>{dimensionLabel(getCourseQuestionDimension(currentQuestion))}</small>
             {currentQuestion.context ? <p className={styles.context}>{currentQuestion.context}</p> : null}
             <h2>{currentQuestion.prompt}</h2>
-            <div className={styles.answerGrid}>
-              {currentQuestion.options.map((option, index) => {
-                const selected = selectedIndex === index
-                const correct = index === currentQuestion.answerIndex
-                const revealedClass = selectedIndex === null
-                  ? ''
-                  : correct
-                    ? styles.answerCorrect
-                    : selected
-                      ? styles.answerWrong
-                      : styles.answerMuted
-                return (
-                  <button key={option} data-option-value={option} className={revealedClass} onClick={() => chooseAnswer(index)} disabled={selectedIndex !== null}>
-                    <span>{String.fromCharCode(65 + index)}</span>
-                    {option}
-                    {selectedIndex !== null && correct ? <Check size={18} /> : null}
-                    {selectedIndex !== null && selected && !correct ? <CircleX size={18} /> : null}
-                  </button>
-                )
-              })}
-            </div>
+            {currentInteraction === 'listening_choice' ? (
+              <button className={styles.audioPrompt} type="button" onClick={() => speakJapanese(currentQuestion.audioText ?? '')}>
+                <Volume2 size={25} />播放声音
+              </button>
+            ) : null}
+            {currentInteraction === 'input' ? (
+              <div className={styles.constructedAnswer}>
+                <label>
+                  <span>你的答案</span>
+                  <input
+                    autoFocus
+                    value={inputAnswer}
+                    disabled={answerCorrect !== null}
+                    onChange={(event) => setInputAnswer(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' && inputAnswer.trim() && answerCorrect === null) submitInputAnswer()
+                    }}
+                    placeholder="输入罗马音，不区分大小写"
+                  />
+                </label>
+                <button className="softButton primaryButton" disabled={!inputAnswer.trim() || answerCorrect !== null} onClick={submitInputAnswer}>检查答案</button>
+              </div>
+            ) : (
+              <div className={styles.answerGrid}>
+                {currentQuestion.options.map((option, index) => {
+                  const selected = selectedIndex === index
+                  const correct = index === currentQuestion.answerIndex
+                  const revealedClass = answerCorrect === null
+                    ? ''
+                    : correct
+                      ? styles.answerCorrect
+                      : selected
+                        ? styles.answerWrong
+                        : styles.answerMuted
+                  return (
+                    <button key={option} data-option-value={option} className={revealedClass} onClick={() => chooseAnswer(index)} disabled={answerCorrect !== null}>
+                      <span>{String.fromCharCode(65 + index)}</span>
+                      {option}
+                      {answerCorrect !== null && correct ? <Check size={18} /> : null}
+                      {answerCorrect !== null && selected && !correct ? <CircleX size={18} /> : null}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </div>
 
-          {selectedIndex !== null ? (
-            <footer className={selectedIndex === currentQuestion.answerIndex ? styles.feedbackCorrect : styles.feedbackWrong}>
+          {answerCorrect !== null ? (
+            <footer className={answerCorrect ? styles.feedbackCorrect : styles.feedbackWrong}>
               <div>
-                {selectedIndex === currentQuestion.answerIndex ? <CheckCircle2 size={23} /> : <Lightbulb size={23} />}
+                {answerCorrect ? <CheckCircle2 size={23} /> : <Lightbulb size={23} />}
                 <div>
-                  <strong>{selectedIndex === currentQuestion.answerIndex ? '答对了' : '这里需要再建立一次连接'}</strong>
+                  <strong>{answerCorrect ? '答对了' : '这里需要再建立一次连接'}</strong>
                   <p>{currentQuestion.explanationZh}</p>
+                  {!answerCorrect ? <small>这项会先让其他内容产生间隔，然后再次出现；重学答案不计作独立掌握证据。</small> : null}
                 </div>
               </div>
               <button className="softButton primaryButton" disabled={saving} onClick={() => void advanceQuestion()}>
-                {questionIndex < preparedQuestions.length - 1 ? '下一题' : saving ? '正在保存…' : '查看结果'}
+                {questionIndex < sessionQuestions.length - 1 ? '下一题' : saving ? '正在保存…' : '查看结果'}
                 <ArrowRight size={18} />
               </button>
             </footer>
@@ -359,8 +434,8 @@ export function CourseLessonPage() {
           <h1>{passed ? '你已经完成本课' : '现在发现问题，正是复习的最好时机'}</h1>
           <p>
             {passed
-              ? '这是第一次成功回忆，还不等于长期掌握。系统会在一段时间后重新检查，连续想起来才会逐步变成稳定能力。'
-              : `本课通过线为 ${Math.round(COURSE_POLICY.lessonPassScore * 100)}%。回看规则后再练一次，错误知识会更早进入复习。`}
+              ? '这是第一次成功回忆，还不等于长期掌握。系统会在一段时间后，从多个方向重新检查；跨天且无提示答对后，才会逐步变成稳定能力。'
+              : `本课需要总正确率达到 ${Math.round(COURSE_POLICY.lessonPassScore * 100)}%，并且每个训练维度至少独立答对一次。回看规则后再练，错误知识会更早进入复习。`}
           </p>
           <div className={styles.resultActions}>
             {!passed ? <button className="softButton primaryButton" onClick={retry}><RotateCcw size={18} />回看讲解再练</button> : null}
@@ -372,20 +447,23 @@ export function CourseLessonPage() {
               </Link>
             ) : null}
           </div>
-          <div className={styles.answerReview}>
-            {preparedQuestions.map((question) => {
-              const answer = answers.find((item) => item.questionId === question.id)
-              return (
-                <article key={question.id} className={answer?.correct ? styles.reviewCorrect : styles.reviewWrong}>
-                  <span>{answer?.correct ? <Check size={17} /> : <CircleX size={17} />}</span>
-                  <div>
-                    <strong>{question.prompt}</strong>
-                    <p>正确答案：{question.options[question.answerIndex]}。{question.explanationZh}</p>
-                  </div>
-                </article>
-              )
-            })}
-          </div>
+          <details className={styles.answerReview}>
+            <summary>查看本次各项答题详情</summary>
+            <div>
+              {lesson.questions.map((question) => {
+                const answer = [...answers].reverse().find((item) => item.questionId === question.id && !item.assisted)
+                return (
+                  <article key={question.id} className={answer?.correct ? styles.reviewCorrect : styles.reviewWrong}>
+                    <span>{answer?.correct ? <Check size={17} /> : <CircleX size={17} />}</span>
+                    <div>
+                      <strong>{question.prompt}</strong>
+                      <p>正确答案：{getCourseQuestionAnswer(question)}。{question.explanationZh}</p>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          </details>
           {existingProgress?.attempts ? <small>本课累计练习 {existingProgress.attempts} 次</small> : null}
         </section>
       ) : null}
@@ -402,6 +480,17 @@ function normalizeRecall(value: string) {
     .normalize('NFKC')
     .toLocaleLowerCase()
     .replace(/[\s。！？、,.!?]/g, '')
+}
+
+function dimensionLabel(dimension: CourseLearningDimension) {
+  const labels: Record<CourseLearningDimension, string> = {
+    recognition: '看字认音',
+    listening: '听音辨字',
+    recall: '主动回忆',
+    production: '完整拼读',
+    transfer: '新组合迁移',
+  }
+  return labels[dimension]
 }
 
 function TargetIcon() {

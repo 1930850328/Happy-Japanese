@@ -1,7 +1,10 @@
 import { courseLessonMap, courseLessons, courseStages } from '../data/courseCatalog'
 import type {
+  CourseDimensionProgress,
   CourseEvidence,
   CourseEvidenceSource,
+  CourseLearningDimension,
+  CourseLesson,
   CourseLessonProgress,
   CourseMastery,
   CourseMasteryState,
@@ -17,6 +20,9 @@ export interface CourseAnswerResult {
   nodeId: string
   correct: boolean
   elapsedMs: number
+  dimension?: CourseLearningDimension
+  assisted?: boolean
+  response?: string
 }
 
 export const COURSE_POLICY = {
@@ -46,6 +52,41 @@ function seededShuffle<T>(items: T[], seed: string) {
   return result
 }
 
+export function getCourseQuestionDimension(question: CourseQuestion): CourseLearningDimension {
+  if (question.dimension) return question.dimension
+  if (question.kind === 'usage') return 'production'
+  if (question.kind === 'comprehension') return 'transfer'
+  return 'recognition'
+}
+
+export function getCourseQuestionInteraction(question: CourseQuestion) {
+  return question.interaction ?? 'choice'
+}
+
+function normalizeCourseResponse(value: string) {
+  return value
+    .normalize('NFKC')
+    .toLocaleLowerCase()
+    .replace(/[\s。！？、,.!?・-]/g, '')
+}
+
+export function isCourseQuestionCorrect(question: CourseQuestion, response: string | number) {
+  if (getCourseQuestionInteraction(question) === 'choice') {
+    return response === question.answerIndex
+  }
+  if (getCourseQuestionInteraction(question) === 'listening_choice') {
+    return response === question.answerIndex
+  }
+  const normalized = normalizeCourseResponse(String(response))
+  return (question.acceptableAnswers ?? []).some((answer) => normalizeCourseResponse(answer) === normalized)
+}
+
+export function getCourseQuestionAnswer(question: CourseQuestion) {
+  return getCourseQuestionInteraction(question) === 'input'
+    ? question.acceptableAnswers?.[0] ?? ''
+    : question.options[question.answerIndex] ?? ''
+}
+
 export function prepareCourseQuestions(
   questions: CourseQuestion[],
   attemptSeed: string,
@@ -55,6 +96,7 @@ export function prepareCourseQuestions(
     ? seededShuffle(questions, `${attemptSeed}:questions`)
     : questions
   return orderedQuestions.map((question) => {
+    if (getCourseQuestionInteraction(question) === 'input') return { ...question }
     const correctOption = question.options[question.answerIndex]
     const options = seededShuffle(question.options, `${attemptSeed}:${question.id}:options`)
     return {
@@ -65,9 +107,64 @@ export function prepareCourseQuestions(
   })
 }
 
+export function prepareAdaptiveLessonQuestions(
+  lesson: CourseLesson,
+  state: CourseState,
+  attemptSeed: string,
+) {
+  const evidenceByQuestion = new Map<string, { correct: number; incorrect: number }>()
+  for (const item of state.evidence) {
+    const summary = evidenceByQuestion.get(item.questionId) ?? { correct: 0, incorrect: 0 }
+    summary[item.correct ? 'correct' : 'incorrect'] += 1
+    evidenceByQuestion.set(item.questionId, summary)
+  }
+
+  const prepared = prepareCourseQuestions(lesson.questions, attemptSeed)
+    .map((item, index) => ({
+      item: { ...item, sessionRole: 'lesson' as const },
+      index,
+      weakness: (evidenceByQuestion.get(item.id)?.incorrect ?? 0) - (evidenceByQuestion.get(item.id)?.correct ?? 0),
+    }))
+    .sort((a, b) => b.weakness - a.weakness || a.index - b.index)
+    .map(({ item }) => item)
+
+  if (!lesson.requiredDimensions?.length) return prepared
+
+  const previousLessons = courseLessons.filter((item) => item.order < lesson.order)
+  const previousQuestions = previousLessons.flatMap((item) => item.questions)
+  const retentionByDimension = new Map<CourseLearningDimension, CourseQuestion>()
+  for (const dimension of lesson.requiredDimensions) {
+    const candidates = previousQuestions.filter((item) => getCourseQuestionDimension(item) === dimension)
+    const selected = candidates.sort((a, b) => {
+      const aEvidence = evidenceByQuestion.get(a.id) ?? { correct: 0, incorrect: 0 }
+      const bEvidence = evidenceByQuestion.get(b.id) ?? { correct: 0, incorrect: 0 }
+      return (bEvidence.incorrect - bEvidence.correct) - (aEvidence.incorrect - aEvidence.correct)
+    })[0]
+    if (selected) {
+      retentionByDimension.set(
+        dimension,
+        { ...prepareCourseQuestions([selected], `${attemptSeed}:retention:${dimension}`, false)[0], sessionRole: 'retention' },
+      )
+    }
+  }
+
+  const result: CourseQuestion[] = []
+  const insertedDimensions = new Set<CourseLearningDimension>()
+  for (const item of prepared) {
+    result.push(item)
+    const dimension = getCourseQuestionDimension(item)
+    const retention = retentionByDimension.get(dimension)
+    if (retention && !insertedDimensions.has(dimension)) {
+      result.push(retention)
+      insertedDimensions.add(dimension)
+    }
+  }
+  return result
+}
+
 export function createEmptyCourseState(): CourseState {
   return {
-    version: 1,
+    version: 2,
     lessonProgress: [],
     mastery: [],
     evidence: [],
@@ -76,26 +173,58 @@ export function createEmptyCourseState(): CourseState {
   }
 }
 
+function requiredDimensionsForNode(nodeId: string) {
+  return [...new Set(
+    courseLessons
+      .filter((lesson) => lesson.nodeIds.includes(nodeId))
+      .flatMap((lesson) => lesson.requiredDimensions ?? []),
+  )]
+}
+
+function resolveAnswerDimension(answer: CourseAnswerResult) {
+  if (answer.dimension) return answer.dimension
+  const question = courseLessons.flatMap((lesson) => lesson.questions).find((item) => item.id === answer.questionId)
+  return question ? getCourseQuestionDimension(question) : 'recognition'
+}
+
+function hasStableDimensionEvidence(mastery: CourseMastery) {
+  const required = requiredDimensionsForNode(mastery.nodeId)
+  return required.length === 0 || required.every((dimension) => {
+    const progress = mastery.dimensions?.[dimension]
+    return Boolean(
+      progress &&
+      progress.delayedCorrectCount > 0 &&
+      progress.confidence >= COURSE_POLICY.reviewingConfidence,
+    )
+  })
+}
+
 export function normalizeCourseState(state: CourseState): CourseState {
   const reviewedNodeIds = new Set(
     state.evidence.filter((item) => item.source === 'review').map((item) => item.nodeId),
   )
   const migrationReviewAt = new Date(Date.now() + 12 * 60 * 60 * 1000).toISOString()
   const mastery = state.mastery.map((item) => {
-    if (reviewedNodeIds.has(item.nodeId)) return item
-    const confidence = Math.min(item.confidence, 0.44)
+    const hasReview = reviewedNodeIds.has(item.nodeId)
+    const confidence = hasReview ? item.confidence : Math.min(item.confidence, 0.44)
+    const provisionalState = item.state === 'stable' && !hasStableDimensionEvidence(item)
+      ? 'reviewing' as const
+      : item.state
     return {
       ...item,
       confidence,
-      stabilityHours: Math.min(item.stabilityHours, 24),
-      state: confidence >= COURSE_POLICY.reviewingConfidence ? 'reviewing' as const : 'learning' as const,
-      nextReviewAt: new Date(item.nextReviewAt).getTime() < new Date(migrationReviewAt).getTime()
+      stabilityHours: hasReview ? item.stabilityHours : Math.min(item.stabilityHours, 24),
+      state: hasReview
+        ? provisionalState
+        : confidence >= COURSE_POLICY.reviewingConfidence ? 'reviewing' as const : 'learning' as const,
+      nextReviewAt: hasReview || new Date(item.nextReviewAt).getTime() < new Date(migrationReviewAt).getTime()
         ? item.nextReviewAt
         : migrationReviewAt,
     }
   })
   return {
     ...state,
+    version: 2,
     mastery,
     literacy: {
       itemProgress: state.literacy?.itemProgress ?? [],
@@ -115,27 +244,28 @@ function getMasteryState(confidence: number, correct: boolean): CourseMasterySta
   return 'learning'
 }
 
-function updateMastery(
-  current: CourseMastery | undefined,
-  nodeId: string,
-  accuracy: number,
-  elapsedMs: number,
-  answerCount: number,
+function updateDimensionProgress(
+  current: CourseDimensionProgress | undefined,
+  answers: CourseAnswerResult[],
   now: Date,
   source: CourseEvidenceSource,
-): CourseMastery {
-  const previousConfidence = current?.confidence ?? 0.18
-  const responseQuality = elapsedMs > 45_000 ? 0.84 : elapsedMs > 20_000 ? 0.93 : 1
-  const passed = accuracy >= COURSE_POLICY.lessonPassScore
+): CourseDimensionProgress {
+  const accuracy = answers.filter((answer) => answer.correct).length / answers.length
+  const elapsedMs = answers.reduce((sum, answer) => sum + answer.elapsedMs, 0) / answers.length
+  const previousConfidence = current?.confidence ?? 0.12
   const previousStability = current?.stabilityHours ?? 6
   const hoursSinceLastReview = current?.lastReviewedAt
     ? Math.max(0, (now.getTime() - new Date(current.lastReviewedAt).getTime()) / 3_600_000)
     : 0
+  const responseQuality = elapsedMs > 45_000 ? 0.84 : elapsedMs > 20_000 ? 0.93 : 1
+  const passed = accuracy >= COURSE_POLICY.lessonPassScore
   const delayedRecall = source === 'review' && hoursSinceLastReview >= previousStability * 0.7
   const rawConfidence = passed
-    ? Math.min(0.99, previousConfidence + (1 - previousConfidence) * 0.24 * accuracy * responseQuality)
-    : Math.max(0.04, previousConfidence * (0.42 + accuracy * 0.28))
-  const confidence = passed && !delayedRecall ? Math.min(rawConfidence, 0.6) : rawConfidence
+    ? Math.min(0.99, previousConfidence + (1 - previousConfidence) * 0.28 * accuracy * responseQuality)
+    : Math.max(0.04, previousConfidence * (0.4 + accuracy * 0.25))
+  const confidence = passed && !delayedRecall
+    ? Math.max(previousConfidence, Math.min(rawConfidence, 0.6))
+    : rawConfidence
   const stabilityHours = passed
     ? delayedRecall
       ? Math.min(24 * 180, Math.max(12, previousStability * (1.35 + confidence)))
@@ -143,16 +273,91 @@ function updateMastery(
     : Math.max(3, previousStability * 0.32)
 
   return {
+    confidence,
+    stabilityHours,
+    correctCount: (current?.correctCount ?? 0) + answers.filter((answer) => answer.correct).length,
+    incorrectCount: (current?.incorrectCount ?? 0) + answers.filter((answer) => !answer.correct).length,
+    delayedCorrectCount: (current?.delayedCorrectCount ?? 0) + (delayedRecall && passed ? 1 : 0),
+    nextReviewAt: addHours(now, stabilityHours),
+    lastReviewedAt: now.toISOString(),
+  }
+}
+
+function updateMastery(
+  current: CourseMastery | undefined,
+  nodeId: string,
+  answers: CourseAnswerResult[],
+  now: Date,
+  source: CourseEvidenceSource,
+): CourseMastery {
+  const accuracy = answers.filter((answer) => answer.correct).length / answers.length
+  const elapsedMs = answers.reduce((sum, answer) => sum + answer.elapsedMs, 0) / answers.length
+  const answerCount = answers.length
+  const previousConfidence = current?.confidence ?? 0.18
+  const responseQuality = elapsedMs > 45_000 ? 0.84 : elapsedMs > 20_000 ? 0.93 : 1
+  const passed = accuracy >= COURSE_POLICY.lessonPassScore
+  const previousStability = current?.stabilityHours ?? 6
+  const delayedRecall = source === 'review' && answers.some((answer) => {
+    const dimensionProgress = current?.dimensions?.[answer.dimension ?? 'recognition']
+    const lastReviewedAt = dimensionProgress?.lastReviewedAt ?? current?.lastReviewedAt
+    const dimensionStability = dimensionProgress?.stabilityHours ?? previousStability
+    if (!lastReviewedAt) return false
+    const hoursSinceLastReview = Math.max(0, (now.getTime() - new Date(lastReviewedAt).getTime()) / 3_600_000)
+    return hoursSinceLastReview >= dimensionStability * 0.7
+  })
+  const rawConfidence = passed
+    ? Math.min(0.99, previousConfidence + (1 - previousConfidence) * 0.24 * accuracy * responseQuality)
+    : Math.max(0.04, previousConfidence * (0.42 + accuracy * 0.28))
+  const confidence = passed && !delayedRecall
+    ? Math.max(previousConfidence, Math.min(rawConfidence, 0.6))
+    : rawConfidence
+  const stabilityHours = passed
+    ? delayedRecall
+      ? Math.min(24 * 180, Math.max(12, previousStability * (1.35 + confidence)))
+      : Math.max(12, Math.min(previousStability, 24))
+    : Math.max(3, previousStability * 0.32)
+
+  const dimensions = { ...(current?.dimensions ?? {}) }
+  const answersByDimension = new Map<CourseLearningDimension, CourseAnswerResult[]>()
+  for (const answer of answers) {
+    const dimension = answer.dimension ?? 'recognition'
+    answersByDimension.set(dimension, [...(answersByDimension.get(dimension) ?? []), answer])
+  }
+  for (const [dimension, dimensionAnswers] of answersByDimension) {
+    dimensions[dimension] = updateDimensionProgress(dimensions[dimension], dimensionAnswers, now, source)
+  }
+
+  const dimensionReviewTimes = Object.values(dimensions).map((item) => new Date(item.nextReviewAt).getTime())
+  const nextReviewAt = dimensionReviewTimes.length > 0
+    ? new Date(Math.min(...dimensionReviewTimes)).toISOString()
+    : addHours(now, stabilityHours)
+  const candidateState = getMasteryState(confidence, passed)
+  const stableAcrossDimensions = hasStableDimensionEvidence({
+    ...(current ?? {
+      nodeId,
+      confidence,
+      stabilityHours,
+      correctCount: 0,
+      incorrectCount: 0,
+      nextReviewAt,
+      lastReviewedAt: now.toISOString(),
+      state: candidateState,
+    }),
+    dimensions,
+  })
+
+  return {
     nodeId,
-    state: getMasteryState(confidence, passed) === 'stable' && !delayedRecall
+    state: candidateState === 'stable' && (!delayedRecall || !stableAcrossDimensions)
       ? 'reviewing'
-      : getMasteryState(confidence, passed),
+      : candidateState,
     confidence,
     stabilityHours,
     correctCount: (current?.correctCount ?? 0) + Math.round(accuracy * answerCount),
     incorrectCount: (current?.incorrectCount ?? 0) + Math.round((1 - accuracy) * answerCount),
-    nextReviewAt: addHours(now, stabilityHours),
+    nextReviewAt,
     lastReviewedAt: now.toISOString(),
+    dimensions,
   }
 }
 
@@ -163,20 +368,22 @@ function mergeEvidence(
   lessonId?: string,
 ) {
   const now = new Date()
+  const resolvedAnswers = answers.map((answer) => ({
+    ...answer,
+    dimension: resolveAnswerDimension(answer),
+  }))
   const masteryMap = new Map(state.mastery.map((item) => [item.nodeId, item]))
   const answersByNode = new Map<string, CourseAnswerResult[]>()
-  for (const answer of answers) {
+  for (const answer of resolvedAnswers) {
     answersByNode.set(answer.nodeId, [...(answersByNode.get(answer.nodeId) ?? []), answer])
   }
   for (const [nodeId, nodeAnswers] of answersByNode) {
-    const accuracy = nodeAnswers.filter((answer) => answer.correct).length / nodeAnswers.length
-    const averageElapsedMs = nodeAnswers.reduce((sum, answer) => sum + answer.elapsedMs, 0) / nodeAnswers.length
-    masteryMap.set(
-      nodeId,
-      updateMastery(masteryMap.get(nodeId), nodeId, accuracy, averageElapsedMs, nodeAnswers.length, now, source),
-    )
+    const independentAnswers = nodeAnswers.filter((answer) => !answer.assisted)
+    if (independentAnswers.length > 0) {
+      masteryMap.set(nodeId, updateMastery(masteryMap.get(nodeId), nodeId, independentAnswers, now, source))
+    }
   }
-  const evidence: CourseEvidence[] = answers.map((answer) => {
+  const evidence: CourseEvidence[] = resolvedAnswers.map((answer) => {
     return {
       id: crypto.randomUUID(),
       nodeId: answer.nodeId,
@@ -186,6 +393,9 @@ function mergeEvidence(
       correct: answer.correct,
       elapsedMs: answer.elapsedMs,
       createdAt: now.toISOString(),
+      dimension: answer.dimension,
+      assisted: answer.assisted,
+      response: answer.response,
     }
   })
 
@@ -254,8 +464,15 @@ export function submitLessonAttempt(
   const lesson = courseLessonMap.get(lessonId)
   if (!lesson || answers.length === 0) return state
 
-  const score = answers.filter((answer) => answer.correct).length / answers.length
-  const passed = score >= COURSE_POLICY.lessonPassScore
+  const independentLessonAnswers = answers.filter((answer) =>
+    !answer.assisted && lesson.nodeIds.includes(answer.nodeId),
+  )
+  if (independentLessonAnswers.length === 0) return state
+  const score = independentLessonAnswers.filter((answer) => answer.correct).length / independentLessonAnswers.length
+  const dimensionCoverage = (lesson.requiredDimensions ?? []).every((dimension) =>
+    independentLessonAnswers.some((answer) => resolveAnswerDimension(answer) === dimension && answer.correct),
+  )
+  const passed = score >= COURSE_POLICY.lessonPassScore && dimensionCoverage
   const now = new Date().toISOString()
   const progressMap = new Map(state.lessonProgress.map((item) => [item.lessonId, item]))
   const current = progressMap.get(lessonId)
@@ -321,6 +538,13 @@ export function getDueCourseMastery(state: CourseState, now = new Date()) {
       if (b.state === 'at_risk' && a.state !== 'at_risk') return 1
       return new Date(a.nextReviewAt).getTime() - new Date(b.nextReviewAt).getTime()
     })
+}
+
+export function getDueCourseDimension(mastery: CourseMastery, now = new Date()) {
+  const dueDimensions = Object.entries(mastery.dimensions ?? {})
+    .filter(([, progress]) => new Date(progress.nextReviewAt).getTime() <= now.getTime())
+    .sort(([, a], [, b]) => a.confidence - b.confidence || new Date(a.nextReviewAt).getTime() - new Date(b.nextReviewAt).getTime())
+  return dueDimensions[0]?.[0] as CourseLearningDimension | undefined
 }
 
 export function getLessonProgress(state: CourseState, lessonId: string) {

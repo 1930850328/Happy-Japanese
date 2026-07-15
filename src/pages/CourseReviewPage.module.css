@@ -62,6 +62,16 @@
   font-weight: 700;
 }
 
+.dimensionBadge {
+  width: fit-content;
+  padding: 0.32rem 0.58rem;
+  border-radius: 999px;
+  background: rgba(201, 222, 210, 0.5);
+  color: #3e6c58;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .reviewCard h2 {
   margin: 0;
   font-family: var(--font-ui);
@@ -74,6 +84,42 @@
   padding: 0.9rem;
   border-radius: 14px;
   background: rgba(245, 244, 236, 0.75);
+}
+
+.audioPrompt {
+  width: min(260px, 100%);
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  border: 1px solid rgba(77, 128, 107, 0.32);
+  border-radius: 16px;
+  background: rgba(223, 241, 231, 0.7);
+  color: #365f4e;
+  font-weight: 800;
+}
+
+.constructedAnswer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.constructedAnswer input {
+  min-height: 52px;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+  font: inherit;
+}
+
+.constructedAnswer input:focus-visible {
+  outline: 3px solid rgba(77, 128, 107, 0.28);
+  outline-offset: 2px;
 }
 
 .answerGrid {
@@ -273,6 +319,10 @@
 
   .answerGrid,
   .masteryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .constructedAnswer {
     grid-template-columns: 1fr;
   }
 }

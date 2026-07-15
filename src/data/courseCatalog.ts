@@ -1,4 +1,5 @@
 import type {
+  CourseLearningDimension,
   CourseLesson,
   CourseLevel,
   CourseNode,
@@ -6,7 +7,16 @@ import type {
   CourseQuestionKind,
   CourseStage,
 } from '../types'
+import { assertCourseContentQuality } from '../lib/courseContentValidation'
 import { expansionLessons, expansionNodes } from './courseExpansion'
+
+const DEEP_KANA_DIMENSIONS: CourseLearningDimension[] = [
+  'recognition',
+  'listening',
+  'recall',
+  'production',
+  'transfer',
+]
 
 function question(
   id: string,
@@ -62,11 +72,15 @@ interface KanaUnitSpec {
   canDo: string
   chars: Array<[string, string]>
   words: Array<{ ja: string; reading: string; zh: string }>
+  deepPractice?: {
+    transfer: Array<{ ja: string; reading: string }>
+    confusions: Array<{ target: string; contrast: string; note: string }>
+  }
 }
 
 const kanaUnits: KanaUnitSpec[] = [
-  { id: 'k', order: 2, title: '读出か行', canDo: '能读出「かきくけこ」，并拼读简单词语。', chars: [['か', 'ka'], ['き', 'ki'], ['く', 'ku'], ['け', 'ke'], ['こ', 'ko']], words: [{ ja: 'かお', reading: 'kao', zh: '脸' }, { ja: 'きく', reading: 'kiku', zh: '听；菊花' }] },
-  { id: 's', order: 3, title: '读出さ行', canDo: '能读出「さしすせそ」，注意「し」读 shi。', chars: [['さ', 'sa'], ['し', 'shi'], ['す', 'su'], ['せ', 'se'], ['そ', 'so']], words: [{ ja: 'すし', reading: 'sushi', zh: '寿司' }, { ja: 'あさ', reading: 'asa', zh: '早晨' }] },
+  { id: 'k', order: 2, title: '读出か行', canDo: '能听辨、回忆并读出「かきくけこ」，再独立拼读新组合。', chars: [['か', 'ka'], ['き', 'ki'], ['く', 'ku'], ['け', 'ke'], ['こ', 'ko']], words: [{ ja: 'かお', reading: 'kao', zh: '脸' }, { ja: 'きく', reading: 'kiku', zh: '听；菊花' }, { ja: 'こえ', reading: 'koe', zh: '声音' }, { ja: 'あき', reading: 'aki', zh: '秋天' }], deepPractice: { transfer: [{ ja: 'いけ', reading: 'ike' }, { ja: 'こい', reading: 'koi' }], confusions: [{ target: 'か', contrast: 'こ', note: 'か有向右伸出的笔画；こ由两条横向笔画组成。' }, { target: 'き', contrast: 'け', note: 'き中部交叉更多；け右侧有明显竖钩。' }] } },
+  { id: 's', order: 3, title: '读出さ行', canDo: '能听辨、回忆并读出「さしすせそ」，尤其不会把「し」机械读成 si。', chars: [['さ', 'sa'], ['し', 'shi'], ['す', 'su'], ['せ', 'se'], ['そ', 'so']], words: [{ ja: 'すし', reading: 'sushi', zh: '寿司' }, { ja: 'あさ', reading: 'asa', zh: '早晨' }, { ja: 'いす', reading: 'isu', zh: '椅子' }, { ja: 'そこ', reading: 'soko', zh: '那里' }], deepPractice: { transfer: [{ ja: 'さけ', reading: 'sake' }, { ja: 'せかい', reading: 'sekai' }], confusions: [{ target: 'さ', contrast: 'き', note: 'さ的下半部向左回收；き有更明显的交叉结构。' }, { target: 'し', contrast: 'す', note: 'し是一条向上收的曲线；す中间有环和下垂笔画。' }] } },
   { id: 't', order: 4, title: '读出た行', canDo: '能读出「たちつてと」，分清 chi 与 tsu。', chars: [['た', 'ta'], ['ち', 'chi'], ['つ', 'tsu'], ['て', 'te'], ['と', 'to']], words: [{ ja: 'つき', reading: 'tsuki', zh: '月亮' }, { ja: 'て', reading: 'te', zh: '手' }] },
   { id: 'n', order: 5, title: '读出な行', canDo: '能读出「なにぬねの」，并在词中识别它们。', chars: [['な', 'na'], ['に', 'ni'], ['ぬ', 'nu'], ['ね', 'ne'], ['の', 'no']], words: [{ ja: 'ねこ', reading: 'neko', zh: '猫' }, { ja: 'いぬ', reading: 'inu', zh: '狗' }] },
   { id: 'h', order: 6, title: '读出は行', canDo: '能读出「はひふへほ」，注意「ふ」读 fu。', chars: [['は', 'ha'], ['ひ', 'hi'], ['ふ', 'fu'], ['へ', 'he'], ['ほ', 'ho']], words: [{ ja: 'はな', reading: 'hana', zh: '花；鼻子' }, { ja: 'ふね', reading: 'fune', zh: '船' }] },
@@ -82,17 +96,98 @@ const kanaUnits: KanaUnitSpec[] = [
   { id: 'katakana-rest', order: 16, title: '补全片假名表', canDo: '能读出片假名ま行、や行、ら行、わ行和ン。', chars: [['マ', 'ma'], ['ミ', 'mi'], ['ム', 'mu'], ['メ', 'me'], ['モ', 'mo'], ['ヤ', 'ya'], ['ユ', 'yu'], ['ヨ', 'yo'], ['ラ', 'ra'], ['リ', 'ri'], ['ル', 'ru'], ['レ', 're'], ['ロ', 'ro'], ['ワ', 'wa'], ['ヲ', 'wo'], ['ン', 'n']], words: [{ ja: 'カメラ', reading: 'kamera', zh: '相机' }, { ja: 'メロン', reading: 'meron', zh: '甜瓜' }] },
 ]
 
+function createDeepKanaQuestions(
+  prefix: string,
+  nodeId: string,
+  chars: KanaUnitSpec['chars'],
+  productionWords: KanaUnitSpec['words'],
+  practice: NonNullable<KanaUnitSpec['deepPractice']>,
+): CourseQuestion[] {
+  const readings = new Map(chars)
+
+  const recognition = chars.map(([character, reading], index): CourseQuestion => ({
+    id: `${prefix}-recognition-${index + 1}`,
+    nodeId,
+    kind: 'reading',
+    dimension: 'recognition',
+    interaction: 'choice',
+    prompt: `看到「${character}」时，应该直接想到哪个声音？`,
+    options: [reading, ...chars.map(([, item]) => item).filter((item) => item !== reading).slice(0, 3)],
+    answerIndex: 0,
+    explanationZh: `「${character}」读作 ${reading}。目标是看到假名就直接想起声音。`,
+  }))
+
+  const listening = practice.confusions.map((item, index): CourseQuestion => ({
+    id: `${prefix}-listening-${index + 1}`,
+    nodeId,
+    kind: 'reading',
+    dimension: 'listening',
+    interaction: 'listening_choice',
+    prompt: '点击播放，只根据声音选出对应的假名。',
+    options: [item.target, item.contrast, ...chars.map(([character]) => character).filter((character) => character !== item.target && character !== item.contrast).slice(0, 2)],
+    answerIndex: 0,
+    audioText: item.target,
+    confusionGroup: `${prefix}:${item.target}-${item.contrast}`,
+    explanationZh: `这次播放的是「${item.target}」（${readings.get(item.target)}）。${item.note}`,
+  }))
+
+  const recall = chars.map(([character, reading], index): CourseQuestion => ({
+    id: `${prefix}-recall-${index + 1}`,
+    nodeId,
+    kind: 'reading',
+    dimension: 'recall',
+    interaction: 'input',
+    prompt: `不看选项，输入「${character}」的罗马音。`,
+    options: [],
+    answerIndex: 0,
+    acceptableAnswers: [reading],
+    explanationZh: `「${character}」读作 ${reading}。主动写出来比从选项里认出来更能暴露记忆空缺。`,
+  }))
+
+  const production = productionWords.map((word, index): CourseQuestion => ({
+    id: `${prefix}-production-${index + 1}`,
+    nodeId,
+    kind: 'usage',
+    dimension: 'production',
+    interaction: 'input',
+    prompt: `把「${word.ja}」从头到尾拼读出来，输入罗马音。`,
+    context: word.zh,
+    options: [],
+    answerIndex: 0,
+    acceptableAnswers: [word.reading],
+    explanationZh: `「${word.ja}」读作 ${word.reading}。把每个假名的声音顺序连接起来，不要把词形当成一张图片背。`,
+  }))
+
+  const transfer = practice.transfer.map((item, index): CourseQuestion => ({
+    id: `${prefix}-transfer-${index + 1}`,
+    nodeId,
+    kind: 'comprehension',
+    dimension: 'transfer',
+    interaction: 'input',
+    prompt: `这是本课没有展示过的新组合：「${item.ja}」。请独立拼读并输入罗马音。`,
+    options: [],
+    answerIndex: 0,
+    acceptableAnswers: [item.reading],
+    explanationZh: `「${item.ja}」读作 ${item.reading}。能处理没背过的新组合，才说明你掌握了假名与声音的对应关系。`,
+  }))
+
+  return [...recognition, ...listening, ...recall, ...production, ...transfer]
+}
+
 function createKanaLesson(unit: KanaUnitSpec, previousId: string): CourseLesson {
   const readings = unit.chars.map(([, reading]) => reading)
-  const questions = unit.chars.map(([character, reading], index) => question(
-    `fk-${unit.id}-${index + 1}`,
-    `kana.hiragana-${unit.id}`,
-    'reading',
-    `「${character}」应该怎样读？`,
-    [reading, ...readings.filter((item) => item !== reading).slice(0, 3)],
-    0,
-    `「${character}」读作 ${reading}。`,
-  ))
+  const nodeId = `kana.hiragana-${unit.id}`
+  const questions = unit.deepPractice
+    ? createDeepKanaQuestions(`fk-${unit.id}`, nodeId, unit.chars, unit.words, unit.deepPractice)
+    : unit.chars.map(([character, reading], index) => question(
+        `fk-${unit.id}-${index + 1}`,
+        nodeId,
+        'reading',
+        `「${character}」应该怎样读？`,
+        [reading, ...readings.filter((item) => item !== reading).slice(0, 3)],
+        0,
+        `「${character}」读作 ${reading}。`,
+      ))
   const result = lesson(
     `foundation-kana-${unit.id}`,
     'foundation',
@@ -101,8 +196,10 @@ function createKanaLesson(unit: KanaUnitSpec, previousId: string): CourseLesson 
     unit.canDo,
     '一次只增加一组声音，先听、再认、最后从词中找出来。',
     [previousId],
-    [`kana.hiragana-${unit.id}`],
-    ['先逐个点击朗读，跟读两遍，再遮住读音尝试回忆。', '不要背整张表；能够从词里认出声音，才算建立了连接。'],
+    [nodeId],
+    unit.deepPractice
+      ? ['先听声音并模仿口型，再把声音和字形连起来。', '练习会从看字认音，逐步过渡到听音辨字、主动输入和拼读新组合。', '答错的内容不会立刻消失，会在其他题之后再次出现。']
+      : ['先逐个点击朗读，跟读两遍，再遮住读音尝试回忆。', '不要背整张表；能够从词里认出声音，才算建立了连接。'],
     [
       ...unit.chars.map(([ja, reading]) => ({ ja, reading, zh: `读作 ${reading}` })),
       ...unit.words,
@@ -111,7 +208,11 @@ function createKanaLesson(unit: KanaUnitSpec, previousId: string): CourseLesson 
   )
   return {
     ...result,
-    durationMinutes: Math.max(12, Math.ceil(unit.chars.length * 1.5)),
+    durationMinutes: unit.deepPractice ? 18 : Math.max(12, Math.ceil(unit.chars.length * 1.5)),
+    requiredDimensions: unit.deepPractice ? DEEP_KANA_DIMENSIONS : undefined,
+    transferTask: unit.deepPractice
+      ? '不依赖选项，听辨易混音，并独立拼读本课从未展示过的假名组合。'
+      : result.transferTask,
   }
 }
 
@@ -143,8 +244,53 @@ export const courseNodes: CourseNode[] = [
   ...expansionNodes,
 ]
 
+const introKanaChars: KanaUnitSpec['chars'] = [['あ', 'a'], ['い', 'i'], ['う', 'u'], ['え', 'e'], ['お', 'o']]
+const introKanaWords: KanaUnitSpec['words'] = [
+  { ja: 'あお', reading: 'ao', zh: '蓝色' },
+  { ja: 'いえ', reading: 'ie', zh: '家' },
+  { ja: 'あい', reading: 'ai', zh: '爱' },
+  { ja: 'うえ', reading: 'ue', zh: '上面' },
+]
+const introKanaPractice: NonNullable<KanaUnitSpec['deepPractice']> = {
+  transfer: [{ ja: 'おい', reading: 'oi' }, { ja: 'えあ', reading: 'ea' }],
+  confusions: [
+    { target: 'あ', contrast: 'お', note: 'あ中间有交叉；お的右侧有独立小笔画。' },
+    { target: 'え', contrast: 'い', note: 'え有横向转折；い由左右两笔组成。' },
+  ],
+}
+const introKanaLesson: CourseLesson = {
+  ...lesson(
+    'foundation-kana',
+    'foundation',
+    1,
+    '学会第一组平假名',
+    '能听辨、回忆并读出「あいうえお」，再独立拼读没见过的新组合。',
+    '五个元音不只要“眼熟”，还要建立声音、字形、主动回忆和新词拼读之间的双向连接。',
+    [],
+    ['kana.hiragana'],
+    [
+      '先点击每个假名听声音并模仿口型：あ张口、い嘴角展开、う轻收唇、え短促、お圆唇。',
+      '随后遮住读音，练习看到字就想起声音；检测中还会反过来听声音找字。',
+      '最后必须自己输入读音并拼读新组合，答错项会隔几题再次出现。',
+    ],
+    [
+      { ja: 'あ', reading: 'a', zh: '像“啊”，嘴巴自然张开' },
+      { ja: 'い', reading: 'i', zh: '像“衣”，嘴角向两边' },
+      { ja: 'う', reading: 'u', zh: '嘴唇轻收，不要读得太重' },
+      { ja: 'え', reading: 'e', zh: '像“诶”但更短' },
+      { ja: 'お', reading: 'o', zh: '像“哦”，保持短促' },
+      ...introKanaWords,
+    ],
+    createDeepKanaQuestions('fq', 'kana.hiragana', introKanaChars, introKanaWords, introKanaPractice),
+    ['あお', 'いえ', 'あい'],
+  ),
+  durationMinutes: 18,
+  requiredDimensions: DEEP_KANA_DIMENSIONS,
+  transferTask: '不依赖选项完成听音辨字、看字写音，并拼读两组本课从未展示过的假名组合。',
+}
+
 const anchorLessons: CourseLesson[] = [
-  lesson('foundation-kana', 'foundation', 1, '学会第一组平假名', '能读出「あいうえお」，并把五个声音组合成词。', '从五个元音开始，而不是一次背完整张假名表。', [], ['kana.hiragana'], ['日语假名通常对应一个稳定的音节。先点击朗读并跟读，再遮住罗马音回忆。', 'あ a、い i、う u、え e、お o。看到文字时要直接想到声音，不经过中文。'], [{ ja: 'あ', reading: 'a', zh: '像“啊”，嘴巴自然张开' }, { ja: 'い', reading: 'i', zh: '像“衣”，嘴角向两边' }, { ja: 'う', reading: 'u', zh: '嘴唇轻收，不要读得太重' }, { ja: 'え', reading: 'e', zh: '像“诶”但更短' }, { ja: 'お', reading: 'o', zh: '像“哦”，保持短促' }, { ja: 'あお', reading: 'ao', zh: '蓝色' }, { ja: 'いえ', reading: 'ie', zh: '家' }], [question('fq-1', 'kana.hiragana', 'reading', '「あ」的读音是？', ['a', 'i', 'u', 'e'], 0, '「あ」读作 a。'), question('fq-2', 'kana.hiragana', 'reading', '「い」的读音是？', ['i', 'a', 'e', 'o'], 0, '「い」读作 i。'), question('fq-3', 'kana.hiragana', 'reading', '「う」的读音是？', ['u', 'o', 'a', 'i'], 0, '「う」读作 u。'), question('fq-4', 'kana.hiragana', 'reading', '「え」的读音是？', ['e', 'i', 'o', 'u'], 0, '「え」读作 e。'), question('fq-5', 'kana.hiragana', 'reading', '「お」的读音是？', ['o', 'a', 'e', 'u'], 0, '「お」读作 o。'), question('fq-6', 'kana.hiragana', 'reading', '「いえ」应该怎样读？', ['ie', 'ue', 'ae', 'io'], 0, 'い是 i，え是 e，连起来是 ie。')], ['あお', 'いえ']),
+  introKanaLesson,
   ...kanaUnits.map((unit, index) => createKanaLesson(unit, index === 0 ? 'foundation-kana' : `foundation-kana-${kanaUnits[index - 1].id}`)),
   lesson('foundation-desu', 'foundation', 2, '说出第一个完整句子', '能够用「A は B です」介绍事物。', '理解日语最基础的判断句结构。', ['foundation-kana-mixed'], ['grammar.desu'], ['「です」放在名词后，让判断句保持礼貌。', '日语经常省略上下文已经清楚的主语。'], [{ ja: '学生です。', reading: 'がくせい です。', zh: '是学生。' }, { ja: 'これは本です。', reading: 'これは ほん です。', zh: '这是书。' }], [question('fd-1', 'grammar.desu', 'meaning', '「学生です」最自然的意思是？', ['是学生', '不是学生', '学生在哪里', '想当学生'], 0, '名词后接です，表示礼貌判断。'), question('fd-2', 'grammar.desu', 'usage', '“这是书”应该选哪一句？', ['これは本です。', 'これは本ます。', 'これを本です。', 'これ本を。'], 0, '「これは本です」是完整的判断句。'), question('fd-3', 'grammar.desu', 'usage', '哪一句句尾最适合礼貌判断？', ['日本です。', '日本を。', '日本に。', '日本ます。'], 0, '名词判断句用です结尾。')]),
   lesson('n5-self-introduction', 'N5', 3, '介绍自己和所属', '能够介绍姓名、身份和所属。', '掌握主题与所属关系。', ['foundation-desu'], ['grammar.wa', 'grammar.no'], ['助词「は」提示谈论主题，写作は但读作 wa。', '「A の B」连接所属或类别关系。'], [{ ja: '私は林です。', reading: 'わたしは はやし です。', zh: '我是林。' }, { ja: '日本語の学生です。', reading: 'にほんごの がくせい です。', zh: '是日语专业的学生。' }], [question('n5s-1', 'grammar.wa', 'usage', '私は学生です。句中的「は」表示什么？', ['正在谈论“我”', '动作对象', '动作地点', '过去时间'], 0, 'は把“我”设为句子的主题。'), question('n5s-2', 'grammar.no', 'meaning', '「日本の会社」是什么意思？', ['日本的公司', '去日本公司', '公司在日本', '喜欢日本公司'], 0, 'A の B 可以表示 B 属于或来自 A。'), question('n5s-3', 'grammar.wa', 'usage', '选择正确的自我介绍。', ['私は王です。', '私を王です。', '私に王ます。', '私で王を。'], 0, '主题用は，判断句用です。')], ['私', '名前']),
@@ -177,6 +323,8 @@ export const courseLessons: CourseLesson[] = orderedLessons.map((item, index) =>
   order: index + 1,
   prerequisiteLessonIds: index === 0 ? [] : [orderedLessons[index - 1].id],
 }))
+
+assertCourseContentQuality(courseLessons)
 
 const stageMeta: Array<Omit<CourseStage, 'lessonIds'>> = [
   { id: 'foundation', label: '入门', title: '独立读出日语', description: '假名、基础词和第一批完整句子。', canDo: '不靠罗马音读出假名和熟悉短词，并理解最基础判断句。', evidence: '遮住读音拼读新词，独立读懂两篇微型短文。' },

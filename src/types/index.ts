@@ -532,6 +532,15 @@ export interface CourseExample {
 
 export type CourseQuestionKind = 'meaning' | 'reading' | 'usage' | 'comprehension'
 
+export type CourseLearningDimension =
+  | 'recognition'
+  | 'listening'
+  | 'recall'
+  | 'production'
+  | 'transfer'
+
+export type CourseQuestionInteraction = 'choice' | 'input' | 'listening_choice'
+
 export interface CourseQuestion {
   id: string
   nodeId: string
@@ -541,6 +550,12 @@ export interface CourseQuestion {
   options: string[]
   answerIndex: number
   explanationZh: string
+  interaction?: CourseQuestionInteraction
+  dimension?: CourseLearningDimension
+  acceptableAnswers?: string[]
+  audioText?: string
+  confusionGroup?: string
+  sessionRole?: 'lesson' | 'retention' | 'remediation'
 }
 
 export interface CourseLesson {
@@ -560,6 +575,7 @@ export interface CourseLesson {
   moduleTitle: string
   mission: string
   transferTask: string
+  requiredDimensions?: CourseLearningDimension[]
 }
 
 export interface CourseStage {
@@ -603,6 +619,17 @@ export interface CourseMastery {
   incorrectCount: number
   nextReviewAt: string
   lastReviewedAt: string
+  dimensions?: Partial<Record<CourseLearningDimension, CourseDimensionProgress>>
+}
+
+export interface CourseDimensionProgress {
+  confidence: number
+  stabilityHours: number
+  correctCount: number
+  incorrectCount: number
+  delayedCorrectCount: number
+  nextReviewAt: string
+  lastReviewedAt: string
 }
 
 export type CourseEvidenceSource = 'lesson' | 'review' | 'placement'
@@ -616,6 +643,9 @@ export interface CourseEvidence {
   correct: boolean
   elapsedMs: number
   createdAt: string
+  dimension?: CourseLearningDimension
+  assisted?: boolean
+  response?: string
 }
 
 export type LiteracyItemKind = 'vocabulary' | 'kanji' | 'grammar'
@@ -650,7 +680,7 @@ export interface LiteracyState {
 }
 
 export interface CourseState {
-  version: 1
+  version: 1 | 2
   profile?: CourseProfile
   lessonProgress: CourseLessonProgress[]
   mastery: CourseMastery[]
