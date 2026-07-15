@@ -1084,7 +1084,7 @@ export function ProfilePage() {
           <span className="chip badgeMint">我的学习空间</span>
           <h1 className="pageTitle">管理今天的学习节奏</h1>
           <p className="sectionIntro">
-            先看目标和打卡，再按需要导入原片、调整字幕和播放提醒。
+            导入和管理自己的日语素材；目标、打卡和播放偏好按需展开。
           </p>
         </div>
 
@@ -1106,13 +1106,13 @@ export function ProfilePage() {
       </section>
 
       <section className={styles.grid}>
-        <div className={`${styles.card} glassCard`}>
-          <header className={styles.cardHeader}>
+        <details className={`${styles.card} ${styles.detailsCard}`}>
+          <summary className={styles.cardHeader}>
             <div>
-              <span className="chip badgePeach">每日目标</span>
-              <h2>今天想推进多少</h2>
+              <h2>每日目标</h2>
+              <small>设置今天想推进多少</small>
             </div>
-          </header>
+          </summary>
 
           <div className={styles.goalForm}>
             <label>
@@ -1165,15 +1165,15 @@ export function ProfilePage() {
             <Save size={18} />
             保存目标
           </button>
-        </div>
+        </details>
 
-        <div className={`${styles.card} glassCard`}>
-          <header className={styles.cardHeader}>
+        <details className={`${styles.card} ${styles.detailsCard}`}>
+          <summary className={styles.cardHeader}>
             <div>
-              <span className="chip badgePink">打卡日历</span>
-              <h2>这个月已经亮起来的日子</h2>
+              <h2>打卡日历</h2>
+              <small>查看这个月的完成记录</small>
             </div>
-          </header>
+          </summary>
 
           <div className={styles.calendar}>
             {calendar.map((cell) => (
@@ -1192,7 +1192,7 @@ export function ProfilePage() {
               </div>
             ))}
           </div>
-        </div>
+        </details>
 
         <div className={`${styles.card} glassCard ${styles.importCard}`}>
           <header className={styles.cardHeader}>
@@ -1621,13 +1621,13 @@ export function ProfilePage() {
             </details>
           ) : null}
         </div>
-        <div className={`${styles.card} glassCard`}>
-          <header className={styles.cardHeader}>
+        <details className={`${styles.card} ${styles.detailsCard}`}>
+          <summary className={styles.cardHeader}>
             <div>
-              <span className="chip badgePink">播放设置</span>
               <h2>字幕和提醒</h2>
+              <small>调整播放时的显示偏好</small>
             </div>
-          </header>
+          </summary>
 
           <div className={styles.settingList}>
             <button className={styles.settingItem} onClick={() => void handleToggleReminder()}>
@@ -1690,7 +1690,7 @@ export function ProfilePage() {
               <Settings2 size={18} />
             </button>
           </div>
-        </div>
+        </details>
 
       </section>
 

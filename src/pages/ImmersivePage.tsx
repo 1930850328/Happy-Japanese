@@ -197,25 +197,6 @@ function ImmersiveSlide({
             </div>
 
             <div className={styles.infoCard} data-testid={active ? 'immersive-info' : undefined}>
-              <div className={styles.infoHeader}>
-                <div className={styles.infoBadges}>
-                  <span className="chip badgeMint">竖屏刷流</span>
-                  <span className="chip">{lesson.theme}</span>
-                  <span className="chip badgePeach">{lesson.difficulty}</span>
-                  <span className="chip">{lesson.sliceLabel ?? `${formatDuration(lesson.durationMs)} 微课`}</span>
-                </div>
-
-                <div className={styles.statusStack}>
-                  {preparing ? <span className="chip badgePink">视频准备中</span> : null}
-                  {!preparing && status ? <span className="chip">{status}</span> : null}
-                  {playerState?.isAutoplayBlocked ? (
-                    <span className="chip badgePink">自动播放被浏览器拦截</span>
-                  ) : null}
-                  {completionFeedback ? <span className="chip badgeMint">{completionFeedback}</span> : null}
-                  {reviewFeedback ? <span className="chip badgePeach">{reviewFeedback}</span> : null}
-                </div>
-              </div>
-
               <div className={styles.lessonHeader}>
                 <div>
                   <h1 className={styles.lessonTitle}>{lesson.title}</h1>
@@ -231,8 +212,6 @@ function ImmersiveSlide({
                 </span>
               </div>
 
-              <p className={styles.lessonDescription}>{lesson.description}</p>
-
               {currentSegment ? (
                 <div className={styles.currentSentenceCard}>
                   <strong>{currentSegment.ja}</strong>
@@ -245,25 +224,31 @@ function ImmersiveSlide({
                 </div>
               ) : null}
 
-              <div className={styles.pointGrid}>
-                {visiblePoints.map((point) => (
-                  <article key={point.id} className={styles.pointCard}>
-                    <small>{point.kind === 'grammar' ? '语法' : point.kind === 'word' ? '单词' : '短句'}</small>
-                    <strong>{point.expression}</strong>
-                    <span>{point.meaningZh}</span>
-                  </article>
-                ))}
-              </div>
+              <details className={styles.lessonDetails}>
+                <summary>查看本条学习点</summary>
+                <p className={styles.lessonDescription}>{lesson.description}</p>
+                <div className={styles.pointGrid}>
+                  {visiblePoints.map((point) => (
+                    <article key={point.id} className={styles.pointCard}>
+                      <small>{point.kind === 'grammar' ? '语法' : point.kind === 'word' ? '单词' : '短句'}</small>
+                      <strong>{point.expression}</strong>
+                      <span>{point.meaningZh}</span>
+                    </article>
+                  ))}
+                </div>
+                <div className={styles.tagRow}>
+                  {lesson.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}
+                </div>
+                <p className={styles.creditLine}>{lesson.creditLine}</p>
+              </details>
 
-              <div className={styles.tagRow}>
-                {lesson.tags.slice(0, 4).map((tag) => (
-                  <span key={tag} className="chip">
-                    {tag}
-                  </span>
-                ))}
+              <div className={styles.statusStack} aria-live="polite">
+                {preparing ? <span>视频准备中</span> : null}
+                {!preparing && status ? <span>{status}</span> : null}
+                {playerState?.isAutoplayBlocked ? <span>自动播放被浏览器拦截</span> : null}
+                {completionFeedback ? <span>{completionFeedback}</span> : null}
+                {reviewFeedback ? <span>{reviewFeedback}</span> : null}
               </div>
-
-              <p className={styles.creditLine}>{lesson.creditLine}</p>
             </div>
           </div>
         </div>

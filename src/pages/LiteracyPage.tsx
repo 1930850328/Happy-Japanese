@@ -298,24 +298,24 @@ export function LiteracyPage() {
           <h1 className="pageTitle">把词汇、汉字、语法，练成阅读能力</h1>
           <p className="sectionIntro">不是“看过”就算学会。只有隔天仍能答对，并能无翻译、无注音读懂文章，才会计入阶段能力。</p>
         </div>
-        <div className={`${styles.levelSummary} glassCard`}>
+        <div className={styles.levelSummary}>
           <small>当前训练级别</small>
           <strong>{currentLevel === 'foundation' ? '入门 · 已学范围' : currentLevel}</strong>
           <span>{readiness.ready ? '五项能力已达标' : '继续补齐未达标能力'}</span>
         </div>
       </section>
 
-      <section className={`${styles.readinessCard} glassCard`} aria-label="阶段能力仪表盘">
-        <header>
+      <details className={styles.readinessCard}>
+        <summary>
           <div>
-            <span className="chip badgePeach">阶段毕业标准</span>
-            <h2>五项同时达标，才算真的学会这一阶段</h2>
+            <strong>阶段毕业标准</strong>
+            <small>查看五项能力进度</small>
           </div>
           <span className={readiness.ready ? styles.ready : styles.notReady}>
             {readiness.ready ? <CheckCircle2 size={17} /> : <BrainCircuit size={17} />}
             {readiness.ready ? '已达标' : '训练中'}
           </span>
-        </header>
+        </summary>
         <div className={styles.dimensionGrid}>
           {readiness.dimensions.map((item) => {
             const ratio = item.target === 0 ? 1 : Math.min(item.value / item.target, 1)
@@ -325,7 +325,7 @@ export function LiteracyPage() {
             </article>
           })}
         </div>
-      </section>
+      </details>
 
       <nav className={styles.tabs} aria-label="能力训练类型">
         {tabs.map((item) => <button

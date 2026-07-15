@@ -39,7 +39,8 @@ interface SongAnalysisJobResponse {
   error?: string
 }
 
-const endpoint = String(import.meta.env.VITE_SONG_ANALYSIS_API_URL || '/api/song-analysis')
+const configuredEndpoint = String(import.meta.env.VITE_SONG_ANALYSIS_API_URL || '/api/song-analysis')
+const FALLBACK_API_ORIGIN = 'https://yuru-nihongo-study.vercel.app'
 const configuredTimeout = Number(import.meta.env.VITE_SONG_ANALYSIS_TIMEOUT_MS)
 const requestTimeoutMs = Number.isFinite(configuredTimeout) && configuredTimeout > 0
   ? configuredTimeout
@@ -52,6 +53,18 @@ const pendingSiteGenerations = new Map<string, {
   promise: Promise<void>
   listeners: Set<(progress: SongAnalysisProgress) => void>
 }>()
+
+function getEndpoint() {
+  if (/^https?:\/\//u.test(configuredEndpoint) || typeof window === 'undefined') {
+    return configuredEndpoint
+  }
+
+  const pathname = configuredEndpoint.startsWith('/') ? configuredEndpoint : `/${configuredEndpoint}`
+  const { hostname, origin } = window.location
+  return hostname === '127.0.0.1' || hostname === 'localhost'
+    ? `${FALLBACK_API_ORIGIN}${pathname}`
+    : `${origin}${pathname}`
+}
 
 function hashText(value: string) {
   let hash = 2166136261
@@ -99,6 +112,7 @@ async function requestSongAnalysis(
   artist: string,
   notify: (progress: SongAnalysisProgress) => void,
 ) {
+  const endpoint = getEndpoint()
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), requestTimeoutMs)
   try {
@@ -148,6 +162,7 @@ async function requestSiteSongLearningGeneration(
   songId: string,
   notify: (progress: SongAnalysisProgress) => void,
 ) {
+  const endpoint = getEndpoint()
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), requestTimeoutMs)
   try {

@@ -131,7 +131,7 @@ export function NotesPage() {
             粘贴新闻、小说、网页或生活中遇到的任意日语，逐句查看中文提示、读音、词汇和语法，并把难点送入复习。
           </p>
         </div>
-        <div className={`${styles.heroCard} glassCard`}>
+        <div className={styles.heroCard}>
           <div>
             <small>当前模式</small>
             <strong>{activeLabel}</strong>
@@ -260,13 +260,13 @@ export function NotesPage() {
             )}
           </div>
 
-          <div className={`${styles.notePanel} glassCard`}>
-            <div className={styles.panelHeader}>
+          <details className={styles.notePanel}>
+            <summary className={styles.panelHeader}>
               <div>
-                <span className="chip badgePeach">本地备注</span>
                 <h2>留下你自己的记忆抓手</h2>
+                <small>{activeLabel}</small>
               </div>
-            </div>
+            </summary>
             <textarea
               className={styles.noteTextarea}
               value={draftNote}
@@ -318,7 +318,7 @@ export function NotesPage() {
                 </div>
               ) : null}
             </div>
-          </div>
+          </details>
         </div>
       </section>
     </div>

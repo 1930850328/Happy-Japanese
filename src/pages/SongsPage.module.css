@@ -382,7 +382,6 @@
   height: 100%;
   border-radius: inherit;
   background: #31a483;
-  transition: width 180ms ease;
 }
 
 .catalogLoading {
@@ -1124,7 +1123,7 @@
 }
 
 .page:not(.pageImmersive) .catalogRail {
-  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
   gap: 1rem;
   padding: 1.2rem 0.92rem 0.95rem;
 }
@@ -1259,10 +1258,10 @@
 }
 
 .page:not(.pageImmersive) .albumHero {
-  grid-template-columns: 160px minmax(0, 1fr);
+  grid-template-columns: 140px minmax(0, 1fr);
   gap: 1.28rem;
-  min-height: 196px;
-  padding: 1.28rem 1.45rem;
+  min-height: 176px;
+  padding: 1.1rem 1.35rem;
   border-color: rgba(255, 255, 255, 0.14);
   background:
     radial-gradient(circle at 16% 24%, rgba(240, 71, 50, 0.34), transparent 34%),
@@ -1277,7 +1276,7 @@
 }
 
 .page:not(.pageImmersive) .heroCover {
-  width: 140px;
+  width: 120px;
   border-radius: 8px;
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
 }
@@ -1340,6 +1339,12 @@
   min-height: 42px;
   gap: 0.36rem;
   border-bottom: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.page:not(.pageImmersive) .lyricTabs::-webkit-scrollbar {
+  display: none;
 }
 
 .page:not(.pageImmersive) .stageTabs {
@@ -1347,6 +1352,7 @@
 }
 
 .page:not(.pageImmersive) .lyricTabs button {
+  flex: 0 0 auto;
   min-height: 34px;
   padding: 0 0.72rem;
   border: 1px solid rgba(23, 32, 29, 0.08);
@@ -1723,10 +1729,17 @@
   }
 
   .page:not(.pageImmersive) .sourcePill {
-    order: 3;
-    width: 100%;
-    justify-content: flex-start;
-    text-align: left;
+    display: none;
+  }
+
+  .page:not(.pageImmersive) .navigationButtons {
+    display: none;
+  }
+
+  .page:not(.pageImmersive) .topBar {
+    min-height: 52px;
+    justify-content: flex-end;
+    padding: 0.55rem 1rem;
   }
 }
 

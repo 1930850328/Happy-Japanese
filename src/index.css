@@ -1,8 +1,8 @@
 :root {
   --bg: #f6f8f4;
   --bg-soft: #eef4ef;
-  --surface: rgba(255, 255, 255, 0.82);
-  --surface-strong: rgba(255, 255, 255, 0.96);
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-strong: #ffffff;
   --surface-warm: rgba(249, 247, 240, 0.94);
   --line: rgba(46, 63, 55, 0.12);
   --line-strong: rgba(46, 63, 55, 0.22);
@@ -15,9 +15,9 @@
   --butter: #eadfae;
   --coral: #d9826f;
   --green: #4d806b;
-  --shadow-lg: 0 22px 54px rgba(37, 50, 44, 0.12);
-  --shadow-md: 0 14px 32px rgba(37, 50, 44, 0.1);
-  --shadow-sm: 0 7px 18px rgba(37, 50, 44, 0.08);
+  --shadow-lg: 0 18px 42px rgba(37, 50, 44, 0.1);
+  --shadow-md: 0 10px 24px rgba(37, 50, 44, 0.08);
+  --shadow-sm: 0 3px 10px rgba(37, 50, 44, 0.06);
   --radius-xl: 22px;
   --radius-lg: 16px;
   --radius-md: 12px;
@@ -123,8 +123,7 @@ iframe {
 .glassCard {
   border: 1px solid var(--line);
   background: var(--surface);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
 }
 
 .chip {
@@ -133,10 +132,10 @@ iframe {
   gap: 0.35rem;
   min-width: 0;
   max-width: 100%;
-  padding: 0.42rem 0.72rem;
+  padding: 0.32rem 0.6rem;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid transparent;
+  background: rgba(46, 63, 55, 0.06);
   color: var(--text-soft);
   font-size: 0.85rem;
   line-height: 1.32;
@@ -164,20 +163,19 @@ iframe {
   gap: 0.5rem;
   min-height: 44px;
   padding: 0.68rem 0.96rem;
-  border-radius: 14px;
+  border-radius: 10px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: var(--shadow-sm);
+  background: var(--surface-strong);
   transition:
     transform 180ms ease,
-    box-shadow 180ms ease,
+    background-color 180ms ease,
     border-color 180ms ease;
 }
 
 .softButton:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
   border-color: var(--line-strong);
+  background: #f8faf8;
 }
 
 .softButton:disabled {
@@ -189,15 +187,25 @@ iframe {
 .primaryButton {
   color: #f8fbf7;
   border-color: rgba(77, 128, 107, 0.28);
-  background: linear-gradient(135deg, #4d806b, #315f4e);
+  background: #3f705c;
 }
 
 .secondaryButton {
-  background: linear-gradient(135deg, rgba(201, 222, 210, 0.9), rgba(207, 225, 237, 0.78));
+  background: #e4eee8;
 }
 
 .dangerButton {
-  background: linear-gradient(135deg, rgba(255, 142, 119, 0.2), rgba(246, 212, 222, 0.55));
+  background: #f8e9e5;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 3px solid rgba(77, 128, 107, 0.28);
+  outline-offset: 3px;
 }
 
 .stack {
@@ -228,5 +236,20 @@ iframe {
 
   .softButton {
     min-height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

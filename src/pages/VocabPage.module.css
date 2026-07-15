@@ -5,9 +5,11 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 18px;
-  align-items: stretch;
+  align-items: end;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .summary,
@@ -18,15 +20,13 @@
 }
 
 .summary {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
+  display: flex;
+  gap: 1.2rem;
 }
 
 .summary article {
-  border-radius: 20px;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.82);
+  padding-left: 1rem;
+  border-left: 1px solid var(--line);
   display: grid;
   gap: 0.35rem;
 }
@@ -83,9 +83,26 @@
 }
 
 .statsGrid {
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+}
+
+.statsDisclosure {
+  padding: .8rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.statsDisclosure > summary {
+  cursor: pointer;
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.statsDisclosure > summary::marker {
+  color: var(--green);
 }
 
 .statCard header {
@@ -117,26 +134,21 @@
 .card {
   min-height: 370px;
   padding: 1rem;
-  border-radius: var(--radius-xl);
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.93), rgba(255, 249, 240, 0.88)),
-    rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  border: 1px solid var(--line);
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
 }
 
 .card:hover {
-  transform: translateY(-2px) rotate(-0.4deg);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
 }
 
 .cardFlipped {
-  background:
-    linear-gradient(160deg, rgba(255, 247, 235, 0.94), rgba(255, 255, 255, 0.9)),
-    rgba(255, 255, 255, 0.78);
+  background: #fffaf4;
 }
 
 .cardFace {
@@ -222,5 +234,9 @@
   .statsGrid,
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .summary {
+    flex-wrap: wrap;
   }
 }

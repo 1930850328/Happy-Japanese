@@ -150,7 +150,7 @@ export function CourseLessonPage() {
               <h1>{lesson.title}</h1>
               <p>{lesson.description}</p>
             </div>
-            <div className={`${styles.canDoCard} glassCard`}>
+            <div className={styles.canDoCard}>
               <TargetIcon />
               <small>完成后你能够</small>
               <strong>{lesson.canDo}</strong>
@@ -204,9 +204,13 @@ export function CourseLessonPage() {
               </section>
             </div>
 
-            <aside className={styles.nodeColumn}>
+          </section>
+
+          <details className={styles.nodeDisclosure}>
+            <summary>查看本课知识点 <span>{nodes.length} 个</span></summary>
+            <div className={styles.nodeColumn}>
               {nodes.map((node) => node ? (
-                <article key={node.id} className={`${styles.nodeCard} glassCard`}>
+                <article key={node.id} className={styles.nodeCard}>
                   <span>{node.kind === 'grammar' ? '语法' : node.kind === 'kana' ? '文字' : node.kind === 'reading' ? '阅读策略' : node.kind === 'vocabulary' ? '词汇群' : '学习策略'}</span>
                   <h3>{node.title}</h3>
                   {node.reading ? <small>{node.reading}</small> : null}
@@ -214,8 +218,8 @@ export function CourseLessonPage() {
                   <p>{node.explanationZh}</p>
                 </article>
               ) : null)}
-            </aside>
-          </section>
+            </div>
+          </details>
 
           <section className={`${styles.transferCard} glassCard`}>
             <div>

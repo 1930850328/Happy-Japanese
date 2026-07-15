@@ -5,9 +5,11 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.42fr);
   gap: 18px;
-  align-items: stretch;
+  align-items: end;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .highlightCard,
@@ -18,8 +20,12 @@
 
 .highlightCard {
   display: grid;
-  gap: 1rem;
+  gap: 0.65rem;
   align-content: center;
+  padding-left: 1.2rem;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
 }
 
 .streakBadge,
@@ -51,7 +57,29 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: 1rem;
+}
+
+.detailsCard {
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.detailsCard > summary {
+  margin: 0;
+  cursor: pointer;
+}
+
+.detailsCard > summary::marker {
+  color: var(--green);
+}
+
+.detailsCard > summary small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--text-soft);
+  font-weight: 400;
 }
 
 .cardHeader {
@@ -176,18 +204,12 @@
   font-family: var(--font-ui);
 }
 
-.favoriteList article,
-.settingItem {
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.76);
-  padding: 0.95rem;
-}
-
 .favoriteList article {
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .favoriteList strong,
@@ -202,6 +224,8 @@
   gap: 1rem;
   align-items: center;
   text-align: left;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .placeholder {
@@ -265,7 +289,6 @@
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #9cd4bb, #ffd5b9 72%, #ffe8a3);
-  transition: width 220ms ease;
 }
 
 .progressHint {
@@ -489,17 +512,16 @@
 }
 
 .importCard {
+  order: -1;
   grid-column: 1 / -1;
   gap: 1rem;
+  background: #fff;
 }
 
 .primaryImportPanel {
-  padding: 1rem;
-  border-radius: 24px;
-  border: 1px solid rgba(155, 205, 183, 0.72);
-  background:
-    linear-gradient(135deg, rgba(242, 249, 245, 0.98), rgba(255, 248, 242, 0.94)),
-    rgba(255, 255, 255, 0.82);
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .studyPlannerPanel {
@@ -507,9 +529,8 @@
   gap: 1rem;
   margin-top: 1rem;
   padding: 1rem;
-  border-radius: 24px;
-  border: 1px solid rgba(222, 204, 193, 0.85);
-  background: rgba(255, 255, 255, 0.66);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .plannerActions {
@@ -1030,6 +1051,12 @@
 
   .reviewRow {
     grid-template-columns: 1fr;
+  }
+
+  .highlightCard {
+    padding: 0.8rem 0 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
   }
 }
 

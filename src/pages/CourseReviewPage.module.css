@@ -12,8 +12,8 @@
 .header,
 .reviewMeta,
 .reviewCard footer,
-.masterySection > header,
-.masterySection > header > div,
+.masterySection > summary,
+.masterySection > summary > div,
 .masteryGrid article > div {
   display: flex;
   align-items: center;
@@ -176,24 +176,34 @@
 }
 
 .masterySection {
-  display: grid;
-  gap: 0.8rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.masterySection > header h2 {
+.masterySection > summary {
+  cursor: pointer;
+}
+
+.masterySection > summary::marker {
+  color: var(--green);
+}
+
+.masterySection > summary h2 {
   margin: 0;
   font-family: var(--font-ui);
 }
 
-.masterySection > header svg {
+.masterySection > summary svg {
   color: #4d806b;
 }
 
-.masterySection > header > span {
+.masterySection > summary > span {
   color: var(--text-soft);
 }
 
 .masteryGrid {
+  margin-top: 0.9rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
@@ -236,6 +246,7 @@
 }
 
 .noMastery {
+  margin-top: 0.9rem;
   padding: 1.2rem;
   display: flex;
   align-items: center;

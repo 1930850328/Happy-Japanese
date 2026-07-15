@@ -1,27 +1,31 @@
 .page { display: grid; gap: 1.25rem; }
-.hero { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1rem .35rem; }
+.hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; padding: .75rem .15rem 1.25rem; border-bottom: 1px solid var(--line); }
 .hero > div:first-child { max-width: 760px; }
-.levelSummary { min-width: 250px; padding: 1.2rem; display: grid; gap: .45rem; }
+.levelSummary { min-width: 230px; padding-left: 1.2rem; display: grid; gap: .35rem; border-left: 1px solid var(--line); }
 .levelSummary small, .levelSummary span { color: var(--text-soft); }
 .levelSummary strong { font-family: var(--font-ui); font-size: 1.45rem; }
-.readinessCard { padding: 1.25rem; display: grid; gap: 1rem; }
-.readinessCard header, .studyHeader { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.readinessCard h2, .studyHeader h2 { margin: .55rem 0 0; font-family: var(--font-ui); }
+.readinessCard { padding: .8rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.readinessCard summary, .studyHeader { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.readinessCard summary { cursor: pointer; }
+.readinessCard summary > div { display: grid; gap: .2rem; }
+.readinessCard summary small { color: var(--text-soft); font-weight: 400; }
+.readinessCard summary::marker { color: var(--green); }
+.studyHeader h2 { margin: .55rem 0 0; font-family: var(--font-ui); }
 .ready, .notReady { padding: .5rem .7rem; display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; font-weight: 700; }
 .ready { background: rgba(191, 226, 205, .7); color: #275d43; }
 .notReady { background: rgba(247, 218, 191, .72); color: #7d4b27; }
-.dimensionGrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .7rem; }
-.dimensionGrid article { padding: .85rem; display: grid; gap: .65rem; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.55); }
+.dimensionGrid { margin-top: .9rem; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .7rem; }
+.dimensionGrid article { padding: .75rem 0; display: grid; gap: .65rem; border-top: 1px solid var(--line); }
 .dimensionGrid article > div { display: grid; gap: .25rem; }
 .dimensionGrid span { color: var(--text-soft); font-size: .82rem; }
 .dimensionGrid strong { font-size: .9rem; }
 .dimensionGrid i { height: 7px; overflow: hidden; border-radius: 999px; background: rgba(46,63,55,.08); }
 .dimensionGrid b { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#83ad97,#edb792); }
-.tabs { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .65rem; }
-.tabs button { padding: .85rem; display: grid; gap: .25rem; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,.58); color: var(--text); text-align: left; }
-.tabs button:hover, .activeTab { border-color: rgba(77,128,107,.5) !important; background: rgba(226,241,232,.86) !important; }
+.tabs { display: flex; gap: .25rem; padding: .25rem; overflow-x: auto; border-radius: 12px; background: rgba(46,63,55,.05); }
+.tabs button { min-width: 130px; flex: 1; padding: .7rem .8rem; display: grid; gap: .18rem; border-radius: 9px; color: var(--text); text-align: left; }
+.tabs button:hover, .activeTab { background: #fff !important; box-shadow: 0 1px 4px rgba(37,50,44,.08); }
 .tabs small { color: var(--text-soft); }
-.studyCard { min-height: 460px; padding: clamp(1.15rem,3vw,2rem); display: grid; align-content: start; gap: 1.25rem; }
+.studyCard { width: min(920px, 100%); min-height: 460px; margin-inline: auto; padding: clamp(1.15rem,3vw,2rem); display: grid; align-content: start; gap: 1.25rem; background: #fff; }
 .studyHeader small { color: var(--text-soft); }
 .loading { min-height: 380px; display: grid; place-items: center; align-content: center; gap: 1rem; color: var(--text-soft); }
 .lockedPractice { min-height: 360px; display: grid; place-items: center; align-content: center; gap: .7rem; text-align: center; }
@@ -69,8 +73,9 @@
 .sourceNote a { color: #3e725c; text-decoration: underline; }
 @media (max-width: 980px) { .dimensionGrid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
 @media (max-width: 720px) {
-  .hero, .readinessCard header, .studyHeader { align-items: stretch; flex-direction: column; }
+  .hero, .studyHeader { align-items: stretch; flex-direction: column; }
   .levelSummary { min-width: 0; }
+  .levelSummary { padding: .8rem 0 0; border-top: 1px solid var(--line); border-left: 0; }
   .dimensionGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .optionGrid, .readingQuestions { grid-template-columns: 1fr; }

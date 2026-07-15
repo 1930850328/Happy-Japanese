@@ -78,7 +78,7 @@ export function VocabPage() {
           </p>
         </div>
 
-        <div className={`${styles.summary} glassCard`}>
+        <div className={styles.summary}>
           <article>
             <small>总词量</small>
             <strong>{vocabCards.length}</strong>
@@ -127,21 +127,22 @@ export function VocabPage() {
         </button>
       </section>
 
-      <section className={styles.statsGrid}>
-        {themeStats.map((item) => (
-          <article key={item.theme} className={`${styles.statCard} glassCard`}>
-            <header>
-              <span className="chip badgeMint">{item.theme}</span>
-              <strong>
-                {item.mastered}/{item.total}
-              </strong>
-            </header>
-            <div className={styles.progressBar}>
-              <div style={{ width: `${(item.mastered / item.total) * 100 || 0}%` }} />
-            </div>
-          </article>
-        ))}
-      </section>
+      <details className={styles.statsDisclosure}>
+        <summary>查看各主题掌握进度</summary>
+        <section className={styles.statsGrid}>
+          {themeStats.map((item) => (
+            <article key={item.theme} className={styles.statCard}>
+              <header>
+                <span>{item.theme}</span>
+                <strong>{item.mastered}/{item.total}</strong>
+              </header>
+              <div className={styles.progressBar}>
+                <div style={{ width: `${(item.mastered / item.total) * 100 || 0}%` }} />
+              </div>
+            </article>
+          ))}
+        </section>
+      </details>
 
       <section className={styles.grid}>
         {filteredCards.map((card) => {

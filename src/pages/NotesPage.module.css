@@ -5,23 +5,25 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.35fr);
   gap: 18px;
-  align-items: stretch;
+  align-items: end;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
 }
 
-.heroCard,
 .inputPanel,
 .resultPanel,
 .notePanel {
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   padding: 1.2rem;
 }
 
 .heroCard {
   display: grid;
-  gap: 1rem;
-  align-content: space-between;
+  gap: .65rem;
+  padding-left: 1.2rem;
+  border-left: 1px solid var(--line);
 }
 
 .heroCard small {
@@ -36,14 +38,20 @@
 }
 
 .workspace {
+  width: min(940px, 100%);
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: 18px;
+  gap: 1rem;
 }
 
 .resultColumn {
   display: grid;
-  gap: 18px;
+  gap: 1rem;
+}
+
+.inputPanel,
+.resultPanel {
+  background: #fff;
 }
 
 .panelHeader {
@@ -58,6 +66,27 @@
   margin: 0.55rem 0 0;
   font-size: 1.25rem;
   font-family: var(--font-ui);
+}
+
+.notePanel {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.notePanel > summary {
+  margin: 0;
+  cursor: pointer;
+}
+
+.notePanel > summary::marker {
+  color: var(--green);
+}
+
+.notePanel > summary small {
+  display: block;
+  margin-top: .35rem;
+  color: var(--text-soft);
+  font-weight: 400;
 }
 
 .textarea,
@@ -98,10 +127,8 @@
 
 .summaryGrid article,
 .savedItem {
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid var(--line);
-  padding: 1rem;
+  padding: .8rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .summaryGrid small {
@@ -155,11 +182,10 @@
 
 .tokenCard {
   padding: 0.95rem;
-  border-radius: 20px;
+  border-radius: 12px;
   text-align: left;
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
   transition:
     transform 180ms ease,
     border-color 180ms ease;
@@ -241,7 +267,7 @@
 
 .emptyState {
   padding: 1.5rem;
-  border-radius: 22px;
+  border-radius: 12px;
   border: 1px dashed var(--line-strong);
   background: rgba(255, 255, 255, 0.6);
   color: var(--text-soft);
@@ -273,5 +299,11 @@
 
   .savedItem header {
     flex-direction: column;
+  }
+
+  .heroCard {
+    padding: .8rem 0 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
   }
 }

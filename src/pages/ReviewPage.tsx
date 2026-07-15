@@ -29,7 +29,7 @@ export function ReviewPage() {
           </p>
         </div>
 
-        <div className={`${styles.heroStats} glassCard`}>
+        <div className={styles.heroStats}>
           <article>
             <small>待复习</small>
             <strong>{dueItems.length}</strong>
@@ -120,7 +120,9 @@ export function ReviewPage() {
           )}
         </div>
 
-        <div className={styles.sideColumn}>
+        <details className={styles.reviewDetails}>
+          <summary>查看复习安排与最近记录</summary>
+          <div className={styles.sideColumn}>
           <div className={`${styles.sideCard} glassCard`}>
             <div className={styles.sideHeader}>
               <h2>接下来会出现</h2>
@@ -153,7 +155,8 @@ export function ReviewPage() {
               {reviewLogs.length === 0 ? <p className={styles.placeholder}>你完成的复习记录会显示在这里。</p> : null}
             </div>
           </div>
-        </div>
+          </div>
+        </details>
       </section>
     </div>
   )

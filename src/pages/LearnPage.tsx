@@ -79,6 +79,49 @@ export function LearnPage() {
   const awaitingStageReadiness = activeLessonProgress?.status === 'completed' && !literacyReadiness.ready
   const fullPathComplete = completion.ratio >= 1 && literacyReadiness.ready
   const activeStage = courseStages.find((stage) => stage.id === literacyLevel)
+  const primaryTask = dueMastery.length > 0
+    ? {
+        label: '先处理遗忘风险',
+        title: `${dueMastery.length} 项知识到期了`,
+        description: '先用一次主动回忆稳住已经学过的内容，再继续今天的主课程。',
+        action: '开始复习',
+        href: '/learn/review',
+        meta: `${dueMastery.length} 项`,
+        icon: RotateCcw,
+      }
+    : fullPathComplete
+      ? {
+          label: '保持真实能力',
+          title: '完整学习路径已达标',
+          description: '继续阅读真实原文并保持延迟复习，让已经掌握的能力稳定留下来。',
+          action: '去读一篇原文',
+          href: '/notes',
+          meta: '长期保持',
+          icon: CheckCircle2,
+        }
+      : awaitingStageReadiness
+        ? {
+            label: '补齐阶段能力',
+            title: `${weakestDimension?.label ?? '综合能力'}还需要加强`,
+            description: '本阶段课程已经学完，补齐这项真实能力后就会解锁下一阶段。',
+            action: '开始能力训练',
+            href: '/literacy',
+            meta: `${weakestDimension?.value ?? 0}/${weakestDimension?.target ?? 0}`,
+            icon: BrainCircuit,
+          }
+        : {
+            label: activeLessonProgress?.status === 'in_progress' ? '继续主课程' : '今天的主课程',
+            title: activeLesson?.title ?? '继续巩固当前阶段',
+            description: activeLesson?.canDo ?? '继续练习已经解锁的知识，补齐当前阶段的能力。',
+            action: activeLessonProgress?.status === 'in_progress' ? '继续本课' : '开始今天的主课',
+            href: activeLesson ? `/learn/${activeLesson.id}` : '/literacy',
+            meta: `约 ${activeLesson?.durationMinutes ?? 12} 分钟`,
+            icon: BookOpenCheck,
+          }
+  const PrimaryTaskIcon = primaryTask.icon
+  const weakestRatio = weakestDimension?.target
+    ? Math.min(weakestDimension.value / weakestDimension.target, 1)
+    : 1
 
   useEffect(() => {
     if (activeLesson) setExpandedStageId(activeLesson.level)
@@ -208,124 +251,125 @@ export function LearnPage() {
 
   return (
     <div className={`${styles.page} fadeIn`}>
-      <section className={styles.dashboardHero}>
+      <header className={styles.learningHeader}>
         <div>
-          <span className="chip badgeMint">今日学习</span>
-          <h1 className="pageTitle">沿着一条路，今天再前进一步</h1>
-          <p className="sectionIntro">
-            先处理遗忘风险，再学主课、练配套知识、读一篇当前难度的短文。每一步都服务于可验证的阅读成果。
-          </p>
+          <p>今日学习 · {activeStage?.label}</p>
+          <h1>今天只专注下一步</h1>
         </div>
-        <div className={`${styles.levelCard} glassCard`}>
-          <small>目标路径</small>
-          <strong>N1</strong>
-          <span>{completion.completed}/{completion.total} 个核心单元已通过</span>
-          <small>这是主干进度，不等于考试准备度</small>
-          <div><i style={{ width: `${completion.ratio * 100}%` }} /></div>
+        <div className={styles.pathProgress} aria-label={`长期路径已完成 ${Math.round(completion.ratio * 100)}%`}>
+          <span>{completion.completed}/{completion.total} 个核心单元</span>
+          <i><b style={{ width: `${completion.ratio * 100}%` }} /></i>
+        </div>
+      </header>
+
+      <section className={styles.focusPanel} aria-labelledby="primary-task-title">
+        <div className={styles.focusIcon}><PrimaryTaskIcon size={28} /></div>
+        <div className={styles.focusContent}>
+          <div className={styles.focusMeta}>
+            <span>{primaryTask.label}</span>
+            <small><Clock3 size={15} />{primaryTask.meta}</small>
+          </div>
+          <h2 id="primary-task-title">{primaryTask.title}</h2>
+          <p>{primaryTask.description}</p>
+          <Link className="softButton primaryButton" to={primaryTask.href}>
+            {primaryTask.action}
+            <ArrowRight size={18} />
+          </Link>
         </div>
       </section>
 
-      <section className={`${styles.dailyRoute} glassCard`} aria-label="今天按顺序完成">
-        <header>
+      <section className={styles.routeSection} aria-labelledby="daily-route-title">
+        <header className={styles.sectionHeader}>
           <div>
-            <span className="chip badgePeach">今天按这个顺序</span>
-            <h2>不用自己拼计划，完成一条学习闭环</h2>
+            <h2 id="daily-route-title">今天的学习闭环</h2>
+            <p>按顺序完成即可，系统会根据你的结果安排下一次出现。</p>
           </div>
-          <strong>{activeStage?.label} · {activeStage?.title}</strong>
         </header>
-        <div className={styles.dailySteps}>
-          <Link to="/learn/review" className={dueMastery.length === 0 ? styles.stepDone : ''}>
+        <div className={styles.routeSteps}>
+          <Link
+            to="/learn/review"
+            className={`${styles.routeStep} ${dueMastery.length === 0 ? styles.routeStepDone : styles.routeStepCurrent}`}
+          >
             <span>{dueMastery.length === 0 ? <Check size={17} /> : '1'}</span>
-            <div><strong>到期复习</strong><small>{dueMastery.length === 0 ? '今天已清空' : `${dueMastery.length} 项接近遗忘点`}</small></div>
+            <div><strong>到期复习</strong><small>{dueMastery.length === 0 ? '今天没有到期内容' : `${dueMastery.length} 项接近遗忘点`}</small></div>
+            <ChevronRight size={17} />
           </Link>
-          <Link to={activeLesson ? `/learn/${activeLesson.id}` : '/'} className={activeLessonProgress?.status === 'completed' ? styles.stepDone : ''}>
+          <Link
+            to={activeLesson ? `/learn/${activeLesson.id}` : '/'}
+            className={`${styles.routeStep} ${activeLessonProgress?.status === 'completed' ? styles.routeStepDone : dueMastery.length === 0 && !awaitingStageReadiness && !fullPathComplete ? styles.routeStepCurrent : ''}`}
+          >
             <span>{activeLessonProgress?.status === 'completed' ? <Check size={17} /> : '2'}</span>
             <div><strong>当前主课</strong><small>{activeLesson?.title ?? '主课已完成'}</small></div>
+            <ChevronRight size={17} />
           </Link>
-          <Link to="/literacy">
+          <Link
+            to="/literacy"
+            className={`${styles.routeStep} ${dueMastery.length === 0 && awaitingStageReadiness ? styles.routeStepCurrent : ''}`}
+          >
             <span>3</span>
-            <div><strong>配套知识训练</strong><small>只练已经解锁的词汇、汉字和语法</small></div>
+            <div><strong>能力训练</strong><small>只练已经解锁的词汇、汉字和语法</small></div>
+            <ChevronRight size={17} />
           </Link>
-          <Link to="/literacy">
+          <Link to="/literacy" className={`${styles.routeStep} ${fullPathComplete ? styles.routeStepCurrent : ''}`}>
             <span>4</span>
             <div><strong>短文迁移</strong><small>不用翻译证明今天真的读懂了</small></div>
+            <ChevronRight size={17} />
           </Link>
         </div>
-        <p><strong>本阶段成果：</strong>{activeStage?.canDo} <span>验收方式：{activeStage?.evidence}</span></p>
       </section>
 
-      <section className={styles.todayGrid} aria-label="今日学习路径">
-        <article className={`${styles.todayPrimary} glassCard`}>
-          <div className={styles.stepMeta}>
-            <span>主课程</span>
-            <small><Clock3 size={15} />约 {activeLesson?.durationMinutes ?? 12} 分钟</small>
-          </div>
-          <div className={styles.stepIcon}><BookOpenCheck size={27} /></div>
-          <h2>{fullPathComplete ? '完整学习路径已达标' : awaitingStageReadiness ? `完成 ${literacyLevel} 阶段能力` : activeLesson?.title ?? '课程已完成'}</h2>
-          <p>{fullPathComplete ? '你已完成主课程并达到 N1 阶段的五项能力目标，可以继续用真实原文保持能力。' : awaitingStageReadiness ? `本阶段课程已经学完，但${weakestDimension?.label ?? '综合能力'}还没有达标。补齐真实能力后才会解锁下一阶段。` : activeLesson?.canDo ?? '你已经完成当前课程路径，可以继续巩固薄弱知识。'}</p>
-          {activeLesson && !fullPathComplete ? (
-            <Link className="softButton primaryButton" to={awaitingStageReadiness ? '/literacy' : `/learn/${activeLesson.id}`}>
-              {awaitingStageReadiness ? '完成阶段能力训练' : activeLessonProgress?.status === 'in_progress' ? '继续本课' : '开始今天的主课'}
-              <ArrowRight size={18} />
-            </Link>
-          ) : null}
-        </article>
-
-        <article className={`${styles.todayCard} glassCard`}>
-          <div className={styles.stepIconSoft}><RotateCcw size={24} /></div>
-          <small>动态复习</small>
-          <strong>{dueMastery.length}</strong>
-          <p>{dueMastery.length > 0 ? '项知识正在接近遗忘点' : '现在没有到期内容'}</p>
-          <Link className="softButton" to="/learn/review">
-            {dueMastery.length > 0 ? '先完成复习' : '查看掌握状态'}
-          </Link>
-        </article>
-
-        <article className={`${styles.todayCard} glassCard`}>
-          <div className={styles.stepIconSoft}><BrainCircuit size={24} /></div>
-          <small>能力训练</small>
-          <strong>{weakestDimension?.label ?? '综合训练'}</strong>
-          <p>{weakestDimension ? `${weakestDimension.value}/${weakestDimension.target}，这是当前最需要补齐的一项` : '继续巩固词汇、汉字、语法与阅读'}</p>
-          <Link className="softButton" to="/literacy">开始训练</Link>
-        </article>
-      </section>
-
-      <section className={`${styles.readinessCard} glassCard`}>
-        <header>
+      <section className={styles.stageSection} aria-labelledby="stage-progress-title">
+        <header className={styles.sectionHeader}>
           <div>
-            <span className="chip badgeMint">真实能力</span>
-            <h2>{literacyLevel === 'foundation' ? '入门阶段' : literacyLevel} 毕业条件</h2>
+            <h2 id="stage-progress-title">当前阶段：{activeStage?.label} · {activeStage?.title}</h2>
+            <p>{activeStage?.canDo}</p>
           </div>
           <Link to="/literacy">查看训练详情 <ChevronRight size={17} /></Link>
         </header>
-        <p>{activeStage?.canDo} 以下五项同时达到目标，才算能够稳定运用并进入下一阶段。</p>
-        <div className={styles.readinessGrid}>
-          {literacyReadiness.dimensions.map((item) => {
-            const ratio = item.target === 0 ? 1 : Math.min(item.value / item.target, 1)
-            return <article key={item.id}>
-              <span>{item.label}</span>
-              <strong>{item.value}/{item.target}{item.id === 'speed' ? ' 字/分' : ''}</strong>
-              <i><b style={{ width: `${ratio * 100}%` }} /></i>
-            </article>
-          })}
+
+        <div className={styles.weaknessRow}>
+          <div>
+            <span>当前最需要补齐</span>
+            <strong>{weakestDimension?.label ?? '综合能力'}</strong>
+          </div>
+          <div className={styles.weaknessProgress}>
+            <span>{weakestDimension?.value ?? 0}/{weakestDimension?.target ?? 0}{weakestDimension?.id === 'speed' ? ' 字/分' : ''}</span>
+            <i><b style={{ width: `${weakestRatio * 100}%` }} /></i>
+          </div>
         </div>
+
+        <details className={styles.detailDisclosure}>
+          <summary>
+            <span>查看五项毕业条件</span>
+            <small>通过全部能力目标后进入下一阶段</small>
+          </summary>
+          <div className={styles.readinessList}>
+            {literacyReadiness.dimensions.map((item) => {
+              const ratio = item.target === 0 ? 1 : Math.min(item.value / item.target, 1)
+              return <div key={item.id} className={styles.readinessRow}>
+                <span>{item.label}</span>
+                <i><b style={{ width: `${ratio * 100}%` }} /></i>
+                <strong>{item.value}/{item.target}{item.id === 'speed' ? ' 字/分' : ''}</strong>
+              </div>
+            })}
+          </div>
+        </details>
       </section>
 
-      <section className={styles.pathSection}>
-        <header>
+      <details className={styles.pathDisclosure}>
+        <summary>
           <div>
-            <span className="chip badgePeach">长期路线</span>
-            <h2>从入门到 N1 的课程地图</h2>
+            <strong>从入门到 N1 的完整路线</strong>
+            <small>查看各阶段课程、成果与验收方式</small>
           </div>
-          <p>每阶段都写明“能读懂什么”和“怎样证明”，通过检测才会推进，不用课数冒充能力。</p>
-        </header>
-
+          <span>{completion.completed}/{completion.total}</span>
+        </summary>
         <div className={styles.stageList}>
           {courseStages.map((stage) => {
             const progress = getStageProgress(stage.id, courseState)
             const expanded = expandedStageId === stage.id
             return (
-              <article key={stage.id} className={`${styles.stageCard} glassCard`}>
+              <article key={stage.id} className={styles.stageItem}>
                 <div className={styles.stageHeader}>
                   <div>
                     <span>{stage.label}</span>
@@ -369,15 +413,15 @@ export function LearnPage() {
             )
           })}
         </div>
-      </section>
+      </details>
 
-      <section className={`${styles.evidenceCard} glassCard`}>
-        <BrainCircuit size={25} />
+      <aside className={styles.evidenceNote}>
+        <BrainCircuit size={22} />
         <div>
-          <strong>系统不是按“看过”计算进度</strong>
-          <p>当前已经记录 {courseState.evidence.length} 条答题证据，掌握度会随正确率、反应时间和延迟复习动态变化。</p>
+          <strong>进度来自真实掌握</strong>
+          <p>已记录 {courseState.evidence.length} 条答题证据；正确率、反应时间和延迟复习会共同决定进度。</p>
         </div>
-      </section>
+      </aside>
     </div>
   )
 }

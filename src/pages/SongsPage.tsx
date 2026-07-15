@@ -22,7 +22,7 @@ import {
   Volume2,
 } from 'lucide-react'
 import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
-import { NavLink, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { LyricLearningLine } from '../components/songLearning/LyricLearningLine'
@@ -1303,11 +1303,6 @@ export function SongsPage() {
               <strong>悠<span>日语</span></strong>
               <small>用歌曲学日语</small>
             </div>
-            <nav className={styles.songNav} aria-label="歌曲模块导航">
-              <NavLink to="/">发现</NavLink>
-              <span>歌曲</span>
-              <NavLink to="/review">复习库</NavLink>
-            </nav>
             <label className={styles.searchBox}>
               <Search size={16} />
               <input aria-label="搜索歌曲" placeholder="搜索歌曲 / 歌手" disabled />
@@ -1353,12 +1348,6 @@ export function SongsPage() {
               <strong>悠<span>日语</span></strong>
               <small>用歌曲学日语</small>
             </div>
-
-            <nav className={styles.songNav} aria-label="歌曲模块导航">
-              <NavLink to="/">发现</NavLink>
-              <span>歌曲</span>
-              <NavLink to="/review">复习库</NavLink>
-            </nav>
 
             <label className={styles.searchBox}>
               <Search size={16} />

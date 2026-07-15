@@ -148,11 +148,11 @@ export function CourseReviewPage() {
         </section>
       )}
 
-      <section className={styles.masterySection}>
-        <header>
+      <details className={styles.masterySection}>
+        <summary>
           <div><BrainCircuit size={22} /><h2>掌握状态</h2></div>
           <span>{sortedMastery.length} 个知识节点</span>
-        </header>
+        </summary>
         {sortedMastery.length > 0 ? (
           <div className={styles.masteryGrid}>
             {sortedMastery.map((item) => {
@@ -176,7 +176,7 @@ export function CourseReviewPage() {
             <p>完成第一课检测后，这里会出现真实掌握状态。</p>
           </div>
         )}
-      </section>
+      </details>
     </div>
   )
 }
