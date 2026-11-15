@@ -1,0 +1,8005 @@
+{
+  "schema": "unordered-lexical-features-v1",
+  "tokenizer": "kuromoji-0.1.2",
+  "vocabulary_sha256": "c31334de35c6c334dbba533e3860ff07e6e20c3c65d0e46dbf6d5caf2fab9c66",
+  "derived_from": "round-05 original text, recorded masks and frozen source vocabulary",
+  "limits": "Unordered lexical regression only; no sentences, reading comprehension, audio or visual context. Outside-vocabulary forms require originals. Exposed samples are regression, never new holdout.",
+  "samples": [
+    {
+      "id": "anime-barakamon-01",
+      "source_id": "anime-barakamon",
+      "group": "barakamon",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "42ecec0bbbe7123d3245a3bed233b67fb71caa5c48038ad7b1025d033cfa20c8",
+      "analysis_sha256": "aac75fcd35ed0c41d4534f659cf0970f821ceeb7788c6f0636baec35c1e804a7",
+      "features": [
+        {
+          "lemma": "アタッ",
+          "pos": "名詞",
+          "surface": "アタッ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "いう",
+          "pos": "動詞",
+          "surface": "いう",
+          "forms": [
+            "いう",
+            "という"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "いやがる",
+          "pos": "動詞",
+          "surface": "いやがっ",
+          "forms": [
+            "いやがる",
+            "言いやがって"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いる",
+          "pos": "動詞",
+          "surface": "い",
+          "forms": [
+            "い",
+            "いない",
+            "いる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "うつ",
+          "pos": "動詞",
+          "surface": "うっ",
+          "forms": [
+            "うっ",
+            "うつ"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "かかる",
+          "pos": "動詞",
+          "surface": "かかっ",
+          "forms": [
+            "かかる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ぐはっ",
+          "pos": "名詞",
+          "surface": "ぐはっ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "こう",
+          "pos": "副詞",
+          "surface": "こう",
+          "forms": [
+            "こう",
+            "こうも",
+            "どうもこうも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "さっき",
+          "pos": "名詞",
+          "surface": "さっき",
+          "forms": [
+            "さっき"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "うとした",
+            "し",
+            "した",
+            "する",
+            "とし",
+            "とした",
+            "とする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "した",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "つまる",
+          "pos": "動詞",
+          "surface": "つまら",
+          "forms": [
+            "つまらん",
+            "つまる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "どうも",
+          "pos": "副詞",
+          "surface": "どうも",
+          "forms": [
+            "どうも",
+            "どうもこうも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "バカ",
+          "pos": "名詞",
+          "surface": "バカ",
+          "forms": [
+            "バカ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "はまる",
+          "pos": "動詞",
+          "surface": "はまっ",
+          "forms": [
+            "はまる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "フンッ",
+          "pos": "名詞",
+          "surface": "フンッ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "まだ",
+          "pos": "副詞",
+          "surface": "まだ",
+          "forms": [
+            "まだ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やる",
+          "pos": "動詞",
+          "surface": "やっ",
+          "forms": [
+            "やる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よい",
+          "pos": "形容詞",
+          "surface": "よ",
+          "forms": [
+            "のよ",
+            "よ",
+            "よい",
+            "運のよい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "わっ",
+          "pos": "副詞",
+          "surface": "わっ",
+          "forms": [
+            "うわっ",
+            "わっ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "乗り越える",
+          "pos": "動詞",
+          "surface": "乗り越えよ",
+          "forms": [
+            "乗り越える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人",
+          "pos": "名詞",
+          "surface": "人",
+          "forms": [
+            "人"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "兄ちゃん",
+          "pos": "名詞",
+          "surface": "兄ちゃん",
+          "forms": [
+            "兄ちゃん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "写真",
+          "pos": "名詞",
+          "surface": "写真",
+          "forms": [
+            "写真"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "勝手",
+          "pos": "名詞",
+          "surface": "勝手",
+          "forms": [
+            "勝手",
+            "好き勝手"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "半日",
+          "pos": "名詞",
+          "surface": "半日",
+          "forms": [
+            "半日"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "型",
+          "pos": "名詞",
+          "surface": "型",
+          "forms": [
+            "型"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "壁",
+          "pos": "名詞",
+          "surface": "壁",
+          "forms": [
+            "壁"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "好き",
+          "pos": "名詞",
+          "surface": "好き",
+          "forms": [
+            "好き",
+            "好き勝手"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "字",
+          "pos": "名詞",
+          "surface": "字",
+          "forms": [
+            "字"
+          ],
+          "count": 5
+        },
+        {
+          "lemma": "実に",
+          "pos": "副詞",
+          "surface": "実に",
+          "forms": [
+            "実に"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "平凡",
+          "pos": "名詞",
+          "surface": "平凡",
+          "forms": [
+            "平凡"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "悪い",
+          "pos": "形容詞",
+          "surface": "悪い",
+          "forms": [
+            "悪い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "手本",
+          "pos": "名詞",
+          "surface": "手本",
+          "forms": [
+            "手本"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "撮る",
+          "pos": "動詞",
+          "surface": "撮っ",
+          "forms": [
+            "撮る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "放す",
+          "pos": "動詞",
+          "surface": "放せ",
+          "forms": [
+            "放す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "書く",
+          "pos": "動詞",
+          "surface": "書い",
+          "forms": [
+            "書く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "書く",
+          "pos": "動詞",
+          "surface": "書く",
+          "forms": [
+            "書く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "目",
+          "pos": "名詞",
+          "surface": "目",
+          "forms": [
+            "目",
+            "目が肥える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "知る",
+          "pos": "動詞",
+          "surface": "知ら",
+          "forms": [
+            "知らない",
+            "知る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "肥える",
+          "pos": "動詞",
+          "surface": "肥える",
+          "forms": [
+            "目が肥える",
+            "肥える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "若い",
+          "pos": "形容詞",
+          "surface": "若い",
+          "forms": [
+            "若い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "苦労",
+          "pos": "名詞",
+          "surface": "苦労",
+          "forms": [
+            "苦労"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言",
+          "pos": "名詞",
+          "surface": "言",
+          "forms": [
+            "言",
+            "言いやがって"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言葉",
+          "pos": "名詞",
+          "surface": "言葉",
+          "forms": [
+            "お言葉",
+            "お言葉ですが",
+            "言葉"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "賞",
+          "pos": "名詞",
+          "surface": "賞",
+          "forms": [
+            "賞"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "通る",
+          "pos": "動詞",
+          "surface": "通ら",
+          "forms": [
+            "通る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "運",
+          "pos": "名詞",
+          "surface": "運",
+          "forms": [
+            "運",
+            "運のよい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "運営",
+          "pos": "名詞",
+          "surface": "運営",
+          "forms": [
+            "運営"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "長い",
+          "pos": "形容詞",
+          "surface": "長い",
+          "forms": [
+            "長い",
+            "長いこと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "館長",
+          "pos": "名詞",
+          "surface": "館長",
+          "forms": [
+            "館長"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "anime-barakamon-02",
+      "source_id": "anime-barakamon",
+      "group": "barakamon",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "b56cc39e3ed98056da46cac85354f8cb2ffc84401b4cc9d8978f2c356728a6f8",
+      "analysis_sha256": "df245556a1bd6389199fa3178bc172795c5b41498d8fe1c9032d2690709abbef",
+      "features": [
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "ある",
+          "forms": [
+            "ある"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "うまい",
+          "pos": "形容詞",
+          "surface": "うまい",
+          "forms": [
+            "うまい",
+            "うまいな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "おおう",
+          "pos": "動詞",
+          "surface": "おおっ",
+          "forms": [
+            "おおう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ける",
+          "pos": "動詞",
+          "surface": "けん",
+          "forms": [
+            "ける",
+            "けん",
+            "じゃけん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "コーン",
+          "pos": "名詞",
+          "surface": "コーン",
+          "forms": [
+            "コーン"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ことば",
+          "pos": "名詞",
+          "surface": "ことば",
+          "forms": [
+            "ことば"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "コロコロー",
+          "pos": "名詞",
+          "surface": "コロコロー",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "こんな",
+          "pos": "連体詞",
+          "surface": "こんな",
+          "forms": [
+            "こんな",
+            "こんなん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "さっき",
+          "pos": "名詞",
+          "surface": "さっき",
+          "forms": [
+            "さっき"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "さては",
+          "pos": "副詞",
+          "surface": "さては",
+          "forms": [
+            "さては"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "じゃ",
+          "pos": "接続詞",
+          "surface": "じゃ",
+          "forms": [
+            "じゃ",
+            "じゃねえ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "すごい",
+          "pos": "形容詞",
+          "surface": "すご",
+          "forms": [
+            "すご",
+            "すごい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "してん",
+            "する",
+            "にし",
+            "にしてる",
+            "バカにする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "だから",
+          "pos": "接続詞",
+          "surface": "だから",
+          "forms": [
+            "だから"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ちょ",
+          "pos": "名詞",
+          "surface": "ちょ",
+          "forms": [
+            "ちょ",
+            "ちょく",
+            "ちょっ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なぜ",
+          "pos": "副詞",
+          "surface": "なぜ",
+          "forms": [
+            "なぜ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "バカ",
+          "pos": "名詞",
+          "surface": "バカ",
+          "forms": [
+            "バカ",
+            "バカに",
+            "バカにする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "バカ",
+          "pos": "名詞",
+          "surface": "バカ",
+          "forms": [
+            "バカ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ハッ",
+          "pos": "副詞",
+          "surface": "ハッ",
+          "forms": [
+            "ハッ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "フィンガー",
+          "pos": "名詞",
+          "surface": "フィンガー",
+          "forms": [
+            "フィンガー"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ぶる",
+          "pos": "動詞",
+          "surface": "ぶっ",
+          "forms": [
+            "ぶっ",
+            "ぶっか",
+            "ぶる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "メタボ",
+          "pos": "名詞",
+          "surface": "メタボ",
+          "forms": [
+            "メタボ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よい",
+          "pos": "形容詞",
+          "surface": "よかっ",
+          "forms": [
+            "よい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よる",
+          "pos": "動詞",
+          "surface": "よっ",
+          "forms": [
+            "よる",
+            "言いよる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "先生",
+          "pos": "名詞",
+          "surface": "先生",
+          "forms": [
+            "先生"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "分かる",
+          "pos": "動詞",
+          "surface": "分かっ",
+          "forms": [
+            "分かる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "勝手",
+          "pos": "名詞",
+          "surface": "勝手",
+          "forms": [
+            "勝手",
+            "勝手に"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "名前",
+          "pos": "名詞",
+          "surface": "名前",
+          "forms": [
+            "名前"
+          ],
+          "count": 4
+        },
+        {
+          "lemma": "固い",
+          "pos": "形容詞",
+          "surface": "固い",
+          "forms": [
+            "固い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "字",
+          "pos": "名詞",
+          "surface": "字",
+          "forms": [
+            "字"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "技",
+          "pos": "名詞",
+          "surface": "技",
+          "forms": [
+            "技"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "書く",
+          "pos": "動詞",
+          "surface": "書い",
+          "forms": [
+            "書く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "書ける",
+          "pos": "動詞",
+          "surface": "書け",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "知る",
+          "pos": "動詞",
+          "surface": "知っ",
+          "forms": [
+            "知る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "能力",
+          "pos": "名詞",
+          "surface": "能力",
+          "forms": [
+            "能力",
+            "能力者",
+            "超能力",
+            "超能力者"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言い",
+          "forms": [
+            "言いよる",
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言う",
+          "forms": [
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "郷",
+          "pos": "名詞",
+          "surface": "郷",
+          "forms": [
+            "郷"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "集中",
+          "pos": "名詞",
+          "surface": "集中",
+          "forms": [
+            "集中"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "食",
+          "pos": "名詞",
+          "surface": "食",
+          "forms": [
+            "食"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "anime-nozaki-01",
+      "source_id": "anime-nozaki",
+      "group": "nozaki",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "1a39844bc748298c53bd1ceaed5ee1e633838d7de7850fe71278482a08164392",
+      "analysis_sha256": "bd32e31e076784212136a675065047bdb7530a1f8cf28d1e1a1aeed4d690ad22",
+      "features": [
+        {
+          "lemma": "あの",
+          "pos": "連体詞",
+          "surface": "あの",
+          "forms": [
+            "あの"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "ばいい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いや",
+          "pos": "接続詞",
+          "surface": "いや",
+          "forms": [
+            "いや"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いる",
+          "pos": "動詞",
+          "surface": "い",
+          "forms": [
+            "い",
+            "いたい",
+            "いる",
+            "にい",
+            "にいる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "うい",
+          "pos": "形容詞",
+          "surface": "うう",
+          "forms": [
+            "うい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "サイン",
+          "pos": "名詞",
+          "surface": "サイン",
+          "forms": [
+            "サイン"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ずっと",
+          "pos": "副詞",
+          "surface": "ずっと",
+          "forms": [
+            "ずっと"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "した",
+            "したら",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "しよ",
+          "forms": [
+            "しよ",
+            "しよう",
+            "する",
+            "どうしよう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "副詞",
+          "surface": "そう",
+          "forms": [
+            "そう",
+            "そうじゃ",
+            "そうじゃなくて"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "その",
+          "pos": "連体詞",
+          "surface": "その",
+          "forms": [
+            "その"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ちょっと",
+          "pos": "副詞",
+          "surface": "ちょっと",
+          "forms": [
+            "ちょっと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "つきあう",
+          "pos": "動詞",
+          "surface": "つきあっ",
+          "forms": [
+            "つきあう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "どう",
+          "pos": "副詞",
+          "surface": "どう",
+          "forms": [
+            "どう",
+            "どうしよう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "どうぞ",
+          "pos": "副詞",
+          "surface": "どうぞ",
+          "forms": [
+            "どうぞ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "のる",
+          "pos": "動詞",
+          "surface": "のっ",
+          "forms": [
+            "のる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ファン",
+          "pos": "名詞",
+          "surface": "ファン",
+          "forms": [
+            "ファン"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "もらう",
+          "pos": "動詞",
+          "surface": "もらい",
+          "forms": [
+            "もらい",
+            "もらう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よい",
+          "pos": "形容詞",
+          "surface": "よし",
+          "forms": [
+            "よい",
+            "よし"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一緒",
+          "pos": "名詞",
+          "surface": "一緒",
+          "forms": [
+            "一緒",
+            "一緒に"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "人",
+          "pos": "名詞",
+          "surface": "人",
+          "forms": [
+            "人"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "告白",
+          "pos": "名詞",
+          "surface": "告白",
+          "forms": [
+            "告白"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "好き",
+          "pos": "名詞",
+          "surface": "好き",
+          "forms": [
+            "好き"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "子",
+          "pos": "名詞",
+          "surface": "子",
+          "forms": [
+            "子"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "待つ",
+          "pos": "動詞",
+          "surface": "待っ",
+          "forms": [
+            "待つ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "思う",
+          "pos": "動詞",
+          "surface": "思わ",
+          "forms": [
+            "思う",
+            "思われる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "普通",
+          "pos": "名詞",
+          "surface": "普通",
+          "forms": [
+            "普通",
+            "普通に"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "行く",
+          "pos": "動詞",
+          "surface": "行き",
+          "forms": [
+            "行き",
+            "行く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言え",
+          "forms": [
+            "って言う",
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言っ",
+          "forms": [
+            "言う"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言わ",
+          "forms": [
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "重い",
+          "pos": "形容詞",
+          "surface": "重い",
+          "forms": [
+            "重い"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "anime-nozaki-02",
+      "source_id": "anime-nozaki",
+      "group": "nozaki",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "3811acf875f8845eff178b4a3a6dec94327ff2719e01583ae03913156984cf86",
+      "analysis_sha256": "cb743a7b1e59fed6d89f822ef53e54700eaa6cd7b8de640084277ee59c5cc43e",
+      "features": [
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "いいの",
+            "ばいい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いろいろ",
+          "pos": "副詞",
+          "surface": "いろいろ",
+          "forms": [
+            "いろいろ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "お話",
+          "pos": "名詞",
+          "surface": "お話",
+          "forms": [
+            "お話"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "こう",
+          "pos": "副詞",
+          "surface": "こう",
+          "forms": [
+            "こう",
+            "こうする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "こう",
+          "pos": "副詞",
+          "surface": "こう",
+          "forms": [
+            "こう",
+            "こうだ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "こう",
+          "pos": "副詞",
+          "surface": "こう",
+          "forms": [
+            "こう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "じゃ",
+          "pos": "接続詞",
+          "surface": "じゃ",
+          "forms": [
+            "じゃ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "しょうが",
+          "pos": "名詞",
+          "surface": "しょうが",
+          "forms": [
+            "しょうが",
+            "しょうがない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "して",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "する",
+          "forms": [
+            "こうする",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "チャリ",
+          "pos": "名詞",
+          "surface": "チャリ",
+          "forms": [
+            "チャリ",
+            "チャリ通"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "っぽい",
+          "pos": "形容詞",
+          "surface": "っぽい",
+          "forms": [
+            "っぽい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "できる",
+          "pos": "動詞",
+          "surface": "でき",
+          "forms": [
+            "でき",
+            "できる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "どういう",
+          "pos": "連体詞",
+          "surface": "どういう",
+          "forms": [
+            "どういう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ドキドキ",
+          "pos": "名詞",
+          "surface": "ドキドキ",
+          "forms": [
+            "ドキドキ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "もしくは",
+          "pos": "接続詞",
+          "surface": "もしくは",
+          "forms": [
+            "もしくは"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一緒",
+          "pos": "名詞",
+          "surface": "一緒",
+          "forms": [
+            "一緒",
+            "一緒に"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "乗っける",
+          "pos": "動詞",
+          "surface": "乗っけ",
+          "forms": [
+            "乗っける"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "交通",
+          "pos": "名詞",
+          "surface": "交通",
+          "forms": [
+            "交通",
+            "交通法",
+            "道路交通",
+            "道路交通法"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "今",
+          "pos": "名詞",
+          "surface": "今",
+          "forms": [
+            "今"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "今日",
+          "pos": "名詞",
+          "surface": "今日",
+          "forms": [
+            "今日",
+            "今日は"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "体温",
+          "pos": "名詞",
+          "surface": "体温",
+          "forms": [
+            "体温"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "何だか",
+          "pos": "副詞",
+          "surface": "何だか",
+          "forms": [
+            "何だか"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "最低",
+          "pos": "名詞",
+          "surface": "最低",
+          "forms": [
+            "最低"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "図る",
+          "pos": "動詞",
+          "surface": "図っ",
+          "forms": [
+            "図る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "大変",
+          "pos": "名詞",
+          "surface": "大変",
+          "forms": [
+            "大変"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "少女",
+          "pos": "名詞",
+          "surface": "少女",
+          "forms": [
+            "少女"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "帰る",
+          "pos": "動詞",
+          "surface": "帰ら",
+          "forms": [
+            "帰る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "帰る",
+          "pos": "動詞",
+          "surface": "帰る",
+          "forms": [
+            "帰る"
+          ],
+          "count": 4
+        },
+        {
+          "lemma": "後ろ",
+          "pos": "名詞",
+          "surface": "後ろ",
+          "forms": [
+            "後ろ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "感じる",
+          "pos": "動詞",
+          "surface": "感じる",
+          "forms": [
+            "感じる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "手",
+          "pos": "名詞",
+          "surface": "手",
+          "forms": [
+            "手"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "持つ",
+          "pos": "動詞",
+          "surface": "持て",
+          "forms": [
+            "持つ",
+            "持て"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "漫画",
+          "pos": "名詞",
+          "surface": "漫画",
+          "forms": [
+            "漫画"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "男",
+          "pos": "名詞",
+          "surface": "男",
+          "forms": [
+            "男"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "考える",
+          "pos": "動詞",
+          "surface": "考える",
+          "forms": [
+            "考える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "自転車",
+          "pos": "名詞",
+          "surface": "自転車",
+          "forms": [
+            "自転車"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "華やかさ",
+          "pos": "名詞",
+          "surface": "華やかさ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "足りる",
+          "pos": "動詞",
+          "surface": "足り",
+          "forms": [
+            "足りない",
+            "足りる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "道路",
+          "pos": "名詞",
+          "surface": "道路",
+          "forms": [
+            "道路",
+            "道路交通",
+            "道路交通法"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "違反",
+          "pos": "名詞",
+          "surface": "違反",
+          "forms": [
+            "違反"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "震える",
+          "pos": "動詞",
+          "surface": "震え",
+          "forms": [
+            "震え",
+            "震える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "馬",
+          "pos": "名詞",
+          "surface": "馬",
+          "forms": [
+            "馬"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "anime-bocchi-01",
+      "source_id": "anime-bocchi",
+      "group": "bocchi",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "c5a7003a09cae639faef55fbdb8ce722721fdf2fed896061a8a2bdce4d118778",
+      "analysis_sha256": "886be58cd5da0a364ce171796c98816cc804760dbccefd876a1ab5e7beb4eaca",
+      "features": [
+        {
+          "lemma": "あの",
+          "pos": "連体詞",
+          "surface": "あの",
+          "forms": [
+            "あの"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "いいの",
+            "ていい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "いいん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "おかず",
+          "pos": "名詞",
+          "surface": "おかず",
+          "forms": [
+            "おかず"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "お知らせ",
+          "pos": "名詞",
+          "surface": "お知らせ",
+          "forms": [
+            "お知らせ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "キャ",
+          "pos": "名詞",
+          "surface": "キャ",
+          "forms": [
+            "陰キャ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "クーポン",
+          "pos": "名詞",
+          "surface": "クーポン",
+          "forms": [
+            "クーポン"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "くれる",
+          "pos": "動詞",
+          "surface": "くれん",
+          "forms": [
+            "くれる",
+            "くれん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この",
+            "このまま"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "して",
+            "してい",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "する",
+          "forms": [
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "副詞",
+          "surface": "そう",
+          "forms": [
+            "そう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "たま",
+          "pos": "名詞",
+          "surface": "たま",
+          "forms": [
+            "たま"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ちる",
+          "pos": "動詞",
+          "surface": "ち",
+          "forms": [
+            "ち",
+            "ちな",
+            "ちる",
+            "ひとりぼっち",
+            "ぼっち"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "でも",
+          "pos": "接続詞",
+          "surface": "でも",
+          "forms": [
+            "でも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "どうぞ",
+          "pos": "副詞",
+          "surface": "どうぞ",
+          "forms": [
+            "どうぞ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "とまる",
+          "pos": "動詞",
+          "surface": "とまっ",
+          "forms": [
+            "とまる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "とまれ",
+          "pos": "副詞",
+          "surface": "とまれ",
+          "forms": [
+            "とまれ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ひとり",
+          "pos": "副詞",
+          "surface": "ひとり",
+          "forms": [
+            "ひとり",
+            "ひとりぼっち"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "ふり",
+          "pos": "名詞",
+          "surface": "ふり",
+          "forms": [
+            "ふり"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ホ",
+          "pos": "名詞",
+          "surface": "ホ",
+          "forms": [
+            "スマホ",
+            "ホ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ぼる",
+          "pos": "動詞",
+          "surface": "ぼ",
+          "forms": [
+            "ぼ",
+            "ぼる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ぼる",
+          "pos": "動詞",
+          "surface": "ぼっ",
+          "forms": [
+            "ひとりぼっち",
+            "ぼっち",
+            "ぼる"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "メッセージ",
+          "pos": "名詞",
+          "surface": "メッセージ",
+          "forms": [
+            "メッセージ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ヤツ",
+          "pos": "名詞",
+          "surface": "ヤツ",
+          "forms": [
+            "ヤツ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やる",
+          "pos": "動詞",
+          "surface": "やる",
+          "forms": [
+            "やる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "中学",
+          "pos": "名詞",
+          "surface": "中学",
+          "forms": [
+            "中学"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "乗り遅れる",
+          "pos": "動詞",
+          "surface": "乗り遅れ",
+          "forms": [
+            "乗り遅れる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "交換",
+          "pos": "名詞",
+          "surface": "交換",
+          "forms": [
+            "交換"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人",
+          "pos": "名詞",
+          "surface": "人",
+          "forms": [
+            "人"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "先生",
+          "pos": "名詞",
+          "surface": "先生",
+          "forms": [
+            "先生"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "入る",
+          "pos": "動詞",
+          "surface": "入ら",
+          "forms": [
+            "入る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "前",
+          "pos": "名詞",
+          "surface": "前",
+          "forms": [
+            "前",
+            "前に"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "合う",
+          "pos": "動詞",
+          "surface": "合っ",
+          "forms": [
+            "合う",
+            "身の丈に合う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "合わす",
+          "pos": "動詞",
+          "surface": "合わす",
+          "forms": [
+            "合わす"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "子",
+          "pos": "名詞",
+          "surface": "子",
+          "forms": [
+            "な子",
+            "子"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "学生",
+          "pos": "名詞",
+          "surface": "学生",
+          "forms": [
+            "学生"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "届く",
+          "pos": "動詞",
+          "surface": "届く",
+          "forms": [
+            "届く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "帰宅",
+          "pos": "名詞",
+          "surface": "帰宅",
+          "forms": [
+            "帰宅"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "弁当",
+          "pos": "名詞",
+          "surface": "弁当",
+          "forms": [
+            "お弁当",
+            "弁当"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "思う",
+          "pos": "動詞",
+          "surface": "思う",
+          "forms": [
+            "思う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "悩む",
+          "pos": "動詞",
+          "surface": "悩ん",
+          "forms": [
+            "悩む"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "指",
+          "pos": "名詞",
+          "surface": "指",
+          "forms": [
+            "指"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "放課後",
+          "pos": "名詞",
+          "surface": "放課後",
+          "forms": [
+            "放課後"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "教室",
+          "pos": "名詞",
+          "surface": "教室",
+          "forms": [
+            "教室"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "日々",
+          "pos": "名詞",
+          "surface": "日々",
+          "forms": [
+            "日々"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "本",
+          "pos": "名詞",
+          "surface": "本",
+          "forms": [
+            "本"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "気付く",
+          "pos": "動詞",
+          "surface": "気付い",
+          "forms": [
+            "気付く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "目",
+          "pos": "名詞",
+          "surface": "目",
+          "forms": [
+            "目"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "苦手",
+          "pos": "名詞",
+          "surface": "苦手",
+          "forms": [
+            "苦手"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "見る",
+          "pos": "動詞",
+          "surface": "見",
+          "forms": [
+            "見",
+            "見る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "親",
+          "pos": "名詞",
+          "surface": "親",
+          "forms": [
+            "親"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言っ",
+          "forms": [
+            "って言う",
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "話す",
+          "pos": "動詞",
+          "surface": "話す",
+          "forms": [
+            "話す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "読む",
+          "pos": "動詞",
+          "surface": "読ん",
+          "forms": [
+            "読む"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "身の丈",
+          "pos": "名詞",
+          "surface": "身の丈",
+          "forms": [
+            "身の丈",
+            "身の丈に合う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "遠足",
+          "pos": "名詞",
+          "surface": "遠足",
+          "forms": [
+            "遠足"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "部活",
+          "pos": "名詞",
+          "surface": "部活",
+          "forms": [
+            "部活"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "陰",
+          "pos": "名詞",
+          "surface": "陰",
+          "forms": [
+            "陰",
+            "陰キャ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "隅っこ",
+          "pos": "名詞",
+          "surface": "隅っこ",
+          "forms": [
+            "隅っこ"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "anime-bocchi-02",
+      "source_id": "anime-bocchi",
+      "group": "bocchi",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "06c733e2de7dfef0678ed420db53cecbd8136feaa0afa4538d4f22b2c1d061b2",
+      "analysis_sha256": "09e678eb24ecf836b76ce081e4237ff0d6f3882275fbf7cf374297d44e44bd0f",
+      "features": [
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "ある",
+          "forms": [
+            "ある",
+            "あるべき"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ある程度",
+          "pos": "副詞",
+          "surface": "ある程度",
+          "forms": [
+            "ある程度"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いつも",
+          "pos": "副詞",
+          "surface": "いつも",
+          "forms": [
+            "いつも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いや",
+          "pos": "接続詞",
+          "surface": "いや",
+          "forms": [
+            "いや"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "いる",
+          "pos": "動詞",
+          "surface": "いる",
+          "forms": [
+            "いる",
+            "にいる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "おしゃれ",
+          "pos": "名詞",
+          "surface": "おしゃれ",
+          "forms": [
+            "おしゃれ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "お願い",
+          "pos": "名詞",
+          "surface": "お願い",
+          "forms": [
+            "お願い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "かび臭い",
+          "pos": "形容詞",
+          "surface": "かび臭い",
+          "forms": [
+            "かび臭い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ギター",
+          "pos": "名詞",
+          "surface": "ギター",
+          "forms": [
+            "ギター"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "クマ",
+          "pos": "名詞",
+          "surface": "クマ",
+          "forms": [
+            "クマ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "これから",
+          "pos": "副詞",
+          "surface": "これから",
+          "forms": [
+            "これから"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "こんな",
+          "pos": "連体詞",
+          "surface": "こんな",
+          "forms": [
+            "こんな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "サポート",
+          "pos": "名詞",
+          "surface": "サポート",
+          "forms": [
+            "サポート"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ジャージ",
+          "pos": "名詞",
+          "surface": "ジャージ",
+          "forms": [
+            "ジャージ",
+            "芋ジャージ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "すごい",
+          "pos": "形容詞",
+          "surface": "すごい",
+          "forms": [
+            "すごい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "して",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "タウン",
+          "pos": "名詞",
+          "surface": "タウン",
+          "forms": [
+            "タウン"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ない",
+          "pos": "形容詞",
+          "surface": "ない",
+          "forms": [
+            "ない",
+            "わけない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なにとぞ",
+          "pos": "副詞",
+          "surface": "なにとぞ",
+          "forms": [
+            "なにとぞ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "におい",
+          "pos": "名詞",
+          "surface": "におい",
+          "forms": [
+            "におい"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "バンド",
+          "pos": "名詞",
+          "surface": "バンド",
+          "forms": [
+            "バンド"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "ひきかえる",
+          "pos": "動詞",
+          "surface": "ひきかえ",
+          "forms": [
+            "にひきかえ",
+            "ひきかえる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ペース",
+          "pos": "名詞",
+          "surface": "ペース",
+          "forms": [
+            "ペース"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "まだ",
+          "pos": "副詞",
+          "surface": "まだ",
+          "forms": [
+            "まだ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "みなぎる",
+          "pos": "動詞",
+          "surface": "みなぎる",
+          "forms": [
+            "みなぎる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "めっちゃ",
+          "pos": "副詞",
+          "surface": "めっちゃ",
+          "forms": [
+            "めっちゃ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "もうちょい",
+          "pos": "副詞",
+          "surface": "もうちょい",
+          "forms": [
+            "もうちょい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よく",
+          "pos": "副詞",
+          "surface": "よく",
+          "forms": [
+            "よく"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ライブ",
+          "pos": "名詞",
+          "surface": "ライブ",
+          "forms": [
+            "ライブ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "ライブハウス",
+          "pos": "名詞",
+          "surface": "ライブハウス",
+          "forms": [
+            "ライブハウス"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "人",
+          "pos": "名詞",
+          "surface": "人",
+          "forms": [
+            "人"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "今日",
+          "pos": "名詞",
+          "surface": "今日",
+          "forms": [
+            "今日"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "個性",
+          "pos": "名詞",
+          "surface": "個性",
+          "forms": [
+            "個性"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "女子",
+          "pos": "名詞",
+          "surface": "女子",
+          "forms": [
+            "女子"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "女子高",
+          "pos": "名詞",
+          "surface": "女子高",
+          "forms": [
+            "女子高",
+            "女子高生"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "子",
+          "pos": "名詞",
+          "surface": "子",
+          "forms": [
+            "子"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "弾ける",
+          "pos": "動詞",
+          "surface": "弾ける",
+          "forms": [
+            "弾ける"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "感じ",
+          "pos": "名詞",
+          "surface": "感じ",
+          "forms": [
+            "感じ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "押し入れ",
+          "pos": "名詞",
+          "surface": "押し入れ",
+          "forms": [
+            "押し入れ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "早い",
+          "pos": "形容詞",
+          "surface": "早い",
+          "forms": [
+            "早い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "早速",
+          "pos": "副詞",
+          "surface": "早速",
+          "forms": [
+            "早速"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "本来",
+          "pos": "名詞",
+          "surface": "本来",
+          "forms": [
+            "本来"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "来る",
+          "pos": "動詞",
+          "surface": "来",
+          "forms": [
+            "来",
+            "来る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "来る",
+          "pos": "動詞",
+          "surface": "来る",
+          "forms": [
+            "来る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "来れる",
+          "pos": "動詞",
+          "surface": "来れる",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "歩く",
+          "pos": "動詞",
+          "surface": "歩く",
+          "forms": [
+            "歩く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "比べる",
+          "pos": "動詞",
+          "surface": "比べ",
+          "forms": [
+            "に比べ",
+            "比べ",
+            "比べる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "猫背",
+          "pos": "名詞",
+          "surface": "猫背",
+          "forms": [
+            "猫背"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "突然",
+          "pos": "副詞",
+          "surface": "突然",
+          "forms": [
+            "突然"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "芋",
+          "pos": "名詞",
+          "surface": "芋",
+          "forms": [
+            "芋",
+            "芋ジャージ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言っ",
+          "forms": [
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "辞める",
+          "pos": "動詞",
+          "surface": "辞め",
+          "forms": [
+            "辞める"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "防虫",
+          "pos": "名詞",
+          "surface": "防虫",
+          "forms": [
+            "防虫",
+            "防虫剤"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "香り",
+          "pos": "名詞",
+          "surface": "香り",
+          "forms": [
+            "香り"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "anime-dungeonmeshi-01",
+      "source_id": "anime-dungeonmeshi",
+      "group": "dungeonmeshi",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "a74db403dd9cf4d4c278e9007f88160f12af1faee71d42553bd6455a3eab152a",
+      "analysis_sha256": "b823384c9b027cc2e3bc0cb940977caf68f8a7a6ddd0b82aa5d691f9e3f2499d",
+      "features": [
+        {
+          "lemma": "あと",
+          "pos": "名詞",
+          "surface": "あと",
+          "forms": [
+            "あと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ある",
+          "pos": "連体詞",
+          "surface": "ある",
+          "forms": [
+            "ある",
+            "ある日"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いや",
+          "pos": "接続詞",
+          "surface": "いや",
+          "forms": [
+            "いや"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "うつ",
+          "pos": "動詞",
+          "surface": "うっ",
+          "forms": [
+            "うっ",
+            "うつ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "かつて",
+          "pos": "副詞",
+          "surface": "かつて",
+          "forms": [
+            "かつて"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "さまよう",
+          "pos": "動詞",
+          "surface": "さまよっ",
+          "forms": [
+            "さまよう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "副詞",
+          "surface": "そう",
+          "forms": [
+            "そう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "その",
+          "pos": "連体詞",
+          "surface": "その",
+          "forms": [
+            "その"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ちり",
+          "pos": "名詞",
+          "surface": "ちり",
+          "forms": [
+            "ちり"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "で",
+          "pos": "接続詞",
+          "surface": "で",
+          "forms": [
+            "で",
+            "でや"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ドラゴン",
+          "pos": "名詞",
+          "surface": "ドラゴン",
+          "forms": [
+            "ドラゴン"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "とらわれる",
+          "pos": "動詞",
+          "surface": "とらわれ",
+          "forms": [
+            "とらわれ",
+            "とらわれる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ない",
+          "pos": "形容詞",
+          "surface": "ない",
+          "forms": [
+            "ない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なお",
+          "pos": "接続詞",
+          "surface": "なお",
+          "forms": [
+            "なお",
+            "今なお"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なる",
+          "pos": "動詞",
+          "surface": "なっ",
+          "forms": [
+            "となる",
+            "なる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ひと息",
+          "pos": "名詞",
+          "surface": "ひと息",
+          "forms": [
+            "ひと息"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ふう",
+          "pos": "動詞",
+          "surface": "ふっ",
+          "forms": [
+            "ふう",
+            "ふっ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "わな",
+          "pos": "名詞",
+          "surface": "わな",
+          "forms": [
+            "わな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一度",
+          "pos": "副詞",
+          "surface": "一度",
+          "forms": [
+            "一度"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "万全",
+          "pos": "名詞",
+          "surface": "万全",
+          "forms": [
+            "万全"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "与える",
+          "pos": "動詞",
+          "surface": "与えよ",
+          "forms": [
+            "与える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "今",
+          "pos": "名詞",
+          "surface": "今",
+          "forms": [
+            "今",
+            "今なお"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "倒す",
+          "pos": "動詞",
+          "surface": "倒し",
+          "forms": [
+            "倒す"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "倒す",
+          "pos": "動詞",
+          "surface": "倒せ",
+          "forms": [
+            "倒す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "全て",
+          "pos": "名詞",
+          "surface": "全て",
+          "forms": [
+            "全て"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "前",
+          "pos": "名詞",
+          "surface": "前",
+          "forms": [
+            "前",
+            "前に"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "動き",
+          "pos": "名詞",
+          "surface": "動き",
+          "forms": [
+            "動き"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "名乗る",
+          "pos": "動詞",
+          "surface": "名乗る",
+          "forms": [
+            "名乗る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "国",
+          "pos": "名詞",
+          "surface": "国",
+          "forms": [
+            "国"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "地下",
+          "pos": "名詞",
+          "surface": "地下",
+          "forms": [
+            "地下"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "地図",
+          "pos": "名詞",
+          "surface": "地図",
+          "forms": [
+            "地図"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "地鳴り",
+          "pos": "名詞",
+          "surface": "地鳴り",
+          "forms": [
+            "地鳴り"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "墓地",
+          "pos": "名詞",
+          "surface": "墓地",
+          "forms": [
+            "墓地"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "失う",
+          "pos": "動詞",
+          "surface": "失っ",
+          "forms": [
+            "失う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "奥",
+          "pos": "名詞",
+          "surface": "奥",
+          "forms": [
+            "奥"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "始まる",
+          "pos": "動詞",
+          "surface": "始まっ",
+          "forms": [
+            "始まる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "小さな",
+          "pos": "連体詞",
+          "surface": "小さな",
+          "forms": [
+            "小さな"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "底",
+          "pos": "名詞",
+          "surface": "底",
+          "forms": [
+            "底"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "引き返す",
+          "pos": "動詞",
+          "surface": "引き返す",
+          "forms": [
+            "引き返す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "我が国",
+          "pos": "名詞",
+          "surface": "我が国",
+          "forms": [
+            "我が国"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "抜ける",
+          "pos": "動詞",
+          "surface": "抜け",
+          "forms": [
+            "抜け",
+            "抜ける"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "掛かる",
+          "pos": "動詞",
+          "surface": "掛かっ",
+          "forms": [
+            "掛かる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "描く",
+          "pos": "動詞",
+          "surface": "描き",
+          "forms": [
+            "描く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "村",
+          "pos": "名詞",
+          "surface": "村",
+          "forms": [
+            "村"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "来る",
+          "pos": "動詞",
+          "surface": "来る",
+          "forms": [
+            "来る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "欠く",
+          "pos": "動詞",
+          "surface": "欠い",
+          "forms": [
+            "欠く",
+            "精彩を欠く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "消える",
+          "pos": "動詞",
+          "surface": "消え",
+          "forms": [
+            "消える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "深い",
+          "pos": "形容詞",
+          "surface": "深く",
+          "forms": [
+            "深い",
+            "深く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "減る",
+          "pos": "動詞",
+          "surface": "減っ",
+          "forms": [
+            "減る",
+            "腹が減る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "準備",
+          "pos": "名詞",
+          "surface": "準備",
+          "forms": [
+            "準備"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "滅びる",
+          "pos": "動詞",
+          "surface": "滅び",
+          "forms": [
+            "滅びる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "無駄",
+          "pos": "名詞",
+          "surface": "無駄",
+          "forms": [
+            "無駄"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "狂乱",
+          "pos": "名詞",
+          "surface": "狂乱",
+          "forms": [
+            "狂乱"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "王",
+          "pos": "名詞",
+          "surface": "王",
+          "forms": [
+            "王"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "現れる",
+          "pos": "動詞",
+          "surface": "現れ",
+          "forms": [
+            "現れ",
+            "現れる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "男",
+          "pos": "名詞",
+          "surface": "男",
+          "forms": [
+            "男"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "精彩",
+          "pos": "名詞",
+          "surface": "精彩",
+          "forms": [
+            "精彩",
+            "精彩を欠く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "腹",
+          "pos": "名詞",
+          "surface": "腹",
+          "forms": [
+            "腹",
+            "腹が減る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "行く",
+          "pos": "動詞",
+          "surface": "行く",
+          "forms": [
+            "行く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "要素",
+          "pos": "名詞",
+          "surface": "要素",
+          "forms": [
+            "要素"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言い残す",
+          "pos": "動詞",
+          "surface": "言い残す",
+          "forms": [
+            "言い残す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "誇る",
+          "pos": "動詞",
+          "surface": "誇っ",
+          "forms": [
+            "誇る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "負ける",
+          "pos": "動詞",
+          "surface": "負ける",
+          "forms": [
+            "負ける"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "間違える",
+          "pos": "動詞",
+          "surface": "間違え",
+          "forms": [
+            "間違え",
+            "間違える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "面倒",
+          "pos": "名詞",
+          "surface": "面倒",
+          "forms": [
+            "面倒"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "頑張る",
+          "pos": "動詞",
+          "surface": "頑張れ",
+          "forms": [
+            "頑張る",
+            "頑張れ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "食料",
+          "pos": "名詞",
+          "surface": "食料",
+          "forms": [
+            "食料"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "魔術",
+          "pos": "名詞",
+          "surface": "魔術",
+          "forms": [
+            "魔術",
+            "魔術師"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "黄金",
+          "pos": "名詞",
+          "surface": "黄金",
+          "forms": [
+            "黄金"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "anime-dungeonmeshi-02",
+      "source_id": "anime-dungeonmeshi",
+      "group": "dungeonmeshi",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "3d611d55cbce985436fd21313801ff5b70df58c2812d846a7141fa16ca810d5f",
+      "analysis_sha256": "091a7f5af434712f57297bf146074b82517202c005f1a5bb1b22893bccca337e",
+      "features": [
+        {
+          "lemma": "あの",
+          "pos": "連体詞",
+          "surface": "あの",
+          "forms": [
+            "あの",
+            "あのさ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "いいな",
+            "がいい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "はいい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "いう",
+          "pos": "動詞",
+          "surface": "いえ",
+          "forms": [
+            "いう",
+            "いえ",
+            "そういう",
+            "そういえば"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "うまい",
+          "pos": "形容詞",
+          "surface": "うまい",
+          "forms": [
+            "うまい"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "えらい",
+          "pos": "形容詞",
+          "surface": "えらい",
+          "forms": [
+            "えらい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "おいしい",
+          "pos": "形容詞",
+          "surface": "おいし",
+          "forms": [
+            "おいしい",
+            "おいしそう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "かぶる",
+          "pos": "動詞",
+          "surface": "かぶる",
+          "forms": [
+            "かぶる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "キノコ",
+          "pos": "名詞",
+          "surface": "キノコ",
+          "forms": [
+            "キノコ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "サソリ",
+          "pos": "名詞",
+          "surface": "サソリ",
+          "forms": [
+            "サソリ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "しまう",
+          "pos": "動詞",
+          "surface": "しまっ",
+          "forms": [
+            "しまう",
+            "しまった"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "スライム",
+          "pos": "名詞",
+          "surface": "スライム",
+          "forms": [
+            "スライム"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "する",
+          "forms": [
+            "がする",
+            "する",
+            "匂いがする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "副詞",
+          "surface": "そう",
+          "forms": [
+            "そう",
+            "そういう",
+            "そういえば"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "副詞",
+          "surface": "そう",
+          "forms": [
+            "そう",
+            "そうだ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ダメ",
+          "pos": "名詞",
+          "surface": "ダメ",
+          "forms": [
+            "ダメ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "ダメダメ",
+          "pos": "名詞",
+          "surface": "ダメダメ",
+          "forms": [
+            "ダメダメ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ちと",
+          "pos": "副詞",
+          "surface": "ちと",
+          "forms": [
+            "ちと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ちょっと",
+          "pos": "副詞",
+          "surface": "ちょっと",
+          "forms": [
+            "ちょっと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "できる",
+          "pos": "動詞",
+          "surface": "でき",
+          "forms": [
+            "でき",
+            "できる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ぷはっ",
+          "pos": "名詞",
+          "surface": "ぷはっ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "わし",
+          "pos": "名詞",
+          "surface": "わし",
+          "forms": [
+            "わし",
+            "わしの"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "わっ",
+          "pos": "副詞",
+          "surface": "わっ",
+          "forms": [
+            "わっ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "上",
+          "pos": "名詞",
+          "surface": "上",
+          "forms": [
+            "上"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "使う",
+          "pos": "動詞",
+          "surface": "使お",
+          "forms": [
+            "使う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "入れる",
+          "pos": "動詞",
+          "surface": "入れる",
+          "forms": [
+            "入れる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "全て",
+          "pos": "名詞",
+          "surface": "全て",
+          "forms": [
+            "全て"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "初めて",
+          "pos": "副詞",
+          "surface": "初めて",
+          "forms": [
+            "初めて"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "匂い",
+          "pos": "名詞",
+          "surface": "匂い",
+          "forms": [
+            "匂い",
+            "匂いがする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "匂い",
+          "pos": "名詞",
+          "surface": "匂い",
+          "forms": [
+            "匂い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "十分",
+          "pos": "名詞",
+          "surface": "十分",
+          "forms": [
+            "十分"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "呪文",
+          "pos": "名詞",
+          "surface": "呪文",
+          "forms": [
+            "呪文"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "墓場",
+          "pos": "名詞",
+          "surface": "墓場",
+          "forms": [
+            "墓場"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "大体",
+          "pos": "名詞",
+          "surface": "大体",
+          "forms": [
+            "大体"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "寂しい",
+          "pos": "形容詞",
+          "surface": "寂しい",
+          "forms": [
+            "寂しい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "小さい",
+          "pos": "形容詞",
+          "surface": "小さい",
+          "forms": [
+            "小さい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "張る",
+          "pos": "動詞",
+          "surface": "張る",
+          "forms": [
+            "張る",
+            "根を張る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "待つ",
+          "pos": "動詞",
+          "surface": "待っ",
+          "forms": [
+            "待つ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "根",
+          "pos": "名詞",
+          "surface": "根",
+          "forms": [
+            "根",
+            "根を張る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "植物",
+          "pos": "名詞",
+          "surface": "植物",
+          "forms": [
+            "植物"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "死ぬ",
+          "pos": "動詞",
+          "surface": "死ん",
+          "forms": [
+            "死ぬ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "準備",
+          "pos": "名詞",
+          "surface": "準備",
+          "forms": [
+            "準備"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "無理",
+          "pos": "名詞",
+          "surface": "無理",
+          "forms": [
+            "無理"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "独特",
+          "pos": "名詞",
+          "surface": "独特",
+          "forms": [
+            "独特"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "詠唱",
+          "pos": "名詞",
+          "surface": "詠唱",
+          "forms": [
+            "詠唱"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "譲る",
+          "pos": "動詞",
+          "surface": "譲っ",
+          "forms": [
+            "百歩譲って",
+            "百歩譲る",
+            "譲る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "足",
+          "pos": "名詞",
+          "surface": "足",
+          "forms": [
+            "足"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "鍋",
+          "pos": "名詞",
+          "surface": "鍋",
+          "forms": [
+            "鍋"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "顔",
+          "pos": "名詞",
+          "surface": "顔",
+          "forms": [
+            "顔"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "魔物",
+          "pos": "名詞",
+          "surface": "魔物",
+          "forms": [
+            "魔物"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "manga-nekodamashi-01",
+      "source_id": "manga-nekodamashi",
+      "group": "nekodamashi",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "4a65878e9fd910dde560825cdd32b81464e5fc36e9c825ccbc623280f1c633b3",
+      "analysis_sha256": "049ea1888daad38c0cf6cfdcb3d7bf321bd59212a89b6ec07c2ceb3b9c8e8c34",
+      "features": [
+        {
+          "lemma": "あげる",
+          "pos": "動詞",
+          "surface": "あげ",
+          "forms": [
+            "あげ",
+            "あげて",
+            "あげる",
+            "総力をあげる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いう",
+          "pos": "動詞",
+          "surface": "いっ",
+          "forms": [
+            "いう",
+            "いって",
+            "これという",
+            "これといって",
+            "という",
+            "といって"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いく",
+          "pos": "動詞",
+          "surface": "いこ",
+          "forms": [
+            "いく",
+            "いこ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ウチ",
+          "pos": "名詞",
+          "surface": "ウチ",
+          "forms": [],
+          "count": 2
+        },
+        {
+          "lemma": "オメェ",
+          "pos": "名詞",
+          "surface": "オメェ",
+          "forms": [],
+          "count": 2
+        },
+        {
+          "lemma": "コイツ",
+          "pos": "名詞",
+          "surface": "コイツ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この",
+            "とこの"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "すすむ",
+          "pos": "動詞",
+          "surface": "すすみ",
+          "forms": [
+            "すすみ",
+            "すすむ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "して",
+            "してい",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "して",
+            "する",
+            "をして"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そいつ",
+          "pos": "名詞",
+          "surface": "そいつ",
+          "forms": [
+            "そいつ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そんな",
+          "pos": "連体詞",
+          "surface": "そんな",
+          "forms": [
+            "そんな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "だが",
+          "pos": "接続詞",
+          "surface": "だが",
+          "forms": [
+            "だが"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ッー",
+          "pos": "名詞",
+          "surface": "ッー",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "つく",
+          "pos": "動詞",
+          "surface": "つか",
+          "forms": [
+            "つか",
+            "つく",
+            "示しがつかない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ない",
+          "pos": "形容詞",
+          "surface": "ない",
+          "forms": [
+            "ない",
+            "もない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ぼる",
+          "pos": "動詞",
+          "surface": "ぼっ",
+          "forms": [
+            "ぼる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "また",
+          "pos": "副詞",
+          "surface": "また",
+          "forms": [
+            "また"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ヤツ",
+          "pos": "名詞",
+          "surface": "ヤツ",
+          "forms": [
+            "ヤツ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ヤッ",
+          "pos": "名詞",
+          "surface": "ヤッ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "やる",
+          "pos": "動詞",
+          "surface": "やっ",
+          "forms": [
+            "やる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よそ見",
+          "pos": "名詞",
+          "surface": "よそ見",
+          "forms": [
+            "よそ見"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "わかる",
+          "pos": "動詞",
+          "surface": "わから",
+          "forms": [
+            "わからん",
+            "わかる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人生",
+          "pos": "名詞",
+          "surface": "人生",
+          "forms": [
+            "人生"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "兄ちゃん",
+          "pos": "名詞",
+          "surface": "兄ちゃん",
+          "forms": [
+            "兄ちゃん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "最善",
+          "pos": "名詞",
+          "surface": "最善",
+          "forms": [
+            "最善"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "平凡",
+          "pos": "名詞",
+          "surface": "平凡",
+          "forms": [
+            "平凡"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "思う",
+          "pos": "動詞",
+          "surface": "思わ",
+          "forms": [
+            "思う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "普通",
+          "pos": "名詞",
+          "surface": "普通",
+          "forms": [
+            "普通"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "死",
+          "pos": "名詞",
+          "surface": "死",
+          "forms": [
+            "死"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "殺し",
+          "pos": "名詞",
+          "surface": "殺し",
+          "forms": [
+            "殺し"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "殺る",
+          "pos": "動詞",
+          "surface": "殺ら",
+          "forms": [
+            "殺る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "決める",
+          "pos": "動詞",
+          "surface": "決め",
+          "forms": [
+            "決め",
+            "決める"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "満足",
+          "pos": "名詞",
+          "surface": "満足",
+          "forms": [
+            "満足"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "演じる",
+          "pos": "動詞",
+          "surface": "演じ",
+          "forms": [
+            "演じる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "男",
+          "pos": "名詞",
+          "surface": "男",
+          "forms": [
+            "男"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "目立つ",
+          "pos": "動詞",
+          "surface": "目立つ",
+          "forms": [
+            "目立つ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "示し",
+          "pos": "名詞",
+          "surface": "示し",
+          "forms": [
+            "示し",
+            "示しがつかない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "総力",
+          "pos": "名詞",
+          "surface": "総力",
+          "forms": [
+            "総力",
+            "総力をあげる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "考える",
+          "pos": "動詞",
+          "surface": "考え",
+          "forms": [
+            "考え",
+            "考える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "至って",
+          "pos": "副詞",
+          "surface": "至って",
+          "forms": [
+            "至って"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "蔓延る",
+          "pos": "動詞",
+          "surface": "蔓延る",
+          "forms": [
+            "蔓延る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "街",
+          "pos": "名詞",
+          "surface": "街",
+          "forms": [
+            "街"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "裏道",
+          "pos": "名詞",
+          "surface": "裏道",
+          "forms": [
+            "裏道"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "追って",
+          "pos": "接続詞",
+          "surface": "追って",
+          "forms": [
+            "追って"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "通り",
+          "pos": "名詞",
+          "surface": "通り",
+          "forms": [
+            "通り",
+            "通りがかる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "関わる",
+          "pos": "動詞",
+          "surface": "関わろ",
+          "forms": [
+            "関わる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "馬の骨",
+          "pos": "名詞",
+          "surface": "馬の骨",
+          "forms": [
+            "どこの馬の骨",
+            "馬の骨"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "manga-nekodamashi-02",
+      "source_id": "manga-nekodamashi",
+      "group": "nekodamashi",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "d939f039eb6079addbd008ecf511b04688f78ea5b2e0f3e00870945c3876548c",
+      "analysis_sha256": "3433862a710e3c4e2a025f2b4aa1d65a07efedc8b6434118efbd05406220ae4f",
+      "features": [
+        {
+          "lemma": "アイツ",
+          "pos": "名詞",
+          "surface": "アイツ",
+          "forms": [
+            "アイツ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "あり",
+          "forms": [
+            "あり",
+            "ありそう",
+            "ある"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "ある",
+          "forms": [
+            "ある",
+            "はある"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "ある",
+          "forms": [
+            "ある"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "アンタ",
+          "pos": "名詞",
+          "surface": "アンタ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いや",
+          "pos": "接続詞",
+          "surface": "いや",
+          "forms": [
+            "いや"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ぇもちろん",
+          "pos": "名詞",
+          "surface": "ぇもちろん",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "ォ",
+          "pos": "名詞",
+          "surface": "ォ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "きっと",
+          "pos": "副詞",
+          "surface": "きっと",
+          "forms": [
+            "きっと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "キテ",
+          "pos": "名詞",
+          "surface": "キテ",
+          "forms": [
+            "キテる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "こんな",
+          "pos": "連体詞",
+          "surface": "こんな",
+          "forms": [
+            "こんな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "サラッ",
+          "pos": "名詞",
+          "surface": "サラッ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "すぐ",
+          "pos": "副詞",
+          "surface": "すぐ",
+          "forms": [
+            "すぐ",
+            "すぐに"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そむ",
+          "pos": "動詞",
+          "surface": "そん",
+          "forms": [
+            "そん",
+            "そんじゃ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ッ",
+          "pos": "名詞",
+          "surface": "ッ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "なんで",
+          "pos": "副詞",
+          "surface": "なんで",
+          "forms": [
+            "なんで"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なんとか",
+          "pos": "副詞",
+          "surface": "なんとか",
+          "forms": [
+            "なんとか"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "ニャ",
+          "pos": "名詞",
+          "surface": "ニャ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "ハッ",
+          "pos": "副詞",
+          "surface": "ハッ",
+          "forms": [
+            "ハッ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ひるむ",
+          "pos": "動詞",
+          "surface": "ひるん",
+          "forms": [
+            "ひるむ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ブチ",
+          "pos": "名詞",
+          "surface": "ブチ",
+          "forms": [
+            "ブチ撒ける"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ブッ",
+          "pos": "名詞",
+          "surface": "ブッ",
+          "forms": [
+            "ブッ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よい",
+          "pos": "形容詞",
+          "surface": "よかっ",
+          "forms": [
+            "よい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "わかる",
+          "pos": "動詞",
+          "surface": "わかっ",
+          "forms": [
+            "わかる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "今",
+          "pos": "名詞",
+          "surface": "今",
+          "forms": [
+            "今",
+            "今まで"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "仕留める",
+          "pos": "動詞",
+          "surface": "仕留め",
+          "forms": [
+            "仕留める"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "余裕",
+          "pos": "名詞",
+          "surface": "余裕",
+          "forms": [
+            "余裕"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "匂い",
+          "pos": "名詞",
+          "surface": "匂い",
+          "forms": [
+            "匂い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "受け入れる",
+          "pos": "動詞",
+          "surface": "受け入れ",
+          "forms": [
+            "受け入れ",
+            "受け入れる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "命",
+          "pos": "名詞",
+          "surface": "命",
+          "forms": [
+            "命",
+            "命張る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "命",
+          "pos": "名詞",
+          "surface": "命",
+          "forms": [
+            "命"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "喧嘩",
+          "pos": "名詞",
+          "surface": "喧嘩",
+          "forms": [
+            "喧嘩"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "噂",
+          "pos": "名詞",
+          "surface": "噂",
+          "forms": [
+            "噂"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "奪う",
+          "pos": "動詞",
+          "surface": "奪っ",
+          "forms": [
+            "奪う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "子",
+          "pos": "名詞",
+          "surface": "子",
+          "forms": [
+            "子"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "完全",
+          "pos": "名詞",
+          "surface": "完全",
+          "forms": [
+            "完全"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "引っ張る",
+          "pos": "動詞",
+          "surface": "引っ張ん",
+          "forms": [
+            "引っ張る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "張る",
+          "pos": "動詞",
+          "surface": "張っ",
+          "forms": [
+            "命張る",
+            "張る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "怖い",
+          "pos": "形容詞",
+          "surface": "怖い",
+          "forms": [
+            "怖い"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "撒ける",
+          "pos": "動詞",
+          "surface": "撒け",
+          "forms": [
+            "ブチ撒ける"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "散らかす",
+          "pos": "動詞",
+          "surface": "散らかす",
+          "forms": [
+            "散らかす"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "数える",
+          "pos": "動詞",
+          "surface": "数え",
+          "forms": [
+            "数え",
+            "数える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "新入り",
+          "pos": "名詞",
+          "surface": "新入り",
+          "forms": [
+            "新入り"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "明日",
+          "pos": "名詞",
+          "surface": "明日",
+          "forms": [
+            "明日"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "殺し",
+          "pos": "名詞",
+          "surface": "殺し",
+          "forms": [
+            "殺し"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "殺す",
+          "pos": "動詞",
+          "surface": "殺さ",
+          "forms": [
+            "殺す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "殺る",
+          "pos": "動詞",
+          "surface": "殺ら",
+          "forms": [
+            "殺る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "泣かす",
+          "pos": "動詞",
+          "surface": "泣かせ",
+          "forms": [
+            "泣かす",
+            "泣かせ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "洗う",
+          "pos": "動詞",
+          "surface": "洗う",
+          "forms": [
+            "洗う",
+            "足を洗う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "無敗",
+          "pos": "名詞",
+          "surface": "無敗",
+          "forms": [
+            "無敗"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "生半可",
+          "pos": "名詞",
+          "surface": "生半可",
+          "forms": [
+            "生半可"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "産まれる",
+          "pos": "動詞",
+          "surface": "産まれ",
+          "forms": [
+            "産まれる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "痛い",
+          "pos": "形容詞",
+          "surface": "痛い",
+          "forms": [
+            "痛い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "笑顔",
+          "pos": "名詞",
+          "surface": "笑顔",
+          "forms": [
+            "笑顔"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "紹介",
+          "pos": "名詞",
+          "surface": "紹介",
+          "forms": [
+            "紹介"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "胃",
+          "pos": "名詞",
+          "surface": "胃",
+          "forms": [
+            "胃"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "胡散臭い",
+          "pos": "形容詞",
+          "surface": "胡散臭",
+          "forms": [
+            "胡散臭い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "脳味噌",
+          "pos": "名詞",
+          "surface": "脳味噌",
+          "forms": [
+            "脳味噌"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "覚悟",
+          "pos": "名詞",
+          "surface": "覚悟",
+          "forms": [
+            "覚悟"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "親",
+          "pos": "名詞",
+          "surface": "親",
+          "forms": [
+            "親"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "貌",
+          "pos": "名詞",
+          "surface": "貌",
+          "forms": [
+            "貌"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "足",
+          "pos": "名詞",
+          "surface": "足",
+          "forms": [
+            "足",
+            "足を洗う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "足",
+          "pos": "名詞",
+          "surface": "足",
+          "forms": [
+            "足"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "manga-rentalfriend-01",
+      "source_id": "manga-rentalfriend",
+      "group": "rentalfriend",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "e29e7ab72ef6b6972b7e3f04473532a7de8f96d848a6cbb60208f4c898542e63",
+      "analysis_sha256": "8913f715e52fa5bfb2ff8314e57ba7192a5942732cebdbe197e89dbcf37bf747",
+      "features": [
+        {
+          "lemma": "あと",
+          "pos": "名詞",
+          "surface": "あと",
+          "forms": [
+            "あと",
+            "このあと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "あんな",
+          "pos": "連体詞",
+          "surface": "あんな",
+          "forms": [
+            "あんな",
+            "あんな風に"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "いいな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "イベント",
+          "pos": "名詞",
+          "surface": "イベント",
+          "forms": [
+            "イベント"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いる",
+          "pos": "動詞",
+          "surface": "いれ",
+          "forms": [
+            "いる",
+            "いれ",
+            "いれば"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "うそ",
+          "pos": "名詞",
+          "surface": "うそ",
+          "forms": [
+            "うそ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "グッズ",
+          "pos": "名詞",
+          "surface": "グッズ",
+          "forms": [
+            "グッズ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この",
+            "このあと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "コラボカフェ",
+          "pos": "名詞",
+          "surface": "コラボカフェ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "こんな",
+          "pos": "連体詞",
+          "surface": "こんな",
+          "forms": [
+            "こんな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "サービス",
+          "pos": "名詞",
+          "surface": "サービス",
+          "forms": [
+            "サービス",
+            "サービス終了"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "さっき",
+          "pos": "名詞",
+          "surface": "さっき",
+          "forms": [
+            "さっき"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "しかも",
+          "pos": "接続詞",
+          "surface": "しかも",
+          "forms": [
+            "しかも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "シャッフル",
+          "pos": "名詞",
+          "surface": "シャッフル",
+          "forms": [
+            "シャッフル"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "さ",
+          "forms": [
+            "さ",
+            "され",
+            "される",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "しよ",
+          "forms": [
+            "しよ",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "する",
+          "forms": [
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ソシャゲ",
+          "pos": "名詞",
+          "surface": "ソシャゲ",
+          "forms": [
+            "ソシャゲ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "チェック",
+          "pos": "名詞",
+          "surface": "チェック",
+          "forms": [
+            "チェック"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "でも",
+          "pos": "接続詞",
+          "surface": "でも",
+          "forms": [
+            "でも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ない",
+          "pos": "形容詞",
+          "surface": "ない",
+          "forms": [
+            "ない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "まだ",
+          "pos": "副詞",
+          "surface": "まだ",
+          "forms": [
+            "はまだ",
+            "まだ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "もう",
+          "pos": "副詞",
+          "surface": "もう",
+          "forms": [
+            "もう"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "らん",
+          "pos": "名詞",
+          "surface": "らん",
+          "forms": [
+            "らん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ランダム",
+          "pos": "名詞",
+          "surface": "ランダム",
+          "forms": [
+            "ランダム"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "わかる",
+          "pos": "動詞",
+          "surface": "わかん",
+          "forms": [
+            "わかる",
+            "わかん",
+            "わかんない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人",
+          "pos": "名詞",
+          "surface": "人",
+          "forms": [
+            "人"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "他",
+          "pos": "名詞",
+          "surface": "他",
+          "forms": [
+            "他"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "会計",
+          "pos": "名詞",
+          "surface": "会計",
+          "forms": [
+            "会計"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "入学",
+          "pos": "名詞",
+          "surface": "入学",
+          "forms": [
+            "入学",
+            "入学式"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "全然",
+          "pos": "副詞",
+          "surface": "全然",
+          "forms": [
+            "全然"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "友達",
+          "pos": "名詞",
+          "surface": "友達",
+          "forms": [
+            "友達"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "噂",
+          "pos": "名詞",
+          "surface": "噂",
+          "forms": [
+            "噂"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "席",
+          "pos": "名詞",
+          "surface": "席",
+          "forms": [
+            "席",
+            "席替え"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "席",
+          "pos": "名詞",
+          "surface": "席",
+          "forms": [
+            "席"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "整形",
+          "pos": "名詞",
+          "surface": "整形",
+          "forms": [
+            "整形"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "早い",
+          "pos": "形容詞",
+          "surface": "早く",
+          "forms": [
+            "早い",
+            "早く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "更に",
+          "pos": "副詞",
+          "surface": "更に",
+          "forms": [
+            "更に"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "替え",
+          "pos": "名詞",
+          "surface": "替え",
+          "forms": [
+            "席替え",
+            "替え"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "無理",
+          "pos": "名詞",
+          "surface": "無理",
+          "forms": [
+            "無理"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "知る",
+          "pos": "動詞",
+          "surface": "知っ",
+          "forms": [
+            "知る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "秘密",
+          "pos": "名詞",
+          "surface": "秘密",
+          "forms": [
+            "秘密"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "終了",
+          "pos": "名詞",
+          "surface": "終了",
+          "forms": [
+            "サービス終了",
+            "終了"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "経つ",
+          "pos": "動詞",
+          "surface": "経つ",
+          "forms": [
+            "経つ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "行く",
+          "pos": "動詞",
+          "surface": "行く",
+          "forms": [
+            "行く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "覚える",
+          "pos": "動詞",
+          "surface": "覚え",
+          "forms": [
+            "覚え",
+            "覚える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言わ",
+          "forms": [
+            "言う"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "話せる",
+          "pos": "動詞",
+          "surface": "話せ",
+          "forms": [
+            "話せる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "話せる",
+          "pos": "動詞",
+          "surface": "話せる",
+          "forms": [
+            "話せる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "隣",
+          "pos": "名詞",
+          "surface": "隣",
+          "forms": [
+            "隣"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "風",
+          "pos": "名詞",
+          "surface": "風",
+          "forms": [
+            "あんな風に",
+            "風"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "manga-rentalfriend-02",
+      "source_id": "manga-rentalfriend",
+      "group": "rentalfriend",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "27ff3d706fa4c3a9a56baf8d1ccb274ef070ce8934cbe60f96afd7e60833dab5",
+      "analysis_sha256": "ff865b2f2ce2dd80cb6644d8a78ea7018db8a6c7e82161594487135afc81a381",
+      "features": [
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "あっ",
+          "forms": [
+            "あっ",
+            "ある"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いつも",
+          "pos": "副詞",
+          "surface": "いつも",
+          "forms": [
+            "いつも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いる",
+          "pos": "動詞",
+          "surface": "い",
+          "forms": [
+            "い",
+            "いる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "うし",
+          "pos": "名詞",
+          "surface": "うし",
+          "forms": [
+            "うし",
+            "うしろ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "おる",
+          "pos": "動詞",
+          "surface": "おら",
+          "forms": [
+            "おら",
+            "おる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "かん",
+          "pos": "名詞",
+          "surface": "かん",
+          "forms": [
+            "かん"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "くじ",
+          "pos": "名詞",
+          "surface": "くじ",
+          "forms": [
+            "くじ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この",
+            "このまま"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "さっき",
+          "pos": "名詞",
+          "surface": "さっき",
+          "forms": [
+            "さっき"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "じゃ",
+          "pos": "接続詞",
+          "surface": "じゃ",
+          "forms": [
+            "じゃ",
+            "じゃない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "しろい",
+          "pos": "形容詞",
+          "surface": "しろ",
+          "forms": [
+            "うしろ",
+            "しろ",
+            "しろい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "する",
+          "forms": [
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "副詞",
+          "surface": "そう",
+          "forms": [
+            "そう",
+            "そうだ",
+            "そうな",
+            "そうなん"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "副詞",
+          "surface": "そう",
+          "forms": [
+            "そう",
+            "そうだ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "たしか",
+          "pos": "副詞",
+          "surface": "たしか",
+          "forms": [
+            "たしか"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "つく",
+          "pos": "動詞",
+          "surface": "つか",
+          "forms": [
+            "つか",
+            "つく"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "でも",
+          "pos": "接続詞",
+          "surface": "でも",
+          "forms": [
+            "でも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "とても",
+          "pos": "副詞",
+          "surface": "とても",
+          "forms": [
+            "とても"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ない",
+          "pos": "形容詞",
+          "surface": "なかっ",
+          "forms": [
+            "じゃない",
+            "ない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なにか",
+          "pos": "副詞",
+          "surface": "なにか",
+          "forms": [
+            "なにか"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "また",
+          "pos": "接続詞",
+          "surface": "また",
+          "forms": [
+            "また"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "もう少し",
+          "pos": "副詞",
+          "surface": "もう少し",
+          "forms": [
+            "もう少し"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "もしかして",
+          "pos": "副詞",
+          "surface": "もしかして",
+          "forms": [
+            "もしかして"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やっぱ",
+          "pos": "副詞",
+          "surface": "やっぱ",
+          "forms": [
+            "やっぱ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やる",
+          "pos": "動詞",
+          "surface": "やっ",
+          "forms": [
+            "やった",
+            "やる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ラッキー",
+          "pos": "名詞",
+          "surface": "ラッキー",
+          "forms": [
+            "ラッキー"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ろ",
+          "pos": "名詞",
+          "surface": "ろ",
+          "forms": [
+            "うしろ",
+            "ろ",
+            "ろと"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ろ",
+          "pos": "名詞",
+          "surface": "ろ",
+          "forms": [
+            "うしろ",
+            "ろ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一生",
+          "pos": "名詞",
+          "surface": "一生",
+          "forms": [
+            "一生"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "中学校",
+          "pos": "名詞",
+          "surface": "中学校",
+          "forms": [
+            "中学校"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "前",
+          "pos": "名詞",
+          "surface": "前",
+          "forms": [
+            "前"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "動かす",
+          "pos": "動詞",
+          "surface": "動かし",
+          "forms": [
+            "動かす"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "友達",
+          "pos": "名詞",
+          "surface": "友達",
+          "forms": [
+            "友達"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "合う",
+          "pos": "動詞",
+          "surface": "合っ",
+          "forms": [
+            "合う",
+            "気が合う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "多分",
+          "pos": "副詞",
+          "surface": "多分",
+          "forms": [
+            "多分"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "失礼",
+          "pos": "名詞",
+          "surface": "失礼",
+          "forms": [
+            "失礼"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "嫌",
+          "pos": "名詞",
+          "surface": "嫌",
+          "forms": [
+            "嫌"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "小学校",
+          "pos": "名詞",
+          "surface": "小学校",
+          "forms": [
+            "小学校"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "席",
+          "pos": "名詞",
+          "surface": "席",
+          "forms": [
+            "席",
+            "席替え"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "席",
+          "pos": "名詞",
+          "surface": "席",
+          "forms": [
+            "席"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "思う",
+          "pos": "動詞",
+          "surface": "思う",
+          "forms": [
+            "思う"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "替える",
+          "pos": "動詞",
+          "surface": "替え",
+          "forms": [
+            "席替え",
+            "替え",
+            "替える"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "机",
+          "pos": "名詞",
+          "surface": "机",
+          "forms": [
+            "机"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "気",
+          "pos": "名詞",
+          "surface": "気",
+          "forms": [
+            "気",
+            "気が合う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "男子",
+          "pos": "名詞",
+          "surface": "男子",
+          "forms": [
+            "男子"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "目元",
+          "pos": "名詞",
+          "surface": "目元",
+          "forms": [
+            "目元"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "窓際",
+          "pos": "名詞",
+          "surface": "窓際",
+          "forms": [
+            "窓際"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "裏",
+          "pos": "名詞",
+          "surface": "裏",
+          "forms": [
+            "裏"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言わ",
+          "forms": [
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "速やか",
+          "pos": "名詞",
+          "surface": "速やか",
+          "forms": [
+            "速やか"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "隣",
+          "pos": "名詞",
+          "surface": "隣",
+          "forms": [
+            "隣"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "manga-luna-01",
+      "source_id": "manga-luna",
+      "group": "luna",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "030ada3e93867c6aad85de934e591dfa1f62fdb00b5922997854ea0baf878734",
+      "analysis_sha256": "d3141708f41481f0da0423b88810aaa8720c79568756c67036c349a2791ab111",
+      "features": [
+        {
+          "lemma": "アニメ",
+          "pos": "名詞",
+          "surface": "アニメ",
+          "forms": [
+            "アニメ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "した",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そう",
+          "pos": "名詞",
+          "surface": "そう",
+          "forms": [
+            "そう",
+            "そうです",
+            "たそう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ちょ",
+          "pos": "名詞",
+          "surface": "ちょ",
+          "forms": [
+            "ちょ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ッ",
+          "pos": "名詞",
+          "surface": "ッ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "つく",
+          "pos": "動詞",
+          "surface": "つか",
+          "forms": [
+            "つか",
+            "つく"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "できる",
+          "pos": "動詞",
+          "surface": "でき",
+          "forms": [
+            "でき",
+            "できる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なんで",
+          "pos": "副詞",
+          "surface": "なんで",
+          "forms": [
+            "なんで"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "もう",
+          "pos": "副詞",
+          "surface": "もう",
+          "forms": [
+            "はもう",
+            "もう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一種",
+          "pos": "名詞",
+          "surface": "一種",
+          "forms": [
+            "一種"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "主人公",
+          "pos": "名詞",
+          "surface": "主人公",
+          "forms": [
+            "主人公"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人",
+          "pos": "名詞",
+          "surface": "人",
+          "forms": [
+            "人",
+            "人酔い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人",
+          "pos": "名詞",
+          "surface": "人",
+          "forms": [
+            "人"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人口",
+          "pos": "名詞",
+          "surface": "人口",
+          "forms": [
+            "人口",
+            "人口密度"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "修行",
+          "pos": "名詞",
+          "surface": "修行",
+          "forms": [
+            "修行"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "出る",
+          "pos": "動詞",
+          "surface": "出",
+          "forms": [
+            "出",
+            "出る",
+            "旅に出る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "受信",
+          "pos": "名詞",
+          "surface": "受信",
+          "forms": [
+            "受信"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "大丈夫",
+          "pos": "名詞",
+          "surface": "大丈夫",
+          "forms": [
+            "大丈夫"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "密度",
+          "pos": "名詞",
+          "surface": "密度",
+          "forms": [
+            "人口密度",
+            "密度"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "念",
+          "pos": "名詞",
+          "surface": "念",
+          "forms": [
+            "念",
+            "念波"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "思う",
+          "pos": "動詞",
+          "surface": "思っ",
+          "forms": [
+            "思う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "旅",
+          "pos": "名詞",
+          "surface": "旅",
+          "forms": [
+            "旅",
+            "旅に出る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "旅立ち",
+          "pos": "名詞",
+          "surface": "旅立ち",
+          "forms": [
+            "旅立ち"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "極める",
+          "pos": "動詞",
+          "surface": "極め",
+          "forms": [
+            "極め",
+            "極める"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "決め",
+          "pos": "名詞",
+          "surface": "決め",
+          "forms": [
+            "決め"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "深夜",
+          "pos": "名詞",
+          "surface": "深夜",
+          "forms": [
+            "深夜"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "用意",
+          "pos": "名詞",
+          "surface": "用意",
+          "forms": [
+            "用意"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "異国",
+          "pos": "名詞",
+          "surface": "異国",
+          "forms": [
+            "異国"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "聖地",
+          "pos": "名詞",
+          "surface": "聖地",
+          "forms": [
+            "聖地"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "行き先",
+          "pos": "名詞",
+          "surface": "行き先",
+          "forms": [
+            "行き先"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "西洋",
+          "pos": "名詞",
+          "surface": "西洋",
+          "forms": [
+            "西洋"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "迷子",
+          "pos": "名詞",
+          "surface": "迷子",
+          "forms": [
+            "迷子"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "面白い",
+          "pos": "形容詞",
+          "surface": "面白く",
+          "forms": [
+            "面白い"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "魔女",
+          "pos": "名詞",
+          "surface": "魔女",
+          "forms": [
+            "魔女"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "魔術",
+          "pos": "名詞",
+          "surface": "魔術",
+          "forms": [
+            "魔術"
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "manga-luna-02",
+      "source_id": "manga-luna",
+      "group": "luna",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "89ece2934e8e55b1b87cf57d1b470373d9efe0c179a093643a6061be06a5813a",
+      "analysis_sha256": "53f5a47c161cba57d84d1a8936089648b8d4939da5a28941de3528594bf2c31c",
+      "features": [
+        {
+          "lemma": "あこがれる",
+          "pos": "動詞",
+          "surface": "あこがれ",
+          "forms": [
+            "あこがれ",
+            "あこがれる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "イミ",
+          "pos": "名詞",
+          "surface": "イミ",
+          "forms": [
+            "イミ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ウケる",
+          "pos": "動詞",
+          "surface": "ウケる",
+          "forms": [
+            "ウケる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ウチ",
+          "pos": "名詞",
+          "surface": "ウチ",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "うつ",
+          "pos": "動詞",
+          "surface": "うっ",
+          "forms": [
+            "うっ",
+            "うつ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ウロ",
+          "pos": "名詞",
+          "surface": "ウロ",
+          "forms": [
+            "ウロ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "キャラ",
+          "pos": "名詞",
+          "surface": "キャラ",
+          "forms": [
+            "キャラ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "さては",
+          "pos": "副詞",
+          "surface": "さては",
+          "forms": [
+            "さては"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そんな",
+          "pos": "連体詞",
+          "surface": "そんな",
+          "forms": [
+            "そんな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "てか",
+          "pos": "接続詞",
+          "surface": "てか",
+          "forms": [
+            "てか"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "テスト",
+          "pos": "名詞",
+          "surface": "テスト",
+          "forms": [
+            "テスト"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "とこ",
+          "pos": "名詞",
+          "surface": "とこ",
+          "forms": [
+            "とこ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ない",
+          "pos": "形容詞",
+          "surface": "ない",
+          "forms": [
+            "ない"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なぜ",
+          "pos": "副詞",
+          "surface": "なぜ",
+          "forms": [
+            "なぜ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なる",
+          "pos": "動詞",
+          "surface": "なる",
+          "forms": [
+            "となる",
+            "なる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ほえる",
+          "pos": "動詞",
+          "surface": "ほえ",
+          "forms": [
+            "ほえ",
+            "ほえる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ホテル",
+          "pos": "名詞",
+          "surface": "ホテル",
+          "forms": [
+            "ホテル"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やめる",
+          "pos": "動詞",
+          "surface": "やめ",
+          "forms": [
+            "やめとき",
+            "やめる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やる",
+          "pos": "動詞",
+          "surface": "やっ",
+          "forms": [
+            "やる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よろしく",
+          "pos": "副詞",
+          "surface": "よろしく",
+          "forms": [
+            "よろしく"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "わかる",
+          "pos": "動詞",
+          "surface": "わから",
+          "forms": [
+            "わからん",
+            "わかる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ワリカン",
+          "pos": "名詞",
+          "surface": "ワリカン",
+          "forms": [
+            "ワリカン"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一人暮らし",
+          "pos": "名詞",
+          "surface": "一人暮らし",
+          "forms": [
+            "一人暮らし"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一族",
+          "pos": "名詞",
+          "surface": "一族",
+          "forms": [
+            "一族"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "一瞬",
+          "pos": "名詞",
+          "surface": "一瞬",
+          "forms": [
+            "一瞬"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "今",
+          "pos": "名詞",
+          "surface": "今",
+          "forms": [
+            "今"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "冗談",
+          "pos": "名詞",
+          "surface": "冗談",
+          "forms": [
+            "冗談"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "出る",
+          "pos": "動詞",
+          "surface": "出",
+          "forms": [
+            "出",
+            "出る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "十分",
+          "pos": "名詞",
+          "surface": "十分",
+          "forms": [
+            "十分"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "嗜む",
+          "pos": "動詞",
+          "surface": "嗜む",
+          "forms": [
+            "嗜む"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "場合",
+          "pos": "名詞",
+          "surface": "場合",
+          "forms": [
+            "場合"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "変わる",
+          "pos": "動詞",
+          "surface": "変わっ",
+          "forms": [
+            "変わった",
+            "変わる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "変わる",
+          "pos": "動詞",
+          "surface": "変わっ",
+          "forms": [
+            "変わる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "学校",
+          "pos": "名詞",
+          "surface": "学校",
+          "forms": [
+            "学校"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "家",
+          "pos": "名詞",
+          "surface": "家",
+          "forms": [
+            "家"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "宿",
+          "pos": "名詞",
+          "surface": "宿",
+          "forms": [
+            "宿"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "居る",
+          "pos": "動詞",
+          "surface": "居",
+          "forms": [
+            "居",
+            "居る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "当然",
+          "pos": "副詞",
+          "surface": "当然",
+          "forms": [
+            "当然"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "待てる",
+          "pos": "動詞",
+          "surface": "待て",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "拾う",
+          "pos": "動詞",
+          "surface": "拾わ",
+          "forms": [
+            "拾う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "木",
+          "pos": "名詞",
+          "surface": "木",
+          "forms": [
+            "木",
+            "木の"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "来る",
+          "pos": "動詞",
+          "surface": "来",
+          "forms": [
+            "来",
+            "来る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "翌朝",
+          "pos": "名詞",
+          "surface": "翌朝",
+          "forms": [
+            "翌朝"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "自由自在",
+          "pos": "名詞",
+          "surface": "自由自在",
+          "forms": [
+            "自由自在"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "行く",
+          "pos": "動詞",
+          "surface": "行く",
+          "forms": [
+            "行く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言っ",
+          "forms": [
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言語",
+          "pos": "名詞",
+          "surface": "言語",
+          "forms": [
+            "言語"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "語",
+          "pos": "名詞",
+          "surface": "語",
+          "forms": [
+            "語"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "貴様",
+          "pos": "名詞",
+          "surface": "貴様",
+          "forms": [
+            "貴様"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "身",
+          "pos": "名詞",
+          "surface": "身",
+          "forms": [
+            "身"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "送る",
+          "pos": "動詞",
+          "surface": "送る",
+          "forms": [
+            "送る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "遅刻",
+          "pos": "名詞",
+          "surface": "遅刻",
+          "forms": [
+            "遅刻"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "長",
+          "pos": "名詞",
+          "surface": "長",
+          "forms": [
+            "長"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "顔",
+          "pos": "名詞",
+          "surface": "顔",
+          "forms": [
+            "顔"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "食費",
+          "pos": "名詞",
+          "surface": "食費",
+          "forms": [
+            "食費"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "魔女",
+          "pos": "名詞",
+          "surface": "魔女",
+          "forms": [
+            "魔女"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "魔術",
+          "pos": "名詞",
+          "surface": "魔術",
+          "forms": [
+            "魔術"
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "manga-tengokumate-01",
+      "source_id": "manga-tengokumate",
+      "group": "tengokumate",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "7c8a908cc0bd2ad06ef6c7bd009bb6f39df6cbfba4f39ab179edc56e4b9accff",
+      "analysis_sha256": "e536fcc23ba306381d3a87d7b297620ecafd57df487d9039ce1ba2f681ba4c53",
+      "features": [
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "ある",
+          "forms": [
+            "ある",
+            "あるの"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "いいから"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "お呼び",
+          "pos": "名詞",
+          "surface": "お呼び",
+          "forms": [
+            "お呼び"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ギャー",
+          "pos": "名詞",
+          "surface": "ギャー",
+          "forms": [
+            "ギャー"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この",
+            "この前"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "この",
+          "pos": "連体詞",
+          "surface": "この",
+          "forms": [
+            "この"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "さ",
+          "forms": [
+            "さ",
+            "させる",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "さ",
+          "forms": [
+            "さ",
+            "され",
+            "される",
+            "する",
+            "視する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "うとした",
+            "し",
+            "した",
+            "する",
+            "とし",
+            "とした",
+            "とする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "しきる",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "した",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "する",
+          "forms": [
+            "する",
+            "耳にする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "する",
+          "forms": [
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そういう",
+          "pos": "連体詞",
+          "surface": "そういう",
+          "forms": [
+            "そういう"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "その",
+          "pos": "連体詞",
+          "surface": "その",
+          "forms": [
+            "その"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "ただ",
+          "pos": "接続詞",
+          "surface": "ただ",
+          "forms": [
+            "ただ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "とこ",
+          "pos": "名詞",
+          "surface": "とこ",
+          "forms": [
+            "とこ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "なぜ",
+          "pos": "副詞",
+          "surface": "なぜ",
+          "forms": [
+            "なぜ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よい",
+          "pos": "形容詞",
+          "surface": "よい",
+          "forms": [
+            "がよい",
+            "よい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "よく",
+          "pos": "副詞",
+          "surface": "よく",
+          "forms": [
+            "よく"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "ラッパ",
+          "pos": "名詞",
+          "surface": "ラッパ",
+          "forms": [
+            "ラッパ"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "わが",
+          "pos": "連体詞",
+          "surface": "わが",
+          "forms": [
+            "わが"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ワシ",
+          "pos": "名詞",
+          "surface": "ワシ",
+          "forms": [
+            "ワシ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "世界",
+          "pos": "名詞",
+          "surface": "世界",
+          "forms": [
+            "世界"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "主",
+          "pos": "名詞",
+          "surface": "主",
+          "forms": [
+            "お主",
+            "主"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "人間",
+          "pos": "名詞",
+          "surface": "人間",
+          "forms": [
+            "人間",
+            "人間界"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "他",
+          "pos": "名詞",
+          "surface": "他",
+          "forms": [
+            "他",
+            "他に",
+            "他にも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "作り直す",
+          "pos": "動詞",
+          "surface": "作り直す",
+          "forms": [
+            "作り直す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "偏る",
+          "pos": "動詞",
+          "surface": "偏っ",
+          "forms": [
+            "偏る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "内容",
+          "pos": "名詞",
+          "surface": "内容",
+          "forms": [
+            "内容"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "最近",
+          "pos": "名詞",
+          "surface": "最近",
+          "forms": [
+            "最近"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "出入り",
+          "pos": "名詞",
+          "surface": "出入り",
+          "forms": [
+            "出入り",
+            "出入り禁止"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "前",
+          "pos": "名詞",
+          "surface": "前",
+          "forms": [
+            "この前",
+            "前"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "問題",
+          "pos": "名詞",
+          "surface": "問題",
+          "forms": [
+            "問題",
+            "問題視"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "地獄",
+          "pos": "名詞",
+          "surface": "地獄",
+          "forms": [
+            "地獄"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "天使",
+          "pos": "名詞",
+          "surface": "天使",
+          "forms": [
+            "天使"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "天界",
+          "pos": "名詞",
+          "surface": "天界",
+          "forms": [
+            "天界"
+          ],
+          "count": 3
+        },
+        {
+          "lemma": "娘",
+          "pos": "名詞",
+          "surface": "娘",
+          "forms": [
+            "娘"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "嫌",
+          "pos": "名詞",
+          "surface": "嫌",
+          "forms": [
+            "嫌"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "学ぶ",
+          "pos": "動詞",
+          "surface": "学び",
+          "forms": [
+            "学び",
+            "学ぶ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "少し",
+          "pos": "副詞",
+          "surface": "少し",
+          "forms": [
+            "少し"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "崩壊",
+          "pos": "名詞",
+          "surface": "崩壊",
+          "forms": [
+            "崩壊"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "必要",
+          "pos": "名詞",
+          "surface": "必要",
+          "forms": [
+            "必要"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "思想",
+          "pos": "名詞",
+          "surface": "思想",
+          "forms": [
+            "思想"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "改造",
+          "pos": "名詞",
+          "surface": "改造",
+          "forms": [
+            "改造",
+            "魔改造"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "来る",
+          "pos": "動詞",
+          "surface": "来",
+          "forms": [
+            "来",
+            "来る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "極端",
+          "pos": "名詞",
+          "surface": "極端",
+          "forms": [
+            "極端"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "活躍",
+          "pos": "名詞",
+          "surface": "活躍",
+          "forms": [
+            "活躍"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "現世",
+          "pos": "名詞",
+          "surface": "現世",
+          "forms": [
+            "現世"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "直す",
+          "pos": "動詞",
+          "surface": "直し",
+          "forms": [
+            "直し",
+            "直す"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "禁止",
+          "pos": "名詞",
+          "surface": "禁止",
+          "forms": [
+            "出入り禁止",
+            "禁止"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "耳",
+          "pos": "名詞",
+          "surface": "耳",
+          "forms": [
+            "耳",
+            "耳にする"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "聞く",
+          "pos": "動詞",
+          "surface": "聞い",
+          "forms": [
+            "聞く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "腐敗",
+          "pos": "名詞",
+          "surface": "腐敗",
+          "forms": [
+            "腐敗"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "褒める",
+          "pos": "動詞",
+          "surface": "褒め",
+          "forms": [
+            "褒めて遣わす",
+            "褒める"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言う",
+          "forms": [
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "追放",
+          "pos": "名詞",
+          "surface": "追放",
+          "forms": [
+            "追放"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "遣わす",
+          "pos": "動詞",
+          "surface": "遣わす",
+          "forms": [
+            "褒めて遣わす",
+            "遣わす"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "魔",
+          "pos": "名詞",
+          "surface": "魔",
+          "forms": [
+            "魔",
+            "魔改造"
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "manga-tengokumate-02",
+      "source_id": "manga-tengokumate",
+      "group": "tengokumate",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "5f4634ba40b8bffb7a005f4337a560de03db82c70ce7621945b500516bb53df3",
+      "analysis_sha256": "5f4634ba40b8bffb7a005f4337a560de03db82c70ce7621945b500516bb53df3",
+      "features": [
+        {
+          "lemma": "ある",
+          "pos": "動詞",
+          "surface": "ある",
+          "forms": [
+            "ある"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いい",
+          "pos": "形容詞",
+          "surface": "いい",
+          "forms": [
+            "いい",
+            "いいこと",
+            "をいいことに"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "いや",
+          "pos": "接続詞",
+          "surface": "いや",
+          "forms": [
+            "いや"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ガチャ",
+          "pos": "名詞",
+          "surface": "ガチャ",
+          "forms": [
+            "ガチャ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "キャラ",
+          "pos": "名詞",
+          "surface": "キャラ",
+          "forms": [
+            "キャラ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ケルベロス",
+          "pos": "名詞",
+          "surface": "ケルベロス",
+          "forms": [
+            "ケルベロス"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "サービス",
+          "pos": "名詞",
+          "surface": "サービス",
+          "forms": [
+            "サービス",
+            "サービス残業"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "すか",
+          "pos": "名詞",
+          "surface": "すか",
+          "forms": [
+            "すか",
+            "やすか"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "したり",
+            "する"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "する",
+          "pos": "動詞",
+          "surface": "し",
+          "forms": [
+            "し",
+            "して",
+            "する"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "そうすると",
+          "pos": "接続詞",
+          "surface": "そうすると",
+          "forms": [
+            "そうすると"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "その",
+          "pos": "連体詞",
+          "surface": "その",
+          "forms": [
+            "その",
+            "その分"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "その",
+          "pos": "連体詞",
+          "surface": "その",
+          "forms": [
+            "その"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "そんな",
+          "pos": "連体詞",
+          "surface": "そんな",
+          "forms": [
+            "そんな"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "だから",
+          "pos": "接続詞",
+          "surface": "だから",
+          "forms": [
+            "だから"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "でも",
+          "pos": "接続詞",
+          "surface": "でも",
+          "forms": [
+            "でも"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "バイト",
+          "pos": "名詞",
+          "surface": "バイト",
+          "forms": [
+            "バイト"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ボール",
+          "pos": "名詞",
+          "surface": "ボール",
+          "forms": [
+            "ボール",
+            "ボール投げ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "マグマ",
+          "pos": "名詞",
+          "surface": "マグマ",
+          "forms": [
+            "マグマ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "めっちゃ",
+          "pos": "副詞",
+          "surface": "めっちゃ",
+          "forms": [
+            "めっちゃ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "もう",
+          "pos": "副詞",
+          "surface": "もう",
+          "forms": [
+            "もう"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やばい",
+          "pos": "形容詞",
+          "surface": "やばい",
+          "forms": [
+            "やばい"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "やめる",
+          "pos": "動詞",
+          "surface": "やめる",
+          "forms": [
+            "やめる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "ワシ",
+          "pos": "名詞",
+          "surface": "ワシ",
+          "forms": [
+            "ワシ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人間",
+          "pos": "名詞",
+          "surface": "人間",
+          "forms": [
+            "人間",
+            "人間界"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "人間",
+          "pos": "名詞",
+          "surface": "人間",
+          "forms": [
+            "人間"
+          ],
+          "count": 5
+        },
+        {
+          "lemma": "他人",
+          "pos": "名詞",
+          "surface": "他人",
+          "forms": [
+            "他人"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "体裁",
+          "pos": "名詞",
+          "surface": "体裁",
+          "forms": [
+            "体裁"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "何たる",
+          "pos": "連体詞",
+          "surface": "何たる",
+          "forms": [
+            "何たる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "分",
+          "pos": "名詞",
+          "surface": "分",
+          "forms": [
+            "その分",
+            "分",
+            "分の"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "助ける",
+          "pos": "動詞",
+          "surface": "助け",
+          "forms": [
+            "助け",
+            "助ける"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "匿名",
+          "pos": "名詞",
+          "surface": "匿名",
+          "forms": [
+            "匿名",
+            "匿名性"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "単位",
+          "pos": "名詞",
+          "surface": "単位",
+          "forms": [
+            "単位"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "善行",
+          "pos": "名詞",
+          "surface": "善行",
+          "forms": [
+            "善行"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "地上",
+          "pos": "名詞",
+          "surface": "地上",
+          "forms": [
+            "地上"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "大丈夫",
+          "pos": "名詞",
+          "surface": "大丈夫",
+          "forms": [
+            "大丈夫"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "学ぶ",
+          "pos": "動詞",
+          "surface": "学ん",
+          "forms": [
+            "学ぶ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "学べる",
+          "pos": "動詞",
+          "surface": "学べる",
+          "forms": [],
+          "count": 1
+        },
+        {
+          "lemma": "川",
+          "pos": "名詞",
+          "surface": "川",
+          "forms": [
+            "川"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "引く",
+          "pos": "動詞",
+          "surface": "引く",
+          "forms": [
+            "引く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "思う",
+          "pos": "動詞",
+          "surface": "思う",
+          "forms": [
+            "思う",
+            "誇りに思う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "悪",
+          "pos": "名詞",
+          "surface": "悪",
+          "forms": [
+            "悪"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "悪魔",
+          "pos": "名詞",
+          "surface": "悪魔",
+          "forms": [
+            "悪魔"
+          ],
+          "count": 2
+        },
+        {
+          "lemma": "感謝",
+          "pos": "名詞",
+          "surface": "感謝",
+          "forms": [
+            "感謝"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "払う",
+          "pos": "動詞",
+          "surface": "払わ",
+          "forms": [
+            "払う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "批判",
+          "pos": "名詞",
+          "surface": "批判",
+          "forms": [
+            "批判"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "投げる",
+          "pos": "動詞",
+          "surface": "投げ",
+          "forms": [
+            "ボール投げ",
+            "投げ",
+            "投げる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "来る",
+          "pos": "動詞",
+          "surface": "来る",
+          "forms": [
+            "来る"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "残業",
+          "pos": "名詞",
+          "surface": "残業",
+          "forms": [
+            "サービス残業",
+            "残業"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "溺れる",
+          "pos": "動詞",
+          "surface": "溺れ",
+          "forms": [
+            "溺れる"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "行く",
+          "pos": "動詞",
+          "surface": "行っ",
+          "forms": [
+            "行く"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "親",
+          "pos": "名詞",
+          "surface": "親",
+          "forms": [
+            "親"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言う",
+          "forms": [
+            "と言う",
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "言う",
+          "pos": "動詞",
+          "surface": "言っ",
+          "forms": [
+            "言う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "誇り",
+          "pos": "名詞",
+          "surface": "誇り",
+          "forms": [
+            "誇り",
+            "誇りに思う"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "賃金",
+          "pos": "名詞",
+          "surface": "賃金",
+          "forms": [
+            "賃金"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "遊ぶ",
+          "pos": "動詞",
+          "surface": "遊ん",
+          "forms": [
+            "遊ぶ"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "金欠",
+          "pos": "名詞",
+          "surface": "金欠",
+          "forms": [
+            "金欠"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "顔",
+          "pos": "名詞",
+          "surface": "顔",
+          "forms": [
+            "顔"
+          ],
+          "count": 1
+        },
+        {
+          "lemma": "飼い主",
+          "pos": "名詞",
+          "surface": "飼い主",
+          "forms": [
+            "飼い主"
+          ],
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

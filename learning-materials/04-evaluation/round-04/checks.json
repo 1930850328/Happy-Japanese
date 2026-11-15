@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-13",
+  "result": "passed",
+  "samples": 16,
+  "works": 8,
+  "content_tokens": 896,
+  "manga_images_reread": 16,
+  "source_integrity": {
+    "srt_files": 8,
+    "new_manga_images": 16,
+    "passed": true
+  },
+  "curriculum_and_config_frozen_files_unchanged": 31,
+  "wordlist_build_check": "passed:605 groups,151 grammar forms",
+  "deterministic_rerun": "byte-identical lexical-results.json",
+  "semantic_source_anchors": "all 16 entries checked against current frozen course",
+  "frequency_source_hashes": "passed",
+  "negative_checks": [
+    {
+      "check": "text tampering",
+      "result": "rejected",
+      "reason": "Original text changed"
+    },
+    {
+      "check": "split tampering",
+      "result": "rejected",
+      "reason": "Sample metadata changed"
+    },
+    {
+      "check": "consumed holdout restored",
+      "result": "rejected",
+      "reason": "Evaluated holdout reused: hyouka"
+    }
+  ],
+  "bank_after_evaluation": {
+    "development": 8,
+    "regression": 54,
+    "holdout": 0
+  },
+  "independent_answer_reviews": 0,
+  "student_test_performed": false
+}

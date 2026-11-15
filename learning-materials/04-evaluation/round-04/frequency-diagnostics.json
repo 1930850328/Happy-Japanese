@@ -1,0 +1,283 @@
+{
+  "scope": "核对当前冻结的真实词频表；不修改选词清单，不将测试中两次出现等同为通用高频。",
+  "source_hashes": {
+    "anime": "cd91e4fc6c04c2a2f4c7b4f1d96fd36711c1492913da0bdfdb8cdec577c46d23",
+    "manga": "72aaf26cd6ab3e701a0c4e61fec93a15997393c884bc652d1ea706a03f1e3212"
+  },
+  "rows": [
+    {
+      "term": "妹",
+      "reading": "いもうと",
+      "source_ranks": {
+        "anime": [
+          1096
+        ],
+        "manga": [
+          915
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "髪",
+      "reading": "かみ",
+      "source_ranks": {
+        "anime": [
+          1339
+        ],
+        "manga": [
+          957
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "高校",
+      "reading": "こうこう",
+      "source_ranks": {
+        "anime": [
+          1900
+        ],
+        "manga": [
+          926
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "猫",
+      "reading": "ねこ",
+      "source_ranks": {
+        "anime": [
+          1667,
+          120857
+        ],
+        "manga": [
+          951
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "あたし",
+      "reading": "あたし",
+      "source_ranks": {
+        "anime": [
+          1370
+        ],
+        "manga": [
+          572
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "仲良く",
+      "reading": "なかよく",
+      "source_ranks": {
+        "anime": [
+          1587
+        ],
+        "manga": [
+          900
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "野郎",
+      "reading": "やろう",
+      "source_ranks": {
+        "anime": [
+          929
+        ],
+        "manga": [
+          1600
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "姉",
+      "reading": "あね",
+      "source_ranks": {
+        "anime": [
+          2379
+        ],
+        "manga": [
+          1330
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "通う",
+      "reading": "かよう",
+      "source_ranks": {
+        "anime": [
+          1644
+        ],
+        "manga": [
+          1231
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "たまたま",
+      "reading": "たまたま",
+      "source_ranks": {
+        "anime": [
+          1649
+        ],
+        "manga": [
+          1608
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "宿題",
+      "reading": "しゅくだい",
+      "source_ranks": {
+        "anime": [
+          3147
+        ],
+        "manga": [
+          3728
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "試験",
+      "reading": "しけん",
+      "source_ranks": {
+        "anime": [
+          3018
+        ],
+        "manga": [
+          2933
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "合格",
+      "reading": "ごうかく",
+      "source_ranks": {
+        "anime": [
+          2800
+        ],
+        "manga": [
+          3334
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "勤務",
+      "reading": "きんむ",
+      "source_ranks": {
+        "anime": [
+          10307
+        ],
+        "manga": [
+          8711
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "全く",
+      "reading": "まったく",
+      "source_ranks": {
+        "anime": [
+          1086
+        ],
+        "manga": [
+          975
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "まったく",
+      "reading": "まったく",
+      "source_ranks": {
+        "anime": [
+          431
+        ],
+        "manga": [
+          544
+        ]
+      },
+      "in_selected_explicit_forms": true,
+      "passes_both_1000_rule": true
+    },
+    {
+      "term": "綺麗",
+      "reading": "きれい",
+      "source_ranks": {
+        "anime": [
+          5896
+        ],
+        "manga": [
+          1483
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "きれい",
+      "reading": "きれい",
+      "source_ranks": {
+        "anime": [
+          713
+        ],
+        "manga": [
+          1530
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    },
+    {
+      "term": "アタシ",
+      "reading": "あたし",
+      "source_ranks": {
+        "anime": [
+          8111
+        ],
+        "manga": [
+          3470
+        ]
+      },
+      "in_selected_explicit_forms": false,
+      "passes_both_1000_rule": false
+    }
+  ],
+  "classification_notes": [
+    "妹/髪/高校/猫/あたし/仲良く等因两类必须同时前1000而被挡掉；单类高频被另一类名次否决。",
+    "全く/まったく、綺麗/きれい是异写教学及匹配问题，不能算两个完全不同的词；きれい已在当前D7词表。",
+    "なのに在D10有讲解；未匹配不能直接变成生词候选。",
+    "うつ/だい/ちょ等包含口语及分词噪声，未人工确认前不加入教材。",
+    "勤務虽出现在两作，源排名明显靠后；只记录用途候选，不挤占核心。"
+  ]
+}

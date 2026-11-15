@@ -1,0 +1,1556 @@
+{
+  "type": "editorial_semantic_support_audit",
+  "student_test_performed": false,
+  "comprehension_percent": null,
+  "sampling": "Each segment: first two complete predicative utterances; contiguous subtitle lines combined; calls, labels, bare reactions skipped. A compound utterance remains one unit. Nekodamashi opening self-introduction and following description are distinct predicates.",
+  "limits": "32 diagnostic utterances, not exhaustive meaning-unit annotation; one editor, no independent rater; no percent from these judgments. Lexical pointers are exact table entries; grammar string presence alone is not a pass.",
+  "fixed_units": [
+    {
+      "sample_id": "anime-barakamon-01",
+      "ordinal": 1,
+      "anchor": "型に はまった字",
+      "meaning_zh": "对方还年轻，却写得程式化；并非赞赏字写得规范。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "若い",
+            "entries": []
+          },
+          {
+            "form": "書く",
+            "entries": [
+              {
+                "day": 5,
+                "reading": "かく",
+                "gloss": "写"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "若い",
+            "entries": [
+              {
+                "day": 7,
+                "reading": "わかい",
+                "gloss": "年轻的；年幼的"
+              }
+            ]
+          },
+          {
+            "form": "書く",
+            "entries": [
+              {
+                "day": 5,
+                "reading": "かく",
+                "gloss": "写"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 10,
+          "find": "のに",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "型にはまる整体评价",
+        "字"
+      ]
+    },
+    {
+      "sample_id": "anime-barakamon-01",
+      "ordinal": 2,
+      "anchor": "手本のような",
+      "meaning_zh": "说是像字帖范本那样的字吗；说话者在斟酌评价。",
+      "lexical_evidence": {
+        "old": [],
+        "revised": []
+      },
+      "grammar_pointers": [
+        {
+          "day": 17,
+          "find": "よう",
+          "old_contains": false,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "手本",
+        "というべきか的评价语气"
+      ]
+    },
+    {
+      "sample_id": "anime-barakamon-02",
+      "ordinal": 1,
+      "anchor": "１個ずつで よかよ",
+      "meaning_zh": "对方因为胖，每次一个就好；方言表达原因与许可。",
+      "lexical_evidence": {
+        "old": [],
+        "revised": []
+      },
+      "grammar_pointers": [
+        {
+          "day": 16,
+          "find": "ずつ",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "メタボ",
+        "じゃけん／よかよ方言"
+      ]
+    },
+    {
+      "sample_id": "anime-barakamon-02",
+      "ordinal": 2,
+      "anchor": "食ぶっか",
+      "meaning_zh": "询问对方要不要吃指套玉米；不是已经吃了。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "食べる",
+            "entries": [
+              {
+                "day": 5,
+                "reading": "たべる",
+                "gloss": "吃；一段动词"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "食べる",
+            "entries": [
+              {
+                "day": 5,
+                "reading": "たべる",
+                "gloss": "吃；一段动词"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "か",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "食ぶっか方言",
+        "フィンガーコーン"
+      ]
+    },
+    {
+      "sample_id": "anime-nozaki-01",
+      "ordinal": 1,
+      "anchor": "行きます",
+      "meaning_zh": "说话者给自己打气：要去行动了。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "行く",
+            "entries": [
+              {
+                "day": 5,
+                "reading": "いく",
+                "gloss": "去"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "行く",
+            "entries": [
+              {
+                "day": 5,
+                "reading": "いく",
+                "gloss": "去"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 5,
+          "find": "ます",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "anime-nozaki-01",
+      "ordinal": 2,
+      "anchor": "ファンでした",
+      "meaning_zh": "一直是你的粉丝；这不是直接表达想交往。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "ずっと",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "ずっと",
+            "entries": [
+              {
+                "day": 6,
+                "reading": "ずっと",
+                "gloss": "一直；始终；……得多（比较时）。"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "です",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "ファン"
+      ]
+    },
+    {
+      "sample_id": "anime-nozaki-02",
+      "ordinal": 1,
+      "anchor": "自転車だけど",
+      "meaning_zh": "自己是骑车来的，以此引出后面的安排。",
+      "lexical_evidence": {
+        "old": [],
+        "revised": []
+      },
+      "grammar_pointers": [
+        {
+          "day": 10,
+          "find": "けど",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "自転車"
+      ]
+    },
+    {
+      "sample_id": "anime-nozaki-02",
+      "ordinal": 2,
+      "anchor": "何って自転車だよ",
+      "meaning_zh": "回应对方的疑问：说的就是自行车。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "何",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "なに／なん",
+                "gloss": "什么；何ですか中读なん"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "何",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "なに",
+                "gloss": "什么；何ですか等读なん；同词写法：なん／なに"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 18,
+          "find": "って",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "自転車",
+        "反问后的重复解释"
+      ]
+    },
+    {
+      "sample_id": "anime-bocchi-01",
+      "ordinal": 1,
+      "anchor": "この指 とまれ",
+      "meaning_zh": "想玩捉迷藏的人来加入；手指召集游戏的惯用说法。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "この",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "この",
+                "gloss": "这个……，后面要接名词"
+              }
+            ]
+          },
+          {
+            "form": "指",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "この",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "この",
+                "gloss": "这个……，后面要接名词"
+              }
+            ]
+          },
+          {
+            "form": "指",
+            "entries": []
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 18,
+          "find": "命令",
+          "old_contains": false,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "かくれんぼ",
+        "指とまれ的游戏语用"
+      ]
+    },
+    {
+      "sample_id": "anime-bocchi-01",
+      "ordinal": 2,
+      "anchor": "やる～",
+      "meaning_zh": "回应前面的邀请，表示自己要参加。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "やる",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "やる",
+            "entries": [
+              {
+                "day": 5,
+                "reading": "やる",
+                "gloss": "做，干，进行"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 5,
+          "find": "将来",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "anime-bocchi-02",
+      "ordinal": 1,
+      "anchor": "サポートギター",
+      "meaning_zh": "请求对方仅今天在自己的乐队担任支援吉他。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "あたし",
+            "entries": []
+          },
+          {
+            "form": "今日",
+            "entries": [
+              {
+                "day": 6,
+                "reading": "きょう",
+                "gloss": "今天"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "あたし",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "あたし",
+                "gloss": "我；随意的女性自称，漫画也写アタシ；同词写法：アタシ"
+              }
+            ]
+          },
+          {
+            "form": "今日",
+            "entries": [
+              {
+                "day": 6,
+                "reading": "きょう",
+                "gloss": "今天"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 15,
+          "find": "くれ",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "バンド",
+        "サポートギター",
+        "してくれないかな委婉请求"
+      ]
+    },
+    {
+      "sample_id": "anime-bocchi-02",
+      "ordinal": 2,
+      "anchor": "突然 辞めちゃって",
+      "meaning_zh": "马上要演出，但吉他手突然退出；这是求助原因。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "突然",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "突然",
+            "entries": [
+              {
+                "day": 21,
+                "reading": "とつぜん",
+                "gloss": "突然；骤然，毫无预兆地"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 18,
+          "find": "ちゃ",
+          "old_contains": true,
+          "revised_contains": true
+        },
+        {
+          "day": 10,
+          "find": "のに",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "ライブ",
+        "ギター",
+        "辞める"
+      ]
+    },
+    {
+      "sample_id": "anime-dungeonmeshi-01",
+      "ordinal": 1,
+      "anchor": "小さな村から始まった",
+      "meaning_zh": "事情起源于一个小村庄。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "小さな",
+            "entries": []
+          },
+          {
+            "form": "村",
+            "entries": []
+          },
+          {
+            "form": "始まる",
+            "entries": [
+              {
+                "day": 8,
+                "reading": "はじまる",
+                "gloss": "开始；五段"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "小さな",
+            "entries": []
+          },
+          {
+            "form": "村",
+            "entries": []
+          },
+          {
+            "form": "始まる",
+            "entries": [
+              {
+                "day": 8,
+                "reading": "はじまる",
+                "gloss": "开始；五段"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 7,
+          "find": "た",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "anime-dungeonmeshi-01",
+      "ordinal": 2,
+      "anchor": "地下墓地の底",
+      "meaning_zh": "某日地面震动，地下墓地底部塌开，一个男人从深处出现。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "日",
+            "entries": []
+          },
+          {
+            "form": "底",
+            "entries": []
+          },
+          {
+            "form": "抜ける",
+            "entries": []
+          },
+          {
+            "form": "奥",
+            "entries": []
+          },
+          {
+            "form": "男",
+            "entries": []
+          },
+          {
+            "form": "現れる",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "日",
+            "entries": [
+              {
+                "day": 6,
+                "reading": "ひ",
+                "gloss": "天、日子；计日常读にち，一日作整天读いちにち，一号读ついたち"
+              }
+            ]
+          },
+          {
+            "form": "底",
+            "entries": []
+          },
+          {
+            "form": "抜ける",
+            "entries": [
+              {
+                "day": 21,
+                "reading": "ぬける",
+                "gloss": "脱落、脱离；本课髪が抜ける＝头发脱落"
+              }
+            ]
+          },
+          {
+            "form": "奥",
+            "entries": []
+          },
+          {
+            "form": "男",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "おとこ",
+                "gloss": "男人，男性"
+              }
+            ]
+          },
+          {
+            "form": "現れる",
+            "entries": [
+              {
+                "day": 20,
+                "reading": "あらわれる",
+                "gloss": "出现，显现"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 10,
+          "find": "と",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "地鳴り",
+        "地下墓地",
+        "と共に"
+      ]
+    },
+    {
+      "sample_id": "anime-dungeonmeshi-02",
+      "ordinal": 1,
+      "anchor": "全て入れる",
+      "meaning_zh": "因为腿好吃，所以全部放进锅里；全部限定这些腿。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "足",
+            "entries": []
+          },
+          {
+            "form": "うまい",
+            "entries": []
+          },
+          {
+            "form": "全て",
+            "entries": []
+          },
+          {
+            "form": "入れる",
+            "entries": [
+              {
+                "day": 12,
+                "reading": "いれる",
+                "gloss": "放入；一段，与入る区分"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "足",
+            "entries": [
+              {
+                "day": 9,
+                "reading": "あし",
+                "gloss": "腿，脚。"
+              }
+            ]
+          },
+          {
+            "form": "うまい",
+            "entries": [
+              {
+                "day": 7,
+                "reading": "うまい",
+                "gloss": "好吃；擅长、巧妙；顺利（不同意思看搭配）"
+              }
+            ]
+          },
+          {
+            "form": "全て",
+            "entries": [
+              {
+                "day": 16,
+                "reading": "すべて",
+                "gloss": "全部，所有的，完全的。；同词写法：すべて"
+              }
+            ]
+          },
+          {
+            "form": "入れる",
+            "entries": [
+              {
+                "day": 12,
+                "reading": "いれる",
+                "gloss": "放入；一段，与入る区分"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 10,
+          "find": "ので",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "anime-dungeonmeshi-02",
+      "ordinal": 2,
+      "anchor": "うまいんですか",
+      "meaning_zh": "惊讶地确认腿好吃这件事。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "足",
+            "entries": []
+          },
+          {
+            "form": "うまい",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "足",
+            "entries": [
+              {
+                "day": 9,
+                "reading": "あし",
+                "gloss": "腿，脚。"
+              }
+            ]
+          },
+          {
+            "form": "うまい",
+            "entries": [
+              {
+                "day": 7,
+                "reading": "うまい",
+                "gloss": "好吃；擅长、巧妙；顺利（不同意思看搭配）"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 13,
+          "find": "んです",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "manga-nekodamashi-01",
+      "ordinal": 1,
+      "anchor": "僕はニャウロ",
+      "meaning_zh": "叙述者介绍自己的名字。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "僕",
+            "entries": [
+              {
+                "day": 18,
+                "reading": "ぼく",
+                "gloss": "我，常见男性自称，但不据此确定所有说话者性别"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "僕",
+            "entries": [
+              {
+                "day": 18,
+                "reading": "ぼく",
+                "gloss": "我，常见男性自称，但不据此确定所有说话者性别"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "は",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "manga-nekodamashi-01",
+      "ordinal": 2,
+      "anchor": "普通の男だ",
+      "meaning_zh": "自己是一个没有突出之处的普通男人。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "普通",
+            "entries": []
+          },
+          {
+            "form": "男",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "普通",
+            "entries": [
+              {
+                "day": 7,
+                "reading": "ふつう",
+                "gloss": "普通、一般、平常"
+              }
+            ]
+          },
+          {
+            "form": "男",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "おとこ",
+                "gloss": "男人，男性"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "だ",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "これといって～ない",
+        "目立つ"
+      ]
+    },
+    {
+      "sample_id": "manga-nekodamashi-02",
+      "ordinal": 1,
+      "anchor": "新入りの紹介",
+      "meaning_zh": "现在介绍新人。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "紹介",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "紹介",
+            "entries": [
+              {
+                "day": 13,
+                "reading": "しょうかい",
+                "gloss": "介绍、推荐。指将某人或某事物向别人作出说明或推荐。"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "の",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "新入り",
+        "そんじゃ"
+      ]
+    },
+    {
+      "sample_id": "manga-nekodamashi-02",
+      "ordinal": 2,
+      "anchor": "ニャウロです",
+      "meaning_zh": "新人结巴着报上自己的名字。",
+      "lexical_evidence": {
+        "old": [],
+        "revised": []
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "です",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "manga-rentalfriend-01",
+      "ordinal": 1,
+      "anchor": "全然わかんなかった",
+      "meaning_zh": "此前完全没有察觉；否定过去。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "全然",
+            "entries": []
+          },
+          {
+            "form": "分かる",
+            "entries": [
+              {
+                "day": 11,
+                "reading": "わかる",
+                "gloss": "明白；五段"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "全然",
+            "entries": [
+              {
+                "day": 16,
+                "reading": "ぜんぜん",
+                "gloss": "与否定搭配表示一点也不；口语中也能加强肯定评价。"
+              }
+            ]
+          },
+          {
+            "form": "分かる",
+            "entries": [
+              {
+                "day": 11,
+                "reading": "わかる",
+                "gloss": "明白；五段；同词写法：わかる"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 6,
+          "find": "なかった",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "わかんなかった的る→ん缩约未明确教"
+      ]
+    },
+    {
+      "sample_id": "manga-rentalfriend-01",
+      "ordinal": 2,
+      "anchor": "他の人に言わないで",
+      "meaning_zh": "要求对方不要告诉别人。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "他",
+            "entries": []
+          },
+          {
+            "form": "人",
+            "entries": [
+              {
+                "day": 9,
+                "reading": "ひと",
+                "gloss": "人；连接第 1 天的ひと，不另算新义"
+              }
+            ]
+          },
+          {
+            "form": "言う",
+            "entries": [
+              {
+                "day": 13,
+                "reading": "いう",
+                "gloss": "说；五段，写成いう时也是这个词"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "他",
+            "entries": [
+              {
+                "day": 16,
+                "reading": "ほか",
+                "gloss": "其他；另外；别处。"
+              }
+            ]
+          },
+          {
+            "form": "人",
+            "entries": [
+              {
+                "day": 9,
+                "reading": "ひと",
+                "gloss": "人；连接第 1 天的ひと，不另算新义"
+              }
+            ]
+          },
+          {
+            "form": "言う",
+            "entries": [
+              {
+                "day": 13,
+                "reading": "いう",
+                "gloss": "说；五段，写成いう时也是这个词；同词写法：いう"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 12,
+          "find": "ないで",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "manga-rentalfriend-02",
+      "ordinal": 1,
+      "anchor": "やっぱそうなんだ",
+      "meaning_zh": "果然如此，确认先前猜测。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "やっぱり",
+            "entries": []
+          },
+          {
+            "form": "そう",
+            "entries": [
+              {
+                "day": 13,
+                "reading": "そう",
+                "gloss": "那样；本课そう思う是那样想"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "やっぱり",
+            "entries": [
+              {
+                "day": 17,
+                "reading": "やっぱり",
+                "gloss": "果然，还是，毕竟，终究（表示最终确认或与预期一致）；同词写法：やっぱ"
+              }
+            ]
+          },
+          {
+            "form": "そう",
+            "entries": [
+              {
+                "day": 13,
+                "reading": "そう",
+                "gloss": "那样；本课そう思う是那样想"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 13,
+          "find": "んだ",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "manga-rentalfriend-02",
+      "ordinal": 2,
+      "anchor": "バレバレだよね",
+      "meaning_zh": "换言之这事已经很明显了；寻求对方认同。",
+      "lexical_evidence": {
+        "old": [],
+        "revised": []
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "だ",
+          "old_contains": true,
+          "revised_contains": true
+        },
+        {
+          "day": 18,
+          "find": "って",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "つか＝というか",
+        "バレバレ"
+      ]
+    },
+    {
+      "sample_id": "manga-luna-01",
+      "ordinal": 1,
+      "anchor": "旅立ちの用意",
+      "meaning_zh": "出发准备已经就绪。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "用意",
+            "entries": []
+          },
+          {
+            "form": "できる",
+            "entries": [
+              {
+                "day": 14,
+                "reading": "できる",
+                "gloss": "能、做得到；一段"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "用意",
+            "entries": [
+              {
+                "day": 11,
+                "reading": "ようい",
+                "gloss": "准备，预备。"
+              }
+            ]
+          },
+          {
+            "form": "できる",
+            "entries": [
+              {
+                "day": 14,
+                "reading": "できる",
+                "gloss": "能、做得到；一段；同词写法：出来る"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 7,
+          "find": "た",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "旅立ち",
+        "できた在此是准备完成，不只是能力"
+      ]
+    },
+    {
+      "sample_id": "manga-luna-01",
+      "ordinal": 2,
+      "anchor": "行き先はもうお決めに",
+      "meaning_zh": "敬语询问是否已经决定去国外修行的目的地。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "もう",
+            "entries": [
+              {
+                "day": 6,
+                "reading": "もう",
+                "gloss": "已经；否定语境也可表示不再"
+              }
+            ]
+          },
+          {
+            "form": "決める",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "もう",
+            "entries": [
+              {
+                "day": 6,
+                "reading": "もう",
+                "gloss": "已经；否定语境也可表示不再"
+              }
+            ]
+          },
+          {
+            "form": "決める",
+            "entries": [
+              {
+                "day": 11,
+                "reading": "きめる",
+                "gloss": "决定；作出决定"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [],
+      "remaining_questions_or_gaps": [
+        "異国",
+        "魔術",
+        "修行",
+        "行き先",
+        "お決めになる的省略"
+      ]
+    },
+    {
+      "sample_id": "manga-luna-02",
+      "ordinal": 1,
+      "anchor": "魔術を嗜む者",
+      "meaning_zh": "怀疑对方也是钻研魔术的人，以疑问形式确认。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "貴様",
+            "entries": []
+          },
+          {
+            "form": "者",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "貴様",
+            "entries": [
+              {
+                "day": 18,
+                "reading": "きさま",
+                "gloss": "你这家伙；带敌意的称呼，只作语域识别"
+              }
+            ]
+          },
+          {
+            "form": "者",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "もの",
+                "gloss": "人；指某个人"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 9,
+          "find": "名词",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "さては",
+        "魔術",
+        "嗜む"
+      ]
+    },
+    {
+      "sample_id": "manga-luna-02",
+      "ordinal": 2,
+      "anchor": "日本語つーじる",
+      "meaning_zh": "发现对方听得懂日语并确认；省略对象。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "日本語",
+            "entries": [
+              {
+                "day": 3,
+                "reading": "にほんご",
+                "gloss": "日语"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "日本語",
+            "entries": [
+              {
+                "day": 3,
+                "reading": "にほんご",
+                "gloss": "日语"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [],
+      "remaining_questions_or_gaps": [
+        "つーじる＝通じる"
+      ]
+    },
+    {
+      "sample_id": "manga-tengokumate-01",
+      "ordinal": 1,
+      "anchor": "天界から追放する",
+      "meaning_zh": "说话者宣布将对方逐出天界。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "この",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "この",
+                "gloss": "这个……，后面要接名词"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "この",
+            "entries": [
+              {
+                "day": 4,
+                "reading": "この",
+                "gloss": "这个……，后面要接名词"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 5,
+          "find": "から",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "お主",
+        "天界",
+        "追放"
+      ]
+    },
+    {
+      "sample_id": "manga-tengokumate-01",
+      "ordinal": 2,
+      "anchor": "なぜですか",
+      "meaning_zh": "询问被驱逐的原因。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "なぜ",
+            "entries": [
+              {
+                "day": 13,
+                "reading": "なぜ",
+                "gloss": "为什么"
+              }
+            ]
+          }
+        ],
+        "revised": [
+          {
+            "form": "なぜ",
+            "entries": [
+              {
+                "day": 13,
+                "reading": "なぜ",
+                "gloss": "为什么"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 4,
+          "find": "か",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": []
+    },
+    {
+      "sample_id": "manga-tengokumate-02",
+      "ordinal": 1,
+      "anchor": "溺れてた",
+      "meaning_zh": "据说对方救了在岩浆河中溺水的三头犬；救的是犬。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "川",
+            "entries": []
+          },
+          {
+            "form": "助ける",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "川",
+            "entries": []
+          },
+          {
+            "form": "助ける",
+            "entries": [
+              {
+                "day": 15,
+                "reading": "たすける",
+                "gloss": "帮助，拯救"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 9,
+          "find": "名词",
+          "old_contains": true,
+          "revised_contains": true
+        },
+        {
+          "day": 18,
+          "find": "てる",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "マグマ",
+        "溺れる",
+        "命名怪物只作为指称跳过"
+      ]
+    },
+    {
+      "sample_id": "manga-tengokumate-02",
+      "ordinal": 2,
+      "anchor": "めっちゃ感謝してた",
+      "meaning_zh": "那只动物的主人非常感激。",
+      "lexical_evidence": {
+        "old": [
+          {
+            "form": "感謝",
+            "entries": []
+          }
+        ],
+        "revised": [
+          {
+            "form": "感謝",
+            "entries": [
+              {
+                "day": 15,
+                "reading": "かんしゃ",
+                "gloss": "感谢，感激之情。"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar_pointers": [
+        {
+          "day": 18,
+          "find": "てる",
+          "old_contains": true,
+          "revised_contains": true
+        }
+      ],
+      "remaining_questions_or_gaps": [
+        "飼い主",
+        "めっちゃ"
+      ]
+    }
+  ],
+  "exploratory_transfer_checks": [
+    {
+      "sample_id": "manga-nekodamashi-02",
+      "anchor": "数えきれません",
+      "day": 14,
+      "new_course_anchor": "読みきれない",
+      "old_same_anchor": false,
+      "meaning_zh": "杀过的生命多得数不完；不是完全不会数。",
+      "assessment": "完成范围／能力否定现在有可迁移解释，但数える未入正式词表。"
+    },
+    {
+      "sample_id": "manga-tengokumate-01",
+      "anchor": "腐敗しきっている",
+      "day": 14,
+      "new_course_anchor": "疲れきる",
+      "old_same_anchor": false,
+      "meaning_zh": "已经彻底腐败；不是切断某个东西。",
+      "assessment": "きる达到极限的新教学义可迁移；腐敗仍陌生。"
+    },
+    {
+      "sample_id": "manga-tengokumate-01",
+      "anchor": "直してくる",
+      "day": 8,
+      "new_course_anchor": "水を買ってくる",
+      "old_same_anchor": false,
+      "meaning_zh": "去人间学习、纠正思想再回来。",
+      "assessment": "来回移动的てくる现在明确教了；がよい的命令语气还未完整教。"
+    },
+    {
+      "sample_id": "anime-bocchi-01",
+      "anchor": "悩んでるうちに",
+      "day": 12,
+      "new_course_anchor": "読んでいるうちに",
+      "old_same_anchor": false,
+      "meaning_zh": "犹豫着犹豫着便错过加入机会，不是趁机去犹豫。",
+      "assessment": "うちに过程中发生变化可迁移；悩む／乗り遅れる仍缺。"
+    }
+  ]
+}

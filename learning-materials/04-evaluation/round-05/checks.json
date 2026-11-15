@@ -1,0 +1,121 @@
+{
+  "result": "passed",
+  "checks": [
+    {
+      "check": "frozen course unchanged after new texts",
+      "passed": true,
+      "detail": 26
+    },
+    {
+      "check": "baseline preserved",
+      "passed": true,
+      "detail": 26
+    },
+    {
+      "check": "all8 works unseen in prior testbank",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "16 unique original and analysis digests",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "python3 /Users/bytedance/Desktop/hxf/Happy-Japanese/learning-materials/01-materials/vocabulary-scope/build.py --check",
+      "passed": true,
+      "detail": "{\"mode\": \"check\", \"candidates\": 1161, \"grammar\": 230, \"core\": 777, \"alias\": 100, \"defer\": 54, \"all_candidates_accounted_for\": true, \"sources_verified\": true}"
+    },
+    {
+      "check": "python3 /Users/bytedance/Desktop/hxf/Happy-Japanese/learning-materials/02-course-design/tools/review.py",
+      "passed": true,
+      "detail": "{\n  \"type\": \"course_editorial_checks\",\n  \"learner_test\": false,\n  \"comprehension_percent\": null,\n  \"complete_lesson_files\": 21,\n  \"feedback_sections\": 330,\n  \"distinct_vocabulary_table_forms\": 874,\n  \"selected_priority_groups\": 777,\n  \"selected_priority_groups_taught\": 777,\n  \"maximum_new_forms_per_day\": 59,\n  \"exact_source_form_matched\": 737,\n  \"kaishi_pool_preserved\": 1500,\n  \"kaishi_records_with_exact_course_form\": 664,\n  \"duplicate_long_reading_lines_across_lessons\": [],\n  \"budget_check\": \"60 minutes allocated in each lesson; not empirically timed\",\n  \"maximum_recall_forms_per_day\": 156,\n  \"limits\": [\n    \"Source form matches are lookup candidates, not verified sense equivalence.\",\n    \"Tables do not enumerate every function expression or inflection taught in prose.\",\n    \"No automatic check proves naturalness, human mastery or feasible learning time.\"\n  ]\n}"
+    },
+    {
+      "check": "node /Users/bytedance/Desktop/hxf/Happy-Japanese/learning-materials/02-course-design/tools/context-review.cjs",
+      "passed": true,
+      "detail": "{\"selected_groups\":777,\"with_table_and_context\":777}"
+    },
+    {
+      "check": "python3 /Users/bytedance/Desktop/hxf/Happy-Japanese/learning-materials/03-test-set/tools/validate.py --subtitle-dir /tmp/hj-round05/all-assets --image-dir /tmp/hj-round05/all-assets",
+      "passed": true,
+      "detail": "{\n  \"result\": \"passed\",\n  \"sources\": 36,\n  \"groups\": 32,\n  \"samples\": 78,\n  \"split\": {\n    \"regression\": 70,\n    \"development\": 8\n  },\n  \"access\": {\n    \"local_image\": 12,\n    \"local_text\": 11,\n    \"external_original\": 55\n  },\n  \"draft_answers\": 32,\n  \"draft_meaning_units\": 237,\n  \"reviewed_answers\": 0,\n  \"external_pages_rechecked\": false,\n  \"subtitle_files_rechecked\": 12,\n  \"external_manga_images_rechecked\": 32,\n  \"historical_material_baseline_checked\": false,\n  \"student_test_performed\": false\n}"
+    },
+    {
+      "check": "node /Users/bytedance/Desktop/hxf/Happy-Japanese/learning-materials/04-evaluation/round-05/audit.cjs /Users/bytedance/Desktop/hxf/Happy-Japanese/learning-materials /tmp/hj-round05/inputs.json /tmp/hj-round05/repeat-results.json",
+      "passed": true,
+      "detail": "{\n  \"samples\": 16,\n  \"works\": 8,\n  \"genres\": [\n    {\n      \"genre\": \"anime_subtitles\",\n      \"works\": 4,\n      \"samples\": 8,\n      \"tokens\": 473,\n      \"scores\": {\n        \"old_authored_tables\": {\n          \"work_macro_percent\": 30.576824040279696,\n          \"pooled_percent\": 28.752642706131077\n        },\n        \"revised_authored_tables\": {\n          \"work_macro_percent\": 50.500033442236436,\n          \"pooled_percent\": 48.625792811839325\n        }\n      }\n    },\n    {\n      \"genre\": \"manga\",\n      \"works\": 4,\n      \"samples\": 8,\n      \"tokens\": 475,\n      \"scores\": {\n        \"old_authored_tables\": {\n          \"work_macro_percent\": 25.751631317266664,\n          \"pooled_percent\": 25.68421052631579\n        },\n        \"revised_authored_tables\": {\n          \"work_macro_percent\": 45.78860583255889,\n          \"pooled_percent\": 46.31578947368421\n        }\n      }\n    }\n  ],\n  \"lexical_proxy_50_50\": {\n    \"old_authored_tables\": 28.16422767877318,\n    \"revised_authored_tables\": 48.144319637397665\n  }\n}"
+    },
+    {
+      "check": "deterministic score rerun",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "reject modified text",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "reject modified group",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "reject modified membership",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "32 fixed semantic units:2 per segment",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "semantic anchors occur in their original input",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "grammar pointers resolve in frozen course",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "new expression evidence 数えきれません",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "new expression evidence 腐敗しきっている",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "new expression evidence 直してくる",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "new expression evidence 悩んでるうちに",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manual aggregate arithmetic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "every new sample retired to regression",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no fabricated student score",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "student_test_performed": false
+}

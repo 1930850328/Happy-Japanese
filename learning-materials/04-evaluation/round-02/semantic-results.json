@@ -1,0 +1,287 @@
+{
+  "type": "course_support_trace_not_student_results",
+  "development_traces": [
+    {
+      "sample_id": "manga-007",
+      "course_days": [
+        16,
+        18
+      ],
+      "course_evidence_anchors": [
+        "しか",
+        "知らねえ"
+      ],
+      "improvement": "范围限定与口语否定分别有正文讲解。",
+      "remaining_gap": "该片段其他词如教授、実験等未覆盖；只追踪局部结构，不给整页分数。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "manga-009",
+      "course_days": [
+        11,
+        12
+      ],
+      "course_evidence_anchors": [
+        "なければ",
+        "返さなければならない"
+      ],
+      "improvement": "否定条件组成义务已具体教学。",
+      "remaining_gap": "合格、試験等未安排进本期词表；不能据结构讲解推定整段理解。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "manga-066",
+      "course_days": [
+        11,
+        18
+      ],
+      "course_evidence_anchors": [
+        "押さないと",
+        "今行かなきゃ"
+      ],
+      "improvement": "条件与明示后果已有对比。",
+      "remaining_gap": "当直、バイト、生活等仍需词义；此前的关键结构问题得到处理，词汇问题没有一起消失。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "anime-kon-02",
+      "course_days": [
+        11,
+        12,
+        18
+      ],
+      "course_evidence_anchors": [
+        "もし",
+        "までに",
+        "読んじゃった"
+      ],
+      "improvement": "条件、期限、しまう缩约分别教学。",
+      "remaining_gap": "今月中的时间范围表达未专门教，入部、廃部等未教；只能算部分结构准备。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "anime-shirokuma-01",
+      "course_days": [
+        13,
+        15
+      ],
+      "course_evidence_anchors": [
+        "どうして帰るの",
+        "運んでくれた"
+      ],
+      "improvement": "解释性疑问与为我方做事有讲解和例句。",
+      "remaining_gap": "动词来る、くれる能组合，但動物園等新词阻碍具体内容。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "anime-shirokuma-03",
+      "course_days": [
+        19
+      ],
+      "course_evidence_anchors": [
+        "読めるわけがない"
+      ],
+      "improvement": "否定可能性的功能已教。",
+      "remaining_gap": "名词接なわけ的形式未明确展开，剥製也未教；不把相关章节存在当完全覆盖。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "supercub-02",
+      "course_days": [
+        7,
+        19
+      ],
+      "course_evidence_anchors": [
+        "嫌い",
+        "難しいわけではない"
+      ],
+      "improvement": "形容词否定解释已有明确对比。",
+      "remaining_gap": "具体家庭叙事的執着等词与语篇内容仍不在课程内。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "daily-mercari-01",
+      "course_days": [
+        10,
+        12,
+        19
+      ],
+      "course_evidence_anchors": [
+        "読んだ後で",
+        "までに",
+        "予約の内容"
+      ],
+      "improvement": "先后、期限、条件和正式指令在不同文本中教学。",
+      "remaining_gap": "取引、発送、経過等业务词及完整规则链未覆盖。",
+      "learner_answer": null,
+      "comprehension_percent": null
+    }
+  ],
+  "reserved_passage_spot_checks": [
+    {
+      "sample_id": "anime-spyfamily-01",
+      "source_text_sha256": "8729482f64ab2db983523bb62552fb333fa56c414c34dcb3d4d0979de7929154",
+      "short_anchor": "顔 洗える",
+      "related_course_days": [
+        14
+      ],
+      "finding": "能力表达能追溯到第14课，但洗う和顔未进入课程；无法仅凭会认可能形知道具体能力。",
+      "candidates": [
+        {
+          "term": "顔",
+          "existing_kaishi_ids": [
+            "kaishi:PYQw+o[tP6"
+          ]
+        },
+        {
+          "term": "洗う",
+          "existing_kaishi_ids": [
+            "kaishi:qU`et8tt0V"
+          ]
+        },
+        {
+          "term": "料理",
+          "existing_kaishi_ids": [
+            "kaishi:y)9M.bEGW$"
+          ]
+        },
+        {
+          "term": "紹介",
+          "existing_kaishi_ids": [
+            "kaishi:ME%o-,AzbQ"
+          ]
+        }
+      ],
+      "review_status": "single_author_content_diagnostic",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "anime-frieren-02",
+      "source_text_sha256": "07ae326df343a949c2d7d6d5503950930e5163e87bf64cb55cdcc5b90f55f3df",
+      "short_anchor": "打ち込みすぎだ",
+      "related_course_days": [
+        16
+      ],
+      "finding": "すぎる的程度结构有教；打ち込む、修行、一人前等词义不在课程，且あまり〜ない未专门讲。",
+      "candidates": [
+        {
+          "term": "修行",
+          "existing_kaishi_ids": []
+        },
+        {
+          "term": "打ち込む",
+          "existing_kaishi_ids": []
+        },
+        {
+          "term": "一人前",
+          "existing_kaishi_ids": []
+        }
+      ],
+      "review_status": "single_author_content_diagnostic",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "kusuriya-01",
+      "source_text_sha256": "00b1cce3b590703f65ff4fcaaa16d4a242eeec679be1f9cb8ccd2f1916ca947b",
+      "short_anchor": "戻れなくもない",
+      "related_course_days": [
+        14,
+        19
+      ],
+      "finding": "可能形与部分否定分别教学，但なくもない的弱肯定组合未教；不自动把认识两个部件算作会读。",
+      "candidates": [
+        {
+          "term": "薬草",
+          "existing_kaishi_ids": []
+        },
+        {
+          "term": "人さらい",
+          "existing_kaishi_ids": []
+        },
+        {
+          "term": "宮廷",
+          "existing_kaishi_ids": []
+        },
+        {
+          "term": "瘴気",
+          "existing_kaishi_ids": []
+        }
+      ],
+      "review_status": "single_author_content_diagnostic",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "rezero-01",
+      "source_text_sha256": "dee32035beb65018add6ea4deb031ec677dbebe2e5487e4cdfbe91d3d7d4a971",
+      "short_anchor": "体の真ん中",
+      "related_course_days": [
+        14,
+        16
+      ],
+      "finding": "基础身体与动作词体、血、倒れる没有分配；即便看到否定、程度或视角结构，也不足以识别主要事件。",
+      "candidates": [
+        {
+          "term": "体",
+          "existing_kaishi_ids": [
+            "kaishi:q5*S/L&M#("
+          ]
+        },
+        {
+          "term": "血",
+          "existing_kaishi_ids": [
+            "kaishi:iy/+66KvQ8"
+          ]
+        },
+        {
+          "term": "倒れる",
+          "existing_kaishi_ids": [
+            "kaishi:hkW%|NTxKB"
+          ]
+        }
+      ],
+      "review_status": "single_author_content_diagnostic",
+      "learner_answer": null,
+      "comprehension_percent": null
+    },
+    {
+      "sample_id": "lit-bocchan-01",
+      "source_text_sha256": "3dc01c629195693a14ab0a47c296d58a5fc1a61980489493c85afeb611d8158c",
+      "short_anchor": "出来まい",
+      "related_course_days": [
+        6,
+        18
+      ],
+      "finding": "旧写法和まい未教；不能把本课现代ない、口语缩约泛化成能读全部旧文学。",
+      "candidates": [
+        {
+          "term": "無鉄砲",
+          "existing_kaishi_ids": []
+        },
+        {
+          "term": "腰",
+          "existing_kaishi_ids": [
+            "kaishi:IXZ0JMma*k"
+          ]
+        },
+        {
+          "term": "囃す",
+          "existing_kaishi_ids": []
+        }
+      ],
+      "review_status": "single_author_content_diagnostic",
+      "learner_answer": null,
+      "comprehension_percent": null
+    }
+  ],
+  "course_modified_after_reserved_body_loading": false
+}

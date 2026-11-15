@@ -1,0 +1,5642 @@
+{
+  "audit_type": "frozen_curriculum_vs_selected_vocabulary",
+  "student_test_performed": false,
+  "comprehension_percent": null,
+  "input_manifest_sha256": "5daf8abd5cf48a970f87c995dbac98a2462c2d64c7a527eba94c92364ea81b26",
+  "method": {
+    "tokenizer": "kuromoji 0.1.2",
+    "denominator": "与round-02相同的内容词筛选；不计助词/助动词/专名/数词等；本轮另按masking-manifest排除字幕说话人/音效/注音和经核对的专名；其余分词误差未全部消除。",
+    "matching": "direct=表层/辞书形精确匹配；span另识别已列词条的连续整体，末词可还原辞书形；只用清单明确列出的异写，不用同音匹配。",
+    "aggregation": "每段词形覆盖→作品平均→类别平均；50/50只作词汇诊断，不是理解率。",
+    "profiles": {
+      "course_table": "实际课程词表",
+      "course_examples": "课程词表+日文例句出现形式，不证明已明确教学",
+      "priority_605": "独立选词清单，尚未编入21天课程",
+      "course_plus_priority": "课程例句词形与605词清单的并集；假设未来全部纳入的词形覆盖，不是已交付课程或学习效果"
+    }
+  },
+  "sizes": {
+    "course_table": 286,
+    "priority_groups": 605,
+    "priority_forms": 659
+  },
+  "samples": [
+    {
+      "id": "anime-nichijou-01",
+      "split": "development",
+      "genre": "anime_subtitles",
+      "group": "nichijou",
+      "source_text_sha256": "efbbb98d8f2aea27b2b7df25d88d486a5b5416de4ea2ab3edad4487661f7d989",
+      "analysis_text_sha256": "84cacb6c3e86c3f2792b71a043d54cd1cbb2f918a9e5d1240b2b2a5157249162",
+      "tokens": 29,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 9,
+          "span_matches": 9,
+          "direct_percent": 31.03448275862069,
+          "span_percent": 31.03448275862069
+        },
+        "course_examples": {
+          "direct_matches": 13,
+          "span_matches": 13,
+          "direct_percent": 44.827586206896555,
+          "span_percent": 44.827586206896555
+        },
+        "priority_605": {
+          "direct_matches": 16,
+          "span_matches": 16,
+          "direct_percent": 55.172413793103445,
+          "span_percent": 55.172413793103445
+        },
+        "course_plus_priority": {
+          "direct_matches": 19,
+          "span_matches": 19,
+          "direct_percent": 65.51724137931035,
+          "span_percent": 65.51724137931035
+        }
+      }
+    },
+    {
+      "id": "anime-nichijou-02",
+      "split": "development",
+      "genre": "anime_subtitles",
+      "group": "nichijou",
+      "source_text_sha256": "fb157b34b31536317d449509ce611651a1c559a054c3604f3a79a344fc7b2011",
+      "analysis_text_sha256": "330fc7a743ceaf3be0650fb98b28380d0171b55be02250ad590b6f098ac6dff2",
+      "tokens": 31,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 13,
+          "span_matches": 13,
+          "direct_percent": 41.935483870967744,
+          "span_percent": 41.935483870967744
+        },
+        "course_examples": {
+          "direct_matches": 14,
+          "span_matches": 14,
+          "direct_percent": 45.16129032258065,
+          "span_percent": 45.16129032258065
+        },
+        "priority_605": {
+          "direct_matches": 12,
+          "span_matches": 12,
+          "direct_percent": 38.70967741935484,
+          "span_percent": 38.70967741935484
+        },
+        "course_plus_priority": {
+          "direct_matches": 16,
+          "span_matches": 16,
+          "direct_percent": 51.61290322580645,
+          "span_percent": 51.61290322580645
+        }
+      }
+    },
+    {
+      "id": "anime-majo-01",
+      "split": "development",
+      "genre": "anime_subtitles",
+      "group": "majo",
+      "source_text_sha256": "b30e8ef7e4d6723c11f35f02bfd94c1165c6ef841505a690168eb3ddf8dfecd0",
+      "analysis_text_sha256": "a9f515b0523391ebd6a4b10da189390a2109e0a46be13de1e318ab235e64c725",
+      "tokens": 43,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 13,
+          "span_matches": 13,
+          "direct_percent": 30.232558139534884,
+          "span_percent": 30.232558139534884
+        },
+        "course_examples": {
+          "direct_matches": 13,
+          "span_matches": 13,
+          "direct_percent": 30.232558139534884,
+          "span_percent": 30.232558139534884
+        },
+        "priority_605": {
+          "direct_matches": 21,
+          "span_matches": 21,
+          "direct_percent": 48.83720930232558,
+          "span_percent": 48.83720930232558
+        },
+        "course_plus_priority": {
+          "direct_matches": 21,
+          "span_matches": 21,
+          "direct_percent": 48.83720930232558,
+          "span_percent": 48.83720930232558
+        }
+      }
+    },
+    {
+      "id": "anime-majo-02",
+      "split": "development",
+      "genre": "anime_subtitles",
+      "group": "majo",
+      "source_text_sha256": "613df3fccc418f91cf0e65764c684806e0817de3a8d338704f6b910dcf1c5fe1",
+      "analysis_text_sha256": "63e255cc1e87525c254ef3afffc04824176eec4441fa06134f7f1da4a26ac87d",
+      "tokens": 94,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 28,
+          "span_matches": 28,
+          "direct_percent": 29.78723404255319,
+          "span_percent": 29.78723404255319
+        },
+        "course_examples": {
+          "direct_matches": 31,
+          "span_matches": 31,
+          "direct_percent": 32.97872340425532,
+          "span_percent": 32.97872340425532
+        },
+        "priority_605": {
+          "direct_matches": 46,
+          "span_matches": 46,
+          "direct_percent": 48.93617021276596,
+          "span_percent": 48.93617021276596
+        },
+        "course_plus_priority": {
+          "direct_matches": 49,
+          "span_matches": 49,
+          "direct_percent": 52.12765957446808,
+          "span_percent": 52.12765957446808
+        }
+      }
+    },
+    {
+      "id": "anime-hyouka-01",
+      "split": "holdout",
+      "genre": "anime_subtitles",
+      "group": "hyouka",
+      "source_text_sha256": "335050cd459c5822c39aefdc6959b4424223d26fbda2b3dd46c916a29a0dfd67",
+      "analysis_text_sha256": "3eb439dec263f048ac2cd85812777d012bfb20c853270ca9aa3bfc2e2f41baf6",
+      "tokens": 53,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 18,
+          "span_matches": 18,
+          "direct_percent": 33.9622641509434,
+          "span_percent": 33.9622641509434
+        },
+        "course_examples": {
+          "direct_matches": 21,
+          "span_matches": 21,
+          "direct_percent": 39.62264150943396,
+          "span_percent": 39.62264150943396
+        },
+        "priority_605": {
+          "direct_matches": 23,
+          "span_matches": 23,
+          "direct_percent": 43.39622641509434,
+          "span_percent": 43.39622641509434
+        },
+        "course_plus_priority": {
+          "direct_matches": 26,
+          "span_matches": 26,
+          "direct_percent": 49.056603773584904,
+          "span_percent": 49.056603773584904
+        }
+      }
+    },
+    {
+      "id": "anime-hyouka-02",
+      "split": "holdout",
+      "genre": "anime_subtitles",
+      "group": "hyouka",
+      "source_text_sha256": "8f35f96ea7354164ded83034024347dbf357efc10706623ecffea64c8cfc1b21",
+      "analysis_text_sha256": "11756ab6860d4bbf1c5e262218c4f53cf789cb804ec5638db767624ef9a4d5dc",
+      "tokens": 110,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 41,
+          "span_matches": 41,
+          "direct_percent": 37.27272727272727,
+          "span_percent": 37.27272727272727
+        },
+        "course_examples": {
+          "direct_matches": 55,
+          "span_matches": 55,
+          "direct_percent": 50,
+          "span_percent": 50
+        },
+        "priority_605": {
+          "direct_matches": 67,
+          "span_matches": 68,
+          "direct_percent": 60.90909090909091,
+          "span_percent": 61.81818181818182
+        },
+        "course_plus_priority": {
+          "direct_matches": 72,
+          "span_matches": 73,
+          "direct_percent": 65.45454545454545,
+          "span_percent": 66.36363636363636
+        }
+      }
+    },
+    {
+      "id": "anime-natsume-01",
+      "split": "holdout",
+      "genre": "anime_subtitles",
+      "group": "natsume",
+      "source_text_sha256": "2819b820e1861358c5703d9f65c9caca81e4c0e9754714147c895df14cf71915",
+      "analysis_text_sha256": "7f4d268bb4032c9eb2ff79421e40fb2888747f7b690fddff548196e913a5f7db",
+      "tokens": 27,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 7,
+          "span_matches": 7,
+          "direct_percent": 25.925925925925927,
+          "span_percent": 25.925925925925927
+        },
+        "course_examples": {
+          "direct_matches": 9,
+          "span_matches": 9,
+          "direct_percent": 33.333333333333336,
+          "span_percent": 33.333333333333336
+        },
+        "priority_605": {
+          "direct_matches": 15,
+          "span_matches": 15,
+          "direct_percent": 55.55555555555556,
+          "span_percent": 55.55555555555556
+        },
+        "course_plus_priority": {
+          "direct_matches": 16,
+          "span_matches": 16,
+          "direct_percent": 59.25925925925926,
+          "span_percent": 59.25925925925926
+        }
+      }
+    },
+    {
+      "id": "anime-natsume-02",
+      "split": "holdout",
+      "genre": "anime_subtitles",
+      "group": "natsume",
+      "source_text_sha256": "67948c2244bdc6cc7e9b6872ee6f92fd8f31f3bc0efeb02ddd206f351aad7e11",
+      "analysis_text_sha256": "82473d5f670a483f1d00c53811daae4581de7f5fb2fb3a8f7f07765c3e15e3f9",
+      "tokens": 107,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 35,
+          "span_matches": 35,
+          "direct_percent": 32.71028037383178,
+          "span_percent": 32.71028037383178
+        },
+        "course_examples": {
+          "direct_matches": 40,
+          "span_matches": 40,
+          "direct_percent": 37.38317757009346,
+          "span_percent": 37.38317757009346
+        },
+        "priority_605": {
+          "direct_matches": 55,
+          "span_matches": 55,
+          "direct_percent": 51.401869158878505,
+          "span_percent": 51.401869158878505
+        },
+        "course_plus_priority": {
+          "direct_matches": 58,
+          "span_matches": 58,
+          "direct_percent": 54.205607476635514,
+          "span_percent": 54.205607476635514
+        }
+      }
+    },
+    {
+      "id": "manga-tomochan-01",
+      "split": "development",
+      "genre": "manga",
+      "group": "tomochan",
+      "source_text_sha256": "d7d48141f3c735790af53330c9ffbfd4c59a583e89c38a6ad21ce947837bff26",
+      "analysis_text_sha256": "4b3aa50e2885faf0c5b79d4a370c931e9fe785a1d1731c54f70abf2a2dd15b04",
+      "tokens": 86,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 21,
+          "span_matches": 24,
+          "direct_percent": 24.41860465116279,
+          "span_percent": 27.906976744186046
+        },
+        "course_examples": {
+          "direct_matches": 30,
+          "span_matches": 30,
+          "direct_percent": 34.883720930232556,
+          "span_percent": 34.883720930232556
+        },
+        "priority_605": {
+          "direct_matches": 43,
+          "span_matches": 43,
+          "direct_percent": 50,
+          "span_percent": 50
+        },
+        "course_plus_priority": {
+          "direct_matches": 44,
+          "span_matches": 44,
+          "direct_percent": 51.16279069767442,
+          "span_percent": 51.16279069767442
+        }
+      }
+    },
+    {
+      "id": "manga-tomochan-02",
+      "split": "development",
+      "genre": "manga",
+      "group": "tomochan",
+      "source_text_sha256": "42f271b56dedc2839e9650ed6d79d08ffc8aee931edf7bd6f3ca2d4ec2045e52",
+      "analysis_text_sha256": "dda0cf87a3bddf3b359d233c1095b10cb13fdb7d51405fd21ecb93747a8f8c70",
+      "tokens": 52,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 15,
+          "span_matches": 15,
+          "direct_percent": 28.846153846153847,
+          "span_percent": 28.846153846153847
+        },
+        "course_examples": {
+          "direct_matches": 16,
+          "span_matches": 16,
+          "direct_percent": 30.76923076923077,
+          "span_percent": 30.76923076923077
+        },
+        "priority_605": {
+          "direct_matches": 27,
+          "span_matches": 27,
+          "direct_percent": 51.92307692307692,
+          "span_percent": 51.92307692307692
+        },
+        "course_plus_priority": {
+          "direct_matches": 28,
+          "span_matches": 28,
+          "direct_percent": 53.84615384615385,
+          "span_percent": 53.84615384615385
+        }
+      }
+    },
+    {
+      "id": "manga-SATOKOandNADA-01",
+      "split": "development",
+      "genre": "manga",
+      "group": "satokoandnada",
+      "source_text_sha256": "ffc34ab800efa0ba7ea4c0d307cb24be0cb22a96dc156ab5acd9f811845f69bb",
+      "analysis_text_sha256": "46551f754bcd889c47cfd109d780f5bd4e09b249e1fbd128510c99478c249b25",
+      "tokens": 42,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 11,
+          "span_matches": 12,
+          "direct_percent": 26.19047619047619,
+          "span_percent": 28.571428571428573
+        },
+        "course_examples": {
+          "direct_matches": 13,
+          "span_matches": 13,
+          "direct_percent": 30.952380952380953,
+          "span_percent": 30.952380952380953
+        },
+        "priority_605": {
+          "direct_matches": 18,
+          "span_matches": 18,
+          "direct_percent": 42.857142857142854,
+          "span_percent": 42.857142857142854
+        },
+        "course_plus_priority": {
+          "direct_matches": 18,
+          "span_matches": 18,
+          "direct_percent": 42.857142857142854,
+          "span_percent": 42.857142857142854
+        }
+      }
+    },
+    {
+      "id": "manga-SATOKOandNADA-02",
+      "split": "development",
+      "genre": "manga",
+      "group": "satokoandnada",
+      "source_text_sha256": "fa1ea43f0c85b1e756f7801d0a02a9bb40b1fc6d529510ac0eae6efe43f8d503",
+      "analysis_text_sha256": "c0699541e87cb71405f9f7f9bbd4c510232f3ab8f8baae7cf3cb231cc1da3d95",
+      "tokens": 37,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 6,
+          "span_matches": 6,
+          "direct_percent": 16.216216216216218,
+          "span_percent": 16.216216216216218
+        },
+        "course_examples": {
+          "direct_matches": 6,
+          "span_matches": 6,
+          "direct_percent": 16.216216216216218,
+          "span_percent": 16.216216216216218
+        },
+        "priority_605": {
+          "direct_matches": 15,
+          "span_matches": 15,
+          "direct_percent": 40.54054054054054,
+          "span_percent": 40.54054054054054
+        },
+        "course_plus_priority": {
+          "direct_matches": 15,
+          "span_matches": 15,
+          "direct_percent": 40.54054054054054,
+          "span_percent": 40.54054054054054
+        }
+      }
+    },
+    {
+      "id": "manga-kanako-01",
+      "split": "holdout",
+      "genre": "manga",
+      "group": "kanako",
+      "source_text_sha256": "d4f0317b625a04a020d7f0b70b0c47a0c670cf9d65cdca0825d0267594943d49",
+      "analysis_text_sha256": "a265353daed4460ebaf436208c223a129a2b79d66ce7f5abf3543fa3f5b78067",
+      "tokens": 64,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 18,
+          "span_matches": 18,
+          "direct_percent": 28.125,
+          "span_percent": 28.125
+        },
+        "course_examples": {
+          "direct_matches": 19,
+          "span_matches": 19,
+          "direct_percent": 29.6875,
+          "span_percent": 29.6875
+        },
+        "priority_605": {
+          "direct_matches": 30,
+          "span_matches": 30,
+          "direct_percent": 46.875,
+          "span_percent": 46.875
+        },
+        "course_plus_priority": {
+          "direct_matches": 32,
+          "span_matches": 32,
+          "direct_percent": 50,
+          "span_percent": 50
+        }
+      }
+    },
+    {
+      "id": "manga-kanako-02",
+      "split": "holdout",
+      "genre": "manga",
+      "group": "kanako",
+      "source_text_sha256": "13bd61e7587093a605f2a8a94f7b66139e14c15e9b13a1526dd595911e59bddd",
+      "analysis_text_sha256": "13bd61e7587093a605f2a8a94f7b66139e14c15e9b13a1526dd595911e59bddd",
+      "tokens": 56,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 13,
+          "span_matches": 13,
+          "direct_percent": 23.214285714285715,
+          "span_percent": 23.214285714285715
+        },
+        "course_examples": {
+          "direct_matches": 14,
+          "span_matches": 14,
+          "direct_percent": 25,
+          "span_percent": 25
+        },
+        "priority_605": {
+          "direct_matches": 22,
+          "span_matches": 22,
+          "direct_percent": 39.285714285714285,
+          "span_percent": 39.285714285714285
+        },
+        "course_plus_priority": {
+          "direct_matches": 23,
+          "span_matches": 23,
+          "direct_percent": 41.07142857142857,
+          "span_percent": 41.07142857142857
+        }
+      }
+    },
+    {
+      "id": "manga-onakin-01",
+      "split": "holdout",
+      "genre": "manga",
+      "group": "onakin",
+      "source_text_sha256": "1cd6a152648cfca4c5f95e5f966a6b9a957eba8beb1b81be6d7c22f8ce88d311",
+      "analysis_text_sha256": "c0007af48299ce8f79ace6ddbcb8753af0f8e08c365a5c67672d2767c4cefa89",
+      "tokens": 30,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 3,
+          "span_matches": 3,
+          "direct_percent": 10,
+          "span_percent": 10
+        },
+        "course_examples": {
+          "direct_matches": 3,
+          "span_matches": 3,
+          "direct_percent": 10,
+          "span_percent": 10
+        },
+        "priority_605": {
+          "direct_matches": 6,
+          "span_matches": 6,
+          "direct_percent": 20,
+          "span_percent": 20
+        },
+        "course_plus_priority": {
+          "direct_matches": 6,
+          "span_matches": 6,
+          "direct_percent": 20,
+          "span_percent": 20
+        }
+      }
+    },
+    {
+      "id": "manga-onakin-02",
+      "split": "holdout",
+      "genre": "manga",
+      "group": "onakin",
+      "source_text_sha256": "62d76b464f8ef5f9346e0d5dcb7b44235d31708bd0e0776ae7c6b6c05b7b1acf",
+      "analysis_text_sha256": "55e02f940fff3831eecd3bd8fb220c874c7ba0ddd224cd4777ce2ad2d8cbe6ab",
+      "tokens": 35,
+      "profiles": {
+        "course_table": {
+          "direct_matches": 12,
+          "span_matches": 12,
+          "direct_percent": 34.285714285714285,
+          "span_percent": 34.285714285714285
+        },
+        "course_examples": {
+          "direct_matches": 16,
+          "span_matches": 16,
+          "direct_percent": 45.714285714285715,
+          "span_percent": 45.714285714285715
+        },
+        "priority_605": {
+          "direct_matches": 15,
+          "span_matches": 15,
+          "direct_percent": 42.857142857142854,
+          "span_percent": 42.857142857142854
+        },
+        "course_plus_priority": {
+          "direct_matches": 20,
+          "span_matches": 20,
+          "direct_percent": 57.142857142857146,
+          "span_percent": 57.142857142857146
+        }
+      }
+    }
+  ],
+  "by_split": {
+    "development": {
+      "by_work": [
+        {
+          "group": "nichijou",
+          "genre": "anime_subtitles",
+          "samples": 2,
+          "scores": {
+            "course_table": 36.48498331479422,
+            "course_examples": 44.994438264738605,
+            "priority_605": 46.94104560622914,
+            "course_plus_priority": 58.5650723025584
+          }
+        },
+        {
+          "group": "majo",
+          "genre": "anime_subtitles",
+          "samples": 2,
+          "scores": {
+            "course_table": 30.009896091044038,
+            "course_examples": 31.605640771895104,
+            "priority_605": 48.88668975754577,
+            "course_plus_priority": 50.48243443839684
+          }
+        },
+        {
+          "group": "tomochan",
+          "genre": "manga",
+          "samples": 2,
+          "scores": {
+            "course_table": 28.376565295169947,
+            "course_examples": 32.826475849731665,
+            "priority_605": 50.96153846153846,
+            "course_plus_priority": 52.50447227191413
+          }
+        },
+        {
+          "group": "satokoandnada",
+          "genre": "manga",
+          "samples": 2,
+          "scores": {
+            "course_table": 22.393822393822397,
+            "course_examples": 23.584298584298587,
+            "priority_605": 41.6988416988417,
+            "course_plus_priority": 41.6988416988417
+          }
+        }
+      ],
+      "by_genre": [
+        {
+          "genre": "anime_subtitles",
+          "works": 2,
+          "samples": 4,
+          "metrics": {
+            "course_table": {
+              "tokens": 197,
+              "direct_matches": 63,
+              "span_matches": 63,
+              "direct_pooled_percent": 31.97969543147208,
+              "span_pooled_percent": 31.97969543147208,
+              "work_macro_percent": 33.24743970291913
+            },
+            "course_examples": {
+              "tokens": 197,
+              "direct_matches": 71,
+              "span_matches": 71,
+              "direct_pooled_percent": 36.04060913705584,
+              "span_pooled_percent": 36.04060913705584,
+              "work_macro_percent": 38.30003951831685
+            },
+            "priority_605": {
+              "tokens": 197,
+              "direct_matches": 95,
+              "span_matches": 95,
+              "direct_pooled_percent": 48.223350253807105,
+              "span_pooled_percent": 48.223350253807105,
+              "work_macro_percent": 47.91386768188745
+            },
+            "course_plus_priority": {
+              "tokens": 197,
+              "direct_matches": 105,
+              "span_matches": 105,
+              "direct_pooled_percent": 53.2994923857868,
+              "span_pooled_percent": 53.2994923857868,
+              "work_macro_percent": 54.52375337047762
+            }
+          }
+        },
+        {
+          "genre": "manga",
+          "works": 2,
+          "samples": 4,
+          "metrics": {
+            "course_table": {
+              "tokens": 217,
+              "direct_matches": 53,
+              "span_matches": 57,
+              "direct_pooled_percent": 24.42396313364055,
+              "span_pooled_percent": 26.267281105990783,
+              "work_macro_percent": 25.385193844496172
+            },
+            "course_examples": {
+              "tokens": 217,
+              "direct_matches": 65,
+              "span_matches": 65,
+              "direct_pooled_percent": 29.953917050691246,
+              "span_pooled_percent": 29.953917050691246,
+              "work_macro_percent": 28.205387217015126
+            },
+            "priority_605": {
+              "tokens": 217,
+              "direct_matches": 103,
+              "span_matches": 103,
+              "direct_pooled_percent": 47.465437788018434,
+              "span_pooled_percent": 47.465437788018434,
+              "work_macro_percent": 46.33019008019008
+            },
+            "course_plus_priority": {
+              "tokens": 217,
+              "direct_matches": 105,
+              "span_matches": 105,
+              "direct_pooled_percent": 48.38709677419355,
+              "span_pooled_percent": 48.38709677419355,
+              "work_macro_percent": 47.101656985377915
+            }
+          }
+        }
+      ],
+      "lexical_proxy_50_50": {
+        "course_table": 29.31631677370765,
+        "course_examples": 33.25271336766599,
+        "priority_605": 47.122028881038766,
+        "course_plus_priority": 50.81270517792777
+      }
+    },
+    "holdout": {
+      "by_work": [
+        {
+          "group": "hyouka",
+          "genre": "anime_subtitles",
+          "samples": 2,
+          "scores": {
+            "course_table": 35.61749571183533,
+            "course_examples": 44.81132075471698,
+            "priority_605": 52.60720411663808,
+            "course_plus_priority": 57.710120068610635
+          }
+        },
+        {
+          "group": "natsume",
+          "genre": "anime_subtitles",
+          "samples": 2,
+          "scores": {
+            "course_table": 29.31810314987885,
+            "course_examples": 35.3582554517134,
+            "priority_605": 53.478712357217034,
+            "course_plus_priority": 56.73243336794739
+          }
+        },
+        {
+          "group": "kanako",
+          "genre": "manga",
+          "samples": 2,
+          "scores": {
+            "course_table": 25.669642857142858,
+            "course_examples": 27.34375,
+            "priority_605": 43.08035714285714,
+            "course_plus_priority": 45.535714285714285
+          }
+        },
+        {
+          "group": "onakin",
+          "genre": "manga",
+          "samples": 2,
+          "scores": {
+            "course_table": 22.142857142857142,
+            "course_examples": 27.857142857142858,
+            "priority_605": 31.428571428571427,
+            "course_plus_priority": 38.57142857142857
+          }
+        }
+      ],
+      "by_genre": [
+        {
+          "genre": "anime_subtitles",
+          "works": 2,
+          "samples": 4,
+          "metrics": {
+            "course_table": {
+              "tokens": 297,
+              "direct_matches": 101,
+              "span_matches": 101,
+              "direct_pooled_percent": 34.00673400673401,
+              "span_pooled_percent": 34.00673400673401,
+              "work_macro_percent": 32.46779943085709
+            },
+            "course_examples": {
+              "tokens": 297,
+              "direct_matches": 125,
+              "span_matches": 125,
+              "direct_pooled_percent": 42.08754208754209,
+              "span_pooled_percent": 42.08754208754209,
+              "work_macro_percent": 40.08478810321519
+            },
+            "priority_605": {
+              "tokens": 297,
+              "direct_matches": 160,
+              "span_matches": 161,
+              "direct_pooled_percent": 53.872053872053876,
+              "span_pooled_percent": 54.20875420875421,
+              "work_macro_percent": 53.04295823692756
+            },
+            "course_plus_priority": {
+              "tokens": 297,
+              "direct_matches": 172,
+              "span_matches": 173,
+              "direct_pooled_percent": 57.91245791245791,
+              "span_pooled_percent": 58.24915824915825,
+              "work_macro_percent": 57.221276718279015
+            }
+          }
+        },
+        {
+          "genre": "manga",
+          "works": 2,
+          "samples": 4,
+          "metrics": {
+            "course_table": {
+              "tokens": 185,
+              "direct_matches": 46,
+              "span_matches": 46,
+              "direct_pooled_percent": 24.864864864864863,
+              "span_pooled_percent": 24.864864864864863,
+              "work_macro_percent": 23.90625
+            },
+            "course_examples": {
+              "tokens": 185,
+              "direct_matches": 52,
+              "span_matches": 52,
+              "direct_pooled_percent": 28.10810810810811,
+              "span_pooled_percent": 28.10810810810811,
+              "work_macro_percent": 27.60044642857143
+            },
+            "priority_605": {
+              "tokens": 185,
+              "direct_matches": 73,
+              "span_matches": 73,
+              "direct_pooled_percent": 39.45945945945946,
+              "span_pooled_percent": 39.45945945945946,
+              "work_macro_percent": 37.254464285714285
+            },
+            "course_plus_priority": {
+              "tokens": 185,
+              "direct_matches": 81,
+              "span_matches": 81,
+              "direct_pooled_percent": 43.78378378378378,
+              "span_pooled_percent": 43.78378378378378,
+              "work_macro_percent": 42.05357142857143
+            }
+          }
+        }
+      ],
+      "lexical_proxy_50_50": {
+        "course_table": 28.187024715428546,
+        "course_examples": 33.84261726589331,
+        "priority_605": 45.148711261320926,
+        "course_plus_priority": 49.63742407342522
+      }
+    }
+  },
+  "unmatched_combined": [
+    {
+      "lemma": "なのに",
+      "pos": "接続詞",
+      "count": 3,
+      "groups": [
+        "hyouka",
+        "tomochan",
+        "kanako"
+      ],
+      "samples": [
+        "anime-hyouka-02",
+        "manga-tomochan-01",
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "なのに"
+      ]
+    },
+    {
+      "lemma": "シェア",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "satokoandnada",
+        "onakin"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01",
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "シェア"
+      ]
+    },
+    {
+      "lemma": "出身",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "majo",
+        "satokoandnada"
+      ],
+      "samples": [
+        "anime-majo-02",
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "出身"
+      ]
+    },
+    {
+      "lemma": "伝統",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "majo",
+        "hyouka"
+      ],
+      "samples": [
+        "anime-majo-02",
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "伝統"
+      ]
+    },
+    {
+      "lemma": "髪",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "nichijou",
+        "satokoandnada"
+      ],
+      "samples": [
+        "anime-nichijou-01",
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "髪"
+      ]
+    },
+    {
+      "lemma": "うつ",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "hyouka",
+        "onakin"
+      ],
+      "samples": [
+        "anime-hyouka-02",
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "うっ"
+      ]
+    },
+    {
+      "lemma": "だい",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "hyouka",
+        "onakin"
+      ],
+      "samples": [
+        "anime-hyouka-02",
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "だい"
+      ]
+    },
+    {
+      "lemma": "たまたま",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "majo",
+        "natsume"
+      ],
+      "samples": [
+        "anime-majo-02",
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "たまたま"
+      ]
+    },
+    {
+      "lemma": "ちょ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tomochan",
+        "onakin"
+      ],
+      "samples": [
+        "manga-tomochan-02",
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "ちょ"
+      ]
+    },
+    {
+      "lemma": "勤務",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kanako",
+        "onakin"
+      ],
+      "samples": [
+        "manga-kanako-01",
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "勤務"
+      ]
+    },
+    {
+      "lemma": "高校",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "hyouka",
+        "tomochan"
+      ],
+      "samples": [
+        "anime-hyouka-01",
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "高校"
+      ]
+    },
+    {
+      "lemma": "合格",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "hyouka",
+        "kanako"
+      ],
+      "samples": [
+        "anime-hyouka-01",
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "合格"
+      ]
+    },
+    {
+      "lemma": "通う",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "tomochan",
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-tomochan-01",
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "通っ",
+        "通い"
+      ]
+    },
+    {
+      "lemma": "野郎",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tomochan",
+        "kanako"
+      ],
+      "samples": [
+        "manga-tomochan-02",
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "野郎"
+      ]
+    },
+    {
+      "lemma": "アタシ",
+      "pos": "名詞",
+      "count": 9,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01",
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "アタシ"
+      ]
+    },
+    {
+      "lemma": "魔女",
+      "pos": "名詞",
+      "count": 8,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01",
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "魔女"
+      ]
+    },
+    {
+      "lemma": "毎週",
+      "pos": "名詞",
+      "count": 5,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "毎週"
+      ]
+    },
+    {
+      "lemma": "古典",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "古典"
+      ]
+    },
+    {
+      "lemma": "試験",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "試験"
+      ]
+    },
+    {
+      "lemma": "魔法使い",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "魔法使い"
+      ]
+    },
+    {
+      "lemma": "なんとなく",
+      "pos": "副詞",
+      "count": 3,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-01"
+      ],
+      "surfaces": [
+        "なんとなく"
+      ]
+    },
+    {
+      "lemma": "歓迎",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01",
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "歓迎"
+      ]
+    },
+    {
+      "lemma": "身長",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "身長"
+      ]
+    },
+    {
+      "lemma": "貸し出し",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "貸し出し"
+      ]
+    },
+    {
+      "lemma": "返却",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "返却"
+      ]
+    },
+    {
+      "lemma": "祠",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "祠"
+      ]
+    },
+    {
+      "lemma": "おう",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01",
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "おう"
+      ]
+    },
+    {
+      "lemma": "が",
+      "pos": "接続詞",
+      "count": 2,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "が"
+      ]
+    },
+    {
+      "lemma": "すい",
+      "pos": "形容詞",
+      "count": 2,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "すぅ"
+      ]
+    },
+    {
+      "lemma": "それどころ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "それどころ"
+      ]
+    },
+    {
+      "lemma": "はるばる",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "はるばる"
+      ]
+    },
+    {
+      "lemma": "ブローチ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01",
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "ブローチ"
+      ]
+    },
+    {
+      "lemma": "ほる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "ほ"
+      ]
+    },
+    {
+      "lemma": "ルーム",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "ルーム"
+      ]
+    },
+    {
+      "lemma": "愛読",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "愛読"
+      ]
+    },
+    {
+      "lemma": "見習い",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "見習い"
+      ]
+    },
+    {
+      "lemma": "告白",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "告白"
+      ]
+    },
+    {
+      "lemma": "殺し",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "殺し"
+      ]
+    },
+    {
+      "lemma": "姉",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "姉"
+      ]
+    },
+    {
+      "lemma": "社員",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01",
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "社員"
+      ]
+    },
+    {
+      "lemma": "宿題",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-01"
+      ],
+      "surfaces": [
+        "宿題"
+      ]
+    },
+    {
+      "lemma": "上司",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "上司"
+      ]
+    },
+    {
+      "lemma": "神さま",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "神さま"
+      ]
+    },
+    {
+      "lemma": "数学",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-01"
+      ],
+      "surfaces": [
+        "数学"
+      ]
+    },
+    {
+      "lemma": "全く",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01",
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "全く"
+      ]
+    },
+    {
+      "lemma": "村",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "村"
+      ]
+    },
+    {
+      "lemma": "大学生",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "大学生"
+      ]
+    },
+    {
+      "lemma": "仲良く",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "仲良く"
+      ]
+    },
+    {
+      "lemma": "土下座",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "土下座"
+      ]
+    },
+    {
+      "lemma": "桃",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "桃"
+      ]
+    },
+    {
+      "lemma": "同士",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "同士"
+      ]
+    },
+    {
+      "lemma": "標的",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "標的"
+      ]
+    },
+    {
+      "lemma": "文化",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "文化"
+      ]
+    },
+    {
+      "lemma": "放課後",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "放課後"
+      ]
+    },
+    {
+      "lemma": "無い",
+      "pos": "形容詞",
+      "count": 2,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "無い",
+        "無かっ"
+      ]
+    },
+    {
+      "lemma": "卵",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "卵"
+      ]
+    },
+    {
+      "lemma": "立派",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "立派"
+      ]
+    },
+    {
+      "lemma": "隣",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "隣"
+      ]
+    },
+    {
+      "lemma": "連続",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "連続"
+      ]
+    },
+    {
+      "lemma": "綺麗",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "綺麗"
+      ]
+    },
+    {
+      "lemma": "あがめる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "あがめ"
+      ]
+    },
+    {
+      "lemma": "アドバイス",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "アドバイス"
+      ]
+    },
+    {
+      "lemma": "アハハッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "アハハッ"
+      ]
+    },
+    {
+      "lemma": "アパレル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "アパレル"
+      ]
+    },
+    {
+      "lemma": "あふれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "あふれ"
+      ]
+    },
+    {
+      "lemma": "あまりに",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "あまりに"
+      ]
+    },
+    {
+      "lemma": "あやかし",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "あやかし"
+      ]
+    },
+    {
+      "lemma": "アラーム",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "アラーム"
+      ]
+    },
+    {
+      "lemma": "あらあら",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "あらあら"
+      ]
+    },
+    {
+      "lemma": "イ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "イ"
+      ]
+    },
+    {
+      "lemma": "イェ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "イェ"
+      ]
+    },
+    {
+      "lemma": "いく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "いき"
+      ]
+    },
+    {
+      "lemma": "いまだ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "いまだ"
+      ]
+    },
+    {
+      "lemma": "イヤ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "イヤ"
+      ]
+    },
+    {
+      "lemma": "ぅ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "ぅ"
+      ]
+    },
+    {
+      "lemma": "ウソウソウソウソ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "ウソウソウソウソ"
+      ]
+    },
+    {
+      "lemma": "ウソメガワウソ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "ウソメガワウソ"
+      ]
+    },
+    {
+      "lemma": "ウワサ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "ウワサ"
+      ]
+    },
+    {
+      "lemma": "おしゃれ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "おしゃれ"
+      ]
+    },
+    {
+      "lemma": "お金",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "お金"
+      ]
+    },
+    {
+      "lemma": "お天気",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "お天気"
+      ]
+    },
+    {
+      "lemma": "お話",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "お話"
+      ]
+    },
+    {
+      "lemma": "カ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "カ"
+      ]
+    },
+    {
+      "lemma": "かす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "かさ"
+      ]
+    },
+    {
+      "lemma": "カタツムリ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "カタツムリ"
+      ]
+    },
+    {
+      "lemma": "かっこいい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "かっこいい"
+      ]
+    },
+    {
+      "lemma": "カワイイ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "カワイイ"
+      ]
+    },
+    {
+      "lemma": "かんぱ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "かんぱ"
+      ]
+    },
+    {
+      "lemma": "キレイ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "キレイ"
+      ]
+    },
+    {
+      "lemma": "クズ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "クズ"
+      ]
+    },
+    {
+      "lemma": "こい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "こ"
+      ]
+    },
+    {
+      "lemma": "こうして",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "こうして"
+      ]
+    },
+    {
+      "lemma": "これから",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "これから"
+      ]
+    },
+    {
+      "lemma": "サッカー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "サッカー"
+      ]
+    },
+    {
+      "lemma": "サンプル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "サンプル"
+      ]
+    },
+    {
+      "lemma": "シャンプー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "シャンプー"
+      ]
+    },
+    {
+      "lemma": "スカート",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "スカート"
+      ]
+    },
+    {
+      "lemma": "スキル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "スキル"
+      ]
+    },
+    {
+      "lemma": "すぎる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "すぎ"
+      ]
+    },
+    {
+      "lemma": "すげる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "すげ"
+      ]
+    },
+    {
+      "lemma": "すっごい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "すっごく"
+      ]
+    },
+    {
+      "lemma": "ぜひ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "ぜひ"
+      ]
+    },
+    {
+      "lemma": "そしたら",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "そしたら"
+      ]
+    },
+    {
+      "lemma": "ソフトボール",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "ソフトボール"
+      ]
+    },
+    {
+      "lemma": "タグ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "タグ"
+      ]
+    },
+    {
+      "lemma": "たつ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "たた"
+      ]
+    },
+    {
+      "lemma": "たった",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "たった"
+      ]
+    },
+    {
+      "lemma": "ダンク",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "ダンク"
+      ]
+    },
+    {
+      "lemma": "ちなみに",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "ちなみに"
+      ]
+    },
+    {
+      "lemma": "チャーミング",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "チャーミング"
+      ]
+    },
+    {
+      "lemma": "ッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "ッ"
+      ]
+    },
+    {
+      "lemma": "つう",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "つう"
+      ]
+    },
+    {
+      "lemma": "づける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "づけ"
+      ]
+    },
+    {
+      "lemma": "つじつま",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "つじつま"
+      ]
+    },
+    {
+      "lemma": "つらい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "つら"
+      ]
+    },
+    {
+      "lemma": "で",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "で"
+      ]
+    },
+    {
+      "lemma": "デカ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "デカ"
+      ]
+    },
+    {
+      "lemma": "では",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "では"
+      ]
+    },
+    {
+      "lemma": "デビュー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "デビュー"
+      ]
+    },
+    {
+      "lemma": "どうか",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "どうか"
+      ]
+    },
+    {
+      "lemma": "どうも",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "どうも"
+      ]
+    },
+    {
+      "lemma": "どー",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "どー"
+      ]
+    },
+    {
+      "lemma": "どっさり",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "どっさり"
+      ]
+    },
+    {
+      "lemma": "とっても",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "とっても"
+      ]
+    },
+    {
+      "lemma": "ドレス",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "ドレス"
+      ]
+    },
+    {
+      "lemma": "なあなあ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "なあなあ"
+      ]
+    },
+    {
+      "lemma": "なんて",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "なんて"
+      ]
+    },
+    {
+      "lemma": "なんとも",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "なんとも"
+      ]
+    },
+    {
+      "lemma": "におい",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "におい"
+      ]
+    },
+    {
+      "lemma": "ニャオ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "ニャオ"
+      ]
+    },
+    {
+      "lemma": "ばあさん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "ばあさん"
+      ]
+    },
+    {
+      "lemma": "パイ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "パイ"
+      ]
+    },
+    {
+      "lemma": "ぱさぱさ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "ぱさぱさ"
+      ]
+    },
+    {
+      "lemma": "はしゃぐ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "はしゃぎ"
+      ]
+    },
+    {
+      "lemma": "パス",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "パス"
+      ]
+    },
+    {
+      "lemma": "バチ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "バチ"
+      ]
+    },
+    {
+      "lemma": "ハッ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "ハッ"
+      ]
+    },
+    {
+      "lemma": "パワハラ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "パワハラ"
+      ]
+    },
+    {
+      "lemma": "パンケーキ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "パンケーキ"
+      ]
+    },
+    {
+      "lemma": "びっくり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "びっくり"
+      ]
+    },
+    {
+      "lemma": "ひとり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "ひとり"
+      ]
+    },
+    {
+      "lemma": "ひねる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "ひねっ"
+      ]
+    },
+    {
+      "lemma": "ブラック",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "ブラック"
+      ]
+    },
+    {
+      "lemma": "ベリー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "ベリー"
+      ]
+    },
+    {
+      "lemma": "ぽい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "ぽ"
+      ]
+    },
+    {
+      "lemma": "ホヤ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "ホヤ"
+      ]
+    },
+    {
+      "lemma": "マッスル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "マッスル"
+      ]
+    },
+    {
+      "lemma": "まなざし",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "まなざし"
+      ]
+    },
+    {
+      "lemma": "ムスリム",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "ムスリム"
+      ]
+    },
+    {
+      "lemma": "ムリムリムリムリ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "ムリムリムリムリ"
+      ]
+    },
+    {
+      "lemma": "メーカー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "メーカー"
+      ]
+    },
+    {
+      "lemma": "めっちゃ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "めっちゃ"
+      ]
+    },
+    {
+      "lemma": "もったいない",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "もったいない"
+      ]
+    },
+    {
+      "lemma": "ゃ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "ゃ"
+      ]
+    },
+    {
+      "lemma": "やってくる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "やってき"
+      ]
+    },
+    {
+      "lemma": "ヤバッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "ヤバッ"
+      ]
+    },
+    {
+      "lemma": "ゆうべ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "ゆうべ"
+      ]
+    },
+    {
+      "lemma": "ランク",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "ランク"
+      ]
+    },
+    {
+      "lemma": "リスト",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "リスト"
+      ]
+    },
+    {
+      "lemma": "れっきとした",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "れっきとした"
+      ]
+    },
+    {
+      "lemma": "わける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "わけ"
+      ]
+    },
+    {
+      "lemma": "愛す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "愛し"
+      ]
+    },
+    {
+      "lemma": "握力",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "握力"
+      ]
+    },
+    {
+      "lemma": "扱い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "扱い"
+      ]
+    },
+    {
+      "lemma": "扱う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "扱っ"
+      ]
+    },
+    {
+      "lemma": "案外",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "案外"
+      ]
+    },
+    {
+      "lemma": "以来",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "以来"
+      ]
+    },
+    {
+      "lemma": "印象",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "印象"
+      ]
+    },
+    {
+      "lemma": "隠れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "隠れ"
+      ]
+    },
+    {
+      "lemma": "越す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "越さ"
+      ]
+    },
+    {
+      "lemma": "下心",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "下心"
+      ]
+    },
+    {
+      "lemma": "何で",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "何で"
+      ]
+    },
+    {
+      "lemma": "稼ぐ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "稼ぎ"
+      ]
+    },
+    {
+      "lemma": "我が",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "我が"
+      ]
+    },
+    {
+      "lemma": "灰",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "灰"
+      ]
+    },
+    {
+      "lemma": "学区",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "学区"
+      ]
+    },
+    {
+      "lemma": "活発",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "活発"
+      ]
+    },
+    {
+      "lemma": "完備",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "完備"
+      ]
+    },
+    {
+      "lemma": "完了",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "完了"
+      ]
+    },
+    {
+      "lemma": "干ばつ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "干ばつ"
+      ]
+    },
+    {
+      "lemma": "汗だく",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "汗だく"
+      ]
+    },
+    {
+      "lemma": "甘える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "甘える"
+      ]
+    },
+    {
+      "lemma": "間に合う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "間に合う"
+      ]
+    },
+    {
+      "lemma": "間違い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "間違い"
+      ]
+    },
+    {
+      "lemma": "基本",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "基本"
+      ]
+    },
+    {
+      "lemma": "奇妙",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "奇妙"
+      ]
+    },
+    {
+      "lemma": "期間",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "期間"
+      ]
+    },
+    {
+      "lemma": "祈る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "祈っ"
+      ]
+    },
+    {
+      "lemma": "牛乳",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "牛乳"
+      ]
+    },
+    {
+      "lemma": "距離",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "距離"
+      ]
+    },
+    {
+      "lemma": "供物",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "供物"
+      ]
+    },
+    {
+      "lemma": "響き",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "響き"
+      ]
+    },
+    {
+      "lemma": "驚き",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "驚き"
+      ]
+    },
+    {
+      "lemma": "極意",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "極意"
+      ]
+    },
+    {
+      "lemma": "金曜",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "金曜"
+      ]
+    },
+    {
+      "lemma": "空手",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "空手"
+      ]
+    },
+    {
+      "lemma": "経験",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "経験"
+      ]
+    },
+    {
+      "lemma": "経歴",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "経歴"
+      ]
+    },
+    {
+      "lemma": "撃てる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "撃て"
+      ]
+    },
+    {
+      "lemma": "件",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "件"
+      ]
+    },
+    {
+      "lemma": "見つめる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "見つめ"
+      ]
+    },
+    {
+      "lemma": "現在",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "現在"
+      ]
+    },
+    {
+      "lemma": "現場",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "現場"
+      ]
+    },
+    {
+      "lemma": "限定",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "限定"
+      ]
+    },
+    {
+      "lemma": "故郷",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "故郷"
+      ]
+    },
+    {
+      "lemma": "効く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "効く"
+      ]
+    },
+    {
+      "lemma": "厚生",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "厚生"
+      ]
+    },
+    {
+      "lemma": "口下手",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "口下手"
+      ]
+    },
+    {
+      "lemma": "広告",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "広告"
+      ]
+    },
+    {
+      "lemma": "慌てる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "慌て"
+      ]
+    },
+    {
+      "lemma": "高校生",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "高校生"
+      ]
+    },
+    {
+      "lemma": "黒",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "黒"
+      ]
+    },
+    {
+      "lemma": "今さら",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "今さら"
+      ]
+    },
+    {
+      "lemma": "今や",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "今や"
+      ]
+    },
+    {
+      "lemma": "今年",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "今年"
+      ]
+    },
+    {
+      "lemma": "砂糖",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "砂糖"
+      ]
+    },
+    {
+      "lemma": "最低",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "最低"
+      ]
+    },
+    {
+      "lemma": "殺せる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "殺せん"
+      ]
+    },
+    {
+      "lemma": "皿",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "皿"
+      ]
+    },
+    {
+      "lemma": "三昧",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "三昧"
+      ]
+    },
+    {
+      "lemma": "惨状",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "惨状"
+      ]
+    },
+    {
+      "lemma": "姿勢",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "姿勢"
+      ]
+    },
+    {
+      "lemma": "指",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "指"
+      ]
+    },
+    {
+      "lemma": "資料",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "資料"
+      ]
+    },
+    {
+      "lemma": "飼う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "飼う"
+      ]
+    },
+    {
+      "lemma": "事故死",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "事故死"
+      ]
+    },
+    {
+      "lemma": "事情",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "事情"
+      ]
+    },
+    {
+      "lemma": "辞める",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "辞め"
+      ]
+    },
+    {
+      "lemma": "若者",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "若者"
+      ]
+    },
+    {
+      "lemma": "手入れ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "手入れ"
+      ]
+    },
+    {
+      "lemma": "酒",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "酒"
+      ]
+    },
+    {
+      "lemma": "首",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "首"
+      ]
+    },
+    {
+      "lemma": "受かる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "受かっ"
+      ]
+    },
+    {
+      "lemma": "受け答え",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "受け答え"
+      ]
+    },
+    {
+      "lemma": "襲う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "襲っ"
+      ]
+    },
+    {
+      "lemma": "住み着く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "住み着い"
+      ]
+    },
+    {
+      "lemma": "宿",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "宿"
+      ]
+    },
+    {
+      "lemma": "宿屋",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "宿屋"
+      ]
+    },
+    {
+      "lemma": "縮む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "縮ん"
+      ]
+    },
+    {
+      "lemma": "出かける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "出かけ"
+      ]
+    },
+    {
+      "lemma": "出会い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "出会い"
+      ]
+    },
+    {
+      "lemma": "処理",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "処理"
+      ]
+    },
+    {
+      "lemma": "初任",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "初任"
+      ]
+    },
+    {
+      "lemma": "所属",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "所属"
+      ]
+    },
+    {
+      "lemma": "女子",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "女子"
+      ]
+    },
+    {
+      "lemma": "女性",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "女性"
+      ]
+    },
+    {
+      "lemma": "傷む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "傷ん"
+      ]
+    },
+    {
+      "lemma": "商社",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "商社"
+      ]
+    },
+    {
+      "lemma": "小学校",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "小学校"
+      ]
+    },
+    {
+      "lemma": "消滅",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "消滅"
+      ]
+    },
+    {
+      "lemma": "焦る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "焦っ"
+      ]
+    },
+    {
+      "lemma": "衝撃",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "衝撃"
+      ]
+    },
+    {
+      "lemma": "証す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "証し"
+      ]
+    },
+    {
+      "lemma": "上げる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "上げ"
+      ]
+    },
+    {
+      "lemma": "場",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "場"
+      ]
+    },
+    {
+      "lemma": "職場",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "職場"
+      ]
+    },
+    {
+      "lemma": "触る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "触っ"
+      ]
+    },
+    {
+      "lemma": "信仰",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "信仰"
+      ]
+    },
+    {
+      "lemma": "寝坊",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "寝坊"
+      ]
+    },
+    {
+      "lemma": "審査",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "審査"
+      ]
+    },
+    {
+      "lemma": "新人",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "新人"
+      ]
+    },
+    {
+      "lemma": "親切",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "親切"
+      ]
+    },
+    {
+      "lemma": "親友",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "親友"
+      ]
+    },
+    {
+      "lemma": "人殺し",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "人殺し"
+      ]
+    },
+    {
+      "lemma": "図書",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "図書"
+      ]
+    },
+    {
+      "lemma": "制服",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "制服"
+      ]
+    },
+    {
+      "lemma": "正解",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "正解"
+      ]
+    },
+    {
+      "lemma": "誠意",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "誠意"
+      ]
+    },
+    {
+      "lemma": "青春",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "青春"
+      ]
+    },
+    {
+      "lemma": "赤い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "赤い"
+      ]
+    },
+    {
+      "lemma": "接する",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "接する"
+      ]
+    },
+    {
+      "lemma": "先行",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-01"
+      ],
+      "surfaces": [
+        "先行"
+      ]
+    },
+    {
+      "lemma": "先方",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "先方"
+      ]
+    },
+    {
+      "lemma": "羨望",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "羨望"
+      ]
+    },
+    {
+      "lemma": "前略",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "前略"
+      ]
+    },
+    {
+      "lemma": "尊敬",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "尊敬"
+      ]
+    },
+    {
+      "lemma": "代理",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "代理"
+      ]
+    },
+    {
+      "lemma": "大学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "大学"
+      ]
+    },
+    {
+      "lemma": "第一声",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "第一声"
+      ]
+    },
+    {
+      "lemma": "段",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "段"
+      ]
+    },
+    {
+      "lemma": "男勝り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "男勝り"
+      ]
+    },
+    {
+      "lemma": "知り合う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "知り合っ"
+      ]
+    },
+    {
+      "lemma": "遅れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "遅れ"
+      ]
+    },
+    {
+      "lemma": "中学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "中学"
+      ]
+    },
+    {
+      "lemma": "昼休み",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "昼休み"
+      ]
+    },
+    {
+      "lemma": "丁度",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "丁度"
+      ]
+    },
+    {
+      "lemma": "通える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "通える"
+      ]
+    },
+    {
+      "lemma": "伝わる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "伝わる"
+      ]
+    },
+    {
+      "lemma": "殿",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "殿"
+      ]
+    },
+    {
+      "lemma": "途絶える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "途絶え"
+      ]
+    },
+    {
+      "lemma": "土日",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "土日"
+      ]
+    },
+    {
+      "lemma": "奴隷",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "奴隷"
+      ]
+    },
+    {
+      "lemma": "投げる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "投げ"
+      ]
+    },
+    {
+      "lemma": "東",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "東"
+      ]
+    },
+    {
+      "lemma": "当たり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "当たり"
+      ]
+    },
+    {
+      "lemma": "当番",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "当番"
+      ]
+    },
+    {
+      "lemma": "働かせる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "働かせ"
+      ]
+    },
+    {
+      "lemma": "働ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "働け"
+      ]
+    },
+    {
+      "lemma": "動画",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-02"
+      ],
+      "surfaces": [
+        "動画"
+      ]
+    },
+    {
+      "lemma": "同じく",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "同じく"
+      ]
+    },
+    {
+      "lemma": "特売",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-02"
+      ],
+      "surfaces": [
+        "特売"
+      ]
+    },
+    {
+      "lemma": "肉",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "肉"
+      ]
+    },
+    {
+      "lemma": "日焼け",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "日焼け"
+      ]
+    },
+    {
+      "lemma": "入社",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "入社"
+      ]
+    },
+    {
+      "lemma": "入部",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "入部"
+      ]
+    },
+    {
+      "lemma": "忍び",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "忍び"
+      ]
+    },
+    {
+      "lemma": "念入り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "念入り"
+      ]
+    },
+    {
+      "lemma": "罵声",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "罵声"
+      ]
+    },
+    {
+      "lemma": "拝む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "拝み"
+      ]
+    },
+    {
+      "lemma": "白い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "白"
+      ]
+    },
+    {
+      "lemma": "販売",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "販売"
+      ]
+    },
+    {
+      "lemma": "病む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "病ん"
+      ]
+    },
+    {
+      "lemma": "布",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-02"
+      ],
+      "surfaces": [
+        "布"
+      ]
+    },
+    {
+      "lemma": "部",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "部"
+      ]
+    },
+    {
+      "lemma": "部員",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "部員"
+      ]
+    },
+    {
+      "lemma": "部活",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-01"
+      ],
+      "surfaces": [
+        "部活"
+      ]
+    },
+    {
+      "lemma": "福利",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-01"
+      ],
+      "surfaces": [
+        "福利"
+      ]
+    },
+    {
+      "lemma": "物静か",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "物静か"
+      ]
+    },
+    {
+      "lemma": "分かれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "分かれ"
+      ]
+    },
+    {
+      "lemma": "文字どおり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "文字どおり"
+      ]
+    },
+    {
+      "lemma": "並ぶ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-01"
+      ],
+      "surfaces": [
+        "並ん"
+      ]
+    },
+    {
+      "lemma": "別々",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "別々"
+      ]
+    },
+    {
+      "lemma": "辺り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "辺り"
+      ]
+    },
+    {
+      "lemma": "暮らす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "暮らし"
+      ]
+    },
+    {
+      "lemma": "放つ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "放っ"
+      ]
+    },
+    {
+      "lemma": "訪れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "訪れる"
+      ]
+    },
+    {
+      "lemma": "魔道",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "魔道"
+      ]
+    },
+    {
+      "lemma": "妙",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-02"
+      ],
+      "surfaces": [
+        "妙"
+      ]
+    },
+    {
+      "lemma": "無礼",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "無礼"
+      ]
+    },
+    {
+      "lemma": "明くる日",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "明くる日"
+      ]
+    },
+    {
+      "lemma": "鳴る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "onakin"
+      ],
+      "samples": [
+        "manga-onakin-02"
+      ],
+      "surfaces": [
+        "鳴ら"
+      ]
+    },
+    {
+      "lemma": "門",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "majo"
+      ],
+      "samples": [
+        "anime-majo-01"
+      ],
+      "surfaces": [
+        "門"
+      ]
+    },
+    {
+      "lemma": "憂える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-02"
+      ],
+      "surfaces": [
+        "憂え"
+      ]
+    },
+    {
+      "lemma": "幼馴染",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tomochan"
+      ],
+      "samples": [
+        "manga-tomochan-01"
+      ],
+      "surfaces": [
+        "幼馴染"
+      ]
+    },
+    {
+      "lemma": "浴びせる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kanako"
+      ],
+      "samples": [
+        "manga-kanako-02"
+      ],
+      "surfaces": [
+        "浴びせ"
+      ]
+    },
+    {
+      "lemma": "利く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "natsume"
+      ],
+      "samples": [
+        "anime-natsume-01"
+      ],
+      "surfaces": [
+        "利い"
+      ]
+    },
+    {
+      "lemma": "裏",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "hyouka"
+      ],
+      "samples": [
+        "anime-hyouka-02"
+      ],
+      "surfaces": [
+        "裏"
+      ]
+    },
+    {
+      "lemma": "留め",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nichijou"
+      ],
+      "samples": [
+        "anime-nichijou-01"
+      ],
+      "surfaces": [
+        "留め"
+      ]
+    },
+    {
+      "lemma": "冷蔵庫",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "satokoandnada"
+      ],
+      "samples": [
+        "manga-SATOKOandNADA-01"
+      ],
+      "surfaces": [
+        "冷蔵庫"
+      ]
+    }
+  ]
+}

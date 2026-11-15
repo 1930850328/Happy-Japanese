@@ -1,0 +1,6583 @@
+{
+  "audit_type": "development_exact_lemma_inventory",
+  "comprehension_percent": null,
+  "student_test_performed": false,
+  "method": {
+    "tokenizer": "kuromoji",
+    "version": "0.1.2",
+    "denominator": "名詞（固有名詞・数・非自立・代名詞・接尾を除く）、自立動詞、形容詞、副詞、連体詞、接続詞；記号・助詞・助動詞・非自立動詞・接尾動詞は対象外",
+    "match": "NFKC + trim; exact surface OR dictionary form in term field; no reading-based homophone matching",
+    "limits": "是词形检索，不是义项正确性、词汇熟练度或整句理解率。未命中可能是分词、异体字、复合词、词条格式、旧词形或真正缺项。"
+  },
+  "inputs_sha256": "b506b561bbe9f7d3fbbd61a632cbf10884e4c18d5b51ad4d51dc994610317c79",
+  "holdout_bodies_loaded": 0,
+  "skipped": [
+    {
+      "id": "manga-021",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-041",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-073",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-090",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-123",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-145",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-171",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-194",
+      "reason": "image_without_verified_transcript"
+    },
+    {
+      "id": "manga-201",
+      "reason": "image_without_verified_transcript"
+    }
+  ],
+  "samples": [
+    {
+      "id": "manga-007",
+      "source_id": "blackjack",
+      "group": "blackjack",
+      "genre": "manga",
+      "source_text_sha256": "7dbdfae83e58afe6c6e8e1b1691dd13adc581d8682a7ad55a9ba0b7a0ddb710f",
+      "tokens": 11,
+      "kaishi_matches": 5,
+      "combined_matches": 6,
+      "kaishi_match_percent": 45.45,
+      "combined_match_percent": 54.55
+    },
+    {
+      "id": "manga-009",
+      "source_id": "blackjack",
+      "group": "blackjack",
+      "genre": "manga",
+      "source_text_sha256": "093383fdac541c979158ca19bee9af11a32e8db28fc437d87ba4171bc9003c79",
+      "tokens": 38,
+      "kaishi_matches": 11,
+      "combined_matches": 14,
+      "kaishi_match_percent": 28.95,
+      "combined_match_percent": 36.84
+    },
+    {
+      "id": "manga-066",
+      "source_id": "blackjack",
+      "group": "blackjack",
+      "genre": "manga",
+      "source_text_sha256": "5bea8fb4fe0433ada17f0d4a7dcedb91d47af145b3e82f19e7978765a7f1f5bd",
+      "tokens": 24,
+      "kaishi_matches": 13,
+      "combined_matches": 16,
+      "kaishi_match_percent": 54.17,
+      "combined_match_percent": 66.67
+    },
+    {
+      "id": "lit-melos-01",
+      "source_id": "melos",
+      "group": "dazai",
+      "genre": "historical_literature",
+      "source_text_sha256": "4c38f0a7ae5f8210e726703c69b8d66001030d0499fbc6f61b4f6c6ff6737bf6",
+      "tokens": 175,
+      "kaishi_matches": 71,
+      "combined_matches": 81,
+      "kaishi_match_percent": 40.57,
+      "combined_match_percent": 46.29
+    },
+    {
+      "id": "lit-melos-02",
+      "source_id": "melos",
+      "group": "dazai",
+      "genre": "historical_literature",
+      "source_text_sha256": "8e96b3332af000aa461beb26e7d8cdecf6076178fec331263792d23b3931f2e9",
+      "tokens": 60,
+      "kaishi_matches": 22,
+      "combined_matches": 31,
+      "kaishi_match_percent": 36.67,
+      "combined_match_percent": 51.67
+    },
+    {
+      "id": "lit-chumon-01",
+      "source_id": "chumon",
+      "group": "miyazawa",
+      "genre": "historical_literature",
+      "source_text_sha256": "4ac502cb5ed2eb94b71c1556a11098b6d973cd3fc6dc345830675c1ffc7666c5",
+      "tokens": 92,
+      "kaishi_matches": 34,
+      "combined_matches": 41,
+      "kaishi_match_percent": 36.96,
+      "combined_match_percent": 44.57
+    },
+    {
+      "id": "nucc-001",
+      "source_id": "nucc-001",
+      "group": "nucc",
+      "genre": "spoken_transcript",
+      "source_text_sha256": "3358e9624813bf0eddfb0c31afb80e7a66fe0750f4401fa80d63e4ef11d6fef1",
+      "tokens": 87,
+      "kaishi_matches": 56,
+      "combined_matches": 63,
+      "kaishi_match_percent": 64.37,
+      "combined_match_percent": 72.41
+    },
+    {
+      "id": "nucc-006",
+      "source_id": "nucc-006",
+      "group": "nucc",
+      "genre": "spoken_transcript",
+      "source_text_sha256": "ab55ea0a5e022506a0ba221f30327dfec86958c74fea2a50b461b895d8477126",
+      "tokens": 49,
+      "kaishi_matches": 29,
+      "combined_matches": 38,
+      "kaishi_match_percent": 59.18,
+      "combined_match_percent": 77.55
+    },
+    {
+      "id": "nucc-042",
+      "source_id": "nucc-042",
+      "group": "nucc",
+      "genre": "spoken_transcript",
+      "source_text_sha256": "931cce2e8c90ea48ea197abc2129912b4d22684b4facd1e6e5580c21918c0fed",
+      "tokens": 59,
+      "kaishi_matches": 32,
+      "combined_matches": 42,
+      "kaishi_match_percent": 54.24,
+      "combined_match_percent": 71.19
+    },
+    {
+      "id": "nucc-067",
+      "source_id": "nucc-067",
+      "group": "nucc",
+      "genre": "spoken_transcript",
+      "source_text_sha256": "ac4259e4bf962530f429e6c81afa502096cbf7d1c14c80182dfca3d3ec81afae",
+      "tokens": 31,
+      "kaishi_matches": 21,
+      "combined_matches": 25,
+      "kaishi_match_percent": 67.74,
+      "combined_match_percent": 80.65
+    },
+    {
+      "id": "nucc-101",
+      "source_id": "nucc-101",
+      "group": "nucc",
+      "genre": "spoken_transcript",
+      "source_text_sha256": "c818b95ec75fde47d9d9ff3ed146e7d648c2fd1eb961f8399194b326b94600af",
+      "tokens": 29,
+      "kaishi_matches": 18,
+      "combined_matches": 22,
+      "kaishi_match_percent": 62.07,
+      "combined_match_percent": 75.86
+    },
+    {
+      "id": "supercub-01",
+      "source_id": "supercub",
+      "group": "supercub",
+      "genre": "light_novel",
+      "source_text_sha256": "10fd134d1a809bc17fd1c358cee8aed0a8ea4e1a000582fffefb69c443e9116d",
+      "tokens": 139,
+      "kaishi_matches": 65,
+      "combined_matches": 74,
+      "kaishi_match_percent": 46.76,
+      "combined_match_percent": 53.24
+    },
+    {
+      "id": "supercub-02",
+      "source_id": "supercub",
+      "group": "supercub",
+      "genre": "light_novel",
+      "source_text_sha256": "6c909458f1534e9574e5aa574bf030ce2c2b0bfed1588ffa45e2623965312226",
+      "tokens": 110,
+      "kaishi_matches": 54,
+      "combined_matches": 69,
+      "kaishi_match_percent": 49.09,
+      "combined_match_percent": 62.73
+    },
+    {
+      "id": "honzuki-01",
+      "source_id": "honzuki",
+      "group": "honzuki",
+      "genre": "light_novel",
+      "source_text_sha256": "1643bd929f055a4ad157e6f07d946ac283ae7e2f5cb6a248c6f55d41d270e195",
+      "tokens": 140,
+      "kaishi_matches": 67,
+      "combined_matches": 76,
+      "kaishi_match_percent": 47.86,
+      "combined_match_percent": 54.29
+    },
+    {
+      "id": "naruse-01",
+      "source_id": "naruse",
+      "group": "naruse",
+      "genre": "modern_fiction",
+      "source_text_sha256": "1cec0061efe69941645c6cf05350328fad0b254659f9b01b033fa164c0cc3423",
+      "tokens": 91,
+      "kaishi_matches": 47,
+      "combined_matches": 57,
+      "kaishi_match_percent": 51.65,
+      "combined_match_percent": 62.64
+    },
+    {
+      "id": "naruse-02",
+      "source_id": "naruse",
+      "group": "naruse",
+      "genre": "modern_fiction",
+      "source_text_sha256": "368c34b853976572a99a8b48eeb98ef14c2b5e8920c9d60275d5f0c970871c9c",
+      "tokens": 155,
+      "kaishi_matches": 64,
+      "combined_matches": 86,
+      "kaishi_match_percent": 41.29,
+      "combined_match_percent": 55.48
+    },
+    {
+      "id": "kaiwa-01",
+      "source_id": "kaiwa",
+      "group": "kaiwa",
+      "genre": "modern_nonfiction",
+      "source_text_sha256": "602720f047a9794758ac412368c3cea5d17ba6cfea44511e1e66ac58fad8feb4",
+      "tokens": 86,
+      "kaishi_matches": 47,
+      "combined_matches": 48,
+      "kaishi_match_percent": 54.65,
+      "combined_match_percent": 55.81
+    },
+    {
+      "id": "daily-mercari-01",
+      "source_id": "mercari",
+      "group": "mercari",
+      "genre": "everyday_instruction",
+      "source_text_sha256": "392b61010662534aa32e7f766e711147396a62f4f5d7ece97bf3074de54e8a08",
+      "tokens": 67,
+      "kaishi_matches": 27,
+      "combined_matches": 44,
+      "kaishi_match_percent": 40.3,
+      "combined_match_percent": 65.67
+    },
+    {
+      "id": "anime-shirokuma-01",
+      "source_id": "anime-shirokuma",
+      "group": "shirokuma",
+      "genre": "anime_subtitles",
+      "source_text_sha256": "c183476b117480ca384b9aa941c1f4fa225611a2e976b5ec64669452c929e47e",
+      "tokens": 45,
+      "kaishi_matches": 22,
+      "combined_matches": 28,
+      "kaishi_match_percent": 48.89,
+      "combined_match_percent": 62.22
+    },
+    {
+      "id": "anime-shirokuma-02",
+      "source_id": "anime-shirokuma",
+      "group": "shirokuma",
+      "genre": "anime_subtitles",
+      "source_text_sha256": "f5271209799dbf8e1dffd7953d26d51d8b1012cc8619694c3ea0e5cd6e53e4c5",
+      "tokens": 26,
+      "kaishi_matches": 13,
+      "combined_matches": 21,
+      "kaishi_match_percent": 50,
+      "combined_match_percent": 80.77
+    },
+    {
+      "id": "anime-shirokuma-03",
+      "source_id": "anime-shirokuma",
+      "group": "shirokuma",
+      "genre": "anime_subtitles",
+      "source_text_sha256": "9b6615be110361e4de6c723b609519928d884c8512a4710b5b4c8e0cdd6b3549",
+      "tokens": 30,
+      "kaishi_matches": 11,
+      "combined_matches": 15,
+      "kaishi_match_percent": 36.67,
+      "combined_match_percent": 50
+    },
+    {
+      "id": "anime-kon-01",
+      "source_id": "anime-kon",
+      "group": "kon",
+      "genre": "anime_subtitles",
+      "source_text_sha256": "776afabb36784be5ef730d0787331b0a1cd9d43b69274c01f4f70ac67e24cdad",
+      "tokens": 44,
+      "kaishi_matches": 21,
+      "combined_matches": 24,
+      "kaishi_match_percent": 47.73,
+      "combined_match_percent": 54.55
+    },
+    {
+      "id": "anime-kon-02",
+      "source_id": "anime-kon",
+      "group": "kon",
+      "genre": "anime_subtitles",
+      "source_text_sha256": "101543fabac98e938e019744b846b5c3fc68e30b733e705e22b7f410fee2b3a4",
+      "tokens": 31,
+      "kaishi_matches": 16,
+      "combined_matches": 20,
+      "kaishi_match_percent": 51.61,
+      "combined_match_percent": 64.52
+    },
+    {
+      "id": "anime-kon-03",
+      "source_id": "anime-kon",
+      "group": "kon",
+      "genre": "anime_subtitles",
+      "source_text_sha256": "db969b75a2474acc106b9ec789280dc4b03a4b42949bc633938ce2eb8e2b86fd",
+      "tokens": 50,
+      "kaishi_matches": 26,
+      "combined_matches": 33,
+      "kaishi_match_percent": 52,
+      "combined_match_percent": 66
+    }
+  ],
+  "by_genre": [
+    {
+      "genre": "manga",
+      "samples": 3,
+      "tokens": 73,
+      "kaishi_matches": 29,
+      "combined_matches": 36,
+      "kaishi_match_percent": 39.73,
+      "combined_match_percent": 49.32
+    },
+    {
+      "genre": "historical_literature",
+      "samples": 3,
+      "tokens": 327,
+      "kaishi_matches": 127,
+      "combined_matches": 153,
+      "kaishi_match_percent": 38.84,
+      "combined_match_percent": 46.79
+    },
+    {
+      "genre": "spoken_transcript",
+      "samples": 5,
+      "tokens": 255,
+      "kaishi_matches": 156,
+      "combined_matches": 190,
+      "kaishi_match_percent": 61.18,
+      "combined_match_percent": 74.51
+    },
+    {
+      "genre": "light_novel",
+      "samples": 3,
+      "tokens": 389,
+      "kaishi_matches": 186,
+      "combined_matches": 219,
+      "kaishi_match_percent": 47.81,
+      "combined_match_percent": 56.3
+    },
+    {
+      "genre": "modern_fiction",
+      "samples": 2,
+      "tokens": 246,
+      "kaishi_matches": 111,
+      "combined_matches": 143,
+      "kaishi_match_percent": 45.12,
+      "combined_match_percent": 58.13
+    },
+    {
+      "genre": "modern_nonfiction",
+      "samples": 1,
+      "tokens": 86,
+      "kaishi_matches": 47,
+      "combined_matches": 48,
+      "kaishi_match_percent": 54.65,
+      "combined_match_percent": 55.81
+    },
+    {
+      "genre": "everyday_instruction",
+      "samples": 1,
+      "tokens": 67,
+      "kaishi_matches": 27,
+      "combined_matches": 44,
+      "kaishi_match_percent": 40.3,
+      "combined_match_percent": 65.67
+    },
+    {
+      "genre": "anime_subtitles",
+      "samples": 6,
+      "tokens": 226,
+      "kaishi_matches": 109,
+      "combined_matches": 141,
+      "kaishi_match_percent": 48.23,
+      "combined_match_percent": 62.39
+    }
+  ],
+  "by_group": [
+    {
+      "group": "blackjack",
+      "samples": 3,
+      "tokens": 73,
+      "kaishi_matches": 29,
+      "combined_matches": 36,
+      "kaishi_match_percent": 39.73,
+      "combined_match_percent": 49.32
+    },
+    {
+      "group": "dazai",
+      "samples": 2,
+      "tokens": 235,
+      "kaishi_matches": 93,
+      "combined_matches": 112,
+      "kaishi_match_percent": 39.57,
+      "combined_match_percent": 47.66
+    },
+    {
+      "group": "miyazawa",
+      "samples": 1,
+      "tokens": 92,
+      "kaishi_matches": 34,
+      "combined_matches": 41,
+      "kaishi_match_percent": 36.96,
+      "combined_match_percent": 44.57
+    },
+    {
+      "group": "nucc",
+      "samples": 5,
+      "tokens": 255,
+      "kaishi_matches": 156,
+      "combined_matches": 190,
+      "kaishi_match_percent": 61.18,
+      "combined_match_percent": 74.51
+    },
+    {
+      "group": "supercub",
+      "samples": 2,
+      "tokens": 249,
+      "kaishi_matches": 119,
+      "combined_matches": 143,
+      "kaishi_match_percent": 47.79,
+      "combined_match_percent": 57.43
+    },
+    {
+      "group": "honzuki",
+      "samples": 1,
+      "tokens": 140,
+      "kaishi_matches": 67,
+      "combined_matches": 76,
+      "kaishi_match_percent": 47.86,
+      "combined_match_percent": 54.29
+    },
+    {
+      "group": "naruse",
+      "samples": 2,
+      "tokens": 246,
+      "kaishi_matches": 111,
+      "combined_matches": 143,
+      "kaishi_match_percent": 45.12,
+      "combined_match_percent": 58.13
+    },
+    {
+      "group": "kaiwa",
+      "samples": 1,
+      "tokens": 86,
+      "kaishi_matches": 47,
+      "combined_matches": 48,
+      "kaishi_match_percent": 54.65,
+      "combined_match_percent": 55.81
+    },
+    {
+      "group": "mercari",
+      "samples": 1,
+      "tokens": 67,
+      "kaishi_matches": 27,
+      "combined_matches": 44,
+      "kaishi_match_percent": 40.3,
+      "combined_match_percent": 65.67
+    },
+    {
+      "group": "shirokuma",
+      "samples": 3,
+      "tokens": 101,
+      "kaishi_matches": 46,
+      "combined_matches": 64,
+      "kaishi_match_percent": 45.54,
+      "combined_match_percent": 63.37
+    },
+    {
+      "group": "kon",
+      "samples": 3,
+      "tokens": 125,
+      "kaishi_matches": 63,
+      "combined_matches": 77,
+      "kaishi_match_percent": 50.4,
+      "combined_match_percent": 61.6
+    }
+  ],
+  "unmatched_candidates": [
+    {
+      "lemma": "なれる",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "dazai",
+        "honzuki",
+        "supercub"
+      ],
+      "samples": [
+        "honzuki-01",
+        "lit-melos-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "ひとり",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "dazai",
+        "miyazawa",
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-02",
+        "lit-chumon-01",
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "居る",
+      "pos": "動詞",
+      "count": 6,
+      "groups": [
+        "dazai",
+        "supercub"
+      ],
+      "samples": [
+        "lit-melos-02",
+        "supercub-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "試験",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "blackjack",
+        "supercub"
+      ],
+      "samples": [
+        "manga-009",
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "部活",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "kon",
+        "supercub"
+      ],
+      "samples": [
+        "anime-kon-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "いう",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "kaiwa",
+        "naruse"
+      ],
+      "samples": [
+        "kaiwa-01",
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "さほど",
+      "pos": "副詞",
+      "count": 3,
+      "groups": [
+        "kaiwa",
+        "supercub"
+      ],
+      "samples": [
+        "kaiwa-01",
+        "supercub-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "母親",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "naruse",
+        "supercub"
+      ],
+      "samples": [
+        "naruse-02",
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "いや",
+      "pos": "接続詞",
+      "count": 2,
+      "groups": [
+        "nucc",
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03",
+        "nucc-067"
+      ]
+    },
+    {
+      "lemma": "こんな",
+      "pos": "連体詞",
+      "count": 2,
+      "groups": [
+        "miyazawa",
+        "naruse"
+      ],
+      "samples": [
+        "lit-chumon-01",
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "しかし",
+      "pos": "接続詞",
+      "count": 2,
+      "groups": [
+        "kaiwa",
+        "naruse"
+      ],
+      "samples": [
+        "kaiwa-01",
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "たつ",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "kon",
+        "miyazawa"
+      ],
+      "samples": [
+        "anime-kon-01",
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "ちゃう",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "kon",
+        "naruse"
+      ],
+      "samples": [
+        "anime-kon-02",
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "つける",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "nucc",
+        "supercub"
+      ],
+      "samples": [
+        "nucc-042",
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "なんだか",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "dazai",
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-02",
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "間近",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai",
+        "naruse"
+      ],
+      "samples": [
+        "lit-melos-01",
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "言語",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "honzuki",
+        "kaiwa"
+      ],
+      "samples": [
+        "honzuki-01",
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "合格",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "blackjack",
+        "supercub"
+      ],
+      "samples": [
+        "manga-009",
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "専門",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "honzuki",
+        "miyazawa"
+      ],
+      "samples": [
+        "honzuki-01",
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "暮す",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "dazai",
+        "supercub"
+      ],
+      "samples": [
+        "lit-melos-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "野",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "blackjack",
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01",
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "メロス",
+      "pos": "名詞",
+      "count": 10,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "シロクマ",
+      "pos": "名詞",
+      "count": 8,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01",
+        "anime-shirokuma-02",
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "ワン",
+      "pos": "名詞",
+      "count": 7,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "取引",
+      "pos": "名詞",
+      "count": 5,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "秒",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "老爺",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "なでる",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "ニー",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "ほる",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "まち",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "逢う",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "此",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "山奥",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "奨学",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "城壁",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "通知",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "動物",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "入部",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02",
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "廃部",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02"
+      ]
+    },
+    {
+      "lemma": "発送",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "話者",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "イモ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "きょう",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01",
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "クイズ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "ぐるり",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "ゲイ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "けれども",
+      "pos": "接続詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "シラクス",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "ダイコン",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "チェック",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "ニート",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "ハードディスク",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "バレる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "びっくり",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "ひょう",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "ポテト",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "まえる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "ママチャリ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "もらえる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "ワイド",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "愛す",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "悪心",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "医学",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "医師",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "演習",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-101"
+      ]
+    },
+    {
+      "lemma": "王様",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "極めて",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "研修",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "交替",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "国家",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "若い衆",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "受取",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "出身",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "商業",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "生まれ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "積もる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "送れる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "損害",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "大人気",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "鉄砲",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "杜",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01",
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "特典",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "剥製",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "白熊",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "八月",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "疋",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "部員",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02",
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "暮し",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01",
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "捧げる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01",
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "訪ねる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "牧人",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "友",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "乱心",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "陸上",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "アイスティー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-067"
+      ]
+    },
+    {
+      "lemma": "あけび",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "あこがれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "あたり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "あらゆる",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "アレキス",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "あんな",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "あんま",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "あんまり",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "いえる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "いく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "いける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "いっしょ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "いっぺん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "いぬ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "ウサイン・ボルト",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "うたう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "ウチ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "うっすら",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "うなる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "エネルギッシュ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "えむ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-101"
+      ]
+    },
+    {
+      "lemma": "おう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "オープン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "オーミー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "おごる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "おでん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "おどろく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "おなか",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-067"
+      ]
+    },
+    {
+      "lemma": "オヤイモ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "オンチ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "お見舞",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "お待ち",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "が",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-101"
+      ]
+    },
+    {
+      "lemma": "カウント",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "かえす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "かかわる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "かく",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "かさかさ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "かたち",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "かっぱ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "かの",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "からい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "からす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "からだ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "カラフル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "がらん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "ぎっちり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "きのう",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-007"
+      ]
+    },
+    {
+      "lemma": "キャンセル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "キレイ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02"
+      ]
+    },
+    {
+      "lemma": "くう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "グサッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "くやしい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "クラブ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "くるくる",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "ぐるっと",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "ケー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "こっそり",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "このごろ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "こめる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "こんど",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "こんにゃく",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "ざき",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "ざん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "サンド",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-067"
+      ]
+    },
+    {
+      "lemma": "サンドイッチ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-067"
+      ]
+    },
+    {
+      "lemma": "じつに",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "しま",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "ジャージ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "しれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "しろくま",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "ずいぶん",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "すっごい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "ずるい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "セリヌンティウス",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "ぜんたい",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "そういう",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02"
+      ]
+    },
+    {
+      "lemma": "そこで",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "その後",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "ターン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "ターンテイキング",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "タイプ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "タイム",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "たどる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "たびたび",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "たま",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "タンタアーン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "ちゃ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "つかまえる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "つかれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "っぽい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "つれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "テナント",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "テラス",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "テレ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "ト",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "とこ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "ところが",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "とっくに",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "とびつく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "ともに",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "トリー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "ないない",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "なす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-067"
+      ]
+    },
+    {
+      "lemma": "なんで",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "ニヨニヨ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "ノベル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "のんき",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "バイト",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "バカ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "はたく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "はばかる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "パラリ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "はるばる",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "はんぺん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "ぴかぴか",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "ひっそり",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "ひる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "びわ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "ファースト",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "フード",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "ぶた",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "ぶらぶら",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "ブレザー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "ぶ厚い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "ページ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "ペダル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "ボー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "ほっぺ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "まぎらわしい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "まげて",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "まごつく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "まずは",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "まわる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "みそ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "みる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "めまい",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "もうかる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "もうす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "モテ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "やけに",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "やってくる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "やっぱ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "ゅ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-101"
+      ]
+    },
+    {
+      "lemma": "ゆすぶる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "よし",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "よろしく",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "ライト",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "リンゴ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "レヴィンソン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "レーサー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "ローカル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "ロード",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "わける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "或",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "安堵",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "案件",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "意図",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "衣裳",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "遺産",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "一見",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "一人ぼっち",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "一線",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "一疋",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "云う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "営業",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "園児",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "横っ腹",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "黄いろ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "下り坂",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "下校",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "化学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "花婿",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "我が身",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "画",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "回数",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "絵本",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "外見",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "垣間見る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "獲得",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "学期",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "学者",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "学年",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "学費",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "学力",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "楽しみ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "活字",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "鞄",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "簡素",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "緩い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "間もなく",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "眼",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "企て",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "基準",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "寄せ付ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "疑い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "詰め込む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "久しい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "給付",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "居",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "拒む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "競争",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "強調",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "教",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "教育",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "教授",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-007"
+      ]
+    },
+    {
+      "lemma": "近々",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "金持ち",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "銀メダル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "駆け落ち",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "繰り広げる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "経過",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "芸術",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "激怒",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "欠ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "決め手",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "決勝",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "結婚式",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "月給",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "件",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "建つ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "県",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "県域",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "県民",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "見れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "見下す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "見習い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "見方",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "賢",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "言い回し",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "言える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "孤立",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "誇らしい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "誇る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "御子",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "御馳走",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "語勢",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "勾配",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "皇后",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "考慮",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "行い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "購入",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "郊外",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "高度",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "合併",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "国王",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "国道",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "最終",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "採血",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "昨年度",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02"
+      ]
+    },
+    {
+      "lemma": "参観",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-02"
+      ]
+    },
+    {
+      "lemma": "山越え",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "産む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "仕事場",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-01"
+      ]
+    },
+    {
+      "lemma": "使い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "市町村",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "思い入れ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "思想",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "私立",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "紙切れ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "事典",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "事務",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "持ち合わせる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "持てる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "自治体",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "自宅",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "鹿",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "七月",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "執着",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "失踪",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "実技",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "実験",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-007"
+      ]
+    },
+    {
+      "lemma": "邪悪",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "邪智",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "取り壊す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "取得",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "手前",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "手伝い",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-007"
+      ]
+    },
+    {
+      "lemma": "趣",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "収集",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-101"
+      ]
+    },
+    {
+      "lemma": "住民",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "十字架",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "十字路",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "宿題",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "祝",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "祝宴",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "出発",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "出来上がる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "術",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "初夏",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "書ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "書房",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "女学生",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "女房",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "除く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "勝ち",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-007"
+      ]
+    },
+    {
+      "lemma": "小",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "小学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "小学生",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "小説",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "小柄",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "少しく",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "上手",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "常勤",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-02"
+      ]
+    },
+    {
+      "lemma": "情熱",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "信ずる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "審査",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "心理",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "慎ましい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "申請",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "臣",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "臣下",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "親しい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "親族",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "身寄り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "進学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "人一倍",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "人質",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "人類",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "尽くす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "須",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "水音",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "酔う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "数学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "寸前",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02"
+      ]
+    },
+    {
+      "lemma": "世嗣",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "政治",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "生まれつく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "生物",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "盛る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "石工",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "跡地",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "切り崩す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "先ず",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "選手",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "全集",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "疎遠",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "祖父母",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "素人",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "漕ぐ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "送信",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "足す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "卒業",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-02"
+      ]
+    },
+    {
+      "lemma": "多額",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "多用",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "体育",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "貸し付ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "大半",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "大路",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "炭焼き",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "地域",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "地学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "地球",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-001"
+      ]
+    },
+    {
+      "lemma": "地理",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "竹馬",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "蓄え",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "中継",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "貯金",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "追い抜く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "痛める",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "痛快",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "通学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "笛",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "天涯孤独",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "登り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "都",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "湯わかし",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "当る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "当直",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-066"
+      ]
+    },
+    {
+      "lemma": "陶酔",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "同人",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "得",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "特有",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "呑む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "内気",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "賑やか",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "年月日",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-101"
+      ]
+    },
+    {
+      "lemma": "破る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "買い換える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "迫力",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "shirokuma"
+      ],
+      "samples": [
+        "anime-shirokuma-03"
+      ]
+    },
+    {
+      "lemma": "発話",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "悲しみ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "皮",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "美酒",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "美少女",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "筆者",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "紐解く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "百科",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "表紙",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "表彰台",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "品々",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "敏感",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "不備",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "mercari"
+      ],
+      "samples": [
+        "daily-mercari-01"
+      ]
+    },
+    {
+      "lemma": "不便",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "父親",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "父母",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "風習",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "物凄い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "物理",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "分野",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "文学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "兵隊",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "平穏",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "平均",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    },
+    {
+      "lemma": "別荘",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-03"
+      ]
+    },
+    {
+      "lemma": "辺",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "弁当",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "放り込む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "放送",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "泡",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "暴虐",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "吠",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "没す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "本屋",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "本山",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-006"
+      ]
+    },
+    {
+      "lemma": "本線",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "凡人",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "幕",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "漫画",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "未明",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "民俗",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "無印",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "婿",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "命じる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-02"
+      ]
+    },
+    {
+      "lemma": "明確",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "免許",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "面取り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nucc"
+      ],
+      "samples": [
+        "nucc-042"
+      ]
+    },
+    {
+      "lemma": "妄想",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "木の葉",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "miyazawa"
+      ],
+      "samples": [
+        "lit-chumon-01"
+      ]
+    },
+    {
+      "lemma": "野暮ったい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "役目",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "唯",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "唯",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kon"
+      ],
+      "samples": [
+        "anime-kon-01"
+      ]
+    },
+    {
+      "lemma": "幼稚園",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "容量",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "羊",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "要するに",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "blackjack"
+      ],
+      "samples": [
+        "manga-009"
+      ]
+    },
+    {
+      "lemma": "陽",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "頼れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-01"
+      ]
+    },
+    {
+      "lemma": "利子",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "supercub"
+      ],
+      "samples": [
+        "supercub-02"
+      ]
+    },
+    {
+      "lemma": "里",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "律",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "良品",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "連なる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "honzuki"
+      ],
+      "samples": [
+        "honzuki-01"
+      ]
+    },
+    {
+      "lemma": "路",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dazai"
+      ],
+      "samples": [
+        "lit-melos-01"
+      ]
+    },
+    {
+      "lemma": "露骨",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "録画",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-02"
+      ]
+    },
+    {
+      "lemma": "囃",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "飄々",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "naruse"
+      ],
+      "samples": [
+        "naruse-01"
+      ]
+    },
+    {
+      "lemma": "嚙",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "kaiwa"
+      ],
+      "samples": [
+        "kaiwa-01"
+      ]
+    }
+  ]
+}

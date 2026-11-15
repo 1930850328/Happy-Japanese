@@ -1,0 +1,616 @@
+{
+  "collectedOn": "2026-11-11",
+  "purpose": "Local material preparation; no app integration, no course scheduling, no evaluation results.",
+  "sourceGroups": [
+    {
+      "id": "kaishi-zh",
+      "title": "Kaishi 1.5k 中文版",
+      "url": "https://github.com/maimemo/kaishi-zh-cn",
+      "downloadUrl": "https://raw.githubusercontent.com/maimemo/kaishi-zh-cn/main/Kaishi%201.5k%20zh-CN.tsv",
+      "gitBlob": "0955be6e31a4317df6f9521a42e2bad98b798a67",
+      "versionNote": "Snapshot of main; welcome card says 1.3.0; equivalence to current upstream 2.4.3 not established.",
+      "rights": "No general redistribution license confirmed; preserve attribution; local preparation only."
+    },
+    {
+      "id": "irodori",
+      "title": "Irodori 官方词表、句型、汉字和语法笔记",
+      "url": "https://www.irodori.jpf.go.jp/resources.html",
+      "rights": "Copyright The Japan Foundation. Official free downloads; downstream publication rights not assessed."
+    },
+    {
+      "id": "taekim-zh",
+      "title": "Tae Kim 日语语法指南中文译本",
+      "author": "Tae Kim",
+      "translator": "pizzamx",
+      "url": "https://github.com/pizzamx/jpgramma",
+      "downloadUrl": "https://codeload.github.com/pizzamx/jpgramma/zip/refs/heads/master",
+      "downloadArchiveSha256": "b7626d5a74889c458668de58d050f53fcf1dcc1467165c742bb40f69d510d0d6",
+      "versionNote": "Snapshot of master; all 71 top-level HTML files and README preserved; media and executable repository tools not extracted.",
+      "rights": "CC BY-NC-SA 3.0 US",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/3.0/us/",
+      "derivativeNote": "Local reader changes layout, removes scripts/audio/video and replaces images with notices. Source HTML unchanged."
+    },
+    {
+      "id": "taekim-en",
+      "title": "Japanese Grammar Guide",
+      "author": "Tae Kim",
+      "url": "https://www.guidetojapanese.org/grammar_guide.pdf",
+      "versionNote": "PDF cover date November 21, 2012; not asserted to match current web guide.",
+      "rights": "CC BY-NC-SA; see author website license link."
+    }
+  ],
+  "files": [
+    {
+      "path": "sources/irodori-grammar-all-en.pdf",
+      "sourceGroup": "irodori",
+      "url": "https://www.irodori.jpf.go.jp/assets/data/Grammar_all.pdf",
+      "bytes": 6148824,
+      "sha256": "58adf2ef9f71e61e63ee9e61525298198c0c9560e138da402e4a62cc63d33cd4"
+    },
+    {
+      "path": "sources/irodori-kanji.xlsx",
+      "sourceGroup": "irodori",
+      "url": "https://www.irodori.jpf.go.jp/assets/data/kanji_list.xlsx",
+      "bytes": 126048,
+      "sha256": "9f28d6e8e05e67a17ba4c31cfcfab7994c3c33e8846f96638269c9ba38e26c52"
+    },
+    {
+      "path": "sources/irodori-patterns.xlsx",
+      "sourceGroup": "irodori",
+      "url": "https://www.irodori.jpf.go.jp/assets/data/sentence_patterns_list.xlsx",
+      "bytes": 80651,
+      "sha256": "5cc6cd279633f9281c0e69ccb2dbd2d080dc387bfd801bf7acd476d870e686d6"
+    },
+    {
+      "path": "sources/irodori-vocabulary.xlsx",
+      "sourceGroup": "irodori",
+      "url": "https://www.irodori.jpf.go.jp/assets/data/wordlist_all.xlsx",
+      "bytes": 616520,
+      "sha256": "04d86188f84da63e12c5e6666a215ea6af2b335650977871a77925acc5c843a6"
+    },
+    {
+      "path": "sources/kaishi-zh-cn.tsv",
+      "sourceGroup": "kaishi-zh",
+      "url": "https://raw.githubusercontent.com/maimemo/kaishi-zh-cn/main/Kaishi%201.5k%20zh-CN.tsv",
+      "bytes": 1345980,
+      "sha256": "b157dfe7370dfdbaef614a816ddae6f49df90aa9a15fcc15b929c57ba74d5fdb"
+    },
+    {
+      "path": "sources/tae-kim-grammar-en.pdf",
+      "sourceGroup": "taekim-en",
+      "url": "https://www.guidetojapanese.org/grammar_guide.pdf",
+      "bytes": 2000269,
+      "sha256": "2626fad9abbccad41838c318aeb2e6a0e8877cd1df3f0db3887b3d6eeb035397"
+    },
+    {
+      "path": "sources/tae-kim-zh/README.md",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/README.md",
+      "bytes": 655,
+      "sha256": "d427d9122d11881d84f5e2d06ba08b447fe04f0b5b74082bbe15cc998aa3a42b"
+    },
+    {
+      "path": "sources/tae-kim-zh/actionclause.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/actionclause.html",
+      "bytes": 18281,
+      "sha256": "fae6bcdd989a0c287bf8dc30b5a7b63c04d34f7d6180e99e16ec59beb0ef01cd"
+    },
+    {
+      "path": "sources/tae-kim-zh/adjectives.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/adjectives.html",
+      "bytes": 22856,
+      "sha256": "235d46f03a7308014b6416ecf17f97c3ab7dcfb44043fce4f1ee0dc8afcea360"
+    },
+    {
+      "path": "sources/tae-kim-zh/adjectives_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/adjectives_ex.html",
+      "bytes": 19651,
+      "sha256": "2f93ee7d2af82b0de24de7a74100dd51157a68a4796057ff653dad7b362624ac"
+    },
+    {
+      "path": "sources/tae-kim-zh/advanced.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/advanced.html",
+      "bytes": 4854,
+      "sha256": "ee60244765e1a02f27a5fe5e60f3d889ec8c29556b1092dbb46b57dc1c837130"
+    },
+    {
+      "path": "sources/tae-kim-zh/adverbs.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/adverbs.html",
+      "bytes": 15691,
+      "sha256": "11f82d0e1c2e94782d32ce4c23c0918fc64b84c1084d3483233cf29c584645e1"
+    },
+    {
+      "path": "sources/tae-kim-zh/amount.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/amount.html",
+      "bytes": 52187,
+      "sha256": "e37855cdc097b1126d92d69b973a6bcaf7a554d7d9815ae33f3604d600c118c0"
+    },
+    {
+      "path": "sources/tae-kim-zh/appendix.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/appendix.html",
+      "bytes": 34432,
+      "sha256": "e06fed514fe3f6806524498a8f6eed48b53afc2b3dce75241e4153a0c971e3a5"
+    },
+    {
+      "path": "sources/tae-kim-zh/basic.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/basic.html",
+      "bytes": 4684,
+      "sha256": "27e0123c7d606c10a864f952a64ae7970a76b80d5e90643df350e731b532cead"
+    },
+    {
+      "path": "sources/tae-kim-zh/causepass.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/causepass.html",
+      "bytes": 48522,
+      "sha256": "d648a2a2c1ac1ab743cf2afdfd028809493e10afc7b783abe4f3e80c0d6ab5e3"
+    },
+    {
+      "path": "sources/tae-kim-zh/certainty.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/certainty.html",
+      "bytes": 17099,
+      "sha256": "9bf6b7ef5148935af1ad90e1d279b037561bbfbb37d5a68b901abf77ebf31878"
+    },
+    {
+      "path": "sources/tae-kim-zh/clause.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/clause.html",
+      "bytes": 16832,
+      "sha256": "db838315daa909c13225b27abd524d7f892eb386a5730f544e6f64b3fcedc71f"
+    },
+    {
+      "path": "sources/tae-kim-zh/comparison.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/comparison.html",
+      "bytes": 27773,
+      "sha256": "9309de712a30443e66377d973fa75af681305d2788aaa6d3a75d3a0a2fbb4df9"
+    },
+    {
+      "path": "sources/tae-kim-zh/compound.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/compound.html",
+      "bytes": 46593,
+      "sha256": "23f50074a60bff41e56976a43b34f919476f52b7ab254adc762bc874ed5f0f59"
+    },
+    {
+      "path": "sources/tae-kim-zh/conditionals.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/conditionals.html",
+      "bytes": 28593,
+      "sha256": "8b0792f6ebf59906b4b75f2e370438f470a1d77628428eea9db4c556db72e743"
+    },
+    {
+      "path": "sources/tae-kim-zh/covered.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/covered.html",
+      "bytes": 13117,
+      "sha256": "babbabe6d71f08cd19485295e168bff854ce967ab47dc20753b4b36ec969e267"
+    },
+    {
+      "path": "sources/tae-kim-zh/define.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/define.html",
+      "bytes": 31462,
+      "sha256": "347af4491f4b543d5b62ff85033aacc24c17481837fb7472a6144bf9751966d6"
+    },
+    {
+      "path": "sources/tae-kim-zh/desire.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/desire.html",
+      "bytes": 32005,
+      "sha256": "a70bd627e4d28a69d85b82edb91be3c8f42a2a761490819dee9f7eede156f82d"
+    },
+    {
+      "path": "sources/tae-kim-zh/easyhard.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/easyhard.html",
+      "bytes": 13892,
+      "sha256": "d2aec5f90197ada7d4e1fdf02aadd2f47c6db1223180b2a26f34b8b6cf040d61"
+    },
+    {
+      "path": "sources/tae-kim-zh/essential.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/essential.html",
+      "bytes": 6545,
+      "sha256": "663ae66f1f7130a8cec8c26d024eb585a4a32f7559710d74d92c9570848edbe1"
+    },
+    {
+      "path": "sources/tae-kim-zh/even.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/even.html",
+      "bytes": 15422,
+      "sha256": "0ca8ebbc51d698a88b849f72826593a05fcf06e8c03674164774822705c84307"
+    },
+    {
+      "path": "sources/tae-kim-zh/favors.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/favors.html",
+      "bytes": 29604,
+      "sha256": "0e834b25ed86f3788594bad9c031e6901d46a62ef21853f60970bb4293230933"
+    },
+    {
+      "path": "sources/tae-kim-zh/feasibility.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/feasibility.html",
+      "bytes": 15639,
+      "sha256": "b31cb881cd7e54a932af01421293b60e56722bf777645366bf3c8e8b3dd79494"
+    },
+    {
+      "path": "sources/tae-kim-zh/formal.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/formal.html",
+      "bytes": 15223,
+      "sha256": "5637f2fbcd83d05327326143f0500e5beddf00d530804cb54dcf8b7c71d48d89"
+    },
+    {
+      "path": "sources/tae-kim-zh/genericnouns.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/genericnouns.html",
+      "bytes": 14383,
+      "sha256": "400ad73f80ddd59102c8340957ae4e6322798b65ee86d29a2bcbc8b8b45ef5b8"
+    },
+    {
+      "path": "sources/tae-kim-zh/hiragana.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/hiragana.html",
+      "bytes": 28170,
+      "sha256": "67992f9d6d4dd4e75dcd8058918331cef250024ea78a8cc154a2f11d61e35d5a"
+    },
+    {
+      "path": "sources/tae-kim-zh/hiragana_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/hiragana_ex.html",
+      "bytes": 24149,
+      "sha256": "9e17c8a02cf83099862e6097a0e5b7ac8a1df4be36aa823bad2340a78c7ee4b1"
+    },
+    {
+      "path": "sources/tae-kim-zh/honorific.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/honorific.html",
+      "bytes": 45921,
+      "sha256": "ad7ab6b6ed5099c22f3af536c4c1d4bf520f02ef4b26ca4dc3b976037d2b233d"
+    },
+    {
+      "path": "sources/tae-kim-zh/immedate.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/immedate.html",
+      "bytes": 13467,
+      "sha256": "6fee109e25cc4730f5a212d6dcdbfa2ef3fedd6e8d29e81f73a90c265927da52"
+    },
+    {
+      "path": "sources/tae-kim-zh/in-transitive.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/in-transitive.html",
+      "bytes": 11482,
+      "sha256": "574c08d644d15f2986b205268ab2b0c9217f8b91c9583e4067c110df68b01bce"
+    },
+    {
+      "path": "sources/tae-kim-zh/index.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/index.html",
+      "bytes": 12078,
+      "sha256": "81695060d4eb988a09aecad9a9eded51713fe50036ca58a649e89a156d2581c6"
+    },
+    {
+      "path": "sources/tae-kim-zh/introduction.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/introduction.html",
+      "bytes": 9716,
+      "sha256": "43853895e251a984669c42f09829a61fcb24980b747aadc4868c62e1e3ba7887"
+    },
+    {
+      "path": "sources/tae-kim-zh/kanji.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/kanji.html",
+      "bytes": 11429,
+      "sha256": "1cca26be5bd942f808e0192d701b6ba1969d34db3e6188721c18bcc617292ac1"
+    },
+    {
+      "path": "sources/tae-kim-zh/katakana.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/katakana.html",
+      "bytes": 20730,
+      "sha256": "dc3c43db6a01f5a91d35aaf97c38c35710889f4e0d2ad68ad707f38af361f63b"
+    },
+    {
+      "path": "sources/tae-kim-zh/katakana_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/katakana_ex.html",
+      "bytes": 25158,
+      "sha256": "663cb5dd8287f5ae06b9530c7f850ba1a1e98178c2bc1bf6f81e554078c55d4f"
+    },
+    {
+      "path": "sources/tae-kim-zh/must.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/must.html",
+      "bytes": 25021,
+      "sha256": "534682c6e48c7e810fa340db340f77a8ceffc8aa4258f0395e9708ff178e1f40"
+    },
+    {
+      "path": "sources/tae-kim-zh/negativeverbs.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/negativeverbs.html",
+      "bytes": 12424,
+      "sha256": "3138916bee373b6443c9ab8ad9181b4d50e0b40295e7799b4d0714be5b364f32"
+    },
+    {
+      "path": "sources/tae-kim-zh/negativeverbs2.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/negativeverbs2.html",
+      "bytes": 22282,
+      "sha256": "1f0df6a279be71afd822ea2a353b797a3dbb8ef2012bcc267728a171fdf52fe5"
+    },
+    {
+      "path": "sources/tae-kim-zh/negativeverbs_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/negativeverbs_ex.html",
+      "bytes": 10485,
+      "sha256": "79fc8db919176d0e32958afc23016ee0d7a233ac7dcacc518c89b4f8e0ffd39f"
+    },
+    {
+      "path": "sources/tae-kim-zh/nochange.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/nochange.html",
+      "bytes": 12476,
+      "sha256": "22b2a29177987880e17d8ced19db3033976628047f791f64f69a94e20a01648f"
+    },
+    {
+      "path": "sources/tae-kim-zh/nounparticles.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/nounparticles.html",
+      "bytes": 33906,
+      "sha256": "6d69cdaa635d9258b635a67f38b130f61f722c5d58aca4cf77756dd38577c1ce"
+    },
+    {
+      "path": "sources/tae-kim-zh/numbers.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/numbers.html",
+      "bytes": 50910,
+      "sha256": "aedf86fb58c4e754f4f7dca446fc0223459e4383ee00ec040cd3ab7b34a3c417"
+    },
+    {
+      "path": "sources/tae-kim-zh/other.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/other.html",
+      "bytes": 11617,
+      "sha256": "16d4ef2bbf1a189057e6f7716135b22ec889faf5d502fcd5aa2dc9587e658232"
+    },
+    {
+      "path": "sources/tae-kim-zh/particlesintro.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/particlesintro.html",
+      "bytes": 14942,
+      "sha256": "1382307d247b35aca6cf3ac58f5245c1d611b649ac1f88b7c2d262f402682181"
+    },
+    {
+      "path": "sources/tae-kim-zh/particlesintro_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/particlesintro_ex.html",
+      "bytes": 18055,
+      "sha256": "647c8ec95f920f4749a40b495a722137c370209497e91e4d9c8b9f33cd5c66fb"
+    },
+    {
+      "path": "sources/tae-kim-zh/past_tense.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/past_tense.html",
+      "bytes": 17002,
+      "sha256": "ecec720c45dd28310441bce06369f184091edcc3168b87a622ef5868433d376f"
+    },
+    {
+      "path": "sources/tae-kim-zh/pasttense_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/pasttense_ex.html",
+      "bytes": 16026,
+      "sha256": "44ce78f5702d583e7c53439517faaf9cc38114efddb4deb7e2e69440de5208f0"
+    },
+    {
+      "path": "sources/tae-kim-zh/people.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/people.html",
+      "bytes": 19568,
+      "sha256": "129dc23e9079abe9c908a7979532ee7daa55ca4d75ac762923af61910fd32f5e"
+    },
+    {
+      "path": "sources/tae-kim-zh/polite.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/polite.html",
+      "bytes": 35206,
+      "sha256": "ecc5267541b474eca7e9b5d6f753af981339358cbb870a5648588f3f53c8fa66"
+    },
+    {
+      "path": "sources/tae-kim-zh/potential.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/potential.html",
+      "bytes": 26925,
+      "sha256": "5966f7ffaae207ae9d56bdec266d1e8eecf7a7dab856915d7830f7e5fe92405e"
+    },
+    {
+      "path": "sources/tae-kim-zh/question.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/question.html",
+      "bytes": 27015,
+      "sha256": "b48baa723d00246c4cc4e816dd0ed13da3fba5b5535bdceeb127d351d50108ff"
+    },
+    {
+      "path": "sources/tae-kim-zh/reasoning.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/reasoning.html",
+      "bytes": 19495,
+      "sha256": "edc6225789a6f6bc726ea0386e3242902755b8e45532bdb8e63546c08cfd8bae"
+    },
+    {
+      "path": "sources/tae-kim-zh/requests.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/requests.html",
+      "bytes": 33064,
+      "sha256": "1dd77512044e42dc1d1df428861543dced33e5639cb9b330af0f27e7f8e6d52f"
+    },
+    {
+      "path": "sources/tae-kim-zh/sentence_ending.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/sentence_ending.html",
+      "bytes": 32961,
+      "sha256": "07623552307d63609ed875a572a5bfa283064e6060a19ec84db59aed2a827682"
+    },
+    {
+      "path": "sources/tae-kim-zh/should.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/should.html",
+      "bytes": 22648,
+      "sha256": "19a2f3f2692871303581fb032de0bb9851fcadf3863a9e1f06d9c581ca496aad"
+    },
+    {
+      "path": "sources/tae-kim-zh/signs.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/signs.html",
+      "bytes": 20807,
+      "sha256": "dd96f4d8b0e6e07c01fc8c772fd21855e0cd9e6196a3e49e9baaeb6d3169f8ec"
+    },
+    {
+      "path": "sources/tae-kim-zh/similarity.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/similarity.html",
+      "bytes": 36375,
+      "sha256": "4db15ae69f033e5c20aa69b45df0b87755c7ad4ea5232d4c507acbd5511de3e9"
+    },
+    {
+      "path": "sources/tae-kim-zh/slang.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/slang.html",
+      "bytes": 26850,
+      "sha256": "a09a2773af4084d04d33de40df0a3fd466a28a683d07b7b52ac67f89da05a710"
+    },
+    {
+      "path": "sources/tae-kim-zh/specialexpressions.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/specialexpressions.html",
+      "bytes": 5170,
+      "sha256": "6857e363e572e329abd71083766f2d795c7fdd455d2997ee6e164c162204bbb4"
+    },
+    {
+      "path": "sources/tae-kim-zh/stateofbeing.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/stateofbeing.html",
+      "bytes": 12126,
+      "sha256": "12fba469f2a5258d2fbd2e1a95abf0dcc392b1f9e2f9391e4c2cc61c8fe7db38"
+    },
+    {
+      "path": "sources/tae-kim-zh/stateofbeing_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/stateofbeing_ex.html",
+      "bytes": 21414,
+      "sha256": "af27e022d80bb0cafb866a8db8dd1fb64786843de8531935e3a08c8dbbe6a0c7"
+    },
+    {
+      "path": "sources/tae-kim-zh/surunaru.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/surunaru.html",
+      "bytes": 17270,
+      "sha256": "732b80daab2390a8308e1b12bb8ea8a2f866d9bdeb0332a68835e1722966029d"
+    },
+    {
+      "path": "sources/tae-kim-zh/teform.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/teform.html",
+      "bytes": 33054,
+      "sha256": "0a19ced0f2868dd98a6af7d29b288a4148ca7e562387465281f6df573a6b64df"
+    },
+    {
+      "path": "sources/tae-kim-zh/tendency.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/tendency.html",
+      "bytes": 17838,
+      "sha256": "28d2e70d1bf81cb4a87dd68adfb53da476b70aa6b17db2c782f1b5c23d3b6344"
+    },
+    {
+      "path": "sources/tae-kim-zh/timeactions.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/timeactions.html",
+      "bytes": 31184,
+      "sha256": "7504b650bf2d1e1f0522c970c6c97237baee8f6016865af7b2bc860f308d4754"
+    },
+    {
+      "path": "sources/tae-kim-zh/try.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/try.html",
+      "bytes": 15727,
+      "sha256": "b005dd1c542de0144b48f2556134ef955450454abd0f070cd229daaa1c982af1"
+    },
+    {
+      "path": "sources/tae-kim-zh/unintended.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/unintended.html",
+      "bytes": 14852,
+      "sha256": "1fa88aef4053d0e6b1628f49016d19d1933d44aaf8367aee85fe2241d4a384aa"
+    },
+    {
+      "path": "sources/tae-kim-zh/verbparticles.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/verbparticles.html",
+      "bytes": 27712,
+      "sha256": "220a9cce9461e6f7d7a71c49478e0fe4e45ef789d142288dd9d49797227cc117"
+    },
+    {
+      "path": "sources/tae-kim-zh/verbs.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/verbs.html",
+      "bytes": 15859,
+      "sha256": "e4ebd9f4996ac9c9ae88b72e6b55837eae165d2740d7862ea1fae28e96a81dbc"
+    },
+    {
+      "path": "sources/tae-kim-zh/verbs_ex.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/verbs_ex.html",
+      "bytes": 13185,
+      "sha256": "d7f47c4b26cfe282ce38de9f64ba9bb09f0c20d010352ad2dffdb1194245f482"
+    },
+    {
+      "path": "sources/tae-kim-zh/volitional2.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/volitional2.html",
+      "bytes": 22274,
+      "sha256": "394303f084317db40d62d6f14ed2754169896c407e955f4bb1fd3ca60e1d2648"
+    },
+    {
+      "path": "sources/tae-kim-zh/writing.html",
+      "sourceGroup": "taekim-zh",
+      "url": "https://github.com/pizzamx/jpgramma/blob/master/writing.html",
+      "bytes": 5616,
+      "sha256": "1056a019328ed23c971951cc610e9d6770e0c49c8e4ddd20018619e7ceba3bc4"
+    }
+  ],
+  "unavailableSources": [
+    {
+      "title": "官方中文假名",
+      "url": "https://www2.jpfbj.cn/irodori/resources/pdf/X_Hiragana_All.pdf",
+      "status": "download failed HTTP 403; not present locally",
+      "discoveredAt": "https://www2.jpfbj.cn/irodori/resources/resources.php"
+    },
+    {
+      "title": "官方中文入门语法",
+      "url": "https://www2.jpfbj.cn/irodori/resources/pdf/X_Grammar_All.pdf",
+      "status": "download failed HTTP 403; not present locally",
+      "discoveredAt": "https://www2.jpfbj.cn/irodori/resources/resources.php"
+    },
+    {
+      "title": "官方中文初级1语法",
+      "url": "https://www2.jpfbj.cn/irodori/resources/pdf/Y_Grammar_All_260309a.pdf",
+      "status": "download failed HTTP 403; not present locally",
+      "discoveredAt": "https://www2.jpfbj.cn/irodori/resources/resources.php"
+    },
+    {
+      "title": "官方中文初级2语法",
+      "url": "https://www2.jpfbj.cn/irodori/resources/pdf/Z_Grammar_All.pdf",
+      "status": "download failed HTTP 403; not present locally",
+      "discoveredAt": "https://www2.jpfbj.cn/irodori/resources/resources.php"
+    }
+  ]
+}

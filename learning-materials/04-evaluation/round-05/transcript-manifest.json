@@ -1,0 +1,122 @@
+[
+  {
+    "id": "manga-nekodamashi-01",
+    "original_images": [
+      "aefcd5487b99ab051ed77147895c4f9875fde19ea5d4d842c527d0fb65b156e0",
+      "5691f06277f776f0d64104880bb0a557a121c50cdabb11102bf660ecdcb63c52"
+    ],
+    "transcript_sha256": "4a65878e9fd910dde560825cdd32b81464e5fc36e9c825ccbc623280f1c633b3",
+    "characters": 266,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0001.html",
+      "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0002.html"
+    ]
+  },
+  {
+    "id": "manga-nekodamashi-02",
+    "original_images": [
+      "55b7136657cb5b6524825730e0bca6ede252cbfccbf2f5552acb5171e71f4e2f",
+      "352eaf03f770479f9dc09b3fdc7bfa2625db5905f026094d02113f1c07926fdc"
+    ],
+    "transcript_sha256": "d939f039eb6079addbd008ecf511b04688f78ea5b2e0f3e00870945c3876548c",
+    "characters": 360,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0003.html",
+      "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0004.html"
+    ]
+  },
+  {
+    "id": "manga-rentalfriend-01",
+    "original_images": [
+      "0767c00745b105499853026569f08333e7b7711cb2114cd2c13966a9ccb23753",
+      "e771cafd9a64390460191540ba6f15b10a2305847568b1af63c4daad547615b2"
+    ],
+    "transcript_sha256": "e29e7ab72ef6b6972b7e3f04473532a7de8f96d848a6cbb60208f4c898542e63",
+    "characters": 261,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0001.html",
+      "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0002.html"
+    ]
+  },
+  {
+    "id": "manga-rentalfriend-02",
+    "original_images": [
+      "03045910fb84579fe074f67cd0cf83d1029c6261512eeed79099e6ec49ab6f63",
+      "d6bd064307ea6afb4a3985af5763d8011873946839cf69a4c004f1b53f79f201"
+    ],
+    "transcript_sha256": "27ff3d706fa4c3a9a56baf8d1ccb274ef070ce8934cbe60f96afd7e60833dab5",
+    "characters": 286,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0003.html",
+      "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0004.html"
+    ]
+  },
+  {
+    "id": "manga-luna-01",
+    "original_images": [
+      "a93c82e0830fa3be2d622be9f12411076c4dc0d1dc4c44a0a9d21204a4dba3a7",
+      "f4d0fd118b2ac71aacf8dd1d55f76b7b4a61dd6268b00b67c49758fad0c23cac"
+    ],
+    "transcript_sha256": "030ada3e93867c6aad85de934e591dfa1f62fdb00b5922997854ea0baf878734",
+    "characters": 231,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/Luna/0001.html",
+      "https://sai-zen-sen.jp/comics/twi4/Luna/0002.html"
+    ]
+  },
+  {
+    "id": "manga-luna-02",
+    "original_images": [
+      "72aedf6cacded651701f71785ce212d78e05e1ced20bd0b4b9ee1a885f96c942",
+      "fbc08ff30b3296f2d87311ea8159ed26d03694100c12de2acff9cfc94fff2473"
+    ],
+    "transcript_sha256": "89ece2934e8e55b1b87cf57d1b470373d9efe0c179a093643a6061be06a5813a",
+    "characters": 354,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/Luna/0003.html",
+      "https://sai-zen-sen.jp/comics/twi4/Luna/0004.html"
+    ]
+  },
+  {
+    "id": "manga-tengokumate-01",
+    "original_images": [
+      "c0dabf9766580cbaa473ad6dfae85affe0e3cd2af3fbdb9ed9304f538adeb5ee",
+      "0f16328e377fe131815f334b5f73fc89f73415dc4b1a8b34630401dd0fbf1f4b"
+    ],
+    "transcript_sha256": "7c8a908cc0bd2ad06ef6c7bd009bb6f39df6cbfba4f39ab179edc56e4b9accff",
+    "characters": 274,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/tengokumate/0001.html",
+      "https://sai-zen-sen.jp/comics/twi4/tengokumate/0002.html"
+    ]
+  },
+  {
+    "id": "manga-tengokumate-02",
+    "original_images": [
+      "8a8569216090220be83cb39cd62c667c52a4d93d9932a1eb3b2fd1a27a9ed3ed",
+      "9f63cccf846e561bfa1de3a4495a5d4031d1f5b09f9b19a21fb9a6b0283629df"
+    ],
+    "transcript_sha256": "5f4634ba40b8bffb7a005f4337a560de03db82c70ce7621945b500516bb53df3",
+    "characters": 315,
+    "method": "人工读取全部对白、旁白、内心独白及实质性画内文字；保留原异写、缩约和卡顿；不重复抄ruby，不抄纯效果线/无语义SFX、装饰英文海报或章名。文本不入库。",
+    "limits": "单编者核对，尚无独立转写复核。",
+    "pages": [
+      "https://sai-zen-sen.jp/comics/twi4/tengokumate/0003.html",
+      "https://sai-zen-sen.jp/comics/twi4/tengokumate/0004.html"
+    ]
+  }
+]

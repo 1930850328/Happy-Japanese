@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-15",
+  "platform": "Darwin",
+  "python": "3.11.16",
+  "node": "v22.22.3",
+  "fresh_index_checkout": true,
+  "original_materials_present_before_setup": false,
+  "preexisting_node_modules": false,
+  "original_material_sources_verified": 78,
+  "checks": [
+    {
+      "command": "python3 learning-materials/tools/workspace.py check",
+      "exit_code": 0,
+      "output": "+ learning-materials/.venv/bin/python learning-materials/01-materials/tools/build.py --check\nPASS: source hashes, source counts, required vocabulary fields, chapter links, PDF chapter mapping, corrections, and reproducible output\n{\n  \"kaishiVocabulary\": 1500,\n  \"kaishiAppliedCorrections\": 62,\n  \"irodoriVocabularyOccurrences\": 4246,\n  \"irodoriDistinctTermReadingMeaningPos\": 3821,\n  \"irodoriPatternOccurrences\": 348,\n  \"irodoriPatternsByBook\": {\n    \"入門\": 82,\n    \"初級1\": 95,\n    \"初級2\": 87,\n    \"初中級\": 84\n  },\n  \"irodoriGrammarPdfPages\": 245,\n  \"irodoriKanjiCharacters\": 644,\n  \"irodoriKanjiOccurrences\": 999,\n  \"taeKimContentsEntries\": 70,\n  \"kanaPairs\": 104\n}\n+ learning-materials/.venv/bin/python learning-materials/01-materials/vocabulary-scope/build.py --check\n{\"mode\": \"check\", \"candidates\": 1161, \"grammar\": 230, \"core\": 777, \"alias\": 100, \"defer\": 54, \"all_candidates_accounted_for\": true, \"sources_verified\": true}\n+ learning-materials/.venv/bin/python learning-materials/02-course-design/tools/review.py\n{\n  \"type\": \"course_editorial_checks\",\n  \"learner_test\": false,\n  \"comprehension_percent\": null,\n  \"complete_lesson_files\": 21,\n  \"feedback_sections\": 330,\n  \"distinct_vocabulary_table_forms\": 874,\n  \"selected_priority_groups\": 777,\n  \"selected_priority_groups_taught\": 777,\n  \"maximum_new_forms_per_day\": 59,\n  \"exact_source_form_matched\": 737,\n  \"kaishi_pool_preserved\": 1500,\n  \"kaishi_records_with_exact_course_form\": 664,\n  \"duplicate_long_reading_lines_across_lessons\": [],\n  \"budget_check\": \"60 minutes allocated in each lesson; not empirically timed\",\n  \"maximum_recall_forms_per_day\": 156,\n  \"limits\": [\n    \"Source form matches are lookup candidates, not verified sense equivalence.\",\n    \"Tables do not enumerate every function expression or inflection taught in prose.\",\n    \"No automatic check proves naturalness, human mastery or feasible learning time.\"\n  ]\n}\n+ node learning-materials/02-course-design/tools/context-review.cjs\n{\"selected_groups\":777,\"with_table_and_context\":777}\n+ learning-materials/.venv/bin/python learning-materials/03-test-set/tools/validate.py --metadata-only\n{\n  \"result\": \"passed\",\n  \"mode\": \"metadata_only\",\n  \"sources\": 36,\n  \"groups\": 32,\n  \"samples\": 78,\n  \"split\": {\n    \"regression\": 70,\n    \"development\": 8\n  },\n  \"access\": {\n    \"local_image\": 12,\n    \"local_text\": 11,\n    \"external_original\": 55\n  },\n  \"draft_answers\": 32,\n  \"draft_meaning_units\": 237,\n  \"reviewed_answers\": 0,\n  \"external_pages_rechecked\": false,\n  \"subtitle_files_rechecked\": 0,\n  \"external_manga_images_rechecked\": 0,\n  \"historical_material_baseline_checked\": false,\n  \"student_test_performed\": false\n}\n"
+    },
+    {
+      "command": "python3 learning-materials/tools/workspace.py regression",
+      "exit_code": 0,
+      "output": "+ node learning-materials/04-evaluation/round-05/audit.cjs learning-materials learning-materials/04-evaluation/round-05/coverage-features.json learning-materials/.cache/round-05-replay.json --features\n{\n  \"samples\": 16,\n  \"works\": 8,\n  \"genres\": [\n    {\n      \"genre\": \"anime_subtitles\",\n      \"works\": 4,\n      \"samples\": 8,\n      \"tokens\": 473,\n      \"scores\": {\n        \"old_authored_tables\": {\n          \"work_macro_percent\": 30.576824040279696,\n          \"pooled_percent\": 28.752642706131077\n        },\n        \"revised_authored_tables\": {\n          \"work_macro_percent\": 50.500033442236436,\n          \"pooled_percent\": 48.625792811839325\n        }\n      }\n    },\n    {\n      \"genre\": \"manga\",\n      \"works\": 4,\n      \"samples\": 8,\n      \"tokens\": 475,\n      \"scores\": {\n        \"old_authored_tables\": {\n          \"work_macro_percent\": 25.751631317266664,\n          \"pooled_percent\": 25.68421052631579\n        },\n        \"revised_authored_tables\": {\n          \"work_macro_percent\": 45.78860583255889,\n          \"pooled_percent\": 46.31578947368421\n        }\n      }\n    }\n  ],\n  \"lexical_proxy_50_50\": {\n    \"old_authored_tables\": 28.16422767877318,\n    \"revised_authored_tables\": 48.144319637397665\n  }\n}\nPASS: all16 sample counts and8 work scores match the original-text run.\nResult: learning-materials/.cache/round-05-replay.json\n"
+    },
+    {
+      "command": "python3 learning-materials/tools/workspace.py regression --current",
+      "exit_code": 0,
+      "output": "+ learning-materials/.venv/bin/python learning-materials/01-materials/tools/build.py --check\nPASS: source hashes, source counts, required vocabulary fields, chapter links, PDF chapter mapping, corrections, and reproducible output\n{\n  \"kaishiVocabulary\": 1500,\n  \"kaishiAppliedCorrections\": 62,\n  \"irodoriVocabularyOccurrences\": 4246,\n  \"irodoriDistinctTermReadingMeaningPos\": 3821,\n  \"irodoriPatternOccurrences\": 348,\n  \"irodoriPatternsByBook\": {\n    \"入門\": 82,\n    \"初級1\": 95,\n    \"初級2\": 87,\n    \"初中級\": 84\n  },\n  \"irodoriGrammarPdfPages\": 245,\n  \"irodoriKanjiCharacters\": 644,\n  \"irodoriKanjiOccurrences\": 999,\n  \"taeKimContentsEntries\": 70,\n  \"kanaPairs\": 104\n}\n+ learning-materials/.venv/bin/python learning-materials/01-materials/vocabulary-scope/build.py --check\n{\"mode\": \"check\", \"candidates\": 1161, \"grammar\": 230, \"core\": 777, \"alias\": 100, \"defer\": 54, \"all_candidates_accounted_for\": true, \"sources_verified\": true}\n+ learning-materials/.venv/bin/python learning-materials/02-course-design/tools/review.py\n{\n  \"type\": \"course_editorial_checks\",\n  \"learner_test\": false,\n  \"comprehension_percent\": null,\n  \"complete_lesson_files\": 21,\n  \"feedback_sections\": 330,\n  \"distinct_vocabulary_table_forms\": 874,\n  \"selected_priority_groups\": 777,\n  \"selected_priority_groups_taught\": 777,\n  \"maximum_new_forms_per_day\": 59,\n  \"exact_source_form_matched\": 737,\n  \"kaishi_pool_preserved\": 1500,\n  \"kaishi_records_with_exact_course_form\": 664,\n  \"duplicate_long_reading_lines_across_lessons\": [],\n  \"budget_check\": \"60 minutes allocated in each lesson; not empirically timed\",\n  \"maximum_recall_forms_per_day\": 156,\n  \"limits\": [\n    \"Source form matches are lookup candidates, not verified sense equivalence.\",\n    \"Tables do not enumerate every function expression or inflection taught in prose.\",\n    \"No automatic check proves naturalness, human mastery or feasible learning time.\"\n  ]\n}\n+ node learning-materials/02-course-design/tools/context-review.cjs\n{\"selected_groups\":777,\"with_table_and_context\":777}\n+ learning-materials/.venv/bin/python learning-materials/03-test-set/tools/validate.py --metadata-only\n{\n  \"result\": \"passed\",\n  \"mode\": \"metadata_only\",\n  \"sources\": 36,\n  \"groups\": 32,\n  \"samples\": 78,\n  \"split\": {\n    \"regression\": 70,\n    \"development\": 8\n  },\n  \"access\": {\n    \"local_image\": 12,\n    \"local_text\": 11,\n    \"external_original\": 55\n  },\n  \"draft_answers\": 32,\n  \"draft_meaning_units\": 237,\n  \"reviewed_answers\": 0,\n  \"external_pages_rechecked\": false,\n  \"subtitle_files_rechecked\": 0,\n  \"external_manga_images_rechecked\": 0,\n  \"historical_material_baseline_checked\": false,\n  \"student_test_performed\": false\n}\n+ node learning-materials/04-evaluation/round-05/audit.cjs learning-materials learning-materials/04-evaluation/round-05/coverage-features.json learning-materials/.cache/current-regression.json --features --current\n{\n  \"samples\": 16,\n  \"works\": 8,\n  \"genres\": [\n    {\n      \"genre\": \"anime_subtitles\",\n      \"works\": 4,\n      \"samples\": 8,\n      \"tokens\": 473,\n      \"scores\": {\n        \"old_authored_tables\": {\n          \"work_macro_percent\": 30.576824040279696,\n          \"pooled_percent\": 28.752642706131077\n        },\n        \"revised_authored_tables\": {\n          \"work_macro_percent\": 50.500033442236436,\n          \"pooled_percent\": 48.625792811839325\n        }\n      }\n    },\n    {\n      \"genre\": \"manga\",\n      \"works\": 4,\n      \"samples\": 8,\n      \"tokens\": 475,\n      \"scores\": {\n        \"old_authored_tables\": {\n          \"work_macro_percent\": 25.751631317266664,\n          \"pooled_percent\": 25.68421052631579\n        },\n        \"revised_authored_tables\": {\n          \"work_macro_percent\": 45.78860583255889,\n          \"pooled_percent\": 46.31578947368421\n        }\n      }\n    }\n  ],\n  \"lexical_proxy_50_50\": {\n    \"old_authored_tables\": 28.16422767877318,\n    \"revised_authored_tables\": 48.144319637397665\n  }\n}\nResult: learning-materials/.cache/current-regression.json\n"
+    },
+    {
+      "command": "python3 learning-materials/tools/test_portability.py",
+      "exit_code": 0,
+      "output": "test_bad_download_does_not_create_or_overwrite (__main__.Portability.test_bad_download_does_not_create_or_overwrite) ... ok\ntest_changed_course_cannot_impersonate_frozen_run (__main__.Portability.test_changed_course_cannot_impersonate_frozen_run) ... ok\ntest_changed_feature_counts_are_rejected (__main__.Portability.test_changed_feature_counts_are_rejected) ... ok\ntest_replay_matches_every_historical_sample (__main__.Portability.test_replay_matches_every_historical_sample) ... ok\ntest_unsupported_current_word_requires_originals (__main__.Portability.test_unsupported_current_word_requires_originals) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 1.551s\n\nOK\n"
+    }
+  ],
+  "limits": "This is a clean checkout on macOS, not a separately operated Windows/Linux device. Downloaded originals and installed dependency caches are ignored by Git.",
+  "external_download_probe": {
+    "subtitles": {
+      "result": "passed",
+      "mode": "metadata_only",
+      "sources": 36,
+      "groups": 32,
+      "samples": 78,
+      "split": {
+        "regression": 70,
+        "development": 8
+      },
+      "access": {
+        "local_image": 12,
+        "local_text": 11,
+        "external_original": 55
+      },
+      "draft_answers": 32,
+      "draft_meaning_units": 237,
+      "reviewed_answers": 0,
+      "external_pages_rechecked": false,
+      "subtitle_files_rechecked": 12,
+      "external_manga_images_rechecked": 0,
+      "historical_material_baseline_checked": false,
+      "student_test_performed": false
+    },
+    "manga_images_verified": [
+      "tomochan-0001.jpg",
+      "tomochan-0003.jpg",
+      "SATOKOandNADA-0001.jpg",
+      "SATOKOandNADA-0003.jpg"
+    ],
+    "complete_32_image_download": false,
+    "note": "Representative image download and hash probe, not a complete network availability claim. Full image fetch was stopped after core clean-checkout checks passed because the source transfer was slow. The CLI retains full-download support."
+  },
+  "final_setup_rerun": {
+    "exit_code": 0,
+    "purpose": "Verify final setup code resumes from valid downloads without changing content",
+    "output": "+ learning-materials/.venv/bin/python -m pip install --index-url https://pypi.org/simple --disable-pip-version-check --timeout 30 -r learning-materials/01-materials/tools/requirements.txt\nRequirement already satisfied: openpyxl==3.1.5 in ./.venv/lib/python3.11/site-packages (from -r learning-materials/01-materials/tools/requirements.txt (line 1)) (3.1.5)\nRequirement already satisfied: pypdf==6.10.0 in ./.venv/lib/python3.11/site-packages (from -r learning-materials/01-materials/tools/requirements.txt (line 2)) (6.10.0)\nRequirement already satisfied: lxml==6.1.1 in ./.venv/lib/python3.11/site-packages (from -r learning-materials/01-materials/tools/requirements.txt (line 3)) (6.1.1)\nRequirement already satisfied: et_xmlfile==2.0.0 in ./.venv/lib/python3.11/site-packages (from -r learning-materials/01-materials/tools/requirements.txt (line 4)) (2.0.0)\n+ /Users/bytedance/.nvm/versions/node/v22.22.3/bin/npm ci --ignore-scripts --workspaces=false --registry=https://registry.npmjs.org --prefix learning-materials\n\nadded 5 packages, and audited 6 packages in 2s\n\nfound 0 vulnerabilities\n+ learning-materials/.venv/bin/python learning-materials/01-materials/tools/build.py\n{\n  \"kaishiVocabulary\": 1500,\n  \"kaishiAppliedCorrections\": 62,\n  \"irodoriVocabularyOccurrences\": 4246,\n  \"irodoriDistinctTermReadingMeaningPos\": 3821,\n  \"irodoriPatternOccurrences\": 348,\n  \"irodoriPatternsByBook\": {\n    \"入門\": 82,\n    \"初級1\": 95,\n    \"初級2\": 87,\n    \"初中級\": 84\n  },\n  \"irodoriGrammarPdfPages\": 245,\n  \"irodoriKanjiCharacters\": 644,\n  \"irodoriKanjiOccurrences\": 999,\n  \"taeKimContentsEntries\": 70,\n  \"kanaPairs\": 104\n}\n"
+  },
+  "feature_export_reproduces_committed_bytes": true
+}

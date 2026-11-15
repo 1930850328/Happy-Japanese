@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-11-13",
+  "integrity": "passed",
+  "negative_checks": [
+    {
+      "check": "旧保留作品不能恢复成新保留",
+      "result": "rejected_as_expected",
+      "reason": "Previously evaluated work reused as fresh material: spyfamily"
+    },
+    {
+      "check": "同系列不得跨开发与保留",
+      "result": "rejected_as_expected",
+      "reason": "Work leaks across splits: hyouka"
+    },
+    {
+      "check": "同一漫画原页不得重复当新样本",
+      "result": "rejected_as_expected",
+      "reason": "Duplicate selected range: manga-tomochan-02"
+    },
+    {
+      "check": "漫画图像变化不能静默通过",
+      "result": "rejected_as_expected",
+      "reason": "Manga image changed: manga-tomochan-01"
+    },
+    {
+      "check": "字幕时间码错位不能通过",
+      "result": "rejected_as_expected",
+      "reason": "Subtitle time locator differs: anime-nichijou-01"
+    },
+    {
+      "check": "核心权重必须完整合计1",
+      "result": "rejected_as_expected",
+      "reason": "Invalid core weights"
+    }
+  ],
+  "unchanged_material_course_files": 209,
+  "historical_reconstruction": {
+    "development": 24,
+    "skipped_images": 9,
+    "reserve": 13,
+    "exact_prior_input_records_match": true
+  },
+  "subtitle_files_verified": 8,
+  "new_manga_images_verified": 16,
+  "new_sources_visually_or_textually_read": 8,
+  "independent_answer_reviews": 0,
+  "student_test_performed": false
+}

@@ -1,0 +1,8 @@
+{
+  "file": "coverage-features.json",
+  "sha256": "4f8de91956326ddbf53fb66abf5250eb287745c423566d03cc7b4061d678ce44",
+  "source_run": "run.json",
+  "original_result": "lexical-results.json",
+  "method": "Unordered token feature counts derived from original masked texts and the frozen Jiten written-form vocabulary. No sentence order or full text.",
+  "purpose": "Portable lexical regression, not a comprehension test."
+}

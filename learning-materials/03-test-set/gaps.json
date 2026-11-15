@@ -1,0 +1,50 @@
+[
+  {
+    "category": "manga_long_form",
+    "status": "missing_new_holdout_body",
+    "finding": "新增4部漫画均为星海社短页/四格开篇；普通长篇分镜漫画仍只有已曝光的医疗回归作品。",
+    "next": "优先核实不同出版社、动作/冒险与日常题材长篇漫画的可读连续原页，新增作品级保留组。",
+    "candidates": [
+      {
+        "title": "正反対な君と僕",
+        "url": "https://shonenjumpplus.com/episode/3269754496899770338",
+        "verified": "官方作品入口存在；动态阅读器正文本轮未取得，不计入样本。"
+      },
+      {
+        "title": "アオのハコ",
+        "url": "https://shonenjumpplus.com/episode/3270375685345219010",
+        "verified": "官方作品入口存在；本轮未取得原图，不计入样本。"
+      },
+      {
+        "title": "ダンダダン",
+        "url": "https://shonenjumpplus.com/episode/3269632237310729754",
+        "verified": "官方作品入口存在；本轮未取得原图，不计入样本。"
+      }
+    ]
+  },
+  {
+    "category": "anime_subtitles",
+    "status": "body_located_review_pending",
+    "finding": "累计8部作品、8集、20段；其中新增4部8段。",
+    "remaining": "社区字幕未对音轨逐句核验；每作一集，题材与剧集位置分布不足。",
+    "next": "补不同系列与中后段完整交流场景，字幕与画面依赖分清；当前仍只测字幕阅读。"
+  },
+  {
+    "category": "scoring",
+    "status": "independent_review_pending",
+    "finding": "32份草稿、237个意思单位；其中新开发8份、110单位；新保留8段尚未编评分点。",
+    "next": "在评分者独立核对范围、意义单位覆盖及答案后再做正式学习效果测评；评分完成不等于教材已经有效。"
+  },
+  {
+    "category": "breadth",
+    "status": "insufficient_for_population_claim",
+    "finding": "新保留仅4部作品、8段；漫画单出版社、开篇、短页偏差明显。Jiten频率语料与这些作品是否重叠未核验，不能称为完全语料外测试。",
+    "next": "先增加独立系列、出版社与叙事位置，保留目的抽样说明；不要靠增加同书页数制造独立样本量。"
+  },
+  {
+    "category": "everyday_written_conversation",
+    "status": "extension_missing_body",
+    "finding": "NUCC为自然口语转写，Mercari为说明，均不能充当真实书面聊天。",
+    "next": "作为扩展池以后补有许可的匿名书面互动，不挤占番剧漫画核心素材工作。"
+  }
+]

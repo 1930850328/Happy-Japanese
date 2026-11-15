@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-11",
+  "course_editorial_checks": "passed",
+  "test_set_integrity": "passed",
+  "external_passage_hashes": 37,
+  "repeat_run_byte_identical": true,
+  "local_links": "passed",
+  "whitespace": "passed",
+  "frozen_course_unchanged_after_test": true,
+  "actual_student_trial": false,
+  "actual_human_learning_time_measured": false,
+  "comprehension_percent": null,
+  "checks_scope": "Course documents and offline evaluation only; no application runtime changes or app test suite run",
+  "result_hashes": {
+    "course-snapshot.json": "28ae05fd6fbeb69d20419b72f1647b58a82df74d2507d5ab9ab3bf87e782c054",
+    "lexical-results.json": "4d504b416f3d5cbd32f0aff79cd04592081e9a8e100794eb70ddf0aa35d01c4d",
+    "semantic-results.json": "cea2211cbad1a7cb2dfb45beac09bbbf5a26a44f488a2ebb58903887938b2a13"
+  }
+}

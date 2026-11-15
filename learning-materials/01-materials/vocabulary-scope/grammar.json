@@ -1,0 +1,5916 @@
+[
+  {
+    "term": "の",
+    "reading": "の",
+    "meaningZh": "所属、名词化等用法",
+    "groupRanks": {
+      "anime": 1,
+      "manga": 1
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "の",
+        "reading": "の",
+        "ranks": {
+          "anime": [
+            1
+          ],
+          "manga": [
+            1
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "は",
+    "reading": "は",
+    "meaningZh": "话题与对比",
+    "groupRanks": {
+      "anime": 2,
+      "manga": 2
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "は",
+        "reading": "は",
+        "ranks": {
+          "anime": [
+            2
+          ],
+          "manga": [
+            2
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "に",
+    "reading": "に",
+    "meaningZh": "时间、位置、对象等关系",
+    "groupRanks": {
+      "anime": 3,
+      "manga": 3
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "に",
+        "reading": "に",
+        "ranks": {
+          "anime": [
+            3
+          ],
+          "manga": [
+            3
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "が",
+    "reading": "が",
+    "meaningZh": "主语、对象及转折等用法",
+    "groupRanks": {
+      "anime": 4,
+      "manga": 4
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "が",
+        "reading": "が",
+        "ranks": {
+          "anime": [
+            4
+          ],
+          "manga": [
+            4
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "を",
+    "reading": "を",
+    "meaningZh": "动作对象与经过的位置",
+    "groupRanks": {
+      "anime": 5,
+      "manga": 5
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "を",
+        "reading": "を",
+        "ranks": {
+          "anime": [
+            5
+          ],
+          "manga": [
+            5
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だ",
+    "reading": "だ",
+    "meaningZh": "普通体判断",
+    "groupRanks": {
+      "anime": 6,
+      "manga": 8
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だ",
+        "reading": "だ",
+        "ranks": {
+          "anime": [
+            6
+          ],
+          "manga": [
+            8
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "と",
+    "reading": "と",
+    "meaningZh": "并列、引述、条件等用法",
+    "groupRanks": {
+      "anime": 8,
+      "manga": 6
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "と",
+        "reading": "と",
+        "ranks": {
+          "anime": [
+            8
+          ],
+          "manga": [
+            6
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "で",
+    "reading": "で",
+    "meaningZh": "动作场所、手段及判断句连接",
+    "groupRanks": {
+      "anime": 9,
+      "manga": 7
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "で",
+        "reading": "で",
+        "ranks": {
+          "anime": [
+            9
+          ],
+          "manga": [
+            7
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "よ",
+    "reading": "よ",
+    "meaningZh": "告知、提醒的句尾语气",
+    "groupRanks": {
+      "anime": 7,
+      "manga": 11
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "よ",
+        "reading": "よ",
+        "ranks": {
+          "anime": [
+            7
+          ],
+          "manga": [
+            11
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "も",
+    "reading": "も",
+    "meaningZh": "也；连……都",
+    "groupRanks": {
+      "anime": 10,
+      "manga": 9
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "も",
+        "reading": "も",
+        "ranks": {
+          "anime": [
+            10
+          ],
+          "manga": [
+            9
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "か",
+    "reading": "か",
+    "meaningZh": "疑问、不确定等用法",
+    "groupRanks": {
+      "anime": 11,
+      "manga": 10
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "か",
+        "reading": "か",
+        "ranks": {
+          "anime": [
+            11
+          ],
+          "manga": [
+            10
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "から",
+    "reading": "から",
+    "meaningZh": "起点、原因",
+    "groupRanks": {
+      "anime": 14,
+      "manga": 12
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "から",
+        "reading": "から",
+        "ranks": {
+          "anime": [
+            14
+          ],
+          "manga": [
+            12
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "な",
+    "reading": "な",
+    "meaningZh": "修饰连接、禁止或句尾语气，须分开教",
+    "groupRanks": {
+      "anime": 12,
+      "manga": 14
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "な",
+        "reading": "な",
+        "ranks": {
+          "anime": [
+            12
+          ],
+          "manga": [
+            14
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "です",
+    "reading": "です",
+    "meaningZh": "礼貌判断",
+    "groupRanks": {
+      "anime": 16,
+      "manga": 15
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "です",
+        "reading": "です",
+        "ranks": {
+          "anime": [
+            16
+          ],
+          "manga": [
+            15
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ね",
+    "reading": "ね",
+    "meaningZh": "确认、共感语气",
+    "groupRanks": {
+      "anime": 15,
+      "manga": 19
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ね",
+        "reading": "ね",
+        "ranks": {
+          "anime": [
+            15
+          ],
+          "manga": [
+            19
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "んだ",
+    "reading": "んだ",
+    "meaningZh": "解释、说明语气",
+    "groupRanks": {
+      "anime": 17,
+      "manga": 16
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "んだ",
+        "reading": "んだ",
+        "ranks": {
+          "anime": [
+            17
+          ],
+          "manga": [
+            16
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "こと",
+    "reading": "こと",
+    "meaningZh": "事情及名词化",
+    "groupRanks": {
+      "anime": 18,
+      "manga": 17
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "こと",
+        "reading": "こと",
+        "ranks": {
+          "anime": [
+            18
+          ],
+          "manga": [
+            17
+          ]
+        }
+      },
+      {
+        "term": "事",
+        "reading": "こと",
+        "ranks": {
+          "anime": [
+            1310
+          ],
+          "manga": [
+            186
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "って",
+    "reading": "って",
+    "meaningZh": "口语引述、话题",
+    "groupRanks": {
+      "anime": 20,
+      "manga": 18
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "って",
+        "reading": "って",
+        "ranks": {
+          "anime": [
+            20
+          ],
+          "manga": [
+            18
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ん",
+    "reading": "ん",
+    "meaningZh": "口语省略；也可能是否定，须看上下文",
+    "groupRanks": {
+      "anime": 19,
+      "manga": 25
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ん",
+        "reading": "ん",
+        "ranks": {
+          "anime": [
+            19
+          ],
+          "manga": [
+            25
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "さん",
+    "reading": "さん",
+    "meaningZh": "人名后礼貌称呼",
+    "groupRanks": {
+      "anime": 31,
+      "manga": 21
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "さん",
+        "reading": "さん",
+        "ranks": {
+          "anime": [
+            31
+          ],
+          "manga": [
+            21
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "けど",
+    "reading": "けど",
+    "meaningZh": "转折、铺垫",
+    "groupRanks": {
+      "anime": 45,
+      "manga": 30
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "けど",
+        "reading": "けど",
+        "ranks": {
+          "anime": [
+            45
+          ],
+          "manga": [
+            30
+          ]
+        }
+      },
+      {
+        "term": "けれど",
+        "reading": "けれど",
+        "ranks": {
+          "anime": [
+            1097
+          ],
+          "manga": [
+            902
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "し",
+    "reading": "し",
+    "meaningZh": "列举理由等用法",
+    "groupRanks": {
+      "anime": 54,
+      "manga": 32
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "し",
+        "reading": "し",
+        "ranks": {
+          "anime": [
+            54
+          ],
+          "manga": [
+            32
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "お",
+    "reading": "お",
+    "meaningZh": "礼貌前缀",
+    "groupRanks": {
+      "anime": 39,
+      "manga": 37
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "お",
+        "reading": "お",
+        "ranks": {
+          "anime": [
+            39
+          ],
+          "manga": [
+            37
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ぞ",
+    "reading": "ぞ",
+    "meaningZh": "较强的告知或强调语气",
+    "groupRanks": {
+      "anime": 37,
+      "manga": 46
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ぞ",
+        "reading": "ぞ",
+        "ranks": {
+          "anime": [
+            37
+          ],
+          "manga": [
+            46
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "じゃない",
+    "reading": "じゃない",
+    "meaningZh": "否定判断；也可用于确认",
+    "groupRanks": {
+      "anime": 38,
+      "manga": 41
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "じゃない",
+        "reading": "じゃない",
+        "ranks": {
+          "anime": [
+            38
+          ],
+          "manga": [
+            41
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ない",
+    "reading": "ない",
+    "meaningZh": "不存在及否定",
+    "groupRanks": {
+      "anime": 43,
+      "manga": 38
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ない",
+        "reading": "ない",
+        "ranks": {
+          "anime": [
+            43
+          ],
+          "manga": [
+            38
+          ]
+        }
+      },
+      {
+        "term": "無い",
+        "reading": "ない",
+        "ranks": {
+          "anime": [
+            4547
+          ],
+          "manga": [
+            772
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "には",
+    "reading": "には",
+    "meaningZh": "に与は的组合",
+    "groupRanks": {
+      "anime": 40,
+      "manga": 39
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "には",
+        "reading": "には",
+        "ranks": {
+          "anime": [
+            40
+          ],
+          "manga": [
+            39
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "や",
+    "reading": "や",
+    "meaningZh": "列举；也有方言判断等用法",
+    "groupRanks": {
+      "anime": 72,
+      "manga": 40
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "や",
+        "reading": "や",
+        "ranks": {
+          "anime": [
+            72
+          ],
+          "manga": [
+            40
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だけ",
+    "reading": "だけ",
+    "meaningZh": "限定",
+    "groupRanks": {
+      "anime": 48,
+      "manga": 45
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だけ",
+        "reading": "だけ",
+        "ranks": {
+          "anime": [
+            48
+          ],
+          "manga": [
+            45
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だった",
+    "reading": "だった",
+    "meaningZh": "だ的过去式",
+    "groupRanks": {
+      "anime": 53,
+      "manga": 48
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だった",
+        "reading": "だった",
+        "ranks": {
+          "anime": [
+            53
+          ],
+          "manga": [
+            48
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "まで",
+    "reading": "まで",
+    "meaningZh": "终点、范围",
+    "groupRanks": {
+      "anime": 52,
+      "manga": 49
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "まで",
+        "reading": "まで",
+        "ranks": {
+          "anime": [
+            52
+          ],
+          "manga": [
+            49
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "わ",
+    "reading": "わ",
+    "meaningZh": "句尾语气",
+    "groupRanks": {
+      "anime": 57,
+      "manga": 85
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "わ",
+        "reading": "わ",
+        "ranks": {
+          "anime": [
+            57
+          ],
+          "manga": [
+            85
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なら",
+    "reading": "なら",
+    "meaningZh": "条件、承接话题",
+    "groupRanks": {
+      "anime": 59,
+      "manga": 59
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なら",
+        "reading": "なら",
+        "ranks": {
+          "anime": [
+            59
+          ],
+          "manga": [
+            59
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なんて",
+    "reading": "なんて",
+    "meaningZh": "举例、轻视、惊讶等语气",
+    "groupRanks": {
+      "anime": 64,
+      "manga": 61
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なんて",
+        "reading": "なんて",
+        "ranks": {
+          "anime": [
+            64
+          ],
+          "manga": [
+            61
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ちゃん",
+    "reading": "ちゃん",
+    "meaningZh": "亲昵称呼后缀",
+    "groupRanks": {
+      "anime": 126,
+      "manga": 63
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ちゃん",
+        "reading": "ちゃん",
+        "ranks": {
+          "anime": [
+            126
+          ],
+          "manga": [
+            63
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "とか",
+    "reading": "とか",
+    "meaningZh": "举例、列举、传闻",
+    "groupRanks": {
+      "anime": 108,
+      "manga": 65
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "とか",
+        "reading": "とか",
+        "ranks": {
+          "anime": [
+            108
+          ],
+          "manga": [
+            65
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "んです",
+    "reading": "んです",
+    "meaningZh": "解释的礼貌形式",
+    "groupRanks": {
+      "anime": 76,
+      "manga": 68
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "んです",
+        "reading": "んです",
+        "ranks": {
+          "anime": [
+            76
+          ],
+          "manga": [
+            68
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "へ",
+    "reading": "へ",
+    "meaningZh": "方向",
+    "groupRanks": {
+      "anime": 80,
+      "manga": 69
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "へ",
+        "reading": "へ",
+        "ranks": {
+          "anime": [
+            80
+          ],
+          "manga": [
+            69
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だろう",
+    "reading": "だろう",
+    "meaningZh": "推测、确认",
+    "groupRanks": {
+      "anime": 70,
+      "manga": 83
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だろう",
+        "reading": "だろう",
+        "ranks": {
+          "anime": [
+            70
+          ],
+          "manga": [
+            83
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "では",
+    "reading": "では",
+    "meaningZh": "连接用法为那么；在ではない等结构中按判断句语法理解。",
+    "groupRanks": {
+      "anime": 91,
+      "manga": 74
+    },
+    "sourceIds": [
+      "kaishi:kcHV9X~7dz",
+      "irodori-word:2620"
+    ],
+    "glossSource": "editor-review",
+    "variants": [
+      {
+        "term": "では",
+        "reading": "では",
+        "ranks": {
+          "anime": [
+            91
+          ],
+          "manga": [
+            74
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "もの",
+    "reading": "もの",
+    "meaningZh": "东西及形式名词用法",
+    "groupRanks": {
+      "anime": 78,
+      "manga": 84
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "もの",
+        "reading": "もの",
+        "ranks": {
+          "anime": [
+            78
+          ],
+          "manga": [
+            84
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "のに",
+    "reading": "のに",
+    "meaningZh": "让步、转折等用法",
+    "groupRanks": {
+      "anime": 92,
+      "manga": 81
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "のに",
+        "reading": "のに",
+        "ranks": {
+          "anime": [
+            92
+          ],
+          "manga": [
+            81
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ですか",
+    "reading": "ですか",
+    "meaningZh": "礼貌判断加疑问",
+    "groupRanks": {
+      "anime": 89,
+      "manga": 82
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ですか",
+        "reading": "ですか",
+        "ranks": {
+          "anime": [
+            89
+          ],
+          "manga": [
+            82
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "さ",
+    "reading": "さ",
+    "meaningZh": "句尾语气；也可作名词化后缀",
+    "groupRanks": {
+      "anime": 87,
+      "manga": 108
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "さ",
+        "reading": "さ",
+        "ranks": {
+          "anime": [
+            87
+          ],
+          "manga": [
+            108
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だろ",
+    "reading": "だろ",
+    "meaningZh": "だろう的口语形式",
+    "groupRanks": {
+      "anime": 128,
+      "manga": 87
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だろ",
+        "reading": "だろ",
+        "ranks": {
+          "anime": [
+            128
+          ],
+          "manga": [
+            87
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なんか",
+    "reading": "なんか",
+    "meaningZh": "なんか的列举、贬低或模糊语气，须按整句读",
+    "groupRanks": {
+      "anime": 96234,
+      "manga": 88
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なんか",
+        "reading": "なんか",
+        "ranks": {
+          "anime": [
+            96234
+          ],
+          "manga": [
+            88
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "とは",
+    "reading": "とは",
+    "meaningZh": "定义、引述或惊讶",
+    "groupRanks": {
+      "anime": 98,
+      "manga": 90
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "とは",
+        "reading": "とは",
+        "ranks": {
+          "anime": [
+            98
+          ],
+          "manga": [
+            90
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "かな",
+    "reading": "かな",
+    "meaningZh": "自问、不确定",
+    "groupRanks": {
+      "anime": 93,
+      "manga": 111
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "かな",
+        "reading": "かな",
+        "ranks": {
+          "anime": [
+            93
+          ],
+          "manga": [
+            111
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なんだ",
+    "reading": "なんだ",
+    "meaningZh": "解释句或疑问表达，须按上下文区分",
+    "groupRanks": {
+      "anime": 94,
+      "manga": 105
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なんだ",
+        "reading": "なんだ",
+        "ranks": {
+          "anime": [
+            94
+          ],
+          "manga": [
+            105
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "という",
+    "reading": "という",
+    "meaningZh": "引述、名称、说明",
+    "groupRanks": {
+      "anime": 110,
+      "manga": 96
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "という",
+        "reading": "という",
+        "ranks": {
+          "anime": [
+            110
+          ],
+          "manga": [
+            96
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "みたい",
+    "reading": "みたい",
+    "meaningZh": "相似、推测",
+    "groupRanks": {
+      "anime": 99,
+      "manga": 103
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "みたい",
+        "reading": "みたい",
+        "ranks": {
+          "anime": [
+            99
+          ],
+          "manga": [
+            103
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "たち",
+    "reading": "たち",
+    "meaningZh": "复数后缀",
+    "groupRanks": {
+      "anime": 103,
+      "manga": 211
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "たち",
+        "reading": "たち",
+        "ranks": {
+          "anime": [
+            103
+          ],
+          "manga": [
+            211
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "より",
+    "reading": "より",
+    "meaningZh": "比较基准、起点",
+    "groupRanks": {
+      "anime": 107,
+      "manga": 109
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "より",
+        "reading": "より",
+        "ranks": {
+          "anime": [
+            107
+          ],
+          "manga": [
+            109
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ぜ",
+    "reading": "ぜ",
+    "meaningZh": "口语强调",
+    "groupRanks": {
+      "anime": 113,
+      "manga": 129
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ぜ",
+        "reading": "ぜ",
+        "ranks": {
+          "anime": [
+            113
+          ],
+          "manga": [
+            129
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ので",
+    "reading": "ので",
+    "meaningZh": "原因",
+    "groupRanks": {
+      "anime": 228,
+      "manga": 115
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ので",
+        "reading": "ので",
+        "ranks": {
+          "anime": [
+            228
+          ],
+          "manga": [
+            115
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "よね",
+    "reading": "よね",
+    "meaningZh": "确认、共感",
+    "groupRanks": {
+      "anime": 137,
+      "manga": 121
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "よね",
+        "reading": "よね",
+        "ranks": {
+          "anime": [
+            137
+          ],
+          "manga": [
+            121
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ために",
+    "reading": "ために",
+    "meaningZh": "目的、原因",
+    "groupRanks": {
+      "anime": 121,
+      "manga": 191
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ために",
+        "reading": "ために",
+        "ranks": {
+          "anime": [
+            121
+          ],
+          "manga": [
+            191
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "として",
+    "reading": "として",
+    "meaningZh": "身份、立场",
+    "groupRanks": {
+      "anime": 149,
+      "manga": 131
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "として",
+        "reading": "として",
+        "ranks": {
+          "anime": [
+            149
+          ],
+          "manga": [
+            131
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なの",
+    "reading": "なの",
+    "meaningZh": "解释、疑问等用法",
+    "groupRanks": {
+      "anime": 134,
+      "manga": 140
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なの",
+        "reading": "なの",
+        "ranks": {
+          "anime": [
+            134
+          ],
+          "manga": [
+            140
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "いく",
+    "reading": "いく",
+    "meaningZh": "ていく等补助用法；行く另作动作词",
+    "groupRanks": {
+      "anime": 140,
+      "manga": 151
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "いく",
+        "reading": "いく",
+        "ranks": {
+          "anime": [
+            140
+          ],
+          "manga": [
+            151
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ように",
+    "reading": "ように",
+    "meaningZh": "方式、目的等用法",
+    "groupRanks": {
+      "anime": 145,
+      "manga": 154
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ように",
+        "reading": "ように",
+        "ranks": {
+          "anime": [
+            145
+          ],
+          "manga": [
+            154
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "でしょう",
+    "reading": "でしょう",
+    "meaningZh": "礼貌推测、确认",
+    "groupRanks": {
+      "anime": 147,
+      "manga": 207
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "でしょう",
+        "reading": "でしょう",
+        "ranks": {
+          "anime": [
+            147
+          ],
+          "manga": [
+            207
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ような",
+    "reading": "ような",
+    "meaningZh": "相似、举例并修饰名词",
+    "groupRanks": {
+      "anime": 151,
+      "manga": 148
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ような",
+        "reading": "ような",
+        "ranks": {
+          "anime": [
+            151
+          ],
+          "manga": [
+            148
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ご",
+    "reading": "ご",
+    "meaningZh": "礼貌前缀",
+    "groupRanks": {
+      "anime": 214,
+      "manga": 162
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ご",
+        "reading": "ご",
+        "ranks": {
+          "anime": [
+            214
+          ],
+          "manga": [
+            162
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "て",
+    "reading": "て",
+    "meaningZh": "て形及连接、请求等用法",
+    "groupRanks": {
+      "anime": 505,
+      "manga": 164
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "て",
+        "reading": "て",
+        "ranks": {
+          "anime": [
+            505
+          ],
+          "manga": [
+            164
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "よう",
+    "reading": "よう",
+    "meaningZh": "推测、比况等形式名词用法",
+    "groupRanks": {
+      "anime": 166,
+      "manga": 212
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "よう",
+        "reading": "よう",
+        "ranks": {
+          "anime": [
+            166
+          ],
+          "manga": [
+            212
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "君",
+    "reading": "くん",
+    "meaningZh": "男性名字后称呼；语气比さん随便。",
+    "groupRanks": {
+      "anime": 315,
+      "manga": 168
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "君",
+        "reading": "くん",
+        "ranks": {
+          "anime": [
+            315
+          ],
+          "manga": [
+            379
+          ]
+        }
+      },
+      {
+        "term": "くん",
+        "reading": "くん",
+        "ranks": {
+          "anime": [
+            739
+          ],
+          "manga": [
+            168
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "もん",
+    "reading": "もん",
+    "meaningZh": "もの的口语形式；可表示解释语气",
+    "groupRanks": {
+      "anime": 174,
+      "manga": 183
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "もん",
+        "reading": "もん",
+        "ranks": {
+          "anime": [
+            174
+          ],
+          "manga": [
+            183
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "わけ",
+    "reading": "わけ",
+    "meaningZh": "理由及形式名词用法",
+    "groupRanks": {
+      "anime": 177,
+      "manga": 214
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "わけ",
+        "reading": "わけ",
+        "ranks": {
+          "anime": [
+            177
+          ],
+          "manga": [
+            214
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "である",
+    "reading": "である",
+    "meaningZh": "书面判断",
+    "groupRanks": {
+      "anime": 231,
+      "manga": 178
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "である",
+        "reading": "である",
+        "ranks": {
+          "anime": [
+            231
+          ],
+          "manga": [
+            178
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "くらい",
+    "reading": "くらい",
+    "meaningZh": "数量、程度的大约、达到……程度等用法。",
+    "groupRanks": {
+      "anime": 212,
+      "manga": 179
+    },
+    "sourceIds": [
+      "kaishi:je}~;:*OPe"
+    ],
+    "glossSource": "editor-review",
+    "variants": [
+      {
+        "term": "くらい",
+        "reading": "くらい",
+        "ranks": {
+          "anime": [
+            212
+          ],
+          "manga": [
+            179
+          ]
+        }
+      },
+      {
+        "term": "ぐらい",
+        "reading": "ぐらい",
+        "ranks": {
+          "anime": [
+            583
+          ],
+          "manga": [
+            1190
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "くる",
+    "reading": "くる",
+    "meaningZh": "てくる等补助用法；来る另作动作词",
+    "groupRanks": {
+      "anime": 406,
+      "manga": 181
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "くる",
+        "reading": "くる",
+        "ranks": {
+          "anime": [
+            406
+          ],
+          "manga": [
+            181
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だが",
+    "reading": "だが",
+    "meaningZh": "转折连接",
+    "groupRanks": {
+      "anime": 184,
+      "manga": 241
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だが",
+        "reading": "だが",
+        "ranks": {
+          "anime": [
+            184
+          ],
+          "manga": [
+            241
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "など",
+    "reading": "など",
+    "meaningZh": "举例、列举",
+    "groupRanks": {
+      "anime": 296,
+      "manga": 184
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "など",
+        "reading": "など",
+        "ranks": {
+          "anime": [
+            296
+          ],
+          "manga": [
+            184
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "かも",
+    "reading": "かも",
+    "meaningZh": "かもしれない的省略",
+    "groupRanks": {
+      "anime": 219,
+      "manga": 187
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "かも",
+        "reading": "かも",
+        "ranks": {
+          "anime": [
+            219
+          ],
+          "manga": [
+            187
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "じゃないか",
+    "reading": "じゃないか",
+    "meaningZh": "否定疑问、确认或提醒",
+    "groupRanks": {
+      "anime": 188,
+      "manga": 237
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "じゃないか",
+        "reading": "じゃないか",
+        "ranks": {
+          "anime": [
+            188
+          ],
+          "manga": [
+            237
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ではない",
+    "reading": "ではない",
+    "meaningZh": "否定判断",
+    "groupRanks": {
+      "anime": 263,
+      "manga": 190
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ではない",
+        "reading": "ではない",
+        "ranks": {
+          "anime": [
+            263
+          ],
+          "manga": [
+            190
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "つもり",
+    "reading": "つもり",
+    "meaningZh": "打算、意图；也可表示自以为的状态。",
+    "groupRanks": {
+      "anime": 192,
+      "manga": 243
+    },
+    "sourceIds": [
+      "kaishi:KNOE38f>mo"
+    ],
+    "glossSource": "editor-review",
+    "variants": [
+      {
+        "term": "つもり",
+        "reading": "つもり",
+        "ranks": {
+          "anime": [
+            192
+          ],
+          "manga": [
+            243
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "一",
+    "reading": "いち",
+    "meaningZh": "数字一；与数字表一起学",
+    "groupRanks": {
+      "anime": 1194,
+      "manga": 192
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "一",
+        "reading": "いち",
+        "ranks": {
+          "anime": [
+            1194,
+            121326
+          ],
+          "manga": [
+            192,
+            67936
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ため",
+    "reading": "ため",
+    "meaningZh": "目的、原因等形式名词用法；与ために一起教。",
+    "groupRanks": {
+      "anime": 195,
+      "manga": 231
+    },
+    "sourceIds": [
+      "kaishi:/#e)cr3|q"
+    ],
+    "glossSource": "editor-review",
+    "variants": [
+      {
+        "term": "ため",
+        "reading": "ため",
+        "ranks": {
+          "anime": [
+            195
+          ],
+          "manga": [
+            231
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "しか",
+    "reading": "しか",
+    "meaningZh": "与否定搭配表示限定",
+    "groupRanks": {
+      "anime": 222,
+      "manga": 196
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "しか",
+        "reading": "しか",
+        "ranks": {
+          "anime": [
+            222
+          ],
+          "manga": [
+            196
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "らしい",
+    "reading": "らしい",
+    "meaningZh": "传闻、推测、典型性",
+    "groupRanks": {
+      "anime": 203,
+      "manga": 197
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "らしい",
+        "reading": "らしい",
+        "ranks": {
+          "anime": [
+            203
+          ],
+          "manga": [
+            197
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "じゃ",
+    "reading": "じゃ",
+    "meaningZh": "では的口语形式；连接或否定判断中的用法要区分。",
+    "groupRanks": {
+      "anime": 260,
+      "manga": 209
+    },
+    "sourceIds": [
+      "kaishi:vX5_M!(}OL"
+    ],
+    "glossSource": "editor-review",
+    "variants": [
+      {
+        "term": "じゃ",
+        "reading": "じゃ",
+        "ranks": {
+          "anime": [
+            260
+          ],
+          "manga": [
+            209
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "こそ",
+    "reading": "こそ",
+    "meaningZh": "强调",
+    "groupRanks": {
+      "anime": 217,
+      "manga": 281
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "こそ",
+        "reading": "こそ",
+        "ranks": {
+          "anime": [
+            217
+          ],
+          "manga": [
+            281
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なのに",
+    "reading": "なのに",
+    "meaningZh": "转折、与预期不符",
+    "groupRanks": {
+      "anime": 254,
+      "manga": 218
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なのに",
+        "reading": "なのに",
+        "ranks": {
+          "anime": [
+            254
+          ],
+          "manga": [
+            218
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なあ",
+    "reading": "なあ",
+    "meaningZh": "感叹、自言自语、呼唤等语气",
+    "groupRanks": {
+      "anime": 227,
+      "manga": 299
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なあ",
+        "reading": "なあ",
+        "ranks": {
+          "anime": [
+            227
+          ],
+          "manga": [
+            299
+          ]
+        }
+      },
+      {
+        "term": "なー",
+        "reading": "なー",
+        "ranks": {
+          "anime": [
+            344
+          ],
+          "manga": [
+            369
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "様",
+    "reading": "さま",
+    "meaningZh": "尊敬称呼等用法",
+    "groupRanks": {
+      "anime": 329,
+      "manga": 227
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "様",
+        "reading": "さま",
+        "ranks": {
+          "anime": [
+            329
+          ],
+          "manga": [
+            227
+          ]
+        }
+      },
+      {
+        "term": "さま",
+        "reading": "さま",
+        "ranks": {
+          "anime": [
+            1795
+          ],
+          "manga": [
+            790
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "はず",
+    "reading": "はず",
+    "meaningZh": "预期、推断",
+    "groupRanks": {
+      "anime": 239,
+      "manga": 296
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "はず",
+        "reading": "はず",
+        "ranks": {
+          "anime": [
+            239
+          ],
+          "manga": [
+            296
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "かもしれない",
+    "reading": "かもしれない",
+    "meaningZh": "可能性",
+    "groupRanks": {
+      "anime": 245,
+      "manga": 258
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "かもしれない",
+        "reading": "かもしれない",
+        "ranks": {
+          "anime": [
+            245
+          ],
+          "manga": [
+            258
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "どうした",
+    "reading": "どうした",
+    "meaningZh": "どうする的过去式；常用于询问怎么了",
+    "groupRanks": {
+      "anime": 246,
+      "manga": 339
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "どうした",
+        "reading": "どうした",
+        "ranks": {
+          "anime": [
+            246
+          ],
+          "manga": [
+            339
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "まま",
+    "reading": "まま",
+    "meaningZh": "状态保持",
+    "groupRanks": {
+      "anime": 359,
+      "manga": 251
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "まま",
+        "reading": "まま",
+        "ranks": {
+          "anime": [
+            359
+          ],
+          "manga": [
+            251
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なぁ",
+    "reading": "なぁ",
+    "meaningZh": "感叹、愿望或自言自语的句尾",
+    "groupRanks": {
+      "anime": 1128,
+      "manga": 257
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なぁ",
+        "reading": "なぁ",
+        "ranks": {
+          "anime": [
+            1128
+          ],
+          "manga": [
+            257
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ほど",
+    "reading": "ほど",
+    "meaningZh": "程度、比较",
+    "groupRanks": {
+      "anime": 261,
+      "manga": 300
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ほど",
+        "reading": "ほど",
+        "ranks": {
+          "anime": [
+            261
+          ],
+          "manga": [
+            300
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なんです",
+    "reading": "なんです",
+    "meaningZh": "解释或询问的礼貌形式",
+    "groupRanks": {
+      "anime": 274,
+      "manga": 262
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なんです",
+        "reading": "なんです",
+        "ranks": {
+          "anime": [
+            274
+          ],
+          "manga": [
+            262
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "っていう",
+    "reading": "っていう",
+    "meaningZh": "という的口语形式",
+    "groupRanks": {
+      "anime": 262,
+      "manga": 393
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "っていう",
+        "reading": "っていう",
+        "ranks": {
+          "anime": [
+            262
+          ],
+          "manga": [
+            393
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だったら",
+    "reading": "だったら",
+    "meaningZh": "だ的条件形式",
+    "groupRanks": {
+      "anime": 265,
+      "manga": 308
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だったら",
+        "reading": "だったら",
+        "ranks": {
+          "anime": [
+            265
+          ],
+          "manga": [
+            308
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "第",
+    "reading": "だい",
+    "meaningZh": "序数前缀",
+    "groupRanks": {
+      "anime": 2201,
+      "manga": 267
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "第",
+        "reading": "だい",
+        "ranks": {
+          "anime": [
+            2201
+          ],
+          "manga": [
+            267
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ことになる",
+    "reading": "ことになる",
+    "meaningZh": "决定、结果、推论",
+    "groupRanks": {
+      "anime": 280,
+      "manga": 406
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ことになる",
+        "reading": "ことになる",
+        "ranks": {
+          "anime": [
+            280
+          ],
+          "manga": [
+            406
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "いけない",
+    "reading": "いけない",
+    "meaningZh": "不可以、不行；结合语境区分其他分析",
+    "groupRanks": {
+      "anime": 281,
+      "manga": 326
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "いけない",
+        "reading": "いけない",
+        "ranks": {
+          "anime": [
+            281
+          ],
+          "manga": [
+            326
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "かい",
+    "reading": "かい",
+    "meaningZh": "口语疑问句尾",
+    "groupRanks": {
+      "anime": 283,
+      "manga": 313
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "かい",
+        "reading": "かい",
+        "ranks": {
+          "anime": [
+            283
+          ],
+          "manga": [
+            313
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "わよ",
+    "reading": "わよ",
+    "meaningZh": "句尾语气的组合",
+    "groupRanks": {
+      "anime": 284,
+      "manga": 388
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "わよ",
+        "reading": "わよ",
+        "ranks": {
+          "anime": [
+            284
+          ],
+          "manga": [
+            388
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "二人",
+    "reading": "ふたり",
+    "meaningZh": "两人的特殊数法ふたり",
+    "groupRanks": {
+      "anime": 290,
+      "manga": 328
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "二人",
+        "reading": "ふたり",
+        "ranks": {
+          "anime": [
+            1135
+          ],
+          "manga": [
+            328
+          ]
+        }
+      },
+      {
+        "term": "2人",
+        "reading": "ふたり",
+        "ranks": {
+          "anime": [
+            290
+          ],
+          "manga": [
+            1046
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "しかない",
+    "reading": "しかない",
+    "meaningZh": "只有……；只能……",
+    "groupRanks": {
+      "anime": 293,
+      "manga": 363
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "しかない",
+        "reading": "しかない",
+        "ranks": {
+          "anime": [
+            293
+          ],
+          "manga": [
+            363
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "じゃねえ",
+    "reading": "じゃねえ",
+    "meaningZh": "じゃない的粗口缩约；否定或评价由语境决定",
+    "groupRanks": {
+      "anime": 302,
+      "manga": 703
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "じゃねえ",
+        "reading": "じゃねえ",
+        "ranks": {
+          "anime": [
+            302
+          ],
+          "manga": [
+            1018
+          ]
+        }
+      },
+      {
+        "term": "じゃねー",
+        "reading": "じゃねー",
+        "ranks": {
+          "anime": [
+            4452
+          ],
+          "manga": [
+            703
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ことがある",
+    "reading": "ことがある",
+    "meaningZh": "有时、曾经等用法",
+    "groupRanks": {
+      "anime": 304,
+      "manga": 442
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ことがある",
+        "reading": "ことがある",
+        "ranks": {
+          "anime": [
+            304
+          ],
+          "manga": [
+            442
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ですから",
+    "reading": "ですから",
+    "meaningZh": "礼貌的原因承接",
+    "groupRanks": {
+      "anime": 412,
+      "manga": 312
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ですから",
+        "reading": "ですから",
+        "ranks": {
+          "anime": [
+            412
+          ],
+          "manga": [
+            312
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "どうしたの",
+    "reading": "どうしたの",
+    "meaningZh": "どうした加解释疑问语气",
+    "groupRanks": {
+      "anime": 312,
+      "manga": 552
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "どうしたの",
+        "reading": "どうしたの",
+        "ranks": {
+          "anime": [
+            312
+          ],
+          "manga": [
+            552
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "でしょうか",
+    "reading": "でしょうか",
+    "meaningZh": "礼貌推测与疑问",
+    "groupRanks": {
+      "anime": 518,
+      "manga": 318
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "でしょうか",
+        "reading": "でしょうか",
+        "ranks": {
+          "anime": [
+            518
+          ],
+          "manga": [
+            318
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "中",
+    "reading": "ちゅう",
+    "meaningZh": "～中：期间、正在进行等后缀用法。",
+    "groupRanks": {
+      "anime": 409,
+      "manga": 329
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "中",
+        "reading": "ちゅう",
+        "ranks": {
+          "anime": [
+            409
+          ],
+          "manga": [
+            329
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "わね",
+    "reading": "わね",
+    "meaningZh": "句尾语气组合",
+    "groupRanks": {
+      "anime": 330,
+      "manga": 489
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "わね",
+        "reading": "わね",
+        "ranks": {
+          "anime": [
+            330
+          ],
+          "manga": [
+            489
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "について",
+    "reading": "について",
+    "meaningZh": "关于；话题或涉及的对象。",
+    "groupRanks": {
+      "anime": 523,
+      "manga": 337
+    },
+    "sourceIds": [
+      "kaishi:H9M&1fSRPV"
+    ],
+    "glossSource": "editor-review",
+    "variants": [
+      {
+        "term": "について",
+        "reading": "について",
+        "ranks": {
+          "anime": [
+            523
+          ],
+          "manga": [
+            337
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ばかり",
+    "reading": "ばかり",
+    "meaningZh": "限定、偏多及时间等用法",
+    "groupRanks": {
+      "anime": 342,
+      "manga": 398
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ばかり",
+        "reading": "ばかり",
+        "ranks": {
+          "anime": [
+            342
+          ],
+          "manga": [
+            398
+          ]
+        }
+      },
+      {
+        "term": "ばっかり",
+        "reading": "ばっかり",
+        "ranks": {
+          "anime": [
+            723
+          ],
+          "manga": [
+            906
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ください",
+    "reading": "ください",
+    "meaningZh": "请求表达：请给我……／请做……。",
+    "groupRanks": {
+      "anime": 371,
+      "manga": 344
+    },
+    "sourceIds": [
+      "kaishi:xwwU62lUAy"
+    ],
+    "glossSource": "editor-review",
+    "variants": [
+      {
+        "term": "ください",
+        "reading": "ください",
+        "ranks": {
+          "anime": [
+            371
+          ],
+          "manga": [
+            344
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "やがる",
+    "reading": "やがる",
+    "meaningZh": "粗俗的负面态度补助表达",
+    "groupRanks": {
+      "anime": 345,
+      "manga": 426
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "やがる",
+        "reading": "やがる",
+        "ranks": {
+          "anime": [
+            345
+          ],
+          "manga": [
+            426
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "俺たち",
+    "reading": "おれたち",
+    "meaningZh": "俺＋たち，第一人称复数",
+    "groupRanks": {
+      "anime": 347,
+      "manga": 1687
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "俺たち",
+        "reading": "おれたち",
+        "ranks": {
+          "anime": [
+            347
+          ],
+          "manga": [
+            1687
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "じゃん",
+    "reading": "じゃん",
+    "meaningZh": "じゃない的口语确认、提醒",
+    "groupRanks": {
+      "anime": 389,
+      "manga": 359
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "じゃん",
+        "reading": "じゃん",
+        "ranks": {
+          "anime": [
+            389
+          ],
+          "manga": [
+            359
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "言える",
+    "reading": "いえる",
+    "meaningZh": "言う的可能形；能说、可以说",
+    "groupRanks": {
+      "anime": 385,
+      "manga": 368
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "言える",
+        "reading": "いえる",
+        "ranks": {
+          "anime": [
+            385
+          ],
+          "manga": [
+            368
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ら",
+    "reading": "ら",
+    "meaningZh": "复数等后缀",
+    "groupRanks": {
+      "anime": 612,
+      "manga": 370
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ら",
+        "reading": "ら",
+        "ranks": {
+          "anime": [
+            612
+          ],
+          "manga": [
+            370
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なれる",
+    "reading": "なれる",
+    "meaningZh": "なる的可能形；慣れる另列",
+    "groupRanks": {
+      "anime": 393,
+      "manga": 408
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なれる",
+        "reading": "なれる",
+        "ranks": {
+          "anime": [
+            393
+          ],
+          "manga": [
+            408
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "大",
+    "reading": "だい",
+    "meaningZh": "大规模、高程度等构词用法",
+    "groupRanks": {
+      "anime": 706,
+      "manga": 412
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "大",
+        "reading": "だい",
+        "ranks": {
+          "anime": [
+            706
+          ],
+          "manga": [
+            412
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "にとって",
+    "reading": "にとって",
+    "meaningZh": "立场、评价对象",
+    "groupRanks": {
+      "anime": 418,
+      "manga": 444
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "にとって",
+        "reading": "にとって",
+        "ranks": {
+          "anime": [
+            418
+          ],
+          "manga": [
+            444
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "巻",
+    "reading": "かん",
+    "meaningZh": "册、卷的量词かん",
+    "groupRanks": {
+      "anime": 11981,
+      "manga": 424
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "巻",
+        "reading": "かん",
+        "ranks": {
+          "anime": [
+            11981,
+            45995
+          ],
+          "manga": [
+            424,
+            6898
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ようになる",
+    "reading": "ようになる",
+    "meaningZh": "变化结果",
+    "groupRanks": {
+      "anime": 525,
+      "manga": 430
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ようになる",
+        "reading": "ようになる",
+        "ranks": {
+          "anime": [
+            525
+          ],
+          "manga": [
+            430
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "わけない",
+    "reading": "わけない",
+    "meaningZh": "わけがない的口语形式等，需结合语境",
+    "groupRanks": {
+      "anime": 436,
+      "manga": 578
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "わけない",
+        "reading": "わけない",
+        "ranks": {
+          "anime": [
+            436
+          ],
+          "manga": [
+            578
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "円",
+    "reading": "えん",
+    "meaningZh": "日元；单位",
+    "groupRanks": {
+      "anime": 1736,
+      "manga": 438
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "円",
+        "reading": "えん",
+        "ranks": {
+          "anime": [
+            1736
+          ],
+          "manga": [
+            438,
+            200116
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "はずだ",
+    "reading": "はずだ",
+    "meaningZh": "预期、推断判断",
+    "groupRanks": {
+      "anime": 451,
+      "manga": 807
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "はずだ",
+        "reading": "はずだ",
+        "ranks": {
+          "anime": [
+            451
+          ],
+          "manga": [
+            807
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "べき",
+    "reading": "べき",
+    "meaningZh": "应当",
+    "groupRanks": {
+      "anime": 455,
+      "manga": 537
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "べき",
+        "reading": "べき",
+        "ranks": {
+          "anime": [
+            455
+          ],
+          "manga": [
+            537
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ことができる",
+    "reading": "ことができる",
+    "meaningZh": "能够",
+    "groupRanks": {
+      "anime": 458,
+      "manga": 690
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ことができる",
+        "reading": "ことができる",
+        "ranks": {
+          "anime": [
+            458
+          ],
+          "manga": [
+            690
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なので",
+    "reading": "なので",
+    "meaningZh": "解释原因",
+    "groupRanks": {
+      "anime": 851,
+      "manga": 460
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なので",
+        "reading": "なので",
+        "ranks": {
+          "anime": [
+            851
+          ],
+          "manga": [
+            460
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "二",
+    "reading": "に",
+    "meaningZh": "数字二",
+    "groupRanks": {
+      "anime": 2475,
+      "manga": 469
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "二",
+        "reading": "に",
+        "ranks": {
+          "anime": [
+            2475
+          ],
+          "manga": [
+            469
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "お前ら",
+    "reading": "おまえら",
+    "meaningZh": "お前＋ら，第二人称复数，粗鲁",
+    "groupRanks": {
+      "anime": 471,
+      "manga": 1073
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "お前ら",
+        "reading": "おまえら",
+        "ranks": {
+          "anime": [
+            471
+          ],
+          "manga": [
+            1073
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "おく",
+    "reading": "おく",
+    "meaningZh": "ておく等预先处理、保持的补助用法",
+    "groupRanks": {
+      "anime": 741,
+      "manga": 481
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "おく",
+        "reading": "おく",
+        "ranks": {
+          "anime": [
+            741
+          ],
+          "manga": [
+            481
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "部",
+    "reading": "ぶ",
+    "meaningZh": "社团或部分；本课结合部活等复合词",
+    "groupRanks": {
+      "anime": 1541,
+      "manga": 488
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "部",
+        "reading": "ぶ",
+        "ranks": {
+          "anime": [
+            1541
+          ],
+          "manga": [
+            488
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "後",
+    "reading": "ご",
+    "meaningZh": "～後：在……之后的构词用法。",
+    "groupRanks": {
+      "anime": 866,
+      "manga": 499
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "後",
+        "reading": "ご",
+        "ranks": {
+          "anime": [
+            866
+          ],
+          "manga": [
+            499
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "達",
+    "reading": "たち",
+    "meaningZh": "人的复数后缀たち",
+    "groupRanks": {
+      "anime": 3502,
+      "manga": 502
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "達",
+        "reading": "たち",
+        "ranks": {
+          "anime": [
+            3502
+          ],
+          "manga": [
+            502
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "頃",
+    "reading": "ころ",
+    "meaningZh": "时候、时期；ころ，与ごろ的接尾用法联系",
+    "groupRanks": {
+      "anime": 1204,
+      "manga": 517
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "頃",
+        "reading": "ころ",
+        "ranks": {
+          "anime": [
+            1204
+          ],
+          "manga": [
+            517
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "1つ",
+    "reading": "ひとつ",
+    "meaningZh": "ひとつ，一个物件",
+    "groupRanks": {
+      "anime": 522,
+      "manga": 3547
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "1つ",
+        "reading": "ひとつ",
+        "ranks": {
+          "anime": [
+            522
+          ],
+          "manga": [
+            3547
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "となる",
+    "reading": "となる",
+    "meaningZh": "与なる组成的结果、变化结构",
+    "groupRanks": {
+      "anime": 541,
+      "manga": 648
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "となる",
+        "reading": "となる",
+        "ranks": {
+          "anime": [
+            541
+          ],
+          "manga": [
+            648
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "すぎる",
+    "reading": "すぎる",
+    "meaningZh": "程度过头的补助表达；過ぎる另列",
+    "groupRanks": {
+      "anime": 555,
+      "manga": 545
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "すぎる",
+        "reading": "すぎる",
+        "ranks": {
+          "anime": [
+            555
+          ],
+          "manga": [
+            545
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ことはない",
+    "reading": "ことはない",
+    "meaningZh": "没有必要等用法；与字面否定区分",
+    "groupRanks": {
+      "anime": 546,
+      "manga": 598
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ことはない",
+        "reading": "ことはない",
+        "ranks": {
+          "anime": [
+            546
+          ],
+          "manga": [
+            598
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "使える",
+    "reading": "つかえる",
+    "meaningZh": "使う的可能形",
+    "groupRanks": {
+      "anime": 547,
+      "manga": 707
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "使える",
+        "reading": "つかえる",
+        "ranks": {
+          "anime": [
+            547
+          ],
+          "manga": [
+            707
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "的",
+    "reading": "てき",
+    "meaningZh": "性质、样态等后缀",
+    "groupRanks": {
+      "anime": 966,
+      "manga": 556
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "的",
+        "reading": "てき",
+        "ranks": {
+          "anime": [
+            966
+          ],
+          "manga": [
+            556
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "とする",
+    "reading": "とする",
+    "meaningZh": "假定、认定、尝试等结构",
+    "groupRanks": {
+      "anime": 562,
+      "manga": 569
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "とする",
+        "reading": "とする",
+        "ranks": {
+          "anime": [
+            562
+          ],
+          "manga": [
+            569
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "わけじゃない",
+    "reading": "わけじゃない",
+    "meaningZh": "并不是说……",
+    "groupRanks": {
+      "anime": 576,
+      "manga": 573
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "わけじゃない",
+        "reading": "わけじゃない",
+        "ranks": {
+          "anime": [
+            576
+          ],
+          "manga": [
+            573
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "つ",
+    "reading": "つ",
+    "meaningZh": "和语数词的量词部分",
+    "groupRanks": {
+      "anime": 2867,
+      "manga": 574
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "つ",
+        "reading": "つ",
+        "ranks": {
+          "anime": [
+            2867
+          ],
+          "manga": [
+            574
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "でもない",
+    "reading": "でもない",
+    "meaningZh": "也不是、并非等结构",
+    "groupRanks": {
+      "anime": 596,
+      "manga": 579
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "でもない",
+        "reading": "でもない",
+        "ranks": {
+          "anime": [
+            596
+          ],
+          "manga": [
+            579
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "回",
+    "reading": "かい",
+    "meaningZh": "次数量词",
+    "groupRanks": {
+      "anime": 1477,
+      "manga": 580
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "回",
+        "reading": "かい",
+        "ranks": {
+          "anime": [
+            1477
+          ],
+          "manga": [
+            580
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "一部",
+    "reading": "いちぶ",
+    "meaningZh": "一部分；范围表达",
+    "groupRanks": {
+      "anime": 1513,
+      "manga": 586
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "一部",
+        "reading": "いちぶ",
+        "ranks": {
+          "anime": [
+            1513
+          ],
+          "manga": [
+            586
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "んな",
+    "reading": "んな",
+    "meaningZh": "そんな等的口语省略，需看上下文",
+    "groupRanks": {
+      "anime": 927,
+      "manga": 590
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "んな",
+        "reading": "んな",
+        "ranks": {
+          "anime": [
+            927
+          ],
+          "manga": [
+            590
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "号",
+    "reading": "ごう",
+    "meaningZh": "号、编号的后缀",
+    "groupRanks": {
+      "anime": 2508,
+      "manga": 599
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "号",
+        "reading": "ごう",
+        "ranks": {
+          "anime": [
+            2508
+          ],
+          "manga": [
+            599
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "くせに",
+    "reading": "くせに",
+    "meaningZh": "带责怪语气的转折",
+    "groupRanks": {
+      "anime": 600,
+      "manga": 797
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "くせに",
+        "reading": "くせに",
+        "ranks": {
+          "anime": [
+            600
+          ],
+          "manga": [
+            797
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "いいよ",
+    "reading": "いいよ",
+    "meaningZh": "回应许可或接受，也可拒绝；需看语境",
+    "groupRanks": {
+      "anime": 6350,
+      "manga": 616
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "いいよ",
+        "reading": "いいよ",
+        "ranks": {
+          "anime": [
+            6350
+          ],
+          "manga": [
+            616
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "どうしよう",
+    "reading": "どうしよう",
+    "meaningZh": "どうする的意向式；怎么办",
+    "groupRanks": {
+      "anime": 659,
+      "manga": 617
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "どうしよう",
+        "reading": "どうしよう",
+        "ranks": {
+          "anime": [
+            659
+          ],
+          "manga": [
+            617
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "さえ",
+    "reading": "さえ",
+    "meaningZh": "连……也；只要等用法",
+    "groupRanks": {
+      "anime": 626,
+      "manga": 817
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "さえ",
+        "reading": "さえ",
+        "ranks": {
+          "anime": [
+            626
+          ],
+          "manga": [
+            817
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だよね",
+    "reading": "だよね",
+    "meaningZh": "判断与确认语气的组合",
+    "groupRanks": {
+      "anime": 631,
+      "manga": 655
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だよね",
+        "reading": "だよね",
+        "ranks": {
+          "anime": [
+            631
+          ],
+          "manga": [
+            655
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "何だ",
+    "reading": "なんだ",
+    "meaningZh": "何＋だ，疑问或惊讶",
+    "groupRanks": {
+      "anime": 633,
+      "manga": 1477
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "何だ",
+        "reading": "なんだ",
+        "ranks": {
+          "anime": [
+            633
+          ],
+          "manga": [
+            1477
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "者",
+    "reading": "しゃ",
+    "meaningZh": "接尾しゃ，表示从事某活动的人",
+    "groupRanks": {
+      "anime": 2239,
+      "manga": 637
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "者",
+        "reading": "しゃ",
+        "ranks": {
+          "anime": [
+            2239
+          ],
+          "manga": [
+            637
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ほうがいい",
+    "reading": "ほうがいい",
+    "meaningZh": "最好……，建议，不是命令",
+    "groupRanks": {
+      "anime": 639,
+      "manga": 950
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ほうがいい",
+        "reading": "ほうがいい",
+        "ranks": {
+          "anime": [
+            639
+          ],
+          "manga": [
+            1919
+          ]
+        }
+      },
+      {
+        "term": "方がいい",
+        "reading": "ほうがいい",
+        "ranks": {
+          "anime": [
+            2523
+          ],
+          "manga": [
+            950
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "お前たち",
+    "reading": "おまえたち",
+    "meaningZh": "お前＋たち",
+    "groupRanks": {
+      "anime": 644,
+      "manga": 4902
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "お前たち",
+        "reading": "おまえたち",
+        "ranks": {
+          "anime": [
+            644
+          ],
+          "manga": [
+            4902
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ひとつ",
+    "reading": "ひとつ",
+    "meaningZh": "一个物件；与数词一起学",
+    "groupRanks": {
+      "anime": 1085,
+      "manga": 653
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ひとつ",
+        "reading": "ひとつ",
+        "ranks": {
+          "anime": [
+            1085
+          ],
+          "manga": [
+            717
+          ]
+        }
+      },
+      {
+        "term": "一つ",
+        "reading": "ひとつ",
+        "ranks": {
+          "anime": [
+            1118
+          ],
+          "manga": [
+            653
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "話",
+    "reading": "わ",
+    "meaningZh": "わ，故事集数/话数的量词；与はなし的词义区分",
+    "groupRanks": {
+      "anime": 7803,
+      "manga": 659
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "話",
+        "reading": "わ",
+        "ranks": {
+          "anime": [
+            7803
+          ],
+          "manga": [
+            659
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "全",
+    "reading": "ぜん",
+    "meaningZh": "全体的前缀",
+    "groupRanks": {
+      "anime": 1322,
+      "manga": 665
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "全",
+        "reading": "ぜん",
+        "ranks": {
+          "anime": [
+            1322
+          ],
+          "manga": [
+            665
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ようです",
+    "reading": "ようです",
+    "meaningZh": "ようだ的礼貌形式；推断或比喻看语境",
+    "groupRanks": {
+      "anime": 667,
+      "manga": 1166
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ようです",
+        "reading": "ようです",
+        "ranks": {
+          "anime": [
+            667
+          ],
+          "manga": [
+            1166
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "によって",
+    "reading": "によって",
+    "meaningZh": "依据、手段、原因、被动施事等",
+    "groupRanks": {
+      "anime": 707,
+      "manga": 669
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "によって",
+        "reading": "によって",
+        "ranks": {
+          "anime": [
+            707
+          ],
+          "manga": [
+            669
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "思える",
+    "reading": "おもえる",
+    "meaningZh": "思う的可能、自发等用法",
+    "groupRanks": {
+      "anime": 681,
+      "manga": 708
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "思える",
+        "reading": "おもえる",
+        "ranks": {
+          "anime": [
+            681
+          ],
+          "manga": [
+            708
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "一人で",
+    "reading": "ひとりで",
+    "meaningZh": "一个人做；で表人数",
+    "groupRanks": {
+      "anime": 1386,
+      "manga": 704
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "一人で",
+        "reading": "ひとりで",
+        "ranks": {
+          "anime": [
+            1386
+          ],
+          "manga": [
+            704
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "だっけ",
+    "reading": "だっけ",
+    "meaningZh": "回忆、确认",
+    "groupRanks": {
+      "anime": 776,
+      "manga": 706
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "だっけ",
+        "reading": "だっけ",
+        "ranks": {
+          "anime": [
+            776
+          ],
+          "manga": [
+            706
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ならば",
+    "reading": "ならば",
+    "meaningZh": "なら的条件形式",
+    "groupRanks": {
+      "anime": 715,
+      "manga": 1502
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ならば",
+        "reading": "ならば",
+        "ranks": {
+          "anime": [
+            715
+          ],
+          "manga": [
+            1502
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "め",
+    "reading": "め",
+    "meaningZh": "贬抑或序数等后缀，不能孤立当成一个意思",
+    "groupRanks": {
+      "anime": 718,
+      "manga": 964
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "め",
+        "reading": "め",
+        "ranks": {
+          "anime": [
+            718
+          ],
+          "manga": [
+            964
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "時",
+    "reading": "じ",
+    "meaningZh": "几点的单位じ；不是とき的读法",
+    "groupRanks": {
+      "anime": 1909,
+      "manga": 719
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "時",
+        "reading": "じ",
+        "ranks": {
+          "anime": [
+            1909
+          ],
+          "manga": [
+            719
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "あいつら",
+    "reading": "あいつら",
+    "meaningZh": "あいつ＋ら",
+    "groupRanks": {
+      "anime": 724,
+      "manga": 1350
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "あいつら",
+        "reading": "あいつら",
+        "ranks": {
+          "anime": [
+            724
+          ],
+          "manga": [
+            1350
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "3人",
+    "reading": "さんにん",
+    "meaningZh": "さんにん，三人的数法",
+    "groupRanks": {
+      "anime": 726,
+      "manga": 1191
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "3人",
+        "reading": "さんにん",
+        "ranks": {
+          "anime": [
+            726
+          ],
+          "manga": [
+            1191
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "上",
+    "reading": "じょう",
+    "meaningZh": "じょう，书面范围/角度后缀；不混入うえ的读法",
+    "groupRanks": {
+      "anime": 2077,
+      "manga": 750
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "上",
+        "reading": "じょう",
+        "ranks": {
+          "anime": [
+            2077
+          ],
+          "manga": [
+            750
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "2人とも",
+    "reading": "ふたりとも",
+    "meaningZh": "两个人都；とも强调全体",
+    "groupRanks": {
+      "anime": 754,
+      "manga": 4795
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "2人とも",
+        "reading": "ふたりとも",
+        "ranks": {
+          "anime": [
+            754
+          ],
+          "manga": [
+            4795
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "てる",
+    "reading": "てる",
+    "meaningZh": "ている省略い",
+    "groupRanks": {
+      "anime": 1237,
+      "manga": 758
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "てる",
+        "reading": "てる",
+        "ranks": {
+          "anime": [
+            1237
+          ],
+          "manga": [
+            758
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "超",
+    "reading": "ちょう",
+    "meaningZh": "超过、很等构词用法",
+    "groupRanks": {
+      "anime": 771,
+      "manga": 767
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "超",
+        "reading": "ちょう",
+        "ranks": {
+          "anime": [
+            771
+          ],
+          "manga": [
+            767
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "君たち",
+    "reading": "きみたち",
+    "meaningZh": "君＋たち",
+    "groupRanks": {
+      "anime": 770,
+      "manga": 3031
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "君たち",
+        "reading": "きみたち",
+        "ranks": {
+          "anime": [
+            770
+          ],
+          "manga": [
+            3031
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "等",
+    "reading": "ら",
+    "meaningZh": "ら，人的复数后缀；不混入など",
+    "groupRanks": {
+      "anime": 8689,
+      "manga": 770
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "等",
+        "reading": "ら",
+        "ranks": {
+          "anime": [
+            8689
+          ],
+          "manga": [
+            770
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "による",
+    "reading": "による",
+    "meaningZh": "依据、原因等连体用法",
+    "groupRanks": {
+      "anime": 840,
+      "manga": 771
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "による",
+        "reading": "による",
+        "ranks": {
+          "anime": [
+            840
+          ],
+          "manga": [
+            771
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ようだ",
+    "reading": "ようだ",
+    "meaningZh": "根据迹象推断或比喻",
+    "groupRanks": {
+      "anime": 775,
+      "manga": 1287
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ようだ",
+        "reading": "ようだ",
+        "ranks": {
+          "anime": [
+            775
+          ],
+          "manga": [
+            1287
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "でもある",
+    "reading": "でもある",
+    "meaningZh": "也是的判断结构",
+    "groupRanks": {
+      "anime": 786,
+      "manga": 818
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "でもある",
+        "reading": "でもある",
+        "ranks": {
+          "anime": [
+            786
+          ],
+          "manga": [
+            818
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "っけ",
+    "reading": "っけ",
+    "meaningZh": "回忆、确认句尾",
+    "groupRanks": {
+      "anime": 792,
+      "manga": 866
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "っけ",
+        "reading": "っけ",
+        "ranks": {
+          "anime": [
+            792
+          ],
+          "manga": [
+            866
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "第2",
+    "reading": "だいに",
+    "meaningZh": "第二，序数",
+    "groupRanks": {
+      "anime": 2055,
+      "manga": 792
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "第2",
+        "reading": "だいに",
+        "ranks": {
+          "anime": [
+            2055
+          ],
+          "manga": [
+            792
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "かどうか",
+    "reading": "かどうか",
+    "meaningZh": "是否",
+    "groupRanks": {
+      "anime": 793,
+      "manga": 992
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "かどうか",
+        "reading": "かどうか",
+        "ranks": {
+          "anime": [
+            793
+          ],
+          "manga": [
+            992
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "第1",
+    "reading": "だいいち",
+    "meaningZh": "第一，序数",
+    "groupRanks": {
+      "anime": 2397,
+      "manga": 801
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "第1",
+        "reading": "だいいち",
+        "ranks": {
+          "anime": [
+            2397
+          ],
+          "manga": [
+            801
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ば",
+    "reading": "ば",
+    "meaningZh": "条件连接",
+    "groupRanks": {
+      "anime": 1103,
+      "manga": 803
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ば",
+        "reading": "ば",
+        "ranks": {
+          "anime": [
+            1103
+          ],
+          "manga": [
+            803
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "知らない",
+    "reading": "しらない",
+    "meaningZh": "知る的否定",
+    "groupRanks": {
+      "anime": 807,
+      "manga": 919
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "知らない",
+        "reading": "しらない",
+        "ranks": {
+          "anime": [
+            807
+          ],
+          "manga": [
+            919
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "三",
+    "reading": "さん",
+    "meaningZh": "数字三",
+    "groupRanks": {
+      "anime": 2209,
+      "manga": 808
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "三",
+        "reading": "さん",
+        "ranks": {
+          "anime": [
+            2209
+          ],
+          "manga": [
+            808
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ども",
+    "reading": "ども",
+    "meaningZh": "群体后缀；常有轻蔑或自谦色彩",
+    "groupRanks": {
+      "anime": 809,
+      "manga": 1836
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ども",
+        "reading": "ども",
+        "ranks": {
+          "anime": [
+            809
+          ],
+          "manga": [
+            1836
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "彼ら",
+    "reading": "かれら",
+    "meaningZh": "彼＋ら；他们",
+    "groupRanks": {
+      "anime": 810,
+      "manga": 1460
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "彼ら",
+        "reading": "かれら",
+        "ranks": {
+          "anime": [
+            810
+          ],
+          "manga": [
+            1460
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "歳",
+    "reading": "さい",
+    "meaningZh": "年龄单位さい",
+    "groupRanks": {
+      "anime": 1427,
+      "manga": 819
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "歳",
+        "reading": "さい",
+        "ranks": {
+          "anime": [
+            1427
+          ],
+          "manga": [
+            819
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "人",
+    "reading": "じん",
+    "meaningZh": "国籍等的接尾じん；不混入ひと",
+    "groupRanks": {
+      "anime": 2172,
+      "manga": 823
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "人",
+        "reading": "じん",
+        "ranks": {
+          "anime": [
+            2172
+          ],
+          "manga": [
+            823
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "のせいで",
+    "reading": "のせいで",
+    "meaningZh": "因……导致不良结果",
+    "groupRanks": {
+      "anime": 834,
+      "manga": 997
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "のせいで",
+        "reading": "のせいで",
+        "ranks": {
+          "anime": [
+            834
+          ],
+          "manga": [
+            997
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "人たち",
+    "reading": "ひとたち",
+    "meaningZh": "人＋たち",
+    "groupRanks": {
+      "anime": 835,
+      "manga": 1952
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "人たち",
+        "reading": "ひとたち",
+        "ranks": {
+          "anime": [
+            835
+          ],
+          "manga": [
+            1952
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ってことは",
+    "reading": "ってことは",
+    "meaningZh": "ということは的缩约；据此推断",
+    "groupRanks": {
+      "anime": 852,
+      "manga": 1464
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ってことは",
+        "reading": "ってことは",
+        "ranks": {
+          "anime": [
+            852
+          ],
+          "manga": [
+            1464
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "誰にも",
+    "reading": "だれにも",
+    "meaningZh": "疑问词＋にも，与后续肯定/否定一起定范围",
+    "groupRanks": {
+      "anime": 853,
+      "manga": 1110
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "誰にも",
+        "reading": "だれにも",
+        "ranks": {
+          "anime": [
+            853
+          ],
+          "manga": [
+            1110
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "我が",
+    "reading": "わが",
+    "meaningZh": "我方、我们的；较书面",
+    "groupRanks": {
+      "anime": 857,
+      "manga": 1806
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "我が",
+        "reading": "わが",
+        "ranks": {
+          "anime": [
+            857
+          ],
+          "manga": [
+            1806
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "としても",
+    "reading": "としても",
+    "meaningZh": "即使、假设让步",
+    "groupRanks": {
+      "anime": 858,
+      "manga": 930
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "としても",
+        "reading": "としても",
+        "ranks": {
+          "anime": [
+            858
+          ],
+          "manga": [
+            930
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "たとえ",
+    "reading": "たとえ",
+    "meaningZh": "即使；与ても等搭配",
+    "groupRanks": {
+      "anime": 860,
+      "manga": 1115
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "たとえ",
+        "reading": "たとえ",
+        "ranks": {
+          "anime": [
+            860
+          ],
+          "manga": [
+            1115
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "なさる",
+    "reading": "なさる",
+    "meaningZh": "する的尊敬形式",
+    "groupRanks": {
+      "anime": 865,
+      "manga": 1012
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "なさる",
+        "reading": "なさる",
+        "ranks": {
+          "anime": [
+            865
+          ],
+          "manga": [
+            1012
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "いいぞ",
+    "reading": "いいぞ",
+    "meaningZh": "肯定/鼓励＋ぞ的语气",
+    "groupRanks": {
+      "anime": 871,
+      "manga": 1354
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "いいぞ",
+        "reading": "いいぞ",
+        "ranks": {
+          "anime": [
+            871
+          ],
+          "manga": [
+            1354
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "2つ",
+    "reading": "ふたつ",
+    "meaningZh": "ふたつ，两个物件",
+    "groupRanks": {
+      "anime": 873,
+      "manga": 2627
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "2つ",
+        "reading": "ふたつ",
+        "ranks": {
+          "anime": [
+            873
+          ],
+          "manga": [
+            2627
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "のみ",
+    "reading": "のみ",
+    "meaningZh": "只、仅；较书面",
+    "groupRanks": {
+      "anime": 1005,
+      "manga": 878
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "のみ",
+        "reading": "のみ",
+        "ranks": {
+          "anime": [
+            1005
+          ],
+          "manga": [
+            878
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "こりゃ",
+    "reading": "こりゃ",
+    "meaningZh": "これは的缩约",
+    "groupRanks": {
+      "anime": 881,
+      "manga": 1711
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "こりゃ",
+        "reading": "こりゃ",
+        "ranks": {
+          "anime": [
+            881
+          ],
+          "manga": [
+            1711
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ってのは",
+    "reading": "ってのは",
+    "meaningZh": "というのは的缩约",
+    "groupRanks": {
+      "anime": 882,
+      "manga": 1128
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ってのは",
+        "reading": "ってのは",
+        "ranks": {
+          "anime": [
+            882
+          ],
+          "manga": [
+            1128
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "わけにはいかない",
+    "reading": "わけにはいかない",
+    "meaningZh": "情理或现实限制使不能做，不等同能力否定",
+    "groupRanks": {
+      "anime": 883,
+      "manga": 2144
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "わけにはいかない",
+        "reading": "わけにはいかない",
+        "ranks": {
+          "anime": [
+            883
+          ],
+          "manga": [
+            2144
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "にて",
+    "reading": "にて",
+    "meaningZh": "在、以；书面用法，联系で",
+    "groupRanks": {
+      "anime": 1959,
+      "manga": 886
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "にて",
+        "reading": "にて",
+        "ranks": {
+          "anime": [
+            1959
+          ],
+          "manga": [
+            886
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "あなたたち",
+    "reading": "あなたたち",
+    "meaningZh": "あなた＋たち",
+    "groupRanks": {
+      "anime": 886,
+      "manga": 3749
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "あなたたち",
+        "reading": "あなたたち",
+        "ranks": {
+          "anime": [
+            886
+          ],
+          "manga": [
+            3749
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "金",
+    "reading": "きん",
+    "meaningZh": "きん，金曜日的缩写和金属金依语境区分",
+    "groupRanks": {
+      "anime": 2041,
+      "manga": 892
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "金",
+        "reading": "きん",
+        "ranks": {
+          "anime": [
+            2041
+          ],
+          "manga": [
+            892
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "新",
+    "reading": "しん",
+    "meaningZh": "新的；前缀しん",
+    "groupRanks": {
+      "anime": 1749,
+      "manga": 897
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "新",
+        "reading": "しん",
+        "ranks": {
+          "anime": [
+            1749
+          ],
+          "manga": [
+            897
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "とおり",
+    "reading": "とおり",
+    "meaningZh": "照……那样；～のとおり／言ったとおり",
+    "groupRanks": {
+      "anime": 909,
+      "manga": 4106
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "とおり",
+        "reading": "とおり",
+        "ranks": {
+          "anime": [
+            909
+          ],
+          "manga": [
+            4106
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "かもしれません",
+    "reading": "かもしれません",
+    "meaningZh": "かもしれない的礼貌形式",
+    "groupRanks": {
+      "anime": 962,
+      "manga": 911
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "かもしれません",
+        "reading": "かもしれません",
+        "ranks": {
+          "anime": [
+            962
+          ],
+          "manga": [
+            911
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "としたら",
+    "reading": "としたら",
+    "meaningZh": "假定……的话",
+    "groupRanks": {
+      "anime": 911,
+      "manga": 1056
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "としたら",
+        "reading": "としたら",
+        "ranks": {
+          "anime": [
+            911
+          ],
+          "manga": [
+            1056
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "行ける",
+    "reading": "いける",
+    "meaningZh": "行く的可能形",
+    "groupRanks": {
+      "anime": 917,
+      "manga": 958
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "行ける",
+        "reading": "いける",
+        "ranks": {
+          "anime": [
+            917
+          ],
+          "manga": [
+            958
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "により",
+    "reading": "により",
+    "meaningZh": "由于、根据；书面关系",
+    "groupRanks": {
+      "anime": 1379,
+      "manga": 920
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "により",
+        "reading": "により",
+        "ranks": {
+          "anime": [
+            1379
+          ],
+          "manga": [
+            920
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "というのは",
+    "reading": "というのは",
+    "meaningZh": "定义、解释、引出话题",
+    "groupRanks": {
+      "anime": 974,
+      "manga": 924
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "というのは",
+        "reading": "というのは",
+        "ranks": {
+          "anime": [
+            974
+          ],
+          "manga": [
+            924
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "というわけ",
+    "reading": "というわけ",
+    "meaningZh": "归结、解释；与わけ系列对照",
+    "groupRanks": {
+      "anime": 931,
+      "manga": 1081
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "というわけ",
+        "reading": "というわけ",
+        "ranks": {
+          "anime": [
+            931
+          ],
+          "manga": [
+            1081
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ことにする",
+    "reading": "ことにする",
+    "meaningZh": "决定做某事",
+    "groupRanks": {
+      "anime": 941,
+      "manga": 1424
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ことにする",
+        "reading": "ことにする",
+        "ranks": {
+          "anime": [
+            941
+          ],
+          "manga": [
+            1424
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "こいつら",
+    "reading": "こいつら",
+    "meaningZh": "こいつ＋ら",
+    "groupRanks": {
+      "anime": 944,
+      "manga": 1515
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "こいつら",
+        "reading": "こいつら",
+        "ranks": {
+          "anime": [
+            944
+          ],
+          "manga": [
+            1515
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ござる",
+    "reading": "ござる",
+    "meaningZh": "ある的郑重/古风形式；剧情识别",
+    "groupRanks": {
+      "anime": 1720,
+      "manga": 944
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ござる",
+        "reading": "ござる",
+        "ranks": {
+          "anime": [
+            1720
+          ],
+          "manga": [
+            944
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ようにする",
+    "reading": "ようにする",
+    "meaningZh": "努力做到、作出安排",
+    "groupRanks": {
+      "anime": 952,
+      "manga": 991
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ようにする",
+        "reading": "ようにする",
+        "ranks": {
+          "anime": [
+            952
+          ],
+          "manga": [
+            991
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "系",
+    "reading": "けい",
+    "meaningZh": "类型、系统的后缀",
+    "groupRanks": {
+      "anime": 1819,
+      "manga": 955
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "系",
+        "reading": "けい",
+        "ranks": {
+          "anime": [
+            1819
+          ],
+          "manga": [
+            955
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "とはいえ",
+    "reading": "とはいえ",
+    "meaningZh": "虽说如此；让步",
+    "groupRanks": {
+      "anime": 964,
+      "manga": 1009
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "とはいえ",
+        "reading": "とはいえ",
+        "ranks": {
+          "anime": [
+            964
+          ],
+          "manga": [
+            1009
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "べ",
+    "reading": "べ",
+    "meaningZh": "方言句尾；只识别，不能套成标准语规则",
+    "groupRanks": {
+      "anime": 1503,
+      "manga": 968
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "べ",
+        "reading": "べ",
+        "ranks": {
+          "anime": [
+            1503
+          ],
+          "manga": [
+            968
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "というか",
+    "reading": "というか",
+    "meaningZh": "或者说、换个说法",
+    "groupRanks": {
+      "anime": 2244,
+      "manga": 969
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "というか",
+        "reading": "というか",
+        "ranks": {
+          "anime": [
+            2244
+          ],
+          "manga": [
+            969
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "やすい",
+    "reading": "やすい",
+    "meaningZh": "ます词干＋やすい，容易做",
+    "groupRanks": {
+      "anime": 1146,
+      "manga": 976
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "やすい",
+        "reading": "やすい",
+        "ranks": {
+          "anime": [
+            1146
+          ],
+          "manga": [
+            976
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "第3",
+    "reading": "だいさん",
+    "meaningZh": "第三，序数",
+    "groupRanks": {
+      "anime": 2847,
+      "manga": 980
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "第3",
+        "reading": "だいさん",
+        "ranks": {
+          "anime": [
+            2847
+          ],
+          "manga": [
+            980
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ですが",
+    "reading": "ですが",
+    "meaningZh": "です＋转折が；句末也可留白",
+    "groupRanks": {
+      "anime": 986,
+      "manga": 1763
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ですが",
+        "reading": "ですが",
+        "ranks": {
+          "anime": [
+            986
+          ],
+          "manga": [
+            1763
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "すら",
+    "reading": "すら",
+    "meaningZh": "连……都；与范围/否定一起读",
+    "groupRanks": {
+      "anime": 1004,
+      "manga": 987
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "すら",
+        "reading": "すら",
+        "ranks": {
+          "anime": [
+            1004
+          ],
+          "manga": [
+            987
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "ございます",
+    "reading": "ございます",
+    "meaningZh": "ある的郑重礼貌对应",
+    "groupRanks": {
+      "anime": 994,
+      "manga": 1003
+    },
+    "sourceIds": [],
+    "glossSource": "editor-zh",
+    "variants": [
+      {
+        "term": "ございます",
+        "reading": "ございます",
+        "ranks": {
+          "anime": [
+            994
+          ],
+          "manga": [
+            1003
+          ]
+        }
+      }
+    ]
+  }
+]

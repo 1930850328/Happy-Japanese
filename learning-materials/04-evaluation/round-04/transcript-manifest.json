@@ -1,0 +1,82 @@
+[
+  {
+    "sample_id": "manga-tomochan-01",
+    "image_sha256": [
+      "15a1ffe51cb920dd0eb7b01382c4caf7cee888695f3c6a63f8a36b097af2ebd2",
+      "b1ec4ef8d473afdb3e702e0c4d0a3942b13caa22183026c5a1b516db83775fe3"
+    ],
+    "transcript_sha256": "d7d48141f3c735790af53330c9ffbfd4c59a583e89c38a6ad21ce947837bff26",
+    "characters": 407,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  },
+  {
+    "sample_id": "manga-tomochan-02",
+    "image_sha256": [
+      "2cfff688cac2bffbc0a012057318e0a9b894bacdbdd5370e617e0d6004f17c59",
+      "1286c0012d0757a335f2b9e02b39b06b12e9caf873efe3d3471b41d9232c7d87"
+    ],
+    "transcript_sha256": "42f271b56dedc2839e9650ed6d79d08ffc8aee931edf7bd6f3ca2d4ec2045e52",
+    "characters": 291,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  },
+  {
+    "sample_id": "manga-SATOKOandNADA-01",
+    "image_sha256": [
+      "19c9a4776fdc04a00437f35d185fbab663355c33f33d2632a21dd807bdb5e3b6",
+      "7fc2ec337877d8a9af36528d41ed1cde5f658d89a0d41ecb9f7d41b5c437430e"
+    ],
+    "transcript_sha256": "ffc34ab800efa0ba7ea4c0d307cb24be0cb22a96dc156ab5acd9f811845f69bb",
+    "characters": 240,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  },
+  {
+    "sample_id": "manga-SATOKOandNADA-02",
+    "image_sha256": [
+      "49219e69c749b2e795c8099031d1496b9f9728055826bafe645562339c7cb43f",
+      "78473e166aa24be2f9cde533a9fc558916222dde210e0c46b45e37238c56cc27"
+    ],
+    "transcript_sha256": "fa1ea43f0c85b1e756f7801d0a02a9bb40b1fc6d529510ac0eae6efe43f8d503",
+    "characters": 212,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  },
+  {
+    "sample_id": "manga-kanako-01",
+    "image_sha256": [
+      "3bad52ae3b0f83d623252d7dd0f6ff10bd31689a6d1acf0cff1cc870a8166af8",
+      "0725822978ebf739595a7eac1ba61023bbbc50ff2b73b98225a6a757ec325c47"
+    ],
+    "transcript_sha256": "d4f0317b625a04a020d7f0b70b0c47a0c670cf9d65cdca0825d0267594943d49",
+    "characters": 318,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  },
+  {
+    "sample_id": "manga-kanako-02",
+    "image_sha256": [
+      "0af1c52be770707a46c6d3633acf18f7f3a242f665bde82e4cd10cba3fe34183",
+      "6a813dd74713218aee980250729bfe6140d3bab6e0cf4dfef14e74a3b369c129"
+    ],
+    "transcript_sha256": "13bd61e7587093a605f2a8a94f7b66139e14c15e9b13a1526dd595911e59bddd",
+    "characters": 262,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  },
+  {
+    "sample_id": "manga-onakin-01",
+    "image_sha256": [
+      "fe8a162d6f9c21807c40c979a522edb17789690a45997dc89dacb1f147b8bc59",
+      "95555c7564ef9bc4750951575fb265ce60fe232df7ee310f2493047e9a8e59ba"
+    ],
+    "transcript_sha256": "1cd6a152648cfca4c5f95e5f966a6b9a957eba8beb1b81be6d7c22f8ce88d311",
+    "characters": 178,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  },
+  {
+    "sample_id": "manga-onakin-02",
+    "image_sha256": [
+      "7effac2c41e6d52e2a00d258ceccbc246d056dc3cc5951d36bd6f05f217098c6",
+      "c6eb2c2ab3e3a496262c27d99d3d4060d96507d73de80b95873829e0b8c00fb5"
+    ],
+    "transcript_sha256": "62d76b464f8ef5f9346e0d5dcb7b44235d31708bd0e0776ae7c6b6c05b7b1acf",
+    "characters": 210,
+    "scope": "编者对原图转写对话、旁白、人物资料和作者页尾短评；不含标题、纯拟声字及画面无字信息。保留原缩约，不补全省略。未独立审校。"
+  }
+]

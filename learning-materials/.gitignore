@@ -1,0 +1,12 @@
+# Downloaded third-party originals and their full-text derivatives stay local.
+/01-materials/sources/
+/01-materials/data/
+/01-materials/reader/
+/03-test-set/sources/*.jpg
+/03-test-set/sources/nucc.zip
+/03-test-set/passages/manga-*.txt
+/03-test-set/passages/nucc-*.txt
+.cache/
+.venv/
+__pycache__/
+*.pyc

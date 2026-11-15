@@ -1,0 +1,81 @@
+[
+  {
+    "id": "san-meaning",
+    "sourceGuid": "E1^8=V/a5U",
+    "field": "meaningZh",
+    "original": "桑",
+    "replacement": "接在人名等后表示礼貌的称呼；可按语境译为先生、女士等，不是名字的一部分",
+    "reason": "音译没有解释称呼功能，不适合作为给初学者的唯一释义。原始 TSV 保留不变。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/people"
+  },
+  {
+    "id": "masu-verbs",
+    "field": "usageNotesZh",
+    "original": "～ます\n动词和形容词的礼貌表达形式。\n用法：在动词的连用形（連用形）后接ます。",
+    "replacement": "～ます\n动词的礼貌表达形式：动词的ます形词干（连用形）＋ます。い形容词通常在句末接です表示礼貌，不直接接ます。",
+    "reason": "原注释把形容词也归入接ます的规则，容易导致错误活用。按整个注释精确匹配，不对其他注释做字符串猜测替换。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/polite"
+  },
+  {
+    "id": "tokeru-masu",
+    "sourceGuid": "A8E]1F+TQ.",
+    "field": "usageNotesZh",
+    "original": "～ます + ～(ら)れる\n动词和形容词的礼貌表达形式。\n用法：在动词的连用形（連用形）后接ます。\n + \n表示（自然）能够做某动作的状态。\n用法：在一段动词的未然形（未然形）后接(ら)れる，在五段动词的命令形（命令形）后接る。する变为できる，くる变为こ(ら)れる。",
+    "replacement": "解けます＝解く的可能形「解ける」＋礼貌形式「ます」，表示能够解开／解决。五段动词末尾的ウ段假名改为同一行的エ段假名，再接る；解く→解ける。ます不直接接形容词。",
+    "reason": "同时更正组合注释中的ます适用范围，并用例句中的实际活用解释可能形。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/potential"
+  },
+  {
+    "id": "potential-taeru",
+    "sourceGuid": "DuK@IutA2e",
+    "field": "usageNotesZh",
+    "original": "～(ら)れる\n表示（自然）能够做某动作的状态。\n用法：在一段动词的未然形（未然形）后接(ら)れる，在五段动词的命令形（命令形）后接る。する变为できる，くる变为こ(ら)れる。",
+    "replacement": "耐えられる是耐える的可能形，表示能够承受。一段动词去掉末尾る，加られる；五段动词末尾ウ段改为同一行エ段再加る。する→できる，来る→来られる（こられる）。口语可能省略一段动词可能形中的ら，但基础规则先保留ら。",
+    "reason": "区分标准可能形与口语省略，避免用命令形解释可能形。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/potential"
+  },
+  {
+    "id": "potential-negative-past",
+    "sourceGuid": "b~%=ev(U7p",
+    "field": "usageNotesZh",
+    "original": "～た + ～ない + ～(ら)れる\n1. 表示过去发生的事实\n2. 表示动作的完成\n3. 表示对事情的确认\n4. 表示说话人确信动作一定会实现\n5. 表示主句之前发生的事件为相对过去\n6. 表示温和的命令。\n用法：在动词音便形的连用形（連用形）后接た，在い形容词词干后接かった。\n + \n1. 动词的否定形\n2. 表达对对方的劝诱感情。\n用法：在动词的未然形（未然形）后接ない，在い形容词词干后接くない。ない本身按い形容词活用。ます变为ません。\n + \n表示（自然）能够做某动作的状态。\n用法：在一段动词的未然形（未然形）后接(ら)れる，在五段动词的命令形（命令形）后接る。する变为できる，くる变为こ(ら)れる。",
+    "replacement": "受け止められなかった＝受け止める的可能形「受け止められる」＋否定过去形「なかった」，表示当时没能接住。不是在这句话中表示被动。",
+    "reason": "按照例句解释可能、否定、过去的组合，替代混杂的通用规则。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/potential"
+  },
+  {
+    "id": "stem-sugiru",
+    "sourceGuid": "uV<0]Xe,!J",
+    "field": "usageNotesZh",
+    "original": "連用形\n用于表示（正在）进行的动作。\n指连用形（連用形），即动词与ます活用后去掉ます的部分。",
+    "replacement": "構い是構う的连用形（ます形词干）。構い＋過ぎる表示过度关心／干涉。连用形本身不表示动作正在进行。",
+    "reason": "原注释把连用形定义成进行中的动作；实际例句为复合动词。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/polite"
+  },
+  {
+    "id": "stem-purpose",
+    "sourceGuid": "Iz~:Y0@<%Z",
+    "field": "usageNotesZh",
+    "original": "連用形\n用于表示（正在）进行的动作。\n指连用形（連用形），即动词与ます活用后去掉ます的部分。",
+    "replacement": "迎え是迎える的连用形（ます形词干）。迎えに来る表示为了迎接而来。连用形本身不表示动作正在进行。",
+    "reason": "原注释把连用形定义成进行中的动作；实际例句为移动目的。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/polite"
+  },
+  {
+    "id": "nasai-register",
+    "sourceGuid": "qU`et8tt0V",
+    "field": "usageNotesZh",
+    "original": "～なさい\n礼貌的命令后缀。\n用法：在动词的连用形（連用形）后接なさい。",
+    "replacement": "动词ます形词干＋なさい表示带命令意味的指示，常见于家长对孩子、老师对学生。这里洗いなさい是「去洗脸」。不能当作对任何人都适用的礼貌请求。",
+    "reason": "补充使用关系与命令语气，避免将其理解成通用礼貌请求。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/requests"
+  },
+  {
+    "id": "naide-request",
+    "field": "usageNotesZh",
+    "original": "～ないで\n否定的て形。",
+    "replacement": "～ないで（ください）在这里表示请求对方不要做某事；口语可省略ください。不要把所有否定接续都当成ないで，なくて另有用法。",
+    "reason": "这些词卡的例句均为否定请求；原注释只写否定的て形，未解释实际用途。",
+    "evidence": "https://guidetojapanese.org/learn/grammar/requests"
+  }
+]

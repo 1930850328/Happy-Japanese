@@ -1,0 +1,59 @@
+{
+  "retrievedOn": "2026-11-13",
+  "publisher": "Jiten",
+  "landingPage": "https://jiten.moe/frequency-dictionaries",
+  "frequencyLicense": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "modifications": "Frozen original CSV bytes stored in gzip; derived filtering, orthographic grouping, grammar routing and Chinese teaching glosses are identified separately.",
+  "files": [
+    {
+      "media": "anime",
+      "file": "sources/anime.csv.gz",
+      "url": "https://api.jiten.moe/api/frequency-list/download?downloadType=csv&mediaType=1",
+      "bytes": 7461995,
+      "sha256": "983b8694484c24a5697d5aeb03fc350e37cd846e5c04e62a19442644acfeb249",
+      "archiveSha256": "cd91e4fc6c04c2a2f4c7b4f1d96fd36711c1492913da0bdfdb8cdec577c46d23"
+    },
+    {
+      "media": "manga",
+      "file": "sources/manga.csv.gz",
+      "url": "https://api.jiten.moe/api/frequency-list/download?downloadType=csv&mediaType=9",
+      "bytes": 9290108,
+      "sha256": "1a9038a0e38770b65b5440f2a1002824ed482502627c291949cfebd0ec271016",
+      "archiveSha256": "72aaf26cd6ab3e701a0c4e61fec93a15997393c884bc652d1ea706a03f1e3212"
+    }
+  ],
+  "statistics": {
+    "file": "sources/stats.json",
+    "url": "https://api.jiten.moe/api/stats/get-global-stats",
+    "sha256": "ed5b827c3c8527636420568f4a1bc4d9b714ea1d6a646d6801b47d334dec8169"
+  },
+  "mediaSpotChecks": {
+    "file": "sources/media-checks.json",
+    "sha256": "4e32897adb48b535bad3e7b16f6a85cdefc830c1a03b78392857bdee59b342db",
+    "note": "Four successful public API checks and two recorded search failures; not a dispersion check of every selected entry."
+  },
+  "algorithmSource": {
+    "commit": "aa4d1d484e1e9a5ae8a092757f5f177bff128ac4",
+    "urls": [
+      "https://github.com/Sirush/Jiten/blob/aa4d1d484e1e9a5ae8a092757f5f177bff128ac4/Jiten.Core/JitenHelper.cs#L980",
+      "https://github.com/Sirush/Jiten/blob/aa4d1d484e1e9a5ae8a092757f5f177bff128ac4/Jiten.Core/YomitanHelper.cs#L86"
+    ],
+    "note": "Public code inspected; the download does not state which server commit generated it."
+  },
+  "localMaterialInputs": [
+    {
+      "file": "../data/vocabulary-kaishi.json",
+      "sha256": "ac3264d923c9e2af7680e83c87daa14945faaafe606a125f9bff318c627bd731"
+    },
+    {
+      "file": "../data/vocabulary-irodori.json",
+      "sha256": "4656c12b346b02174535faa319f265574ef661be36dc3ac5d602c2eb1d786644"
+    }
+  ],
+  "meaningChecks": {
+    "file": "sources/meaning-checks.json",
+    "sha256": "11f24c034379316ad71f964a19abb5f6106aaf1d19fdacec36622609097a2308",
+    "attribution": "Jiten public dictionary API; dictionary data from EDRDG JMdict. Chinese teaching glosses are editor selections, not official Chinese translations."
+  }
+}

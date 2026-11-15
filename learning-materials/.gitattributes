@@ -1,0 +1,11 @@
+* text=auto eol=lf
+*.gz binary
+*.zip binary
+*.jpg binary
+*.pdf binary
+*.xlsx binary
+# Original Aozora snapshots are CP932 with source CRLF; hashes require exact bytes.
+03-test-set/sources/*.html binary
+
+# Markdown hard line breaks and frozen historical EOF spacing are intentional.
+*.md whitespace=-blank-at-eol,-blank-at-eof

@@ -1,0 +1,156 @@
+{
+  "type": "development_semantic_requirement_trace",
+  "review_status": "single_reviewer_draft",
+  "not_a_learner_test": true,
+  "cases": [
+    {
+      "sample_id": "manga-007",
+      "source_text_sha256": "7dbdfae83e58afe6c6e8e1b1691dd13adc581d8682a7ad55a9ba0b7a0ddb710f",
+      "anchor": "3時間しか寝てねえ",
+      "required_meaning_zh": "只睡了三小时；不是没有睡三小时。",
+      "teaching_requirement": "范围限定和否定共同解释；识别口语否定。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/amount.html",
+        "01-materials/reader/tae-kim-zh/slang.html"
+      ],
+      "planned_days": [
+        16,
+        18
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "amount 有しか与否定说明；slang 未检得ねえ字面形式，具体口语否定教学需补查。",
+      "observed_student_answer": null,
+      "student_score": null
+    },
+    {
+      "sample_id": "manga-009",
+      "source_text_sha256": "093383fdac541c979158ca19bee9af11a32e8db28fc437d87ba4171bc9003c79",
+      "anchor": "合格しなければいけない",
+      "required_meaning_zh": "通过考试是必须满足的条件；没有断言人物已经通过。",
+      "teaching_requirement": "否定条件与否定评价组成义务。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/must.html"
+      ],
+      "planned_days": [
+        12
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "义务讲解存在；合格和試験在两份词表中无同形独立词条。",
+      "observed_student_answer": null,
+      "student_score": null
+    },
+    {
+      "sample_id": "manga-066",
+      "source_text_sha256": "5bea8fb4fe0433ada17f0d4a7dcedb91d47af145b3e82f19e7978765a7f1f5bd",
+      "anchor": "しなきゃ生活もできない",
+      "required_meaning_zh": "如果不做夜班兼职，就连生活也维持不了。",
+      "teaching_requirement": "条件缩约有显式后果；与省略后果表达必须做区分。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/conditionals.html",
+        "01-materials/reader/tae-kim-zh/must.html"
+      ],
+      "planned_days": [
+        11,
+        12,
+        18
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "教材分别解释否定条件与なきゃ缩约；课程未写两种用法的对比教学。",
+      "observed_student_answer": null,
+      "student_score": null
+    },
+    {
+      "sample_id": "anime-kon-02",
+      "source_text_sha256": "101543fabac98e938e019744b846b5c3fc68e30b733e705e22b7f410fee2b3a4",
+      "anchor": "今月中に４人 入部しないと",
+      "required_meaning_zh": "如果本月内没有四人加入，社团会被废止；当前是濒临废止。",
+      "teaching_requirement": "条件、期限、数量、上下文校正。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/conditionals.html",
+        "01-materials/reader/tae-kim-zh/unintended.html"
+      ],
+      "planned_days": [
+        11,
+        18
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "条件与ちゃう分别有参考资料，未写组合阅读课。",
+      "observed_student_answer": null,
+      "student_score": null
+    },
+    {
+      "sample_id": "anime-shirokuma-01",
+      "source_text_sha256": "c183476b117480ca384b9aa941c1f4fa225611a2e976b5ec64669452c929e47e",
+      "anchor": "来てくれないの",
+      "required_meaning_zh": "询问为什么不来动物园看自己；上下文含不满和邀请，不是能力不足。",
+      "teaching_requirement": "授受视角、否定疑问、后文语气。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/favors.html",
+        "01-materials/reader/tae-kim-zh/stateofbeing.html"
+      ],
+      "planned_days": [
+        13,
+        15
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "くれる相关资料存在；课程没有完整人物关系和语境教学。",
+      "observed_student_answer": null,
+      "student_score": null
+    },
+    {
+      "sample_id": "anime-shirokuma-03",
+      "source_text_sha256": "9b6615be110361e4de6c723b609519928d884c8512a4710b5b4c8e0cdd6b3549",
+      "anchor": "剥製なわけない",
+      "required_meaning_zh": "说话者根据它刚才动了，否定它是标本的说法。",
+      "teaching_requirement": "强烈否定可能解释；根据上下文判断立场。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/reasoning.html"
+      ],
+      "planned_days": [
+        19
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "reasoning 明确给出わけがない及省略助词的わけない。",
+      "observed_student_answer": null,
+      "student_score": null
+    },
+    {
+      "sample_id": "supercub-02",
+      "source_text_sha256": "6c909458f1534e9574e5aa574bf030ce2c2b0bfed1588ffa45e2623965312226",
+      "anchor": "嫌いだったわけではなく",
+      "required_meaning_zh": "缺少交流并非因为讨厌母亲，后文解释人物不依恋他人。",
+      "teaching_requirement": "否定解释的范围；连接前后文。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/reasoning.html"
+      ],
+      "planned_days": [
+        19
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "reasoning 已有わけ主题，但未检得わけでは字面形式；本次不据此声称全资料缺失，具体教学待补。",
+      "observed_student_answer": null,
+      "student_score": null
+    },
+    {
+      "sample_id": "daily-mercari-01",
+      "source_text_sha256": "392b61010662534aa32e7f766e711147396a62f4f5d7ece97bf3074de54e8a08",
+      "anchor": "取引メッセージ送信後",
+      "required_meaning_zh": "等待的计时起点是发送交易消息之后；达到二十四小时以上且仍无发货通知或回复时进入后续咨询。",
+      "teaching_requirement": "时间起点、门槛、让步条件、操作对象。",
+      "reference_paths": [
+        "01-materials/reader/tae-kim-zh/conditionals.html",
+        "01-materials/reader/tae-kim-zh/compound.html",
+        "01-materials/reader/tae-kim-zh/timeactions.html"
+      ],
+      "planned_days": [
+        10,
+        11,
+        19
+      ],
+      "lesson_delivery": "outline_only",
+      "finding": "相关基础章节存在；需要全文条件链教学，不能把识别数词当成完成理解。",
+      "observed_student_answer": null,
+      "student_score": null
+    }
+  ]
+}

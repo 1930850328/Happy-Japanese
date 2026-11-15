@@ -1,0 +1,125 @@
+{
+  "date": "2026-11-13",
+  "type": "retest_unchanged_course_plus_targeted_editorial_review",
+  "course_snapshot": "../round-02/course-snapshot.json",
+  "course_unchanged": true,
+  "student_test_performed": false,
+  "comprehension_percent": null,
+  "mechanical_checks": "passed",
+  "corpus_integrity": "passed",
+  "external_samples_retested": 37,
+  "new_unseen_samples": 0,
+  "lexical_results_reference": "../round-02/lexical-results.json",
+  "lexical_result_sha256": "4d504b416f3d5cbd32f0aff79cd04592081e9a8e100794eb70ddf0aa35d01c4d",
+  "repeat_result_byte_identical": true,
+  "answer_consistency_samples": [
+    {
+      "day": 6,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "买、未吃、吃的主语及昨天今天的时间与答案一致。",
+      "path": "02-course-design/lessons/06.md",
+      "sha256": "db70178ecd51e90eb3140133a43704e5ea61f568edd34b64ad960c7dace3931e",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 9,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "信的写作者与读者、见面者与朋友关系没有在答案中互换。",
+      "path": "02-course-design/lessons/09.md",
+      "sha256": "32ec90dacd73f7a59a7e12fb3cacff994aaa79b902ed8ef51fcd51731635dd7b",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 12,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "不必到校与必须联系没有混为同一义务；邮件是联系的替代方式。",
+      "path": "02-course-design/lessons/12.md",
+      "sha256": "353547fb9f4596fc51d454fe36c27db1282238b64de58978d4df071aa538a19c",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 13,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "答案保留ミナ的断言与叙述者未核实的区别。",
+      "path": "02-course-design/lessons/13.md",
+      "sha256": "0f16b605068dca5e0e2e13c8307ff267fb52b6d029eaac92a801b54c053252ff",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 14,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "被动读者与叙述者能力分开；少ししか和多く有当篇提示，不作为未教错误。",
+      "path": "02-course-design/lessons/14.md",
+      "sha256": "79eebae39d99b65c915544f4bf5155370f4f5fdd0f7fc6f19cd4d2308d804ccb",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 15,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "允许读书的判断由先前愿望和随后感谢支持，不单凭使役形判定。",
+      "path": "02-course-design/lessons/15.md",
+      "sha256": "7e96e4a2014b6b44f91cf57f064ad167a9f82e87c36bb467d2a72d67eb5d6c9c",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 16,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "五页读过且看懂，不扩展成整本读懂，否定范围与答案一致。",
+      "path": "02-course-design/lessons/16.md",
+      "sha256": "fe902bceb9221bd6a5b283c629009b825b097488505e94057a08da17beb8ccac",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 17,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "未品尝与样态、转述与亲身经历区分正确。",
+      "path": "02-course-design/lessons/17.md",
+      "sha256": "f101e8a6378a8c52d154e9c461221590eca8ad3d5f020fb49987247ae51668ef",
+      "reviewer": "same assistant, not independent teacher or novice"
+    },
+    {
+      "day": 18,
+      "scope": "last reading-and-answer section",
+      "verdict": "no_semantic_conflict_found_in_sample",
+      "note": "遗憾与提前准备由对话语境支持，缩约还原与已教规则一致。",
+      "path": "02-course-design/lessons/18.md",
+      "sha256": "27b8e0bea39c8c179f2eb260943ea568577b510f96d978816284646d43d77568",
+      "reviewer": "same assistant, not independent teacher or novice"
+    }
+  ],
+  "confirmed_findings": [
+    {
+      "id": "R3-01",
+      "kind": "vocabulary_schedule_alignment",
+      "form": "違う",
+      "first_explanatory_example_day": 13,
+      "word_table_first_day": 16,
+      "scheduled_recall_days": [
+        17,
+        19
+      ],
+      "detail": "第13课有整句中文翻译，但未单列该词读法；词表及首次教学驱动的复习安排仍从第16课起算。不是完全未给意思，而是词条教学、课文使用、复习记录不一致。",
+      "recommendation": "在第13课明确词形读法与义项并同步索引、复现，或把该例句改为已教词；本轮不修改课程。"
+    }
+  ],
+  "withdrawn_findings": [
+    {
+      "id": "R3-FP-01",
+      "detail": "疲れているのに帰らない实际在第11课复现，第10课已有疲れる和のに教学；先前把课号读错，未计入问题。"
+    }
+  ],
+  "outcome": "do_not_accept_as_demonstrated_90_percent_raw_reading_course",
+  "limits": [
+    "Same 37 passages as prior run; no new blind score.",
+    "Nine sampled answer checks are not a review of all 62 feedback sections.",
+    "No human learning duration or comprehension result."
+  ]
+}

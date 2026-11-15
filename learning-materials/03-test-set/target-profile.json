@@ -1,0 +1,14 @@
+{
+  "id": "anime-manga-reading-v1",
+  "updated_at": "2026-11-13",
+  "goal": "面向番剧日文字幕和漫画原页的阅读理解；不测听力，不代表所有日语生肉",
+  "core_weights": {"anime_subtitles": 0.5, "manga": 0.5},
+  "extension_genres": ["historical_literature", "spoken_transcript", "light_novel", "modern_fiction", "modern_nonfiction", "everyday_instruction"],
+  "aggregation": "片段按意思单位计分；作品分为其片段分的算术平均；类别分为作品分的算术平均；核心分按core_weights汇总。三种split分开，不跨split平均。",
+  "weight_basis": "用户用途为番剧和漫画；尚无个人阅读时长分布，采用两类等权的产品选择，并非统计测得的市场占比。",
+  "missing_category": "任一核心类别缺有效成绩，不输出核心总分，也不把剩余类别权重重归一化。",
+  "sampling": "先按作品/系列隔离开发和保留，再读原文确认连续场景边界；不按605词覆盖率或预期高分选段。",
+  "holdout_meaning": "相对教材和课程修订保留；编辑已看过原文核对边界，不声称模型或整理者从未见过。保留作品用于内容修订或反馈后即退出保留。",
+  "franchise_isolation": "同系列、续篇、动画/漫画/小说改编共用source.group；不得跨split。",
+  "formal_scoring": "原文可访问、全部主要语言信息已标注、评分点独立审校后才能进行正式理解率评分；当前无正式学生成绩。"
+}

@@ -1,0 +1,1477 @@
+[
+  {
+    "sample_id": "manga-007",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [
+      "擦洗拟声字"
+    ],
+    "units": [
+      {
+        "id": "manga-007-u01",
+        "evidence": "右上",
+        "meaning_zh": "从昨天早晨起已经在这里超过24小时"
+      },
+      {
+        "id": "manga-007-u02",
+        "evidence": "右下小气泡",
+        "meaning_zh": "另一人也一直在这里"
+      },
+      {
+        "id": "manga-007-u03",
+        "evidence": "左上右",
+        "meaning_zh": "其中一人在帮教授做实验"
+      },
+      {
+        "id": "manga-007-u04",
+        "evidence": "左上左",
+        "meaning_zh": "他说自己只睡了3小时"
+      },
+      {
+        "id": "manga-007-u05",
+        "evidence": "中左及底部",
+        "meaning_zh": "另一人说自己赢了，因为只睡了2小时；不是睡得更久"
+      }
+    ]
+  },
+  {
+    "sample_id": "manga-009",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [
+      "画面操作细节；这里只判断作品所述意思，不把故事当成现行医疗制度依据"
+    ],
+    "units": [
+      {
+        "id": "manga-009-u01",
+        "evidence": "上右旁白",
+        "meaning_zh": "研修医相当于见习医生"
+      },
+      {
+        "id": "manga-009-u02",
+        "evidence": "上左旁白",
+        "meaning_zh": "成为医生需在大学学6年医学"
+      },
+      {
+        "id": "manga-009-u03",
+        "evidence": "上左下方",
+        "meaning_zh": "还必须通过国家医师考试"
+      },
+      {
+        "id": "manga-009-u04",
+        "evidence": "中右",
+        "meaning_zh": "该考试考医学知识"
+      },
+      {
+        "id": "manga-009-u05",
+        "evidence": "中左",
+        "meaning_zh": "考试不包括实际操作测试"
+      },
+      {
+        "id": "manga-009-u06",
+        "evidence": "下右旁白",
+        "meaning_zh": "所以多数取得执照者随后在大学医院等研修2年"
+      },
+      {
+        "id": "manga-009-u07",
+        "evidence": "下部对话",
+        "meaning_zh": "有人命令斋藤扩大手术视野，斋藤应答"
+      }
+    ]
+  },
+  {
+    "sample_id": "manga-066",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [
+      "背景科室标牌和拟声字"
+    ],
+    "units": [
+      {
+        "id": "manga-066-u01",
+        "evidence": "右上",
+        "meaning_zh": "早晨招呼并通知现在要采血"
+      },
+      {
+        "id": "manga-066-u02",
+        "evidence": "中右",
+        "meaning_zh": "有人认为医生赚钱多，向医生求证"
+      },
+      {
+        "id": "manga-066-u03",
+        "evidence": "中左",
+        "meaning_zh": "此人提议让医生见见自己的女儿"
+      },
+      {
+        "id": "manga-066-u04",
+        "evidence": "下右旁白",
+        "meaning_zh": "医生疑惑为何大家都以为医生富有"
+      },
+      {
+        "id": "manga-066-u05",
+        "evidence": "下左右气泡",
+        "meaning_zh": "医生说自己月薪38000日元"
+      },
+      {
+        "id": "manga-066-u06",
+        "evidence": "下左右气泡",
+        "meaning_zh": "穷到不做值班兼职就难以生活"
+      },
+      {
+        "id": "manga-066-u07",
+        "evidence": "下左左气泡",
+        "meaning_zh": "另一人表示知道了，让斋藤别冲自己生气"
+      }
+    ]
+  },
+  {
+    "sample_id": "lit-melos-01",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "lit-melos-01-u01",
+        "evidence": "段1开头",
+        "meaning_zh": "梅洛斯愤怒，决心除掉暴虐的国王"
+      },
+      {
+        "id": "lit-melos-01-u02",
+        "evidence": "段1",
+        "meaning_zh": "他是村中牧人，不懂政治，却对邪恶敏感"
+      },
+      {
+        "id": "lit-melos-01-u03",
+        "evidence": "段1",
+        "meaning_zh": "未明离村，越过山野到十里外的城市"
+      },
+      {
+        "id": "lit-melos-01-u04",
+        "evidence": "段1",
+        "meaning_zh": "没有父母妻子，与16岁的内向妹妹同住"
+      },
+      {
+        "id": "lit-melos-01-u05",
+        "evidence": "段1",
+        "meaning_zh": "妹妹即将嫁给村里正直的牧人"
+      },
+      {
+        "id": "lit-melos-01-u06",
+        "evidence": "段1",
+        "meaning_zh": "他进城是为妹妹婚礼买衣服与宴席食物"
+      },
+      {
+        "id": "lit-melos-01-u07",
+        "evidence": "段1",
+        "meaning_zh": "采购后打算探访久未见面的童年朋友石匠塞利努提乌斯"
+      },
+      {
+        "id": "lit-melos-01-u08",
+        "evidence": "段1",
+        "meaning_zh": "发现全城异常冷清，觉得不只是因为夜晚"
+      },
+      {
+        "id": "lit-melos-01-u09",
+        "evidence": "段1",
+        "meaning_zh": "他记得两年前城里夜间仍热闹"
+      },
+      {
+        "id": "lit-melos-01-u10",
+        "evidence": "段1末",
+        "meaning_zh": "青年不答；老人起初也不答，被追问后顾忌四周、低声作答"
+      }
+    ]
+  },
+  {
+    "sample_id": "lit-melos-02",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "lit-melos-02-u01",
+        "evidence": "段2—4",
+        "meaning_zh": "老人说国王杀人，理由是怀疑人有恶意；老人否认他们有恶意"
+      },
+      {
+        "id": "lit-melos-02-u02",
+        "evidence": "段5—6",
+        "meaning_zh": "已杀多位亲属、王后及贤臣"
+      },
+      {
+        "id": "lit-melos-02-u03",
+        "evidence": "段7—8",
+        "meaning_zh": "老人说不是发疯，而是不能信任人"
+      },
+      {
+        "id": "lit-melos-02-u04",
+        "evidence": "段8",
+        "meaning_zh": "国王也怀疑臣下，命令生活稍华丽者交出一名人质"
+      },
+      {
+        "id": "lit-melos-02-u05",
+        "evidence": "段8",
+        "meaning_zh": "拒绝命令会被钉上十字架杀死"
+      },
+      {
+        "id": "lit-melos-02-u06",
+        "evidence": "段8末",
+        "meaning_zh": "当天已杀6人"
+      }
+    ]
+  },
+  {
+    "sample_id": "lit-chumon-01",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "lit-chumon-01-u01",
+        "evidence": "段1",
+        "meaning_zh": "两名年轻绅士身穿英军样式服装、携枪带两条像白熊的狗进入深山"
+      },
+      {
+        "id": "lit-chumon-01-u02",
+        "evidence": "段2",
+        "meaning_zh": "抱怨没有鸟兽，急着开枪打猎"
+      },
+      {
+        "id": "lit-chumon-01-u03",
+        "evidence": "段3",
+        "meaning_zh": "另一人想象射鹿取乐"
+      },
+      {
+        "id": "lit-chumon-01-u04",
+        "evidence": "段4",
+        "meaning_zh": "带路的专业猎手也迷惑并不知去向"
+      },
+      {
+        "id": "lit-chumon-01-u05",
+        "evidence": "段5",
+        "meaning_zh": "两条狗眩晕、吠叫、吐沫后死去"
+      },
+      {
+        "id": "lit-chumon-01-u06",
+        "evidence": "段6—7",
+        "meaning_zh": "两人分别以损失2400和2800日元来评价狗的死亡"
+      }
+    ]
+  },
+  {
+    "sample_id": "nucc-001",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [
+      "行9匿名/听不清的城镇名；行25地球圆的玩笑另作扩展，不计核心分"
+    ],
+    "units": [
+      {
+        "id": "nucc-001-u01",
+        "evidence": "行9—11",
+        "meaning_zh": "小镇城墙环绕全城，绕一圈不到一小时，约四五十分钟"
+      },
+      {
+        "id": "nucc-001-u02",
+        "evidence": "行13",
+        "meaning_zh": "从城墙上能看见镇内"
+      },
+      {
+        "id": "nucc-001-u03",
+        "evidence": "行15—18",
+        "meaning_zh": "遇到游客带着散步的狗"
+      },
+      {
+        "id": "nucc-001-u04",
+        "evidence": "行20—22",
+        "meaning_zh": "摸了狗后双方朝不同方向走，绕着走又相遇"
+      },
+      {
+        "id": "nucc-001-u05",
+        "evidence": "行26",
+        "meaning_zh": "狗高兴地跑来扑向讲话者"
+      },
+      {
+        "id": "nucc-001-u06",
+        "evidence": "行27—29",
+        "meaning_zh": "讲话者惊讶，只稍微招呼摸过它，它就很亲近"
+      }
+    ]
+  },
+  {
+    "sample_id": "nucc-006",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "nucc-006-u01",
+        "evidence": "行16—17",
+        "meaning_zh": "说到蛋糕店，提到最近去过觉王山附近咖啡很好喝的店"
+      },
+      {
+        "id": "nucc-006-u02",
+        "evidence": "行18—22",
+        "meaning_zh": "另一人说电视上介绍过"
+      },
+      {
+        "id": "nucc-006-u03",
+        "evidence": "行24—31",
+        "meaning_zh": "从本山方向来，在松屋电气附近十字路口右转，店在到松坂屋前的路边"
+      },
+      {
+        "id": "nucc-006-u04",
+        "evidence": "行32",
+        "meaning_zh": "炭烧咖啡很好喝"
+      },
+      {
+        "id": "nucc-006-u05",
+        "evidence": "行35—38",
+        "meaning_zh": "被问贵不贵，回答蛋糕套餐大约800日元，对价格记得不完全确定"
+      }
+    ]
+  },
+  {
+    "sample_id": "nucc-042",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [
+      "行10未明确的物品指代；不自行补出具体器皿"
+    ],
+    "units": [
+      {
+        "id": "nucc-042-u01",
+        "evidence": "行7—11",
+        "meaning_zh": "两人开始吃饭，水已烧好，今天吃关东煮"
+      },
+      {
+        "id": "nucc-042-u02",
+        "evidence": "行12",
+        "meaning_zh": "没有放半片鱼糕，用的是现有食材"
+      },
+      {
+        "id": "nucc-042-u03",
+        "evidence": "行13—17",
+        "meaning_zh": "萝卜已削皮修边，是自家的萝卜"
+      },
+      {
+        "id": "nucc-042-u04",
+        "evidence": "行19—21",
+        "meaning_zh": "已调味，先这样尝一次"
+      },
+      {
+        "id": "nucc-042-u05",
+        "evidence": "行22—24",
+        "meaning_zh": "提议拿芥末，但另一人说不需要"
+      },
+      {
+        "id": "nucc-042-u06",
+        "evidence": "行25—27",
+        "meaning_zh": "还有自家的芋头与魔芋"
+      },
+      {
+        "id": "nucc-042-u07",
+        "evidence": "行29—33",
+        "meaning_zh": "觉得味淡，所以打算加味噌"
+      }
+    ]
+  },
+  {
+    "sample_id": "nucc-067",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "nucc-067-u01",
+        "evidence": "行26—27",
+        "meaning_zh": "一人考虑点冰茶"
+      },
+      {
+        "id": "nucc-067-u02",
+        "evidence": "行28—29",
+        "meaning_zh": "另一人有点饿，但打算忍着"
+      },
+      {
+        "id": "nucc-067-u03",
+        "evidence": "行30—31",
+        "meaning_zh": "建议吃三明治，却又觉得可能不好吃"
+      },
+      {
+        "id": "nucc-067-u04",
+        "evidence": "行32—35",
+        "meaning_zh": "对方说面包其实挺好吃"
+      },
+      {
+        "id": "nucc-067-u05",
+        "evidence": "行36",
+        "meaning_zh": "提到这种时候选金枪鱼三明治"
+      },
+      {
+        "id": "nucc-067-u06",
+        "evidence": "行37—39",
+        "meaning_zh": "担心现在吃了，到晚上就吃不下饭，另一人赞同"
+      }
+    ]
+  },
+  {
+    "sample_id": "nucc-101",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "nucc-101-u01",
+        "evidence": "行8—15",
+        "meaning_zh": "准备填写资料，确认收集者应写谁，F057表示写自己并得到同意"
+      },
+      {
+        "id": "nucc-101-u02",
+        "evidence": "行17—20",
+        "meaning_zh": "有人提醒还要填年月日"
+      },
+      {
+        "id": "nucc-101-u03",
+        "evidence": "行21",
+        "meaning_zh": "日期是2002年1月18日星期五"
+      },
+      {
+        "id": "nucc-101-u04",
+        "evidence": "行22—24",
+        "meaning_zh": "时间按1点到1点半填写，不把含糊取整说成精确测时"
+      },
+      {
+        "id": "nucc-101-u05",
+        "evidence": "行25—26",
+        "meaning_zh": "地点填写B演习室"
+      }
+    ]
+  },
+  {
+    "sample_id": "supercub-01",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "supercub-01-u01",
+        "evidence": "段1—5",
+        "meaning_zh": "初夏北杜市，小个子乡村少女骑车上学，穿制服和运动裤"
+      },
+      {
+        "id": "supercub-01-u02",
+        "evidence": "段6—7",
+        "meaning_zh": "女孩叫小熊，孤身一人"
+      },
+      {
+        "id": "supercub-01-u03",
+        "evidence": "段8",
+        "meaning_zh": "父亲在她出生不久事故去世，母亲用遗产养她后失踪"
+      },
+      {
+        "id": "supercub-01-u04",
+        "evidence": "段9",
+        "meaning_zh": "祖父母也已去世，没有可依靠的亲属"
+      },
+      {
+        "id": "supercub-01-u05",
+        "evidence": "段10—11",
+        "meaning_zh": "与学校和地方政府商量、通过考试获得奖学支持，得以继续上学而安心"
+      }
+    ]
+  },
+  {
+    "sample_id": "supercub-02",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "supercub-02-u01",
+        "evidence": "段12—13",
+        "meaning_zh": "被母亲抛下的悲伤比想象淡；少交流不等于讨厌母亲"
+      },
+      {
+        "id": "supercub-02-u02",
+        "evidence": "段14—15",
+        "meaning_zh": "没有亲密朋友、社团和兴趣，却不觉得不便"
+      },
+      {
+        "id": "supercub-02-u03",
+        "evidence": "段16—17",
+        "meaning_zh": "坡越来越陡，廉价自行车被同校学生超越"
+      },
+      {
+        "id": "supercub-02-u04",
+        "evidence": "段18",
+        "meaning_zh": "靠助学支持节俭生活，每天自己做便当"
+      },
+      {
+        "id": "supercub-02-u05",
+        "evidence": "段18",
+        "meaning_zh": "有买车积蓄，但不愿为换车花掉"
+      }
+    ]
+  },
+  {
+    "sample_id": "honzuki-01",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "honzuki-01-u01",
+        "evidence": "段1—3",
+        "meaning_zh": "22岁的本须丽乃非常爱书，胜过吃饭是夸张表达"
+      },
+      {
+        "id": "honzuki-01-u02",
+        "evidence": "段4",
+        "meaning_zh": "喜欢借文字接触知识、想象和作者思想"
+      },
+      {
+        "id": "honzuki-01-u03",
+        "evidence": "段5—6",
+        "meaning_zh": "书让她见识未亲见的世界和异国旧时代文化，常读得忘时"
+      },
+      {
+        "id": "honzuki-01-u04",
+        "evidence": "段7—16",
+        "meaning_zh": "爱各种领域和形式的书，包括专业书、小说、漫画、同人志"
+      },
+      {
+        "id": "honzuki-01-u05",
+        "evidence": "段17",
+        "meaning_zh": "把开书比作醉人的美酒，表达陶醉而非实际喝酒"
+      }
+    ]
+  },
+  {
+    "sample_id": "naruse-01",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "naruse-01-u01",
+        "evidence": "段1—2",
+        "meaning_zh": "7月31日放学时成濑宣称要把夏天献给西武"
+      },
+      {
+        "id": "naruse-01-u02",
+        "evidence": "段3",
+        "meaning_zh": "叙述者岛崎与她同楼，从幼儿园就见识其多项能力"
+      },
+      {
+        "id": "naruse-01-u03",
+        "evidence": "段3—4",
+        "meaning_zh": "成濑不自夸；越长大越孤立，别人误读她独立为冷漠"
+      },
+      {
+        "id": "naruse-01-u04",
+        "evidence": "段5",
+        "meaning_zh": "小学五年级女生无视她；叙述者因自保没出面维护"
+      }
+    ]
+  },
+  {
+    "sample_id": "naruse-02",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "naruse-02-u01",
+        "evidence": "段11—13",
+        "meaning_zh": "每天去西武；百货店8月31日结束44年经营，原址据说建公寓"
+      },
+      {
+        "id": "naruse-02-u02",
+        "evidence": "段14—17",
+        "meaning_zh": "叙述者常去，家距5分钟；两家的父母对西武感情不同"
+      },
+      {
+        "id": "naruse-02-u03",
+        "evidence": "段17—18",
+        "meaning_zh": "成濑想每天出现在当地直播，请岛崎看；实际仅工作日约20次"
+      },
+      {
+        "id": "naruse-02-u04",
+        "evidence": "段19—21",
+        "meaning_zh": "拒绝录像以免占硬盘，叙述者不理解这个标准"
+      },
+      {
+        "id": "naruse-02-u05",
+        "evidence": "段22—23",
+        "meaning_zh": "不必每天看，方便的日子看就行"
+      }
+    ]
+  },
+  {
+    "sample_id": "kaiwa-01",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "kaiwa-01-u01",
+        "evidence": "段1—2",
+        "meaning_zh": "男子百米决赛两人差0.13秒，盖伊银牌，博尔特更快"
+      },
+      {
+        "id": "kaiwa-01-u02",
+        "evidence": "段3",
+        "meaning_zh": "作者用这个极短时间引出日常会话"
+      },
+      {
+        "id": "kaiwa-01-u03",
+        "evidence": "段4",
+        "meaning_zh": "一次说话轮次叫turn，交替叫turn-taking"
+      },
+      {
+        "id": "kaiwa-01-u04",
+        "evidence": "段4",
+        "meaning_zh": "文中援引研究说平均交替仅约0.2秒"
+      }
+    ]
+  },
+  {
+    "sample_id": "daily-mercari-01",
+    "status": "draft_needs_review",
+    "author": "Codex；未经过独立人工复核",
+    "excluded": [],
+    "units": [
+      {
+        "id": "daily-mercari-01-u01",
+        "evidence": "段3",
+        "meaning_zh": "先通过交易消息告知卖家已收到商品"
+      },
+      {
+        "id": "daily-mercari-01-u02",
+        "evidence": "段3",
+        "meaning_zh": "等卖家按发货通知后再评价收货、完成交易"
+      },
+      {
+        "id": "daily-mercari-01-u03",
+        "evidence": "段5",
+        "meaning_zh": "商品无问题且打算评价时，可等待可能没看到消息的卖家回复"
+      },
+      {
+        "id": "daily-mercari-01-u04",
+        "evidence": "段5",
+        "meaning_zh": "不要申请取消"
+      },
+      {
+        "id": "daily-mercari-01-u05",
+        "evidence": "段6",
+        "meaning_zh": "发消息24小时以上仍无发货通知或回复，联系平台确认交易情况"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-shirokuma-01",
+    "status": "draft_needs_review",
+    "author": "Codex 依日文字幕编写；待独立语言审校与音轨比对",
+    "excluded": [],
+    "units": [
+      {
+        "id": "anime-shirokuma-01-u01",
+        "evidence": "cue 13—18",
+        "meaning_zh": "熊猫抱怨自己常来，白熊却没来动物园；对方说熊猫只是来喝茶"
+      },
+      {
+        "id": "anime-shirokuma-01-u02",
+        "evidence": "cue 19—24",
+        "meaning_zh": "熊猫自夸受欢迎，重复同一句话被吐槽"
+      },
+      {
+        "id": "anime-shirokuma-01-u03",
+        "evidence": "cue 25—26",
+        "meaning_zh": "电话提醒白熊别忘了明天来"
+      },
+      {
+        "id": "anime-shirokuma-01-u04",
+        "evidence": "cue 27",
+        "meaning_zh": "还请他转告企鹅"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-shirokuma-02",
+    "status": "draft_needs_review",
+    "author": "Codex 依日文字幕编写；待独立语言审校与音轨比对",
+    "excluded": [
+      "cue 39 音乐标记；括号台词按想象处理，待音轨与画面复核"
+    ],
+    "units": [
+      {
+        "id": "anime-shirokuma-02-u01",
+        "evidence": "cue 28—31",
+        "meaning_zh": "熊猫精神好，因为朋友今天来探望"
+      },
+      {
+        "id": "anime-shirokuma-02-u02",
+        "evidence": "cue 32—35",
+        "meaning_zh": "常勤熊猫因女儿学校参观日请假"
+      },
+      {
+        "id": "anime-shirokuma-02-u03",
+        "evidence": "cue 36—37",
+        "meaning_zh": "所以今天只有他一个熊猫"
+      },
+      {
+        "id": "anime-shirokuma-02-u04",
+        "evidence": "cue 38—41",
+        "meaning_zh": "想象受到称赞，决定努力工作"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-shirokuma-03",
+    "status": "draft_needs_review",
+    "author": "Codex 依日文字幕编写；待独立语言审校与音轨比对",
+    "excluded": [
+      "cue 69 水声；不考画面中未写出的动作"
+    ],
+    "units": [
+      {
+        "id": "anime-shirokuma-03-u01",
+        "evidence": "cue 63—66",
+        "meaning_zh": "白熊被禁止进入白熊馆，理由是容易混淆"
+      },
+      {
+        "id": "anime-shirokuma-03-u02",
+        "evidence": "cue 67—68",
+        "meaning_zh": "说偷偷进去不会被发现，另一人指出他很显眼"
+      },
+      {
+        "id": "anime-shirokuma-03-u03",
+        "evidence": "cue 71—73",
+        "meaning_zh": "工作人员责问为何无视入馆限制"
+      },
+      {
+        "id": "anime-shirokuma-03-u04",
+        "evidence": "cue 74—75",
+        "meaning_zh": "辩称是标本，被“刚才还在动”反驳"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-kon-01",
+    "status": "draft_needs_review",
+    "author": "Codex 依日文字幕编写；待独立语言审校与音轨比对",
+    "excluded": [],
+    "units": [
+      {
+        "id": "anime-kon-01-u01",
+        "evidence": "cue 38—42",
+        "meaning_zh": "开学已两周，唯还没选社团"
+      },
+      {
+        "id": "anime-kon-01-u02",
+        "evidence": "cue 43—44",
+        "meaning_zh": "她不擅长运动，也不了解文化社团"
+      },
+      {
+        "id": "anime-kon-01-u03",
+        "evidence": "cue 45—46",
+        "meaning_zh": "朋友调侃她会变成尼特族，她反问没社团就算吗"
+      },
+      {
+        "id": "anime-kon-01-u04",
+        "evidence": "cue 47—52",
+        "meaning_zh": "过去也没参加社团，觉得该做点事但不知做什么"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-kon-02",
+    "status": "draft_needs_review",
+    "author": "Codex 依日文字幕编写；待独立语言审校与音轨比对",
+    "excluded": [],
+    "units": [
+      {
+        "id": "anime-kon-02-u01",
+        "evidence": "cue 65—66",
+        "meaning_zh": "社团尚未废除，只是濒临废除"
+      },
+      {
+        "id": "anime-kon-02-u02",
+        "evidence": "cue 67",
+        "meaning_zh": "去年部员都已毕业"
+      },
+      {
+        "id": "anime-kon-02-u03",
+        "evidence": "cue 68—69",
+        "meaning_zh": "本月须有4人入部，否则废部；这解释了音乐室无人"
+      },
+      {
+        "id": "anime-kon-02-u04",
+        "evidence": "cue 70—75",
+        "meaning_zh": "老师要去上课，鼓励她们；同伴觉得此时不该只夸老师漂亮"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-kon-03",
+    "status": "draft_needs_review",
+    "author": "Codex 依日文字幕编写；待独立语言审校与音轨比对",
+    "excluded": [],
+    "units": [
+      {
+        "id": "anime-kon-03-u01",
+        "evidence": "cue 150—157",
+        "meaning_zh": "接受加点薯条；第一次来快餐店，曾憧憬听到这句询问"
+      },
+      {
+        "id": "anime-kon-03-u02",
+        "evidence": "cue 158—162",
+        "meaning_zh": "开始讨论如何本月再招一人，具体办法还没想好"
+      },
+      {
+        "id": "anime-kon-03-u03",
+        "evidence": "cue 163—168",
+        "meaning_zh": "考虑入部赠品，车和别墅被否定为不现实"
+      },
+      {
+        "id": "anime-kon-03-u04",
+        "evidence": "cue 169—172",
+        "meaning_zh": "又提请冰淇淋或帮作业，同伴怀疑能否吸引人"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-nichijou-01",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "纯音效与停顿不单列分；保留在原文中。"
+    ],
+    "units": [
+      {
+        "id": "anime-nichijou-01-u01",
+        "evidence": "cue 13—16",
+        "meaning_zh": "祐子问美绪为什么总用同一个发夹。"
+      },
+      {
+        "id": "anime-nichijou-01-u02",
+        "evidence": "cue 17—19",
+        "meaning_zh": "美绪表示没有特别理由。"
+      },
+      {
+        "id": "anime-nichijou-01-u03",
+        "evidence": "cue 21",
+        "meaning_zh": "美绪忘带数学笔记本。"
+      },
+      {
+        "id": "anime-nichijou-01-u04",
+        "evidence": "cue 22—23",
+        "meaning_zh": "当天有数学课。"
+      },
+      {
+        "id": "anime-nichijou-01-u05",
+        "evidence": "cue 23",
+        "meaning_zh": "数学课还布置了作业。"
+      },
+      {
+        "id": "anime-nichijou-01-u06",
+        "evidence": "cue 24",
+        "meaning_zh": "美绪要回去取笔记本。"
+      },
+      {
+        "id": "anime-nichijou-01-u07",
+        "evidence": "cue 24",
+        "meaning_zh": "她让祐子先走。"
+      },
+      {
+        "id": "anime-nichijou-01-u08",
+        "evidence": "cue 25",
+        "meaning_zh": "祐子没做作业。"
+      },
+      {
+        "id": "anime-nichijou-01-u09",
+        "evidence": "cue 25",
+        "meaning_zh": "祐子认为既然没做，带不带也一样。"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-nichijou-02",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "纯音效与停顿不单列分；保留在原文中。"
+    ],
+    "units": [
+      {
+        "id": "anime-nichijou-02-u01",
+        "evidence": "cue 172—174",
+        "meaning_zh": "奈乃已经买了糖。"
+      },
+      {
+        "id": "anime-nichijou-02-u02",
+        "evidence": "cue 172—174",
+        "meaning_zh": "奈乃已经买了牛奶。"
+      },
+      {
+        "id": "anime-nichijou-02-u03",
+        "evidence": "cue 175",
+        "meaning_zh": "路人说当天鸡蛋便宜。"
+      },
+      {
+        "id": "anime-nichijou-02-u04",
+        "evidence": "cue 177",
+        "meaning_zh": "另一位路人买了两盒。"
+      },
+      {
+        "id": "anime-nichijou-02-u05",
+        "evidence": "cue 178—179",
+        "meaning_zh": "奈乃意识到自己忘了当天鸡蛋特卖。"
+      },
+      {
+        "id": "anime-nichijou-02-u06",
+        "evidence": "cue 180",
+        "meaning_zh": "她认为现在还赶得上。"
+      },
+      {
+        "id": "anime-nichijou-02-u07",
+        "evidence": "cue 181",
+        "meaning_zh": "她决定回商店。"
+      },
+      {
+        "id": "anime-nichijou-02-u08",
+        "evidence": "cue 182—185",
+        "meaning_zh": "奈乃遇见一只黑猫。"
+      },
+      {
+        "id": "anime-nichijou-02-u09",
+        "evidence": "cue 182—185",
+        "meaning_zh": "她觉得猫很可爱。"
+      },
+      {
+        "id": "anime-nichijou-02-u10",
+        "evidence": "cue 190",
+        "meaning_zh": "她认为不能把猫养起来。"
+      },
+      {
+        "id": "anime-nichijou-02-u11",
+        "evidence": "cue 191",
+        "meaning_zh": "她提到了家里还有博士这个顾虑。"
+      },
+      {
+        "id": "anime-nichijou-02-u12",
+        "evidence": "cue 192—194",
+        "meaning_zh": "她向猫道歉。"
+      },
+      {
+        "id": "anime-nichijou-02-u13",
+        "evidence": "cue 192—194",
+        "meaning_zh": "她随后离开。"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-majo-01",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "纯音效与停顿不单列分；保留在原文中。"
+    ],
+    "units": [
+      {
+        "id": "anime-majo-01-u01",
+        "evidence": "cue 15—16",
+        "meaning_zh": "门卫欢迎伊蕾娜进入魔法使之国。"
+      },
+      {
+        "id": "anime-majo-01-u02",
+        "evidence": "cue 17",
+        "meaning_zh": "伊蕾娜询问是否不用接受审查。"
+      },
+      {
+        "id": "anime-majo-01-u03",
+        "evidence": "cue 18—19",
+        "meaning_zh": "门卫解释非魔法使无法来到这道门。"
+      },
+      {
+        "id": "anime-majo-01-u04",
+        "evidence": "cue 20",
+        "meaning_zh": "胸针是魔女身份的证明。"
+      },
+      {
+        "id": "anime-majo-01-u05",
+        "evidence": "cue 21",
+        "meaning_zh": "门卫称她为灰之魔女。"
+      },
+      {
+        "id": "anime-majo-01-u06",
+        "evidence": "cue 23—24",
+        "meaning_zh": "这个国家只允许魔法使进入。"
+      },
+      {
+        "id": "anime-majo-01-u07",
+        "evidence": "cue 25",
+        "meaning_zh": "魔女属于最高位。"
+      },
+      {
+        "id": "anime-majo-01-u08",
+        "evidence": "cue 25—27",
+        "meaning_zh": "她听说魔女在这里特别受尊敬。"
+      },
+      {
+        "id": "anime-majo-01-u09",
+        "evidence": "cue 25—27",
+        "meaning_zh": "她听说别人会羡慕魔女。"
+      },
+      {
+        "id": "anime-majo-01-u10",
+        "evidence": "cue 25—27",
+        "meaning_zh": "她听说魔女会受到优待。"
+      },
+      {
+        "id": "anime-majo-01-u11",
+        "evidence": "cue 28",
+        "meaning_zh": "她一直期待来这个国家。"
+      }
+    ]
+  },
+  {
+    "sample_id": "anime-majo-02",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "纯音效与停顿不单列分；保留在原文中。"
+    ],
+    "units": [
+      {
+        "id": "anime-majo-02-u01",
+        "evidence": "cue 176—179",
+        "meaning_zh": "沙耶请求伊蕾娜教她通过魔女见习考试的诀窍。"
+      },
+      {
+        "id": "anime-majo-02-u02",
+        "evidence": "cue 180—181",
+        "meaning_zh": "沙耶解释自己的姿势是故乡传统的土下座。"
+      },
+      {
+        "id": "anime-majo-02-u03",
+        "evidence": "cue 182—184",
+        "meaning_zh": "伊蕾娜认为土下座是奇怪的传统。"
+      },
+      {
+        "id": "anime-majo-02-u04",
+        "evidence": "cue 182—184",
+        "meaning_zh": "她认可沙耶表现出的诚意。"
+      },
+      {
+        "id": "anime-majo-02-u05",
+        "evidence": "cue 185—187",
+        "meaning_zh": "应要求说明情况时，沙耶先介绍自己有个妹妹。"
+      },
+      {
+        "id": "anime-majo-02-u06",
+        "evidence": "cue 188",
+        "meaning_zh": "她认为妹妹很可爱。"
+      },
+      {
+        "id": "anime-majo-02-u07",
+        "evidence": "cue 190",
+        "meaning_zh": "姐妹来自东方的国家。"
+      },
+      {
+        "id": "anime-majo-02-u08",
+        "evidence": "cue 191—192",
+        "meaning_zh": "她们远道而来是为了成为魔女见习。"
+      },
+      {
+        "id": "anime-majo-02-u09",
+        "evidence": "cue 194—195",
+        "meaning_zh": "姐妹在旅店打工赚钱。"
+      },
+      {
+        "id": "anime-majo-02-u10",
+        "evidence": "cue 194—195",
+        "meaning_zh": "她们反复参加考试。"
+      },
+      {
+        "id": "anime-majo-02-u11",
+        "evidence": "cue 196—199",
+        "meaning_zh": "妹妹在上次考试中已经合格。"
+      },
+      {
+        "id": "anime-majo-02-u12",
+        "evidence": "cue 196—199",
+        "meaning_zh": "妹妹已先回国。"
+      },
+      {
+        "id": "anime-majo-02-u13",
+        "evidence": "cue 200—203",
+        "meaning_zh": "伊蕾娜判断沙耶因被妹妹超过而着急。"
+      },
+      {
+        "id": "anime-majo-02-u14",
+        "evidence": "cue 200—203",
+        "meaning_zh": "伊蕾娜判断沙耶因此向偶遇的魔女求助。"
+      },
+      {
+        "id": "anime-majo-02-u15",
+        "evidence": "cue 200—203",
+        "meaning_zh": "沙耶认可了这个判断。"
+      },
+      {
+        "id": "anime-majo-02-u16",
+        "evidence": "cue 204—205",
+        "meaning_zh": "下一次考试是一周后。"
+      },
+      {
+        "id": "anime-majo-02-u17",
+        "evidence": "cue 207",
+        "meaning_zh": "伊蕾娜只答应在找到胸针之前教她。"
+      },
+      {
+        "id": "anime-majo-02-u18",
+        "evidence": "cue 208—210",
+        "meaning_zh": "沙耶为此道谢。"
+      },
+      {
+        "id": "anime-majo-02-u19",
+        "evidence": "cue 211—214",
+        "meaning_zh": "伊蕾娜开始担任沙耶的老师。"
+      },
+      {
+        "id": "anime-majo-02-u20",
+        "evidence": "cue 211—214",
+        "meaning_zh": "伊蕾娜觉得老师这个称呼听起来不错。"
+      }
+    ]
+  },
+  {
+    "sample_id": "manga-tomochan-01",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "章节标题、独立拟声字与不形成命题的感叹不单列分；正文对话、旁白、否定/条件/人物关系须审校覆盖。",
+      "漫画画面用于识别说话者和指代；不能仅因猜中画面动作就判定读懂台词。"
+    ],
+    "units": [
+      {
+        "id": "manga-tomochan-01-u01",
+        "evidence": "#0001 第1格",
+        "meaning_zh": "智在刚进入高中时向喜欢的淳告白。"
+      },
+      {
+        "id": "manga-tomochan-01-u02",
+        "evidence": "#0001 第2格",
+        "meaning_zh": "她常被人说像男孩子。"
+      },
+      {
+        "id": "manga-tomochan-01-u03",
+        "evidence": "#0001 第2格",
+        "meaning_zh": "她强调自己确实是女生。"
+      },
+      {
+        "id": "manga-tomochan-01-u04",
+        "evidence": "#0001 第3格",
+        "meaning_zh": "淳是她的青梅竹马。"
+      },
+      {
+        "id": "manga-tomochan-01-u05",
+        "evidence": "#0001 第4格",
+        "meaning_zh": "淳把她的告白当作好朋友之间的感情。"
+      },
+      {
+        "id": "manga-tomochan-01-u06",
+        "evidence": "#0001 第4格",
+        "meaning_zh": "智认为淳完全没有把自己当女生看待。"
+      },
+      {
+        "id": "manga-tomochan-01-u07",
+        "evidence": "#0002 第1格",
+        "meaning_zh": "两家是邻居。"
+      },
+      {
+        "id": "manga-tomochan-01-u08",
+        "evidence": "#0002 第1格",
+        "meaning_zh": "两人从小时候就经常一起玩。"
+      },
+      {
+        "id": "manga-tomochan-01-u09",
+        "evidence": "#0002 第2格",
+        "meaning_zh": "两家之间恰好是学区分界。"
+      },
+      {
+        "id": "manga-tomochan-01-u10",
+        "evidence": "#0002 第2格",
+        "meaning_zh": "所以小学时两人上不同的学校。"
+      },
+      {
+        "id": "manga-tomochan-01-u11",
+        "evidence": "#0002 第3格",
+        "meaning_zh": "到初中两人才上同一所学校。"
+      },
+      {
+        "id": "manga-tomochan-01-u12",
+        "evidence": "#0002 第4格",
+        "meaning_zh": "看到智穿裙子校服，淳还以为她是在夸张打扮。"
+      },
+      {
+        "id": "manga-tomochan-01-u13",
+        "evidence": "#0002 第4格",
+        "meaning_zh": "智在这时才第一次知道淳此前把她当成男生。"
+      }
+    ]
+  },
+  {
+    "sample_id": "manga-tomochan-02",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "章节标题、独立拟声字与不形成命题的感叹不单列分；正文对话、旁白、否定/条件/人物关系须审校覆盖。",
+      "漫画画面用于识别说话者和指代；不能仅因猜中画面动作就判定读懂台词。"
+    ],
+    "units": [
+      {
+        "id": "manga-tomochan-02-u01",
+        "evidence": "#0003 第1格",
+        "meaning_zh": "淳一边打招呼一边随意碰智。"
+      },
+      {
+        "id": "manga-tomochan-02-u02",
+        "evidence": "#0003 第2格",
+        "meaning_zh": "淳问智有没有看昨天的足球。"
+      },
+      {
+        "id": "manga-tomochan-02-u03",
+        "evidence": "#0003 第2格",
+        "meaning_zh": "淳觉得那场足球很精彩。"
+      },
+      {
+        "id": "manga-tomochan-02-u04",
+        "evidence": "#0003 第2格",
+        "meaning_zh": "智觉得淳这样随便接触自己，还不如是因为对自己有男女之意。"
+      },
+      {
+        "id": "manga-tomochan-02-u05",
+        "evidence": "#0003 第3格",
+        "meaning_zh": "淳注意到智脸红。"
+      },
+      {
+        "id": "manga-tomochan-02-u06",
+        "evidence": "#0003 第3格",
+        "meaning_zh": "淳询问智怎么了。"
+      },
+      {
+        "id": "manga-tomochan-02-u07",
+        "evidence": "#0003 第4格",
+        "meaning_zh": "智用回早安的方式打了淳一拳。"
+      },
+      {
+        "id": "manga-tomochan-02-u08",
+        "evidence": "#0003 第4格",
+        "meaning_zh": "淳不明白为什么挨打。"
+      },
+      {
+        "id": "manga-tomochan-02-u09",
+        "evidence": "#0003 第4格",
+        "meaning_zh": "旁白说明智练空手道。"
+      },
+      {
+        "id": "manga-tomochan-02-u10",
+        "evidence": "#0004 第1—2格",
+        "meaning_zh": "淳想给智看自己找到的视频。"
+      },
+      {
+        "id": "manga-tomochan-02-u11",
+        "evidence": "#0004 第2格",
+        "meaning_zh": "视频里有人高高跳起扣篮。"
+      },
+      {
+        "id": "manga-tomochan-02-u12",
+        "evidence": "#0004 第2格",
+        "meaning_zh": "智觉得淳和自己相处时完全不注意距离。"
+      },
+      {
+        "id": "manga-tomochan-02-u13",
+        "evidence": "#0004 第3格",
+        "meaning_zh": "淳讲解视频里接球的过程。"
+      },
+      {
+        "id": "manga-tomochan-02-u14",
+        "evidence": "#0004 第3—4格",
+        "meaning_zh": "智因过近的接触心神不宁，根本顾不上看视频。"
+      },
+      {
+        "id": "manga-tomochan-02-u15",
+        "evidence": "#0004 第4格",
+        "meaning_zh": "淳看到扣篮成功很兴奋。"
+      },
+      {
+        "id": "manga-tomochan-02-u16",
+        "evidence": "#0004 第4格",
+        "meaning_zh": "淳感叹视频中的人强得不像普通人。"
+      }
+    ]
+  },
+  {
+    "sample_id": "manga-SATOKOandNADA-01",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "章节标题、独立拟声字与不形成命题的感叹不单列分；正文对话、旁白、否定/条件/人物关系须审校覆盖。",
+      "漫画画面用于识别说话者和指代；不能仅因猜中画面动作就判定读懂台词。"
+    ],
+    "units": [
+      {
+        "id": "manga-SATOKOandNADA-01-u01",
+        "evidence": "#0001 第1格",
+        "meaning_zh": "聪子从这一天开始与人合租。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u02",
+        "evidence": "#0001 第1格",
+        "meaning_zh": "她好奇将与什么样的人同住。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u03",
+        "evidence": "#0001 第2—3格",
+        "meaning_zh": "新室友向聪子打招呼。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u04",
+        "evidence": "#0001 第2—3格",
+        "meaning_zh": "新室友确认她是不是聪子。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u05",
+        "evidence": "#0001 第4格",
+        "meaning_zh": "室友让她使用冰箱的第二层。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u06",
+        "evidence": "#0001 第4格",
+        "meaning_zh": "聪子起初担心能否与对方好好相处。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u07",
+        "evidence": "#0002 第1格",
+        "meaning_zh": "聪子来自日本。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u08",
+        "evidence": "#0002 第1格",
+        "meaning_zh": "聪子是大学生。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u09",
+        "evidence": "#0002 第1格",
+        "meaning_zh": "娜达来自沙特阿拉伯。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u10",
+        "evidence": "#0002 第1格",
+        "meaning_zh": "娜达也是大学生。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u11",
+        "evidence": "#0002 第2格",
+        "meaning_zh": "两人在美国上大学。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u12",
+        "evidence": "#0002 第2格",
+        "meaning_zh": "相识一段时间后，两人相处融洽。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u13",
+        "evidence": "#0002 第3格",
+        "meaning_zh": "合租之前，聪子原以为穆斯林女性更文静。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u14",
+        "evidence": "#0002 第3格",
+        "meaning_zh": "聪子发现娜达很活泼。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u15",
+        "evidence": "#0002 第3格",
+        "meaning_zh": "聪子觉得娜达很有魅力。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u16",
+        "evidence": "#0002 第3—4格",
+        "meaning_zh": "娜达要求看拍好的照片。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-01-u17",
+        "evidence": "#0002 第4格",
+        "meaning_zh": "娜达吐槽照片里只有聪子显得可爱。"
+      }
+    ]
+  },
+  {
+    "sample_id": "manga-SATOKOandNADA-02",
+    "status": "draft_needs_review",
+    "author": "Codex，2026-11-13据原字幕/原图人工编写，未独立复核",
+    "excluded": [
+      "章节标题、独立拟声字与不形成命题的感叹不单列分；正文对话、旁白、否定/条件/人物关系须审校覆盖。",
+      "漫画画面用于识别说话者和指代；不能仅因猜中画面动作就判定读懂台词。"
+    ],
+    "units": [
+      {
+        "id": "manga-SATOKOandNADA-02-u01",
+        "evidence": "#0003 第1格",
+        "meaning_zh": "聪子认为这么漂亮的头发用布遮住很可惜。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u02",
+        "evidence": "#0003 第2格",
+        "meaning_zh": "娜达说恰恰因为漂亮才要遮起来。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u03",
+        "evidence": "#0003 第3格",
+        "meaning_zh": "娜达强调正因为头发藏着，更要用心保养。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u04",
+        "evidence": "#0003 第4格",
+        "meaning_zh": "聪子从那天起把洗发水档次提高了约两档。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u05",
+        "evidence": "#0003 第4格",
+        "meaning_zh": "她想知道产品对晒伤干枯的头发有没有用。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u06",
+        "evidence": "#0004 第1格",
+        "meaning_zh": "聪子认为娜达其实很时髦。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u07",
+        "evidence": "#0004 第1格",
+        "meaning_zh": "娜达说明这种打扮仅限家里或女生聚会。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u08",
+        "evidence": "#0004 第2格",
+        "meaning_zh": "娜达给聪子看新买的裙子。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u09",
+        "evidence": "#0004 第3格",
+        "meaning_zh": "聪子笑着叫她别逗自己。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u10",
+        "evidence": "#0004 第4格",
+        "meaning_zh": "娜达说她就是想让聪子吃惊。"
+      },
+      {
+        "id": "manga-SATOKOandNADA-02-u11",
+        "evidence": "#0004 第3—4格",
+        "meaning_zh": "聪子从最初的惊讶转而觉得娜达也是普通女孩。"
+      }
+    ]
+  }
+]

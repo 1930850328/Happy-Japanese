@@ -1,0 +1,8 @@
+{
+  "name": "happy-japanese-course-research",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Standalone curriculum checks; no application services or credentials required",
+  "engines": { "node": ">=20" },
+  "dependencies": { "kuromoji": "0.1.2" }
+}

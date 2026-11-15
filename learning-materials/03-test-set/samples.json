@@ -1,0 +1,1817 @@
+[
+  {
+    "id": "manga-007",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第7页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 7
+    },
+    "annotation": "draft_needs_review",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf007.jpg",
+    "access": "local_image",
+    "transcript_path": "passages/manga-007.txt",
+    "transcript_sha256": "7dbdfae83e58afe6c6e8e1b1691dd13adc581d8682a7ad55a9ba0b7a0ddb710f",
+    "transcript_scope": "人工对照图片转写气泡和主叙述，横排化；不含拟声字、背景标牌和注音；原图为准",
+    "visual_review": "Codex 已逐页查看，待第二人校对"
+  },
+  {
+    "id": "manga-009",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第9页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 9
+    },
+    "annotation": "draft_needs_review",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf009.jpg",
+    "access": "local_image",
+    "transcript_path": "passages/manga-009.txt",
+    "transcript_sha256": "093383fdac541c979158ca19bee9af11a32e8db28fc437d87ba4171bc9003c79",
+    "transcript_scope": "人工对照图片转写气泡和主叙述，横排化；不含拟声字、背景标牌和注音；原图为准",
+    "visual_review": "Codex 已逐页查看，待第二人校对"
+  },
+  {
+    "id": "manga-021",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第21页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 21
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf021.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-041",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第41页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 41
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf041.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-066",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第66页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 66
+    },
+    "annotation": "draft_needs_review",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf066.jpg",
+    "access": "local_image",
+    "transcript_path": "passages/manga-066.txt",
+    "transcript_sha256": "5bea8fb4fe0433ada17f0d4a7dcedb91d47af145b3e82f19e7978765a7f1f5bd",
+    "transcript_scope": "人工对照图片转写气泡和主叙述，横排化；不含拟声字、背景标牌和注音；原图为准",
+    "visual_review": "Codex 已逐页查看，待第二人校对"
+  },
+  {
+    "id": "manga-073",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第73页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 73
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf073.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-090",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第90页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 90
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf090.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-123",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第123页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 123
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf123.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-145",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第145页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 145
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf145.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-171",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第171页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 171
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf171.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-194",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第194页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 194
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf194.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "manga-201",
+    "source_id": "blackjack",
+    "title": "第1巻 PDF 第201页",
+    "split": "regression",
+    "locator": {
+      "pdf_page": 201
+    },
+    "annotation": "pending",
+    "selection": "继承镜像选页；仅作开发试运行",
+    "image_path": "sources/black_jack_v01_pdf201.jpg",
+    "access": "local_image"
+  },
+  {
+    "id": "lit-melos-01",
+    "source_id": "melos",
+    "title": "进城与异常",
+    "split": "regression",
+    "locator": {
+      "selector": "div.main_text",
+      "paragraphs": [
+        1,
+        1
+      ],
+      "normalization": "Shift_JIS 解码；删 rt/rp；br 分段；空白段删除；正文标题计入段落序号"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "4c38f0a7ae5f8210e726703c69b8d66001030d0499fbc6f61b4f6c6ff6737bf6",
+    "characters": 691,
+    "access": "local_text",
+    "text_path": "passages/lit-melos-01.txt"
+  },
+  {
+    "id": "lit-melos-02",
+    "source_id": "melos",
+    "title": "国王为何杀人",
+    "split": "regression",
+    "locator": {
+      "selector": "div.main_text",
+      "paragraphs": [
+        2,
+        8
+      ],
+      "normalization": "Shift_JIS 解码；删 rt/rp；br 分段；空白段删除；正文标题计入段落序号"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "8e96b3332af000aa461beb26e7d8cdecf6076178fec331263792d23b3931f2e9",
+    "characters": 311,
+    "access": "local_text",
+    "text_path": "passages/lit-melos-02.txt"
+  },
+  {
+    "id": "lit-chumon-01",
+    "source_id": "chumon",
+    "title": "两位猎人与狗",
+    "split": "regression",
+    "locator": {
+      "selector": "div.main_text",
+      "paragraphs": [
+        1,
+        7
+      ],
+      "normalization": "Shift_JIS 解码；删 rt/rp；br 分段；空白段删除；正文标题计入段落序号"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "4ac502cb5ed2eb94b71c1556a11098b6d973cd3fc6dc345830675c1ffc7666c5",
+    "characters": 460,
+    "access": "local_text",
+    "text_path": "passages/lit-chumon-01.txt"
+  },
+  {
+    "id": "lit-bocchan-01",
+    "source_id": "bocchan",
+    "title": "童年片段一",
+    "split": "regression",
+    "locator": {
+      "selector": "div.main_text",
+      "paragraphs": [
+        2,
+        2
+      ],
+      "normalization": "Shift_JIS 解码；删 rt/rp；br 分段；空白段删除；正文标题计入段落序号"
+    },
+    "annotation": "pending",
+    "text_sha256": "3dc01c629195693a14ab0a47c296d58a5fc1a61980489493c85afeb611d8158c",
+    "characters": 237,
+    "access": "local_text",
+    "text_path": "passages/lit-bocchan-01.txt"
+  },
+  {
+    "id": "lit-bocchan-02",
+    "source_id": "bocchan",
+    "title": "童年片段二",
+    "split": "regression",
+    "locator": {
+      "selector": "div.main_text",
+      "paragraphs": [
+        3,
+        3
+      ],
+      "normalization": "Shift_JIS 解码；删 rt/rp；br 分段；空白段删除；正文标题计入段落序号"
+    },
+    "annotation": "pending",
+    "text_sha256": "cdbaea8663503a64ce6d0deb0a9a1a2cd60b11064f158d4580467e1f2fd4819b",
+    "characters": 188,
+    "access": "local_text",
+    "text_path": "passages/lit-bocchan-02.txt"
+  },
+  {
+    "id": "lit-bocchan-03",
+    "source_id": "bocchan",
+    "title": "童年片段三",
+    "split": "regression",
+    "locator": {
+      "selector": "div.main_text",
+      "paragraphs": [
+        4,
+        4
+      ],
+      "normalization": "Shift_JIS 解码；删 rt/rp；br 分段；空白段删除；正文标题计入段落序号"
+    },
+    "annotation": "pending",
+    "text_sha256": "c2a8faf3ce13faf03cab3aec212c6c1fd485f4c524daaf5595e238235536d161",
+    "characters": 542,
+    "access": "local_text",
+    "text_path": "passages/lit-bocchan-03.txt"
+  },
+  {
+    "id": "nucc-001",
+    "source_id": "nucc-001",
+    "title": "绕城墙遇到狗",
+    "split": "regression",
+    "locator": {
+      "member": "nucc/data001.txt",
+      "lines": [
+        9,
+        29
+      ],
+      "encoding": "UTF-8",
+      "normalization": "原行不改词；LF 连接；仅去片段首尾空白"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "3358e9624813bf0eddfb0c31afb80e7a66fe0750f4401fa80d63e4ef11d6fef1",
+    "characters": 566,
+    "access": "local_text",
+    "text_path": "passages/nucc-001.txt"
+  },
+  {
+    "id": "nucc-006",
+    "source_id": "nucc-006",
+    "title": "咖啡店位置和价格",
+    "split": "regression",
+    "locator": {
+      "member": "nucc/data006.txt",
+      "lines": [
+        16,
+        38
+      ],
+      "encoding": "UTF-8",
+      "normalization": "原行不改词；LF 连接；仅去片段首尾空白"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "ab55ea0a5e022506a0ba221f30327dfec86958c74fea2a50b461b895d8477126",
+    "characters": 461,
+    "access": "local_text",
+    "text_path": "passages/nucc-006.txt"
+  },
+  {
+    "id": "nucc-042",
+    "source_id": "nucc-042",
+    "title": "家里吃关东煮",
+    "split": "regression",
+    "locator": {
+      "member": "nucc/data042.txt",
+      "lines": [
+        7,
+        33
+      ],
+      "encoding": "UTF-8",
+      "normalization": "原行不改词；LF 连接；仅去片段首尾空白"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "931cce2e8c90ea48ea197abc2129912b4d22684b4facd1e6e5580c21918c0fed",
+    "characters": 386,
+    "access": "local_text",
+    "text_path": "passages/nucc-042.txt"
+  },
+  {
+    "id": "nucc-067",
+    "source_id": "nucc-067",
+    "title": "要不要点三明治",
+    "split": "regression",
+    "locator": {
+      "member": "nucc/data067.txt",
+      "lines": [
+        26,
+        39
+      ],
+      "encoding": "UTF-8",
+      "normalization": "原行不改词；LF 连接；仅去片段首尾空白"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "ac4259e4bf962530f429e6c81afa502096cbf7d1c14c80182dfca3d3ec81afae",
+    "characters": 207,
+    "access": "local_text",
+    "text_path": "passages/nucc-067.txt"
+  },
+  {
+    "id": "nucc-101",
+    "source_id": "nucc-101",
+    "title": "填写会话记录信息",
+    "split": "regression",
+    "locator": {
+      "member": "nucc/data101.txt",
+      "lines": [
+        8,
+        26
+      ],
+      "encoding": "UTF-8",
+      "normalization": "原行不改词；LF 连接；仅去片段首尾空白"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "c818b95ec75fde47d9d9ff3ed146e7d648c2fd1eb961f8399194b326b94600af",
+    "characters": 292,
+    "access": "local_text",
+    "text_path": "passages/nucc-101.txt"
+  },
+  {
+    "id": "supercub-01",
+    "source_id": "supercub",
+    "title": "开篇段落 1—11",
+    "split": "regression",
+    "locator": {
+      "selector": "div.widget-episodeBody p",
+      "paragraphs": [
+        1,
+        11
+      ],
+      "counting": "排除空 p 和后记；去 rt/rp，正文非空 p 从1开始"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "10fd134d1a809bc17fd1c358cee8aed0a8ea4e1a000582fffefb69c443e9116d",
+    "characters": 557,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "supercub-02",
+    "source_id": "supercub",
+    "title": "开篇段落 12—18",
+    "split": "regression",
+    "locator": {
+      "selector": "div.widget-episodeBody p",
+      "paragraphs": [
+        12,
+        18
+      ],
+      "counting": "排除空 p 和后记；去 rt/rp，正文非空 p 从1开始"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "6c909458f1534e9574e5aa574bf030ce2c2b0bfed1588ffa45e2623965312226",
+    "characters": 494,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "honzuki-01",
+    "source_id": "honzuki",
+    "title": "开篇段落 1—17",
+    "split": "regression",
+    "locator": {
+      "selector": "div.js-novel-text.p-novel__text p",
+      "paragraphs": [
+        1,
+        17
+      ],
+      "counting": "排除空 p 和后记；去 rt/rp，正文非空 p 从1开始"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "1643bd929f055a4ad157e6f07d946ac283ae7e2f5cb6a248c6f55d41d270e195",
+    "characters": 558,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "kusuriya-01",
+    "source_id": "kusuriya",
+    "title": "开篇段落 1—8",
+    "split": "regression",
+    "locator": {
+      "selector": "div.js-novel-text.p-novel__text p",
+      "paragraphs": [
+        1,
+        8
+      ],
+      "counting": "排除空 p 和后记；去 rt/rp，正文非空 p 从1开始"
+    },
+    "annotation": "pending",
+    "text_sha256": "00b1cce3b590703f65ff4fcaaa16d4a242eeec679be1f9cb8ccd2f1916ca947b",
+    "characters": 283,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "kusuriya-02",
+    "source_id": "kusuriya",
+    "title": "开篇段落 9—16",
+    "split": "regression",
+    "locator": {
+      "selector": "div.js-novel-text.p-novel__text p",
+      "paragraphs": [
+        9,
+        16
+      ],
+      "counting": "排除空 p 和后记；去 rt/rp，正文非空 p 从1开始"
+    },
+    "annotation": "pending",
+    "text_sha256": "84a3dd496db266ad13452ed744fa5ab890e33832e07ab756ffe8fd9c9d07c48a",
+    "characters": 408,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "rezero-01",
+    "source_id": "rezero",
+    "title": "开篇段落 1—10",
+    "split": "regression",
+    "locator": {
+      "selector": "div.js-novel-text.p-novel__text p",
+      "paragraphs": [
+        1,
+        10
+      ],
+      "counting": "排除空 p 和后记；去 rt/rp，正文非空 p 从1开始"
+    },
+    "annotation": "pending",
+    "text_sha256": "dee32035beb65018add6ea4deb031ec677dbebe2e5487e4cdfbe91d3d7d4a971",
+    "characters": 411,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "rezero-02",
+    "source_id": "rezero",
+    "title": "开篇段落 11—20",
+    "split": "regression",
+    "locator": {
+      "selector": "div.js-novel-text.p-novel__text p",
+      "paragraphs": [
+        11,
+        20
+      ],
+      "counting": "排除空 p 和后记；去 rt/rp，正文非空 p 从1开始"
+    },
+    "annotation": "pending",
+    "text_sha256": "d5e87e38e092e0f0a739c4b86f8c40260c588631eec31fc1262630e068de12be",
+    "characters": 362,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "naruse-01",
+    "source_id": "naruse",
+    "title": "试读开篇片段",
+    "split": "regression",
+    "locator": {
+      "section": "ありがとう西武大津店",
+      "paragraphs": [
+        1,
+        5
+      ],
+      "counting": "指定章节标题之后，非空正文段落；对话独立段计数；不计导航",
+      "observed_web_lines": [
+        26,
+        30
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "1cec0061efe69941645c6cf05350328fad0b254659f9b01b033fa164c0cc3423",
+    "characters": 499,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "naruse-02",
+    "source_id": "naruse",
+    "title": "试读开篇片段",
+    "split": "regression",
+    "locator": {
+      "section": "ありがとう西武大津店",
+      "paragraphs": [
+        11,
+        23
+      ],
+      "counting": "指定章节标题之后，非空正文段落；对话独立段计数；不计导航",
+      "observed_web_lines": [
+        36,
+        48
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "368c34b853976572a99a8b48eeb98ef14c2b5e8920c9d60275d5f0c970871c9c",
+    "characters": 825,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "kaiwa-01",
+    "source_id": "kaiwa",
+    "title": "试读开篇片段",
+    "split": "regression",
+    "locator": {
+      "section": "まえがき：日々繰り広げられる、0・1秒単位の競争",
+      "paragraphs": [
+        1,
+        4
+      ],
+      "counting": "指定章节标题之后，非空正文段落；对话独立段计数；不计导航",
+      "observed_web_lines": [
+        28,
+        31
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "602720f047a9794758ac412368c3cea5d17ba6cfea44511e1e66ac58fad8feb4",
+    "characters": 458,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "daily-mercari-01",
+    "source_id": "mercari",
+    "title": "收货却没发货通知怎么办",
+    "split": "regression",
+    "locator": {
+      "selector": "article p",
+      "paragraphs": [
+        3,
+        6
+      ],
+      "counting": "非空 p 从1开始，保留 p 内换行"
+    },
+    "annotation": "draft_needs_review",
+    "text_sha256": "392b61010662534aa32e7f766e711147396a62f4f5d7ece97bf3074de54e8a08",
+    "characters": 282,
+    "access": "external_original",
+    "text_normalization": "所列段落去首尾空白，以 LF 连接，末尾一个 LF；ruby 去 rt/rp。新潮社为 web 工具文本视图（括号读音保留），并非 HTML 原文哈希。"
+  },
+  {
+    "id": "anime-shirokuma-01",
+    "source_id": "anime-shirokuma",
+    "title": "邀请朋友参观工作场所",
+    "split": "regression",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        13,
+        27
+      ],
+      "time_start": "00:04:10,125",
+      "time_end": "00:05:03,375",
+      "source_lines": [
+        56,
+        118
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "c183476b117480ca384b9aa941c1f4fa225611a2e976b5ec64669452c929e47e",
+    "characters": 249,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-shirokuma-02",
+    "source_id": "anime-shirokuma",
+    "title": "今天为何只有一个熊猫上班",
+    "split": "regression",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        28,
+        41
+      ],
+      "time_start": "00:05:10,085",
+      "time_end": "00:06:00,448",
+      "source_lines": [
+        120,
+        176
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "f5271209799dbf8e1dffd7953d26d51d8b1012cc8619694c3ea0e5cd6e53e4c5",
+    "characters": 200,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-shirokuma-03",
+    "source_id": "anime-shirokuma",
+    "title": "入馆限制和辩解",
+    "split": "regression",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        63,
+        75
+      ],
+      "time_start": "00:07:17,779",
+      "time_end": "00:08:06,523",
+      "source_lines": [
+        270,
+        325
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "9b6615be110361e4de6c723b609519928d884c8512a4710b5b4c8e0cdd6b3549",
+    "characters": 207,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-kon-01",
+    "source_id": "anime-kon",
+    "title": "犹豫加入哪个社团",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        38,
+        52
+      ],
+      "time_start": "00:03:58,790",
+      "time_end": "00:04:38,140",
+      "source_lines": [
+        149,
+        207
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "776afabb36784be5ef730d0787331b0a1cd9d43b69274c01f4f70ac67e24cdad",
+    "characters": 231,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-kon-02",
+    "source_id": "anime-kon",
+    "title": "社团保留的条件",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        65,
+        75
+      ],
+      "time_start": "00:05:15,140",
+      "time_end": "00:05:47,810",
+      "source_lines": [
+        257,
+        299
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "101543fabac98e938e019744b846b5c3fc68e30b733e705e22b7f410fee2b3a4",
+    "characters": 146,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-kon-03",
+    "source_id": "anime-kon",
+    "title": "快餐店里的招新讨论",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        150,
+        172
+      ],
+      "time_start": "00:09:34,940",
+      "time_end": "00:10:29,840",
+      "source_lines": [
+        597,
+        687
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "db969b75a2474acc106b9ec789280dc4b03a4b42949bc633938ce2eb8e2b86fd",
+    "characters": 283,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-spyfamily-01",
+    "source_id": "anime-spyfamily",
+    "title": "带新家庭成员参观家里",
+    "split": "regression",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        47,
+        70
+      ],
+      "time_start": "00:04:43,707",
+      "time_end": "00:06:07,749",
+      "source_lines": [
+        213,
+        312
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "8729482f64ab2db983523bb62552fb333fa56c414c34dcb3d4d0979de7929154",
+    "characters": 321,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-spyfamily-02",
+    "source_id": "anime-spyfamily",
+    "title": "饮料和自制饼干",
+    "split": "regression",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        105,
+        123
+      ],
+      "time_start": "00:07:45,722",
+      "time_end": "00:08:35,522",
+      "source_lines": [
+        466,
+        547
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "8e49981d0436af33c28c5d8b7c48870ba9d1dc44937f752c77da5fab769468ac",
+    "characters": 255,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-spyfamily-03",
+    "source_id": "anime-spyfamily",
+    "title": "买完衣服后的交谈",
+    "split": "regression",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        242,
+        250
+      ],
+      "time_start": "00:14:19,491",
+      "time_end": "00:14:41,930",
+      "source_lines": [
+        1074,
+        1114
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "17c1dc61be7b74b076a5cbac4f737c244e372b5200a1fec291818ba2500818e2",
+    "characters": 158,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-frieren-01",
+    "source_id": "anime-frieren",
+    "title": "解释远距离魔法的要素",
+    "split": "regression",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        1,
+        14
+      ],
+      "time_start": "00:01:40,701",
+      "time_end": "00:02:34,855",
+      "source_lines": [
+        1,
+        64
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "9e654faab473300402efa3950c35ee2c77d38511e1f97f4c80c1d4d2f690ee60",
+    "characters": 290,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-frieren-02",
+    "source_id": "anime-frieren",
+    "title": "谈论学习进展",
+    "split": "regression",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        17,
+        24
+      ],
+      "time_start": "00:03:43,857",
+      "time_end": "00:04:10,817",
+      "source_lines": [
+        74,
+        109
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "07ae326df343a949c2d7d6d5503950930e5163e87bf64cb55cdcc5b90f55f3df",
+    "characters": 159,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-frieren-03",
+    "source_id": "anime-frieren",
+    "title": "寻找一种花的理由",
+    "split": "regression",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        159,
+        176
+      ],
+      "time_start": "00:15:19,318",
+      "time_end": "00:16:45,505",
+      "source_lines": [
+        716,
+        795
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "abd5fefc16fd83091e44c7fc1eaf8fb55875cdea4f86d02d4604e12707a504b4",
+    "characters": 289,
+    "text_normalization": "UTF-8-sig；CRLF 转 LF；连续 SRT cue 的正文按原顺序以 LF 连接，去显式 ASS 样式标签，末尾一个 LF；不删说话者、重复台词、拟声或括号内容。",
+    "selection": "按完整对话边界目的抽样，未依据教材词汇覆盖筛题；整理者已读内容，holdout 指未用于课程修订。"
+  },
+  {
+    "id": "anime-nichijou-01",
+    "source_id": "anime-nichijou",
+    "title": "第3集连续片段1",
+    "split": "development",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        13,
+        25
+      ],
+      "time_start": "00:02:16,573",
+      "time_end": "00:02:51,649",
+      "source_lines": [
+        50,
+        110
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "efbbb98d8f2aea27b2b7df25d88d486a5b5416de4ea2ab3edad4487661f7d989",
+    "characters": 232,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "anime-nichijou-02",
+    "source_id": "anime-nichijou",
+    "title": "第3集连续片段2",
+    "split": "development",
+    "locator": {
+      "episode": 3,
+      "subtitle_cues": [
+        172,
+        194
+      ],
+      "time_start": "00:11:57,775",
+      "time_end": "00:12:52,162",
+      "source_lines": [
+        765,
+        862
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "fb157b34b31536317d449509ce611651a1c559a054c3604f3a79a344fc7b2011",
+    "characters": 289,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "anime-majo-01",
+    "source_id": "anime-majo",
+    "title": "第2集连续片段1",
+    "split": "development",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        15,
+        28
+      ],
+      "time_start": "00:02:24,435",
+      "time_end": "00:03:04,392",
+      "source_lines": [
+        63,
+        125
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "b30e8ef7e4d6723c11f35f02bfd94c1165c6ef841505a690168eb3ddf8dfecd0",
+    "characters": 239,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "anime-majo-02",
+    "source_id": "anime-majo",
+    "title": "第2集连续片段2",
+    "split": "development",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        176,
+        214
+      ],
+      "time_start": "00:09:18,349",
+      "time_end": "00:11:07,625",
+      "source_lines": [
+        755,
+        923
+      ]
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "text_sha256": "613df3fccc418f91cf0e65764c684806e0817de3a8d338704f6b910dcf1c5fe1",
+    "characters": 588,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "anime-hyouka-01",
+    "source_id": "anime-hyouka",
+    "title": "第2集连续片段1",
+    "split": "regression",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        4,
+        20
+      ],
+      "time_start": "00:00:25,792",
+      "time_end": "00:01:17,969",
+      "source_lines": [
+        13,
+        89
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "335050cd459c5822c39aefdc6959b4424223d26fbda2b3dd46c916a29a0dfd67",
+    "characters": 309,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "anime-hyouka-02",
+    "source_id": "anime-hyouka",
+    "title": "第2集连续片段2",
+    "split": "regression",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        149,
+        188
+      ],
+      "time_start": "00:08:49,878",
+      "time_end": "00:10:39,405",
+      "source_lines": [
+        661,
+        841
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "8f35f96ea7354164ded83034024347dbf357efc10706623ecffea64c8cfc1b21",
+    "characters": 624,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "anime-natsume-01",
+    "source_id": "anime-natsume",
+    "title": "第2集连续片段1",
+    "split": "regression",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        145,
+        161
+      ],
+      "time_start": "00:08:16,454",
+      "time_end": "00:09:10,800",
+      "source_lines": [
+        645,
+        719
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "2819b820e1861358c5703d9f65c9caca81e4c0e9754714147c895df14cf71915",
+    "characters": 276,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "anime-natsume-02",
+    "source_id": "anime-natsume",
+    "title": "第2集连续片段2",
+    "split": "regression",
+    "locator": {
+      "episode": 2,
+      "subtitle_cues": [
+        162,
+        195
+      ],
+      "time_start": "00:09:15,429",
+      "time_end": "00:10:54,987",
+      "source_lines": [
+        721,
+        882
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "67948c2244bdc6cc7e9b6872ee6f92fd8f31f3bc0efeb02ddd206f351aad7e11",
+    "characters": 625,
+    "text_normalization": "使用tools/subtitles.py；保留原说话者、重复、括号与音效，仅去显式ASS排版标签。",
+    "selection": "先定作品与split，再按完整交谈/叙述边界选段；未计算当前词表覆盖率，未依据预测成绩删难词。"
+  },
+  {
+    "id": "manga-tomochan-01",
+    "source_id": "manga-tomochan",
+    "title": "原连载编号0001—0002",
+    "split": "development",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tomochan/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tomochan/works/0001.b3b276c19c5a1b6fad1dec476946b39a.jpg",
+          "title": "一世一代の不発",
+          "sha256": "15a1ffe51cb920dd0eb7b01382c4caf7cee888695f3c6a63f8a36b097af2ebd2",
+          "bytes": 302754,
+          "file_name": "tomochan-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tomochan/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tomochan/works/0002.468dc8bd588f99ec651126cdf1e71d96.jpg",
+          "title": "セーラーショック",
+          "sha256": "b1ec4ef8d473afdb3e702e0c4d0a3942b13caa22183026c5a1b516db83775fe3",
+          "bytes": 292878,
+          "file_name": "tomochan-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "manga-tomochan-02",
+    "source_id": "manga-tomochan",
+    "title": "原连载编号0003—0004",
+    "split": "development",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tomochan/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tomochan/works/0003.9b95bb8bef0eb6c1b094c2192c726055.jpg",
+          "title": "ナチュラルタッチ",
+          "sha256": "2cfff688cac2bffbc0a012057318e0a9b894bacdbdd5370e617e0d6004f17c59",
+          "bytes": 331372,
+          "file_name": "tomochan-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tomochan/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tomochan/works/0004.add6c8fc0d459b67e966d0d270db7582.jpg",
+          "title": "当たってんだよ!!",
+          "sha256": "1286c0012d0757a335f2b9e02b39b06b12e9caf873efe3d3471b41d9232c7d87",
+          "bytes": 341799,
+          "file_name": "tomochan-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "manga-SATOKOandNADA-01",
+    "source_id": "manga-SATOKOandNADA",
+    "title": "原连载编号0001—0002",
+    "split": "development",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/works/0001.jpg",
+          "title": "ふたりの出会い",
+          "sha256": "19c9a4776fdc04a00437f35d185fbab663355c33f33d2632a21dd807bdb5e3b6",
+          "bytes": 69386,
+          "file_name": "SATOKOandNADA-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/works/0002.jpg",
+          "title": "セルフィー",
+          "sha256": "7fc2ec337877d8a9af36528d41ed1cde5f658d89a0d41ecb9f7d41b5c437430e",
+          "bytes": 77034,
+          "file_name": "SATOKOandNADA-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "manga-SATOKOandNADA-02",
+    "source_id": "manga-SATOKOandNADA",
+    "title": "原连载编号0003—0004",
+    "split": "development",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/works/0003.jpg",
+          "title": "乙女の髪",
+          "sha256": "49219e69c749b2e795c8099031d1496b9f9728055826bafe645562339c7cb43f",
+          "bytes": 64771,
+          "file_name": "SATOKOandNADA-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/SATOKOandNADA/works/0004.jpg",
+          "title": "おしゃれさん",
+          "sha256": "78473e166aa24be2f9cde533a9fc558916222dde210e0c46b45e37238c56cc27",
+          "bytes": 66277,
+          "file_name": "SATOKOandNADA-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "draft_needs_review",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "manga-kanako-01",
+    "source_id": "manga-kanako",
+    "title": "原连载编号0001—0002",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/kanako/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/kanako/works/0001.a60b16311489270d2f11a7b9ffb5f31b.jpg",
+          "title": "第1話①",
+          "sha256": "3bad52ae3b0f83d623252d7dd0f6ff10bd31689a6d1acf0cff1cc870a8166af8",
+          "bytes": 77343,
+          "file_name": "kanako-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/kanako/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/kanako/works/0002.05f82732466c957f0e754efe67e262cb.jpg",
+          "title": "第1話②",
+          "sha256": "0725822978ebf739595a7eac1ba61023bbbc50ff2b73b98225a6a757ec325c47",
+          "bytes": 83185,
+          "file_name": "kanako-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "manga-kanako-02",
+    "source_id": "manga-kanako",
+    "title": "原连载编号0003—0004",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/kanako/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/kanako/works/0003.7586c66f4a73242e9b2a7ea8a14e9b04.jpg",
+          "title": "第1話③",
+          "sha256": "0af1c52be770707a46c6d3633acf18f7f3a242f665bde82e4cd10cba3fe34183",
+          "bytes": 96010,
+          "file_name": "kanako-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/kanako/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/kanako/works/0004.74ff9d3618e6fc6520707e6f9b109588.jpg",
+          "title": "第1話④",
+          "sha256": "6a813dd74713218aee980250729bfe6140d3bab6e0cf4dfef14e74a3b369c129",
+          "bytes": 83075,
+          "file_name": "kanako-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "manga-onakin-01",
+    "source_id": "manga-onakin",
+    "title": "原连载编号0001—0002",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/onakin/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/onakin/works/0001.plxqbXqfrq18XOlvzl7jCZ9YPRyvHR19.jpg",
+          "title": "マッスルガールズ①",
+          "sha256": "fe8a162d6f9c21807c40c979a522edb17789690a45997dc89dacb1f147b8bc59",
+          "bytes": 297105,
+          "file_name": "onakin-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/onakin/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/onakin/works/0002.MUAmWEIMTKEfC67ElRgWN1271iVOoSZk.jpg",
+          "title": "マッスルガールズ②",
+          "sha256": "95555c7564ef9bc4750951575fb265ce60fe232df7ee310f2493047e9a8e59ba",
+          "bytes": 279509,
+          "file_name": "onakin-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "manga-onakin-02",
+    "source_id": "manga-onakin",
+    "title": "原连载编号0003—0004",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/onakin/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/onakin/works/0003.6wQ2BbsuybZpfQmViLORMiG7vdyZGJkF.jpg",
+          "title": "ショートカット",
+          "sha256": "7effac2c41e6d52e2a00d258ceccbc246d056dc3cc5951d36bd6f05f217098c6",
+          "bytes": 282967,
+          "file_name": "onakin-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/onakin/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/onakin/works/0004.GhkyFZeuy7UBsZXojdXLVzkErWDkzajG.jpg",
+          "title": "タメ",
+          "sha256": "c6eb2c2ab3e3a496262c27d99d3d4060d96507d73de80b95873829e0b8c00fb5",
+          "bytes": 335184,
+          "file_name": "onakin-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序，每张从上到下，同排从右到左；同作品两段按顺序阅读，交卷前不反馈。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "以完整连载页为边界，保留画面、手写字、口语、旁白；不按605词覆盖筛选。每作4张原页归并为2段，不当作4部作品。"
+  },
+  {
+    "id": "anime-barakamon-01",
+    "source_id": "anime-barakamon",
+    "title": "第1集固定窗口1",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        8,
+        37
+      ],
+      "time_start": "00:00:37,037",
+      "time_end": "00:03:49,312",
+      "source_lines": [
+        29,
+        157
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "42ecec0bbbe7123d3245a3bed233b67fb71caa5c48038ad7b1025d033cfa20c8",
+    "characters": 411,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "anime-barakamon-02",
+    "source_id": "anime-barakamon",
+    "title": "第1集固定窗口2",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        170,
+        194
+      ],
+      "time_start": "00:10:00,850",
+      "time_end": "00:11:01,869",
+      "source_lines": [
+        731,
+        838
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "b56cc39e3ed98056da46cac85354f8cb2ffc84401b4cc9d8978f2c356728a6f8",
+    "characters": 363,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "anime-nozaki-01",
+    "source_id": "anime-nozaki",
+    "title": "第1集固定窗口1",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        2,
+        25
+      ],
+      "time_start": "00:00:30,905",
+      "time_end": "00:02:13,091",
+      "source_lines": [
+        5,
+        103
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "1a39844bc748298c53bd1ceaed5ee1e633838d7de7850fe71278482a08164392",
+    "characters": 281,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "anime-nozaki-02",
+    "source_id": "anime-nozaki",
+    "title": "第1集固定窗口2",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        135,
+        159
+      ],
+      "time_start": "00:10:01,309",
+      "time_end": "00:11:34,902",
+      "source_lines": [
+        582,
+        685
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "3811acf875f8845eff178b4a3a6dec94327ff2719e01583ae03913156984cf86",
+    "characters": 334,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "anime-bocchi-01",
+    "source_id": "anime-bocchi",
+    "title": "第1集固定窗口1",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        1,
+        24
+      ],
+      "time_start": "00:00:00,427",
+      "time_end": "00:01:11,581",
+      "source_lines": [
+        1,
+        101
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "c5a7003a09cae639faef55fbdb8ce722721fdf2fed896061a8a2bdce4d118778",
+    "characters": 315,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "anime-bocchi-02",
+    "source_id": "anime-bocchi",
+    "title": "第1集固定窗口2",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        160,
+        183
+      ],
+      "time_start": "00:10:00,165",
+      "time_end": "00:11:06,857",
+      "source_lines": [
+        680,
+        782
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "06c733e2de7dfef0678ed420db53cecbd8136feaa0afa4538d4f22b2c1d061b2",
+    "characters": 365,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "anime-dungeonmeshi-01",
+    "source_id": "anime-dungeonmeshi",
+    "title": "第1集固定窗口1",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        1,
+        26
+      ],
+      "time_start": "00:00:04,672",
+      "time_end": "00:01:40,684",
+      "source_lines": [
+        2,
+        116
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "a74db403dd9cf4d4c278e9007f88160f12af1faee71d42553bd6455a3eab152a",
+    "characters": 441,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "anime-dungeonmeshi-02",
+    "source_id": "anime-dungeonmeshi",
+    "title": "第1集固定窗口2",
+    "split": "regression",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        212,
+        235
+      ],
+      "time_start": "00:10:02,477",
+      "time_end": "00:11:05,415",
+      "source_lines": [
+        938,
+        1041
+      ]
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "text_sha256": "3d611d55cbce985436fd21313801ff5b70df58c2812d846a7141fa16ca810d5f",
+    "characters": 378,
+    "text_normalization": "tools/subtitles.py；原文保留说话人、注音、音效；计数掩码另存round-05。",
+    "selection": "课程冻结后取固定窗口；首段从首个有词义的对白/旁白开始，取24个含语言条目，纯音效/音乐cue不计但原范围保留。第二段从10:00后开始。迷宫饭首段补1条完成未完句；未用覆盖率选段。"
+  },
+  {
+    "id": "manga-nekodamashi-01",
+    "source_id": "manga-nekodamashi",
+    "title": "原连载编号0001—0002",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/works/0001.c5dfcb905c33db1b079e542c176495b3.jpg",
+          "title": "ネコダマシ①",
+          "sha256": "aefcd5487b99ab051ed77147895c4f9875fde19ea5d4d842c527d0fb65b156e0",
+          "bytes": 315730,
+          "file_name": "nekodamashi-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/works/0002.5da1cdcc50cfb7da74956399b25c1f0b.jpg",
+          "title": "ネコダマシ②",
+          "sha256": "5691f06277f776f0d64104880bb0a557a121c50cdabb11102bf660ecdcb63c52",
+          "bytes": 287471,
+          "file_name": "nekodamashi-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "manga-nekodamashi-02",
+    "source_id": "manga-nekodamashi",
+    "title": "原连载编号0003—0004",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/works/0003.1b562c436144fdd2622b02b144df2870.jpg",
+          "title": "ネコダマシ③",
+          "sha256": "55b7136657cb5b6524825730e0bca6ede252cbfccbf2f5552acb5171e71f4e2f",
+          "bytes": 296039,
+          "file_name": "nekodamashi-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/nekodamashi/works/0004.11e509671a220fb191684627dd09fef5.jpg",
+          "title": "ネコダマシ④",
+          "sha256": "352eaf03f770479f9dc09b3fdc7bfa2625db5905f026094d02113f1c07926fdc",
+          "bytes": 355639,
+          "file_name": "nekodamashi-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "manga-rentalfriend-01",
+    "source_id": "manga-rentalfriend",
+    "title": "原连载编号0001—0002",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/works/0001.EQTWK5D7okGpyHyfMedy8bNaz5h7PRDi.jpg",
+          "title": "席替え（レンタルフレンド_001）",
+          "sha256": "0767c00745b105499853026569f08333e7b7711cb2114cd2c13966a9ccb23753",
+          "bytes": 147227,
+          "file_name": "rentalfriend-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/works/0002.5MQKO5ciDeaxhaBdpGpdrxwrQ0GSWEd2.jpg",
+          "title": "席替え（レンタルフレンド_002）",
+          "sha256": "e771cafd9a64390460191540ba6f15b10a2305847568b1af63c4daad547615b2",
+          "bytes": 190350,
+          "file_name": "rentalfriend-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "manga-rentalfriend-02",
+    "source_id": "manga-rentalfriend",
+    "title": "原连载编号0003—0004",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/works/0003.iBPqMSAfqh951mXQt9uNUSguge7UTiN4.jpg",
+          "title": "席替え（レンタルフレンド_003）",
+          "sha256": "03045910fb84579fe074f67cd0cf83d1029c6261512eeed79099e6ec49ab6f63",
+          "bytes": 214822,
+          "file_name": "rentalfriend-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/rentalfriend/works/0004.dZXrI6WPYwaMF0l7fkuyU61B6HqB8Xlu.jpg",
+          "title": "席替え（レンタルフレンド_004）",
+          "sha256": "d6bd064307ea6afb4a3985af5763d8011873946839cf69a4c004f1b53f79f201",
+          "bytes": 180402,
+          "file_name": "rentalfriend-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "manga-luna-01",
+    "source_id": "manga-luna",
+    "title": "原连载编号0001—0002",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/Luna/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/Luna/works/0001.893be7d9fc2209615fa0d4b932ca5d3a.jpg",
+          "title": "旅立ち",
+          "sha256": "a93c82e0830fa3be2d622be9f12411076c4dc0d1dc4c44a0a9d21204a4dba3a7",
+          "bytes": 89326,
+          "file_name": "Luna-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/Luna/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/Luna/works/0002.e7f7279c1bf3d70845a54008e1411eb7.jpg",
+          "title": "魔女との出会い",
+          "sha256": "f4d0fd118b2ac71aacf8dd1d55f76b7b4a61dd6268b00b67c49758fad0c23cac",
+          "bytes": 98189,
+          "file_name": "Luna-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "manga-luna-02",
+    "source_id": "manga-luna",
+    "title": "原连载编号0003—0004",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/Luna/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/Luna/works/0003.63ddc81afe96c4abf2d9825737a8453b.jpg",
+          "title": "なりゆき",
+          "sha256": "72aedf6cacded651701f71785ce212d78e05e1ced20bd0b4b9ee1a885f96c942",
+          "bytes": 80138,
+          "file_name": "Luna-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/Luna/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/Luna/works/0004.e00fde9cf10286d81170084cbb98489f.jpg",
+          "title": "ふたりぐらし",
+          "sha256": "fbc08ff30b3296f2d87311ea8159ed26d03694100c12de2acff9cfc94fff2473",
+          "bytes": 91003,
+          "file_name": "Luna-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "manga-tengokumate-01",
+    "source_id": "manga-tengokumate",
+    "title": "原连载编号0001—0002",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/works/0001.HjdNtSf1VcqPNBRNfXERgxVXkU9wnMpH.jpg",
+          "title": "ちぐはぐな天使と悪魔に巻き込まれた話",
+          "sha256": "c0dabf9766580cbaa473ad6dfae85affe0e3cd2af3fbdb9ed9304f538adeb5ee",
+          "bytes": 301648,
+          "file_name": "tengokumate-0001.jpg"
+        },
+        {
+          "number": 2,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/works/0002.wFUXnt1KArEX0UPFzginIJwzrSAg1YMV.jpg",
+          "title": "ちぐはぐな天使と悪魔に巻き込まれた話 ２",
+          "sha256": "0f16328e377fe131815f334b5f73fc89f73415dc4b1a8b34630401dd0fbf1f4b",
+          "bytes": 316360,
+          "file_name": "tengokumate-0002.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "manga-tengokumate-02",
+    "source_id": "manga-tengokumate",
+    "title": "原连载编号0003—0004",
+    "split": "regression",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/works/0003.mMYytvLf7BSrK7QnSsVgxzYd2Ne86zhR.jpg",
+          "title": "ちぐはぐな天使と悪魔に巻き込まれた話 ３",
+          "sha256": "8a8569216090220be83cb39cd62c667c52a4d93d9932a1eb3b2fd1a27a9ed3ed",
+          "bytes": 306076,
+          "file_name": "tengokumate-0003.jpg"
+        },
+        {
+          "number": 4,
+          "url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tengokumate/works/0004.0fipp22exBlwDpWPyyIQowexNyoP5qwM.jpg",
+          "title": "ちぐはぐな天使と悪魔に巻き込まれた話 ４",
+          "sha256": "9f63cccf846e561bfa1de3a4495a5d4031d1f5b09f9b19a21fb9a6b0283629df",
+          "bytes": 257989,
+          "file_name": "tengokumate-0004.jpg"
+        }
+      ],
+      "reading_order": "编号升序；同排从右到左，逐排向下。"
+    },
+    "annotation": "pending",
+    "access": "external_original",
+    "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  }
+]

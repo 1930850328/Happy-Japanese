@@ -1,0 +1,312 @@
+{
+  "type": "selected_sentence_support_audit",
+  "student_score": null,
+  "selection": "每个新片段选1个有诊断意义的表达，包含已有教学和疑似缺口；非随机题目，不汇总为理解率。",
+  "status_meaning": {
+    "covered": "所选结构在课文有讲解；不代表整句全部词义已教或学生已会",
+    "partial": "有构形/相关用法，但当前语境解释未完整",
+    "missing": "缺少关键整体用法；认识其中小词不足以解释句意"
+  },
+  "items": [
+    {
+      "sample_id": "anime-nichijou-01",
+      "original_split": "development",
+      "evidence": "ちょっと取ってくる",
+      "required_meaning_zh": "去拿一下再回来。",
+      "structure_support": "partial",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/12.md",
+          "line": 29,
+          "text_at_line": "| 持ってくる | もってくる | 带来；持つ＋て＋来る |"
+        },
+        {
+          "file": "02-course-design/lessons/12.md",
+          "line": 50,
+          "text_at_line": "`予約した人は、必ず本を持ってきてください。`预约过的人务必带书来，持ってくる的来る在て形里读きて。`ノートを出してください。`请拿出笔记本。`本を部屋に入れてもいいです。`可把书放入房间。`それで大丈夫です。お願いします。`这样就没问题，拜托了。最后两句是回应对方方案的场景，不是让学生凭空猜それ指什么。"
+        }
+      ],
+      "finding": "课文以持ってくる教带来，但未展开去做再回来的てくる；有构形线索，教学解释不完整。"
+    },
+    {
+      "sample_id": "anime-nichijou-02",
+      "original_split": "development",
+      "evidence": "飼うわけには いきませんよね",
+      "required_meaning_zh": "受现实条件限制，不能养这只猫。",
+      "structure_support": "missing",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/19.md",
+          "line": 38,
+          "text_at_line": "`難しいわけではない。`不是说难／并非难；否定一种解释或断言。`全員が読めるわけではない。`不是所有人都能读，**不等于所有人都不能读**。`読めるわけがない／読めるわけない`不可能读得懂，否定可能性；わけない常省略が。`漢字を知っている。だから、読めるわけだ。`认识汉字，所以能读也就说得通，わけだ归结理由。判断仍属于说话者，不替他担保事实。"
+        }
+      ],
+      "finding": "D19教わけではない、わけがない、わけだ；没有わけにはいかない。飼う也未入605清单。"
+    },
+    {
+      "sample_id": "anime-majo-01",
+      "original_split": "development",
+      "evidence": "魔法使いしか入れない",
+      "required_meaning_zh": "只有魔法使能进入。",
+      "structure_support": "covered",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/14.md",
+          "line": 40,
+          "text_at_line": "可能：五段把u段换e段加る，読む→読める、書く→書ける、行く→行ける。一段去る加られる，食べる→食べられる。不规则する→できる、来る→来られる（こられる）。可能形再按一段变化：読めない、読めた。对象常用が，如日本語が読める；也会见を，不据助词一项决定能力与被动。"
+        },
+        {
+          "file": "02-course-design/lessons/16.md",
+          "line": 44,
+          "text_at_line": "`二冊だけ読んだ。`只读了两本；`二冊しか読まなかった。`只读了两本，常带少、不足的评价。しか通常与否定呼应，否定形式不代表一本都没读。数字二冊写成2冊也一样。"
+        }
+      ],
+      "finding": "可能形加しか＋否定的结构已教；魔法使い不在605清单，认出结构不等于知道对象。"
+    },
+    {
+      "sample_id": "anime-majo-02",
+      "original_split": "development",
+      "evidence": "先生をすることに\nなったのでした",
+      "required_meaning_zh": "事情发展成她来担任老师。",
+      "structure_support": "covered",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/19.md",
+          "line": 42,
+          "text_at_line": "`本を読むことにした`决定读书，こと把动作作为安排；`読むことになった`事情安排成读书，决定的来源要看上下文。`速く読んでも、理解したことにはならない`即使读得快也不能算理解了；ても在这里是即使、让步，不能当作第 12 天てもいい的许可。`分かったふりをする`装作懂了，ふり把假装的外观和真正理解分开；`分かったふりをしなくてもいい`不必装懂。"
+        }
+      ],
+      "finding": "ことになった的安排/事态结果已经解释。不能误说成一定是她主动决定。"
+    },
+    {
+      "sample_id": "anime-hyouka-01",
+      "original_split": "holdout",
+      "evidence": "今年 入部者がいなければ",
+      "required_meaning_zh": "如果今年没有入部者；并未断言现在已经发生消灭。",
+      "structure_support": "covered",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/11.md",
+          "line": 42,
+          "text_at_line": "**ば**：五段末尾u段变e段加ば：使えば、行けば；一段去る加れば：見れば；する→すれば、来る→来れば（くれば）。い形容词い→ければ：安ければ；ない→なければ。`時間があれば読む。`有时间就读。先理解条件关系，ば与后面意志、请求搭配还有限制，不把四种条件当可任意互换。"
+        }
+      ],
+      "finding": "ない→なければ已教；入部等具体词义仍要补，条件后果见同段。"
+    },
+    {
+      "sample_id": "anime-hyouka-02",
+      "original_split": "holdout",
+      "evidence": "その日のうちに",
+      "required_meaning_zh": "在借书当天之内归还。",
+      "structure_support": "missing",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/10.md",
+          "line": 53,
+          "text_at_line": "`食べてから読む`吃完再读；`読む前に食べる`读之前吃；`読んだ後で食べる`读过之后吃。前接辞书形，後接た形；它们表示两动作的相对顺序，**不是一见た就断定在昨天**。"
+        }
+      ],
+      "finding": "课文有前に、後で、てから，没有うちに；不能用一般先后关系替代当天期限。"
+    },
+    {
+      "sample_id": "anime-natsume-01",
+      "original_split": "holdout",
+      "evidence": "１人では食べきれなくて",
+      "required_meaning_zh": "一个人没法全部吃完，所以请对方拿些。",
+      "structure_support": "missing",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/14.md",
+          "line": 40,
+          "text_at_line": "可能：五段把u段换e段加る，読む→読める、書く→書ける、行く→行ける。一段去る加られる，食べる→食べられる。不规则する→できる、来る→来られる（こられる）。可能形再按一段变化：読めない、読めた。对象常用が，如日本語が読める；也会见を，不据助词一项决定能力与被动。"
+        }
+      ],
+      "finding": "可能否定已教，复合动词～きる的完成/尽量义没有；只读成不能吃会丢失全部吃完。"
+    },
+    {
+      "sample_id": "anime-natsume-02",
+      "original_split": "holdout",
+      "evidence": "信仰のおかげで",
+      "required_meaning_zh": "原先身体变大依赖人们的信仰；后文信众减少，身体缩小。",
+      "structure_support": "missing",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/10.md",
+          "line": 47,
+          "text_at_line": "`雨が降っているから、家にいる。`因为下雨，待在家里。这里から接一句原因；駅から的から却是起点。动词／い形容词普通形接から；名词／な类接だから，如雨だから、静かだから。"
+        }
+      ],
+      "finding": "から/ので已教，但おかげで没有；信仰、縮む也不是605清单的内容。"
+    },
+    {
+      "sample_id": "manga-tomochan-01",
+      "original_split": "development",
+      "evidence": "男だと思っていたことを知った",
+      "required_meaning_zh": "她这才得知，对方此前一直把她当作男孩。",
+      "structure_support": "covered",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/13.md",
+          "line": 47,
+          "text_at_line": "`私はいい本だと思う。`我觉得是好书。名词普通体引用保留だ；い形容词直接接と，如面白いと思う，不是面白いだと思う。别人说了／我认为了，并不保证被说的内容是真的。"
+        },
+        {
+          "file": "02-course-design/lessons/08.md",
+          "line": 44,
+          "text_at_line": "`今、本を読んでいる。`：正在读书。`ドアが開いている。`：门开着；这里是打开后的状态，不一定正在慢慢打开。动词类型和语境决定ている表示进行、结果持续或习惯，例如毎日ここで働いている是持续的工作习惯。"
+        },
+        {
+          "file": "02-course-design/lessons/09.md",
+          "line": 48,
+          "text_at_line": "`本を読むのが好きだ。`喜欢读书这件事。の在这里把动作名词化，不是“谁的”。`本を読むことが好きだ`也可表达类似意思，但の／こと并非任何场合都能互换；本课只处理把读书作为喜欢的对象。"
+        },
+        {
+          "file": "02-course-design/lessons/17.md",
+          "line": 51,
+          "text_at_line": "`本がないことに気づいた。家に忘れたかもしれない。`注意到书不在，可能忘在家里。こと把“书不在”作为注意到的事情；“忘在家里”只是推测，不能当核实结果。"
+        }
+      ],
+      "finding": "引用＋持续过去＋事实名词化＋知る有教学依据；仍需从原页恢复谁以为、谁得知。"
+    },
+    {
+      "sample_id": "manga-tomochan-02",
+      "original_split": "development",
+      "evidence": "それどころじゃねえんだよ",
+      "required_meaning_zh": "她现在顾不上看视频；靠得太近让她无法关注视频。",
+      "structure_support": "missing",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/18.md",
+          "line": 52,
+          "text_at_line": "`知らねえ`常是くだけた、偏粗的知らない；`高え`常对应高い。这些不是规范作文替换规则，只做阅读识别。`そうじゃない`否定“不是那样”；`いいじゃない`在不同语调下又可能是“挺好的嘛”，需要场景，不能只按ない判定否定立场。"
+        },
+        {
+          "file": "02-course-design/lessons/13.md",
+          "line": 55,
+          "text_at_line": "`どうして帰るんですか。`为何要回去？`疲れたんです。`是在解释因为累了。动词／い形容词普通形＋のだ／んだ；名词／な类肯定用なのだ／なんだ：学生なんです。疑问口语也可用の，如どうして帰るの。它们常与解释、确认联系，不能每次硬译成“因为”或额外制造因果事实。"
+        }
+      ],
+      "finding": "じゃねえ/んだ有线索，それどころではない这一整体义没有；不能逐字译成不是那个地方。"
+    },
+    {
+      "sample_id": "manga-SATOKOandNADA-01",
+      "original_split": "development",
+      "evidence": "仲良くしていけるのだろうか",
+      "required_meaning_zh": "担心今后是否能与室友相处融洽。",
+      "structure_support": "missing",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/14.md",
+          "line": 40,
+          "text_at_line": "可能：五段把u段换e段加る，読む→読める、書く→書ける、行く→行ける。一段去る加られる，食べる→食べられる。不规则する→できる、来る→来られる（こられる）。可能形再按一段变化：読めない、読めた。对象常用が，如日本語が読める；也会见を，不据助词一项决定能力与被动。"
+        },
+        {
+          "file": "02-course-design/lessons/17.md",
+          "line": 49,
+          "text_at_line": "`明日のために本を読んでおく`为明天预先读书，ておく是准备；`机に本が置いてある`桌上放着书，てある常呈现人为动作留下的结果；`本を置いている`可能是在放、或保持放置状态，须看语境。不要把てある与存在ある的所有用法混成一条规则。"
+        }
+      ],
+      "finding": "可能形已有，持续到今后的ていく未讲；仲良く也未入605清单。"
+    },
+    {
+      "sample_id": "manga-SATOKOandNADA-02",
+      "original_split": "development",
+      "evidence": "隠れているからこそ",
+      "required_meaning_zh": "正因为遮着，反而更要仔细护理。",
+      "structure_support": "partial",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/08.md",
+          "line": 44,
+          "text_at_line": "`今、本を読んでいる。`：正在读书。`ドアが開いている。`：门开着；这里是打开后的状态，不一定正在慢慢打开。动词类型和语境决定ている表示进行、结果持续或习惯，例如毎日ここで働いている是持续的工作习惯。"
+        },
+        {
+          "file": "02-course-design/lessons/10.md",
+          "line": 47,
+          "text_at_line": "`雨が降っているから、家にいる。`因为下雨，待在家里。这里から接一句原因；駅から的から却是起点。动词／い形容词普通形接から；名词／な类接だから，如雨だから、静かだから。"
+        }
+      ],
+      "finding": "ている、から已教；こそ在教材候选语法表，但未进课文。隠れる、手入れ、念入り也是词义缺口。"
+    },
+    {
+      "sample_id": "manga-kanako-01",
+      "original_split": "holdout",
+      "evidence": "早く新しい仕事見つけなくちゃ",
+      "required_meaning_zh": "得赶快找份新工作。",
+      "structure_support": "covered",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/18.md",
+          "line": 48,
+          "text_at_line": "| 行かなくちゃ | 行かなくては | 常省略不行等后半句来表示得去 |"
+        }
+      ],
+      "finding": "なくちゃ的省略义务解释已教。"
+    },
+    {
+      "sample_id": "manga-kanako-02",
+      "original_split": "holdout",
+      "evidence": "やるじゃねえか",
+      "required_meaning_zh": "称赞她干得不错，并非否认她做了这件事。",
+      "structure_support": "covered",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/18.md",
+          "line": 52,
+          "text_at_line": "`知らねえ`常是くだけた、偏粗的知らない；`高え`常对应高い。这些不是规范作文替换规则，只做阅读识别。`そうじゃない`否定“不是那样”；`いいじゃない`在不同语调下又可能是“挺好的嘛”，需要场景，不能只按ない判定否定立场。"
+        }
+      ],
+      "finding": "课文同时教粗口ない→ねえ和じゃない可表达正面评价；仍须结合夸赞场景。"
+    },
+    {
+      "sample_id": "manga-onakin-01",
+      "original_split": "holdout",
+      "evidence": "並んで正解だったね",
+      "required_meaning_zh": "排队来吃这家店是正确的选择。",
+      "structure_support": "covered",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/08.md",
+          "line": 42,
+          "text_at_line": "`パンを買って、家に帰った。`买了面包回家。て形连接动作，最后的帰った把这段放在过去；て本身不是“过去”的意思。`食べてから読む`明确说吃完以后读。"
+        },
+        {
+          "file": "02-course-design/lessons/06.md",
+          "line": 58,
+          "text_at_line": "否定过去把ない变なかった：読まなかった、食べなかった、来なかった。礼貌体为読みます／読みません／読みました／読みませんでした。名词句过去是学生だった／学生でした；否定过去是学生ではなかった／学生ではありませんでした。"
+        }
+      ],
+      "finding": "动作连接、名词过去判断有基础；並ぶ、正解的语境词义没有完整落实到605清单。"
+    },
+    {
+      "sample_id": "manga-onakin-02",
+      "original_split": "holdout",
+      "evidence": "先方に確認とっといて",
+      "required_meaning_zh": "请先向对方确认一下。",
+      "structure_support": "partial",
+      "course_evidence": [
+        {
+          "file": "02-course-design/lessons/17.md",
+          "line": 49,
+          "text_at_line": "`明日のために本を読んでおく`为明天预先读书，ておく是准备；`机に本が置いてある`桌上放着书，てある常呈现人为动作留下的结果；`本を置いている`可能是在放、或保持放置状态，须看语境。不要把てある与存在ある的所有用法混成一条规则。"
+        },
+        {
+          "file": "02-course-design/lessons/18.md",
+          "line": 44,
+          "text_at_line": "| 買っとく | 買っておく | 预先买 |"
+        },
+        {
+          "file": "02-course-design/lessons/18.md",
+          "line": 85,
+          "text_at_line": "レン弄丢便条，带遗憾；ミナ预先拍了照片，所以不要紧。撮っといた＝撮っておいた，してた＝していた。最后句是对先前准备的确认，不代表刚开始准备。上下文使ちゃった带遗憾，但“终于读完了”中的読んじゃった不一定遗憾。"
+        },
+        {
+          "file": "02-course-design/lessons/19.md",
+          "line": 52,
+          "text_at_line": "`ご確認ください`请确认；`お送りください`请发送；`お持ちください`请带来。常见形式是お＋动词ます词干＋ください（送り、持ち），或ご＋部分汉语动作名词＋ください（確認）；不是所有词都可机械套用。`先生が来られます`可能是尊敬地说老师来，也可能是老师能来，要用上下文区分第 14 天的られる。今天只要求认这些对应关系，不要求生成敬语作文。"
+        }
+      ],
+      "finding": "ておく→とく以及确认已出现；確認を取る的搭配与省略を没有明讲，不能把取る只理解为拿走。"
+    }
+  ]
+}

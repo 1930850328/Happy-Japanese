@@ -1,0 +1,195 @@
+{
+  "date": "2026-11-13",
+  "type": "curriculum_and_priority_vocabulary_content_audit",
+  "student_test_performed": false,
+  "comprehension_percent": null,
+  "course_changed": false,
+  "vocabulary_changed": false,
+  "files_before_evaluation": {
+    "02-course-design/LESSON-09-SAMPLE.md": "85925bc08389881bc2817ef010fffd5194007cc5c07ea57ff0bdec2edbbb7732",
+    "02-course-design/README.md": "d249e525d59115cf134065b055ec65fccad4747cb4254ddd9b91f0120f290fa2",
+    "02-course-design/RECALL.md": "36afb5c1043bb91486eb5bc5d3bd5ee6084f260b9f31148d7d5496e5f3612f79",
+    "02-course-design/REVIEW.md": "6c7c1cc1d82190d886f52cc521bbb11599dd381cdc53eb41be25fdcd6c2d23f9",
+    "02-course-design/SEQUENCE.md": "431a89f0a6dcda7d247040e59509e946aa305983f8235c1f4d550e01df8033ca",
+    "02-course-design/lessons/18.md": "27b8e0bea39c8c179f2eb260943ea568577b510f96d978816284646d43d77568",
+    "02-course-design/lessons/08.md": "b35429ba1a7b65d6b867f0b1613a2b5c89c6c85ef90c697b5c4726ecf8635c65",
+    "02-course-design/lessons/19.md": "23acec0f5a67cadc3aec8badbc2a835bf662585ebfc76c1b41fdd1298e4a5bf2",
+    "02-course-design/lessons/09.md": "32ec90dacd73f7a59a7e12fb3cacff994aaa79b902ed8ef51fcd51731635dd7b",
+    "02-course-design/lessons/16.md": "fe902bceb9221bd6a5b283c629009b825b097488505e94057a08da17beb8ccac",
+    "02-course-design/lessons/06.md": "db70178ecd51e90eb3140133a43704e5ea61f568edd34b64ad960c7dace3931e",
+    "02-course-design/lessons/12.md": "353547fb9f4596fc51d454fe36c27db1282238b64de58978d4df071aa538a19c",
+    "02-course-design/lessons/02.md": "04c989016ecb6d124be5cd51a81a9369a37efdf9a4798ab4d4b569efeba3c829",
+    "02-course-design/lessons/13.md": "0f16b605068dca5e0e2e13c8307ff267fb52b6d029eaac92a801b54c053252ff",
+    "02-course-design/lessons/03.md": "e50aabc300b6f2dbf8c745f2cd67b0185078ac4a4b0d2c2ba64f3ac41661b5c4",
+    "02-course-design/lessons/17.md": "f101e8a6378a8c52d154e9c461221590eca8ad3d5f020fb49987247ae51668ef",
+    "02-course-design/lessons/07.md": "5cca70d427641db118ba2f6999da6c56fd82791392c3e41ed46a9935df78ec43",
+    "02-course-design/lessons/10.md": "5e29cb0870217cb59c85efdd88221d550c26d3bb805a96963dc0da3b21a29469",
+    "02-course-design/lessons/14.md": "79eebae39d99b65c915544f4bf5155370f4f5fdd0f7fc6f19cd4d2308d804ccb",
+    "02-course-design/lessons/20.md": "a8d54cd1722a6b233f79f17b7fda7105d0f5dbc2254a23b54479e566e54eae93",
+    "02-course-design/lessons/04.md": "6b5a1811d0cfa30a3766b38b02898cab6343d7dceaaebeff7707948cb02bda07",
+    "02-course-design/lessons/15.md": "7e96e4a2014b6b44f91cf57f064ad167a9f82e87c36bb467d2a72d67eb5d6c9c",
+    "02-course-design/lessons/21.md": "b3918f21061f999c20469ff77e0b06277e2d791d693035a4c272f77efaa3c2cb",
+    "02-course-design/lessons/05.md": "b24eaa636de18c793ef7e0ba61347a96ac92b2c3bc4e2b781b95f497aaad45f5",
+    "02-course-design/lessons/11.md": "df8b2636cc5f761a72e4587ab7c48b71d6050a633303c6a0503ae684d8507b11",
+    "02-course-design/lessons/01.md": "038f3590094b72e91182087f62300a7e972e9593d206090658bbb652e3b85399",
+    "02-course-design/inventory.json": "1a99a8d2cea87bb83dfda1251b72dd538191d5c4a0243123755167ef0cd72faf",
+    "01-materials/vocabulary-scope/selected.json": "1fc7ffbbb53815330a426fcf98792832aa4c39ad908dafdd83a3858de33bff4c",
+    "01-materials/vocabulary-scope/grammar.json": "ff611684a2a5596e54271daf5ff2eb5485aaf2d63e8f11be36589cbb7a74fa09",
+    "01-materials/vocabulary-scope/selection.json": "1db06db364696e583e46a824dc2c3279e7df5fe8cbee8d4c618cc3c515cee1d5",
+    "03-test-set/sources.json": "26f2132b8130c2472cfe01e4f2fa047603ff9f98f52797892eac54679ab91240",
+    "03-test-set/samples.json": "ab710f94f695fbae790f552cb9864f44527ebdd7087d89b1a7f7229c06cb0435",
+    "03-test-set/answers.json": "c6fbc2dc6eeea14c60fb848b619b8f68fb08db47533f6e925ce698a41da965bf",
+    "03-test-set/target-profile.json": "8feede301c3622ac5325db12aa0eadae99267da5a6ffe7d62c487b6185ffd2f2"
+  },
+  "samples": [
+    {
+      "id": "anime-nichijou-01",
+      "source_id": "anime-nichijou",
+      "group": "nichijou",
+      "genre": "anime_subtitles",
+      "split": "development",
+      "sha256": "efbbb98d8f2aea27b2b7df25d88d486a5b5416de4ea2ab3edad4487661f7d989"
+    },
+    {
+      "id": "anime-nichijou-02",
+      "source_id": "anime-nichijou",
+      "group": "nichijou",
+      "genre": "anime_subtitles",
+      "split": "development",
+      "sha256": "fb157b34b31536317d449509ce611651a1c559a054c3604f3a79a344fc7b2011"
+    },
+    {
+      "id": "anime-majo-01",
+      "source_id": "anime-majo",
+      "group": "majo",
+      "genre": "anime_subtitles",
+      "split": "development",
+      "sha256": "b30e8ef7e4d6723c11f35f02bfd94c1165c6ef841505a690168eb3ddf8dfecd0"
+    },
+    {
+      "id": "anime-majo-02",
+      "source_id": "anime-majo",
+      "group": "majo",
+      "genre": "anime_subtitles",
+      "split": "development",
+      "sha256": "613df3fccc418f91cf0e65764c684806e0817de3a8d338704f6b910dcf1c5fe1"
+    },
+    {
+      "id": "anime-hyouka-01",
+      "source_id": "anime-hyouka",
+      "group": "hyouka",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "335050cd459c5822c39aefdc6959b4424223d26fbda2b3dd46c916a29a0dfd67"
+    },
+    {
+      "id": "anime-hyouka-02",
+      "source_id": "anime-hyouka",
+      "group": "hyouka",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "8f35f96ea7354164ded83034024347dbf357efc10706623ecffea64c8cfc1b21"
+    },
+    {
+      "id": "anime-natsume-01",
+      "source_id": "anime-natsume",
+      "group": "natsume",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "2819b820e1861358c5703d9f65c9caca81e4c0e9754714147c895df14cf71915"
+    },
+    {
+      "id": "anime-natsume-02",
+      "source_id": "anime-natsume",
+      "group": "natsume",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "sha256": "67948c2244bdc6cc7e9b6872ee6f92fd8f31f3bc0efeb02ddd206f351aad7e11"
+    },
+    {
+      "id": "manga-tomochan-01",
+      "source_id": "manga-tomochan",
+      "group": "tomochan",
+      "genre": "manga",
+      "split": "development",
+      "sha256": "d7d48141f3c735790af53330c9ffbfd4c59a583e89c38a6ad21ce947837bff26"
+    },
+    {
+      "id": "manga-tomochan-02",
+      "source_id": "manga-tomochan",
+      "group": "tomochan",
+      "genre": "manga",
+      "split": "development",
+      "sha256": "42f271b56dedc2839e9650ed6d79d08ffc8aee931edf7bd6f3ca2d4ec2045e52"
+    },
+    {
+      "id": "manga-SATOKOandNADA-01",
+      "source_id": "manga-SATOKOandNADA",
+      "group": "satokoandnada",
+      "genre": "manga",
+      "split": "development",
+      "sha256": "ffc34ab800efa0ba7ea4c0d307cb24be0cb22a96dc156ab5acd9f811845f69bb"
+    },
+    {
+      "id": "manga-SATOKOandNADA-02",
+      "source_id": "manga-SATOKOandNADA",
+      "group": "satokoandnada",
+      "genre": "manga",
+      "split": "development",
+      "sha256": "fa1ea43f0c85b1e756f7801d0a02a9bb40b1fc6d529510ac0eae6efe43f8d503"
+    },
+    {
+      "id": "manga-kanako-01",
+      "source_id": "manga-kanako",
+      "group": "kanako",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "d4f0317b625a04a020d7f0b70b0c47a0c670cf9d65cdca0825d0267594943d49"
+    },
+    {
+      "id": "manga-kanako-02",
+      "source_id": "manga-kanako",
+      "group": "kanako",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "13bd61e7587093a605f2a8a94f7b66139e14c15e9b13a1526dd595911e59bddd"
+    },
+    {
+      "id": "manga-onakin-01",
+      "source_id": "manga-onakin",
+      "group": "onakin",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "1cd6a152648cfca4c5f95e5f966a6b9a957eba8beb1b81be6d7c22f8ce88d311"
+    },
+    {
+      "id": "manga-onakin-02",
+      "source_id": "manga-onakin",
+      "group": "onakin",
+      "genre": "manga",
+      "split": "holdout",
+      "sha256": "62d76b464f8ef5f9346e0d5dcb7b44235d31708bd0e0776ae7c6b6c05b7b1acf"
+    }
+  ],
+  "input_note": "原字幕与漫画转写全文仅在外部临时目录；仓库保存定位、摘要、哈希和短引文。漫画逐张回看原图自校；没有独立审校。",
+  "temporary_inputs": "/tmp/hj-round04/inputs.json",
+  "temporary_source_captures": "/tmp/hj-target-tests",
+  "transcription_corrections": [
+    {
+      "page": "kanako-0001",
+      "before": "人材",
+      "after": "社員"
+    },
+    {
+      "page": "kanako-0002",
+      "before": "えらいふつーに見えんねんけど",
+      "after": "そんなふうには見えねえけど"
+    },
+    {
+      "page": "kanako-0004",
+      "correction": "恢复漏录的しばらく"
+    }
+  ],
+  "holdout_after_use": "8个原保留片段已分析其缺词及句型，转为regression；本报告保持运行时的holdout标签。",
+  "independent_reviews": 0
+}

@@ -1,0 +1,718 @@
+[
+  {
+    "id": "anime-nichijou-01",
+    "original_sha256": "efbbb98d8f2aea27b2b7df25d88d486a5b5416de4ea2ab3edad4487661f7d989",
+    "analysis_sha256": "84cacb6c3e86c3f2792b71a043d54cd1cbb2f918a9e5d1240b2b2a5157249162",
+    "removals": [
+      {
+        "text": "（相生祐子(あいおいゆうこ)）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（長野原(ながのはら)みお）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（祐子）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（祐子）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（みお）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（みお）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（みお）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（祐子）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "みお",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "anime-nichijou-02",
+    "original_sha256": "fb157b34b31536317d449509ce611651a1c559a054c3604f3a79a344fc7b2011",
+    "analysis_sha256": "330fc7a743ceaf3be0650fb98b28380d0171b55be02250ad590b6f098ac6dff2",
+    "removals": [
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（主婦１）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（主婦Ｂ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（黒猫）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（黒猫）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（黒猫）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（黒猫）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（なの）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（遠ざかる足音）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（黒猫）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "はかせ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "ミャアー",
+        "reason": "猫叫音效；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "ニャー",
+        "reason": "猫叫音效；仅词汇统计排除",
+        "count": 2
+      },
+      {
+        "text": "ニャン ニャン",
+        "reason": "猫叫音效；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "ミャオ",
+        "reason": "猫叫音效；仅词汇统计排除",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "anime-majo-01",
+    "original_sha256": "b30e8ef7e4d6723c11f35f02bfd94c1165c6ef841505a690168eb3ddf8dfecd0",
+    "analysis_sha256": "a9f515b0523391ebd6a4b10da189390a2109e0a46be13de1e318ab235e64c725",
+    "removals": [
+      {
+        "text": "（門兵たち）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（イレイナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（門兵）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（イレイナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "anime-majo-02",
+    "original_sha256": "613df3fccc418f91cf0e65764c684806e0817de3a8d338704f6b910dcf1c5fe1",
+    "analysis_sha256": "63e255cc1e87525c254ef3afffc04824176eec4441fa06134f7f1da4a26ac87d",
+    "removals": [
+      {
+        "text": "（イレイナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（サヤ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（サヤ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（サヤ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（サヤ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（イレイナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "サヤ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "anime-hyouka-01",
+    "original_sha256": "335050cd459c5822c39aefdc6959b4424223d26fbda2b3dd46c916a29a0dfd67",
+    "analysis_sha256": "3eb439dec263f048ac2cd85812777d012bfb20c853270ca9aa3bfc2e2f41baf6",
+    "removals": [
+      {
+        "text": "（折木供恵(ともえ)）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "(かみやま)",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "折木奉太郎",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "折木供恵",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "ベナレス",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "奉太郎",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "神山",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "anime-hyouka-02",
+    "original_sha256": "8f35f96ea7354164ded83034024347dbf357efc10706623ecffea64c8cfc1b21",
+    "analysis_sha256": "11756ab6860d4bbf1c5e262218c4f53cf789cb804ec5638db767624ef9a4d5dc",
+    "removals": [
+      {
+        "text": "（奉太郎）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（える）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（里志）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（える）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（里志）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（奉太郎）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（える）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（摩耶花）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（える）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（奉太郎）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（える）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（摩耶花）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（奉太郎）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（える）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（える）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（摩耶花）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（里志）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "摩耶花",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "折木",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "id": "anime-natsume-01",
+    "original_sha256": "2819b820e1861358c5703d9f65c9caca81e4c0e9754714147c895df14cf71915",
+    "analysis_sha256": "7f4d268bb4032c9eb2ff79421e40fb2888747f7b690fddff548196e913a5f7db",
+    "removals": [
+      {
+        "text": "（桃の落ちる音）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ハナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ハナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ハナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ハナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ハナ）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ニャンコ先生）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ニャンコ先生）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "anime-natsume-02",
+    "original_sha256": "67948c2244bdc6cc7e9b6872ee6f92fd8f31f3bc0efeb02ddd206f351aad7e11",
+    "analysis_sha256": "82473d5f670a483f1d00c53811daae4581de7f5fb2fb3a8f7f07765c3e15e3f9",
+    "removals": [
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ニャンコ先生）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ニャンコ先生）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "(ほこら)",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（ニャンコ先生）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（露神）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "（夏目）",
+        "reason": "原字幕说话人/音效标注或注音",
+        "count": 1
+      },
+      {
+        "text": "レイコ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "露神",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 4
+      },
+      {
+        "text": "夏目",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "ハナ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "manga-tomochan-01",
+    "original_sha256": "d7d48141f3c735790af53330c9ffbfd4c59a583e89c38a6ad21ce947837bff26",
+    "analysis_sha256": "4b3aa50e2885faf0c5b79d4a370c931e9fe785a1d1731c54f70abf2a2dd15b04",
+    "removals": [
+      {
+        "text": "久保田淳一郎",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "相沢智",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "ジュン",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 6
+      },
+      {
+        "text": "久保田",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "トモ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "相沢",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "manga-tomochan-02",
+    "original_sha256": "42f271b56dedc2839e9650ed6d79d08ffc8aee931edf7bd6f3ca2d4ec2045e52",
+    "analysis_sha256": "dda0cf87a3bddf3b359d233c1095b10cb13fdb7d51405fd21ecb93747a8f8c70",
+    "removals": [
+      {
+        "text": "ジュン",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 3
+      },
+      {
+        "text": "トモ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "manga-SATOKOandNADA-01",
+    "original_sha256": "ffc34ab800efa0ba7ea4c0d307cb24be0cb22a96dc156ab5acd9f811845f69bb",
+    "analysis_sha256": "46551f754bcd889c47cfd109d780f5bd4e09b249e1fbd128510c99478c249b25",
+    "removals": [
+      {
+        "text": "サトコ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 2
+      },
+      {
+        "text": "ナダ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "manga-SATOKOandNADA-02",
+    "original_sha256": "fa1ea43f0c85b1e756f7801d0a02a9bb40b1fc6d529510ac0eae6efe43f8d503",
+    "analysis_sha256": "c0699541e87cb71405f9f7f9bbd4c510232f3ab8f8baae7cf3cb231cc1da3d95",
+    "removals": [
+      {
+        "text": "サトコ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 3
+      },
+      {
+        "text": "ナダ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "manga-kanako-01",
+    "original_sha256": "d4f0317b625a04a020d7f0b70b0c47a0c670cf9d65cdca0825d0267594943d49",
+    "analysis_sha256": "a265353daed4460ebaf436208c223a129a2b79d66ce7f5abf3543fa3f5b78067",
+    "removals": [
+      {
+        "text": "西野カナコ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "manga-kanako-02",
+    "original_sha256": "13bd61e7587093a605f2a8a94f7b66139e14c15e9b13a1526dd595911e59bddd",
+    "analysis_sha256": "13bd61e7587093a605f2a8a94f7b66139e14c15e9b13a1526dd595911e59bddd",
+    "removals": []
+  },
+  {
+    "id": "manga-onakin-01",
+    "original_sha256": "1cd6a152648cfca4c5f95e5f966a6b9a957eba8beb1b81be6d7c22f8ce88d311",
+    "analysis_sha256": "c0007af48299ce8f79ace6ddbcb8753af0f8e08c365a5c67672d2767c4cefa89",
+    "removals": [
+      {
+        "text": "村上イオリ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "神田ユイ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      },
+      {
+        "text": "小西マユ",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "id": "manga-onakin-02",
+    "original_sha256": "62d76b464f8ef5f9346e0d5dcb7b44235d31708bd0e0776ae7c6b6c05b7b1acf",
+    "analysis_sha256": "55e02f940fff3831eecd3bd8fb220c874c7ba0ddd224cd4777ce2ad2d8cbe6ab",
+    "removals": [
+      {
+        "text": "村上",
+        "reason": "经原文确认的人物或地点专名；仅词汇统计排除",
+        "count": 4
+      }
+    ]
+  }
+]

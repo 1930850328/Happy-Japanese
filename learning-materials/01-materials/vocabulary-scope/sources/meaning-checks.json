@@ -1,0 +1,2150 @@
+[
+  {
+    "label": "つく-search",
+    "response": {
+      "query": "つく",
+      "queryType": "japanese",
+      "results": [
+        {
+          "wordId": 1441400,
+          "readingIndex": 1,
+          "text": "つく",
+          "rubyText": "つく",
+          "primaryKanjiText": "点[つ]く",
+          "partsOfSpeech": [
+            "v5k",
+            "vi",
+            "uk"
+          ],
+          "meanings": [
+            "to be lit (of a lamp, burner, etc.)",
+            "to catch fire",
+            "to ignite",
+            "to start burning"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to be lit (of a lamp, burner, etc.)",
+                "to catch fire",
+                "to ignite",
+                "to start burning"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to be turned on (of a light, appliance, etc.)",
+                "to come on"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            }
+          ],
+          "frequencyRank": 2668
+        },
+        {
+          "wordId": 1444150,
+          "readingIndex": 1,
+          "text": "つく",
+          "rubyText": "つく",
+          "primaryKanjiText": "吐[つ]く",
+          "partsOfSpeech": [
+            "v5k",
+            "vt",
+            "uk"
+          ],
+          "meanings": [
+            "to breathe out",
+            "to breathe"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to breathe out",
+                "to breathe"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to tell (a lie)",
+                "to use (foul language)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to vomit",
+                "to throw up",
+                "to spit up"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            }
+          ],
+          "frequencyRank": 3220
+        },
+        {
+          "wordId": 1422970,
+          "readingIndex": 1,
+          "text": "つく",
+          "rubyText": "つく",
+          "primaryKanjiText": "着[つ]く",
+          "partsOfSpeech": [
+            "v5k",
+            "vi"
+          ],
+          "meanings": [
+            "to arrive at",
+            "to reach"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to arrive at",
+                "to reach"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to sit on",
+                "to sit at (e.g. the table)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 58037
+        },
+        {
+          "wordId": 1331530,
+          "readingIndex": 2,
+          "text": "つく",
+          "rubyText": "つく",
+          "primaryKanjiText": "就[つ]く",
+          "partsOfSpeech": [
+            "v5k",
+            "vi"
+          ],
+          "meanings": [
+            "to take (seat, position, course, office, etc.)",
+            "to assume",
+            "to be hired",
+            "to be employed"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to take (seat, position, course, office, etc.)",
+                "to assume",
+                "to be hired",
+                "to be employed"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to ascend (the throne)",
+                "to accede"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to start (on a journey)",
+                "to commence",
+                "to depart"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 3,
+              "meanings": [
+                "to study (under teacher)",
+                "to be an apprentice"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 80667
+        },
+        {
+          "wordId": 1456890,
+          "readingIndex": 4,
+          "text": "つく",
+          "rubyText": "つく",
+          "primaryKanjiText": "突[つ]く",
+          "partsOfSpeech": [
+            "v5k",
+            "vt"
+          ],
+          "meanings": [
+            "to prick",
+            "to stab"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to prick",
+                "to stab"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to poke",
+                "to prod",
+                "to push",
+                "to thrust",
+                "to nudge",
+                "to hit",
+                "to strike"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt"
+              ],
+              "misc": []
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to use (a cane)",
+                "to prop oneself up with",
+                "to press against (the floor, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt"
+              ],
+              "misc": []
+            },
+            {
+              "index": 3,
+              "meanings": [
+                "to attack"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt"
+              ],
+              "misc": []
+            },
+            {
+              "index": 4,
+              "meanings": [
+                "to brave (the rain, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vt"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 87539
+        }
+      ],
+      "dictionaryResults": [],
+      "hasMore": true
+    }
+  },
+  {
+    "label": "つく-ranks",
+    "response": {
+      "global": {
+        "rank": 2668,
+        "percentage": 82.17960432581346,
+        "amount": 7702
+      },
+      "byType": {
+        "1": {
+          "rank": 3182,
+          "percentage": 98.02416583527325,
+          "amount": 900
+        },
+        "9": {
+          "rank": 2603,
+          "percentage": 87.17197797175238,
+          "amount": 661
+        },
+        "10": {
+          "rank": 2424,
+          "percentage": 100,
+          "amount": 4
+        },
+        "11": {
+          "rank": 2371,
+          "percentage": 73.1579786386099,
+          "amount": 40
+        },
+        "2": {
+          "rank": 2662,
+          "percentage": 98.57656436985096,
+          "amount": 1060
+        },
+        "3": {
+          "rank": 3252,
+          "percentage": 98.76712706420754,
+          "amount": 307
+        },
+        "4": {
+          "rank": 2871,
+          "percentage": 75.94340188958697,
+          "amount": 2282
+        },
+        "5": {
+          "rank": 5380,
+          "percentage": 92.87984742530197,
+          "amount": 28
+        },
+        "6": {
+          "rank": 2740,
+          "percentage": 85.13268061464343,
+          "amount": 243
+        },
+        "7": {
+          "rank": 2870,
+          "percentage": 75.34186870913734,
+          "amount": 2143
+        },
+        "8": {
+          "rank": 4254,
+          "percentage": 75.63643081470534,
+          "amount": 34
+        }
+      },
+      "resolved": {
+        "source": "global",
+        "rank": 2668,
+        "isFallback": false
+      }
+    }
+  },
+  {
+    "label": "つける-search",
+    "response": {
+      "query": "つける",
+      "queryType": "japanese",
+      "results": [
+        {
+          "wordId": 1495770,
+          "readingIndex": 3,
+          "text": "つける",
+          "rubyText": "つける",
+          "primaryKanjiText": "付[つ]ける",
+          "partsOfSpeech": [
+            "v1",
+            "vt",
+            "uk",
+            "suf"
+          ],
+          "meanings": [
+            "to attach",
+            "to join",
+            "to connect",
+            "to add",
+            "to append",
+            "to affix",
+            "to stick",
+            "to glue",
+            "to fasten",
+            "to sew on",
+            "to apply (ointment)",
+            "to put against"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to attach",
+                "to join",
+                "to connect",
+                "to add",
+                "to append",
+                "to affix",
+                "to stick",
+                "to glue",
+                "to fasten",
+                "to sew on",
+                "to apply (ointment)",
+                "to put against"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to furnish (a house with)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to wear",
+                "to put on"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 3,
+              "meanings": [
+                "to keep a diary",
+                "to make an entry"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 4,
+              "meanings": [
+                "to appraise",
+                "to set (a price)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 5,
+              "meanings": [
+                "to allot",
+                "to budget",
+                "to assign"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 6,
+              "meanings": [
+                "to bring alongside"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 7,
+              "meanings": [
+                "to place (under guard or doctor)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 8,
+              "meanings": [
+                "to follow (someone)",
+                "to shadow",
+                "to tail",
+                "to stalk"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 9,
+              "meanings": [
+                "to load",
+                "to give (courage to)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 10,
+              "meanings": [
+                "to keep (an eye on)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 11,
+              "meanings": [
+                "to establish (relations or understanding)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 12,
+              "meanings": [
+                "to turn on (a light)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 13,
+              "meanings": [
+                "to produce flowers (of a plant)",
+                "to produce fruit"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 14,
+              "meanings": [
+                "to attach",
+                "to play an attachment"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 15,
+              "meanings": [
+                "to do intensely",
+                "to do fiercely",
+                "to do strongly"
+              ],
+              "partsOfSpeech": [
+                "suf",
+                "v1",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            },
+            {
+              "index": 16,
+              "meanings": [
+                "to be used to (doing)",
+                "to be accustomed to"
+              ],
+              "partsOfSpeech": [
+                "suf",
+                "v1",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            }
+          ],
+          "frequencyRank": 335
+        },
+        {
+          "wordId": 1331540,
+          "readingIndex": 2,
+          "text": "つける",
+          "rubyText": "つける",
+          "primaryKanjiText": "就[つ]ける",
+          "partsOfSpeech": [
+            "v1",
+            "vt"
+          ],
+          "meanings": [
+            "to install (a king, emperor, etc.)"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to install (a king, emperor, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to appoint (to a post)",
+                "to promote"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt"
+              ],
+              "misc": []
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to assign (to study under)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 476568
+        },
+        {
+          "wordId": 1433680,
+          "readingIndex": 2,
+          "text": "つける",
+          "rubyText": "つける",
+          "primaryKanjiText": "漬[つ]ける",
+          "partsOfSpeech": [
+            "v1",
+            "vt"
+          ],
+          "meanings": [
+            "to soak (in)",
+            "to steep",
+            "to dip",
+            "to dunk"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to soak (in)",
+                "to steep",
+                "to dip",
+                "to dunk"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to pickle",
+                "to preserve (in salt, vinegar, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 476568
+        },
+        {
+          "wordId": 1610400,
+          "readingIndex": 1,
+          "text": "つける",
+          "rubyText": "つける",
+          "primaryKanjiText": "点[つ]ける",
+          "partsOfSpeech": [
+            "v1",
+            "vt",
+            "uk"
+          ],
+          "meanings": [
+            "to turn on",
+            "to switch on",
+            "to light up"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to turn on",
+                "to switch on",
+                "to light up"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt",
+                "uk"
+              ],
+              "misc": [
+                "uk"
+              ]
+            }
+          ],
+          "frequencyRank": 476568
+        },
+        {
+          "wordId": 2100600,
+          "readingIndex": 1,
+          "text": "つける",
+          "rubyText": "つける",
+          "primaryKanjiText": "尾[つ]ける",
+          "partsOfSpeech": [
+            "v1",
+            "vt"
+          ],
+          "meanings": [
+            "to follow (someone)",
+            "to shadow",
+            "to tail",
+            "to stalk"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to follow (someone)",
+                "to shadow",
+                "to tail",
+                "to stalk"
+              ],
+              "partsOfSpeech": [
+                "v1",
+                "vt"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 476568
+        }
+      ],
+      "dictionaryResults": [],
+      "hasMore": true
+    }
+  },
+  {
+    "label": "つける-ranks",
+    "response": {
+      "global": {
+        "rank": 335,
+        "percentage": 55.078774347741074,
+        "amount": 15822
+      },
+      "byType": {
+        "1": {
+          "rank": 380,
+          "percentage": 61.24183006535948,
+          "amount": 2944
+        },
+        "9": {
+          "rank": 323,
+          "percentage": 56.69542960487999,
+          "amount": 1178
+        },
+        "10": {
+          "rank": 321,
+          "percentage": 89.33131720430107,
+          "amount": 12
+        },
+        "11": {
+          "rank": 308,
+          "percentage": 46.31413270508112,
+          "amount": 55
+        },
+        "2": {
+          "rank": 394,
+          "percentage": 58.83949659210403,
+          "amount": 2740
+        },
+        "3": {
+          "rank": 308,
+          "percentage": 73.57852554125644,
+          "amount": 2285
+        },
+        "4": {
+          "rank": 365,
+          "percentage": 50.79731568992189,
+          "amount": 3360
+        },
+        "5": {
+          "rank": 273,
+          "percentage": 64.20343497587216,
+          "amount": 103
+        },
+        "6": {
+          "rank": 394,
+          "percentage": 52.82334693316971,
+          "amount": 370
+        },
+        "7": {
+          "rank": 509,
+          "percentage": 46.3563268554183,
+          "amount": 2737
+        },
+        "8": {
+          "rank": 557,
+          "percentage": 39.30500258609283,
+          "amount": 38
+        }
+      },
+      "resolved": {
+        "source": "global",
+        "rank": 335,
+        "isFallback": false
+      }
+    }
+  },
+  {
+    "label": "すむ-search",
+    "response": {
+      "query": "すむ",
+      "queryType": "japanese",
+      "results": [
+        {
+          "wordId": 1295070,
+          "readingIndex": 2,
+          "text": "すむ",
+          "rubyText": "すむ",
+          "primaryKanjiText": "済[す]む",
+          "partsOfSpeech": [
+            "v5m",
+            "vi"
+          ],
+          "meanings": [
+            "to finish",
+            "to end",
+            "to be completed",
+            "to be resolved"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to finish",
+                "to end",
+                "to be completed",
+                "to be resolved"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to have a result less severe than expected"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to feel at ease"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 3,
+              "meanings": [
+                "to feel unease or guilt for troubling someone",
+                "to be sorry"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 1195
+        },
+        {
+          "wordId": 1373680,
+          "readingIndex": 2,
+          "text": "すむ",
+          "rubyText": "すむ",
+          "primaryKanjiText": "澄[す]む",
+          "partsOfSpeech": [
+            "v5m",
+            "vi"
+          ],
+          "meanings": [
+            "to become clear (water, air, etc.)",
+            "to become transparent"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to become clear (water, air, etc.)",
+                "to become transparent"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to resonate clearly (e.g. voice)"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to become serene",
+                "to become tranquil",
+                "to be free of worries"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 3,
+              "meanings": [
+                "to pronounce as an unvoiced sound"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 12130
+        },
+        {
+          "wordId": 2862350,
+          "readingIndex": 0,
+          "text": "スム",
+          "rubyText": "スム",
+          "primaryKanjiText": null,
+          "partsOfSpeech": [
+            "n"
+          ],
+          "meanings": [
+            "sum (currency of Uzbekistan)"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "sum (currency of Uzbekistan)"
+              ],
+              "partsOfSpeech": [
+                "n"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 67891
+        },
+        {
+          "wordId": 1334040,
+          "readingIndex": 1,
+          "text": "すむ",
+          "rubyText": "すむ",
+          "primaryKanjiText": "住[す]む",
+          "partsOfSpeech": [
+            "v5m",
+            "vi"
+          ],
+          "meanings": [
+            "to live (of humans)",
+            "to reside",
+            "to inhabit",
+            "to dwell",
+            "to abide"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to live (of humans)",
+                "to reside",
+                "to inhabit",
+                "to dwell",
+                "to abide"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 102347
+        },
+        {
+          "wordId": 1887210,
+          "readingIndex": 2,
+          "text": "すむ",
+          "rubyText": "すむ",
+          "primaryKanjiText": "棲[す]む",
+          "partsOfSpeech": [
+            "v5m",
+            "vi"
+          ],
+          "meanings": [
+            "to live (of animals)",
+            "to inhabit",
+            "to nest"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to live (of animals)",
+                "to inhabit",
+                "to nest"
+              ],
+              "partsOfSpeech": [
+                "v5m",
+                "vi"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 476568
+        }
+      ],
+      "dictionaryResults": [],
+      "hasMore": true
+    }
+  },
+  {
+    "label": "すむ-ranks",
+    "response": {
+      "global": {
+        "rank": 1195,
+        "percentage": 43.0904151137125,
+        "amount": 10975
+      },
+      "byType": {
+        "1": {
+          "rank": 945,
+          "percentage": 43.786426833449276,
+          "amount": 2058
+        },
+        "9": {
+          "rank": 695,
+          "percentage": 54.27048694424841,
+          "amount": 1038
+        },
+        "10": {
+          "rank": 2777,
+          "percentage": 16.08102521703183,
+          "amount": 4
+        },
+        "11": {
+          "rank": 1845,
+          "percentage": 48.3599881534133,
+          "amount": 42
+        },
+        "2": {
+          "rank": 1537,
+          "percentage": 36.96917911372334,
+          "amount": 1518
+        },
+        "3": {
+          "rank": 971,
+          "percentage": 35.0662949697343,
+          "amount": 1011
+        },
+        "4": {
+          "rank": 2228,
+          "percentage": 42.36470452025517,
+          "amount": 2405
+        },
+        "5": {
+          "rank": 2545,
+          "percentage": 41.23186946011281,
+          "amount": 47
+        },
+        "6": {
+          "rank": 857,
+          "percentage": 52.65550056267549,
+          "amount": 335
+        },
+        "7": {
+          "rank": 1410,
+          "percentage": 46.58312082520884,
+          "amount": 2481
+        },
+        "8": {
+          "rank": 2848,
+          "percentage": 43.27094392300204,
+          "amount": 36
+        }
+      },
+      "resolved": {
+        "source": "global",
+        "rank": 1195,
+        "isFallback": false
+      }
+    }
+  },
+  {
+    "label": "付く-search",
+    "response": {
+      "query": "付く",
+      "queryType": "japanese",
+      "results": [
+        {
+          "wordId": 1495740,
+          "readingIndex": 0,
+          "text": "付く",
+          "rubyText": "付[つ]く",
+          "primaryKanjiText": null,
+          "partsOfSpeech": [
+            "v5k",
+            "vi",
+            "suf"
+          ],
+          "meanings": [
+            "to be attached",
+            "to be connected with",
+            "to adhere",
+            "to stick",
+            "to cling"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to be attached",
+                "to be connected with",
+                "to adhere",
+                "to stick",
+                "to cling"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 1,
+              "meanings": [
+                "to remain imprinted",
+                "to scar",
+                "to stain",
+                "to dye"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 2,
+              "meanings": [
+                "to bear (fruit, interest, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 3,
+              "meanings": [
+                "to be acquired (of a habit, ability, etc.)",
+                "to increase (of strength, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 4,
+              "meanings": [
+                "to take root"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 5,
+              "meanings": [
+                "to accompany",
+                "to attend",
+                "to follow",
+                "to study with"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 6,
+              "meanings": [
+                "to side with",
+                "to belong to"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 7,
+              "meanings": [
+                "to possess",
+                "to haunt"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 8,
+              "meanings": [
+                "to be lit",
+                "to catch fire",
+                "to ignite",
+                "to be turned on (of a light, appliance, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 9,
+              "meanings": [
+                "to be settled",
+                "to be resolved",
+                "to be decided"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 10,
+              "meanings": [
+                "to be given (of a name, price, etc.)"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 11,
+              "meanings": [
+                "to be sensed",
+                "to be perceived"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 12,
+              "meanings": [
+                "to be lucky"
+              ],
+              "partsOfSpeech": [
+                "v5k",
+                "vi"
+              ],
+              "misc": []
+            },
+            {
+              "index": 13,
+              "meanings": [
+                "to become (a state, condition, etc.)"
+              ],
+              "partsOfSpeech": [
+                "suf",
+                "v5k"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 1833
+        },
+        {
+          "wordId": 2262620,
+          "readingIndex": 0,
+          "text": "付く",
+          "rubyText": "付[づ]く",
+          "primaryKanjiText": null,
+          "partsOfSpeech": [
+            "suf",
+            "v5k"
+          ],
+          "meanings": [
+            "to become (a state, condition, etc.)"
+          ],
+          "senses": [
+            {
+              "index": 0,
+              "meanings": [
+                "to become (a state, condition, etc.)"
+              ],
+              "partsOfSpeech": [
+                "suf",
+                "v5k"
+              ],
+              "misc": []
+            }
+          ],
+          "frequencyRank": 476568
+        }
+      ],
+      "dictionaryResults": [],
+      "hasMore": false
+    }
+  },
+  {
+    "label": "付く-info",
+    "response": {
+      "wordId": 1495740,
+      "mainReading": {
+        "text": "付[つ]く",
+        "readingType": 0,
+        "readingIndex": 0,
+        "frequencyRank": 1833,
+        "frequencyPercentage": 32.55016842712769,
+        "usedInMediaAmount": 8698,
+        "usedInMediaAmountByType": {}
+      },
+      "alternativeReadings": [
+        {
+          "text": "付く",
+          "readingType": 0,
+          "readingIndex": 0,
+          "frequencyRank": 1833,
+          "frequencyPercentage": 32.55016842712769,
+          "usedInMediaAmount": 8698,
+          "usedInMediaAmountByType": {}
+        },
+        {
+          "text": "附く",
+          "readingType": 0,
+          "readingIndex": 1,
+          "frequencyRank": 98678,
+          "frequencyPercentage": 0.1308167355161829,
+          "usedInMediaAmount": 56,
+          "usedInMediaAmountByType": {}
+        },
+        {
+          "text": "つく",
+          "readingType": 1,
+          "readingIndex": 2,
+          "frequencyRank": 313,
+          "frequencyPercentage": 67.31901483735612,
+          "usedInMediaAmount": 15920,
+          "usedInMediaAmountByType": {}
+        }
+      ],
+      "partsOfSpeech": [
+        "v5k",
+        "vi",
+        "suf"
+      ],
+      "definitions": [
+        {
+          "index": 1,
+          "meanings": [
+            "to be attached",
+            "to be connected with",
+            "to adhere",
+            "to stick",
+            "to cling"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 2,
+          "meanings": [
+            "to remain imprinted",
+            "to scar",
+            "to stain",
+            "to dye"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 3,
+          "meanings": [
+            "to bear (fruit, interest, etc.)"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 4,
+          "meanings": [
+            "to be acquired (of a habit, ability, etc.)",
+            "to increase (of strength, etc.)"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 5,
+          "meanings": [
+            "to take root"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 6,
+          "meanings": [
+            "to accompany",
+            "to attend",
+            "to follow",
+            "to study with"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 7,
+          "meanings": [
+            "to side with",
+            "to belong to"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 8,
+          "meanings": [
+            "to possess",
+            "to haunt"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": [
+            {
+              "type": "see",
+              "targetWordId": 1566940,
+              "targetReadingIndex": 0,
+              "targetText": "憑く",
+              "targetKanji": "憑く",
+              "targetReading": null,
+              "targetSenseIndex": null
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "meanings": [
+            "to be lit",
+            "to catch fire",
+            "to ignite",
+            "to be turned on (of a light, appliance, etc.)"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": [
+            {
+              "type": "see",
+              "targetWordId": 1441400,
+              "targetReadingIndex": 0,
+              "targetText": "点く[1]",
+              "targetKanji": "点く",
+              "targetReading": null,
+              "targetSenseIndex": 1
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "meanings": [
+            "to be settled",
+            "to be resolved",
+            "to be decided"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 11,
+          "meanings": [
+            "to be given (of a name, price, etc.)"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 12,
+          "meanings": [
+            "to be sensed",
+            "to be perceived"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": null,
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 13,
+          "meanings": [
+            "to be lucky"
+          ],
+          "partsOfSpeech": [
+            "Godan verb with 'ku' ending",
+            "intransitive verb"
+          ],
+          "pos": [
+            "v5k",
+            "vi"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": [
+            "from 運がつく"
+          ],
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": null
+        },
+        {
+          "index": 14,
+          "meanings": [
+            "to become (a state, condition, etc.)"
+          ],
+          "partsOfSpeech": [
+            "suffix",
+            "Godan verb with 'ku' ending"
+          ],
+          "pos": [
+            "suf",
+            "v5k"
+          ],
+          "misc": null,
+          "field": null,
+          "dial": null,
+          "senseInfo": [
+            "after -masu stems, onomatopoeic and mimetic words"
+          ],
+          "glossTypes": null,
+          "restrictedToReadingIndices": null,
+          "crossReferences": [
+            {
+              "type": "see",
+              "targetWordId": 2262620,
+              "targetReadingIndex": 0,
+              "targetText": "付く(づく)",
+              "targetKanji": "付く",
+              "targetReading": "づく",
+              "targetSenseIndex": null
+            }
+          ]
+        }
+      ],
+      "occurrences": 0,
+      "pitchAccents": [
+        1,
+        2
+      ],
+      "knownStates": [],
+      "composedOf": null,
+      "usedIn": [
+        {
+          "wordId": 1591050,
+          "readingIndex": 1,
+          "reading": "気が付く",
+          "readingFurigana": "気[き]が付[つ]く",
+          "mainDefinition": "to notice",
+          "frequencyRank": 3599,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1665010,
+          "readingIndex": 0,
+          "reading": "張り付く",
+          "readingFurigana": "張[は]り付[つ]く",
+          "mainDefinition": "to stick (to)",
+          "frequencyRank": 6912,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1228250,
+          "readingIndex": 0,
+          "reading": "吸い付く",
+          "readingFurigana": "吸[す]い付[つ]く",
+          "mainDefinition": "to stick to",
+          "frequencyRank": 12636,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1894260,
+          "readingIndex": 0,
+          "reading": "付いてる",
+          "readingFurigana": "付[つ]いてる",
+          "mainDefinition": "to be lucky",
+          "frequencyRank": 12864,
+          "matchSurface": "付い"
+        },
+        {
+          "wordId": 1350560,
+          "readingIndex": 0,
+          "reading": "焼き付く",
+          "readingFurigana": "焼[や]き付[つ]く",
+          "mainDefinition": "to be scorched into",
+          "frequencyRank": 13666,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1360280,
+          "readingIndex": 0,
+          "reading": "寝付く",
+          "readingFurigana": "寝[ね]付[つ]く",
+          "mainDefinition": "to go to bed",
+          "frequencyRank": 14522,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1446260,
+          "readingIndex": 1,
+          "reading": "凍り付く",
+          "readingFurigana": "凍[こお]り付[つ]く",
+          "mainDefinition": "to freeze (to something)",
+          "frequencyRank": 15232,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1589330,
+          "readingIndex": 1,
+          "reading": "思い付く",
+          "readingFurigana": "思[おも]い付[つ]く",
+          "mainDefinition": "to think of",
+          "frequencyRank": 16385,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1588810,
+          "readingIndex": 1,
+          "reading": "追い付く",
+          "readingFurigana": "追[お]い付[つ]く",
+          "mainDefinition": "to catch up (with)",
+          "frequencyRank": 18789,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1211180,
+          "readingIndex": 0,
+          "reading": "巻き付く",
+          "readingFurigana": "巻[ま]き付[つ]く",
+          "mainDefinition": "to twine around",
+          "frequencyRank": 19325,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 2758300,
+          "readingIndex": 1,
+          "reading": "気が付くと",
+          "readingFurigana": "気[き]が付[つ]くと",
+          "mainDefinition": "before I knew it",
+          "frequencyRank": 22470,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1209220,
+          "readingIndex": 0,
+          "reading": "噛み付く",
+          "readingFurigana": "噛[か]み付[つ]く",
+          "mainDefinition": "to bite (at)",
+          "frequencyRank": 23621,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1646690,
+          "readingIndex": 0,
+          "reading": "染み付く",
+          "readingFurigana": "染[し]み付[つ]く",
+          "mainDefinition": "to permeate (of a stain, smell, etc.)",
+          "frequencyRank": 23708,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1548510,
+          "readingIndex": 1,
+          "reading": "絡み付く",
+          "readingFurigana": "絡[から]み付[つ]く",
+          "mainDefinition": "to twine around",
+          "frequencyRank": 23789,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1326900,
+          "readingIndex": 0,
+          "reading": "取り付く",
+          "readingFurigana": "取[と]り付[つ]く",
+          "mainDefinition": "to cling to",
+          "frequencyRank": 25531,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 2034480,
+          "readingIndex": 1,
+          "reading": "身に付く",
+          "readingFurigana": "身[み]に付[つ]く",
+          "mainDefinition": "to master (e.g. a skill)",
+          "frequencyRank": 30056,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1219660,
+          "readingIndex": 0,
+          "reading": "寄り付く",
+          "readingFurigana": "寄[よ]り付[つ]く",
+          "mainDefinition": "to approach",
+          "frequencyRank": 30145,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1847880,
+          "readingIndex": 1,
+          "reading": "抱き付く",
+          "readingFurigana": "抱[だ]き付[つ]く",
+          "mainDefinition": "to cling to",
+          "frequencyRank": 31027,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1570560,
+          "readingIndex": 1,
+          "reading": "縋り付く",
+          "readingFurigana": "縋[すが]り付[つ]く",
+          "mainDefinition": "to cling to",
+          "frequencyRank": 33392,
+          "matchSurface": "付く"
+        },
+        {
+          "wordId": 1611350,
+          "readingIndex": 0,
+          "reading": "引っ付く",
+          "readingFurigana": "引[ひ]っ付[つ]く",
+          "mainDefinition": "to stick to",
+          "frequencyRank": 33502,
+          "matchSurface": "付く"
+        }
+      ],
+      "usedInTotal": 167,
+      "languageSources": null,
+      "entryInfo": null,
+      "derivedFrom": null,
+      "derives": null,
+      "redundantVia": null
+    }
+  },
+  {
+    "label": "付く-kana-ranks",
+    "response": {
+      "global": {
+        "rank": 313,
+        "percentage": 67.31901483735612,
+        "amount": 15920
+      },
+      "byType": {
+        "1": {
+          "rank": 372,
+          "percentage": 73.70466516253096,
+          "amount": 2979
+        },
+        "9": {
+          "rank": 336,
+          "percentage": 66.733291685552,
+          "amount": 1171
+        },
+        "10": {
+          "rank": 542,
+          "percentage": 92.5925925925926,
+          "amount": 10
+        },
+        "11": {
+          "rank": 361,
+          "percentage": 54.90872675940784,
+          "amount": 55
+        },
+        "2": {
+          "rank": 355,
+          "percentage": 68.80043139129808,
+          "amount": 2825
+        },
+        "3": {
+          "rank": 332,
+          "percentage": 80.41443743477458,
+          "amount": 2209
+        },
+        "4": {
+          "rank": 286,
+          "percentage": 64.9573910515922,
+          "amount": 3383
+        },
+        "5": {
+          "rank": 300,
+          "percentage": 68.50897170791207,
+          "amount": 102
+        },
+        "6": {
+          "rank": 299,
+          "percentage": 67.472664284941,
+          "amount": 380
+        },
+        "7": {
+          "rank": 394,
+          "percentage": 58.94124232562372,
+          "amount": 2768
+        },
+        "8": {
+          "rank": 520,
+          "percentage": 54.12617767473981,
+          "amount": 38
+        }
+      },
+      "resolved": {
+        "source": "global",
+        "rank": 313,
+        "isFallback": false
+      }
+    }
+  }
+]

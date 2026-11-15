@@ -1,0 +1,282 @@
+{
+  "version": "anime-manga-v3",
+  "date": "2026-11-13",
+  "candidateRule": "rank <= 1000 in EITHER anime or manga, followed by editorial review",
+  "candidateForms": 1161,
+  "coreTeachingGroups": 777,
+  "grammarSurfaceRoots": 230,
+  "mergedVariants": 100,
+  "deferredFragments": 54,
+  "partition": {
+    "grammar": 230,
+    "core": 777,
+    "alias": 100,
+    "defer": 54
+  },
+  "coreSurfaceFormsIncludingMerged": 865,
+  "grammarSurfaceFormsIncludingMerged": 242,
+  "publisherMediaSnapshot": {
+    "Anime": 3863,
+    "Manga": 1279
+  },
+  "inputs": {
+    "anime": {
+      "csvRows": 213416,
+      "formReadingKeys": 212580
+    },
+    "manga": {
+      "csvRows": 273493,
+      "formReadingKeys": 272728
+    }
+  },
+  "rankBoundarySensitivityBeforeEditorialReview": {
+    "500": 568,
+    "750": 857,
+    "1000": 1161,
+    "1500": 1749,
+    "2000": 2362
+  },
+  "duplicateRankKeysInCandidates": [
+    {
+      "term": "一",
+      "reading": "いち",
+      "ranks": {
+        "anime": [
+          1194,
+          121326
+        ],
+        "manga": [
+          192,
+          67936
+        ]
+      }
+    },
+    {
+      "term": "一番",
+      "reading": "いちばん",
+      "ranks": {
+        "anime": [
+          457,
+          112959
+        ],
+        "manga": [
+          239
+        ]
+      }
+    },
+    {
+      "term": "上",
+      "reading": "うえ",
+      "ranks": {
+        "anime": [
+          286
+        ],
+        "manga": [
+          242,
+          212730
+        ]
+      }
+    },
+    {
+      "term": "世界",
+      "reading": "せかい",
+      "ranks": {
+        "anime": [
+          200,
+          125224
+        ],
+        "manga": [
+          235
+        ]
+      }
+    },
+    {
+      "term": "元",
+      "reading": "もと",
+      "ranks": {
+        "anime": [
+          604,
+          43703
+        ],
+        "manga": [
+          559,
+          36537
+        ]
+      }
+    },
+    {
+      "term": "円",
+      "reading": "えん",
+      "ranks": {
+        "anime": [
+          1736
+        ],
+        "manga": [
+          438,
+          200116
+        ]
+      }
+    },
+    {
+      "term": "口",
+      "reading": "くち",
+      "ranks": {
+        "anime": [
+          652
+        ],
+        "manga": [
+          492,
+          212730
+        ]
+      }
+    },
+    {
+      "term": "子",
+      "reading": "こ",
+      "ranks": {
+        "anime": [
+          199,
+          178199
+        ],
+        "manga": [
+          147,
+          129338
+        ]
+      }
+    },
+    {
+      "term": "巻",
+      "reading": "かん",
+      "ranks": {
+        "anime": [
+          11981,
+          45995
+        ],
+        "manga": [
+          424,
+          6898
+        ]
+      }
+    },
+    {
+      "term": "所",
+      "reading": "ところ",
+      "ranks": {
+        "anime": [
+          374
+        ],
+        "manga": [
+          399,
+          107491
+        ]
+      }
+    },
+    {
+      "term": "時代",
+      "reading": "じだい",
+      "ranks": {
+        "anime": [
+          874
+        ],
+        "manga": [
+          822,
+          173151
+        ]
+      }
+    },
+    {
+      "term": "木",
+      "reading": "き",
+      "ranks": {
+        "anime": [
+          1625,
+          111540
+        ],
+        "manga": [
+          836
+        ]
+      }
+    },
+    {
+      "term": "東京",
+      "reading": "とうきょう",
+      "ranks": {
+        "anime": [
+          2343
+        ],
+        "manga": [
+          811,
+          203348
+        ]
+      }
+    },
+    {
+      "term": "東京都",
+      "reading": "とうきょうと",
+      "ranks": {
+        "anime": [
+          16573
+        ],
+        "manga": [
+          779,
+          166653
+        ]
+      }
+    },
+    {
+      "term": "正直",
+      "reading": "しょうじき",
+      "ranks": {
+        "anime": [
+          828,
+          178199
+        ],
+        "manga": [
+          700
+        ]
+      }
+    },
+    {
+      "term": "猫",
+      "reading": "ねこ",
+      "ranks": {
+        "anime": [
+          1667,
+          120857
+        ],
+        "manga": [
+          951
+        ]
+      }
+    },
+    {
+      "term": "邪魔",
+      "reading": "じゃま",
+      "ranks": {
+        "anime": [
+          491
+        ],
+        "manga": [
+          677,
+          212730
+        ]
+      }
+    },
+    {
+      "term": "間",
+      "reading": "あいだ",
+      "ranks": {
+        "anime": [
+          399,
+          137277
+        ],
+        "manga": [
+          335,
+          203348
+        ]
+      }
+    }
+  ],
+  "meaningChecks": "All selected teaching glosses read through; ambiguous つく/つける/すむ additionally checked against public dictionary API. Not every sense has independently measured frequency.",
+  "scope": "Selection is compiled into the current course; this builder reads only the editorial selection and source assets, not lessons or tests."
+}

@@ -1,0 +1,478 @@
+[
+  {
+    "id": "anime-barakamon-01",
+    "original_sha256": "42ecec0bbbe7123d3245a3bed233b67fb71caa5c48038ad7b1025d033cfa20c8",
+    "analysis_sha256": "aac75fcd35ed0c41d4534f659cf0970f821ceeb7788c6f0636baec35c1e804a7",
+    "removals": [
+      {
+        "text": "（館長）",
+        "count": 6,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（半田）",
+        "count": 6,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（川藤(かわふじ)）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（人々の悲鳴）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（メールの受信音）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（操作音）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（トラクターの\nエンジン音）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（耕作(こうさく)）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "(ななんだけ)",
+        "count": 1,
+        "reason": "ruby pronunciation duplicate"
+      },
+      {
+        "text": "♪～",
+        "count": 1,
+        "reason": "music-only caption"
+      },
+      {
+        "text": "～♪",
+        "count": 1,
+        "reason": "music-only caption"
+      },
+      {
+        "text": "半田",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "七ッ岳",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "anime-barakamon-02",
+    "original_sha256": "b56cc39e3ed98056da46cac85354f8cb2ffc84401b4cc9d8978f2c356728a6f8",
+    "analysis_sha256": "df245556a1bd6389199fa3178bc172795c5b41498d8fe1c9032d2690709abbef",
+    "removals": [
+      {
+        "text": "（郷長）",
+        "count": 3,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（なる）",
+        "count": 5,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（半田）",
+        "count": 2,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（鼻歌）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "半田",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "こといし なる",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "ジュノンボーイ",
+        "count": 3,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "なる",
+        "count": 3,
+        "reason": "three verified character-name body uses"
+      }
+    ]
+  },
+  {
+    "id": "anime-nozaki-01",
+    "original_sha256": "1a39844bc748298c53bd1ceaed5ee1e633838d7de7850fe71278482a08164392",
+    "analysis_sha256": "bd32e31e076784212136a675065047bdb7530a1f8cf28d1e1a1aeed4d690ad22",
+    "removals": [
+      {
+        "text": "（千代）",
+        "count": 4,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（野崎梅太郞(うめたろう)）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（野崎）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "(のざき)",
+        "count": 1,
+        "reason": "ruby pronunciation duplicate"
+      },
+      {
+        "text": "佐倉千代",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "野崎",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "anime-nozaki-02",
+    "original_sha256": "3811acf875f8845eff178b4a3a6dec94327ff2719e01583ae03913156984cf86",
+    "analysis_sha256": "cb743a7b1e59fed6d89f822ef53e54700eaa6cd7b8de640084277ee59c5cc43e",
+    "removals": [
+      {
+        "text": "（鈴木）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（野崎）",
+        "count": 4,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（千代）",
+        "count": 5,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（野崎･千代）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（学校のチャイム）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "佐倉",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "anime-bocchi-01",
+    "original_sha256": "c5a7003a09cae639faef55fbdb8ce722721fdf2fed896061a8a2bdce4d118778",
+    "analysis_sha256": "886be58cd5da0a364ce171796c98816cc804760dbccefd876a1ab5e7beb4eaca",
+    "removals": [
+      {
+        "text": "後藤ひとり",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "anime-bocchi-02",
+    "original_sha256": "06c733e2de7dfef0678ed420db53cecbd8136feaa0afa4538d4f22b2c1d061b2",
+    "analysis_sha256": "09e678eb24ecf836b76ce081e4237ff0d6f3882275fbf7cf374297d44e44bd0f",
+    "removals": [
+      {
+        "text": "ひとりちゃん",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "虹夏ちゃん",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "下北",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "anime-dungeonmeshi-01",
+    "original_sha256": "a74db403dd9cf4d4c278e9007f88160f12af1faee71d42553bd6455a3eab152a",
+    "analysis_sha256": "b823384c9b027cc2e3bc0cb940977caf68f8a7a6ddd0b82aa5d691f9e3f2499d",
+    "removals": [
+      {
+        "text": "（ナレーション）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（ドラゴンの咆哮(ほうこう)）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（ライオス）",
+        "count": 5,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（ナマリ）",
+        "count": 2,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（シュロー）",
+        "count": 2,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（マルシルたち）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      }
+    ]
+  },
+  {
+    "id": "anime-dungeonmeshi-02",
+    "original_sha256": "3d611d55cbce985436fd21313801ff5b70df58c2812d846a7141fa16ca810d5f",
+    "analysis_sha256": "091a7f5af434712f57297bf146074b82517202c005f1a5bb1b22893bccca337e",
+    "removals": [
+      {
+        "text": "（センシ）",
+        "count": 4,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（マルシル）",
+        "count": 5,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（ライオス）",
+        "count": 2,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "（チルチャック）",
+        "count": 1,
+        "reason": "speaker/sound caption, visually checked against selected cues"
+      },
+      {
+        "text": "(えいしょう)",
+        "count": 1,
+        "reason": "ruby pronunciation duplicate"
+      },
+      {
+        "text": "マルシル",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-nekodamashi-01",
+    "original_sha256": "4a65878e9fd910dde560825cdd32b81464e5fc36e9c825ccbc623280f1c633b3",
+    "analysis_sha256": "049ea1888daad38c0cf6cfdcb3d7bf321bd59212a89b6ec07c2ceb3b9c8e8c34",
+    "removals": [
+      {
+        "text": "ニャウロ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "コリーニオ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-nekodamashi-02",
+    "original_sha256": "d939f039eb6079addbd008ecf511b04688f78ea5b2e0f3e00870945c3876548c",
+    "analysis_sha256": "3433862a710e3c4e2a025f2b4aa1d65a07efedc8b6434118efbd05406220ae4f",
+    "removals": [
+      {
+        "text": "ニャウロ",
+        "count": 3,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "コリーニオ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "バウトーロ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "リバー",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-rentalfriend-01",
+    "original_sha256": "e29e7ab72ef6b6972b7e3f04473532a7de8f96d848a6cbb60208f4c898542e63",
+    "analysis_sha256": "8913f715e52fa5bfb2ff8314e57ba7192a5942732cebdbe197e89dbcf37bf747",
+    "removals": [
+      {
+        "text": "佳奈子",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-rentalfriend-02",
+    "original_sha256": "27ff3d706fa4c3a9a56baf8d1ccb274ef070ce8934cbe60f96afd7e60833dab5",
+    "analysis_sha256": "ff865b2f2ce2dd80cb6644d8a78ea7018db8a6c7e82161594487135afc81a381",
+    "removals": [
+      {
+        "text": "神田",
+        "count": 3,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-luna-01",
+    "original_sha256": "030ada3e93867c6aad85de934e591dfa1f62fdb00b5922997854ea0baf878734",
+    "analysis_sha256": "d3141708f41481f0da0423b88810aaa8720c79568756c67036c349a2791ab111",
+    "removals": [
+      {
+        "text": "ブロッケン山",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "まじょっこ☆プリンセス",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "トーキョー",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "ドイツ",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "日本",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "リリア",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "ルナ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-luna-02",
+    "original_sha256": "89ece2934e8e55b1b87cf57d1b470373d9efe0c179a093643a6061be06a5813a",
+    "analysis_sha256": "53f5a47c161cba57d84d1a8936089648b8d4939da5a28941de3528594bf2c31c",
+    "removals": [
+      {
+        "text": "ドイツ",
+        "count": 2,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "日本",
+        "count": 3,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "リリア",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "ルナ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "ゆりあ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "キメツ",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-tengokumate-01",
+    "original_sha256": "7c8a908cc0bd2ad06ef6c7bd009bb6f39df6cbfba4f39ab179edc56e4b9accff",
+    "analysis_sha256": "e536fcc23ba306381d3a87d7b297620ecafd57df487d9039ce1ba2f681ba4c53",
+    "removals": [
+      {
+        "text": "エイブリル",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "サタン",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      },
+      {
+        "text": "バエル",
+        "count": 1,
+        "reason": "named character/place/work title, not general vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "manga-tengokumate-02",
+    "original_sha256": "5f4634ba40b8bffb7a005f4337a560de03db82c70ce7621945b500516bb53df3",
+    "analysis_sha256": "5f4634ba40b8bffb7a005f4337a560de03db82c70ce7621945b500516bb53df3",
+    "removals": []
+  }
+]
