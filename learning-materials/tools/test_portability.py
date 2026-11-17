@@ -30,7 +30,12 @@ class Portability(unittest.TestCase):
                               capture_output=True, text=True, env=env)
 
     def copy_frozen_inputs(self):
-        paths = set(workspace.read(ROUND / 'run.json')['files_before_evaluation'])
+        frozen = workspace.read(ROUND / 'run.json')['files_before_evaluation']
+        paths = set(frozen)
+        # The active course is now v4. Historical replay must use the retained
+        # v3 snapshot, never copy today's lessons and call them frozen v3.
+        snapshot = ROOT / '04-evaluation/round-07/before'
+        snapshot_files = workspace.read(snapshot / 'manifest.json')['files']
         paths.update(['tools/coverage_vocabulary.py', '01-materials/vocabulary-scope/sources.json',
                       '01-materials/vocabulary-scope/sources/anime.csv.gz',
                       '01-materials/vocabulary-scope/sources/manga.csv.gz',
@@ -38,10 +43,14 @@ class Portability(unittest.TestCase):
         for relative in paths:
             dest = self.directory / relative
             dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(ROOT / relative, dest)
+            source = snapshot / relative if relative in snapshot_files else ROOT / relative
+            if relative in frozen:
+                self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), frozen[relative])
+            shutil.copyfile(source, dest)
 
     def test_replay_matches_every_historical_sample(self):
-        result = self.audit()
+        self.copy_frozen_inputs()
+        result = self.audit(learning=self.directory)
         self.assertEqual(result.returncode, 0, result.stderr)
         expected = workspace.read(ROUND / 'lexical-results.json')
         actual = workspace.read(self.directory / 'result.json')
@@ -51,11 +60,12 @@ class Portability(unittest.TestCase):
         self.assertFalse(actual['student_test_performed'])
 
     def test_changed_feature_counts_are_rejected(self):
+        self.copy_frozen_inputs()
         data = workspace.read(ROUND / 'coverage-features.json')
         data['samples'][0]['features'][0]['count'] += 1
         changed = self.directory / 'changed.json'
         changed.write_text(json.dumps(data), encoding='utf-8')
-        result = self.audit(changed)
+        result = self.audit(changed, learning=self.directory)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('Frozen feature file changed', result.stderr)
 

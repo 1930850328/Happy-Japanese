@@ -1,0 +1,32 @@
+{
+  "type": "editorial_course_constrained_reading_simulation",
+  "new_holdout": false,
+  "real_student_test": false,
+  "files": {
+    "02-course-design/inventory.json": "7c3c0eadecfa2e3a356914e25903febb03b5800fe4e7fd0a00affef9eb714ae2",
+    "02-course-design/lessons/01.md": "9ae8f013f05db679dd9ca27dad0a4880c63e888d2a95f05bfd858e6384d325d3",
+    "02-course-design/lessons/02.md": "04c989016ecb6d124be5cd51a81a9369a37efdf9a4798ab4d4b569efeba3c829",
+    "02-course-design/lessons/03.md": "680fc7e82a33050fc44b2ecac1048ff77776f50fdd028abe79add21d824bf744",
+    "02-course-design/lessons/04.md": "0dbd1660c09b4f045ecc48f6f7a430acb1433610924cba6e9376a187f3fd78cc",
+    "02-course-design/lessons/05.md": "35e49490154337e7d9669349aeabebfe0952c22024224da7deb306d2abc4f937",
+    "02-course-design/lessons/06.md": "aa74f823e65cee3e760bda9a86177973386db8753b506009ab7f9971398f2550",
+    "02-course-design/lessons/07.md": "5fffc28779490b4e0f735e4f222a200f2cba3f1f0c87215bb4bd41e1bb6f05cb",
+    "02-course-design/lessons/08.md": "42f44e42edbfb242701f36bb4862daf0e20f319f2e7efb3264b4798832de87f3",
+    "02-course-design/lessons/09.md": "03dbd23061d6f98fb5c86e33163056e101b12257935d42b7f32193e5c5764bbf",
+    "02-course-design/lessons/10.md": "9478b9dc2595825421a2bbc9d2ecc6e56cdf3b95cdefdc8c319814c513fd8a3b",
+    "02-course-design/lessons/11.md": "62b431a6c865912b77337f3cdeacc00a8b8720123922270eb8f179382b04fbed",
+    "02-course-design/lessons/12.md": "6d18b3336cccfd23bb6887a580d78214f08c66cdb401bf032116167ee0b3f3f7",
+    "02-course-design/lessons/13.md": "1ae1da54acf9bd3995f29454a9a696967ea6c5db7059faf3129470bb06202a3b",
+    "02-course-design/lessons/14.md": "420def75f4779f42c661a49b1f8ea66d8aeadc86acc0e7e1c5b550f7da491bed",
+    "02-course-design/lessons/15.md": "b50845c76215f40415ab5796de943da5bc65441ef9b62e296d85e3aeb84ea513",
+    "02-course-design/lessons/16.md": "ee17f0b9c2528d3b17fa2ef5ceaf3241e46c2bd9ae4215f48d26d87ad08e9984",
+    "02-course-design/lessons/17.md": "3390ff4889a6a1fd02f3b2ab5ca4640530a97bade0c4a0a5b37535279a5ffe47",
+    "02-course-design/lessons/18.md": "04436df356bd3b9b999e3f1ac104bd27c13b984ab01e73ada39ae9ebfa9ac832",
+    "02-course-design/lessons/19.md": "3e413d6580dee21b0c6ce2e69425424bf2ffd921a4a25346fdc2debd747cc849",
+    "02-course-design/lessons/20.md": "a187e96200ff9d4db7191e7c099b6538583339c77916fee55e186907c2bf6449",
+    "02-course-design/lessons/21.md": "1fd4b22dba798c53537cd8df1e1bb39604beab9194a7a884568bb612ec230f89",
+    "04-evaluation/round-06/samples.json": "9a84c6285c78c7cd19e9aafb0f52b1976ba9c1e817d91a6eeb790a531c716fec",
+    "04-evaluation/round-06/sources.json": "d7151359b237f83487529ab0014a56083f6317050ede35f5f787d2500ce15660",
+    "04-evaluation/round-06/reading-simulation/PROTOCOL.md": "1766f903b3b2a2e5f035710b55dac1be63e4a7db80215ce1a7c110da887f0d99"
+  }
+}

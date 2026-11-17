@@ -29,10 +29,7 @@
     'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
     'Noto Sans JP', sans-serif;
   color: var(--text);
-  background:
-    linear-gradient(135deg, rgba(210, 224, 216, 0.82) 0%, rgba(210, 224, 216, 0) 34%),
-    linear-gradient(225deg, rgba(207, 225, 237, 0.62) 0%, rgba(207, 225, 237, 0) 32%),
-    linear-gradient(180deg, #f7f8f4 0%, #f2f5ef 58%, #edf2ec 100%);
+  background: #f8f9f5;
   font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -65,11 +62,7 @@ body::after {
 }
 
 body::before {
-  background-image:
-    linear-gradient(rgba(46, 63, 55, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(46, 63, 55, 0.035) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.68), transparent 82%);
+  display: none;
 }
 
 body::after {

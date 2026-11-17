@@ -2,17 +2,22 @@ import { expect, test, type Page } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 
 import { courseLessons, courseNodeMap, courseStages } from '../src/data/courseCatalog'
-import { advanceCourseForLiteracy, createEmptyCourseState, isLessonAvailable, prepareCourseQuestions, startCourseAtStage, submitLessonAttempt } from '../src/lib/courseEngine'
+import { advanceCourseForLiteracy, createEmptyCourseState, isLessonAvailable, prepareAdaptiveLessonQuestions, prepareCourseQuestions, startCourseAtStage, submitLessonAttempt } from '../src/lib/courseEngine'
 import { selectStudyBatch, type VocabularyEntry } from '../src/lib/curriculumContent'
 import { getLiteracyReadiness, isStableLiteracyItem, recordLiteracyAnswer, recordReadingAttempt } from '../src/lib/literacyEngine'
 
-async function answerQuestions(page: Page, answersByPrompt: Record<string, string>, count: number) {
-  for (let index = 0; index < count; index += 1) {
-    const prompt = (await page.locator('main h2').last().textContent())?.trim() ?? ''
-    const answer = answersByPrompt[prompt]
-    expect(answer, `missing answer for ${prompt}`).toBeTruthy()
-    await page.locator(`[data-option-value=${JSON.stringify(answer)}]`).click()
-    await page.getByRole('button', { name: index === count - 1 ? /查看结果/ : /下一题/ }).click()
+async function answerFirstLegacyLesson(page: Page) {
+  const lesson = courseLessons[0]
+  const questions = prepareAdaptiveLessonQuestions(lesson, createEmptyCourseState(), `${lesson.id}:0`)
+  for (const [index, question] of questions.entries()) {
+    await expect(page.getByTestId('course-practice').getByRole('heading')).toHaveText(question.prompt)
+    if (question.interaction === 'input') {
+      await page.getByPlaceholder('输入罗马音，不区分大小写').fill(question.acceptableAnswers![0])
+      await page.getByRole('button', { name: '检查答案', exact: true }).click()
+    } else {
+      await page.locator(`[data-option-value=${JSON.stringify(question.options[question.answerIndex])}]`).click()
+    }
+    await page.getByRole('button', { name: index === questions.length - 1 ? /查看结果/ : /下一题/ }).click()
   }
 }
 
@@ -73,11 +78,11 @@ test('new learner can finish the first course and resume the next step after rel
       body: JSON.stringify({ translations: (body.texts ?? []).map((text) => `中文：${text}`) }),
     })
   })
-  await page.goto('/')
+  await page.goto('/learn')
 
   await expect(page.getByRole('heading', { name: /不再收藏知识/ })).toBeVisible()
   await page.getByRole('button', { name: /我从零开始/ }).click()
-  await expect(page.getByRole('heading', { name: '沿着一条路，今天再前进一步' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '今天只专注下一步' })).toBeVisible()
   await expect(page.getByText('学会第一组平假名').first()).toBeVisible()
 
   await page.getByRole('link', { name: /开始今天的主课/ }).click()
@@ -87,14 +92,7 @@ test('new learner can finish the first course and resume the next step after rel
   await page.getByPlaceholder('输入罗马音').fill('a')
   await page.getByRole('button', { name: '检查回答' }).click()
   await page.getByRole('button', { name: /开始检测/ }).click()
-  await answerQuestions(page, {
-    '「あ」的读音是？': 'a',
-    '「い」的读音是？': 'i',
-    '「う」的读音是？': 'u',
-    '「え」的读音是？': 'e',
-    '「お」的读音是？': 'o',
-    '「いえ」应该怎样读？': 'ie',
-  }, 6)
+  await answerFirstLegacyLesson(page)
 
   await expect(page.getByTestId('lesson-result')).toContainText('你已经完成本课')
   await page.getByRole('link', { name: /进入下一课/ }).click()
@@ -105,10 +103,10 @@ test('new learner can finish the first course and resume the next step after rel
   await expect(page.getByText('读出か行').first()).toBeVisible()
 
   await page.reload()
-  await expect(page.getByRole('heading', { name: '沿着一条路，今天再前进一步' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '今天只专注下一步' })).toBeVisible()
   await expect(page.getByText('读出か行').first()).toBeVisible()
 
-  await page.getByRole('link', { name: '能力训练' }).click()
+  await page.getByRole('link', { name: /能力训练.*只练/ }).click()
   await expect(page.getByRole('heading', { name: '先理解，再遮住回忆' })).toBeVisible()
   await expect(page.getByTestId('literacy-practice')).toContainText('假名读音')
   await page.getByRole('button', { name: /遮住答案，开始回忆/ }).click()
@@ -116,7 +114,8 @@ test('new learner can finish the first course and resume the next step after rel
 })
 
 test('a fresh installation creates its own cloud profile instead of sharing another learner state', async ({ page, browser }) => {
-  await page.goto('/')
+  await page.route('**/api/app-state**', (route) => route.fulfill({ json: { state: null, ok: true } }))
+  await page.goto('/learn')
 
   await expect(page.getByRole('button', { name: /我从零开始/ })).toBeVisible()
   const storedProfileId = await page.evaluate(() => localStorage.getItem('yuru-nihongo-cloud-profile-id'))
@@ -125,7 +124,8 @@ test('a fresh installation creates its own cloud profile instead of sharing anot
 
   const secondContext = await browser.newContext()
   const secondPage = await secondContext.newPage()
-  await secondPage.goto('/')
+  await secondPage.route('**/api/app-state**', (route) => route.fulfill({ json: { state: null, ok: true } }))
+  await secondPage.goto('/learn')
   await expect(secondPage.getByRole('button', { name: /我从零开始/ })).toBeVisible()
   const secondProfileId = await secondPage.evaluate(() => localStorage.getItem('yuru-nihongo-cloud-profile-id'))
   expect(secondProfileId).toBeTruthy()
@@ -135,7 +135,7 @@ test('a fresh installation creates its own cloud profile instead of sharing anot
 
 test('placement immediately assigns a conservative course entry', async ({ page }) => {
   await useCourseProfile(page, 'course-placement')
-  await page.goto('/')
+  await page.goto('/learn')
 
   await page.getByRole('button', { name: /先定位水平/ }).click()
   await expect(page.getByTestId('placement-panel')).toBeVisible()
@@ -148,7 +148,7 @@ test('placement immediately assigns a conservative course entry', async ({ page 
     await page.locator(`[data-option-value=${JSON.stringify(selected)}]`).click()
   }
 
-  await expect(page.getByRole('heading', { name: '沿着一条路，今天再前进一步' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '今天只专注下一步' })).toBeVisible()
   await expect(page.getByText('学会第一组平假名').first()).toBeVisible()
 })
 
@@ -185,7 +185,9 @@ test('the main curriculum remains complete, sequential and assessment-ready', ()
     expect(lesson.questions.length).toBeGreaterThanOrEqual(3)
     expect(lesson.nodeIds.every((nodeId) => courseNodeMap.has(nodeId))).toBe(true)
     expect(lesson.questions.every((question) => new Set(question.options).size === question.options.length)).toBe(true)
-    expect(lesson.questions.every((question) => question.options.length === 4)).toBe(true)
+    expect(lesson.questions.every((question) => question.interaction === 'input'
+      ? question.options.length === 0 && Boolean(question.acceptableAnswers?.length)
+      : question.options.length === 4)).toBe(true)
     expect(lesson.prerequisiteLessonIds).toEqual(index === 0 ? [] : [courseLessons[index - 1].id])
   })
 })

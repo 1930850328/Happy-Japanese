@@ -1,0 +1,9 @@
+{
+  "files": {
+    "units.tsv": "e900ef7313707bbfaa928bec2ea958c92064c50872228f8a1936642d5c17d171",
+    "REVIEW.md": "644c40e9872ef72ef94cf8131165b2ec4e36dbf25d8c763624915adba27451fc",
+    "score.py": "e9b1f10e8e7ef3fc41885403b9ce413de77d0c5cd86c9f29119c006fbdaf5cd1",
+    "freeze.json": "e327dac51f7d78e0cf8e59d65f289f5ed091f7398335b48e55a4a642a45211fc"
+  },
+  "note": "Editorial judgments after evidence review; no independent learner or grader."
+}

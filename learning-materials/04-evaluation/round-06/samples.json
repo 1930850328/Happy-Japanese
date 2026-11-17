@@ -1,0 +1,513 @@
+[
+  {
+    "id": "chihaya-1",
+    "group": "chihaya",
+    "genre": "anime_subtitles",
+    "url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Chihayafuru/ちはやふる.S01E01.第一首.さくやこのはな.WEBRip.Netflix.ja[cc].srt",
+    "file": "chihaya-1.txt",
+    "characters": 402,
+    "sha256": "49ad30329a28499c8deff2aea2e7ea8eeb426d8800cf59ac059f871d4b322063",
+    "analysis_sha256": "7e55a52fa2a8d35229c8ee90633fc6c67c682f32afd3936f2f7b1cecba392f5a",
+    "masks": [
+      {
+        "text": "（女子部員）",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（女子生徒）",
+        "count": 3,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（男子生徒）",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（堀川）",
+        "count": 5,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（千早）",
+        "count": 4,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（宮内）",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "ちーちゃん",
+        "count": 2,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      }
+    ],
+    "locator": {
+      "kind": "cue_numbers_inclusive",
+      "start": 31,
+      "end": 55
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "chihaya-2",
+    "group": "chihaya",
+    "genre": "anime_subtitles",
+    "url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Chihayafuru/ちはやふる.S01E01.第一首.さくやこのはな.WEBRip.Netflix.ja[cc].srt",
+    "file": "chihaya-2.txt",
+    "characters": 411,
+    "sha256": "7860511eceda60ae500930fdb149406c0fecb6bb18a1b31bb4a74b9421bac476",
+    "analysis_sha256": "778c67e85d6e820cc92da34d8a1fa50aaa89e66b20ae91bae8fbad925be8fb13",
+    "masks": [
+      {
+        "text": "（女子児童たちの笑い声）",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（女子児童）",
+        "count": 6,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（男子児童）",
+        "count": 6,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "(わたや)",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（太一）",
+        "count": 4,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（千早）",
+        "count": 3,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "ちーちゃん",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "綿谷",
+        "count": 2,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "福井",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      }
+    ],
+    "locator": {
+      "kind": "cue_numbers_inclusive",
+      "start": 151,
+      "end": 175
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "anohana-1",
+    "group": "anohana",
+    "genre": "anime_subtitles",
+    "url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Ano%20Hi%20Mita%20Hana%20no%20Namae%20wo%20Bokutachi%20wa%20Mada%20Shiranai/あの日見た花の名前を僕達はまだ知らない。.S01E01.超平和バスターズ.WEBRip.Netflix.ja[cc].srt",
+    "file": "anohana-1.txt",
+    "characters": 420,
+    "sha256": "3d916577d8d350bd62853948c89ec6e956a4a1edcfd02bfaef6e0180d13b92f1",
+    "analysis_sha256": "b3b6dc7df83a8febb0685a97e8e923b03a9f8b7d4b02e0c7739f23884928bef5",
+    "masks": [
+      {
+        "text": "（じんたん）",
+        "count": 4,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（めんま）",
+        "count": 2,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "(じんた)",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（篤）",
+        "count": 8,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "めんま",
+        "count": 2,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "仁太",
+        "count": 2,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      }
+    ],
+    "locator": {
+      "kind": "cue_numbers_inclusive",
+      "start": 31,
+      "end": 55
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "anohana-2",
+    "group": "anohana",
+    "genre": "anime_subtitles",
+    "url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Ano%20Hi%20Mita%20Hana%20no%20Namae%20wo%20Bokutachi%20wa%20Mada%20Shiranai/あの日見た花の名前を僕達はまだ知らない。.S01E01.超平和バスターズ.WEBRip.Netflix.ja[cc].srt",
+    "file": "anohana-2.txt",
+    "characters": 337,
+    "sha256": "2aa1ffa72b9fa9529e7f9fc54aa64492377b5ea0ace75609c2875e7cbd183759",
+    "analysis_sha256": "8fa13a818ab2c16efadb397307b2ad251c637946bb91929b57919f4f33a1b8ab",
+    "masks": [
+      {
+        "text": "(あんじょう)",
+        "count": 2,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（チャイム）",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（じんたん）",
+        "count": 4,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（めんま）",
+        "count": 8,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "（あなる）",
+        "count": 1,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "安城",
+        "count": 2,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      },
+      {
+        "text": "あなる",
+        "count": 3,
+        "reason": "speaker/ruby/proper name or non-speech annotation"
+      }
+    ],
+    "locator": {
+      "kind": "cue_numbers_inclusive",
+      "start": 151,
+      "end": 175
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "slime-1",
+    "group": "slime",
+    "genre": "light_novel",
+    "url": "https://ncode.syosetu.com/n6316bn/1/",
+    "file": "slime-1.txt",
+    "characters": 236,
+    "sha256": "d7b55670ab674336e9da4a2970cc8a2af68f28dec21cb26d9f3ab72c59b8d430",
+    "analysis_sha256": "d7b55670ab674336e9da4a2970cc8a2af68f28dec21cb26d9f3ab72c59b8d430",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 0,
+      "end": 5
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "slime-2",
+    "group": "slime",
+    "genre": "light_novel",
+    "url": "https://ncode.syosetu.com/n6316bn/1/",
+    "file": "slime-2.txt",
+    "characters": 273,
+    "sha256": "079c38541802e49f44dddca9f63471e111139e38f0688396d9f81adedc0e6091",
+    "analysis_sha256": "079c38541802e49f44dddca9f63471e111139e38f0688396d9f81adedc0e6091",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 16,
+      "end": 23
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "mushoku-1",
+    "group": "mushoku",
+    "genre": "light_novel",
+    "url": "https://ncode.syosetu.com/n9669bk/1/",
+    "file": "mushoku-1.txt",
+    "characters": 252,
+    "sha256": "c76d729a34300b13b7abfb7d395148cc70812cd08469085bd60bb5daa3a509ac",
+    "analysis_sha256": "c76d729a34300b13b7abfb7d395148cc70812cd08469085bd60bb5daa3a509ac",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 0,
+      "end": 10
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "mushoku-2",
+    "group": "mushoku",
+    "genre": "light_novel",
+    "url": "https://ncode.syosetu.com/n9669bk/1/",
+    "file": "mushoku-2.txt",
+    "characters": 233,
+    "sha256": "7afb1de22ad58fb6eac9c7aa28a8071d32939338b7f51795ff256388e029a48a",
+    "analysis_sha256": "7afb1de22ad58fb6eac9c7aa28a8071d32939338b7f51795ff256388e029a48a",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 25,
+      "end": 34
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "japanpost-1",
+    "group": "japanpost",
+    "genre": "everyday_instruction",
+    "url": "https://www.post.japanpost.jp/question/66.html",
+    "file": "japanpost-1.txt",
+    "characters": 402,
+    "sha256": "b42a5b204b7e6bcc991bd87972b8d6b1893391a4cc1877315387044187c62435",
+    "analysis_sha256": "b42a5b204b7e6bcc991bd87972b8d6b1893391a4cc1877315387044187c62435",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 0,
+      "end": 3
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "japanpost-2",
+    "group": "japanpost",
+    "genre": "everyday_instruction",
+    "url": "https://www.post.japanpost.jp/question/66.html",
+    "file": "japanpost-2.txt",
+    "characters": 245,
+    "sha256": "9c106a93f06614b5f69981f68ab73dee1ef7aa3d2fc6edaad49d1695f7c4fbb3",
+    "analysis_sha256": "9c106a93f06614b5f69981f68ab73dee1ef7aa3d2fc6edaad49d1695f7c4fbb3",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 6,
+      "end": 22
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "jrwest-1",
+    "group": "jrwest",
+    "genre": "everyday_instruction",
+    "url": "https://www.jr-odekake.net/ticket/eki/change/",
+    "file": "jrwest-1.txt",
+    "characters": 235,
+    "sha256": "eba0d49676e1b2c3b47740b547c65ac6047db244999460ea91224309bfd8b9b7",
+    "analysis_sha256": "eba0d49676e1b2c3b47740b547c65ac6047db244999460ea91224309bfd8b9b7",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 0,
+      "end": 7
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "jrwest-2",
+    "group": "jrwest",
+    "genre": "everyday_instruction",
+    "url": "https://www.jr-odekake.net/ticket/eki/change/",
+    "file": "jrwest-2.txt",
+    "characters": 231,
+    "sha256": "7febb4803d1966faa179ffac58e0cc8791938af6b108e37c41d0be85ba25fdda",
+    "analysis_sha256": "7febb4803d1966faa179ffac58e0cc8791938af6b108e37c41d0be85ba25fdda",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 7,
+      "end": 13
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "jma-1",
+    "group": "jma",
+    "genre": "nonfiction",
+    "url": "https://www.jma.go.jp/jma/kishou/know/faq/faq13.html",
+    "file": "jma-1.txt",
+    "characters": 454,
+    "sha256": "33fe47db45439295c096c6109694f47d1a50df9493def60f6db3c256012d67d4",
+    "analysis_sha256": "33fe47db45439295c096c6109694f47d1a50df9493def60f6db3c256012d67d4",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 0,
+      "end": 4
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "jma-2",
+    "group": "jma",
+    "genre": "nonfiction",
+    "url": "https://www.jma.go.jp/jma/kishou/know/faq/faq13.html",
+    "file": "jma-2.txt",
+    "characters": 327,
+    "sha256": "720382df6a31afd27d1afae5332958eee00b80aa5fce4c02abe3095586c74ca1",
+    "analysis_sha256": "720382df6a31afd27d1afae5332958eee00b80aa5fce4c02abe3095586c74ca1",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 6,
+      "end": 8
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "terada-1",
+    "group": "terada",
+    "genre": "nonfiction",
+    "url": "https://www.aozora.gr.jp/cards/000042/files/2363_13807.html",
+    "file": "terada-1.txt",
+    "characters": 457,
+    "sha256": "2b17a65f72e34c1c12110eab83df16b8884185aeafc878e1c8ef266c36fd6fab",
+    "analysis_sha256": "2b17a65f72e34c1c12110eab83df16b8884185aeafc878e1c8ef266c36fd6fab",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 0,
+      "end": 2
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "terada-2",
+    "group": "terada",
+    "genre": "nonfiction",
+    "url": "https://www.aozora.gr.jp/cards/000042/files/2363_13807.html",
+    "file": "terada-2.txt",
+    "characters": 227,
+    "sha256": "f67a21779de7dbe1d11da0bbb01387e7554eac9c6c6be5c5544427ae4d0ff93a",
+    "analysis_sha256": "f67a21779de7dbe1d11da0bbb01387e7554eac9c6c6be5c5544427ae4d0ff93a",
+    "masks": [],
+    "locator": {
+      "kind": "normalized_paragraph_indices_half_open",
+      "start": 3,
+      "end": 4
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "tsuredure-pair1",
+    "group": "tsuredure",
+    "genre": "manga",
+    "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/",
+    "file": "tsuredure-pair1.txt",
+    "characters": 36,
+    "sha256": "c3dad28aa785475a88ee825ff1d6cb98aba281cf1a55c31048312491063cbf45",
+    "analysis_sha256": "c3dad28aa785475a88ee825ff1d6cb98aba281cf1a55c31048312491063cbf45",
+    "masks": [],
+    "locator": {
+      "kind": "numbered_pages_inclusive",
+      "start": 1,
+      "end": 2
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "tsuredure-pair2",
+    "group": "tsuredure",
+    "genre": "manga",
+    "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/",
+    "file": "tsuredure-pair2.txt",
+    "characters": 138,
+    "sha256": "21c317dc6941275a66c50ea56d36b43e8c2def4fdbe2ab4d8ce48126d61483be",
+    "analysis_sha256": "25383f0d2927baed4797f51d4a3e0085c7a8765c9637ceda29616ec810393145",
+    "masks": [
+      {
+        "text": "高瀬",
+        "count": 1,
+        "reason": "proper name"
+      }
+    ],
+    "locator": {
+      "kind": "numbered_pages_inclusive",
+      "start": 3,
+      "end": 4
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "yojouhan-pair1",
+    "group": "yojouhan",
+    "genre": "manga",
+    "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/",
+    "file": "yojouhan-pair1.txt",
+    "characters": 205,
+    "sha256": "c02fe95c16bcb9c39aa36dbe170263871ee9edbf01cbe5fb73a0f91a66d7c38a",
+    "analysis_sha256": "05856452a466ac3d5c50bda8078ae73b42c5d4dc8a140d200234d8a68bbe2e08",
+    "masks": [
+      {
+        "text": "クラウディア・ニコラス",
+        "count": 1,
+        "reason": "proper name"
+      },
+      {
+        "text": "クラウディア",
+        "count": 1,
+        "reason": "proper name"
+      },
+      {
+        "text": "ライフォンス",
+        "count": 1,
+        "reason": "proper name"
+      }
+    ],
+    "locator": {
+      "kind": "numbered_pages_inclusive",
+      "start": 1,
+      "end": 2
+    },
+    "split": "regression_after_this_run"
+  },
+  {
+    "id": "yojouhan-pair2",
+    "group": "yojouhan",
+    "genre": "manga",
+    "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/",
+    "file": "yojouhan-pair2.txt",
+    "characters": 190,
+    "sha256": "bbae2d7ed6f1bd55ba62eb8b0360a127c7794fb4f12d4168b738349761b12e57",
+    "analysis_sha256": "bbae2d7ed6f1bd55ba62eb8b0360a127c7794fb4f12d4168b738349761b12e57",
+    "masks": [],
+    "locator": {
+      "kind": "numbered_pages_inclusive",
+      "start": 3,
+      "end": 4
+    },
+    "split": "regression_after_this_run"
+  }
+]

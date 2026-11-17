@@ -2,6 +2,26 @@
 
 这是独立于网站运行的课程工作区。课程、选词决策、历史评估、词频快照和工具均由 Git 管理；无需 Vercel、数据库、账号密钥或前端应用依赖。
 
+**当前工作：已编成[21天阅读入门v4](02-course-design/README.md)。** 当前选词、课文、检查和新文本诊断见[第7轮](04-evaluation/round-07/README.md)。1355组方案保留作资料池，不是整包必学内容。
+
+### 历史审查与旧课怎样恢复
+
+05-curriculum-audit、reading-scope和第6轮模拟冻结的是v3，改课后直接在当前目录执行其检查会拒绝，这是保护历史结果。第7轮的 `before/manifest.json` 与相对路径快照保存了改版前的26份课文/索引/选词文件。需要复算旧审查时，先复制仓库到**独立临时目录**，按manifest逐项校验SHA-256，再将before中的文件覆盖到这个临时目录的learning-materials对应位置；勿覆盖当前工作区。其余依赖照原setup恢复。恢复后可运行旧build/score的--check。当前版本仅运行下面的当前检查与回归。
+
+历史测试见[第6轮跨体裁结果](04-evaluation/round-06/README.md)。完成下方setup后，用以下命令离线复算本轮20段、10来源的三个冻结范围；无需原文缓存，但不能用于任意新词表或理解率评分：
+
+```sh
+node learning-materials/04-evaluation/round-06/evaluate.cjs --features --check
+```
+
+历史[新手阅读模拟](04-evaluation/round-06/reading-simulation/README.md)需要先按上文恢复v3到独立目录，再复算既有判断的计分，无需原文缓存：
+
+```sh
+python3 learning-materials/04-evaluation/round-06/reading-simulation/score.py --check
+```
+
+这条命令验证已登记的模型模拟判断和算术，不会重新生成独立答卷。
+
 ## 首次下载与安装
 
 安装 **Python 3.10+、Node.js 20+（含 npm）、Git**。macOS 的系统 `python3` 可能仍是3.9，此时下面用已安装的 `python3.11` 等替代。命令从仓库根目录执行，也支持把脚本路径写成绝对路径。
@@ -11,7 +31,7 @@ git clone https://github.com/1930850328/Happy-Japanese.git
 cd Happy-Japanese
 python3 learning-materials/tools/workspace.py setup
 python3 learning-materials/tools/workspace.py check
-python3 learning-materials/tools/workspace.py regression
+python3 learning-materials/tools/workspace.py regression --current
 ```
 
 已有仓库先 `git pull --ff-only`，再执行后三条。setup 创建本目录 `.venv`，按锁定版本安装 Python 和 Node 依赖，并按 `01-materials/sources-manifest.json` 下载、核对教材原件，生成 `data/`、`reader/`。使用公开 PyPI/npm 源，不依赖公司内网镜像。第一次需要联网；之后 check 和 regression 可离线执行。
@@ -21,8 +41,8 @@ python3 learning-materials/tools/workspace.py regression
 ## 能直接复现什么
 
 - **check**：重建材料一致性、筛词依据、21课正文与派生索引、当课用法、测试目录的引用和隔离组。测试目录以 `metadata_only` 明确标记，没有声称检查未下载的旧原文。
-- **regression**：以第5轮冻结课程，重算16段、8作品的全部词形匹配计数和聚合分数，并逐项比较历史原文结果。新课程48.144319637397665%，旧课程28.16422767877318%。这不是理解率。
-- 结果写入 `learning-materials/.cache/round-05-replay.json`，不会改历史结果文件。
+- **regression --current**：以当前v4课表重算第5轮16段、8作品的词形匹配；是曝光样本回归，不是新生肉理解率。无--current的历史重跑要求先在独立目录恢复v3。
+- 当前结果写入 `learning-materials/.cache/current-regression.json`，不会改历史结果文件。
 
 `coverage-features.json` 是无句序的分词特征计数：保存词形、词元、词性、可匹配词形和次数，不保存完整句子、台词顺序或漫画转写。它由原文和既有掩码生成，并有来源哈希、文件哈希与固定词频词形集合约束。原文输入运行与统计输入运行共用匹配含义和聚合实现，已逐段对照。
 
@@ -34,7 +54,7 @@ python3 learning-materials/tools/workspace.py regression
 python3 learning-materials/tools/workspace.py fetch-tests
 ```
 
-脚本按现有来源清单下载12份日文SRT、32张外部漫画原图到 `.cache/test-assets/`，校验原文件哈希、字幕范围和时间码、图像哈希。可直接用编辑器读SRT、用图片查看器读漫画；对应范围和官方入口见 [原文目录](03-test-set/CATALOG.md)。
+脚本按现有来源清单下载14份日文SRT、40张外部漫画原图到 `.cache/test-assets/`，校验原文件哈希、字幕范围和时间码、图像哈希。可直接用编辑器读SRT、用图片查看器读漫画；对应范围和官方入口见 [原文目录](03-test-set/CATALOG.md)。
 
 这些原件不上传公共仓库。第5轮8段漫画的完整人工转写未公开分发；要重新做句义评审，应打开原图，而不是从词形统计猜句子。若要重建完全一致的原文运行，仍需按 `transcript-manifest.json` 整理转写并匹配哈希。第1—4轮涉及的旧网页捕获及部分旧漫画转写也未全部迁移，**不能把本入口说成所有历史原文测试的一键复现**。
 
@@ -61,7 +81,7 @@ python learning-materials/tools/workspace.py regression --current
 
 `--current` 先检查当前正文与派生索引，再在**已经曝光的旧样本**上回归，输出 `.cache/current-regression.json`；不会把当前课改成第5轮冻结版本，也不会覆盖原成绩。不带 `--current` 的历史重跑要求课文仍等于第5轮快照；修改后拒绝历史重跑是正常保护，应在对应Git提交的独立检出中重跑历史。
 
-回归通过后，仍须遵守原工作流程：先review并冻结本次课程，再选**未用于本次修改的新系列**，读取真实字幕和漫画，登记连续范围及哈希，做同输入旧新对照和整句分析。记录新一轮结果后，将已使用的新样本转回归。当前78段均已曝光或作为开发材料，**没有剩余新保留集**。不得只在这16段上反复补词并称为新测试。
+回归通过后，仍须遵守原工作流程：先review并冻结本次课程，再选**未用于本次修改的新系列**，读取真实字幕和漫画，登记连续范围及哈希，做同输入旧新对照和整句分析。记录新一轮结果后，将已使用的新样本转回归。当前98段均已曝光或作为开发材料，**没有剩余新保留集**。不得只在这16段上反复补词并称为新测试。
 
 21天、每日不超过1小时仍是课程约束。不得把词形匹配率写成理解率，也不得把写入词表写成学生已掌握；每天学习负荷与真人效果仍待验证。
 

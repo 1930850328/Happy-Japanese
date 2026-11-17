@@ -1813,5 +1813,481 @@
     "annotation": "pending",
     "access": "external_original",
     "selection": "课程冻结后按首4张故事页固定分段；未按词频覆盖挑页。"
+  },
+  {
+    "id": "chihaya-1",
+    "source_id": "chihaya",
+    "split": "regression",
+    "title": "ちはやふる 第1話 / chihaya-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "49ad30329a28499c8deff2aea2e7ea8eeb426d8800cf59ac059f871d4b322063",
+    "characters": 401,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        31,
+        55
+      ],
+      "source_lines": [
+        134,
+        244
+      ],
+      "time_start": "00:01:22,165",
+      "time_end": "00:03:41,012"
+    }
+  },
+  {
+    "id": "chihaya-2",
+    "source_id": "chihaya",
+    "split": "regression",
+    "title": "ちはやふる 第1話 / chihaya-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "7860511eceda60ae500930fdb149406c0fecb6bb18a1b31bb4a74b9421bac476",
+    "characters": 410,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        151,
+        175
+      ],
+      "source_lines": [
+        664,
+        774
+      ],
+      "time_start": "00:08:30,718",
+      "time_end": "00:09:20,893"
+    }
+  },
+  {
+    "id": "anohana-1",
+    "source_id": "anohana",
+    "split": "regression",
+    "title": "あの日見た花の名前を僕達はまだ知らない。第1話 / anohana-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "3d916577d8d350bd62853948c89ec6e956a4a1edcfd02bfaef6e0180d13b92f1",
+    "characters": 419,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        31,
+        55
+      ],
+      "source_lines": [
+        132,
+        248
+      ],
+      "time_start": "00:00:58,600",
+      "time_end": "00:01:49,317"
+    }
+  },
+  {
+    "id": "anohana-2",
+    "source_id": "anohana",
+    "split": "regression",
+    "title": "あの日見た花の名前を僕達はまだ知らない。第1話 / anohana-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "2aa1ffa72b9fa9529e7f9fc54aa64492377b5ea0ace75609c2875e7cbd183759",
+    "characters": 336,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "episode": 1,
+      "subtitle_cues": [
+        151,
+        175
+      ],
+      "source_lines": [
+        656,
+        764
+      ],
+      "time_start": "00:07:03,381",
+      "time_end": "00:07:32,952"
+    }
+  },
+  {
+    "id": "slime-1",
+    "source_id": "slime",
+    "split": "regression",
+    "title": "転生したらスライムだった件 Web版 第1話 / slime-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "d7b55670ab674336e9da4a2970cc8a2af68f28dec21cb26d9f3ab72c59b8d430",
+    "characters": 235,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        1,
+        5
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "slime-2",
+    "source_id": "slime",
+    "split": "regression",
+    "title": "転生したらスライムだった件 Web版 第1話 / slime-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "079c38541802e49f44dddca9f63471e111139e38f0688396d9f81adedc0e6091",
+    "characters": 272,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        17,
+        23
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "mushoku-1",
+    "source_id": "mushoku",
+    "split": "regression",
+    "title": "無職転生 Web版 プロローグ / mushoku-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "c76d729a34300b13b7abfb7d395148cc70812cd08469085bd60bb5daa3a509ac",
+    "characters": 251,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        1,
+        10
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "mushoku-2",
+    "source_id": "mushoku",
+    "split": "regression",
+    "title": "無職転生 Web版 プロローグ / mushoku-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "7afb1de22ad58fb6eac9c7aa28a8071d32939338b7f51795ff256388e029a48a",
+    "characters": 232,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        26,
+        34
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "japanpost-1",
+    "source_id": "japanpost",
+    "split": "regression",
+    "title": "日本郵便：受取人が忙しくて留守がち / japanpost-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "b42a5b204b7e6bcc991bd87972b8d6b1893391a4cc1877315387044187c62435",
+    "characters": 401,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        1,
+        3
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "japanpost-2",
+    "source_id": "japanpost",
+    "split": "regression",
+    "title": "日本郵便：受取人が忙しくて留守がち / japanpost-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "9c106a93f06614b5f69981f68ab73dee1ef7aa3d2fc6edaad49d1695f7c4fbb3",
+    "characters": 244,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        7,
+        22
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "jrwest-1",
+    "source_id": "jrwest",
+    "split": "regression",
+    "title": "JR西日本：きっぷの変更 / jrwest-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "eba0d49676e1b2c3b47740b547c65ac6047db244999460ea91224309bfd8b9b7",
+    "characters": 234,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        1,
+        7
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "jrwest-2",
+    "source_id": "jrwest",
+    "split": "regression",
+    "title": "JR西日本：きっぷの変更 / jrwest-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "7febb4803d1966faa179ffac58e0cc8791938af6b108e37c41d0be85ba25fdda",
+    "characters": 230,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        8,
+        13
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "jma-1",
+    "source_id": "jma",
+    "split": "regression",
+    "title": "気象庁：雲・大気現象・大気光象 / jma-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "33fe47db45439295c096c6109694f47d1a50df9493def60f6db3c256012d67d4",
+    "characters": 453,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        1,
+        4
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "jma-2",
+    "source_id": "jma",
+    "split": "regression",
+    "title": "気象庁：雲・大気現象・大気光象 / jma-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "720382df6a31afd27d1afae5332958eee00b80aa5fce4c02abe3095586c74ca1",
+    "characters": 326,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        7,
+        8
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "terada-1",
+    "source_id": "terada",
+    "split": "regression",
+    "title": "寺田寅彦：茶わんの湯 / terada-1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "2b17a65f72e34c1c12110eab83df16b8884185aeafc878e1c8ef266c36fd6fab",
+    "characters": 456,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        1,
+        2
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "terada-2",
+    "source_id": "terada",
+    "split": "regression",
+    "title": "寺田寅彦：茶わんの湯 / terada-2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "f67a21779de7dbe1d11da0bbb01387e7554eac9c6c6be5c5544427ae4d0ff93a",
+    "characters": 226,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "paragraphs": [
+        4,
+        4
+      ],
+      "selector": "round-06/prepare.py按来源指定的正文容器",
+      "counting": "去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。"
+    }
+  },
+  {
+    "id": "tsuredure-pair1",
+    "source_id": "tsuredure",
+    "split": "regression",
+    "title": "徒然チルドレン カラー版 / tsuredure-pair1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "c3dad28aa785475a88ee825ff1d6cb98aba281cf1a55c31048312491063cbf45",
+    "characters": 35,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0001.3Ps1zVJl8qaWM23PD99hrsHn0PItnV4A.jpg",
+          "sha256": "010d6bb2d0c50819fb8d104b1b59102cfde62a0c9e2af3be9f59f4e51423fa4a",
+          "bytes": 29609,
+          "file_name": "tsuredure-1.jpg"
+        },
+        {
+          "number": 2,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0002.V9zVTBdWEOikFyN7ZStDKsMx54EVOeJI.jpg",
+          "sha256": "530434a3634dbf2e8eddd6e148fbeecca9c2a8f50ca048a1851e9d59d203f83a",
+          "bytes": 139412,
+          "file_name": "tsuredure-2.jpg"
+        }
+      ]
+    }
+  },
+  {
+    "id": "tsuredure-pair2",
+    "source_id": "tsuredure",
+    "split": "regression",
+    "title": "徒然チルドレン カラー版 / tsuredure-pair2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "21c317dc6941275a66c50ea56d36b43e8c2def4fdbe2ab4d8ce48126d61483be",
+    "characters": 137,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0003.qQ4amZIY6Pjk08hjqotqhNwyNfvxU3r5.jpg",
+          "sha256": "44c0029aefac22a1c2b2afd9508728426e9ecd04e642900ab028a3d6d99806ba",
+          "bytes": 150490,
+          "file_name": "tsuredure-3.jpg"
+        },
+        {
+          "number": 4,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0004.eRVNXkERv7Nj0XxVQCf3PqQ63BiULS3d.jpg",
+          "sha256": "e102c438b267c8663450836688b243822180f0b5be11d9c0027dfcc43ab0f131",
+          "bytes": 179189,
+          "file_name": "tsuredure-4.jpg"
+        }
+      ]
+    }
+  },
+  {
+    "id": "yojouhan-pair1",
+    "source_id": "yojouhan",
+    "split": "regression",
+    "title": "悪役令嬢の四畳半 / yojouhan-pair1",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "c02fe95c16bcb9c39aa36dbe170263871ee9edbf01cbe5fb73a0f91a66d7c38a",
+    "characters": 204,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "pages": [
+        {
+          "number": 1,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0001.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0001.2aLf2o1169evU3885BnqrvBsaOrJfak1.jpg",
+          "sha256": "e2e4bb6c33c960d2e10f3c6f4512a9f52f7eeec6874a5f667adff4cd3a04fdf7",
+          "bytes": 341168,
+          "file_name": "yojouhan-1.jpg"
+        },
+        {
+          "number": 2,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0002.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0002.1l37l0Sqe3qf9ovwVyyrZ8rncNTunrcg.jpg",
+          "sha256": "62c7ee9b69e5005c124988daca76103deb1688f94eafdde0f51c4f9209205050",
+          "bytes": 271104,
+          "file_name": "yojouhan-2.jpg"
+        }
+      ]
+    }
+  },
+  {
+    "id": "yojouhan-pair2",
+    "source_id": "yojouhan",
+    "split": "regression",
+    "title": "悪役令嬢の四畳半 / yojouhan-pair2",
+    "access": "external_original",
+    "annotation": "pending",
+    "text_sha256": "bbae2d7ed6f1bd55ba62eb8b0360a127c7794fb4f12d4168b738349761b12e57",
+    "characters": 189,
+    "evaluation_round": "round-06",
+    "note": "已做词形范围对照与编者句义核查；尚无独立审校的学生理解题。",
+    "locator": {
+      "pages": [
+        {
+          "number": 3,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0003.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0003.592vsO6sSntGab6DeH5xnGZkrdMerOcQ.jpg",
+          "sha256": "75d2a6c39ce198ad7be9266fbe9f27128bb518bd6a94459bb625d982669d2ce5",
+          "bytes": 281388,
+          "file_name": "yojouhan-3.jpg"
+        },
+        {
+          "number": 4,
+          "title": "原页",
+          "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0004.html",
+          "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0004.iT6gPu1MAuZC1FjshdjypZfGavN4lEbq.jpg",
+          "sha256": "4437c59bb13e6fbb67d99f721898cb57ad7ae77a792186dc5ce9d9fc8fac9620",
+          "bytes": 328543,
+          "file_name": "yojouhan-4.jpg"
+        }
+      ]
+    }
   }
 ]

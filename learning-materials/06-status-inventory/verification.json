@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-17",
+  "scope": "inventory_only_no_curriculum_or_score_changes",
+  "git_head": "0f40f7f59b26c13502e223bf5776ac8800ed43e5",
+  "inventory_files_at_start": 200,
+  "existing_files_protected_including_3_unrelated_app_files": 203,
+  "unchanged_existing_files": 201,
+  "existing_files_changed_this_task": [
+    "learning-materials/README.md",
+    "learning-materials/START-HERE.md"
+  ],
+  "artifact_hashes": "artifacts.tsv contains start-of-task hashes; only the two navigation files differ afterward",
+  "counts": {
+    "lessons": 21,
+    "lesson_bytes": 225531,
+    "table_form_reading_entries": 874,
+    "distinct_written_forms": 872,
+    "priority_groups": 777,
+    "test_sources": 46,
+    "test_groups": 42,
+    "test_samples": 98,
+    "splits": {
+      "regression": 90,
+      "development": 8
+    },
+    "holdout": 0,
+    "answer_drafts": 32,
+    "draft_meaning_units": 237,
+    "independently_reviewed_answers": 0,
+    "pending_items": 28
+  },
+  "preservation": {
+    "all_21_lessons_equal_HEAD": true,
+    "audit_baseline_29_files_equal": true,
+    "existing_research_non_navigation_files_byte_identical": true,
+    "unrelated_app_changes_byte_identical": true
+  },
+  "checks": [
+    {
+      "command": "python3 learning-materials/tools/workspace.py check",
+      "result": "passed",
+      "meaning": "来源哈希、资料派生、选词、21课索引及777组用法、测试目录元数据；不检验学生效果"
+    },
+    {
+      "command": "python3 learning-materials/tools/workspace.py regression --current",
+      "result": "passed",
+      "meaning": "第5轮16段8作品，现行课词形48.144319637397665%；已曝光材料"
+    },
+    {
+      "command": "python3 learning-materials/05-curriculum-audit/build.py --check",
+      "result": "passed",
+      "meaning": "审查输入、29项v3基线、候选及证据保持一致；不是确认筛词规则充分"
+    },
+    {
+      "command": "node learning-materials/04-evaluation/round-06/evaluate.cjs --features --check",
+      "result": "passed",
+      "meaning": "20段10来源，49.43257880153676/51.221617877375785/58.18080124554988；词形指标"
+    },
+    {
+      "command": "python3 learning-materials/04-evaluation/round-06/reading-simulation/score.py --check",
+      "result": "passed",
+      "meaning": "181单位，88完整77部分16未懂，126.5/181；复算已有判断，不重新裁分"
+    }
+  ],
+  "document_review": {
+    "local_links_checked": true,
+    "pending_evidence_paths_checked": true,
+    "tsv_columns_and_unique_ids_checked": true,
+    "git_diff_check": "passed"
+  },
+  "not_performed": [
+    "course revision",
+    "new content selection",
+    "new test or regrading",
+    "raw-source download or current online availability audit",
+    "new clean-checkout or other-OS test",
+    "application changes",
+    "commit",
+    "push",
+    "remote status verification"
+  ],
+  "historical_notes": [
+    "Prior portable delivery is documented in PORTABILITY.md; it is not a new clean-checkout result of this task.",
+    "The 79 additions and 1308 candidates remain proposals. Corpus thresholds have not been accepted as sufficient curriculum scope.",
+    "The simulation contains an unresolved meaning-based scoring question; historical scores are unchanged."
+  ]
+}

@@ -19,6 +19,7 @@ interface CourseStore {
   initializing: boolean
   courseState: CourseState
   initialize: () => Promise<void>
+  saveReadingCourse: (progress: NonNullable<CourseState['readingCourse']>) => Promise<void>
   startFromBeginning: () => Promise<void>
   finishPlacement: (answers: CourseAnswerResult[]) => Promise<void>
   saveLessonAttempt: (lessonId: string, answers: CourseAnswerResult[]) => Promise<CourseState>
@@ -56,6 +57,12 @@ export const useCourseStore = create<CourseStore>((set, get) => ({
     const next = startCourseAtStage(get().courseState, 0)
     set({ courseState: next })
     await saveCourseState(next)
+  },
+
+  async saveReadingCourse(readingCourse) {
+    const next = { ...get().courseState, readingCourse, updatedAt: new Date().toISOString() }
+    await saveCourseState(next)
+    set({ courseState: next })
   },
 
   async finishPlacement(answers) {
@@ -102,7 +109,7 @@ export const useCourseStore = create<CourseStore>((set, get) => ({
   },
 
   async restartPlacement() {
-    const next = createEmptyCourseState()
+    const next = { ...createEmptyCourseState(), readingCourse: get().courseState.readingCourse }
     set({ courseState: next })
     await saveCourseState(next)
   },

@@ -1,0 +1,671 @@
+{
+  "type": "frozen_material_scope_comparison",
+  "student_test": false,
+  "comprehension_percent": null,
+  "form_counts": {
+    "v3": 872,
+    "plus79": 951,
+    "plus1308": 1537
+  },
+  "samples": [
+    {
+      "id": "chihaya-1",
+      "source_id": "chihaya",
+      "group": "chihaya",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "characters": 402,
+      "scores": {
+        "v3": {
+          "matched": 33,
+          "total": 58,
+          "percent": 56.89655172413793
+        },
+        "plus79": {
+          "matched": 33,
+          "total": 58,
+          "percent": 56.89655172413793
+        },
+        "plus1308": {
+          "matched": 35,
+          "total": 58,
+          "percent": 60.3448275862069
+        }
+      }
+    },
+    {
+      "id": "chihaya-2",
+      "source_id": "chihaya",
+      "group": "chihaya",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "characters": 411,
+      "scores": {
+        "v3": {
+          "matched": 31,
+          "total": 43,
+          "percent": 72.09302325581395
+        },
+        "plus79": {
+          "matched": 31,
+          "total": 43,
+          "percent": 72.09302325581395
+        },
+        "plus1308": {
+          "matched": 33,
+          "total": 43,
+          "percent": 76.74418604651163
+        }
+      }
+    },
+    {
+      "id": "anohana-1",
+      "source_id": "anohana",
+      "group": "anohana",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "characters": 420,
+      "scores": {
+        "v3": {
+          "matched": 30,
+          "total": 63,
+          "percent": 47.61904761904762
+        },
+        "plus79": {
+          "matched": 34,
+          "total": 63,
+          "percent": 53.96825396825397
+        },
+        "plus1308": {
+          "matched": 36,
+          "total": 63,
+          "percent": 57.142857142857146
+        }
+      }
+    },
+    {
+      "id": "anohana-2",
+      "source_id": "anohana",
+      "group": "anohana",
+      "genre": "anime_subtitles",
+      "split": "holdout",
+      "characters": 337,
+      "scores": {
+        "v3": {
+          "matched": 24,
+          "total": 30,
+          "percent": 80
+        },
+        "plus79": {
+          "matched": 24,
+          "total": 30,
+          "percent": 80
+        },
+        "plus1308": {
+          "matched": 25,
+          "total": 30,
+          "percent": 83.33333333333333
+        }
+      }
+    },
+    {
+      "id": "slime-1",
+      "source_id": "slime",
+      "group": "slime",
+      "genre": "light_novel",
+      "split": "holdout",
+      "characters": 236,
+      "scores": {
+        "v3": {
+          "matched": 32,
+          "total": 56,
+          "percent": 57.142857142857146
+        },
+        "plus79": {
+          "matched": 34,
+          "total": 56,
+          "percent": 60.714285714285715
+        },
+        "plus1308": {
+          "matched": 36,
+          "total": 56,
+          "percent": 64.28571428571429
+        }
+      }
+    },
+    {
+      "id": "slime-2",
+      "source_id": "slime",
+      "group": "slime",
+      "genre": "light_novel",
+      "split": "holdout",
+      "characters": 273,
+      "scores": {
+        "v3": {
+          "matched": 21,
+          "total": 47,
+          "percent": 44.680851063829785
+        },
+        "plus79": {
+          "matched": 25,
+          "total": 47,
+          "percent": 53.191489361702125
+        },
+        "plus1308": {
+          "matched": 31,
+          "total": 47,
+          "percent": 65.95744680851064
+        }
+      }
+    },
+    {
+      "id": "mushoku-1",
+      "source_id": "mushoku",
+      "group": "mushoku",
+      "genre": "light_novel",
+      "split": "holdout",
+      "characters": 252,
+      "scores": {
+        "v3": {
+          "matched": 17,
+          "total": 60,
+          "percent": 28.333333333333332
+        },
+        "plus79": {
+          "matched": 19,
+          "total": 60,
+          "percent": 31.666666666666668
+        },
+        "plus1308": {
+          "matched": 25,
+          "total": 60,
+          "percent": 41.666666666666664
+        }
+      }
+    },
+    {
+      "id": "mushoku-2",
+      "source_id": "mushoku",
+      "group": "mushoku",
+      "genre": "light_novel",
+      "split": "holdout",
+      "characters": 233,
+      "scores": {
+        "v3": {
+          "matched": 26,
+          "total": 52,
+          "percent": 50
+        },
+        "plus79": {
+          "matched": 26,
+          "total": 52,
+          "percent": 50
+        },
+        "plus1308": {
+          "matched": 26,
+          "total": 52,
+          "percent": 50
+        }
+      }
+    },
+    {
+      "id": "japanpost-1",
+      "source_id": "japanpost",
+      "group": "japanpost",
+      "genre": "everyday_instruction",
+      "split": "holdout",
+      "characters": 402,
+      "scores": {
+        "v3": {
+          "matched": 26,
+          "total": 85,
+          "percent": 30.58823529411765
+        },
+        "plus79": {
+          "matched": 29,
+          "total": 85,
+          "percent": 34.11764705882353
+        },
+        "plus1308": {
+          "matched": 42,
+          "total": 85,
+          "percent": 49.411764705882355
+        }
+      }
+    },
+    {
+      "id": "japanpost-2",
+      "source_id": "japanpost",
+      "group": "japanpost",
+      "genre": "everyday_instruction",
+      "split": "holdout",
+      "characters": 245,
+      "scores": {
+        "v3": {
+          "matched": 6,
+          "total": 25,
+          "percent": 24
+        },
+        "plus79": {
+          "matched": 7,
+          "total": 25,
+          "percent": 28
+        },
+        "plus1308": {
+          "matched": 10,
+          "total": 25,
+          "percent": 40
+        }
+      }
+    },
+    {
+      "id": "jrwest-1",
+      "source_id": "jrwest",
+      "group": "jrwest",
+      "genre": "everyday_instruction",
+      "split": "holdout",
+      "characters": 235,
+      "scores": {
+        "v3": {
+          "matched": 22,
+          "total": 48,
+          "percent": 45.833333333333336
+        },
+        "plus79": {
+          "matched": 22,
+          "total": 48,
+          "percent": 45.833333333333336
+        },
+        "plus1308": {
+          "matched": 27,
+          "total": 48,
+          "percent": 56.25
+        }
+      }
+    },
+    {
+      "id": "jrwest-2",
+      "source_id": "jrwest",
+      "group": "jrwest",
+      "genre": "everyday_instruction",
+      "split": "holdout",
+      "characters": 231,
+      "scores": {
+        "v3": {
+          "matched": 22,
+          "total": 54,
+          "percent": 40.74074074074074
+        },
+        "plus79": {
+          "matched": 22,
+          "total": 54,
+          "percent": 40.74074074074074
+        },
+        "plus1308": {
+          "matched": 31,
+          "total": 54,
+          "percent": 57.407407407407405
+        }
+      }
+    },
+    {
+      "id": "jma-1",
+      "source_id": "jma",
+      "group": "jma",
+      "genre": "nonfiction",
+      "split": "holdout",
+      "characters": 454,
+      "scores": {
+        "v3": {
+          "matched": 61,
+          "total": 129,
+          "percent": 47.286821705426355
+        },
+        "plus79": {
+          "matched": 63,
+          "total": 129,
+          "percent": 48.83720930232558
+        },
+        "plus1308": {
+          "matched": 79,
+          "total": 129,
+          "percent": 61.24031007751938
+        }
+      }
+    },
+    {
+      "id": "jma-2",
+      "source_id": "jma",
+      "group": "jma",
+      "genre": "nonfiction",
+      "split": "holdout",
+      "characters": 327,
+      "scores": {
+        "v3": {
+          "matched": 38,
+          "total": 86,
+          "percent": 44.18604651162791
+        },
+        "plus79": {
+          "matched": 39,
+          "total": 86,
+          "percent": 45.348837209302324
+        },
+        "plus1308": {
+          "matched": 46,
+          "total": 86,
+          "percent": 53.48837209302326
+        }
+      }
+    },
+    {
+      "id": "terada-1",
+      "source_id": "terada",
+      "group": "terada",
+      "genre": "nonfiction",
+      "split": "holdout",
+      "characters": 457,
+      "scores": {
+        "v3": {
+          "matched": 50,
+          "total": 106,
+          "percent": 47.16981132075472
+        },
+        "plus79": {
+          "matched": 50,
+          "total": 106,
+          "percent": 47.16981132075472
+        },
+        "plus1308": {
+          "matched": 60,
+          "total": 106,
+          "percent": 56.60377358490566
+        }
+      }
+    },
+    {
+      "id": "terada-2",
+      "source_id": "terada",
+      "group": "terada",
+      "genre": "nonfiction",
+      "split": "holdout",
+      "characters": 227,
+      "scores": {
+        "v3": {
+          "matched": 18,
+          "total": 53,
+          "percent": 33.9622641509434
+        },
+        "plus79": {
+          "matched": 20,
+          "total": 53,
+          "percent": 37.735849056603776
+        },
+        "plus1308": {
+          "matched": 26,
+          "total": 53,
+          "percent": 49.056603773584904
+        }
+      }
+    },
+    {
+      "id": "tsuredure-pair1",
+      "source_id": "tsuredure",
+      "group": "tsuredure",
+      "genre": "manga",
+      "split": "holdout",
+      "characters": 36,
+      "scores": {
+        "v3": {
+          "matched": 4,
+          "total": 7,
+          "percent": 57.142857142857146
+        },
+        "plus79": {
+          "matched": 4,
+          "total": 7,
+          "percent": 57.142857142857146
+        },
+        "plus1308": {
+          "matched": 4,
+          "total": 7,
+          "percent": 57.142857142857146
+        }
+      }
+    },
+    {
+      "id": "tsuredure-pair2",
+      "source_id": "tsuredure",
+      "group": "tsuredure",
+      "genre": "manga",
+      "split": "holdout",
+      "characters": 138,
+      "scores": {
+        "v3": {
+          "matched": 18,
+          "total": 23,
+          "percent": 78.26086956521739
+        },
+        "plus79": {
+          "matched": 18,
+          "total": 23,
+          "percent": 78.26086956521739
+        },
+        "plus1308": {
+          "matched": 18,
+          "total": 23,
+          "percent": 78.26086956521739
+        }
+      }
+    },
+    {
+      "id": "yojouhan-pair1",
+      "source_id": "yojouhan",
+      "group": "yojouhan",
+      "genre": "manga",
+      "split": "holdout",
+      "characters": 205,
+      "scores": {
+        "v3": {
+          "matched": 14,
+          "total": 34,
+          "percent": 41.1764705882353
+        },
+        "plus79": {
+          "matched": 14,
+          "total": 34,
+          "percent": 41.1764705882353
+        },
+        "plus1308": {
+          "matched": 14,
+          "total": 34,
+          "percent": 41.1764705882353
+        }
+      }
+    },
+    {
+      "id": "yojouhan-pair2",
+      "source_id": "yojouhan",
+      "group": "yojouhan",
+      "genre": "manga",
+      "split": "holdout",
+      "characters": 190,
+      "scores": {
+        "v3": {
+          "matched": 24,
+          "total": 39,
+          "percent": 61.53846153846154
+        },
+        "plus79": {
+          "matched": 24,
+          "total": 39,
+          "percent": 61.53846153846154
+        },
+        "plus1308": {
+          "matched": 25,
+          "total": 39,
+          "percent": 64.1025641025641
+        }
+      }
+    }
+  ],
+  "works": [
+    {
+      "group": "chihaya",
+      "genre": "anime_subtitles",
+      "samples": 2,
+      "scores": {
+        "v3": 64.49478748997593,
+        "plus79": 64.49478748997593,
+        "plus1308": 68.54450681635926
+      }
+    },
+    {
+      "group": "anohana",
+      "genre": "anime_subtitles",
+      "samples": 2,
+      "scores": {
+        "v3": 63.80952380952381,
+        "plus79": 66.98412698412699,
+        "plus1308": 70.23809523809524
+      }
+    },
+    {
+      "group": "slime",
+      "genre": "light_novel",
+      "samples": 2,
+      "scores": {
+        "v3": 50.911854103343465,
+        "plus79": 56.95288753799392,
+        "plus1308": 65.12158054711247
+      }
+    },
+    {
+      "group": "mushoku",
+      "genre": "light_novel",
+      "samples": 2,
+      "scores": {
+        "v3": 39.166666666666664,
+        "plus79": 40.833333333333336,
+        "plus1308": 45.83333333333333
+      }
+    },
+    {
+      "group": "japanpost",
+      "genre": "everyday_instruction",
+      "samples": 2,
+      "scores": {
+        "v3": 27.294117647058826,
+        "plus79": 31.058823529411764,
+        "plus1308": 44.705882352941174
+      }
+    },
+    {
+      "group": "jrwest",
+      "genre": "everyday_instruction",
+      "samples": 2,
+      "scores": {
+        "v3": 43.28703703703704,
+        "plus79": 43.28703703703704,
+        "plus1308": 56.8287037037037
+      }
+    },
+    {
+      "group": "jma",
+      "genre": "nonfiction",
+      "samples": 2,
+      "scores": {
+        "v3": 45.736434108527135,
+        "plus79": 47.093023255813954,
+        "plus1308": 57.36434108527132
+      }
+    },
+    {
+      "group": "terada",
+      "genre": "nonfiction",
+      "samples": 2,
+      "scores": {
+        "v3": 40.56603773584906,
+        "plus79": 42.45283018867924,
+        "plus1308": 52.83018867924528
+      }
+    },
+    {
+      "group": "tsuredure",
+      "genre": "manga",
+      "samples": 2,
+      "scores": {
+        "v3": 67.70186335403727,
+        "plus79": 67.70186335403727,
+        "plus1308": 67.70186335403727
+      }
+    },
+    {
+      "group": "yojouhan",
+      "genre": "manga",
+      "samples": 2,
+      "scores": {
+        "v3": 51.35746606334842,
+        "plus79": 51.35746606334842,
+        "plus1308": 52.639517345399696
+      }
+    }
+  ],
+  "genres": [
+    {
+      "genre": "anime_subtitles",
+      "works": 2,
+      "scores": {
+        "v3": 64.15215564974987,
+        "plus79": 65.73945723705145,
+        "plus1308": 69.39130102722726
+      }
+    },
+    {
+      "genre": "light_novel",
+      "works": 2,
+      "scores": {
+        "v3": 45.039260385005065,
+        "plus79": 48.89311043566363,
+        "plus1308": 55.4774569402229
+      }
+    },
+    {
+      "genre": "everyday_instruction",
+      "works": 2,
+      "scores": {
+        "v3": 35.29057734204793,
+        "plus79": 37.1729302832244,
+        "plus1308": 50.76729302832244
+      }
+    },
+    {
+      "genre": "nonfiction",
+      "works": 2,
+      "scores": {
+        "v3": 43.15123592218809,
+        "plus79": 44.772926722246595,
+        "plus1308": 55.0972648822583
+      }
+    },
+    {
+      "genre": "manga",
+      "works": 2,
+      "scores": {
+        "v3": 59.52966470869285,
+        "plus79": 59.52966470869285,
+        "plus1308": 60.170690349718484
+      }
+    }
+  ],
+  "descriptive_equal_genre_average": {
+    "v3": 49.43257880153676,
+    "plus79": 51.221617877375785,
+    "plus1308": 58.18080124554988
+  },
+  "limitations": [
+    "Exact form/lemma matches, not sense-disambiguated understanding.",
+    "plus79 and plus1308 are unimplemented scope scenarios, not lessons completed in 21 hours.",
+    "Convenience sample, two works per category, not a population estimate."
+  ]
+}

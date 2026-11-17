@@ -638,5 +638,129 @@
     "version": "官方编号0001—0004，2026-11-13观察版",
     "verification": "逐页查看官方HTML所指原图、人工转写对白/旁白/实质文字；不以自动OCR代替核对。",
     "bias": "仍集中星海社短页开篇；包含普通分镜和四格，不代表其他出版社、长篇或所有漫画。"
+  },
+  {
+    "id": "chihaya",
+    "title": "ちはやふる 第1話",
+    "genre": "anime_subtitles",
+    "group": "chihaya",
+    "url": "https://github.com/Ajatt-Tools/kitsunekko-mirror/blob/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Chihayafuru/ちはやふる.S01E01.第一首.さくやこのはな.WEBRip.Netflix.ja[cc].srt",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。",
+    "commit": "619b935cb062b7c122cd25614f02a3ac919c285b",
+    "episode": 1,
+    "official_episode_url": "https://www.ntv.co.jp/chihayafuru1/story/01.html",
+    "subtitle": {
+      "format": "srt",
+      "raw_url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Chihayafuru/ちはやふる.S01E01.第一首.さくやこのはな.WEBRip.Netflix.ja[cc].srt",
+      "file_name": "chihaya.srt",
+      "sha256": "31a12bb77b6b47b50fac4a4215bcfea1ea36a56084f74c5d6457e3954529c364",
+      "bytes": 33622,
+      "git_blob_sha1": "06009de498b859a956b1f39a5629e0a72f3c611f",
+      "cue_count": 421
+    }
+  },
+  {
+    "id": "anohana",
+    "title": "あの日見た花の名前を僕達はまだ知らない。第1話",
+    "genre": "anime_subtitles",
+    "group": "anohana",
+    "url": "https://github.com/Ajatt-Tools/kitsunekko-mirror/blob/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Ano%20Hi%20Mita%20Hana%20no%20Namae%20wo%20Bokutachi%20wa%20Mada%20Shiranai/あの日見た花の名前を僕達はまだ知らない。.S01E01.超平和バスターズ.WEBRip.Netflix.ja[cc].srt",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。",
+    "commit": "619b935cb062b7c122cd25614f02a3ac919c285b",
+    "episode": 1,
+    "official_episode_url": "https://www.anohana.jp/tv/sp/story/index.html",
+    "subtitle": {
+      "format": "srt",
+      "raw_url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Ano%20Hi%20Mita%20Hana%20no%20Namae%20wo%20Bokutachi%20wa%20Mada%20Shiranai/あの日見た花の名前を僕達はまだ知らない。.S01E01.超平和バスターズ.WEBRip.Netflix.ja[cc].srt",
+      "file_name": "anohana.srt",
+      "sha256": "ed26b3f4eb0c37df97400c1e787091bd8efd6f374a723796d3e9d5738f172bb7",
+      "bytes": 38273,
+      "git_blob_sha1": "ec02861e7e8ab26746468a2c4bf8e8ddefce4224",
+      "cue_count": 484
+    }
+  },
+  {
+    "id": "slime",
+    "title": "転生したらスライムだった件 Web版 第1話",
+    "genre": "light_novel",
+    "group": "slime",
+    "url": "https://ncode.syosetu.com/n6316bn/1/",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
+  },
+  {
+    "id": "mushoku",
+    "title": "無職転生 Web版 プロローグ",
+    "genre": "light_novel",
+    "group": "mushoku",
+    "url": "https://ncode.syosetu.com/n9669bk/1/",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
+  },
+  {
+    "id": "japanpost",
+    "title": "日本郵便：受取人が忙しくて留守がち",
+    "genre": "everyday_instruction",
+    "group": "japanpost",
+    "url": "https://www.post.japanpost.jp/question/66.html",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
+  },
+  {
+    "id": "jrwest",
+    "title": "JR西日本：きっぷの変更",
+    "genre": "everyday_instruction",
+    "group": "jrwest",
+    "url": "https://www.jr-odekake.net/ticket/eki/change/",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
+  },
+  {
+    "id": "jma",
+    "title": "気象庁：雲・大気現象・大気光象",
+    "genre": "modern_nonfiction",
+    "group": "jma",
+    "url": "https://www.jma.go.jp/jma/kishou/know/faq/faq13.html",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
+  },
+  {
+    "id": "terada",
+    "title": "寺田寅彦：茶わんの湯",
+    "genre": "historical_literature",
+    "group": "terada",
+    "url": "https://www.aozora.gr.jp/cards/000042/files/2363_13807.html",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
+  },
+  {
+    "id": "tsuredure",
+    "title": "徒然チルドレン カラー版",
+    "genre": "manga",
+    "group": "tsuredure",
+    "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/",
+    "rights": "官方公开图片与完整转写不分发，只保存原件哈希和统计。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
+  },
+  {
+    "id": "yojouhan",
+    "title": "悪役令嬢の四畳半",
+    "genre": "manga",
+    "group": "yojouhan",
+    "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/",
+    "rights": "官方公开图片与完整转写不分发，只保存原件哈希和统计。",
+    "checked_at": "2026-11-16",
+    "bias": "第6轮便利抽样；已曝光。具体抽取方式和局限见04-evaluation/round-06。"
   }
 ]

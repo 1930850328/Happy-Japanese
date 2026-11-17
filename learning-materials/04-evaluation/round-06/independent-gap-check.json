@@ -1,0 +1,105 @@
+{
+  "purpose": "Post-test diagnosis against unchanged independent corpus; not vocabulary promotion",
+  "rows": [
+    {
+      "lemma": "席",
+      "lForm": "セキ",
+      "pos": "名詞-普通名詞-一般",
+      "PB_rank": "1163",
+      "PM_rank": "804",
+      "PN_rank": "1560",
+      "OC_rank": "1017",
+      "OY_rank": "649"
+    },
+    {
+      "lemma": "現象",
+      "lForm": "ゲンショウ",
+      "pos": "名詞-普通名詞-一般",
+      "PB_rank": "1264",
+      "PM_rank": "4031",
+      "PN_rank": "4090",
+      "OC_rank": "2223",
+      "OY_rank": "3795"
+    },
+    {
+      "lemma": "操作",
+      "lForm": "ソウサ",
+      "pos": "名詞-普通名詞-サ変可能",
+      "PB_rank": "1262",
+      "PM_rank": "993",
+      "PN_rank": "3824",
+      "OC_rank": "1399",
+      "OY_rank": "3724"
+    },
+    {
+      "lemma": "雲",
+      "lForm": "クモ",
+      "pos": "名詞-普通名詞-一般",
+      "PB_rank": "2572",
+      "PM_rank": "3497",
+      "PN_rank": "7658",
+      "OC_rank": "3507",
+      "OY_rank": "1156"
+    },
+    {
+      "lemma": "列車",
+      "lForm": "レッシャ",
+      "pos": "名詞-普通名詞-一般",
+      "PB_rank": "3102",
+      "PM_rank": "3905",
+      "PN_rank": "4090",
+      "OC_rank": "3169",
+      "OY_rank": "1422"
+    },
+    {
+      "lemma": "時刻",
+      "lForm": "ジコク",
+      "pos": "名詞-普通名詞-副詞可能",
+      "PB_rank": "3545",
+      "PM_rank": "6049",
+      "PN_rank": "5460",
+      "OC_rank": "3896",
+      "OY_rank": "4204"
+    },
+    {
+      "lemma": "告白",
+      "lForm": "コクハク",
+      "pos": "名詞-普通名詞-サ変可能",
+      "PB_rank": "5502",
+      "PM_rank": "4726",
+      "PN_rank": "5275",
+      "OC_rank": "1100",
+      "OY_rank": "3753"
+    },
+    {
+      "lemma": "配達",
+      "lForm": "ハイタツ",
+      "pos": "名詞-普通名詞-サ変可能",
+      "PB_rank": "7312",
+      "PM_rank": "16866",
+      "PN_rank": "5275",
+      "OC_rank": "1560",
+      "OY_rank": "6012"
+    },
+    {
+      "lemma": "区間",
+      "lForm": "クカン",
+      "pos": "名詞-普通名詞-一般",
+      "PB_rank": "8629",
+      "PM_rank": "10901",
+      "PN_rank": "2477",
+      "OC_rank": "4979",
+      "OY_rank": "3825"
+    },
+    {
+      "lemma": "雲",
+      "lForm": "ウン",
+      "pos": "接尾辞-名詞的-一般",
+      "PB_rank": "76149",
+      "PM_rank": "65245",
+      "PN_rank": "41582",
+      "OC_rank": "61531",
+      "OY_rank": "78538"
+    }
+  ]
+}

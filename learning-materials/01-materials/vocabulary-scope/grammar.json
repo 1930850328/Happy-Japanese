@@ -400,43 +400,6 @@
     ]
   },
   {
-    "term": "こと",
-    "reading": "こと",
-    "meaningZh": "事情及名词化",
-    "groupRanks": {
-      "anime": 18,
-      "manga": 17
-    },
-    "sourceIds": [],
-    "glossSource": "editor-zh",
-    "variants": [
-      {
-        "term": "こと",
-        "reading": "こと",
-        "ranks": {
-          "anime": [
-            18
-          ],
-          "manga": [
-            17
-          ]
-        }
-      },
-      {
-        "term": "事",
-        "reading": "こと",
-        "ranks": {
-          "anime": [
-            1310
-          ],
-          "manga": [
-            186
-          ]
-        }
-      }
-    ]
-  },
-  {
     "term": "って",
     "reading": "って",
     "meaningZh": "口语引述、话题",
@@ -730,31 +693,6 @@
           ],
           "manga": [
             40
-          ]
-        }
-      }
-    ]
-  },
-  {
-    "term": "だけ",
-    "reading": "だけ",
-    "meaningZh": "限定",
-    "groupRanks": {
-      "anime": 48,
-      "manga": 45
-    },
-    "sourceIds": [],
-    "glossSource": "editor-zh",
-    "variants": [
-      {
-        "term": "だけ",
-        "reading": "だけ",
-        "ranks": {
-          "anime": [
-            48
-          ],
-          "manga": [
-            45
           ]
         }
       }
@@ -2622,43 +2560,6 @@
     ]
   },
   {
-    "term": "二人",
-    "reading": "ふたり",
-    "meaningZh": "两人的特殊数法ふたり",
-    "groupRanks": {
-      "anime": 290,
-      "manga": 328
-    },
-    "sourceIds": [],
-    "glossSource": "editor-zh",
-    "variants": [
-      {
-        "term": "二人",
-        "reading": "ふたり",
-        "ranks": {
-          "anime": [
-            1135
-          ],
-          "manga": [
-            328
-          ]
-        }
-      },
-      {
-        "term": "2人",
-        "reading": "ふたり",
-        "ranks": {
-          "anime": [
-            290
-          ],
-          "manga": [
-            1046
-          ]
-        }
-      }
-    ]
-  },
-  {
     "term": "しかない",
     "reading": "しかない",
     "meaningZh": "只有……；只能……",
@@ -2929,33 +2830,6 @@
           ],
           "manga": [
             906
-          ]
-        }
-      }
-    ]
-  },
-  {
-    "term": "ください",
-    "reading": "ください",
-    "meaningZh": "请求表达：请给我……／请做……。",
-    "groupRanks": {
-      "anime": 371,
-      "manga": 344
-    },
-    "sourceIds": [
-      "kaishi:xwwU62lUAy"
-    ],
-    "glossSource": "editor-review",
-    "variants": [
-      {
-        "term": "ください",
-        "reading": "ください",
-        "ranks": {
-          "anime": [
-            371
-          ],
-          "manga": [
-            344
           ]
         }
       }
@@ -3233,32 +3107,6 @@
           ],
           "manga": [
             578
-          ]
-        }
-      }
-    ]
-  },
-  {
-    "term": "円",
-    "reading": "えん",
-    "meaningZh": "日元；单位",
-    "groupRanks": {
-      "anime": 1736,
-      "manga": 438
-    },
-    "sourceIds": [],
-    "glossSource": "editor-zh",
-    "variants": [
-      {
-        "term": "円",
-        "reading": "えん",
-        "ranks": {
-          "anime": [
-            1736
-          ],
-          "manga": [
-            438,
-            200116
           ]
         }
       }
@@ -4914,31 +4762,6 @@
     ]
   },
   {
-    "term": "歳",
-    "reading": "さい",
-    "meaningZh": "年龄单位さい",
-    "groupRanks": {
-      "anime": 1427,
-      "manga": 819
-    },
-    "sourceIds": [],
-    "glossSource": "editor-zh",
-    "variants": [
-      {
-        "term": "歳",
-        "reading": "さい",
-        "ranks": {
-          "anime": [
-            1427
-          ],
-          "manga": [
-            819
-          ]
-        }
-      }
-    ]
-  },
-  {
     "term": "人",
     "reading": "じん",
     "meaningZh": "国籍等的接尾じん；不混入ひと",
@@ -5908,6 +5731,33 @@
           ],
           "manga": [
             1003
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "term": "半",
+    "reading": "はん",
+    "meaningZh": "一半；时刻里表示半点",
+    "groupRanks": {
+      "anime": 4332,
+      "manga": 2612
+    },
+    "sourceIds": [
+      "irodori-word:3286"
+    ],
+    "glossSource": "v4-authored-lesson",
+    "variants": [
+      {
+        "term": "半",
+        "reading": "はん",
+        "ranks": {
+          "anime": [
+            4332
+          ],
+          "manga": [
+            2612
           ]
         }
       }

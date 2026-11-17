@@ -681,6 +681,15 @@ export interface LiteracyState {
 
 export interface CourseState {
   version: 1 | 2
+  readingCourse?: {
+    version: 'reading-v4'
+    activeDay: number
+    lessons: Record<number, {
+      section: number
+      completedSections: number[]
+      completedAt?: string
+    }>
+  }
   profile?: CourseProfile
   lessonProgress: CourseLessonProgress[]
   mastery: CourseMastery[]

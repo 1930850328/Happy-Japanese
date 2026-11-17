@@ -1,20 +1,21 @@
 {
-  "version": "anime-manga-v3",
-  "date": "2026-11-13",
-  "candidateRule": "rank <= 1000 in EITHER anime or manga, followed by editorial review",
-  "candidateForms": 1161,
-  "coreTeachingGroups": 777,
-  "grammarSurfaceRoots": 230,
-  "mergedVariants": 100,
-  "deferredFragments": 54,
+  "version": "reading-foundation-v4",
+  "date": "2026-11-17",
+  "candidateRule": "Historical media rank <= 1000 candidates plus explicit material additions; current core chosen for 21-hour reading foundation",
+  "candidateForms": 1243,
+  "materialAdditions": 82,
+  "coreTeachingGroups": 263,
+  "grammarSurfaceRoots": 225,
+  "mergedVariants": 44,
+  "deferredFragments": 711,
   "partition": {
-    "grammar": 230,
-    "core": 777,
-    "alias": 100,
-    "defer": 54
+    "grammar": 225,
+    "core": 263,
+    "defer": 711,
+    "alias": 44
   },
-  "coreSurfaceFormsIncludingMerged": 865,
-  "grammarSurfaceFormsIncludingMerged": 242,
+  "coreSurfaceFormsIncludingMerged": 297,
+  "grammarSurfaceFormsIncludingMerged": 235,
   "publisherMediaSnapshot": {
     "Anime": 3863,
     "Manga": 1279
@@ -277,6 +278,6 @@
       }
     }
   ],
-  "meaningChecks": "All selected teaching glosses read through; ambiguous つく/つける/すむ additionally checked against public dictionary API. Not every sense has independently measured frequency.",
-  "scope": "Selection is compiled into the current course; this builder reads only the editorial selection and source assets, not lessons or tests."
+  "meaningChecks": "Core teaching meanings reviewed in authored lessons; source ranks are not sense frequencies or measured learning outcomes.",
+  "scope": "Core is required current vocabulary; grammar surface candidates are a source index, not all taught. This builder reads only selection and sources, never lessons or tests."
 }

@@ -34,14 +34,16 @@ kuromoji.builder({dicPath: path.join(path.dirname(require.resolve('kuromoji/pack
     }
     return false;
   };
+  const missing = [];
   const entries = selected.map(w => {
     const mapping = lessons.find(l => l.term === w.term && l.reading === w.reading);
     if (!mapping) throw Error(`Missing table teaching: ${w.term}/${w.reading}`);
     const forms = new Set([w.term, ...w.variants.map(v => v.term)]);
     const examples = files[mapping.first_day - 1].contexts.filter(c => contains(c, forms));
-    if (!examples.length) throw Error(`Missing contextual use: ${w.term}, day ${mapping.first_day}`);
+    if (!examples.length) missing.push(`${w.term}, day ${mapping.first_day}`);
     return {term: w.term, reading: w.reading, first_day: mapping.first_day, examples};
   });
+  if (missing.length) throw Error(`Missing contextual uses:\n${missing.join('\n')}`);
   const output = {
     type: 'first_lesson_context_check', learner_test: false,
     method: 'Selected group must match a table form+reading, then a contiguous Japanese example; inflection allowed only at span end. This verifies occurrence, not every sense or teaching quality.',

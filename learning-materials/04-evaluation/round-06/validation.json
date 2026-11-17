@@ -1,0 +1,70 @@
+{
+  "all_input_and_result_manifest_hashes": {
+    "passed": true
+  },
+  "isolated_copy_without_originals": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "feature_tampering_rejected": {
+    "passed": true,
+    "exit_code": 1
+  },
+  "changed_lesson_rejected": {
+    "passed": true,
+    "exit_code": 1
+  },
+  "changed_profile_rejected": {
+    "passed": true,
+    "exit_code": 1
+  },
+  "sample_scope_semantic_rows_and_monotonic_counts": {
+    "passed": true,
+    "samples": 20,
+    "works": 10,
+    "genres": 5,
+    "semantic_units": 40,
+    "eligible_occurrences": 1098
+  },
+  "original_extraction_check": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "original_text_recompute": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "frozen_feature_recompute": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "subtitle_duplicate_sensitivity": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "workspace_check": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "existing_course_regression": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "limits": [
+    "No human learner test or comprehension percentage.",
+    "Isolated copy reused installed locked node dependencies, not a fresh network installation.",
+    "Metadata checks do not assert all historical original assets were re-fetched.",
+    "Semantic review is editorial, not independent answer-key validation."
+  ],
+  "round06_raw_sources_and_complete_manga_images": {
+    "passed": true,
+    "sources": 10,
+    "manga_images": 8
+  },
+  "registry_asset_counts": {
+    "passed": true,
+    "subtitles": 14,
+    "manga_images": 40,
+    "historical_assets_refetched": false
+  }
+}

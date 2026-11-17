@@ -77,7 +77,7 @@ export function CourseReviewPage() {
   }, [activeNodeId, courseState.evidence, due])
 
   if (!initialized) return <div className={`${styles.loading} glassCard`}>正在准备复习…</div>
-  if (!courseState.profile) return <Navigate replace to="/" />
+  if (!courseState.profile) return <Navigate replace to="/learn" />
 
   const answer = async (response: string | number) => {
     if (!question || answerCorrect !== null) return
@@ -133,7 +133,7 @@ export function CourseReviewPage() {
         </div>
         <div className={styles.headerActions}>
           <Link className="softButton" to="/review"><RotateCcw size={18} />歌曲与词汇复习</Link>
-          <Link className="softButton" to="/"><ArrowLeft size={18} />返回今日学习</Link>
+          <Link className="softButton" to="/learn"><ArrowLeft size={18} />返回今日学习</Link>
         </div>
       </header>
 
@@ -209,7 +209,7 @@ export function CourseReviewPage() {
           <span className="chip badgeMint">当前队列已清空</span>
           <h2>{reviewedCount > 0 ? '今天到期的内容已经处理完了' : '现在没有到期复习'}</h2>
           <p>系统会根据每项知识的稳定性自动安排下一次出现。继续主课，不需要为了打卡重复已经稳定的内容。</p>
-          <Link className="softButton primaryButton" to="/">继续今日主课<ArrowRight size={18} /></Link>
+          <Link className="softButton primaryButton" to="/learn">继续今日主课<ArrowRight size={18} /></Link>
         </section>
       )}
 

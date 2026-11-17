@@ -1,0 +1,31 @@
+{
+  "version": "general-reading-content-1",
+  "unit": "explicit-spelling-linked form+reading groups, not disambiguated sense count",
+  "base_form_reading_entries": 874,
+  "base_groups_after_documented_spelling_links": 868,
+  "target_groups": 1355,
+  "core_reading_groups": 1345,
+  "context_recognition_groups": 10,
+  "not_in_formal_v3_table_groups": 487,
+  "explicit_source_card_senses": 447,
+  "priority_items_reviewed": 79,
+  "supplement_items": 92,
+  "usage_targets": 60,
+  "grammar_units": 66,
+  "grammar_core_units": 64,
+  "legacy_31_plus_8_dispositions": 39,
+  "jev_corrob_exact_or_reviewed_spelling_levels": {
+    "1.初級前半": 240,
+    "multiple_level_matches": 35,
+    "no_exact_or_reviewed_spelling_match": 126,
+    "2.初級後半": 320,
+    "3.中級前半": 362,
+    "4.中級後半": 260,
+    "5.上級前半": 12
+  },
+  "semantically_selected_not_frequency_gated": true,
+  "new_course_authored": false,
+  "new_comprehension_score": null,
+  "time_feasibility_verified": false,
+  "test_inputs": []
+}

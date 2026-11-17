@@ -7,6 +7,8 @@ import { Toaster } from 'sonner'
 import { AppShell } from './components/AppShell'
 
 const LearnPage = lazy(async () => ({ default: (await import('./pages/LearnPage')).LearnPage }))
+const ReadingCoursePage = lazy(async () => ({ default: (await import('./pages/ReadingCoursePage')).ReadingCoursePage }))
+const ReadingLessonPage = lazy(async () => ({ default: (await import('./pages/ReadingLessonPage')).ReadingLessonPage }))
 const CourseLessonPage = lazy(async () => ({ default: (await import('./pages/CourseLessonPage')).CourseLessonPage }))
 const CourseReviewPage = lazy(async () => ({ default: (await import('./pages/CourseReviewPage')).CourseReviewPage }))
 const HomePage = lazy(async () => ({ default: (await import('./pages/HomePage')).HomePage }))
@@ -23,7 +25,9 @@ function App() {
     <>
       <Routes>
         <Route element={<AppShell />}>
-          <Route index element={<PageLoader><LearnPage /></PageLoader>} />
+          <Route index element={<PageLoader><ReadingCoursePage /></PageLoader>} />
+          <Route path="/course/:day" element={<PageLoader><ReadingLessonPage /></PageLoader>} />
+          <Route path="/learn" element={<PageLoader><LearnPage /></PageLoader>} />
           <Route path="/learn/review" element={<PageLoader><CourseReviewPage /></PageLoader>} />
           <Route path="/learn/:lessonId" element={<PageLoader><CourseLessonPage /></PageLoader>} />
           <Route path="/discover" element={<PageLoader><HomePage /></PageLoader>} />

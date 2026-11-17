@@ -1,0 +1,80 @@
+term	reading	decision	existing_teaching	evidence	required_action	target_meaning_ref
+会社	かいしゃ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		会社員不能代替独立认识会社	priority79:会社#meaning_zh+collocation
+大学	だいがく	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与学校的上下位关系一起教	priority79:大学#meaning_zh+collocation
+質問	しつもん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与需要处理的问题もんだい区分	priority79:質問#meaning_zh+collocation
+参加	さんか	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		加入活动，记に所接对象	priority79:参加#meaning_zh+collocation
+経験	けいけん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与たことがある经验表达联系	priority79:経験#meaning_zh+collocation
+意見	いけん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		他人观点不等于确定事实	priority79:意見#meaning_zh+collocation
+原因	げんいん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与结果和原因句一起读	priority79:原因#meaning_zh+collocation
+影響	えいきょう	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		方向和影响对象要读清	priority79:影響#meaning_zh+collocation
+条件	じょうけん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		配合如果、许可范围	priority79:条件#meaning_zh+collocation
+部分	ぶぶん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		不要把局部扩大成全部	priority79:部分#meaning_zh+collocation
+全体	ぜんたい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与部分成对教	priority79:全体#meaning_zh+collocation
+例	れい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		抽象词配实际文本例子	priority79:例#meaning_zh+collocation
+例えば	たとえば	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		标记举例，后文未必穷尽	priority79:例えば#meaning_zh+collocation
+重要	じゅうよう	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		用于说明和评论中的重要性判断	priority79:重要#meaning_zh+collocation
+表示	ひょうじ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		阅读界面和标牌	priority79:表示#meaning_zh+collocation
+設定	せってい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		操作说明，不只技术专业语	priority79:設定#meaning_zh+collocation
+文字	もじ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与语言、汉字、词语分开	priority79:文字#meaning_zh+collocation
+判断	はんだん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		判断主体与判断根据	priority79:判断#meaning_zh+collocation
+選択	せんたく	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与選ぶ联系，不新增两个相同概念	priority79:選択#meaning_zh+collocation
+種類	しゅるい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		分类与个数不是同一维度	priority79:種類#meaning_zh+collocation
+事実	じじつ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与噂、思う的证据状态区分	priority79:事実#meaning_zh+collocation
+特徴	とくちょう	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		读说明文的性质描述	priority79:特徴#meaning_zh+collocation
+変化	へんか	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与変わる、なる连接	priority79:変化#meaning_zh+collocation
+効果	こうか	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		词义是效果；是否有效须读整句肯否与条件	priority79:効果#meaning_zh+collocation
+比べる	くらべる	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		连到より/ほう，保留比较对象	priority79:比べる#meaning_zh+collocation
+含む	ふくむ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		范围和数量的组成关系	priority79:含む#meaning_zh+collocation
+加える	くわえる	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		实体添加与抽象追加分别用例	priority79:加える#meaning_zh+collocation
+払う	はらう	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		不只认识买卖，理解支付动作	priority79:払う#meaning_zh+collocation
+料金	りょうきん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		说明和服务文本常用	priority79:料金#meaning_zh+collocation
+値段	ねだん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与费用、金额按对象区分	priority79:値段#meaning_zh+collocation
+無料	むりょう	纳入当前内容范围	正文已解释；补词表与复现	02-course-design/lessons/16.md:173	同场景反馈解释免费；不要计成全新概念	priority79:無料#meaning_zh+collocation
+要る	いる	纳入当前内容范围	いらない已解释；补辞书形/类别/肯定搭配	02-course-design/lessons/16.md:173	同场景お金はいらない，不因辞书形未出现判全未教	usage-targets.tsv:要る|いる#override
+住所	じゅうしょ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		表格和日常消息	priority79:住所#meaning_zh+collocation
+手続き	てつづき	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		顺序、条件和完成状态	priority79:手続き#meaning_zh+collocation
+問い合わせ	といあわせ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		服务说明和信息查证	priority79:問い合わせ#meaning_zh+collocation
+午前	ごぜん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与时刻一起读	priority79:午前#meaning_zh+collocation
+午後	ごご	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		不能只教明日昨日而漏时刻	priority79:午後#meaning_zh+collocation
+昼	ひる	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		按具体安排区分时段	priority79:昼#meaning_zh+collocation
+去年	きょねん	纳入当前内容范围	正文已有读音和释义；补词表与复现	02-course-design/lessons/06.md:111	明确きょねん和去年	priority79:去年#meaning_zh+collocation
+来年	らいねん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与过去和未来计划结合	priority79:来年#meaning_zh+collocation
+季節	きせつ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与春夏秋冬联系	priority79:季節#meaning_zh+collocation
+寒い	さむい	纳入当前内容范围	正文已有释义；补读音和首教回链	02-course-design/lessons/17.md:87	均见前课的承诺错误，不能反过来抹掉本处解释	priority79:寒い#meaning_zh+collocation
+暑い	あつい	纳入当前内容范围	正文已有天气义；补读音和正式教学	02-course-design/lessons/17.md:121	第7课也与熱い对比	priority79:暑い#meaning_zh+collocation
+冷たい	つめたい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		先教触感，人物态度义另给语境	priority79:冷たい#meaning_zh+collocation
+明るい	あかるい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		性质对象决定词义	priority79:明るい#meaning_zh+collocation
+暗い	くらい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		不要只在答案首次解释	priority79:暗い#meaning_zh+collocation
+広い	ひろい	纳入当前内容范围	正文场景已有；补读音与稳定义项	02-course-design/lessons/20.md:134	世界は広い，核对同场景反馈	priority79:広い#meaning_zh+collocation
+狭い	せまい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		和広い对照	priority79:狭い#meaning_zh+collocation
+低い	ひくい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		高度与声音用法分开给例	priority79:低い#meaning_zh+collocation
+軽い	かるい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与重い对照，其他义另教	priority79:軽い#meaning_zh+collocation
+右	みぎ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		方向和对象位置	priority79:右#meaning_zh+collocation
+左	ひだり	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		保持观察者的方向基点	priority79:左#meaning_zh+collocation
+耳	みみ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		并入身体与健康词组	priority79:耳#meaning_zh+collocation
+指	ゆび	纳入当前内容范围	正文已有读音和整句义；补词表与复现	02-course-design/lessons/20.md:266	指（ゆび）与剪纸/不割伤手指的反馈已经出现；旁注回链表述仍须修	priority79:指#meaning_zh+collocation
+病気	びょうき	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		身体状态与事件文本	priority79:病気#meaning_zh+collocation
+薬	くすり	纳入当前内容范围	正文场景已有；补读音与词表复现	02-course-design/lessons/21.md:299	薬が効く，核对同场景反馈	priority79:薬#meaning_zh+collocation
+食事	しょくじ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与饭菜、ご飯的关系	priority79:食事#meaning_zh+collocation
+野菜	やさい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		常见生活类别	priority79:野菜#meaning_zh+collocation
+魚	さかな	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		生活和叙事共用，不只生物分类	priority79:魚#meaning_zh+collocation
+肉	にく	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		按食材和身体语境区分	priority79:肉#meaning_zh+collocation
+卵	たまご	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与列举结构同教	priority79:卵#meaning_zh+collocation
+弟	おとうと	纳入当前内容范围	整句翻译已有；补读音且修错误旁注回链	02-course-design/lessons/05.md:202	不能算零接触，也不能说完整教学已经闭合	priority79:弟#meaning_zh+collocation
+姉	あね	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		和尊称お姉さん区分	priority79:姉#meaning_zh+collocation
+妻	つま	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		人物关系和省略主体	priority79:妻#meaning_zh+collocation
+夫	おっと	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		不由说话者性别猜关系	priority79:夫#meaning_zh+collocation
+息子	むすこ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		补亲属基本关系	priority79:息子#meaning_zh+collocation
+友人	ゆうじん	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与友達的书面语对应	priority79:友人#meaning_zh+collocation
+人物	じんぶつ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		叙事和说明的跨体裁词	priority79:人物#meaning_zh+collocation
+表情	ひょうじょう	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		小说描写和人物反应	priority79:表情#meaning_zh+collocation
+感情	かんじょう	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与心、気持ち建立关系	priority79:感情#meaning_zh+collocation
+態度	たいど	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		行为与内心推断不能混同	priority79:態度#meaning_zh+collocation
+悲しい	かなしい	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		补基本情感，不只强烈语气词	priority79:悲しい#meaning_zh+collocation
+断る	ことわる	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与邀请、许可构成事件关系	priority79:断る#meaning_zh+collocation
+伝わる	つたわる	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与伝える的参与者区别；是否已传达须看时态语境	priority79:伝わる#meaning_zh+collocation
+遅れる	おくれる	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		读状态变化和计划影响	priority79:遅れる#meaning_zh+collocation
+倒れる	たおれる	纳入当前内容范围	对比词形出现；尚缺独立教学义/读音	02-course-design/lessons/20.md:52	倒す词表提到与倒れる区分，不等于完整解释	priority79:倒れる#meaning_zh+collocation
+戻す	もどす	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与戻る区分	priority79:戻す#meaning_zh+collocation
+並ぶ	ならぶ	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		位置和行为	priority79:並ぶ#meaning_zh+collocation
+並べる	ならべる	纳入当前内容范围	未确认有独立日文词义教学；中文说明或复合词包含不算		与並ぶ的参与者区别	priority79:並べる#meaning_zh+collocation

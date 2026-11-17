@@ -108,8 +108,9 @@ def make():
     selected_mapping = []
     for word in selected:
         variants = {(word['term'], word['reading'])} | {(v['term'], v['reading']) for v in word['variants']}
-        canonical = cards.get((word['term'], word['reading']))
-        matches = [canonical] if canonical else [cards[key] for key in variants if key in cards]
+        # A kana spelling taught earlier is a real first encounter, even when
+        # its canonical kanji spelling appears in a later lesson.
+        matches = [cards[key] for key in variants if key in cards]
         assert matches, ('Selected group not actually taught', word['term'], word['reading'])
         first = min(matches, key=lambda c: c['first_day'])
         selected_mapping.append(dict(term=word['term'], reading=word['reading'],

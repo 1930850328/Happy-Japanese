@@ -1,0 +1,11 @@
+{
+  "files": {
+    "lexical-results.json": "2facfa1f6e3eb357f605b09f32f4a2f55caff971d1b3f4a7ec0eba3db3239551",
+    "diagnostics.json": "96d902b69605b34ed0544413c2737bbc1fe48375538546e136428563ce2b8f7a",
+    "coverage-features.json": "480d2ac8b6daa8f838fda76d4d841453ef5e2f4a351587bf0e627a8752a42dce",
+    "semantic-review.tsv": "ffdcc8161364708bb1cbdaeb27b811d0f73d86b31b61cdeac1a6dd19a5fc31e9",
+    "subtitle-sensitivity.json": "42a867f55576fba287c5f60d7147152fa4b8cb03b2218cefdde280d821e3541e",
+    "independent-gap-check.json": "e95ca699f06829de46abcf2a76033a4d909e6fa57b8ec073938a6e18609d18af"
+  },
+  "purpose": "Freeze measured results and editorial semantic observations; no student score"
+}

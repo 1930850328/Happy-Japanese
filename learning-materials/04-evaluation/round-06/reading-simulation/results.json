@@ -1,0 +1,292 @@
+{
+  "type": "editorial_course_constrained_reading_simulation",
+  "real_student_test": false,
+  "new_holdout": false,
+  "assumption": "Full recall and use of explicitly taught material; Chinese and visible-context inference allowed and recorded.",
+  "grading": {
+    "full": 1,
+    "partial": 0.5,
+    "unknown_or_key_relation_wrong": 0
+  },
+  "overall": {
+    "units": 181,
+    "fully_understood": 88,
+    "partly_understood": 77,
+    "not_understood_or_wrong": 16,
+    "earned": 126.5,
+    "possible": 181,
+    "simulated_content_comprehension_percent": 69.88950276243095,
+    "fully_understood_unit_percent": 48.61878453038674
+  },
+  "language_units_excluding_image_only": {
+    "units": 179,
+    "fully_understood": 86,
+    "partly_understood": 77,
+    "not_understood_or_wrong": 16,
+    "earned": 124.5,
+    "possible": 179,
+    "simulated_content_comprehension_percent": 69.55307262569832,
+    "fully_understood_unit_percent": 48.04469273743017
+  },
+  "genres": {
+    "anime_subtitles": {
+      "units": 42,
+      "fully_understood": 19,
+      "partly_understood": 16,
+      "not_understood_or_wrong": 7,
+      "earned": 27.0,
+      "possible": 42,
+      "simulated_content_comprehension_percent": 64.28571428571429,
+      "fully_understood_unit_percent": 45.23809523809524
+    },
+    "everyday_instruction": {
+      "units": 30,
+      "fully_understood": 13,
+      "partly_understood": 15,
+      "not_understood_or_wrong": 2,
+      "earned": 20.5,
+      "possible": 30,
+      "simulated_content_comprehension_percent": 68.33333333333333,
+      "fully_understood_unit_percent": 43.333333333333336
+    },
+    "light_novel": {
+      "units": 39,
+      "fully_understood": 17,
+      "partly_understood": 15,
+      "not_understood_or_wrong": 7,
+      "earned": 24.5,
+      "possible": 39,
+      "simulated_content_comprehension_percent": 62.82051282051282,
+      "fully_understood_unit_percent": 43.58974358974359
+    },
+    "manga": {
+      "units": 30,
+      "fully_understood": 20,
+      "partly_understood": 10,
+      "not_understood_or_wrong": 0,
+      "earned": 25.0,
+      "possible": 30,
+      "simulated_content_comprehension_percent": 83.33333333333334,
+      "fully_understood_unit_percent": 66.66666666666666
+    },
+    "nonfiction": {
+      "units": 40,
+      "fully_understood": 19,
+      "partly_understood": 21,
+      "not_understood_or_wrong": 0,
+      "earned": 29.5,
+      "possible": 40,
+      "simulated_content_comprehension_percent": 73.75,
+      "fully_understood_unit_percent": 47.5
+    }
+  },
+  "samples": {
+    "chihaya-1": {
+      "units": 13,
+      "fully_understood": 5,
+      "partly_understood": 7,
+      "not_understood_or_wrong": 1,
+      "earned": 8.5,
+      "possible": 13,
+      "simulated_content_comprehension_percent": 65.38461538461539,
+      "fully_understood_unit_percent": 38.46153846153847
+    },
+    "chihaya-2": {
+      "units": 11,
+      "fully_understood": 4,
+      "partly_understood": 6,
+      "not_understood_or_wrong": 1,
+      "earned": 7.0,
+      "possible": 11,
+      "simulated_content_comprehension_percent": 63.63636363636363,
+      "fully_understood_unit_percent": 36.36363636363637
+    },
+    "anohana-1": {
+      "units": 11,
+      "fully_understood": 5,
+      "partly_understood": 2,
+      "not_understood_or_wrong": 4,
+      "earned": 6.0,
+      "possible": 11,
+      "simulated_content_comprehension_percent": 54.54545454545454,
+      "fully_understood_unit_percent": 45.45454545454545
+    },
+    "anohana-2": {
+      "units": 7,
+      "fully_understood": 5,
+      "partly_understood": 1,
+      "not_understood_or_wrong": 1,
+      "earned": 5.5,
+      "possible": 7,
+      "simulated_content_comprehension_percent": 78.57142857142857,
+      "fully_understood_unit_percent": 71.42857142857143
+    },
+    "slime-1": {
+      "units": 12,
+      "fully_understood": 5,
+      "partly_understood": 4,
+      "not_understood_or_wrong": 3,
+      "earned": 7.0,
+      "possible": 12,
+      "simulated_content_comprehension_percent": 58.333333333333336,
+      "fully_understood_unit_percent": 41.66666666666667
+    },
+    "slime-2": {
+      "units": 9,
+      "fully_understood": 4,
+      "partly_understood": 3,
+      "not_understood_or_wrong": 2,
+      "earned": 5.5,
+      "possible": 9,
+      "simulated_content_comprehension_percent": 61.111111111111114,
+      "fully_understood_unit_percent": 44.44444444444444
+    },
+    "mushoku-1": {
+      "units": 10,
+      "fully_understood": 3,
+      "partly_understood": 6,
+      "not_understood_or_wrong": 1,
+      "earned": 6.0,
+      "possible": 10,
+      "simulated_content_comprehension_percent": 60.0,
+      "fully_understood_unit_percent": 30.0
+    },
+    "mushoku-2": {
+      "units": 8,
+      "fully_understood": 5,
+      "partly_understood": 2,
+      "not_understood_or_wrong": 1,
+      "earned": 6.0,
+      "possible": 8,
+      "simulated_content_comprehension_percent": 75.0,
+      "fully_understood_unit_percent": 62.5
+    },
+    "japanpost-1": {
+      "units": 8,
+      "fully_understood": 3,
+      "partly_understood": 5,
+      "not_understood_or_wrong": 0,
+      "earned": 5.5,
+      "possible": 8,
+      "simulated_content_comprehension_percent": 68.75,
+      "fully_understood_unit_percent": 37.5
+    },
+    "japanpost-2": {
+      "units": 5,
+      "fully_understood": 2,
+      "partly_understood": 3,
+      "not_understood_or_wrong": 0,
+      "earned": 3.5,
+      "possible": 5,
+      "simulated_content_comprehension_percent": 70.0,
+      "fully_understood_unit_percent": 40.0
+    },
+    "jrwest-1": {
+      "units": 9,
+      "fully_understood": 6,
+      "partly_understood": 3,
+      "not_understood_or_wrong": 0,
+      "earned": 7.5,
+      "possible": 9,
+      "simulated_content_comprehension_percent": 83.33333333333334,
+      "fully_understood_unit_percent": 66.66666666666666
+    },
+    "jrwest-2": {
+      "units": 8,
+      "fully_understood": 2,
+      "partly_understood": 4,
+      "not_understood_or_wrong": 2,
+      "earned": 4.0,
+      "possible": 8,
+      "simulated_content_comprehension_percent": 50.0,
+      "fully_understood_unit_percent": 25.0
+    },
+    "jma-1": {
+      "units": 12,
+      "fully_understood": 6,
+      "partly_understood": 6,
+      "not_understood_or_wrong": 0,
+      "earned": 9.0,
+      "possible": 12,
+      "simulated_content_comprehension_percent": 75.0,
+      "fully_understood_unit_percent": 50.0
+    },
+    "jma-2": {
+      "units": 9,
+      "fully_understood": 4,
+      "partly_understood": 5,
+      "not_understood_or_wrong": 0,
+      "earned": 6.5,
+      "possible": 9,
+      "simulated_content_comprehension_percent": 72.22222222222221,
+      "fully_understood_unit_percent": 44.44444444444444
+    },
+    "terada-1": {
+      "units": 12,
+      "fully_understood": 6,
+      "partly_understood": 6,
+      "not_understood_or_wrong": 0,
+      "earned": 9.0,
+      "possible": 12,
+      "simulated_content_comprehension_percent": 75.0,
+      "fully_understood_unit_percent": 50.0
+    },
+    "terada-2": {
+      "units": 7,
+      "fully_understood": 3,
+      "partly_understood": 4,
+      "not_understood_or_wrong": 0,
+      "earned": 5.0,
+      "possible": 7,
+      "simulated_content_comprehension_percent": 71.42857142857143,
+      "fully_understood_unit_percent": 42.857142857142854
+    },
+    "tsuredure-pair1": {
+      "units": 4,
+      "fully_understood": 4,
+      "partly_understood": 0,
+      "not_understood_or_wrong": 0,
+      "earned": 4.0,
+      "possible": 4,
+      "simulated_content_comprehension_percent": 100.0,
+      "fully_understood_unit_percent": 100.0
+    },
+    "tsuredure-pair2": {
+      "units": 7,
+      "fully_understood": 6,
+      "partly_understood": 1,
+      "not_understood_or_wrong": 0,
+      "earned": 6.5,
+      "possible": 7,
+      "simulated_content_comprehension_percent": 92.85714285714286,
+      "fully_understood_unit_percent": 85.71428571428571
+    },
+    "yojouhan-pair1": {
+      "units": 10,
+      "fully_understood": 6,
+      "partly_understood": 4,
+      "not_understood_or_wrong": 0,
+      "earned": 8.0,
+      "possible": 10,
+      "simulated_content_comprehension_percent": 80.0,
+      "fully_understood_unit_percent": 60.0
+    },
+    "yojouhan-pair2": {
+      "units": 9,
+      "fully_understood": 4,
+      "partly_understood": 5,
+      "not_understood_or_wrong": 0,
+      "earned": 6.5,
+      "possible": 9,
+      "simulated_content_comprehension_percent": 72.22222222222221,
+      "fully_understood_unit_percent": 44.44444444444444
+    }
+  },
+  "limits": [
+    "Model-authored novice interpretations and grades, not independent human responses.",
+    "Meaning-unit boundaries and partial credit are editorial choices, not a calibrated measurement instrument.",
+    "Recomputation verifies arithmetic and frozen inputs, not the truth of semantic judgments.",
+    "No pre-course control; Chinese and picture inference cannot be attributed solely to the course.",
+    "Not evidence of 21-hour retention, speed, broad population comprehension or improvement over lexical scores."
+  ]
+}

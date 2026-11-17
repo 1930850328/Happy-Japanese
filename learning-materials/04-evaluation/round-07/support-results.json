@@ -1,0 +1,82 @@
+{
+  "type": "editorial_course_support_diagnostic",
+  "student_test_performed": false,
+  "independent_raters": 0,
+  "original_sources": 3,
+  "meaning_units": 28,
+  "by_source": {
+    "library": {
+      "v3": {
+        "units": 16,
+        "full": 1,
+        "partial": 14,
+        "unsupported": 1,
+        "earned": 8.0,
+        "editorial_support_percent": 50.0
+      },
+      "v4": {
+        "units": 16,
+        "full": 1,
+        "partial": 13,
+        "unsupported": 2,
+        "earned": 7.5,
+        "editorial_support_percent": 46.875
+      }
+    },
+    "rules": {
+      "v3": {
+        "units": 8,
+        "full": 0,
+        "partial": 3,
+        "unsupported": 5,
+        "earned": 1.5,
+        "editorial_support_percent": 18.75
+      },
+      "v4": {
+        "units": 8,
+        "full": 0,
+        "partial": 3,
+        "unsupported": 5,
+        "earned": 1.5,
+        "editorial_support_percent": 18.75
+      }
+    },
+    "story": {
+      "v3": {
+        "units": 4,
+        "full": 0,
+        "partial": 3,
+        "unsupported": 1,
+        "earned": 1.5,
+        "editorial_support_percent": 37.5
+      },
+      "v4": {
+        "units": 4,
+        "full": 0,
+        "partial": 2,
+        "unsupported": 2,
+        "earned": 1.0,
+        "editorial_support_percent": 25.0
+      }
+    }
+  },
+  "pooled": {
+    "v3": {
+      "units": 28,
+      "full": 1,
+      "partial": 20,
+      "unsupported": 7,
+      "earned": 11.0,
+      "editorial_support_percent": 39.285714285714285
+    },
+    "v4": {
+      "units": 28,
+      "full": 1,
+      "partial": 18,
+      "unsupported": 9,
+      "earned": 10.0,
+      "editorial_support_percent": 35.714285714285715
+    }
+  },
+  "claim": "Ideal recall, author-limited support judgments; neither real novice comprehension nor a generalization estimate"
+}

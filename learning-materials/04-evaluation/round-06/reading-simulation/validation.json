@@ -1,0 +1,18 @@
+{
+  "isolated_copy_without_cache": {
+    "passed": true
+  },
+  "changed_judgments_rejected": {
+    "passed": true
+  },
+  "score_recomputed": {
+    "passed": true
+  },
+  "material_and_input_hashes": {
+    "passed": true,
+    "checked_by": "score.py"
+  },
+  "limitations": [
+    "These checks verify recorded editorial judgments and arithmetic, not learner performance or semantic correctness."
+  ]
+}

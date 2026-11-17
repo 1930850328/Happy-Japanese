@@ -9,7 +9,7 @@ export function useAppBootstrap() {
   const refreshPublishedLessons = useAppStore((state) => state.refreshPublishedLessons)
   const location = useLocation()
   const shouldPollPublishedLessons =
-    location.pathname === '/' || location.pathname === '/immersive'
+    location.pathname === '/discover' || location.pathname === '/immersive'
 
   useEffect(() => {
     void initialize()

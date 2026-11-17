@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-16",
+  "purpose": "independent_content_audit_not_learner_test",
+  "test_inputs_used": [],
+  "existing_lessons": 21,
+  "existing_table_entries": 874,
+  "existing_priority_groups": 777,
+  "corpus_rows": {
+    "BCCWJ": 185136,
+    "CEJC": 29534
+  },
+  "proposal_counts": {
+    "跨体裁扩展候选": 929,
+    "基础候选": 1308,
+    "歧义待核": 2
+  },
+  "foundation_candidates_without_exact_or_reviewed_variant_table_match": 671,
+  "old_priority_actions": {
+    "保留通用基础候选": 589,
+    "保留完整表达/构词组；短单位排名不适用": 86,
+    "保留会话补充候选": 50,
+    "转专题或搭配复核；不自动删除": 31,
+    "未对齐；核对异写/短单位切分，不能断言低频": 8,
+    "变体识别；未用母词频率冒充本形频率": 13
+  },
+  "grammar_module_count": 42,
+  "grammar_status": {
+    "已有": 18,
+    "部分": 20,
+    "缺失": 4
+  },
+  "curated_priority_additions": 79,
+  "irodori_source_patterns": 348,
+  "irodori_explicitly_aligned": 348,
+  "written_threshold_sensitivity": {
+    "2000": 1466,
+    "3000": 2239,
+    "4000": 3020
+  },
+  "v3_unchanged": true,
+  "student_comprehension_score": null,
+  "limitations": [
+    "Word-head and selected POS matches, not disambiguated senses or learning outcomes.",
+    "Five BCCWJ registers belong to one corpus; CEJC is separate conversational evidence.",
+    "Candidate threshold is editorial; not selected by exam scores or optimized for 90%.",
+    "No 21-day lesson rewrite or novice timing validation in this content-audit stage."
+  ]
+}

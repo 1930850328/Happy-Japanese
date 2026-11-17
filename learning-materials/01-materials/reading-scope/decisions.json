@@ -1,0 +1,5368 @@
+{
+  "version": "general-reading-content-1",
+  "status": "selected_content_not_authored_lessons",
+  "goal": "通用日语文字阅读；21学习日、每天不超过60分钟；90%为待验证目标",
+  "base": "01-materials/vocabulary-scope/selection.json + 02-course-design/inventory.json",
+  "base_policy": "保留v3正式表项及已教用法；按明确异写链接归组；相近词义不自动合并；下列角色语/重复语气形式仅随文识别，不安排为独立新核心词",
+  "recognition_only_terms": [
+    "貴様",
+    "野郎",
+    "てめえ",
+    "くそ",
+    "ふーん",
+    "おーい",
+    "えっと",
+    "ううん",
+    "そりゃ",
+    "そうそう"
+  ],
+  "selection_method": "人工按教材功能与日常/叙事/说明的知识关系逐项选定；词频和JEV难度只作旁证，不设共同前N、教材交集或难度等级自动准入门槛",
+  "source_card_selections": [
+    {
+      "source_id": "kaishi:PL30]wdY7T",
+      "source_order": 238,
+      "term": "毎月",
+      "reading": "まいつき",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:PL30]wdY7T#meaningZh"
+    },
+    {
+      "source_id": "kaishi:lf@~YB~=>I",
+      "source_order": 239,
+      "term": "毎年",
+      "reading": "まいとし",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:lf@~YB~=>I#meaningZh"
+    },
+    {
+      "source_id": "kaishi:MmSk>R~M12",
+      "source_order": 278,
+      "term": "去年",
+      "reading": "きょねん",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:MmSk>R~M12#meaningZh"
+    },
+    {
+      "source_id": "kaishi:QLW;TpT{E<",
+      "source_order": 279,
+      "term": "来年",
+      "reading": "らいねん",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:QLW;TpT{E<#meaningZh"
+    },
+    {
+      "source_id": "kaishi:A<<h4zm4by",
+      "source_order": 295,
+      "term": "春",
+      "reading": "はる",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:A<<h4zm4by#meaningZh"
+    },
+    {
+      "source_id": "kaishi:>)2V?0_j|",
+      "source_order": 297,
+      "term": "秋",
+      "reading": "あき",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:>)2V?0_j|#meaningZh"
+    },
+    {
+      "source_id": "kaishi:iJ`*s2LDv^",
+      "source_order": 298,
+      "term": "冬",
+      "reading": "ふゆ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:iJ`*s2LDv^#meaningZh"
+    },
+    {
+      "source_id": "kaishi:sMk<`6V%dF",
+      "source_order": 408,
+      "term": "来月",
+      "reading": "らいげつ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:sMk<`6V%dF#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Jf,_uU|o},",
+      "source_order": 701,
+      "term": "今夜",
+      "reading": "こんや",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:Jf,_uU|o},#meaningZh"
+    },
+    {
+      "source_id": "kaishi:up]D<P}wKM",
+      "source_order": 702,
+      "term": "昨夜",
+      "reading": "ゆうべ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:up]D<P}wKM#meaningZh"
+    },
+    {
+      "source_id": "kaishi:B,aW`.e@n1",
+      "source_order": 292,
+      "term": "今後",
+      "reading": "こんご",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:B,aW`.e@n1#meaningZh"
+    },
+    {
+      "source_id": "kaishi:quuP.k?&Uo",
+      "source_order": 159,
+      "term": "これから",
+      "reading": "これから",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:quuP.k?&Uo#meaningZh"
+    },
+    {
+      "source_id": "kaishi:P?@T,i<m]]",
+      "source_order": 529,
+      "term": "頃",
+      "reading": "ころ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:P?@T,i<m]]#meaningZh"
+    },
+    {
+      "source_id": "kaishi:t<oA7prr|k",
+      "source_order": 496,
+      "term": "再び",
+      "reading": "ふたたび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:t<oA7prr|k#meaningZh"
+    },
+    {
+      "source_id": "kaishi:IK*1nSRi:n",
+      "source_order": 680,
+      "term": "過去",
+      "reading": "かこ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:IK*1nSRi:n#meaningZh"
+    },
+    {
+      "source_id": "kaishi:b$2~e;}G/j",
+      "source_order": 807,
+      "term": "現在",
+      "reading": "げんざい",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:b$2~e;}G/j#meaningZh"
+    },
+    {
+      "source_id": "kaishi:uR$<=+F;H~",
+      "source_order": 834,
+      "term": "時代",
+      "reading": "じだい",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:uR$<=+F;H~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h<^l8V^;b9",
+      "source_order": 1245,
+      "term": "時期",
+      "reading": "じき",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:h<^l8V^;b9#meaningZh"
+    },
+    {
+      "source_id": "kaishi:c2*%MYR`^3",
+      "source_order": 1256,
+      "term": "直後",
+      "reading": "ちょくご",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:c2*%MYR`^3#meaningZh"
+    },
+    {
+      "source_id": "kaishi:wf/Z(?4f~t",
+      "source_order": 1367,
+      "term": "以来",
+      "reading": "いらい",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:wf/Z(?4f~t#meaningZh"
+    },
+    {
+      "source_id": "kaishi:fdO,.a=Mb`",
+      "source_order": 1268,
+      "term": "当時",
+      "reading": "とうじ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:fdO,.a=Mb`#meaningZh"
+    },
+    {
+      "source_id": "kaishi:L!23.O8j~m",
+      "source_order": 1058,
+      "term": "日々",
+      "reading": "ひび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:L!23.O8j~m#meaningZh"
+    },
+    {
+      "source_id": "kaishi:F*1nO0X{7y",
+      "source_order": 842,
+      "term": "先ほど",
+      "reading": "さきほど",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:F*1nO0X{7y#meaningZh"
+    },
+    {
+      "source_id": "kaishi:GBvY$EpL:>",
+      "source_order": 1483,
+      "term": "先日",
+      "reading": "せんじつ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:GBvY$EpL:>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:F]s%LggYn~",
+      "source_order": 1482,
+      "term": "本日",
+      "reading": "ほんじつ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:F]s%LggYn~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h*4Lh1?uz|",
+      "source_order": 1460,
+      "term": "将来",
+      "reading": "しょうらい",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:h*4Lh1?uz|#meaningZh"
+    },
+    {
+      "source_id": "kaishi:OOtR!`!/p@",
+      "source_order": 940,
+      "term": "一部",
+      "reading": "いちぶ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:OOtR!`!/p@#meaningZh"
+    },
+    {
+      "source_id": "kaishi:l$hI3k8d,}",
+      "source_order": 1355,
+      "term": "全体",
+      "reading": "ぜんたい",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:l$hI3k8d,}#meaningZh"
+    },
+    {
+      "source_id": "kaishi:cA1?Jbg_o]",
+      "source_order": 599,
+      "term": "部分",
+      "reading": "ぶぶん",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:cA1?Jbg_o]#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LXW_cW3b#&",
+      "source_order": 757,
+      "term": "数",
+      "reading": "かず",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:LXW_cW3b#&#meaningZh"
+    },
+    {
+      "source_id": "kaishi:K[s{A6jKMy",
+      "source_order": 993,
+      "term": "量",
+      "reading": "りょう",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:K[s{A6jKMy#meaningZh"
+    },
+    {
+      "source_id": "kaishi:N|1!?|Zk`l",
+      "source_order": 790,
+      "term": "半分",
+      "reading": "はんぶん",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:N|1!?|Zk`l#meaningZh"
+    },
+    {
+      "source_id": "kaishi:F)%Md;$ox{",
+      "source_order": 1356,
+      "term": "度",
+      "reading": "ど",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:F)%Md;$ox{#meaningZh"
+    },
+    {
+      "source_id": "kaishi:x:/CUrSN?>",
+      "source_order": 1370,
+      "term": "最大",
+      "reading": "さいだい",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:x:/CUrSN?>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:q;&14E0%u-",
+      "source_order": 1097,
+      "term": "多少",
+      "reading": "たしょう",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:q;&14E0%u-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:M`$fna^:]T",
+      "source_order": 1134,
+      "term": "わずか",
+      "reading": "わずか",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:M`$fna^:]T#meaningZh"
+    },
+    {
+      "source_id": "kaishi:M@me=){k=B",
+      "source_order": 953,
+      "term": "ほぼ",
+      "reading": "ほぼ",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:M@me=){k=B#meaningZh"
+    },
+    {
+      "source_id": "kaishi:L}~4]B{@po",
+      "source_order": 954,
+      "term": "ちょうど",
+      "reading": "ちょうど",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:L}~4]B{@po#meaningZh"
+    },
+    {
+      "source_id": "kaishi:QoF~RtL#ZW",
+      "source_order": 918,
+      "term": "少なくとも",
+      "reading": "すくなくとも",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "读日期、时间、数量、先后与频率；数字和量词的变化另由语法单元负责",
+      "meaning_ref": "kaishi:QoF~RtL#ZW#meaningZh"
+    },
+    {
+      "source_id": "kaishi:hhAc}:IM#r",
+      "source_order": 308,
+      "term": "左",
+      "reading": "ひだり",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:hhAc}:IM#r#meaningZh"
+    },
+    {
+      "source_id": "kaishi:x;FP?}2n>%",
+      "source_order": 309,
+      "term": "右",
+      "reading": "みぎ",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:x;FP?}2n>%#meaningZh"
+    },
+    {
+      "source_id": "kaishi:tIG$2;oLaQ",
+      "source_order": 387,
+      "term": "奥",
+      "reading": "おく",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:tIG$2;oLaQ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:w;yai)9MMP",
+      "source_order": 687,
+      "term": "横",
+      "reading": "よこ",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:w;yai)9MMP#meaningZh"
+    },
+    {
+      "source_id": "kaishi:dSDBZ<}^Y",
+      "source_order": 896,
+      "term": "方向",
+      "reading": "ほうこう",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:dSDBZ<}^Y#meaningZh"
+    },
+    {
+      "source_id": "kaishi:F-%_aFP}oe",
+      "source_order": 693,
+      "term": "距離",
+      "reading": "きょり",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:F-%_aFP}oe#meaningZh"
+    },
+    {
+      "source_id": "kaishi:t{+--R,G3P",
+      "source_order": 873,
+      "term": "位置",
+      "reading": "いち",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:t{+--R,G3P#meaningZh"
+    },
+    {
+      "source_id": "kaishi:u!GdcC92ei",
+      "source_order": 514,
+      "term": "周囲",
+      "reading": "しゅうい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:u!GdcC92ei#meaningZh"
+    },
+    {
+      "source_id": "kaishi:flsYf~#dP[",
+      "source_order": 539,
+      "term": "周り",
+      "reading": "まわり",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:flsYf~#dP[#meaningZh"
+    },
+    {
+      "source_id": "kaishi:xm3q?,Yczv",
+      "source_order": 646,
+      "term": "地面",
+      "reading": "じめん",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:xm3q?,Yczv#meaningZh"
+    },
+    {
+      "source_id": "kaishi:pA5Cos,XQ/",
+      "source_order": 686,
+      "term": "床",
+      "reading": "ゆか",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:pA5Cos,XQ/#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qgRU+wWbpy",
+      "source_order": 475,
+      "term": "壁",
+      "reading": "かべ",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:qgRU+wWbpy#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Ii<@Z3:I9X",
+      "source_order": 432,
+      "term": "扉",
+      "reading": "とびら",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:Ii<@Z3:I9X#meaningZh"
+    },
+    {
+      "source_id": "kaishi:bu$Zole)O/",
+      "source_order": 943,
+      "term": "階段",
+      "reading": "かいだん",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:bu$Zole)O/#meaningZh"
+    },
+    {
+      "source_id": "kaishi:zDW%,(jnyY",
+      "source_order": 1320,
+      "term": "天井",
+      "reading": "てんじょう",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:zDW%,(jnyY#meaningZh"
+    },
+    {
+      "source_id": "kaishi:g%WJ~qQ,^J",
+      "source_order": 1257,
+      "term": "地下",
+      "reading": "ちか",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:g%WJ~qQ,^J#meaningZh"
+    },
+    {
+      "source_id": "kaishi:J?Ob$;-O)~",
+      "source_order": 1336,
+      "term": "地上",
+      "reading": "ちじょう",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:J?Ob$;-O)~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:r?@_e%<Wmg",
+      "source_order": 1453,
+      "term": "底",
+      "reading": "そこ",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:r?@_e%<Wmg#meaningZh"
+    },
+    {
+      "source_id": "kaishi:xe.=BKy$1H",
+      "source_order": 1481,
+      "term": "隙間",
+      "reading": "すきま",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:xe.=BKy$1H#meaningZh"
+    },
+    {
+      "source_id": "kaishi:lu@qx*0g}f",
+      "source_order": 81,
+      "term": "町",
+      "reading": "まち",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:lu@qx*0g}f#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Bq`=l@$w4?",
+      "source_order": 755,
+      "term": "村",
+      "reading": "むら",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:Bq`=l@$w4?#meaningZh"
+    },
+    {
+      "source_id": "kaishi:GiVp1WxI%z",
+      "source_order": 1342,
+      "term": "島",
+      "reading": "しま",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:GiVp1WxI%z#meaningZh"
+    },
+    {
+      "source_id": "kaishi:fkg}}w#+l<",
+      "source_order": 546,
+      "term": "森",
+      "reading": "もり",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:fkg}}w#+l<#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Hr/*5D`aT~",
+      "source_order": 1137,
+      "term": "川",
+      "reading": "かわ",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:Hr/*5D`aT~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:PIs(~P!?F~",
+      "source_order": 793,
+      "term": "石",
+      "reading": "いし",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:PIs(~P!?F~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:upM3$O@193",
+      "source_order": 704,
+      "term": "自然",
+      "reading": "しぜん",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:upM3$O@193#meaningZh"
+    },
+    {
+      "source_id": "kaishi:G[rU$go)h{",
+      "source_order": 1358,
+      "term": "太陽",
+      "reading": "たいよう",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:G[rU$go)h{#meaningZh"
+    },
+    {
+      "source_id": "kaishi:DO>M~|jOb{",
+      "source_order": 1293,
+      "term": "鳥",
+      "reading": "とり",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:DO>M~|jOb{#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v|&[8R!2tf",
+      "source_order": 1292,
+      "term": "魚",
+      "reading": "さかな",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:v|&[8R!2tf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:K9yRmjKGWx",
+      "source_order": 1283,
+      "term": "氷",
+      "reading": "こおり",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:K9yRmjKGWx#meaningZh"
+    },
+    {
+      "source_id": "kaishi:JoJdW^Oy@P",
+      "source_order": 734,
+      "term": "影",
+      "reading": "かげ",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:JoJdW^Oy@P#meaningZh"
+    },
+    {
+      "source_id": "kaishi:m6U}e>54x;",
+      "source_order": 745,
+      "term": "広い",
+      "reading": "ひろい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:m6U}e>54x;#meaningZh"
+    },
+    {
+      "source_id": "kaishi:mw)a8]n`6c",
+      "source_order": 1284,
+      "term": "狭い",
+      "reading": "せまい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:mw)a8]n`6c#meaningZh"
+    },
+    {
+      "source_id": "kaishi:vn<L_noYxY",
+      "source_order": 741,
+      "term": "低い",
+      "reading": "ひくい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:vn<L_noYxY#meaningZh"
+    },
+    {
+      "source_id": "kaishi:P^&KyU{VOS",
+      "source_order": 838,
+      "term": "明るい",
+      "reading": "あかるい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:P^&KyU{VOS#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qq1xbh{8rI",
+      "source_order": 777,
+      "term": "暗い",
+      "reading": "くらい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:qq1xbh{8rI#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Q%i]d+.h>3",
+      "source_order": 1089,
+      "term": "寒い",
+      "reading": "さむい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:Q%i]d+.h>3#meaningZh"
+    },
+    {
+      "source_id": "kaishi:g2K-wMXJEU",
+      "source_order": 615,
+      "term": "冷たい",
+      "reading": "つめたい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:g2K-wMXJEU#meaningZh"
+    },
+    {
+      "source_id": "kaishi:y<iKykIIr~",
+      "source_order": 388,
+      "term": "軽い",
+      "reading": "かるい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:y<iKykIIr~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LExDyNu7l&",
+      "source_order": 1075,
+      "term": "細い",
+      "reading": "ほそい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:LExDyNu7l&#meaningZh"
+    },
+    {
+      "source_id": "kaishi:cZhzB9}6a[",
+      "source_order": 886,
+      "term": "薄い",
+      "reading": "うすい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:cZhzB9}6a[#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Ezjz+B(6rs",
+      "source_order": 1032,
+      "term": "柔らかい",
+      "reading": "やわらかい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:Ezjz+B(6rs#meaningZh"
+    },
+    {
+      "source_id": "kaishi:yRUi;6-f|;",
+      "source_order": 464,
+      "term": "赤い",
+      "reading": "あかい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:yRUi;6-f|;#meaningZh"
+    },
+    {
+      "source_id": "kaishi:BG5saHQ~t)",
+      "source_order": 499,
+      "term": "白い",
+      "reading": "しろい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:BG5saHQ~t)#meaningZh"
+    },
+    {
+      "source_id": "kaishi:o8*.%R@HK=",
+      "source_order": 622,
+      "term": "黒い",
+      "reading": "くろい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:o8*.%R@HK=#meaningZh"
+    },
+    {
+      "source_id": "kaishi:CTsaD@j_c`",
+      "source_order": 1101,
+      "term": "青い",
+      "reading": "あおい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:CTsaD@j_c`#meaningZh"
+    },
+    {
+      "source_id": "kaishi:.:@C&gHak",
+      "source_order": 1230,
+      "term": "硬い",
+      "reading": "かたい",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:.:@C&gHak#meaningZh"
+    },
+    {
+      "source_id": "kaishi:DV,X8?rjsg",
+      "source_order": 1002,
+      "term": "建物",
+      "reading": "たてもの",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:DV,X8?rjsg#meaningZh"
+    },
+    {
+      "source_id": "kaishi:KBQ`Cg<<QZ",
+      "source_order": 1272,
+      "term": "入り口",
+      "reading": "いりぐち",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:KBQ`Cg<<QZ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:D5*sA1`VbG",
+      "source_order": 1474,
+      "term": "景色",
+      "reading": "けしき",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:D5*sA1`VbG#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Gf0v4WkoO:",
+      "source_order": 1447,
+      "term": "庭",
+      "reading": "にわ",
+      "roles": [
+        "空间与环境"
+      ],
+      "reason": "辨认位置、移动路线、场景和普通环境描写",
+      "meaning_ref": "kaishi:Gf0v4WkoO:#meaningZh"
+    },
+    {
+      "source_id": "kaishi:kd>[iLEYV&",
+      "source_order": 433,
+      "term": "指",
+      "reading": "ゆび",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:kd>[iLEYV&#meaningZh"
+    },
+    {
+      "source_id": "kaishi:H/3}Gx9$1g",
+      "source_order": 554,
+      "term": "耳",
+      "reading": "みみ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:H/3}Gx9$1g#meaningZh"
+    },
+    {
+      "source_id": "kaishi:u1F6%=,.-B",
+      "source_order": 537,
+      "term": "首",
+      "reading": "くび",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:u1F6%=,.-B#meaningZh"
+    },
+    {
+      "source_id": "kaishi:p8tl=f/Q#B",
+      "source_order": 489,
+      "term": "肩",
+      "reading": "かた",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:p8tl=f/Q#B#meaningZh"
+    },
+    {
+      "source_id": "kaishi:OR[Cx{L>Kz",
+      "source_order": 477,
+      "term": "背中",
+      "reading": "せなか",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:OR[Cx{L>Kz#meaningZh"
+    },
+    {
+      "source_id": "kaishi:IXZ0JMma*k",
+      "source_order": 505,
+      "term": "腰",
+      "reading": "こし",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:IXZ0JMma*k#meaningZh"
+    },
+    {
+      "source_id": "kaishi:k.Ysl,YP6A",
+      "source_order": 1347,
+      "term": "鼻",
+      "reading": "はな",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:k.Ysl,YP6A#meaningZh"
+    },
+    {
+      "source_id": "kaishi:o&U[3_LA87",
+      "source_order": 1208,
+      "term": "喉",
+      "reading": "のど",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:o&U[3_LA87#meaningZh"
+    },
+    {
+      "source_id": "kaishi:e=t#3(q[)l",
+      "source_order": 1133,
+      "term": "膝",
+      "reading": "ひざ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:e=t#3(q[)l#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LBM5)2,RdS",
+      "source_order": 945,
+      "term": "舌",
+      "reading": "した",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:LBM5)2,RdS#meaningZh"
+    },
+    {
+      "source_id": "kaishi:dlBH<@BpD,",
+      "source_order": 561,
+      "term": "唇",
+      "reading": "くちびる",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:dlBH<@BpD,#meaningZh"
+    },
+    {
+      "source_id": "kaishi:EBjnCZkHQK",
+      "source_order": 778,
+      "term": "息",
+      "reading": "いき",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:EBjnCZkHQK#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qB<U..cuSo",
+      "source_order": 1328,
+      "term": "呼吸",
+      "reading": "こきゅう",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:qB<U..cuSo#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h|d|O)hAvy",
+      "source_order": 1130,
+      "term": "汗",
+      "reading": "あせ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:h|d|O)hAvy#meaningZh"
+    },
+    {
+      "source_id": "kaishi:i!>pQSHwPq",
+      "source_order": 638,
+      "term": "涙",
+      "reading": "なみだ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:i!>pQSHwPq#meaningZh"
+    },
+    {
+      "source_id": "kaishi:xD{F?h<z>`",
+      "source_order": 732,
+      "term": "痛み",
+      "reading": "いたみ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:xD{F?h<z>`#meaningZh"
+    },
+    {
+      "source_id": "kaishi:mrxh2*DUMn",
+      "source_order": 809,
+      "term": "熱",
+      "reading": "ねつ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:mrxh2*DUMn#meaningZh"
+    },
+    {
+      "source_id": "kaishi:vAOG+5B}G2",
+      "source_order": 1415,
+      "term": "病気",
+      "reading": "びょうき",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:vAOG+5B}G2#meaningZh"
+    },
+    {
+      "source_id": "kaishi:DR1TrpFKcp",
+      "source_order": 934,
+      "term": "薬",
+      "reading": "くすり",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:DR1TrpFKcp#meaningZh"
+    },
+    {
+      "source_id": "kaishi:P,~.jiLx)?",
+      "source_order": 767,
+      "term": "傷",
+      "reading": "きず",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:P,~.jiLx)?#meaningZh"
+    },
+    {
+      "source_id": "kaishi:E$Q$=4`fhU",
+      "source_order": 721,
+      "term": "全身",
+      "reading": "ぜんしん",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:E$Q$=4`fhU#meaningZh"
+    },
+    {
+      "source_id": "kaishi:BY6),}(N)b",
+      "source_order": 660,
+      "term": "両手",
+      "reading": "りょうて",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:BY6),}(N)b#meaningZh"
+    },
+    {
+      "source_id": "kaishi:J=8|48l|ic",
+      "source_order": 1349,
+      "term": "片手",
+      "reading": "かたて",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:J=8|48l|ic#meaningZh"
+    },
+    {
+      "source_id": "kaishi:A{Xi)L,%*o",
+      "source_order": 618,
+      "term": "食事",
+      "reading": "しょくじ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:A{Xi)L,%*o#meaningZh"
+    },
+    {
+      "source_id": "kaishi:s^Vwz9p:e)",
+      "source_order": 651,
+      "term": "肉",
+      "reading": "にく",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:s^Vwz9p:e)#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qU`et8tt0V",
+      "source_order": 1263,
+      "term": "洗う",
+      "reading": "あらう",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:qU`et8tt0V#meaningZh"
+    },
+    {
+      "source_id": "kaishi:B-H^Pt<#D|",
+      "source_order": 1229,
+      "term": "掃除",
+      "reading": "そうじ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:B-H^Pt<#D|#meaningZh"
+    },
+    {
+      "source_id": "kaishi:flvY^_,;7:",
+      "source_order": 1173,
+      "term": "着替える",
+      "reading": "きがえる",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:flvY^_,;7:#meaningZh"
+    },
+    {
+      "source_id": "kaishi:zN[XwO}|pP",
+      "source_order": 1198,
+      "term": "脱ぐ",
+      "reading": "ぬぐ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:zN[XwO}|pP#meaningZh"
+    },
+    {
+      "source_id": "kaishi:dbQn^-<Kzn",
+      "source_order": 1178,
+      "term": "焼く",
+      "reading": "やく",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:dbQn^-<Kzn#meaningZh"
+    },
+    {
+      "source_id": "kaishi:sp^c,wtR:F",
+      "source_order": 1167,
+      "term": "吸う",
+      "reading": "すう",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:sp^c,wtR:F#meaningZh"
+    },
+    {
+      "source_id": "kaishi:bb{`EW(S)C",
+      "source_order": 1427,
+      "term": "袋",
+      "reading": "ふくろ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:bb{`EW(S)C#meaningZh"
+    },
+    {
+      "source_id": "kaishi:e?X+1!H)pw",
+      "source_order": 1174,
+      "term": "箱",
+      "reading": "はこ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:e?X+1!H)pw#meaningZh"
+    },
+    {
+      "source_id": "kaishi:@cB.&5hx1",
+      "source_order": 1296,
+      "term": "紙",
+      "reading": "かみ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:@cB.&5hx1#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h.5G<_`D4M",
+      "source_order": 1394,
+      "term": "鏡",
+      "reading": "かがみ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:h.5G<_`D4M#meaningZh"
+    },
+    {
+      "source_id": "kaishi:FJ!&OM`H}`",
+      "source_order": 1237,
+      "term": "絵",
+      "reading": "え",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:FJ!&OM`H}`#meaningZh"
+    },
+    {
+      "source_id": "kaishi:hl&}iX9f^R",
+      "source_order": 813,
+      "term": "席",
+      "reading": "せき",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:hl&}iX9f^R#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v~NR/k(z+-",
+      "source_order": 990,
+      "term": "荷物",
+      "reading": "にもつ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:v~NR/k(z+-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jutMwU=(al",
+      "source_order": 1261,
+      "term": "道具",
+      "reading": "どうぐ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:jutMwU=(al#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v)$AsiG3rc",
+      "source_order": 1416,
+      "term": "携帯",
+      "reading": "けいたい",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:v)$AsiG3rc#meaningZh"
+    },
+    {
+      "source_id": "kaishi:D~X<r2{`jm",
+      "source_order": 1457,
+      "term": "テレビ",
+      "reading": "テレビ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:D~X<r2{`jm#meaningZh"
+    },
+    {
+      "source_id": "kaishi:xrY#?!@uLv",
+      "source_order": 1082,
+      "term": "広げる",
+      "reading": "ひろげる",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:xrY#?!@uLv#meaningZh"
+    },
+    {
+      "source_id": "kaishi:zg$-,(8gH&",
+      "source_order": 1446,
+      "term": "歌",
+      "reading": "うた",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:zg$-,(8gH&#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jqhq31meuH",
+      "source_order": 1405,
+      "term": "歌う",
+      "reading": "うたう",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:jqhq31meuH#meaningZh"
+    },
+    {
+      "source_id": "kaishi:JAxm2km/J?",
+      "source_order": 1445,
+      "term": "買い物",
+      "reading": "かいもの",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:JAxm2km/J?#meaningZh"
+    },
+    {
+      "source_id": "kaishi:pmT_I@{8H",
+      "source_order": 1153,
+      "term": "趣味",
+      "reading": "しゅみ",
+      "roles": [
+        "身体与生活"
+      ],
+      "reason": "辨认身体、感受、普通生活物件及相关动作",
+      "meaning_ref": "kaishi:pmT_I@{8H#meaningZh"
+    },
+    {
+      "source_id": "kaishi:FHG4jdQ)++",
+      "source_order": 242,
+      "term": "姉",
+      "reading": "あね",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:FHG4jdQ)++#meaningZh"
+    },
+    {
+      "source_id": "kaishi:PL,d.LT:MN",
+      "source_order": 243,
+      "term": "弟",
+      "reading": "おとうと",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:PL,d.LT:MN#meaningZh"
+    },
+    {
+      "source_id": "kaishi:uFsEA9_T!3",
+      "source_order": 1182,
+      "term": "妻",
+      "reading": "つま",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:uFsEA9_T!3#meaningZh"
+    },
+    {
+      "source_id": "kaishi:PxOb#sR:)/",
+      "source_order": 726,
+      "term": "息子",
+      "reading": "むすこ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:PxOb#sR:)/#meaningZh"
+    },
+    {
+      "source_id": "kaishi:eI|fYUc6Q^",
+      "source_order": 992,
+      "term": "両親",
+      "reading": "りょうしん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:eI|fYUc6Q^#meaningZh"
+    },
+    {
+      "source_id": "kaishi:A?/@r_eT2I",
+      "source_order": 111,
+      "term": "おじいさん",
+      "reading": "おじいさん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:A?/@r_eT2I#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qV7~%|wXlE",
+      "source_order": 112,
+      "term": "おばあさん",
+      "reading": "おばあさん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:qV7~%|wXlE#meaningZh"
+    },
+    {
+      "source_id": "kaishi:vsYS*h$)~n",
+      "source_order": 1013,
+      "term": "お兄さん",
+      "reading": "おにいさん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:vsYS*h$)~n#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jaEX=6+Wbw",
+      "source_order": 1014,
+      "term": "お姉さん",
+      "reading": "おねえさん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:jaEX=6+Wbw#meaningZh"
+    },
+    {
+      "source_id": "kaishi:PBaK3aT!S9",
+      "source_order": 185,
+      "term": "男の子",
+      "reading": "おとこのこ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:PBaK3aT!S9#meaningZh"
+    },
+    {
+      "source_id": "kaishi:J&k2+XImA6",
+      "source_order": 373,
+      "term": "少女",
+      "reading": "しょうじょ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:J&k2+XImA6#meaningZh"
+    },
+    {
+      "source_id": "kaishi:L1rx_V/9!b",
+      "source_order": 663,
+      "term": "少年",
+      "reading": "しょうねん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:L1rx_V/9!b#meaningZh"
+    },
+    {
+      "source_id": "kaishi:RiL$*8K<wD",
+      "source_order": 804,
+      "term": "男性",
+      "reading": "だんせい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:RiL$*8K<wD#meaningZh"
+    },
+    {
+      "source_id": "kaishi:L36kGlDi%(",
+      "source_order": 1034,
+      "term": "女子",
+      "reading": "じょし",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:L36kGlDi%(#meaningZh"
+    },
+    {
+      "source_id": "kaishi:x?QBp.N6Iv",
+      "source_order": 1383,
+      "term": "男子",
+      "reading": "だんし",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:x?QBp.N6Iv#meaningZh"
+    },
+    {
+      "source_id": "kaishi:crtY6,;k..",
+      "source_order": 786,
+      "term": "生徒",
+      "reading": "せいと",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:crtY6,;k..#meaningZh"
+    },
+    {
+      "source_id": "kaishi:CwKWJ=f]#~",
+      "source_order": 756,
+      "term": "人物",
+      "reading": "じんぶつ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:CwKWJ=f]#~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:dQ0AVt4:DI",
+      "source_order": 935,
+      "term": "友人",
+      "reading": "ゆうじん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:dQ0AVt4:DI#meaningZh"
+    },
+    {
+      "source_id": "kaishi:i*Pi7*:W_`",
+      "source_order": 828,
+      "term": "他人",
+      "reading": "たにん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:i*Pi7*:W_`#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h>88A/qcsu",
+      "source_order": 1092,
+      "term": "恋人",
+      "reading": "こいびと",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:h>88A/qcsu#meaningZh"
+    },
+    {
+      "source_id": "kaishi:wSV~~zeUND",
+      "source_order": 1063,
+      "term": "知り合い",
+      "reading": "しりあい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:wSV~~zeUND#meaningZh"
+    },
+    {
+      "source_id": "kaishi:u$t,e!3VI{",
+      "source_order": 1301,
+      "term": "部下",
+      "reading": "ぶか",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:u$t,e!3VI{#meaningZh"
+    },
+    {
+      "source_id": "kaishi:HtC%J}AHV5",
+      "source_order": 312,
+      "term": "表情",
+      "reading": "ひょうじょう",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:HtC%J}AHV5#meaningZh"
+    },
+    {
+      "source_id": "kaishi:DKl+3;k|mt",
+      "source_order": 538,
+      "term": "感情",
+      "reading": "かんじょう",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:DKl+3;k|mt#meaningZh"
+    },
+    {
+      "source_id": "kaishi:r^U`Q&B)c#",
+      "source_order": 699,
+      "term": "態度",
+      "reading": "たいど",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:r^U`Q&B)c##meaningZh"
+    },
+    {
+      "source_id": "kaishi:IEtMMCR7K`",
+      "source_order": 932,
+      "term": "性格",
+      "reading": "せいかく",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:IEtMMCR7K`#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Ev|?{.mKDk",
+      "source_order": 364,
+      "term": "笑顔",
+      "reading": "えがお",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:Ev|?{.mKDk#meaningZh"
+    },
+    {
+      "source_id": "kaishi:A[|dt9&lcZ",
+      "source_order": 718,
+      "term": "寂しい",
+      "reading": "さびしい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:A[|dt9&lcZ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:kb9vpH]5-<",
+      "source_order": 850,
+      "term": "悲しい",
+      "reading": "かなしい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:kb9vpH]5-<#meaningZh"
+    },
+    {
+      "source_id": "kaishi:rL)vnnaQ-m",
+      "source_order": 837,
+      "term": "苦しい",
+      "reading": "くるしい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:rL)vnnaQ-m#meaningZh"
+    },
+    {
+      "source_id": "kaishi:ozfpi;{AP$",
+      "source_order": 811,
+      "term": "厳しい",
+      "reading": "きびしい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:ozfpi;{AP$#meaningZh"
+    },
+    {
+      "source_id": "kaishi:J1ERv3r*2;",
+      "source_order": 650,
+      "term": "素直",
+      "reading": "すなお",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:J1ERv3r*2;#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Fx|R!0cl@3",
+      "source_order": 1005,
+      "term": "真面目",
+      "reading": "まじめ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:Fx|R!0cl@3#meaningZh"
+    },
+    {
+      "source_id": "kaishi:f4Nq[R,$Ow",
+      "source_order": 1455,
+      "term": "丁寧",
+      "reading": "ていねい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:f4Nq[R,$Ow#meaningZh"
+    },
+    {
+      "source_id": "kaishi:bQ:FKkT9ON",
+      "source_order": 1248,
+      "term": "優秀",
+      "reading": "ゆうしゅう",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:bQ:FKkT9ON#meaningZh"
+    },
+    {
+      "source_id": "kaishi:E=x&A_0yu[",
+      "source_order": 642,
+      "term": "緊張",
+      "reading": "きんちょう",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:E=x&A_0yu[#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Cc*Siz?f+@",
+      "source_order": 821,
+      "term": "満足",
+      "reading": "まんぞく",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:Cc*Siz?f+@#meaningZh"
+    },
+    {
+      "source_id": "kaishi:hjX1GmtB;A",
+      "source_order": 1234,
+      "term": "不満",
+      "reading": "ふまん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:hjX1GmtB;A#meaningZh"
+    },
+    {
+      "source_id": "kaishi:P_EEQC58R>",
+      "source_order": 470,
+      "term": "不安",
+      "reading": "ふあん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:P_EEQC58R>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Czj,CenQMX",
+      "source_order": 582,
+      "term": "納得",
+      "reading": "なっとく",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:Czj,CenQMX#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Jhx>09F8yA",
+      "source_order": 927,
+      "term": "後悔",
+      "reading": "こうかい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:Jhx>09F8yA#meaningZh"
+    },
+    {
+      "source_id": "kaishi:xh?l4bc]cL",
+      "source_order": 928,
+      "term": "希望",
+      "reading": "きぼう",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:xh?l4bc]cL#meaningZh"
+    },
+    {
+      "source_id": "kaishi:r(Ung)~L^p",
+      "source_order": 1265,
+      "term": "誤解",
+      "reading": "ごかい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:r(Ung)~L^p#meaningZh"
+    },
+    {
+      "source_id": "kaishi:l/@BU[e<Cm",
+      "source_order": 960,
+      "term": "勘違い",
+      "reading": "かんちがい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:l/@BU[e<Cm#meaningZh"
+    },
+    {
+      "source_id": "kaishi:HWER~|,Fv]",
+      "source_order": 1290,
+      "term": "文句",
+      "reading": "もんく",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:HWER~|,Fv]#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Bzla.7}HhM",
+      "source_order": 153,
+      "term": "約束",
+      "reading": "やくそく",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:Bzla.7}HhM#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LE8K{&vHMN",
+      "source_order": 794,
+      "term": "挨拶",
+      "reading": "あいさつ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:LE8K{&vHMN#meaningZh"
+    },
+    {
+      "source_id": "kaishi:kh@4QxKPEL",
+      "source_order": 543,
+      "term": "会話",
+      "reading": "かいわ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:kh@4QxKPEL#meaningZh"
+    },
+    {
+      "source_id": "kaishi:gZ!NK<g@,K",
+      "source_order": 781,
+      "term": "参加",
+      "reading": "さんか",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:gZ!NK<g@,K#meaningZh"
+    },
+    {
+      "source_id": "kaishi:{M{(O+@{d",
+      "source_order": 737,
+      "term": "協力",
+      "reading": "きょうりょく",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:{M{(O+@{d#meaningZh"
+    },
+    {
+      "source_id": "kaishi:NBW-jYE8;1",
+      "source_order": 795,
+      "term": "相談",
+      "reading": "そうだん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:NBW-jYE8;1#meaningZh"
+    },
+    {
+      "source_id": "kaishi:vXjwbm((z&",
+      "source_order": 1266,
+      "term": "応援",
+      "reading": "おうえん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:vXjwbm((z&#meaningZh"
+    },
+    {
+      "source_id": "kaishi:CwhU?2`#2h",
+      "source_order": 605,
+      "term": "結婚",
+      "reading": "けっこん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:CwhU?2`#2h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:M]UMrX8UV,",
+      "source_order": 1199,
+      "term": "信頼",
+      "reading": "しんらい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:M]UMrX8UV,#meaningZh"
+    },
+    {
+      "source_id": "kaishi:zMBTGmVrtt",
+      "source_order": 1045,
+      "term": "責任",
+      "reading": "せきにん",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:zMBTGmVrtt#meaningZh"
+    },
+    {
+      "source_id": "kaishi:cNTCsOkPv)",
+      "source_order": 1127,
+      "term": "恋",
+      "reading": "こい",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:cNTCsOkPv)#meaningZh"
+    },
+    {
+      "source_id": "kaishi:De{w#E5n-i",
+      "source_order": 1426,
+      "term": "事故",
+      "reading": "じこ",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "跟踪谁与谁的关系、交谈、情绪及普通社会场景",
+      "meaning_ref": "kaishi:De{w#E5n-i#meaningZh"
+    },
+    {
+      "source_id": "kaishi:tup_pI!66l",
+      "source_order": 386,
+      "term": "向ける",
+      "reading": "むける",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:tup_pI!66l#meaningZh"
+    },
+    {
+      "source_id": "kaishi:g,A%ytDYC}",
+      "source_order": 706,
+      "term": "向く",
+      "reading": "むく",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:g,A%ytDYC}#meaningZh"
+    },
+    {
+      "source_id": "kaishi:H`I7/NKcL=",
+      "source_order": 547,
+      "term": "動かす",
+      "reading": "うごかす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:H`I7/NKcL=#meaningZh"
+    },
+    {
+      "source_id": "kaishi:c|1_6p{:~Y",
+      "source_order": 457,
+      "term": "触れる",
+      "reading": "ふれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:c|1_6p{:~Y#meaningZh"
+    },
+    {
+      "source_id": "kaishi:t{$O~HdosD",
+      "source_order": 604,
+      "term": "握る",
+      "reading": "にぎる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:t{$O~HdosD#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jmG)d]Y-U^",
+      "source_order": 747,
+      "term": "叩く",
+      "reading": "たたく",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:jmG)d]Y-U^#meaningZh"
+    },
+    {
+      "source_id": "kaishi:z[`g(*Z=Ye",
+      "source_order": 750,
+      "term": "振る",
+      "reading": "ふる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:z[`g(*Z=Ye#meaningZh"
+    },
+    {
+      "source_id": "kaishi:KAqyLZ3PlD",
+      "source_order": 802,
+      "term": "抱く",
+      "reading": "だく",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:KAqyLZ3PlD#meaningZh"
+    },
+    {
+      "source_id": "kaishi:b.{JSeaE>O",
+      "source_order": 799,
+      "term": "抱える",
+      "reading": "かかえる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:b.{JSeaE>O#meaningZh"
+    },
+    {
+      "source_id": "kaishi:K38P3V%2U4",
+      "source_order": 827,
+      "term": "掴む",
+      "reading": "つかむ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:K38P3V%2U4#meaningZh"
+    },
+    {
+      "source_id": "kaishi:OD{cZ9(DSx",
+      "source_order": 848,
+      "term": "押す",
+      "reading": "おす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:OD{cZ9(DSx#meaningZh"
+    },
+    {
+      "source_id": "kaishi:w{=1*;Ytjg",
+      "source_order": 1083,
+      "term": "引っ張る",
+      "reading": "ひっぱる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:w{=1*;Ytjg#meaningZh"
+    },
+    {
+      "source_id": "kaishi:fiVT1&?6I^",
+      "source_order": 1299,
+      "term": "投げる",
+      "reading": "なげる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:fiVT1&?6I^#meaningZh"
+    },
+    {
+      "source_id": "kaishi:f<{SZMZQ]a",
+      "source_order": 1360,
+      "term": "踏む",
+      "reading": "ふむ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:f<{SZMZQ]a#meaningZh"
+    },
+    {
+      "source_id": "kaishi:gRg#@OiunL",
+      "source_order": 864,
+      "term": "外す",
+      "reading": "はずす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:gRg#@OiunL#meaningZh"
+    },
+    {
+      "source_id": "kaishi:D4Hvl?[~;!",
+      "source_order": 1404,
+      "term": "外れる",
+      "reading": "はずれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:D4Hvl?[~;!#meaningZh"
+    },
+    {
+      "source_id": "kaishi:K@*-CD*UIW",
+      "source_order": 1040,
+      "term": "回す",
+      "reading": "まわす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:K@*-CD*UIW#meaningZh"
+    },
+    {
+      "source_id": "kaishi:k*]AtT-2!F",
+      "source_order": 957,
+      "term": "揺れる",
+      "reading": "ゆれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:k*]AtT-2!F#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Y`TSuFl[I",
+      "source_order": 991,
+      "term": "伸びる",
+      "reading": "のびる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:Y`TSuFl[I#meaningZh"
+    },
+    {
+      "source_id": "kaishi:J7!6fF}BI!",
+      "source_order": 1048,
+      "term": "伸ばす",
+      "reading": "のばす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:J7!6fF}BI!#meaningZh"
+    },
+    {
+      "source_id": "kaishi:FzCw9~d`kM",
+      "source_order": 1371,
+      "term": "下げる",
+      "reading": "さげる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:FzCw9~d`kM#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Bh8T{RJ|@k",
+      "source_order": 1001,
+      "term": "取れる",
+      "reading": "とれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:Bh8T{RJ|@k#meaningZh"
+    },
+    {
+      "source_id": "kaishi:kt<uPi1}xS",
+      "source_order": 981,
+      "term": "抜く",
+      "reading": "ぬく",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:kt<uPi1}xS#meaningZh"
+    },
+    {
+      "source_id": "kaishi:NO_k/;4-qo",
+      "source_order": 872,
+      "term": "包む",
+      "reading": "つつむ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:NO_k/;4-qo#meaningZh"
+    },
+    {
+      "source_id": "kaishi:EHGMy1Mxxf",
+      "source_order": 697,
+      "term": "並ぶ",
+      "reading": "ならぶ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:EHGMy1Mxxf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:I#8fDF~/=t",
+      "source_order": 1418,
+      "term": "並べる",
+      "reading": "ならべる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:I#8fDF~/=t#meaningZh"
+    },
+    {
+      "source_id": "kaishi:HWqhH:5-:q",
+      "source_order": 854,
+      "term": "戻す",
+      "reading": "もどす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:HWqhH:5-:q#meaningZh"
+    },
+    {
+      "source_id": "kaishi:hkW%|NTxKB",
+      "source_order": 609,
+      "term": "倒れる",
+      "reading": "たおれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:hkW%|NTxKB#meaningZh"
+    },
+    {
+      "source_id": "kaishi:yPt^g:10^#",
+      "source_order": 573,
+      "term": "降りる",
+      "reading": "おりる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:yPt^g:10^##meaningZh"
+    },
+    {
+      "source_id": "kaishi:c|9;KVsu}!",
+      "source_order": 574,
+      "term": "下りる",
+      "reading": "おりる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:c|9;KVsu}!#meaningZh"
+    },
+    {
+      "source_id": "kaishi:CQL%n6b---",
+      "source_order": 1020,
+      "term": "遅れる",
+      "reading": "おくれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:CQL%n6b---#meaningZh"
+    },
+    {
+      "source_id": "kaishi:b=4zhM{E{x",
+      "source_order": 1325,
+      "term": "出かける",
+      "reading": "でかける",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:b=4zhM{E{x#meaningZh"
+    },
+    {
+      "source_id": "kaishi:mFrXwrQT?~",
+      "source_order": 1200,
+      "term": "寄る",
+      "reading": "よる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:mFrXwrQT?~#meaningZh"
+    },
+    {
+      "source_id": "kaishi:PwkI[)&2Kf",
+      "source_order": 1080,
+      "term": "通う",
+      "reading": "かよう",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:PwkI[)&2Kf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:F!~&>FEIz#",
+      "source_order": 930,
+      "term": "訪れる",
+      "reading": "おとずれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:F!~&>FEIz##meaningZh"
+    },
+    {
+      "source_id": "kaishi:Hz=paCmtWi",
+      "source_order": 1308,
+      "term": "見送る",
+      "reading": "みおくる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:Hz=paCmtWi#meaningZh"
+    },
+    {
+      "source_id": "kaishi:lr~Q0JYpf",
+      "source_order": 1433,
+      "term": "育つ",
+      "reading": "そだつ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:lr~Q0JYpf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:e-{i^bn~qG",
+      "source_order": 1247,
+      "term": "育てる",
+      "reading": "そだてる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:e-{i^bn~qG#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h)T7Tu~F*h",
+      "source_order": 657,
+      "term": "流れる",
+      "reading": "ながれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:h)T7Tu~F*h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:NQY5KgHM:M",
+      "source_order": 889,
+      "term": "流す",
+      "reading": "ながす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:NQY5KgHM:M#meaningZh"
+    },
+    {
+      "source_id": "kaishi:DO*<YFv0=P",
+      "source_order": 775,
+      "term": "浮かぶ",
+      "reading": "うかぶ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:DO*<YFv0=P#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LU*FJRo(/(",
+      "source_order": 1335,
+      "term": "沈む",
+      "reading": "しずむ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:LU*FJRo(/(#meaningZh"
+    },
+    {
+      "source_id": "kaishi:ror8.>@5=$",
+      "source_order": 1216,
+      "term": "濡れる",
+      "reading": "ぬれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:ror8.>@5=$#meaningZh"
+    },
+    {
+      "source_id": "kaishi:kx+3YFKOQ4",
+      "source_order": 1378,
+      "term": "燃える",
+      "reading": "もえる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:kx+3YFKOQ4#meaningZh"
+    },
+    {
+      "source_id": "kaishi:s;voAclrIH",
+      "source_order": 1396,
+      "term": "固まる",
+      "reading": "かたまる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:s;voAclrIH#meaningZh"
+    },
+    {
+      "source_id": "kaishi:r%IGh6U)pA",
+      "source_order": 920,
+      "term": "消す",
+      "reading": "けす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:r%IGh6U)pA#meaningZh"
+    },
+    {
+      "source_id": "kaishi:B^Ry`-5%$<",
+      "source_order": 1113,
+      "term": "壊す",
+      "reading": "こわす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:B^Ry`-5%$<#meaningZh"
+    },
+    {
+      "source_id": "kaishi:GF#F+,QwzV",
+      "source_order": 1036,
+      "term": "壊れる",
+      "reading": "こわれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:GF#F+,QwzV#meaningZh"
+    },
+    {
+      "source_id": "kaishi:hlq*T>:mSI",
+      "source_order": 1069,
+      "term": "直す",
+      "reading": "なおす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:hlq*T>:mSI#meaningZh"
+    },
+    {
+      "source_id": "kaishi:ww$5n1vK)n",
+      "source_order": 1061,
+      "term": "減る",
+      "reading": "へる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:ww$5n1vK)n#meaningZh"
+    },
+    {
+      "source_id": "kaishi:O_b//<WFRe",
+      "source_order": 716,
+      "term": "広がる",
+      "reading": "ひろがる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:O_b//<WFRe#meaningZh"
+    },
+    {
+      "source_id": "kaishi:IZ=nT=Un-]",
+      "source_order": 698,
+      "term": "終える",
+      "reading": "おえる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:IZ=nT=Un-]#meaningZh"
+    },
+    {
+      "source_id": "kaishi:NB3E.Tko0O",
+      "source_order": 462,
+      "term": "済む",
+      "reading": "すむ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:NB3E.Tko0O#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LlXRB5^wR>",
+      "source_order": 565,
+      "term": "立ち上がる",
+      "reading": "たちあがる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:LlXRB5^wR>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:uG`X*:S+=!",
+      "source_order": 689,
+      "term": "振り返る",
+      "reading": "ふりかえる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:uG`X*:S+=!#meaningZh"
+    },
+    {
+      "source_id": "kaishi:D@Z$=-C??-",
+      "source_order": 738,
+      "term": "見上げる",
+      "reading": "みあげる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:D@Z$=-C??-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:JGCyn%IVE2",
+      "source_order": 1197,
+      "term": "振り向く",
+      "reading": "ふりむく",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:JGCyn%IVE2#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qb(HW^[J{e",
+      "source_order": 664,
+      "term": "繰り返す",
+      "reading": "くりかえす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:qb(HW^[J{e#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v[-nCf[AX9",
+      "source_order": 632,
+      "term": "合わせる",
+      "reading": "あわせる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:v[-nCf[AX9#meaningZh"
+    },
+    {
+      "source_id": "kaishi:tZtC`ds(tL",
+      "source_order": 749,
+      "term": "集める",
+      "reading": "あつめる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:tZtC`ds(tL#meaningZh"
+    },
+    {
+      "source_id": "kaishi:f(/)|H-kEf",
+      "source_order": 771,
+      "term": "取り出す",
+      "reading": "とりだす",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:f(/)|H-kEf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:G:tn!yJC$<",
+      "source_order": 796,
+      "term": "受け入れる",
+      "reading": "うけいれる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:G:tn!yJC$<#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Q$x3g]1_lZ",
+      "source_order": 762,
+      "term": "断る",
+      "reading": "ことわる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:Q$x3g]1_lZ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qu@.OZX%Vr",
+      "source_order": 730,
+      "term": "伝わる",
+      "reading": "つたわる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:qu@.OZX%Vr#meaningZh"
+    },
+    {
+      "source_id": "kaishi:u,eG/?p)MH",
+      "source_order": 648,
+      "term": "避ける",
+      "reading": "さける",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:u,eG/?p)MH#meaningZh"
+    },
+    {
+      "source_id": "kaishi:DuK@IutA2e",
+      "source_order": 791,
+      "term": "耐える",
+      "reading": "たえる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:DuK@IutA2e#meaningZh"
+    },
+    {
+      "source_id": "kaishi:y6@lJ.+DKY",
+      "source_order": 519,
+      "term": "頷く",
+      "reading": "うなずく",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:y6@lJ.+DKY#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Ms5k$w7Sf",
+      "source_order": 705,
+      "term": "眺める",
+      "reading": "ながめる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:Ms5k$w7Sf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:vkzmL.Wca:",
+      "source_order": 412,
+      "term": "見つめる",
+      "reading": "みつめる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:vkzmL.Wca:#meaningZh"
+    },
+    {
+      "source_id": "kaishi:k3uOfXs)%8",
+      "source_order": 513,
+      "term": "慌てる",
+      "reading": "あわてる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:k3uOfXs)%8#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v;Bp!p9Gi#",
+      "source_order": 549,
+      "term": "震える",
+      "reading": "ふるえる",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:v;Bp!p9Gi##meaningZh"
+    },
+    {
+      "source_id": "kaishi:grDpTV<QsI",
+      "source_order": 584,
+      "term": "叫ぶ",
+      "reading": "さけぶ",
+      "roles": [
+        "动作与变化"
+      ],
+      "reason": "补能迁移到多场景的实际动作及自动他动关系，不按考题补某个动作",
+      "meaning_ref": "kaishi:grDpTV<QsI#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Ld/Z:y,D+t",
+      "source_order": 691,
+      "term": "質問",
+      "reading": "しつもん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:Ld/Z:y,D+t#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Bfoszi84|t",
+      "source_order": 818,
+      "term": "経験",
+      "reading": "けいけん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:Bfoszi84|t#meaningZh"
+    },
+    {
+      "source_id": "kaishi:eCox$B2;uQ",
+      "source_order": 1042,
+      "term": "意見",
+      "reading": "いけん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:eCox$B2;uQ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:vLhruZ9U?<",
+      "source_order": 839,
+      "term": "原因",
+      "reading": "げんいん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:vLhruZ9U?<#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Dhy|G5Ln<h",
+      "source_order": 1006,
+      "term": "影響",
+      "reading": "えいきょう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:Dhy|G5Ln<h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:f0&J!yo=Do",
+      "source_order": 1053,
+      "term": "条件",
+      "reading": "じょうけん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:f0&J!yo=Do#meaningZh"
+    },
+    {
+      "source_id": "kaishi:i623&vEVt$",
+      "source_order": 516,
+      "term": "事実",
+      "reading": "じじつ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:i623&vEVt$#meaningZh"
+    },
+    {
+      "source_id": "kaishi:HgZu(49Ib#",
+      "source_order": 1055,
+      "term": "例",
+      "reading": "れい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:HgZu(49Ib##meaningZh"
+    },
+    {
+      "source_id": "kaishi:w(L3.C4;2G",
+      "source_order": 1307,
+      "term": "例えば",
+      "reading": "たとえば",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:w(L3.C4;2G#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qttoyWtl9j",
+      "source_order": 973,
+      "term": "重要",
+      "reading": "じゅうよう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:qttoyWtl9j#meaningZh"
+    },
+    {
+      "source_id": "kaishi:N0`eZYmUEV",
+      "source_order": 626,
+      "term": "判断",
+      "reading": "はんだん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:N0`eZYmUEV#meaningZh"
+    },
+    {
+      "source_id": "kaishi:oXa>O[[-ml",
+      "source_order": 1305,
+      "term": "選択",
+      "reading": "せんたく",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:oXa>O[[-ml#meaningZh"
+    },
+    {
+      "source_id": "kaishi:CFT3royy,S",
+      "source_order": 1472,
+      "term": "種類",
+      "reading": "しゅるい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:CFT3royy,S#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jRQYAA$U/h",
+      "source_order": 819,
+      "term": "変化",
+      "reading": "へんか",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:jRQYAA$U/h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:ikxsA9*88T",
+      "source_order": 770,
+      "term": "効果",
+      "reading": "こうか",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:ikxsA9*88T#meaningZh"
+    },
+    {
+      "source_id": "kaishi:;l#vZJ18G",
+      "source_order": 1282,
+      "term": "比べる",
+      "reading": "くらべる",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:;l#vZJ18G#meaningZh"
+    },
+    {
+      "source_id": "kaishi:IN3@$O-Gz",
+      "source_order": 1267,
+      "term": "含む",
+      "reading": "ふくむ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:IN3@$O-Gz#meaningZh"
+    },
+    {
+      "source_id": "kaishi:NOf$,95Hk2",
+      "source_order": 1244,
+      "term": "含める",
+      "reading": "ふくめる",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:NOf$,95Hk2#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Fxpddkm,:g",
+      "source_order": 1477,
+      "term": "加える",
+      "reading": "くわえる",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:Fxpddkm,:g#meaningZh"
+    },
+    {
+      "source_id": "kaishi:L;tWqq`)]G",
+      "source_order": 800,
+      "term": "示す",
+      "reading": "しめす",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:L;tWqq`)]G#meaningZh"
+    },
+    {
+      "source_id": "kaishi:l~qRu^E8dh",
+      "source_order": 349,
+      "term": "説明",
+      "reading": "せつめい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:l~qRu^E8dh#meaningZh"
+    },
+    {
+      "source_id": "kaishi:p4&mE4&8_|",
+      "source_order": 805,
+      "term": "否定",
+      "reading": "ひてい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:p4&mE4&8_|#meaningZh"
+    },
+    {
+      "source_id": "kaishi:E%:37.~c$G",
+      "source_order": 955,
+      "term": "疑問",
+      "reading": "ぎもん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:E%:37.~c$G#meaningZh"
+    },
+    {
+      "source_id": "kaishi:QtLon2jr(q",
+      "source_order": 968,
+      "term": "証拠",
+      "reading": "しょうこ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:QtLon2jr(q#meaningZh"
+    },
+    {
+      "source_id": "kaishi:yM9q7~[:z-",
+      "source_order": 946,
+      "term": "予想",
+      "reading": "よそう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:yM9q7~[:z-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:n6(T&>vh1K",
+      "source_order": 900,
+      "term": "可能",
+      "reading": "かのう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:n6(T&>vh1K#meaningZh"
+    },
+    {
+      "source_id": "kaishi:z7yb|8c/Kj",
+      "source_order": 1181,
+      "term": "不可能",
+      "reading": "ふかのう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:z7yb|8c/Kj#meaningZh"
+    },
+    {
+      "source_id": "kaishi:tN5N-rMCu&",
+      "source_order": 937,
+      "term": "確実",
+      "reading": "かくじつ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:tN5N-rMCu&#meaningZh"
+    },
+    {
+      "source_id": "kaishi:A~Scw1i<h;",
+      "source_order": 881,
+      "term": "明らか",
+      "reading": "あきらか",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:A~Scw1i<h;#meaningZh"
+    },
+    {
+      "source_id": "kaishi:BkaVs=Nf0v",
+      "source_order": 1185,
+      "term": "正確",
+      "reading": "せいかく",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:BkaVs=Nf0v#meaningZh"
+    },
+    {
+      "source_id": "kaishi:FwI{GszJ9j",
+      "source_order": 1298,
+      "term": "複雑",
+      "reading": "ふくざつ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:FwI{GszJ9j#meaningZh"
+    },
+    {
+      "source_id": "kaishi:raf.g1~/wi",
+      "source_order": 1145,
+      "term": "単純",
+      "reading": "たんじゅん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:raf.g1~/wi#meaningZh"
+    },
+    {
+      "source_id": "kaishi:QBAN;|n:g7",
+      "source_order": 1255,
+      "term": "違い",
+      "reading": "ちがい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:QBAN;|n:g7#meaningZh"
+    },
+    {
+      "source_id": "kaishi:ISWRbckJse",
+      "source_order": 1333,
+      "term": "対象",
+      "reading": "たいしょう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:ISWRbckJse#meaningZh"
+    },
+    {
+      "source_id": "kaishi:G8oO}G#+kg",
+      "source_order": 1456,
+      "term": "範囲",
+      "reading": "はんい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:G8oO}G#+kg#meaningZh"
+    },
+    {
+      "source_id": "kaishi:M@:T&K8q*p",
+      "source_order": 540,
+      "term": "方法",
+      "reading": "ほうほう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:M@:T&K8q*p#meaningZh"
+    },
+    {
+      "source_id": "kaishi:i$pZgC!yNr",
+      "source_order": 1264,
+      "term": "手段",
+      "reading": "しゅだん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:i$pZgC!yNr#meaningZh"
+    },
+    {
+      "source_id": "kaishi:fDUO:Yv{`%",
+      "source_order": 792,
+      "term": "立場",
+      "reading": "たちば",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:fDUO:Yv{`%#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Ef$[I=.t*h",
+      "source_order": 683,
+      "term": "現実",
+      "reading": "げんじつ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:Ef$[I=.t*h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:I(j4Is<96R",
+      "source_order": 1451,
+      "term": "現状",
+      "reading": "げんじょう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:I(j4Is<96R#meaningZh"
+    },
+    {
+      "source_id": "kaishi:BWg_@_D$CR",
+      "source_order": 1120,
+      "term": "知識",
+      "reading": "ちしき",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:BWg_@_D$CR#meaningZh"
+    },
+    {
+      "source_id": "kaishi:A%7mV?,|Oj",
+      "source_order": 1351,
+      "term": "学ぶ",
+      "reading": "まなぶ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:A%7mV?,|Oj#meaningZh"
+    },
+    {
+      "source_id": "kaishi:t04;-tTUE,",
+      "source_order": 1118,
+      "term": "計画",
+      "reading": "けいかく",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:t04;-tTUE,#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jL)?waju+X",
+      "source_order": 1044,
+      "term": "提案",
+      "reading": "ていあん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:jL)?waju+X#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LG8qUj8>5W",
+      "source_order": 1065,
+      "term": "解決",
+      "reading": "かいけつ",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:LG8qUj8>5W#meaningZh"
+    },
+    {
+      "source_id": "kaishi:n7vhHK1#F%",
+      "source_order": 1149,
+      "term": "完成",
+      "reading": "かんせい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:n7vhHK1#F%#meaningZh"
+    },
+    {
+      "source_id": "kaishi:gVq=3g{bN/",
+      "source_order": 1253,
+      "term": "発生",
+      "reading": "はっせい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:gVq=3g{bN/#meaningZh"
+    },
+    {
+      "source_id": "kaishi:j1f9Nc~a_k",
+      "source_order": 1008,
+      "term": "発見",
+      "reading": "はっけん",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:j1f9Nc~a_k#meaningZh"
+    },
+    {
+      "source_id": "kaishi:G%IpCA8#g7",
+      "source_order": 1461,
+      "term": "記録",
+      "reading": "きろく",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:G%IpCA8#g7#meaningZh"
+    },
+    {
+      "source_id": "kaishi:P`(t[/A=9b",
+      "source_order": 1500,
+      "term": "評価",
+      "reading": "ひょうか",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:P`(t[/A=9b#meaningZh"
+    },
+    {
+      "source_id": "kaishi:i}IT!F[S^-",
+      "source_order": 1464,
+      "term": "目標",
+      "reading": "もくひょう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:i}IT!F[S^-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:sK%IK~1>~0",
+      "source_order": 1156,
+      "term": "価値",
+      "reading": "かち",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:sK%IK~1>~0#meaningZh"
+    },
+    {
+      "source_id": "kaishi:qF0GI<ZgaX",
+      "source_order": 694,
+      "term": "内容",
+      "reading": "ないよう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:qF0GI<ZgaX#meaningZh"
+    },
+    {
+      "source_id": "kaishi:j+O7V22Fx-",
+      "source_order": 1215,
+      "term": "話題",
+      "reading": "わだい",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:j+O7V22Fx-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:AQ9nfAP`/_",
+      "source_order": 759,
+      "term": "事情",
+      "reading": "じじょう",
+      "roles": [
+        "信息与判断"
+      ],
+      "reason": "理解问题、根据、条件、范围、比较和观点；不是全部同形汉字都按中文理解",
+      "meaning_ref": "kaishi:AQ9nfAP`/_#meaningZh"
+    },
+    {
+      "source_id": "kaishi:P?YCp&e5?w",
+      "source_order": 994,
+      "term": "払う",
+      "reading": "はらう",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:P?YCp&e5?w#meaningZh"
+    },
+    {
+      "source_id": "kaishi:yI_L%Eaot}",
+      "source_order": 559,
+      "term": "要る",
+      "reading": "いる",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:yI_L%Eaot}#meaningZh"
+    },
+    {
+      "source_id": "kaishi:HTC#jXGX|v",
+      "source_order": 1337,
+      "term": "用事",
+      "reading": "ようじ",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:HTC#jXGX|v#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Fie1aPK|=:",
+      "source_order": 984,
+      "term": "案内",
+      "reading": "あんない",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:Fie1aPK|=:#meaningZh"
+    },
+    {
+      "source_id": "kaishi:ME%o-,AzbQ",
+      "source_order": 969,
+      "term": "紹介",
+      "reading": "しょうかい",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:ME%o-,AzbQ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:m8hD={TIm-",
+      "source_order": 1122,
+      "term": "注意",
+      "reading": "ちゅうい",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:m8hD={TIm-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:LivfS*7+~l",
+      "source_order": 956,
+      "term": "指示",
+      "reading": "しじ",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:LivfS*7+~l#meaningZh"
+    },
+    {
+      "source_id": "kaishi:D_cvvhJz{Q",
+      "source_order": 972,
+      "term": "作業",
+      "reading": "さぎょう",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:D_cvvhJz{Q#meaningZh"
+    },
+    {
+      "source_id": "kaishi:pPUYqv?T/d",
+      "source_order": 1260,
+      "term": "使用",
+      "reading": "しよう",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:pPUYqv?T/d#meaningZh"
+    },
+    {
+      "source_id": "kaishi:u:]5#{;rPd",
+      "source_order": 816,
+      "term": "利用",
+      "reading": "りよう",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:u:]5#{;rPd#meaningZh"
+    },
+    {
+      "source_id": "kaishi:j%iQl^#&,0",
+      "source_order": 1072,
+      "term": "許可",
+      "reading": "きょか",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:j%iQl^#&,0#meaningZh"
+    },
+    {
+      "source_id": "kaishi:O5eAQTvdYt",
+      "source_order": 1078,
+      "term": "到着",
+      "reading": "とうちゃく",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:O5eAQTvdYt#meaningZh"
+    },
+    {
+      "source_id": "kaishi:d+VzD26$wJ",
+      "source_order": 997,
+      "term": "開始",
+      "reading": "かいし",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:d+VzD26$wJ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:zh2:B%m6j:",
+      "source_order": 1436,
+      "term": "終了",
+      "reading": "しゅうりょう",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:zh2:B%m6j:#meaningZh"
+    },
+    {
+      "source_id": "kaishi:BQf<=~@k?M",
+      "source_order": 1419,
+      "term": "契約",
+      "reading": "けいやく",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:BQf<=~@k?M#meaningZh"
+    },
+    {
+      "source_id": "kaishi:quMoi_Q,tl",
+      "source_order": 672,
+      "term": "予定",
+      "reading": "よてい",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:quMoi_Q,tl#meaningZh"
+    },
+    {
+      "source_id": "kaishi:lb6U7G=8fR",
+      "source_order": 654,
+      "term": "連絡",
+      "reading": "れんらく",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:lb6U7G=8fR#meaningZh"
+    },
+    {
+      "source_id": "kaishi:fei{_R/:`.",
+      "source_order": 907,
+      "term": "お茶",
+      "reading": "おちゃ",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:fei{_R/:`.#meaningZh"
+    },
+    {
+      "source_id": "kaishi:mp>2k;wece",
+      "source_order": 676,
+      "term": "いらっしゃる",
+      "reading": "いらっしゃる",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:mp>2k;wece#meaningZh"
+    },
+    {
+      "source_id": "kaishi:fMNUN;sBTj",
+      "source_order": 806,
+      "term": "致す",
+      "reading": "いたす",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:fMNUN;sBTj#meaningZh"
+    },
+    {
+      "source_id": "kaishi:hLlIR[f6:_",
+      "source_order": 1297,
+      "term": "申す",
+      "reading": "もうす",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:hLlIR[f6:_#meaningZh"
+    },
+    {
+      "source_id": "kaishi:QVCeffSjm%",
+      "source_order": 1376,
+      "term": "参る",
+      "reading": "まいる",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:QVCeffSjm%#meaningZh"
+    },
+    {
+      "source_id": "kaishi:si!;]c.kyD",
+      "source_order": 352,
+      "term": "頂く",
+      "reading": "いただく",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:si!;]c.kyD#meaningZh"
+    },
+    {
+      "source_id": "kaishi:rd;t-JV~,:",
+      "source_order": 142,
+      "term": "申し訳ない",
+      "reading": "もうしわけない",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:rd;t-JV~,:#meaningZh"
+    },
+    {
+      "source_id": "kaishi:BW|a0v![jc",
+      "source_order": 146,
+      "term": "失礼します",
+      "reading": "しつれいします",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:BW|a0v![jc#meaningZh"
+    },
+    {
+      "source_id": "kaishi:dNLm>+ZH;m",
+      "source_order": 73,
+      "term": "ありがとうございます",
+      "reading": "ありがとうございます",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:dNLm>+ZH;m#meaningZh"
+    },
+    {
+      "source_id": "kaishi:hFm!PVLVvf",
+      "source_order": 709,
+      "term": "どうも",
+      "reading": "どうも",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:hFm!PVLVvf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:lUJ%BP37?9",
+      "source_order": 1470,
+      "term": "いかが",
+      "reading": "いかが",
+      "roles": [
+        "办事与礼貌"
+      ],
+      "reason": "读消息、通知、服务与一般操作文本，识别原动作而非训练敬语产出",
+      "meaning_ref": "kaishi:lUJ%BP37?9#meaningZh"
+    },
+    {
+      "source_id": "kaishi:FfPHkm>cD=",
+      "source_order": 358,
+      "term": "それに",
+      "reading": "それに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:FfPHkm>cD=#meaningZh"
+    },
+    {
+      "source_id": "kaishi:d}6a](ViaK",
+      "source_order": 442,
+      "term": "更に",
+      "reading": "さらに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:d}6a](ViaK#meaningZh"
+    },
+    {
+      "source_id": "kaishi:bL:FL1>i;R",
+      "source_order": 1288,
+      "term": "なお",
+      "reading": "なお",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:bL:FL1>i;R#meaningZh"
+    },
+    {
+      "source_id": "kaishi:cg^j9x@dfP",
+      "source_order": 610,
+      "term": "既に",
+      "reading": "すでに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:cg^j9x@dfP#meaningZh"
+    },
+    {
+      "source_id": "kaishi:E3~nI=Wj@@",
+      "source_order": 491,
+      "term": "ようやく",
+      "reading": "ようやく",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:E3~nI=Wj@@#meaningZh"
+    },
+    {
+      "source_id": "kaishi:QxH_?ikmaL",
+      "source_order": 492,
+      "term": "思わず",
+      "reading": "おもわず",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:QxH_?ikmaL#meaningZh"
+    },
+    {
+      "source_id": "kaishi:L20V~1xR^%",
+      "source_order": 495,
+      "term": "自身",
+      "reading": "じしん",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:L20V~1xR^%#meaningZh"
+    },
+    {
+      "source_id": "kaishi:gx[4eS2PM-",
+      "source_order": 645,
+      "term": "自ら",
+      "reading": "みずから",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:gx[4eS2PM-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:o1Z$Urno9E",
+      "source_order": 844,
+      "term": "人々",
+      "reading": "ひとびと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:o1Z$Urno9E#meaningZh"
+    },
+    {
+      "source_id": "kaishi:k*B;g>NM*h",
+      "source_order": 728,
+      "term": "一気に",
+      "reading": "いっきに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:k*B;g>NM*h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:g|as)PSmHW",
+      "source_order": 729,
+      "term": "そっと",
+      "reading": "そっと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:g|as)PSmHW#meaningZh"
+    },
+    {
+      "source_id": "kaishi:gGUTTv~U~h",
+      "source_order": 782,
+      "term": "はっきり",
+      "reading": "はっきり",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:gGUTTv~U~h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:B1jQ(gy9^?",
+      "source_order": 817,
+      "term": "ふと",
+      "reading": "ふと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:B1jQ(gy9^?#meaningZh"
+    },
+    {
+      "source_id": "kaishi:J|/FPBt,nH",
+      "source_order": 831,
+      "term": "すっかり",
+      "reading": "すっかり",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:J|/FPBt,nH#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v03O;^3$38",
+      "source_order": 890,
+      "term": "じっと",
+      "reading": "じっと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:v03O;^3$38#meaningZh"
+    },
+    {
+      "source_id": "kaishi:lvy]Gb/EvY",
+      "source_order": 1302,
+      "term": "たっぷり",
+      "reading": "たっぷり",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:lvy]Gb/EvY#meaningZh"
+    },
+    {
+      "source_id": "kaishi:E%^F-faLPr",
+      "source_order": 1392,
+      "term": "ぼんやり",
+      "reading": "ぼんやり",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:E%^F-faLPr#meaningZh"
+    },
+    {
+      "source_id": "kaishi:G>!&?c<NMf",
+      "source_order": 1417,
+      "term": "ますます",
+      "reading": "ますます",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:G>!&?c<NMf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v6e|ZDhv3?",
+      "source_order": 1469,
+      "term": "わざと",
+      "reading": "わざと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:v6e|ZDhv3?#meaningZh"
+    },
+    {
+      "source_id": "kaishi:teP{s+~?,e",
+      "source_order": 1206,
+      "term": "大体",
+      "reading": "だいたい",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:teP{s+~?,e#meaningZh"
+    },
+    {
+      "source_id": "kaishi:D=CZb+pn:i",
+      "source_order": 1207,
+      "term": "きちんと",
+      "reading": "きちんと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:D=CZb+pn:i#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Kp]Hd(fw,=",
+      "source_order": 1209,
+      "term": "少々",
+      "reading": "しょうしょう",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:Kp]Hd(fw,=#meaningZh"
+    },
+    {
+      "source_id": "kaishi:dwkF#}r15a",
+      "source_order": 1251,
+      "term": "元々",
+      "reading": "もともと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:dwkF#}r15a#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jpyu&*8uiX",
+      "source_order": 1280,
+      "term": "様々",
+      "reading": "さまざま",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:jpyu&*8uiX#meaningZh"
+    },
+    {
+      "source_id": "kaishi:FNO^w[$F1D",
+      "source_order": 910,
+      "term": "そのもの",
+      "reading": "そのもの",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:FNO^w[$F1D#meaningZh"
+    },
+    {
+      "source_id": "kaishi:P/pC!vN=&t",
+      "source_order": 1273,
+      "term": "一方",
+      "reading": "いっぽう",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:P/pC!vN=&t#meaningZh"
+    },
+    {
+      "source_id": "kaishi:f=vCN0hz6u",
+      "source_order": 1309,
+      "term": "もっとも",
+      "reading": "もっとも",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:f=vCN0hz6u#meaningZh"
+    },
+    {
+      "source_id": "kaishi:AG,?Z-]0~_",
+      "source_order": 836,
+      "term": "もしかしたら",
+      "reading": "もしかしたら",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:AG,?Z-]0~_#meaningZh"
+    },
+    {
+      "source_id": "kaishi:AqhSsQc>{m",
+      "source_order": 1068,
+      "term": "いつの間にか",
+      "reading": "いつのまにか",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:AqhSsQc>{m#meaningZh"
+    },
+    {
+      "source_id": "kaishi:CjL{)7j@b+",
+      "source_order": 1084,
+      "term": "いつまでも",
+      "reading": "いつまでも",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:CjL{)7j@b+#meaningZh"
+    },
+    {
+      "source_id": "kaishi:cFET>dom$a",
+      "source_order": 1217,
+      "term": "ついでに",
+      "reading": "ついでに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:cFET>dom$a#meaningZh"
+    },
+    {
+      "source_id": "kaishi:F4AB`$w~,B",
+      "source_order": 1155,
+      "term": "何となく",
+      "reading": "なんとなく",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:F4AB`$w~,B#meaningZh"
+    },
+    {
+      "source_id": "kaishi:gf7(ZFwR:z",
+      "source_order": 669,
+      "term": "何とか",
+      "reading": "なんとか",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:gf7(ZFwR:z#meaningZh"
+    },
+    {
+      "source_id": "kaishi:E>aah7Ozd>",
+      "source_order": 1300,
+      "term": "出来事",
+      "reading": "できごと",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:E>aah7Ozd>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Jm+U,5Wj(_",
+      "source_order": 639,
+      "term": "雰囲気",
+      "reading": "ふんいき",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:Jm+U,5Wj(_#meaningZh"
+    },
+    {
+      "source_id": "kaishi:oC67E4rAIv",
+      "source_order": 667,
+      "term": "感覚",
+      "reading": "かんかく",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:oC67E4rAIv#meaningZh"
+    },
+    {
+      "source_id": "kaishi:JW{9/BAXUs",
+      "source_order": 681,
+      "term": "気配",
+      "reading": "けはい",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:JW{9/BAXUs#meaningZh"
+    },
+    {
+      "source_id": "kaishi:EBbTkE]Zf.",
+      "source_order": 637,
+      "term": "勢い",
+      "reading": "いきおい",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:EBbTkE]Zf.#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Q4_G5/D)2)",
+      "source_order": 653,
+      "term": "余裕",
+      "reading": "よゆう",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:Q4_G5/D)2)#meaningZh"
+    },
+    {
+      "source_id": "kaishi:KM(b>x3l>I",
+      "source_order": 743,
+      "term": "面倒",
+      "reading": "めんどう",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:KM(b>x3l>I#meaningZh"
+    },
+    {
+      "source_id": "kaishi:B7,TDmP.mQ",
+      "source_order": 798,
+      "term": "無駄",
+      "reading": "むだ",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:B7,TDmP.mQ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:GuukP1BJ2x",
+      "source_order": 1410,
+      "term": "正解",
+      "reading": "せいかい",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:GuukP1BJ2x#meaningZh"
+    },
+    {
+      "source_id": "kaishi:GiyH&Jw<<G",
+      "source_order": 1003,
+      "term": "本来",
+      "reading": "ほんらい",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:GiyH&Jw<<G#meaningZh"
+    },
+    {
+      "source_id": "kaishi:bWn++M0yO@",
+      "source_order": 760,
+      "term": "本当に",
+      "reading": "ほんとうに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:bWn++M0yO@#meaningZh"
+    },
+    {
+      "source_id": "kaishi:fcbe>Mju`-",
+      "source_order": 171,
+      "term": "そんなに",
+      "reading": "そんなに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:fcbe>Mju`-#meaningZh"
+    },
+    {
+      "source_id": "kaishi:l0;`NfYup$",
+      "source_order": 367,
+      "term": "こんなに",
+      "reading": "こんなに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:l0;`NfYup$#meaningZh"
+    },
+    {
+      "source_id": "kaishi:q#*c@[wGMl",
+      "source_order": 1117,
+      "term": "あんなに",
+      "reading": "あんなに",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:q#*c@[wGMl#meaningZh"
+    },
+    {
+      "source_id": "kaishi:f7&+@),kfW",
+      "source_order": 1343,
+      "term": "それほど",
+      "reading": "それほど",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:f7&+@),kfW#meaningZh"
+    },
+    {
+      "source_id": "kaishi:eV;bjWM4{b",
+      "source_order": 1275,
+      "term": "役に立つ",
+      "reading": "やくにたつ",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:eV;bjWM4{b#meaningZh"
+    },
+    {
+      "source_id": "kaishi:b~%=ev(U7p",
+      "source_order": 1163,
+      "term": "受け止める",
+      "reading": "うけとめる",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:b~%=ev(U7p#meaningZh"
+    },
+    {
+      "source_id": "kaishi:2)2:cVY49",
+      "source_order": 1157,
+      "term": "見守る",
+      "reading": "みまもる",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:2)2:cVY49#meaningZh"
+    },
+    {
+      "source_id": "kaishi:3g_GQW([e",
+      "source_order": 1319,
+      "term": "思い出",
+      "reading": "おもいで",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:3g_GQW([e#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h@ge.rmaq>",
+      "source_order": 1276,
+      "term": "懐かしい",
+      "reading": "なつかしい",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:h@ge.rmaq>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:f]SDacB-?^",
+      "source_order": 768,
+      "term": "怒り",
+      "reading": "いかり",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:f]SDacB-?^#meaningZh"
+    },
+    {
+      "source_id": "kaishi:nrfQCuzOu4",
+      "source_order": 614,
+      "term": "愛する",
+      "reading": "あいする",
+      "roles": [
+        "篇章与描写"
+      ],
+      "reason": "读程度、立场、接续、叙事事件与常见拟态表达，区分事实和推断",
+      "meaning_ref": "kaishi:nrfQCuzOu4#meaningZh"
+    },
+    {
+      "source_id": "kaishi:MR~cNIicuX",
+      "source_order": 1414,
+      "term": "年齢",
+      "reading": "ねんれい",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:MR~cNIicuX#meaningZh"
+    },
+    {
+      "source_id": "kaishi:yM<iiu[glG",
+      "source_order": 1484,
+      "term": "月曜日",
+      "reading": "げつようび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:yM<iiu[glG#meaningZh"
+    },
+    {
+      "source_id": "kaishi:@x:`KP.k]",
+      "source_order": 1485,
+      "term": "火曜日",
+      "reading": "かようび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:@x:`KP.k]#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Bzk3<z3SXy",
+      "source_order": 1486,
+      "term": "水曜日",
+      "reading": "すいようび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:Bzk3<z3SXy#meaningZh"
+    },
+    {
+      "source_id": "kaishi:iHwd,3FEez",
+      "source_order": 1487,
+      "term": "木曜日",
+      "reading": "もくようび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:iHwd,3FEez#meaningZh"
+    },
+    {
+      "source_id": "kaishi:x6xphqAhl*",
+      "source_order": 1488,
+      "term": "金曜日",
+      "reading": "きんようび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:x6xphqAhl*#meaningZh"
+    },
+    {
+      "source_id": "kaishi:wU9L)/LIn(",
+      "source_order": 1489,
+      "term": "土曜日",
+      "reading": "どようび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:wU9L)/LIn(#meaningZh"
+    },
+    {
+      "source_id": "kaishi:C$PauK{1/;",
+      "source_order": 1490,
+      "term": "日曜日",
+      "reading": "にちようび",
+      "roles": [
+        "时间与数量"
+      ],
+      "reason": "完整覆盖星期序列与年龄，不按各成员词频决定是否教",
+      "meaning_ref": "kaishi:C$PauK{1/;#meaningZh"
+    },
+    {
+      "source_id": "kaishi:D,DkENX3F8",
+      "source_order": 378,
+      "term": "かかる",
+      "reading": "かかる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:D,DkENX3F8#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Et-d5Cb,xH",
+      "source_order": 515,
+      "term": "気分",
+      "reading": "きぶん",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:Et-d5Cb,xH#meaningZh"
+    },
+    {
+      "source_id": "kaishi:u36@}IJe64",
+      "source_order": 299,
+      "term": "以上",
+      "reading": "いじょう",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:u36@}IJe64#meaningZh"
+    },
+    {
+      "source_id": "kaishi:eE.jyW|;0r",
+      "source_order": 48,
+      "term": "ちゃん",
+      "reading": "ちゃん",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:eE.jyW|;0r#meaningZh"
+    },
+    {
+      "source_id": "kaishi:n@yhnX1Qz2",
+      "source_order": 1193,
+      "term": "最も",
+      "reading": "もっとも",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:n@yhnX1Qz2#meaningZh"
+    },
+    {
+      "source_id": "kaishi:eAn+$CF4It",
+      "source_order": 520,
+      "term": "通り",
+      "reading": "とおり",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:eAn+$CF4It#meaningZh"
+    },
+    {
+      "source_id": "kaishi:PZKVAcl`+>",
+      "source_order": 631,
+      "term": "上手い",
+      "reading": "うまい",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:PZKVAcl`+>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:r+ioaO1R/A",
+      "source_order": 562,
+      "term": "着る",
+      "reading": "きる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:r+ioaO1R/A#meaningZh"
+    },
+    {
+      "source_id": "kaishi:NHR.kLJ.dB",
+      "source_order": 115,
+      "term": "持つ",
+      "reading": "もつ",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:NHR.kLJ.dB#meaningZh"
+    },
+    {
+      "source_id": "kaishi:x;W@]-@Fs:",
+      "source_order": 66,
+      "term": "聞く",
+      "reading": "きく",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:x;W@]-@Fs:#meaningZh"
+    },
+    {
+      "source_id": "kaishi:ckUQD(l9r<",
+      "source_order": 67,
+      "term": "聞く",
+      "reading": "きく",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:ckUQD(l9r<#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jZew1s.J)9",
+      "source_order": 275,
+      "term": "聞こえる",
+      "reading": "きこえる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:jZew1s.J)9#meaningZh"
+    },
+    {
+      "source_id": "kaishi:uU<asl7u|y",
+      "source_order": 29,
+      "term": "見る",
+      "reading": "みる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:uU<asl7u|y#meaningZh"
+    },
+    {
+      "source_id": "kaishi:b(,QwC<[w>",
+      "source_order": 226,
+      "term": "見える",
+      "reading": "みえる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:b(,QwC<[w>#meaningZh"
+    },
+    {
+      "source_id": "kaishi:j!+(;vJnY4",
+      "source_order": 33,
+      "term": "なる",
+      "reading": "なる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:j!+(;vJnY4#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Oy%CtLYf,F",
+      "source_order": 32,
+      "term": "する",
+      "reading": "する",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:Oy%CtLYf,F#meaningZh"
+    },
+    {
+      "source_id": "kaishi:J?8k3.)N{D",
+      "source_order": 20,
+      "term": "ある",
+      "reading": "ある",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:J?8k3.)N{D#meaningZh"
+    },
+    {
+      "source_id": "kaishi:FB?BSN#P`f",
+      "source_order": 19,
+      "term": "いる",
+      "reading": "いる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:FB?BSN#P`f#meaningZh"
+    },
+    {
+      "source_id": "kaishi:H[v)<nngEe",
+      "source_order": 109,
+      "term": "上げる",
+      "reading": "あげる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:H[v)<nngEe#meaningZh"
+    },
+    {
+      "source_id": "kaishi:CkxHVwCI#h",
+      "source_order": 91,
+      "term": "あげる",
+      "reading": "あげる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:CkxHVwCI#h#meaningZh"
+    },
+    {
+      "source_id": "kaishi:n2wIa=r~A&",
+      "source_order": 44,
+      "term": "帰る",
+      "reading": "かえる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:n2wIa=r~A&#meaningZh"
+    },
+    {
+      "source_id": "kaishi:v(haWJ9u|n",
+      "source_order": 137,
+      "term": "信じる",
+      "reading": "しんじる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:v(haWJ9u|n#meaningZh"
+    },
+    {
+      "source_id": "kaishi:coAg{MN{Ft",
+      "source_order": 233,
+      "term": "感じる",
+      "reading": "かんじる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:coAg{MN{Ft#meaningZh"
+    },
+    {
+      "source_id": "kaishi:6~.=Ru-5t",
+      "source_order": 1259,
+      "term": "効く",
+      "reading": "きく",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:6~.=Ru-5t#meaningZh"
+    },
+    {
+      "source_id": "kaishi:B.0X7pY_lF",
+      "source_order": 476,
+      "term": "用",
+      "reading": "よう",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:B.0X7pY_lF#meaningZh"
+    },
+    {
+      "source_id": "kaishi:Mx?}%;N`s,",
+      "source_order": 700,
+      "term": "金",
+      "reading": "かね",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:Mx?}%;N`s,#meaningZh"
+    },
+    {
+      "source_id": "kaishi:xrMUu_}%_r",
+      "source_order": 64,
+      "term": "方",
+      "reading": "ほう",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:xrMUu_}%_r#meaningZh"
+    },
+    {
+      "source_id": "kaishi:h|9QRXg^5G",
+      "source_order": 65,
+      "term": "方",
+      "reading": "かた",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:h|9QRXg^5G#meaningZh"
+    },
+    {
+      "source_id": "kaishi:H$a7o=U,tK",
+      "source_order": 322,
+      "term": "開く",
+      "reading": "あく",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:H$a7o=U,tK#meaningZh"
+    },
+    {
+      "source_id": "kaishi:JIFO|m&|UJ",
+      "source_order": 323,
+      "term": "開く",
+      "reading": "ひらく",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:JIFO|m&|UJ#meaningZh"
+    },
+    {
+      "source_id": "kaishi:GJV$9TO$|b",
+      "source_order": 329,
+      "term": "取る",
+      "reading": "とる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:GJV$9TO$|b#meaningZh"
+    },
+    {
+      "source_id": "kaishi:jcuhxG75l7",
+      "source_order": 321,
+      "term": "入れる",
+      "reading": "いれる",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:jcuhxG75l7#meaningZh"
+    },
+    {
+      "source_id": "kaishi:rZ;:9Ng<>#",
+      "source_order": 236,
+      "term": "出す",
+      "reading": "だす",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:rZ;:9Ng<>##meaningZh"
+    },
+    {
+      "source_id": "kaishi:zJ4D_~>dyK",
+      "source_order": 508,
+      "term": "付く",
+      "reading": "つく",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:zJ4D_~>dyK#meaningZh"
+    },
+    {
+      "source_id": "kaishi:B+H,P_;^Jf",
+      "source_order": 394,
+      "term": "付ける",
+      "reading": "つける",
+      "roles": [
+        "义项与搭配对照"
+      ],
+      "reason": "usage-targets明确规定的常用义项或易混关系，非额外整包扩词",
+      "meaning_ref": "kaishi:B+H,P_;^Jf#meaningZh"
+    },
+    {
+      "source_id": "kaishi:l!G#]Y40Nt",
+      "source_order": 1109,
+      "term": "授業",
+      "reading": "じゅぎょう",
+      "roles": [
+        "人物与关系"
+      ],
+      "reason": "学校情境中与学生/老师/学校不同的课堂事件，已有Irodori初级2第17课也收录",
+      "meaning_ref": "kaishi:l!G#]Y40Nt#meaningZh"
+    }
+  ],
+  "priority_additions": "05-curriculum-audit/priority-additions.tsv: 79项逐项复核并保留；实际新增与正文已教在对账表分别列出",
+  "not_selected": "其余Kaishi/Irodori仍为资料池；1308候选不自动入课；不整包采用Kaishi或JEV初级清单",
+  "test_inputs": [],
+  "supplement_file": "supplements.tsv: 编者自写中文教学义与用法，逐项回链既有Irodori词条",
+  "meaning_policy": "原v3教学义和已选Kaishi卡片的meaningZh作为明确的基础义项引用；usage-targets.tsv覆盖需要修订或补齐的义项及搭配。引用不等于独立教师审定，编课时仍按本范围逐句校对。",
+  "supplement_source_refs": {
+    "あさって|あさって": [
+      "irodori-word:53"
+    ],
+    "おととい|おととい": [
+      "irodori-word:624"
+    ],
+    "今週|こんしゅう": [
+      "irodori-word:1491"
+    ],
+    "来週|らいしゅう": [
+      "irodori-word:4096"
+    ],
+    "先週|せんしゅう": [
+      "irodori-word:2156"
+    ],
+    "毎週|まいしゅう": [
+      "irodori-word:3676"
+    ],
+    "今月|こんげつ": [
+      "irodori-word:1488"
+    ],
+    "先月|せんげつ": [
+      "irodori-word:2153"
+    ],
+    "毎朝|まいあさ": [
+      "irodori-word:3675"
+    ],
+    "週末|しゅうまつ": [
+      "irodori-word:1800"
+    ],
+    "曜日|ようび": [
+      "irodori-word:4035"
+    ],
+    "夕方|ゆうがた": [
+      "irodori-word:3990"
+    ],
+    "時計|とけい": [
+      "irodori-word:2750"
+    ],
+    "誕生日|たんじょうび": [
+      "irodori-word:2407",
+      "irodori-word:2408"
+    ],
+    "黄色|きいろ": [
+      "irodori-word:1004"
+    ],
+    "緑色|みどりいろ": [
+      "irodori-word:3797"
+    ],
+    "茶色|ちゃいろ": [
+      "irodori-word:2450"
+    ],
+    "北|きた": [
+      "irodori-word:1024"
+    ],
+    "南|みなみ": [
+      "irodori-word:3803"
+    ],
+    "東|ひがし": [
+      "irodori-word:3330"
+    ],
+    "西|にし": [
+      "irodori-word:2962"
+    ],
+    "暖かい|あたたかい": [
+      "irodori-word:75",
+      "irodori-word:78"
+    ],
+    "温かい|あたたかい": [
+      "irodori-word:76"
+    ],
+    "厚い|あつい": [
+      "irodori-word:88"
+    ],
+    "遠い|とおい": [
+      "irodori-word:2732"
+    ],
+    "あちら|あちら": [
+      "irodori-word:86"
+    ],
+    "公園|こうえん": [
+      "irodori-word:1300",
+      "irodori-word:1301"
+    ],
+    "台所|だいどころ": [
+      "irodori-word:2299"
+    ],
+    "トイレ|といれ": [
+      "irodori-word:2681",
+      "irodori-word:2682"
+    ],
+    "電気|でんき": [
+      "irodori-word:2642",
+      "irodori-word:2643"
+    ],
+    "冷蔵庫|れいぞうこ": [
+      "irodori-word:4153",
+      "irodori-word:4154"
+    ],
+    "洗濯|せんたく": [
+      "irodori-word:2164",
+      "irodori-word:2165"
+    ],
+    "洗濯機|せんたくき": [
+      "irodori-word:2166",
+      "irodori-word:2167"
+    ],
+    "靴|くつ": [
+      "irodori-word:1958"
+    ],
+    "傘|かさ": [
+      "irodori-word:822",
+      "irodori-word:823"
+    ],
+    "かばん|かばん": [
+      "irodori-word:899",
+      "irodori-word:900"
+    ],
+    "財布|さいふ": [
+      "irodori-word:1532"
+    ],
+    "めがね|めがね": [
+      "irodori-word:3860"
+    ],
+    "歯|は": [
+      "irodori-word:3130"
+    ],
+    "食べ物|たべもの": [
+      "irodori-word:2383",
+      "irodori-word:2384"
+    ],
+    "飲み物|のみもの": [
+      "irodori-word:3110",
+      "irodori-word:3111",
+      "irodori-word:3112"
+    ],
+    "果物|くだもの": [
+      "irodori-word:1173",
+      "irodori-word:1174"
+    ],
+    "牛乳|ぎゅうにゅう": [
+      "irodori-word:1097",
+      "irodori-word:1098"
+    ],
+    "砂糖|さとう": [
+      "irodori-word:1574",
+      "irodori-word:1575"
+    ],
+    "塩|しお": [
+      "irodori-word:1628",
+      "irodori-word:1629"
+    ],
+    "しょうゆ|しょうゆ": [
+      "irodori-word:1893",
+      "irodori-word:1894"
+    ],
+    "スープ|すーぷ": [
+      "irodori-word:1992",
+      "irodori-word:1993"
+    ],
+    "駅前|えきまえ": [
+      "irodori-word:408"
+    ],
+    "自転車|じてんしゃ": [
+      "irodori-word:1690",
+      "irodori-word:1691"
+    ],
+    "バス|ばす": [
+      "irodori-word:3199",
+      "irodori-word:3200"
+    ],
+    "地下鉄|ちかてつ": [
+      "irodori-word:2439"
+    ],
+    "飛行機|ひこうき": [
+      "irodori-word:3345",
+      "irodori-word:3346"
+    ],
+    "空港|くうこう": [
+      "irodori-word:1159"
+    ],
+    "地図|ちず": [
+      "irodori-word:2447"
+    ],
+    "信号|しんごう": [
+      "irodori-word:1953",
+      "irodori-word:1954"
+    ],
+    "交差点|こうさてん": [
+      "irodori-word:1310"
+    ],
+    "橋|はし": [
+      "irodori-word:3188"
+    ],
+    "出口|でぐち": [
+      "irodori-word:2604"
+    ],
+    "チケット|ちけっと": [
+      "irodori-word:2444"
+    ],
+    "医者|いしゃ": [
+      "irodori-word:189"
+    ],
+    "せき|せき": [
+      "irodori-word:2113",
+      "irodori-word:2114"
+    ],
+    "赤ちゃん|あかちゃん": [
+      "irodori-word:30"
+    ],
+    "親戚|しんせき": [
+      "irodori-word:1965"
+    ],
+    "中学校|ちゅうがっこう": [
+      "irodori-word:2461"
+    ],
+    "社長|しゃちょう": [
+      "irodori-word:1734"
+    ],
+    "店員|てんいん": [
+      "irodori-word:2639"
+    ],
+    "銀行|ぎんこう": [
+      "irodori-word:1145",
+      "irodori-word:1146",
+      "irodori-word:1147"
+    ],
+    "郵便局|ゆうびんきょく": [
+      "irodori-word:3998",
+      "irodori-word:3999"
+    ],
+    "スーパー|すーぱー": [
+      "irodori-word:1991"
+    ],
+    "コンビニ|こんびに": [
+      "irodori-word:1504",
+      "irodori-word:1505"
+    ],
+    "レストラン|れすとらん": [
+      "irodori-word:4162",
+      "irodori-word:4163"
+    ],
+    "音楽|おんがく": [
+      "irodori-word:717",
+      "irodori-word:718",
+      "irodori-word:719"
+    ],
+    "映画|えいが": [
+      "irodori-word:386",
+      "irodori-word:387"
+    ],
+    "雑誌|ざっし": [
+      "irodori-word:1571"
+    ],
+    "新聞|しんぶん": [
+      "irodori-word:1974"
+    ],
+    "インターネット|いんたーねっと": [
+      "irodori-word:298",
+      "irodori-word:299"
+    ],
+    "パソコン|ぱそこん": [
+      "irodori-word:3209",
+      "irodori-word:3210"
+    ],
+    "メール|めーる": [
+      "irodori-word:3858",
+      "irodori-word:3859"
+    ],
+    "スマホ|すまほ": [
+      "irodori-word:2071"
+    ],
+    "アプリ|あぷり": [
+      "irodori-word:113"
+    ],
+    "検索|けんさく": [
+      "irodori-word:1275"
+    ],
+    "変更|へんこう": [
+      "irodori-word:3589"
+    ],
+    "お待たせしました|おまたせしました": [
+      "irodori-word:662"
+    ],
+    "くもり|くもり": [
+      "irodori-word:1188"
+    ],
+    "晴れ|はれ": [
+      "irodori-word:3283"
+    ],
+    "晴れる|はれる": [
+      "irodori-word:3284"
+    ],
+    "乗り換える|のりかえる": [
+      "irodori-word:3123"
+    ],
+    "曲がる|まがる": [
+      "irodori-word:3695"
+    ],
+    "渡る|わたる": [
+      "irodori-word:4237"
+    ],
+    "運動|うんどう": [
+      "irodori-word:378"
+    ],
+    "旅行|りょこう": [
+      "irodori-word:4145",
+      "irodori-word:4146"
+    ],
+    "お米|おこめ": [
+      "irodori-word:537"
+    ]
+  },
+  "meaning_precedence": [
+    "usage-targets.tsv 的本期义项覆盖",
+    "supplements.tsv 的自写义项",
+    "priority79 的已核对义项",
+    "v3正文及表项所教义项",
+    "明确选择的Kaishi卡片义项；同形多卡逐一保留"
+  ],
+  "legacy_dispositions": {
+    "じゃあ": "承接和转换话轮的常见形式，核心保留；不因语料短单位切分失配降级",
+    "帰る": "回家/回原处是基础动作；返る词元不能直接代表全部教学义",
+    "ねえ": "招呼和句末确认需识别；不同于ねえ否定缩约，分别由词汇和R51负责",
+    "信じる": "相信说法或他人是阅读判断的基础；不因信ずる词元问题删除",
+    "感じる": "感受与判断的基础动作；不因感ずる词元问题删除",
+    "用": "按用がある/何の用教事务和来意，不要求脱离搭配背裸词",
+    "さて": "说明和叙事中的话题转换，保留语用关系",
+    "黙る": "不说话/沉默是人物互动常见动作；命令形成规则另由R52负责",
+    "そりゃ": "それは的口语形式，随文还原识别；不占新的核心概念教学",
+    "あげる": "授受基本角色，必须与上げる同音动作分开",
+    "無事": "是否平安影响事件结果理解，保留",
+    "本気": "认真/动真格是人物态度的常见表达，保留",
+    "倒す": "使倒下和打败，结合倒れる对照；不限定成战斗专用",
+    "さっさと": "催促或迅速行动的程度/态度，保留阅读识别，不训练粗鲁催人产出",
+    "ただいま": "归来招呼与正式现在的表达依语境分开，保留识别",
+    "そうそう": "重复确认的口语回应，随文识别，不重复增加独立新概念",
+    "くそ": "粗俗感叹，随文识别；不优先背多种同功能骂法",
+    "覚悟": "对后果的心理准备，保留现有阅读义，不展开哲学含义",
+    "なんと": "惊讶程度或数量表达依结构区分；未对齐不能当罕见",
+    "救う": "救助与解救，保留普通叙事功能，不归纯专业词",
+    "正直": "诚实与坦率表达观点，保留",
+    "貴様": "强烈角色称呼，随文识别；不当现代中性你",
+    "冗談": "区分玩笑与认真判断，保留",
+    "バレる": "隐瞒事项被发现的口语表达，保留",
+    "謝る": "道歉基本人际行为，保留",
+    "おはよう": "基础招呼，不能只因单一词元排名删去",
+    "連中": "指一伙人/那些人，保留角色指代并标随意或贬义语域",
+    "かなう": "愿望实现与匹敌须按当前具体义项教；不凭假名共享合并全部义",
+    "せめて": "最低愿望/退让界限，保留范围关系",
+    "襲う": "袭击及突然遭受事件的叙事动作，保留识别",
+    "隠れる": "隐藏的自动动作，与隠す成对，保留",
+    "野郎": "粗鲁人物称呼，随文识别，不当中性男性指代",
+    "超える": "超过数量/限度，保留并与越える具体搭配分开",
+    "おとなしい": "安静温顺的状态词，保留；大人しい是已核对异写",
+    "離す": "使分离/放开，与離れる成对；未匹配不构成删除依据",
+    "完璧": "完全无缺的评价，保留已有阅读义，不以出现一次证明必要",
+    "効く": "药物/办法等有效，保留；不能把听或利く全部义项并入",
+    "迷惑": "给他人带来困扰，保留关系与评价",
+    "早速": "得到条件后立即行动的衔接，保留区别于单纯速度"
+  },
+  "priority_prose_evidence": {
+    "無料": {
+      "day": 16,
+      "line": 173,
+      "status": "正文已解释；补词表与复现",
+      "note": "同场景反馈解释免费；不要计成全新概念"
+    },
+    "要る": {
+      "day": 16,
+      "line": 173,
+      "status": "いらない已解释；补辞书形/类别/肯定搭配",
+      "note": "同场景お金はいらない，不因辞书形未出现判全未教"
+    },
+    "去年": {
+      "day": 6,
+      "line": 111,
+      "status": "正文已有读音和释义；补词表与复现",
+      "note": "明确きょねん和去年"
+    },
+    "寒い": {
+      "day": 17,
+      "line": 87,
+      "status": "正文已有释义；补读音和首教回链",
+      "note": "均见前课的承诺错误，不能反过来抹掉本处解释"
+    },
+    "暑い": {
+      "day": 17,
+      "line": 121,
+      "status": "正文已有天气义；补读音和正式教学",
+      "note": "第7课也与熱い对比"
+    },
+    "広い": {
+      "day": 20,
+      "line": 134,
+      "status": "正文场景已有；补读音与稳定义项",
+      "note": "世界は広い，核对同场景反馈"
+    },
+    "薬": {
+      "day": 21,
+      "line": 299,
+      "status": "正文场景已有；补读音与词表复现",
+      "note": "薬が効く，核对同场景反馈"
+    },
+    "弟": {
+      "day": 5,
+      "line": 202,
+      "status": "整句翻译已有；补读音且修错误旁注回链",
+      "note": "不能算零接触，也不能说完整教学已经闭合"
+    },
+    "指": {
+      "day": 20,
+      "line": 266,
+      "status": "正文已有读音和整句义；补词表与复现",
+      "note": "指（ゆび）与剪纸/不割伤手指的反馈已经出现；旁注回链表述仍须修"
+    },
+    "倒れる": {
+      "day": 20,
+      "line": 52,
+      "status": "对比词形出现；尚缺独立教学义/读音",
+      "note": "倒す词表提到与倒れる区分，不等于完整解释"
+    }
+  }
+}

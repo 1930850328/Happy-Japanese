@@ -1,0 +1,22 @@
+{
+  "frozen_before_first_score_at": "2026-11-16T08:50:29.844368+00:00",
+  "files": {
+    "freeze.json": "09bb9aa173736e2bbf239746a5f66db6f1eabb43924e400c5eeec84461250d5e",
+    "sources.json": "d7151359b237f83487529ab0014a56083f6317050ede35f5f787d2500ce15660",
+    "samples.json": "9a84c6285c78c7cd19e9aafb0f52b1976ba9c1e817d91a6eeb790a531c716fec",
+    "profiles.json": "7e5aec52e52067019f1cdf011e88f1e2d5f1bd566b72d27c860a8b4ada7d4be8",
+    "prepare.py": "6151975a188547e0861dc09f6367435b877e2c967f65a98eede4bf90bdfbaac5",
+    "evaluate.cjs": "932ca70efaa31ce07c265d1f498a092db1156b0177c7b3d9d82a24b690fcb637"
+  },
+  "known_input_issues": [
+    "Anime anohana includes continuing identical display cues (source lists exact IDs); primary score retains raw cue window, separate dedup sensitivity to be reported.",
+    "One title-only manga page and one silent page are retained, not substituted.",
+    "tsuredure shares author with old kanako, although series is new; not author-held-out.",
+    "Two light novels from same platform, two manga from same publisher; no claim of publisher independence."
+  ],
+  "access_notes": [
+    "First guessed Yuru Camp directory unavailable; Chihayafuru and Anohana selected before reading or scoring.",
+    "urllib received HTTP403 on novel pages; ordinary curl browser User-Agent retrieved public pages.",
+    "Two manga downloads timed out; partial JPEGs rejected. Final complete original recovered over IPv4 HTTP1.1, unchanged source."
+  ]
+}

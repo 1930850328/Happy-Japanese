@@ -1,0 +1,47 @@
+{
+  "purpose": "input_display_duplication_sensitivity_not_replacement_score",
+  "removed_cues": {
+    "anohana-1": [
+      38,
+      40,
+      42,
+      44,
+      49,
+      51,
+      52
+    ],
+    "anohana-2": [
+      153,
+      155,
+      157,
+      159,
+      161,
+      162,
+      165,
+      167,
+      169,
+      170,
+      171
+    ]
+  },
+  "primary_average": {
+    "v3": 49.43257880153676,
+    "plus79": 51.221617877375785,
+    "plus1308": 58.18080124554988
+  },
+  "deduplicated_average": {
+    "v3": 49.0702777835686,
+    "plus79": 50.90771020048389,
+    "plus1308": 58.07951682934437
+  },
+  "deduplicated_anime": {
+    "genre": "anime_subtitles",
+    "works": 2,
+    "scores": {
+      "v3": 62.34065055990906,
+      "plus79": 64.16991885259199,
+      "plus1308": 68.8848789461997
+    }
+  },
+  "limits": "Only identical text in overlapping or touching cue intervals removed; no audio verification. No change to primary corpus or material."
+}

@@ -1,0 +1,92 @@
+{
+  "accessed_on": "2026-11-16",
+  "downloads": [
+    {
+      "file": "bccwj.zip",
+      "url": "https://repository.ninjal.ac.jp/record/3235/files/BCCWJ_frequencylist_suw_ver1_1.zip",
+      "sha256": "06c642e6e4ffdeadd4d76ea7497615992dc913207f8502ee43277a60a64e8183",
+      "bytes": 8334169
+    },
+    {
+      "file": "bccwj-manual.pdf",
+      "url": "https://repository.ninjal.ac.jp/record/3299/files/BCCWJ_frequencylist_manual_1_1.pdf",
+      "sha256": "b748aed5068ab8aec33416173cae1f7986a5245116905d946680f146a24fdd65",
+      "bytes": 282009
+    },
+    {
+      "file": "cejc.tsv",
+      "url": "https://www2.ninjal.ac.jp/conversation/cejc/data/CEJC短単位語彙表_語彙素のみ_語形別_ver202209.zip",
+      "sha256": "523f71c2ee5065cf5852dab4a0d97fefe2379fd2c9f4271ca6ba922094429e3e",
+      "bytes": 37149712,
+      "member_suffix": "2_cejc_frequencylist_suw_token.tsv"
+    },
+    {
+      "file": "cejc-manual.pdf",
+      "url": "https://www2.ninjal.ac.jp/conversation/cejc/data/0_CEJC短単位語彙表と語数表の解説_ver202209.pdf",
+      "sha256": "9207d569de9125debfcaaa30bd4d3f832a59dc111377653511c4ad5e08e946bc",
+      "bytes": 476379
+    },
+    {
+      "file": "genki-syllabus.pdf",
+      "url": "https://bookclub2.japantimes.co.jp/download/files/genki3/genki-3rd_syllabus_J.pdf",
+      "sha256": "74c1de31b36e7ff45ff937577645c8a032f89bb22d480890cf6698a4ddcb9183",
+      "bytes": 344720
+    }
+  ],
+  "cejc_columns": {
+    "lemma": "語彙素",
+    "reading": "語彙素読み",
+    "pos": "品詞",
+    "rank": "rank"
+  },
+  "sources": [
+    {
+      "id": "genki3",
+      "title": "げんき 第3版 官方介绍与学习项目表",
+      "url": "https://genki3.japantimes.co.jp/intro/",
+      "use": "独立初级范围对照与读写渐进；不复制课文，不将约200小时综合课估算直接当阅读课下界"
+    },
+    {
+      "id": "irodori",
+      "title": "国际交流基金 Irodori",
+      "url": "https://www.irodori.jpf.go.jp/resources.html",
+      "use": "本地冻结348条语法出现与4246词条出现，按原记录ID/册/课定位；不是348独立语法点",
+      "manifest": "../01-materials/sources-manifest.json"
+    },
+    {
+      "id": "taekim",
+      "title": "Tae Kim 中文版既有冻结章节",
+      "url": "https://github.com/pizzamx/jpgramma",
+      "use": "规则、接续和参考解释；非官方考试大纲",
+      "manifest": "../01-materials/sources-manifest.json"
+    },
+    {
+      "id": "kaishi",
+      "title": "Kaishi1.5k 中文既有冻结词库",
+      "url": "https://github.com/maimemo/kaishi-zh-cn",
+      "use": "教学词候选和原ID定位；不作为跨体裁频率的独立证据",
+      "manifest": "../01-materials/sources-manifest.json"
+    },
+    {
+      "id": "bccwj",
+      "title": "BCCWJ1短单位词汇表 v1.1",
+      "url": "https://clrd.ninjal.ac.jp/bccwj/bcc-chu.html",
+      "use": "PB/PM/PN/OC/OY分语域排名；不混合原始频次；旧样本不是2026实时语言分布",
+      "rights": "研究教育免费；说明书写不可再分发、商业用途须咨询，仓储另列CC BY-NC-ND3.0。本工作只本地下载原件、输出自主筛选和分析；不向产品分发原表。"
+    },
+    {
+      "id": "cejc",
+      "title": "CEJC短单位词汇表 ver202209",
+      "url": "https://www2.ninjal.ac.jp/conversation/cejc/cejc-wc.html",
+      "use": "2016—2020收录200小时自然会话，词头/POS匹配旁证；不是番剧/漫画频率，也不是日常聊天文字的直接样本",
+      "rights": "研究教育免费；不可再分发，商业使用须咨询；只缓存原TSV，不提交原表。",
+      "required_bibliography": "Koiso et al. (2022). Design and Evaluation of the Corpus of Everyday Japanese Conversation. LREC2022, pp.5587–5594."
+    },
+    {
+      "id": "jiten-v3",
+      "title": "旧Jiten番剧/漫画冻结榜",
+      "use": "审查旧版准入与语域偏向；本轮不以它决定通用基础候选",
+      "manifest": "../01-materials/vocabulary-scope/sources.json"
+    }
+  ]
+}

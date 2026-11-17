@@ -104,12 +104,12 @@ export function CourseLessonPage() {
     setQuestionStartedAt(Date.now())
   }, [lessonId])
 
-  if (!lesson) return <Navigate replace to="/" />
+  if (!lesson) return <Navigate replace to="/learn" />
   if (!initialized) {
     return <div className={`${styles.loading} glassCard`}>正在打开课程…</div>
   }
-  if (!courseState.profile) return <Navigate replace to="/" />
-  if (!isLessonAvailable(courseState, lesson.id)) return <Navigate replace to="/" />
+  if (!courseState.profile) return <Navigate replace to="/learn" />
+  if (!isLessonAvailable(courseState, lesson.id)) return <Navigate replace to="/learn" />
 
   const recordAnswer = (response: string | number) => {
     if (answerCorrect !== null || !currentQuestion) return
@@ -181,7 +181,7 @@ export function CourseLessonPage() {
   return (
     <div className={`${styles.page} fadeIn`}>
       <header className={styles.topBar}>
-        <Link to="/" className="softButton" aria-label="返回学习首页"><ArrowLeft size={18} />返回路径</Link>
+        <Link to="/learn" className="softButton" aria-label="返回学习首页"><ArrowLeft size={18} />返回路径</Link>
         <div className={styles.lessonMeta}>
           <span>{lesson.level === 'foundation' ? '入门' : lesson.level}</span>
           <small><Clock3 size={14} />约 {lesson.durationMinutes} 分钟</small>
@@ -440,7 +440,7 @@ export function CourseLessonPage() {
           <div className={styles.resultActions}>
             {!passed ? <button className="softButton primaryButton" onClick={retry}><RotateCcw size={18} />回看讲解再练</button> : null}
             {passed && nextLesson ? <Link className="softButton primaryButton" to={`/learn/${nextLesson.id}`}>进入下一课<ArrowRight size={18} /></Link> : null}
-            <Link className="softButton" to="/"><ArrowLeft size={18} />回到学习路径</Link>
+            <Link className="softButton" to="/learn"><ArrowLeft size={18} />回到学习路径</Link>
             {lesson.songSearchTerms.length > 0 ? (
               <Link className="softButton" to={`/songs?focus=${encodeURIComponent(lesson.songSearchTerms[0])}`}>
                 <Music2 size={18} />在歌曲中找本课表达（可选）

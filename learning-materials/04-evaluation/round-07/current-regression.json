@@ -1,0 +1,7669 @@
+{
+  "type": "same_new_text_authored_curriculum_lexical_audit",
+  "student_test_performed": false,
+  "comprehension_percent": null,
+  "method": {
+    "denominator": "kuromoji0.1.2 content words; excludes particles, auxiliaries, proper-noun tags, numbers, non-independent forms and documented speaker/ruby/name masks",
+    "matching": "same NFKC exact surface/lemma and contiguous-compound matching in both profiles; table forms only, no incidental example tokens, no undeclared synonyms or homophone aliases",
+    "limits": "Matching is form-level. Same form does not prove correct sense, phrase comprehension or learner retention. Manual semantic audit is separate.",
+    "aggregation": "segment -> work -> genre; anime/manga50/50; no claim of population inference"
+  },
+  "sizes": {
+    "old_table_entries": 286,
+    "revised_table_entries": 271
+  },
+  "samples": [
+    {
+      "id": "anime-barakamon-01",
+      "group": "barakamon",
+      "genre": "anime_subtitles",
+      "source_id": "anime-barakamon",
+      "split": "holdout",
+      "sha256": "42ecec0bbbe7123d3245a3bed233b67fb71caa5c48038ad7b1025d033cfa20c8",
+      "analysis_sha256": "aac75fcd35ed0c41d4534f659cf0970f821ceeb7788c6f0636baec35c1e804a7",
+      "tokens": 59,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 14,
+          "percent": 23.728813559322035
+        },
+        "revised_authored_tables": {
+          "matched": 13,
+          "percent": 22.033898305084747
+        }
+      }
+    },
+    {
+      "id": "anime-barakamon-02",
+      "group": "barakamon",
+      "genre": "anime_subtitles",
+      "source_id": "anime-barakamon",
+      "split": "holdout",
+      "sha256": "b56cc39e3ed98056da46cac85354f8cb2ffc84401b4cc9d8978f2c356728a6f8",
+      "analysis_sha256": "df245556a1bd6389199fa3178bc172795c5b41498d8fe1c9032d2690709abbef",
+      "tokens": 51,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 16,
+          "percent": 31.372549019607842
+        },
+        "revised_authored_tables": {
+          "matched": 14,
+          "percent": 27.45098039215686
+        }
+      }
+    },
+    {
+      "id": "anime-nozaki-01",
+      "group": "nozaki",
+      "genre": "anime_subtitles",
+      "source_id": "anime-nozaki",
+      "split": "holdout",
+      "sha256": "1a39844bc748298c53bd1ceaed5ee1e633838d7de7850fe71278482a08164392",
+      "analysis_sha256": "bd32e31e076784212136a675065047bdb7530a1f8cf28d1e1a1aeed4d690ad22",
+      "tokens": 39,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 22,
+          "percent": 56.41025641025641
+        },
+        "revised_authored_tables": {
+          "matched": 22,
+          "percent": 56.41025641025641
+        }
+      }
+    },
+    {
+      "id": "anime-nozaki-02",
+      "group": "nozaki",
+      "genre": "anime_subtitles",
+      "source_id": "anime-nozaki",
+      "split": "holdout",
+      "sha256": "3811acf875f8845eff178b4a3a6dec94327ff2719e01583ae03913156984cf86",
+      "analysis_sha256": "cb743a7b1e59fed6d89f822ef53e54700eaa6cd7b8de640084277ee59c5cc43e",
+      "tokens": 53,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 16,
+          "percent": 30.18867924528302
+        },
+        "revised_authored_tables": {
+          "matched": 20,
+          "percent": 37.735849056603776
+        }
+      }
+    },
+    {
+      "id": "anime-bocchi-01",
+      "group": "bocchi",
+      "genre": "anime_subtitles",
+      "source_id": "anime-bocchi",
+      "split": "holdout",
+      "sha256": "c5a7003a09cae639faef55fbdb8ce722721fdf2fed896061a8a2bdce4d118778",
+      "analysis_sha256": "886be58cd5da0a364ce171796c98816cc804760dbccefd876a1ab5e7beb4eaca",
+      "tokens": 67,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 23,
+          "percent": 34.32835820895522
+        },
+        "revised_authored_tables": {
+          "matched": 22,
+          "percent": 32.83582089552239
+        }
+      }
+    },
+    {
+      "id": "anime-bocchi-02",
+      "group": "bocchi",
+      "genre": "anime_subtitles",
+      "source_id": "anime-bocchi",
+      "split": "holdout",
+      "sha256": "06c733e2de7dfef0678ed420db53cecbd8136feaa0afa4538d4f22b2c1d061b2",
+      "analysis_sha256": "09e678eb24ecf836b76ce081e4237ff0d6f3882275fbf7cf374297d44e44bd0f",
+      "tokens": 64,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 14,
+          "percent": 21.875
+        },
+        "revised_authored_tables": {
+          "matched": 12,
+          "percent": 18.75
+        }
+      }
+    },
+    {
+      "id": "anime-dungeonmeshi-01",
+      "group": "dungeonmeshi",
+      "genre": "anime_subtitles",
+      "source_id": "anime-dungeonmeshi",
+      "split": "holdout",
+      "sha256": "a74db403dd9cf4d4c278e9007f88160f12af1faee71d42553bd6455a3eab152a",
+      "analysis_sha256": "b823384c9b027cc2e3bc0cb940977caf68f8a7a6ddd0b82aa5d691f9e3f2499d",
+      "tokens": 79,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 11,
+          "percent": 13.924050632911392
+        },
+        "revised_authored_tables": {
+          "matched": 13,
+          "percent": 16.455696202531644
+        }
+      }
+    },
+    {
+      "id": "anime-dungeonmeshi-02",
+      "group": "dungeonmeshi",
+      "genre": "anime_subtitles",
+      "source_id": "anime-dungeonmeshi",
+      "split": "holdout",
+      "sha256": "3d611d55cbce985436fd21313801ff5b70df58c2812d846a7141fa16ca810d5f",
+      "analysis_sha256": "091a7f5af434712f57297bf146074b82517202c005f1a5bb1b22893bccca337e",
+      "tokens": 61,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 20,
+          "percent": 32.78688524590164
+        },
+        "revised_authored_tables": {
+          "matched": 18,
+          "percent": 29.508196721311474
+        }
+      }
+    },
+    {
+      "id": "manga-nekodamashi-01",
+      "group": "nekodamashi",
+      "genre": "manga",
+      "source_id": "manga-nekodamashi",
+      "split": "holdout",
+      "sha256": "4a65878e9fd910dde560825cdd32b81464e5fc36e9c825ccbc623280f1c633b3",
+      "analysis_sha256": "049ea1888daad38c0cf6cfdcb3d7bf321bd59212a89b6ec07c2ceb3b9c8e8c34",
+      "tokens": 51,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 6,
+          "percent": 11.764705882352942
+        },
+        "revised_authored_tables": {
+          "matched": 8,
+          "percent": 15.686274509803921
+        }
+      }
+    },
+    {
+      "id": "manga-nekodamashi-02",
+      "group": "nekodamashi",
+      "genre": "manga",
+      "source_id": "manga-nekodamashi",
+      "split": "holdout",
+      "sha256": "d939f039eb6079addbd008ecf511b04688f78ea5b2e0f3e00870945c3876548c",
+      "analysis_sha256": "3433862a710e3c4e2a025f2b4aa1d65a07efedc8b6434118efbd05406220ae4f",
+      "tokens": 69,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 9,
+          "percent": 13.043478260869565
+        },
+        "revised_authored_tables": {
+          "matched": 8,
+          "percent": 11.594202898550725
+        }
+      }
+    },
+    {
+      "id": "manga-rentalfriend-01",
+      "group": "rentalfriend",
+      "genre": "manga",
+      "source_id": "manga-rentalfriend",
+      "split": "holdout",
+      "sha256": "e29e7ab72ef6b6972b7e3f04473532a7de8f96d848a6cbb60208f4c898542e63",
+      "analysis_sha256": "8913f715e52fa5bfb2ff8314e57ba7192a5942732cebdbe197e89dbcf37bf747",
+      "tokens": 57,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 21,
+          "percent": 36.8421052631579
+        },
+        "revised_authored_tables": {
+          "matched": 23,
+          "percent": 40.35087719298246
+        }
+      }
+    },
+    {
+      "id": "manga-rentalfriend-02",
+      "group": "rentalfriend",
+      "genre": "manga",
+      "source_id": "manga-rentalfriend",
+      "split": "holdout",
+      "sha256": "27ff3d706fa4c3a9a56baf8d1ccb274ef070ce8934cbe60f96afd7e60833dab5",
+      "analysis_sha256": "ff865b2f2ce2dd80cb6644d8a78ea7018db8a6c7e82161594487135afc81a381",
+      "tokens": 58,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 17,
+          "percent": 29.310344827586206
+        },
+        "revised_authored_tables": {
+          "matched": 19,
+          "percent": 32.758620689655174
+        }
+      }
+    },
+    {
+      "id": "manga-luna-01",
+      "group": "luna",
+      "genre": "manga",
+      "source_id": "manga-luna",
+      "split": "holdout",
+      "sha256": "030ada3e93867c6aad85de934e591dfa1f62fdb00b5922997854ea0baf878734",
+      "analysis_sha256": "d3141708f41481f0da0423b88810aaa8720c79568756c67036c349a2791ab111",
+      "tokens": 38,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 11,
+          "percent": 28.94736842105263
+        },
+        "revised_authored_tables": {
+          "matched": 11,
+          "percent": 28.94736842105263
+        }
+      }
+    },
+    {
+      "id": "manga-luna-02",
+      "group": "luna",
+      "genre": "manga",
+      "source_id": "manga-luna",
+      "split": "holdout",
+      "sha256": "89ece2934e8e55b1b87cf57d1b470373d9efe0c179a093643a6061be06a5813a",
+      "analysis_sha256": "53f5a47c161cba57d84d1a8936089648b8d4939da5a28941de3528594bf2c31c",
+      "tokens": 66,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 14,
+          "percent": 21.21212121212121
+        },
+        "revised_authored_tables": {
+          "matched": 14,
+          "percent": 21.21212121212121
+        }
+      }
+    },
+    {
+      "id": "manga-tengokumate-01",
+      "group": "tengokumate",
+      "genre": "manga",
+      "source_id": "manga-tengokumate",
+      "split": "holdout",
+      "sha256": "7c8a908cc0bd2ad06ef6c7bd009bb6f39df6cbfba4f39ab179edc56e4b9accff",
+      "analysis_sha256": "e536fcc23ba306381d3a87d7b297620ecafd57df487d9039ce1ba2f681ba4c53",
+      "tokens": 67,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 26,
+          "percent": 38.80597014925373
+        },
+        "revised_authored_tables": {
+          "matched": 21,
+          "percent": 31.34328358208955
+        }
+      }
+    },
+    {
+      "id": "manga-tengokumate-02",
+      "group": "tengokumate",
+      "genre": "manga",
+      "source_id": "manga-tengokumate",
+      "split": "holdout",
+      "sha256": "5f4634ba40b8bffb7a005f4337a560de03db82c70ce7621945b500516bb53df3",
+      "analysis_sha256": "5f4634ba40b8bffb7a005f4337a560de03db82c70ce7621945b500516bb53df3",
+      "tokens": 69,
+      "profiles": {
+        "old_authored_tables": {
+          "matched": 18,
+          "percent": 26.08695652173913
+        },
+        "revised_authored_tables": {
+          "matched": 18,
+          "percent": 26.08695652173913
+        }
+      }
+    }
+  ],
+  "works": [
+    {
+      "group": "barakamon",
+      "genre": "anime_subtitles",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 27.55068128946494,
+        "revised_authored_tables": 24.742439348620806
+      }
+    },
+    {
+      "group": "nozaki",
+      "genre": "anime_subtitles",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 43.29946782776972,
+        "revised_authored_tables": 47.07305273343009
+      }
+    },
+    {
+      "group": "bocchi",
+      "genre": "anime_subtitles",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 28.10167910447761,
+        "revised_authored_tables": 25.792910447761194
+      }
+    },
+    {
+      "group": "dungeonmeshi",
+      "genre": "anime_subtitles",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 23.355467939406516,
+        "revised_authored_tables": 22.98194646192156
+      }
+    },
+    {
+      "group": "nekodamashi",
+      "genre": "manga",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 12.404092071611252,
+        "revised_authored_tables": 13.640238704177323
+      }
+    },
+    {
+      "group": "rentalfriend",
+      "genre": "manga",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 33.076225045372055,
+        "revised_authored_tables": 36.55474894131882
+      }
+    },
+    {
+      "group": "luna",
+      "genre": "manga",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 25.07974481658692,
+        "revised_authored_tables": 25.07974481658692
+      }
+    },
+    {
+      "group": "tengokumate",
+      "genre": "manga",
+      "samples": 2,
+      "scores": {
+        "old_authored_tables": 32.44646333549643,
+        "revised_authored_tables": 28.71512005191434
+      }
+    }
+  ],
+  "genres": [
+    {
+      "genre": "anime_subtitles",
+      "works": 4,
+      "samples": 8,
+      "tokens": 473,
+      "scores": {
+        "old_authored_tables": {
+          "work_macro_percent": 30.576824040279696,
+          "pooled_percent": 28.752642706131077
+        },
+        "revised_authored_tables": {
+          "work_macro_percent": 30.14758724793341,
+          "pooled_percent": 28.32980972515856
+        }
+      }
+    },
+    {
+      "genre": "manga",
+      "works": 4,
+      "samples": 8,
+      "tokens": 475,
+      "scores": {
+        "old_authored_tables": {
+          "work_macro_percent": 25.751631317266664,
+          "pooled_percent": 25.68421052631579
+        },
+        "revised_authored_tables": {
+          "work_macro_percent": 25.99746312849935,
+          "pooled_percent": 25.68421052631579
+        }
+      }
+    }
+  ],
+  "lexical_proxy_50_50": {
+    "old_authored_tables": 28.16422767877318,
+    "revised_authored_tables": 28.07252518821638
+  },
+  "unmatched": [
+    {
+      "lemma": "いや",
+      "pos": "接続詞",
+      "count": 6,
+      "groups": [
+        "nozaki",
+        "bocchi",
+        "dungeonmeshi",
+        "nekodamashi",
+        "tengokumate"
+      ],
+      "samples": [
+        "anime-nozaki-01",
+        "anime-bocchi-02",
+        "anime-dungeonmeshi-01",
+        "manga-nekodamashi-02",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "いや"
+      ]
+    },
+    {
+      "lemma": "ない",
+      "pos": "形容詞",
+      "count": 6,
+      "groups": [
+        "bocchi",
+        "dungeonmeshi",
+        "nekodamashi",
+        "rentalfriend",
+        "luna"
+      ],
+      "samples": [
+        "anime-bocchi-02",
+        "anime-dungeonmeshi-01",
+        "manga-nekodamashi-01",
+        "manga-rentalfriend-01",
+        "manga-rentalfriend-02",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "ない",
+        "なかっ"
+      ]
+    },
+    {
+      "lemma": "やる",
+      "pos": "動詞",
+      "count": 5,
+      "groups": [
+        "barakamon",
+        "bocchi",
+        "nekodamashi",
+        "rentalfriend",
+        "luna"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-bocchi-01",
+        "manga-nekodamashi-01",
+        "manga-rentalfriend-02",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "やっ",
+        "やる"
+      ]
+    },
+    {
+      "lemma": "よい",
+      "pos": "形容詞",
+      "count": 5,
+      "groups": [
+        "barakamon",
+        "nozaki",
+        "nekodamashi",
+        "tengokumate"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-barakamon-02",
+        "anime-nozaki-01",
+        "manga-nekodamashi-02",
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "よ",
+        "よかっ",
+        "よし",
+        "よい"
+      ]
+    },
+    {
+      "lemma": "こんな",
+      "pos": "連体詞",
+      "count": 4,
+      "groups": [
+        "barakamon",
+        "bocchi",
+        "nekodamashi",
+        "rentalfriend"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "anime-bocchi-02",
+        "manga-nekodamashi-02",
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "こんな"
+      ]
+    },
+    {
+      "lemma": "うつ",
+      "pos": "動詞",
+      "count": 6,
+      "groups": [
+        "barakamon",
+        "dungeonmeshi",
+        "luna"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-dungeonmeshi-01",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "うっ"
+      ]
+    },
+    {
+      "lemma": "子",
+      "pos": "名詞",
+      "count": 5,
+      "groups": [
+        "nozaki",
+        "bocchi",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-nozaki-01",
+        "anime-bocchi-01",
+        "anime-bocchi-02",
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "子"
+      ]
+    },
+    {
+      "lemma": "なぜ",
+      "pos": "副詞",
+      "count": 4,
+      "groups": [
+        "barakamon",
+        "luna",
+        "tengokumate"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "manga-luna-02",
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "なぜ"
+      ]
+    },
+    {
+      "lemma": "わかる",
+      "pos": "動詞",
+      "count": 4,
+      "groups": [
+        "nekodamashi",
+        "rentalfriend",
+        "luna"
+      ],
+      "samples": [
+        "manga-nekodamashi-01",
+        "manga-nekodamashi-02",
+        "manga-rentalfriend-01",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "わから",
+        "わかっ",
+        "わかん"
+      ]
+    },
+    {
+      "lemma": "じゃ",
+      "pos": "接続詞",
+      "count": 3,
+      "groups": [
+        "barakamon",
+        "nozaki",
+        "rentalfriend"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "anime-nozaki-02",
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "じゃ"
+      ]
+    },
+    {
+      "lemma": "そんな",
+      "pos": "連体詞",
+      "count": 3,
+      "groups": [
+        "nekodamashi",
+        "luna",
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-nekodamashi-01",
+        "manga-luna-02",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "そんな"
+      ]
+    },
+    {
+      "lemma": "つく",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "nekodamashi",
+        "rentalfriend",
+        "luna"
+      ],
+      "samples": [
+        "manga-nekodamashi-01",
+        "manga-rentalfriend-02",
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "つか"
+      ]
+    },
+    {
+      "lemma": "顔",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "dungeonmeshi",
+        "luna",
+        "tengokumate"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02",
+        "manga-luna-02",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "顔"
+      ]
+    },
+    {
+      "lemma": "親",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "bocchi",
+        "nekodamashi",
+        "tengokumate"
+      ],
+      "samples": [
+        "anime-bocchi-01",
+        "manga-nekodamashi-02",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "親"
+      ]
+    },
+    {
+      "lemma": "魔術",
+      "pos": "名詞",
+      "count": 8,
+      "groups": [
+        "dungeonmeshi",
+        "luna"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01",
+        "manga-luna-01",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "魔術"
+      ]
+    },
+    {
+      "lemma": "足",
+      "pos": "名詞",
+      "count": 5,
+      "groups": [
+        "dungeonmeshi",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02",
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "足"
+      ]
+    },
+    {
+      "lemma": "こう",
+      "pos": "副詞",
+      "count": 4,
+      "groups": [
+        "barakamon",
+        "nozaki"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "こう"
+      ]
+    },
+    {
+      "lemma": "さっき",
+      "pos": "名詞",
+      "count": 4,
+      "groups": [
+        "barakamon",
+        "rentalfriend"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-barakamon-02",
+        "manga-rentalfriend-01",
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "さっき"
+      ]
+    },
+    {
+      "lemma": "ぼる",
+      "pos": "動詞",
+      "count": 4,
+      "groups": [
+        "bocchi",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-bocchi-01",
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "ぼ",
+        "ぼっ"
+      ]
+    },
+    {
+      "lemma": "いう",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "barakamon",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "いう",
+        "いっ"
+      ]
+    },
+    {
+      "lemma": "ウチ",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "nekodamashi",
+        "luna"
+      ],
+      "samples": [
+        "manga-nekodamashi-01",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "ウチ"
+      ]
+    },
+    {
+      "lemma": "うまい",
+      "pos": "形容詞",
+      "count": 3,
+      "groups": [
+        "barakamon",
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "うまい"
+      ]
+    },
+    {
+      "lemma": "ハッ",
+      "pos": "副詞",
+      "count": 3,
+      "groups": [
+        "barakamon",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "ハッ"
+      ]
+    },
+    {
+      "lemma": "よく",
+      "pos": "副詞",
+      "count": 3,
+      "groups": [
+        "bocchi",
+        "tengokumate"
+      ],
+      "samples": [
+        "anime-bocchi-02",
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "よく"
+      ]
+    },
+    {
+      "lemma": "匂い",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "dungeonmeshi",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02",
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "匂い"
+      ]
+    },
+    {
+      "lemma": "無理",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "dungeonmeshi",
+        "rentalfriend"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02",
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "無理"
+      ]
+    },
+    {
+      "lemma": "あと",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi",
+        "rentalfriend"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01",
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "あと"
+      ]
+    },
+    {
+      "lemma": "いつも",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "bocchi",
+        "rentalfriend"
+      ],
+      "samples": [
+        "anime-bocchi-02",
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "いつも"
+      ]
+    },
+    {
+      "lemma": "キャラ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "luna",
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-luna-02",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "キャラ"
+      ]
+    },
+    {
+      "lemma": "サービス",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "rentalfriend",
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-rentalfriend-01",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "サービス"
+      ]
+    },
+    {
+      "lemma": "さては",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "barakamon",
+        "luna"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "さては"
+      ]
+    },
+    {
+      "lemma": "すごい",
+      "pos": "形容詞",
+      "count": 2,
+      "groups": [
+        "barakamon",
+        "bocchi"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "すご",
+        "すごい"
+      ]
+    },
+    {
+      "lemma": "ちょ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "barakamon",
+        "luna"
+      ],
+      "samples": [
+        "anime-barakamon-02",
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "ちょ"
+      ]
+    },
+    {
+      "lemma": "ちょっと",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "nozaki",
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-nozaki-01",
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "ちょっと"
+      ]
+    },
+    {
+      "lemma": "ッ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi",
+        "luna"
+      ],
+      "samples": [
+        "manga-nekodamashi-02",
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "ッ"
+      ]
+    },
+    {
+      "lemma": "どうぞ",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "nozaki",
+        "bocchi"
+      ],
+      "samples": [
+        "anime-nozaki-01",
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "どうぞ"
+      ]
+    },
+    {
+      "lemma": "とこ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "luna",
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-luna-02",
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "とこ"
+      ]
+    },
+    {
+      "lemma": "なんで",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi",
+        "luna"
+      ],
+      "samples": [
+        "manga-nekodamashi-02",
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "なんで"
+      ]
+    },
+    {
+      "lemma": "めっちゃ",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "bocchi",
+        "tengokumate"
+      ],
+      "samples": [
+        "anime-bocchi-02",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "めっちゃ"
+      ]
+    },
+    {
+      "lemma": "ヤツ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "bocchi",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-bocchi-01",
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "ヤツ"
+      ]
+    },
+    {
+      "lemma": "やめる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "luna",
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-luna-02",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "やめ",
+        "やめる"
+      ]
+    },
+    {
+      "lemma": "わっ",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "barakamon",
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "わっ"
+      ]
+    },
+    {
+      "lemma": "噂",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi",
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-nekodamashi-02",
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "噂"
+      ]
+    },
+    {
+      "lemma": "兄ちゃん",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "barakamon",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "兄ちゃん"
+      ]
+    },
+    {
+      "lemma": "嫌",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "rentalfriend",
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-rentalfriend-02",
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "嫌"
+      ]
+    },
+    {
+      "lemma": "考える",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "nozaki",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-nozaki-02",
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "考える",
+        "考え"
+      ]
+    },
+    {
+      "lemma": "合う",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "bocchi",
+        "rentalfriend"
+      ],
+      "samples": [
+        "anime-bocchi-01",
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "合っ"
+      ]
+    },
+    {
+      "lemma": "十分",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi",
+        "luna"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "十分"
+      ]
+    },
+    {
+      "lemma": "他",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "rentalfriend",
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-rentalfriend-01",
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "他"
+      ]
+    },
+    {
+      "lemma": "張る",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02",
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "張る",
+        "張っ"
+      ]
+    },
+    {
+      "lemma": "普通",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nozaki",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-nozaki-01",
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "普通"
+      ]
+    },
+    {
+      "lemma": "平凡",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "barakamon",
+        "nekodamashi"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "平凡"
+      ]
+    },
+    {
+      "lemma": "目",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "barakamon",
+        "bocchi"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "目"
+      ]
+    },
+    {
+      "lemma": "人間",
+      "pos": "名詞",
+      "count": 7,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "人間"
+      ]
+    },
+    {
+      "lemma": "字",
+      "pos": "名詞",
+      "count": 6,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "字"
+      ]
+    },
+    {
+      "lemma": "席",
+      "pos": "名詞",
+      "count": 6,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01",
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "席"
+      ]
+    },
+    {
+      "lemma": "魔女",
+      "pos": "名詞",
+      "count": 5,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01",
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "魔女"
+      ]
+    },
+    {
+      "lemma": "ずっと",
+      "pos": "副詞",
+      "count": 3,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "ずっと"
+      ]
+    },
+    {
+      "lemma": "バカ",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "バカ"
+      ]
+    },
+    {
+      "lemma": "バンド",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "バンド"
+      ]
+    },
+    {
+      "lemma": "郷",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "郷"
+      ]
+    },
+    {
+      "lemma": "集中",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "集中"
+      ]
+    },
+    {
+      "lemma": "天界",
+      "pos": "名詞",
+      "count": 3,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "天界"
+      ]
+    },
+    {
+      "lemma": "倒す",
+      "pos": "動詞",
+      "count": 3,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "倒し",
+        "倒せ"
+      ]
+    },
+    {
+      "lemma": "うし",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "うし"
+      ]
+    },
+    {
+      "lemma": "おしゃれ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "おしゃれ"
+      ]
+    },
+    {
+      "lemma": "オメェ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "オメェ"
+      ]
+    },
+    {
+      "lemma": "かん",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "かん"
+      ]
+    },
+    {
+      "lemma": "ギター",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "ギター"
+      ]
+    },
+    {
+      "lemma": "これから",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "これから"
+      ]
+    },
+    {
+      "lemma": "スライム",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "スライム"
+      ]
+    },
+    {
+      "lemma": "そういう",
+      "pos": "連体詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "そういう"
+      ]
+    },
+    {
+      "lemma": "ダメ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "ダメ"
+      ]
+    },
+    {
+      "lemma": "チャリ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "チャリ"
+      ]
+    },
+    {
+      "lemma": "ちる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "ち"
+      ]
+    },
+    {
+      "lemma": "てか",
+      "pos": "接続詞",
+      "count": 2,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "てか"
+      ]
+    },
+    {
+      "lemma": "ドラゴン",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "ドラゴン"
+      ]
+    },
+    {
+      "lemma": "なんとか",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "なんとか"
+      ]
+    },
+    {
+      "lemma": "におい",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "におい"
+      ]
+    },
+    {
+      "lemma": "ひとり",
+      "pos": "副詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "ひとり"
+      ]
+    },
+    {
+      "lemma": "ファン",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "ファン"
+      ]
+    },
+    {
+      "lemma": "ライブ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "ライブ"
+      ]
+    },
+    {
+      "lemma": "ライブハウス",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "ライブハウス"
+      ]
+    },
+    {
+      "lemma": "ラッパ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "ラッパ"
+      ]
+    },
+    {
+      "lemma": "ろ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "ろ"
+      ]
+    },
+    {
+      "lemma": "ワシ",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "ワシ"
+      ]
+    },
+    {
+      "lemma": "悪",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "悪"
+      ]
+    },
+    {
+      "lemma": "悪魔",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "悪魔"
+      ]
+    },
+    {
+      "lemma": "覚悟",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "覚悟"
+      ]
+    },
+    {
+      "lemma": "学ぶ",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01",
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "学び",
+        "学ん"
+      ]
+    },
+    {
+      "lemma": "技",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "技"
+      ]
+    },
+    {
+      "lemma": "語",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "語"
+      ]
+    },
+    {
+      "lemma": "国",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "国"
+      ]
+    },
+    {
+      "lemma": "最低",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "最低"
+      ]
+    },
+    {
+      "lemma": "殺し",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01",
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "殺し"
+      ]
+    },
+    {
+      "lemma": "殺る",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01",
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "殺ら"
+      ]
+    },
+    {
+      "lemma": "指",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "指"
+      ]
+    },
+    {
+      "lemma": "飼い主",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "飼い主"
+      ]
+    },
+    {
+      "lemma": "自転車",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "自転車"
+      ]
+    },
+    {
+      "lemma": "主",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "主"
+      ]
+    },
+    {
+      "lemma": "準備",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01",
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "準備"
+      ]
+    },
+    {
+      "lemma": "勝手",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01",
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "勝手"
+      ]
+    },
+    {
+      "lemma": "小さな",
+      "pos": "連体詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "小さな"
+      ]
+    },
+    {
+      "lemma": "善行",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "善行"
+      ]
+    },
+    {
+      "lemma": "全て",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01",
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "全て"
+      ]
+    },
+    {
+      "lemma": "地下",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "地下"
+      ]
+    },
+    {
+      "lemma": "天使",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "天使"
+      ]
+    },
+    {
+      "lemma": "鍋",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "鍋"
+      ]
+    },
+    {
+      "lemma": "脳味噌",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "脳味噌"
+      ]
+    },
+    {
+      "lemma": "怖い",
+      "pos": "形容詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "怖い"
+      ]
+    },
+    {
+      "lemma": "変わる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "変わっ"
+      ]
+    },
+    {
+      "lemma": "命",
+      "pos": "名詞",
+      "count": 2,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "命"
+      ]
+    },
+    {
+      "lemma": "話せる",
+      "pos": "動詞",
+      "count": 2,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "話せ",
+        "話せる"
+      ]
+    },
+    {
+      "lemma": "アイツ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "アイツ"
+      ]
+    },
+    {
+      "lemma": "あこがれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "あこがれ"
+      ]
+    },
+    {
+      "lemma": "アタッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "アタッ"
+      ]
+    },
+    {
+      "lemma": "ある程度",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "ある程度"
+      ]
+    },
+    {
+      "lemma": "アンタ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "アンタ"
+      ]
+    },
+    {
+      "lemma": "あんな",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "あんな"
+      ]
+    },
+    {
+      "lemma": "いく",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "いこ"
+      ]
+    },
+    {
+      "lemma": "イベント",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "イベント"
+      ]
+    },
+    {
+      "lemma": "イミ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "イミ"
+      ]
+    },
+    {
+      "lemma": "いやがる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "いやがっ"
+      ]
+    },
+    {
+      "lemma": "いろいろ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "いろいろ"
+      ]
+    },
+    {
+      "lemma": "うい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "うう"
+      ]
+    },
+    {
+      "lemma": "ウケる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "ウケる"
+      ]
+    },
+    {
+      "lemma": "うそ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "うそ"
+      ]
+    },
+    {
+      "lemma": "ウロ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "ウロ"
+      ]
+    },
+    {
+      "lemma": "ぇもちろん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "ぇもちろん"
+      ]
+    },
+    {
+      "lemma": "えらい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "えらい"
+      ]
+    },
+    {
+      "lemma": "ォ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "ォ"
+      ]
+    },
+    {
+      "lemma": "おいしい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "おいし"
+      ]
+    },
+    {
+      "lemma": "おおう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "おおっ"
+      ]
+    },
+    {
+      "lemma": "おかず",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "おかず"
+      ]
+    },
+    {
+      "lemma": "おる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "おら"
+      ]
+    },
+    {
+      "lemma": "お呼び",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "お呼び"
+      ]
+    },
+    {
+      "lemma": "お知らせ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "お知らせ"
+      ]
+    },
+    {
+      "lemma": "お話",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "お話"
+      ]
+    },
+    {
+      "lemma": "かかる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "かかっ"
+      ]
+    },
+    {
+      "lemma": "ガチャ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "ガチャ"
+      ]
+    },
+    {
+      "lemma": "かつて",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "かつて"
+      ]
+    },
+    {
+      "lemma": "かび臭い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "かび臭い"
+      ]
+    },
+    {
+      "lemma": "かぶる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "かぶる"
+      ]
+    },
+    {
+      "lemma": "きっと",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "きっと"
+      ]
+    },
+    {
+      "lemma": "キテ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "キテ"
+      ]
+    },
+    {
+      "lemma": "キノコ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "キノコ"
+      ]
+    },
+    {
+      "lemma": "キャ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "キャ"
+      ]
+    },
+    {
+      "lemma": "ギャー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "ギャー"
+      ]
+    },
+    {
+      "lemma": "クーポン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "クーポン"
+      ]
+    },
+    {
+      "lemma": "くじ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "くじ"
+      ]
+    },
+    {
+      "lemma": "グッズ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "グッズ"
+      ]
+    },
+    {
+      "lemma": "ぐはっ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "ぐはっ"
+      ]
+    },
+    {
+      "lemma": "クマ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "クマ"
+      ]
+    },
+    {
+      "lemma": "ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "けん"
+      ]
+    },
+    {
+      "lemma": "ケルベロス",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "ケルベロス"
+      ]
+    },
+    {
+      "lemma": "コイツ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "コイツ"
+      ]
+    },
+    {
+      "lemma": "コーン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "コーン"
+      ]
+    },
+    {
+      "lemma": "ことば",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "ことば"
+      ]
+    },
+    {
+      "lemma": "コラボカフェ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "コラボカフェ"
+      ]
+    },
+    {
+      "lemma": "コロコロー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "コロコロー"
+      ]
+    },
+    {
+      "lemma": "サイン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "サイン"
+      ]
+    },
+    {
+      "lemma": "サソリ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "サソリ"
+      ]
+    },
+    {
+      "lemma": "サポート",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "サポート"
+      ]
+    },
+    {
+      "lemma": "さまよう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "さまよっ"
+      ]
+    },
+    {
+      "lemma": "サラッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "サラッ"
+      ]
+    },
+    {
+      "lemma": "しかも",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "しかも"
+      ]
+    },
+    {
+      "lemma": "しまう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "しまっ"
+      ]
+    },
+    {
+      "lemma": "ジャージ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "ジャージ"
+      ]
+    },
+    {
+      "lemma": "シャッフル",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "シャッフル"
+      ]
+    },
+    {
+      "lemma": "しょうが",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "しょうが"
+      ]
+    },
+    {
+      "lemma": "しろい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "しろ"
+      ]
+    },
+    {
+      "lemma": "すか",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "すか"
+      ]
+    },
+    {
+      "lemma": "すぐ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "すぐ"
+      ]
+    },
+    {
+      "lemma": "すすむ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "すすみ"
+      ]
+    },
+    {
+      "lemma": "そいつ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "そいつ"
+      ]
+    },
+    {
+      "lemma": "そうすると",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "そうすると"
+      ]
+    },
+    {
+      "lemma": "ソシャゲ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "ソシャゲ"
+      ]
+    },
+    {
+      "lemma": "そむ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "そん"
+      ]
+    },
+    {
+      "lemma": "タウン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "タウン"
+      ]
+    },
+    {
+      "lemma": "だが",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "だが"
+      ]
+    },
+    {
+      "lemma": "たしか",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "たしか"
+      ]
+    },
+    {
+      "lemma": "ただ",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "ただ"
+      ]
+    },
+    {
+      "lemma": "たま",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "たま"
+      ]
+    },
+    {
+      "lemma": "ダメダメ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "ダメダメ"
+      ]
+    },
+    {
+      "lemma": "チェック",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "チェック"
+      ]
+    },
+    {
+      "lemma": "ちと",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "ちと"
+      ]
+    },
+    {
+      "lemma": "ちり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "ちり"
+      ]
+    },
+    {
+      "lemma": "ッー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "ッー"
+      ]
+    },
+    {
+      "lemma": "つきあう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "つきあっ"
+      ]
+    },
+    {
+      "lemma": "っぽい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "っぽい"
+      ]
+    },
+    {
+      "lemma": "つまる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "つまら"
+      ]
+    },
+    {
+      "lemma": "で",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "で"
+      ]
+    },
+    {
+      "lemma": "どういう",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "どういう"
+      ]
+    },
+    {
+      "lemma": "どうも",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "どうも"
+      ]
+    },
+    {
+      "lemma": "ドキドキ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "ドキドキ"
+      ]
+    },
+    {
+      "lemma": "とまる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "とまっ"
+      ]
+    },
+    {
+      "lemma": "とまれ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "とまれ"
+      ]
+    },
+    {
+      "lemma": "とらわれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "とらわれ"
+      ]
+    },
+    {
+      "lemma": "なお",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "なお"
+      ]
+    },
+    {
+      "lemma": "なにか",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "なにか"
+      ]
+    },
+    {
+      "lemma": "なにとぞ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "なにとぞ"
+      ]
+    },
+    {
+      "lemma": "ニャ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "ニャ"
+      ]
+    },
+    {
+      "lemma": "のる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "のっ"
+      ]
+    },
+    {
+      "lemma": "バイト",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "バイト"
+      ]
+    },
+    {
+      "lemma": "はまる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "はまっ"
+      ]
+    },
+    {
+      "lemma": "ひきかえる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "ひきかえ"
+      ]
+    },
+    {
+      "lemma": "ひと息",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "ひと息"
+      ]
+    },
+    {
+      "lemma": "ひるむ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "ひるん"
+      ]
+    },
+    {
+      "lemma": "フィンガー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "フィンガー"
+      ]
+    },
+    {
+      "lemma": "ふう",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "ふっ"
+      ]
+    },
+    {
+      "lemma": "ブチ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "ブチ"
+      ]
+    },
+    {
+      "lemma": "ブッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "ブッ"
+      ]
+    },
+    {
+      "lemma": "ぷはっ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "ぷはっ"
+      ]
+    },
+    {
+      "lemma": "ふり",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "ふり"
+      ]
+    },
+    {
+      "lemma": "ぶる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "ぶっ"
+      ]
+    },
+    {
+      "lemma": "フンッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "フンッ"
+      ]
+    },
+    {
+      "lemma": "ペース",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "ペース"
+      ]
+    },
+    {
+      "lemma": "ホ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "ホ"
+      ]
+    },
+    {
+      "lemma": "ほえる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "ほえ"
+      ]
+    },
+    {
+      "lemma": "ボール",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "ボール"
+      ]
+    },
+    {
+      "lemma": "マグマ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "マグマ"
+      ]
+    },
+    {
+      "lemma": "みなぎる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "みなぎる"
+      ]
+    },
+    {
+      "lemma": "メタボ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "メタボ"
+      ]
+    },
+    {
+      "lemma": "メッセージ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "メッセージ"
+      ]
+    },
+    {
+      "lemma": "もうちょい",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "もうちょい"
+      ]
+    },
+    {
+      "lemma": "もう少し",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "もう少し"
+      ]
+    },
+    {
+      "lemma": "もしかして",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "もしかして"
+      ]
+    },
+    {
+      "lemma": "もしくは",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "もしくは"
+      ]
+    },
+    {
+      "lemma": "ヤッ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "ヤッ"
+      ]
+    },
+    {
+      "lemma": "やっぱ",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "やっぱ"
+      ]
+    },
+    {
+      "lemma": "やばい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "やばい"
+      ]
+    },
+    {
+      "lemma": "よそ見",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "よそ見"
+      ]
+    },
+    {
+      "lemma": "よる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "よっ"
+      ]
+    },
+    {
+      "lemma": "よろしく",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "よろしく"
+      ]
+    },
+    {
+      "lemma": "ラッキー",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "ラッキー"
+      ]
+    },
+    {
+      "lemma": "らん",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "らん"
+      ]
+    },
+    {
+      "lemma": "ランダム",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "ランダム"
+      ]
+    },
+    {
+      "lemma": "わが",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "わが"
+      ]
+    },
+    {
+      "lemma": "わし",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "わし"
+      ]
+    },
+    {
+      "lemma": "わな",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "わな"
+      ]
+    },
+    {
+      "lemma": "ワリカン",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "ワリカン"
+      ]
+    },
+    {
+      "lemma": "異国",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "異国"
+      ]
+    },
+    {
+      "lemma": "胃",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "胃"
+      ]
+    },
+    {
+      "lemma": "違反",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "違反"
+      ]
+    },
+    {
+      "lemma": "一種",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "一種"
+      ]
+    },
+    {
+      "lemma": "一瞬",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "一瞬"
+      ]
+    },
+    {
+      "lemma": "一人暮らし",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "一人暮らし"
+      ]
+    },
+    {
+      "lemma": "一生",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "一生"
+      ]
+    },
+    {
+      "lemma": "一族",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "一族"
+      ]
+    },
+    {
+      "lemma": "一度",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "一度"
+      ]
+    },
+    {
+      "lemma": "芋",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "芋"
+      ]
+    },
+    {
+      "lemma": "引き返す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "引き返す"
+      ]
+    },
+    {
+      "lemma": "引く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "引く"
+      ]
+    },
+    {
+      "lemma": "引っ張る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "引っ張ん"
+      ]
+    },
+    {
+      "lemma": "陰",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "陰"
+      ]
+    },
+    {
+      "lemma": "運",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "運"
+      ]
+    },
+    {
+      "lemma": "運営",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "運営"
+      ]
+    },
+    {
+      "lemma": "詠唱",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "詠唱"
+      ]
+    },
+    {
+      "lemma": "演じる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "演じ"
+      ]
+    },
+    {
+      "lemma": "遠足",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "遠足"
+      ]
+    },
+    {
+      "lemma": "奥",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "奥"
+      ]
+    },
+    {
+      "lemma": "押し入れ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "押し入れ"
+      ]
+    },
+    {
+      "lemma": "王",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "王"
+      ]
+    },
+    {
+      "lemma": "黄金",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "黄金"
+      ]
+    },
+    {
+      "lemma": "何だか",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "何だか"
+      ]
+    },
+    {
+      "lemma": "何たる",
+      "pos": "連体詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "何たる"
+      ]
+    },
+    {
+      "lemma": "華やかさ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "華やかさ"
+      ]
+    },
+    {
+      "lemma": "我が国",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "我が国"
+      ]
+    },
+    {
+      "lemma": "会計",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "会計"
+      ]
+    },
+    {
+      "lemma": "改造",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "改造"
+      ]
+    },
+    {
+      "lemma": "街",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "街"
+      ]
+    },
+    {
+      "lemma": "学べる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "学べる"
+      ]
+    },
+    {
+      "lemma": "掛かる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "掛かっ"
+      ]
+    },
+    {
+      "lemma": "活躍",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "活躍"
+      ]
+    },
+    {
+      "lemma": "完全",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "完全"
+      ]
+    },
+    {
+      "lemma": "感じ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "感じ"
+      ]
+    },
+    {
+      "lemma": "感じる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "感じる"
+      ]
+    },
+    {
+      "lemma": "感謝",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "感謝"
+      ]
+    },
+    {
+      "lemma": "間違える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "間違え"
+      ]
+    },
+    {
+      "lemma": "関わる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "関わろ"
+      ]
+    },
+    {
+      "lemma": "館長",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "館長"
+      ]
+    },
+    {
+      "lemma": "頑張る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "頑張れ"
+      ]
+    },
+    {
+      "lemma": "帰宅",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "帰宅"
+      ]
+    },
+    {
+      "lemma": "気",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "気"
+      ]
+    },
+    {
+      "lemma": "気付く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "気付い"
+      ]
+    },
+    {
+      "lemma": "貴様",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "貴様"
+      ]
+    },
+    {
+      "lemma": "泣かす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "泣かせ"
+      ]
+    },
+    {
+      "lemma": "居る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "居"
+      ]
+    },
+    {
+      "lemma": "教室",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "教室"
+      ]
+    },
+    {
+      "lemma": "狂乱",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "狂乱"
+      ]
+    },
+    {
+      "lemma": "極める",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "極め"
+      ]
+    },
+    {
+      "lemma": "極端",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "極端"
+      ]
+    },
+    {
+      "lemma": "禁止",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "禁止"
+      ]
+    },
+    {
+      "lemma": "金欠",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "金欠"
+      ]
+    },
+    {
+      "lemma": "苦手",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "苦手"
+      ]
+    },
+    {
+      "lemma": "苦労",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "苦労"
+      ]
+    },
+    {
+      "lemma": "隅っこ",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "隅っこ"
+      ]
+    },
+    {
+      "lemma": "型",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "型"
+      ]
+    },
+    {
+      "lemma": "経つ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "経つ"
+      ]
+    },
+    {
+      "lemma": "欠く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "欠い"
+      ]
+    },
+    {
+      "lemma": "決め",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "決め"
+      ]
+    },
+    {
+      "lemma": "決める",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "決め"
+      ]
+    },
+    {
+      "lemma": "喧嘩",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "喧嘩"
+      ]
+    },
+    {
+      "lemma": "遣わす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "遣わす"
+      ]
+    },
+    {
+      "lemma": "減る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "減っ"
+      ]
+    },
+    {
+      "lemma": "現れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "現れ"
+      ]
+    },
+    {
+      "lemma": "現世",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "現世"
+      ]
+    },
+    {
+      "lemma": "言",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "言"
+      ]
+    },
+    {
+      "lemma": "言い残す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "言い残す"
+      ]
+    },
+    {
+      "lemma": "言語",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "言語"
+      ]
+    },
+    {
+      "lemma": "個性",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "個性"
+      ]
+    },
+    {
+      "lemma": "固い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "固い"
+      ]
+    },
+    {
+      "lemma": "胡散臭い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "胡散臭"
+      ]
+    },
+    {
+      "lemma": "誇り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "誇り"
+      ]
+    },
+    {
+      "lemma": "誇る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "誇っ"
+      ]
+    },
+    {
+      "lemma": "交換",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "交換"
+      ]
+    },
+    {
+      "lemma": "交通",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "交通"
+      ]
+    },
+    {
+      "lemma": "更に",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "更に"
+      ]
+    },
+    {
+      "lemma": "行き先",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "行き先"
+      ]
+    },
+    {
+      "lemma": "香り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "香り"
+      ]
+    },
+    {
+      "lemma": "合わす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "合わす"
+      ]
+    },
+    {
+      "lemma": "告白",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "告白"
+      ]
+    },
+    {
+      "lemma": "根",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "根"
+      ]
+    },
+    {
+      "lemma": "最善",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "最善"
+      ]
+    },
+    {
+      "lemma": "作り直す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "作り直す"
+      ]
+    },
+    {
+      "lemma": "撮る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "撮っ"
+      ]
+    },
+    {
+      "lemma": "殺す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "殺さ"
+      ]
+    },
+    {
+      "lemma": "撒ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "撒け"
+      ]
+    },
+    {
+      "lemma": "散らかす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "散らかす"
+      ]
+    },
+    {
+      "lemma": "産まれる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "産まれ"
+      ]
+    },
+    {
+      "lemma": "残業",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "残業"
+      ]
+    },
+    {
+      "lemma": "仕留める",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "仕留め"
+      ]
+    },
+    {
+      "lemma": "思想",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "思想"
+      ]
+    },
+    {
+      "lemma": "死",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "死"
+      ]
+    },
+    {
+      "lemma": "死ぬ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "死ん"
+      ]
+    },
+    {
+      "lemma": "至って",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "至って"
+      ]
+    },
+    {
+      "lemma": "示し",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "示し"
+      ]
+    },
+    {
+      "lemma": "耳",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "耳"
+      ]
+    },
+    {
+      "lemma": "自由自在",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "自由自在"
+      ]
+    },
+    {
+      "lemma": "辞める",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "辞め"
+      ]
+    },
+    {
+      "lemma": "失う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "失っ"
+      ]
+    },
+    {
+      "lemma": "失礼",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "失礼"
+      ]
+    },
+    {
+      "lemma": "実に",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "実に"
+      ]
+    },
+    {
+      "lemma": "若い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "若い"
+      ]
+    },
+    {
+      "lemma": "寂しい",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "寂しい"
+      ]
+    },
+    {
+      "lemma": "主人公",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "主人公"
+      ]
+    },
+    {
+      "lemma": "手",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "手"
+      ]
+    },
+    {
+      "lemma": "手本",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "手本"
+      ]
+    },
+    {
+      "lemma": "受け入れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "受け入れ"
+      ]
+    },
+    {
+      "lemma": "受信",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "受信"
+      ]
+    },
+    {
+      "lemma": "呪文",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "呪文"
+      ]
+    },
+    {
+      "lemma": "修行",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "修行"
+      ]
+    },
+    {
+      "lemma": "拾う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "拾わ"
+      ]
+    },
+    {
+      "lemma": "終了",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "終了"
+      ]
+    },
+    {
+      "lemma": "重い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-01"
+      ],
+      "surfaces": [
+        "重い"
+      ]
+    },
+    {
+      "lemma": "宿",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "宿"
+      ]
+    },
+    {
+      "lemma": "出入り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "出入り"
+      ]
+    },
+    {
+      "lemma": "書ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "書け"
+      ]
+    },
+    {
+      "lemma": "助ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "助け"
+      ]
+    },
+    {
+      "lemma": "女子",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "女子"
+      ]
+    },
+    {
+      "lemma": "女子高",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "女子高"
+      ]
+    },
+    {
+      "lemma": "小学校",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "小学校"
+      ]
+    },
+    {
+      "lemma": "少女",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "少女"
+      ]
+    },
+    {
+      "lemma": "消える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "消え"
+      ]
+    },
+    {
+      "lemma": "笑顔",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "笑顔"
+      ]
+    },
+    {
+      "lemma": "紹介",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "紹介"
+      ]
+    },
+    {
+      "lemma": "賞",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "賞"
+      ]
+    },
+    {
+      "lemma": "乗っける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "乗っけ"
+      ]
+    },
+    {
+      "lemma": "乗り越える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "乗り越えよ"
+      ]
+    },
+    {
+      "lemma": "乗り遅れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "乗り遅れ"
+      ]
+    },
+    {
+      "lemma": "冗談",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "冗談"
+      ]
+    },
+    {
+      "lemma": "場合",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "場合"
+      ]
+    },
+    {
+      "lemma": "譲る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "譲っ"
+      ]
+    },
+    {
+      "lemma": "植物",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "植物"
+      ]
+    },
+    {
+      "lemma": "食",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "食"
+      ]
+    },
+    {
+      "lemma": "食費",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "食費"
+      ]
+    },
+    {
+      "lemma": "食料",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "食料"
+      ]
+    },
+    {
+      "lemma": "新入り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "新入り"
+      ]
+    },
+    {
+      "lemma": "深い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "深く"
+      ]
+    },
+    {
+      "lemma": "深夜",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "深夜"
+      ]
+    },
+    {
+      "lemma": "身",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "身"
+      ]
+    },
+    {
+      "lemma": "身の丈",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "身の丈"
+      ]
+    },
+    {
+      "lemma": "震える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "震え"
+      ]
+    },
+    {
+      "lemma": "人口",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "人口"
+      ]
+    },
+    {
+      "lemma": "人生",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "人生"
+      ]
+    },
+    {
+      "lemma": "図る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "図っ"
+      ]
+    },
+    {
+      "lemma": "数える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "数え"
+      ]
+    },
+    {
+      "lemma": "世界",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "世界"
+      ]
+    },
+    {
+      "lemma": "整形",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "整形"
+      ]
+    },
+    {
+      "lemma": "生半可",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "生半可"
+      ]
+    },
+    {
+      "lemma": "精彩",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "精彩"
+      ]
+    },
+    {
+      "lemma": "聖地",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "聖地"
+      ]
+    },
+    {
+      "lemma": "西洋",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "西洋"
+      ]
+    },
+    {
+      "lemma": "川",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "川"
+      ]
+    },
+    {
+      "lemma": "洗う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "洗う"
+      ]
+    },
+    {
+      "lemma": "全然",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "全然"
+      ]
+    },
+    {
+      "lemma": "早速",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "早速"
+      ]
+    },
+    {
+      "lemma": "窓際",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "窓際"
+      ]
+    },
+    {
+      "lemma": "総力",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "総力"
+      ]
+    },
+    {
+      "lemma": "送る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "送る"
+      ]
+    },
+    {
+      "lemma": "足りる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "足り"
+      ]
+    },
+    {
+      "lemma": "速やか",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "速やか"
+      ]
+    },
+    {
+      "lemma": "村",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "村"
+      ]
+    },
+    {
+      "lemma": "他人",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "他人"
+      ]
+    },
+    {
+      "lemma": "多分",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "多分"
+      ]
+    },
+    {
+      "lemma": "体温",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "体温"
+      ]
+    },
+    {
+      "lemma": "体裁",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "体裁"
+      ]
+    },
+    {
+      "lemma": "待てる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "待て"
+      ]
+    },
+    {
+      "lemma": "替え",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "替え"
+      ]
+    },
+    {
+      "lemma": "替える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "替え"
+      ]
+    },
+    {
+      "lemma": "大体",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "大体"
+      ]
+    },
+    {
+      "lemma": "奪う",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "奪っ"
+      ]
+    },
+    {
+      "lemma": "単位",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "単位"
+      ]
+    },
+    {
+      "lemma": "弾ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "弾ける"
+      ]
+    },
+    {
+      "lemma": "男子",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "男子"
+      ]
+    },
+    {
+      "lemma": "地獄",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "地獄"
+      ]
+    },
+    {
+      "lemma": "地上",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "地上"
+      ]
+    },
+    {
+      "lemma": "地図",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "地図"
+      ]
+    },
+    {
+      "lemma": "地鳴り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "地鳴り"
+      ]
+    },
+    {
+      "lemma": "遅刻",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "遅刻"
+      ]
+    },
+    {
+      "lemma": "中学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "中学"
+      ]
+    },
+    {
+      "lemma": "中学校",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "中学校"
+      ]
+    },
+    {
+      "lemma": "長",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "長"
+      ]
+    },
+    {
+      "lemma": "長い",
+      "pos": "形容詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "長い"
+      ]
+    },
+    {
+      "lemma": "直す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "直し"
+      ]
+    },
+    {
+      "lemma": "賃金",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "賃金"
+      ]
+    },
+    {
+      "lemma": "追って",
+      "pos": "接続詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "追って"
+      ]
+    },
+    {
+      "lemma": "追放",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "追放"
+      ]
+    },
+    {
+      "lemma": "通り",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "通り"
+      ]
+    },
+    {
+      "lemma": "通る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "通ら"
+      ]
+    },
+    {
+      "lemma": "底",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "底"
+      ]
+    },
+    {
+      "lemma": "溺れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "溺れ"
+      ]
+    },
+    {
+      "lemma": "投げる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "投げ"
+      ]
+    },
+    {
+      "lemma": "当然",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "当然"
+      ]
+    },
+    {
+      "lemma": "動かす",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "動かし"
+      ]
+    },
+    {
+      "lemma": "動き",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "動き"
+      ]
+    },
+    {
+      "lemma": "道路",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "道路"
+      ]
+    },
+    {
+      "lemma": "匿名",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "匿名"
+      ]
+    },
+    {
+      "lemma": "独特",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "独特"
+      ]
+    },
+    {
+      "lemma": "突然",
+      "pos": "副詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "突然"
+      ]
+    },
+    {
+      "lemma": "届く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "届く"
+      ]
+    },
+    {
+      "lemma": "内容",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "内容"
+      ]
+    },
+    {
+      "lemma": "日々",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "日々"
+      ]
+    },
+    {
+      "lemma": "入学",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "入学"
+      ]
+    },
+    {
+      "lemma": "猫背",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "猫背"
+      ]
+    },
+    {
+      "lemma": "念",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "念"
+      ]
+    },
+    {
+      "lemma": "悩む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "悩ん"
+      ]
+    },
+    {
+      "lemma": "能力",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-02"
+      ],
+      "surfaces": [
+        "能力"
+      ]
+    },
+    {
+      "lemma": "馬",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "馬"
+      ]
+    },
+    {
+      "lemma": "馬の骨",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "馬の骨"
+      ]
+    },
+    {
+      "lemma": "抜ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "抜け"
+      ]
+    },
+    {
+      "lemma": "半日",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "半日"
+      ]
+    },
+    {
+      "lemma": "批判",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "批判"
+      ]
+    },
+    {
+      "lemma": "比べる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "比べ"
+      ]
+    },
+    {
+      "lemma": "秘密",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-01"
+      ],
+      "surfaces": [
+        "秘密"
+      ]
+    },
+    {
+      "lemma": "肥える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "肥える"
+      ]
+    },
+    {
+      "lemma": "描く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "描き"
+      ]
+    },
+    {
+      "lemma": "腐敗",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "腐敗"
+      ]
+    },
+    {
+      "lemma": "負ける",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "負ける"
+      ]
+    },
+    {
+      "lemma": "部活",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "部活"
+      ]
+    },
+    {
+      "lemma": "腹",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "腹"
+      ]
+    },
+    {
+      "lemma": "壁",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "壁"
+      ]
+    },
+    {
+      "lemma": "偏る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "偏っ"
+      ]
+    },
+    {
+      "lemma": "弁当",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "弁当"
+      ]
+    },
+    {
+      "lemma": "歩く",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "歩く"
+      ]
+    },
+    {
+      "lemma": "墓場",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "墓場"
+      ]
+    },
+    {
+      "lemma": "墓地",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "墓地"
+      ]
+    },
+    {
+      "lemma": "崩壊",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "崩壊"
+      ]
+    },
+    {
+      "lemma": "放す",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "barakamon"
+      ],
+      "samples": [
+        "anime-barakamon-01"
+      ],
+      "surfaces": [
+        "放せ"
+      ]
+    },
+    {
+      "lemma": "放課後",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-01"
+      ],
+      "surfaces": [
+        "放課後"
+      ]
+    },
+    {
+      "lemma": "褒める",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "褒め"
+      ]
+    },
+    {
+      "lemma": "貌",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "貌"
+      ]
+    },
+    {
+      "lemma": "防虫",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "防虫"
+      ]
+    },
+    {
+      "lemma": "本来",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "本来"
+      ]
+    },
+    {
+      "lemma": "魔",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "魔"
+      ]
+    },
+    {
+      "lemma": "魔物",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-02"
+      ],
+      "surfaces": [
+        "魔物"
+      ]
+    },
+    {
+      "lemma": "万全",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "万全"
+      ]
+    },
+    {
+      "lemma": "満足",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "満足"
+      ]
+    },
+    {
+      "lemma": "漫画",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nozaki"
+      ],
+      "samples": [
+        "anime-nozaki-02"
+      ],
+      "surfaces": [
+        "漫画"
+      ]
+    },
+    {
+      "lemma": "蔓延る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "蔓延る"
+      ]
+    },
+    {
+      "lemma": "密度",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "密度"
+      ]
+    },
+    {
+      "lemma": "無駄",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "無駄"
+      ]
+    },
+    {
+      "lemma": "無敗",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "無敗"
+      ]
+    },
+    {
+      "lemma": "娘",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-01"
+      ],
+      "surfaces": [
+        "娘"
+      ]
+    },
+    {
+      "lemma": "名乗る",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "名乗る"
+      ]
+    },
+    {
+      "lemma": "迷子",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "迷子"
+      ]
+    },
+    {
+      "lemma": "滅びる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "滅び"
+      ]
+    },
+    {
+      "lemma": "面倒",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "面倒"
+      ]
+    },
+    {
+      "lemma": "目元",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "目元"
+      ]
+    },
+    {
+      "lemma": "目立つ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "目立つ"
+      ]
+    },
+    {
+      "lemma": "遊ぶ",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "tengokumate"
+      ],
+      "samples": [
+        "manga-tengokumate-02"
+      ],
+      "surfaces": [
+        "遊ん"
+      ]
+    },
+    {
+      "lemma": "余裕",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-02"
+      ],
+      "surfaces": [
+        "余裕"
+      ]
+    },
+    {
+      "lemma": "与える",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "与えよ"
+      ]
+    },
+    {
+      "lemma": "用意",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "用意"
+      ]
+    },
+    {
+      "lemma": "要素",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "dungeonmeshi"
+      ],
+      "samples": [
+        "anime-dungeonmeshi-01"
+      ],
+      "surfaces": [
+        "要素"
+      ]
+    },
+    {
+      "lemma": "翌朝",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "翌朝"
+      ]
+    },
+    {
+      "lemma": "来れる",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "bocchi"
+      ],
+      "samples": [
+        "anime-bocchi-02"
+      ],
+      "surfaces": [
+        "来れる"
+      ]
+    },
+    {
+      "lemma": "裏",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "rentalfriend"
+      ],
+      "samples": [
+        "manga-rentalfriend-02"
+      ],
+      "surfaces": [
+        "裏"
+      ]
+    },
+    {
+      "lemma": "裏道",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "nekodamashi"
+      ],
+      "samples": [
+        "manga-nekodamashi-01"
+      ],
+      "surfaces": [
+        "裏道"
+      ]
+    },
+    {
+      "lemma": "旅",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "旅"
+      ]
+    },
+    {
+      "lemma": "旅立ち",
+      "pos": "名詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-01"
+      ],
+      "surfaces": [
+        "旅立ち"
+      ]
+    },
+    {
+      "lemma": "嗜む",
+      "pos": "動詞",
+      "count": 1,
+      "groups": [
+        "luna"
+      ],
+      "samples": [
+        "manga-luna-02"
+      ],
+      "surfaces": [
+        "嗜む"
+      ]
+    }
+  ],
+  "execution": {
+    "input": "unordered_features",
+    "course": "current_revision_on_old_regression",
+    "inventory_sha256": "2a932a5f3bbe394414130180c7079e098f1af7c3b87bdc25d1ef0567d313391a"
+  }
+}

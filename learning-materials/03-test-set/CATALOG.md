@@ -607,3 +607,155 @@ SPY×FAMILY 第3集 受験対策をせよ · anime_subtitles · 未编写评分�
 - [#0003 · ちぐはぐな天使と悪魔に巻き込まれた話 ３](https://sai-zen-sen.jp/comics/twi4/tengokumate/0003.html) · [原图](https://sai-zen-sen.jp/comics/twi4/tengokumate/works/0003.mMYytvLf7BSrK7QnSsVgxzYd2Ne86zhR.jpg)
 - [#0004 · ちぐはぐな天使と悪魔に巻き込まれた話 ４](https://sai-zen-sen.jp/comics/twi4/tengokumate/0004.html) · [原图](https://sai-zen-sen.jp/comics/twi4/tengokumate/works/0004.0fipp22exBlwDpWPyyIQowexNyoP5qwM.jpg)
 
+### chihaya-1 · ちはやふる 第1話 / chihaya-1
+
+ちはやふる 第1話 · anime_subtitles · 未编写评分点
+
+[阅读所选字幕范围](https://github.com/Ajatt-Tools/kitsunekko-mirror/blob/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Chihayafuru/ちはやふる.S01E01.第一首.さくやこのはな.WEBRip.Netflix.ja[cc].srt#L134-L244) · [官方分集信息](https://www.ntv.co.jp/chihayafuru1/story/01.html)
+第 1 集；字幕编号 31—55；00:01:22,165—00:03:41,012。
+社区字幕；已核对固定文件版本，未逐句比对音轨。正文外部访问，非开放再分发授权。
+
+### chihaya-2 · ちはやふる 第1話 / chihaya-2
+
+ちはやふる 第1話 · anime_subtitles · 未编写评分点
+
+[阅读所选字幕范围](https://github.com/Ajatt-Tools/kitsunekko-mirror/blob/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Chihayafuru/ちはやふる.S01E01.第一首.さくやこのはな.WEBRip.Netflix.ja[cc].srt#L664-L774) · [官方分集信息](https://www.ntv.co.jp/chihayafuru1/story/01.html)
+第 1 集；字幕编号 151—175；00:08:30,718—00:09:20,893。
+社区字幕；已核对固定文件版本，未逐句比对音轨。正文外部访问，非开放再分发授权。
+
+### anohana-1 · あの日見た花の名前を僕達はまだ知らない。第1話 / anohana-1
+
+あの日見た花の名前を僕達はまだ知らない。第1話 · anime_subtitles · 未编写评分点
+
+[阅读所选字幕范围](https://github.com/Ajatt-Tools/kitsunekko-mirror/blob/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Ano%20Hi%20Mita%20Hana%20no%20Namae%20wo%20Bokutachi%20wa%20Mada%20Shiranai/あの日見た花の名前を僕達はまだ知らない。.S01E01.超平和バスターズ.WEBRip.Netflix.ja[cc].srt#L132-L248) · [官方分集信息](https://www.anohana.jp/tv/sp/story/index.html)
+第 1 集；字幕编号 31—55；00:00:58,600—00:01:49,317。
+社区字幕；已核对固定文件版本，未逐句比对音轨。正文外部访问，非开放再分发授权。
+
+### anohana-2 · あの日見た花の名前を僕達はまだ知らない。第1話 / anohana-2
+
+あの日見た花の名前を僕達はまだ知らない。第1話 · anime_subtitles · 未编写评分点
+
+[阅读所选字幕范围](https://github.com/Ajatt-Tools/kitsunekko-mirror/blob/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Ano%20Hi%20Mita%20Hana%20no%20Namae%20wo%20Bokutachi%20wa%20Mada%20Shiranai/あの日見た花の名前を僕達はまだ知らない。.S01E01.超平和バスターズ.WEBRip.Netflix.ja[cc].srt#L656-L764) · [官方分集信息](https://www.anohana.jp/tv/sp/story/index.html)
+第 1 集；字幕编号 151—175；00:07:03,381—00:07:32,952。
+社区字幕；已核对固定文件版本，未逐句比对音轨。正文外部访问，非开放再分发授权。
+
+### slime-1 · 転生したらスライムだった件 Web版 第1話 / slime-1
+
+転生したらスライムだった件 Web版 第1話 · light_novel · 未编写评分点
+
+[阅读官方原文](https://ncode.syosetu.com/n6316bn/1/)
+范围：round-06/prepare.py按来源指定的正文容器；第 1—5 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### slime-2 · 転生したらスライムだった件 Web版 第1話 / slime-2
+
+転生したらスライムだった件 Web版 第1話 · light_novel · 未编写评分点
+
+[阅读官方原文](https://ncode.syosetu.com/n6316bn/1/)
+范围：round-06/prepare.py按来源指定的正文容器；第 17—23 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### mushoku-1 · 無職転生 Web版 プロローグ / mushoku-1
+
+無職転生 Web版 プロローグ · light_novel · 未编写评分点
+
+[阅读官方原文](https://ncode.syosetu.com/n9669bk/1/)
+范围：round-06/prepare.py按来源指定的正文容器；第 1—10 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### mushoku-2 · 無職転生 Web版 プロローグ / mushoku-2
+
+無職転生 Web版 プロローグ · light_novel · 未编写评分点
+
+[阅读官方原文](https://ncode.syosetu.com/n9669bk/1/)
+范围：round-06/prepare.py按来源指定的正文容器；第 26—34 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### japanpost-1 · 日本郵便：受取人が忙しくて留守がち / japanpost-1
+
+日本郵便：受取人が忙しくて留守がち · everyday_instruction · 未编写评分点
+
+[阅读官方原文](https://www.post.japanpost.jp/question/66.html)
+范围：round-06/prepare.py按来源指定的正文容器；第 1—3 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### japanpost-2 · 日本郵便：受取人が忙しくて留守がち / japanpost-2
+
+日本郵便：受取人が忙しくて留守がち · everyday_instruction · 未编写评分点
+
+[阅读官方原文](https://www.post.japanpost.jp/question/66.html)
+范围：round-06/prepare.py按来源指定的正文容器；第 7—22 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### jrwest-1 · JR西日本：きっぷの変更 / jrwest-1
+
+JR西日本：きっぷの変更 · everyday_instruction · 未编写评分点
+
+[阅读官方原文](https://www.jr-odekake.net/ticket/eki/change/)
+范围：round-06/prepare.py按来源指定的正文容器；第 1—7 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### jrwest-2 · JR西日本：きっぷの変更 / jrwest-2
+
+JR西日本：きっぷの変更 · everyday_instruction · 未编写评分点
+
+[阅读官方原文](https://www.jr-odekake.net/ticket/eki/change/)
+范围：round-06/prepare.py按来源指定的正文容器；第 8—13 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### jma-1 · 気象庁：雲・大気現象・大気光象 / jma-1
+
+気象庁：雲・大気現象・大気光象 · modern_nonfiction · 未编写评分点
+
+[阅读官方原文](https://www.jma.go.jp/jma/kishou/know/faq/faq13.html)
+范围：round-06/prepare.py按来源指定的正文容器；第 1—4 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### jma-2 · 気象庁：雲・大気現象・大気光象 / jma-2
+
+気象庁：雲・大気現象・大気光象 · modern_nonfiction · 未编写评分点
+
+[阅读官方原文](https://www.jma.go.jp/jma/kishou/know/faq/faq13.html)
+范围：round-06/prepare.py按来源指定的正文容器；第 7—8 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### terada-1 · 寺田寅彦：茶わんの湯 / terada-1
+
+寺田寅彦：茶わんの湯 · historical_literature · 未编写评分点
+
+[阅读官方原文](https://www.aozora.gr.jp/cards/000042/files/2363_13807.html)
+范围：round-06/prepare.py按来源指定的正文容器；第 1—2 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### terada-2 · 寺田寅彦：茶わんの湯 / terada-2
+
+寺田寅彦：茶わんの湯 · historical_literature · 未编写评分点
+
+[阅读官方原文](https://www.aozora.gr.jp/cards/000042/files/2363_13807.html)
+范围：round-06/prepare.py按来源指定的正文容器；第 4—4 段。去ruby；按规范化正文块计数，表格按完整行；精确抽取规则见第6轮脚本。
+
+### tsuredure-pair1 · 徒然チルドレン カラー版 / tsuredure-pair1
+
+徒然チルドレン カラー版 · manga · 未编写评分点
+
+连续漫画原页；按编号从小到大读，每张自上而下。
+
+- [#0001 · 原页](https://sai-zen-sen.jp/comics/twi4/tsuredure/0001.html) · [原图](https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0001.3Ps1zVJl8qaWM23PD99hrsHn0PItnV4A.jpg)
+- [#0002 · 原页](https://sai-zen-sen.jp/comics/twi4/tsuredure/0002.html) · [原图](https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0002.V9zVTBdWEOikFyN7ZStDKsMx54EVOeJI.jpg)
+
+### tsuredure-pair2 · 徒然チルドレン カラー版 / tsuredure-pair2
+
+徒然チルドレン カラー版 · manga · 未编写评分点
+
+连续漫画原页；按编号从小到大读，每张自上而下。
+
+- [#0003 · 原页](https://sai-zen-sen.jp/comics/twi4/tsuredure/0003.html) · [原图](https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0003.qQ4amZIY6Pjk08hjqotqhNwyNfvxU3r5.jpg)
+- [#0004 · 原页](https://sai-zen-sen.jp/comics/twi4/tsuredure/0004.html) · [原图](https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0004.eRVNXkERv7Nj0XxVQCf3PqQ63BiULS3d.jpg)
+
+### yojouhan-pair1 · 悪役令嬢の四畳半 / yojouhan-pair1
+
+悪役令嬢の四畳半 · manga · 未编写评分点
+
+连续漫画原页；按编号从小到大读，每张自上而下。
+
+- [#0001 · 原页](https://sai-zen-sen.jp/comics/twi4/yojouhan/0001.html) · [原图](https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0001.2aLf2o1169evU3885BnqrvBsaOrJfak1.jpg)
+- [#0002 · 原页](https://sai-zen-sen.jp/comics/twi4/yojouhan/0002.html) · [原图](https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0002.1l37l0Sqe3qf9ovwVyyrZ8rncNTunrcg.jpg)
+
+### yojouhan-pair2 · 悪役令嬢の四畳半 / yojouhan-pair2
+
+悪役令嬢の四畳半 · manga · 未编写评分点
+
+连续漫画原页；按编号从小到大读，每张自上而下。
+
+- [#0003 · 原页](https://sai-zen-sen.jp/comics/twi4/yojouhan/0003.html) · [原图](https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0003.592vsO6sSntGab6DeH5xnGZkrdMerOcQ.jpg)
+- [#0004 · 原页](https://sai-zen-sen.jp/comics/twi4/yojouhan/0004.html) · [原图](https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0004.iT6gPu1MAuZC1FjshdjypZfGavN4lEbq.jpg)
+

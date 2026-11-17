@@ -1,0 +1,48 @@
+{
+  "retrieved_at_utc": "2026-11-17T07:27:50.971109+00:00",
+  "normalization": "HTMLParser text; omit script/style/rt/rp; newline at block tags; strip blank lines; retain Japanese wording; no translation or gloss supplied",
+  "samples": [
+    {
+      "id": "library",
+      "title": "横滨市图书馆登记说明",
+      "url": "https://www.city.yokohama.lg.jp/lang/residents/ej/life/libinfo-ej.html",
+      "encoding": "utf-8",
+      "raw_sha256": "dc0faa5ac8cfd07ee04578ff8354da35467bec6caca271f097d88612895d0b2c",
+      "start": "登録（図書館カードを作る）",
+      "end_before": "貸出（本を借りる）",
+      "excerpt_sha256": "80a7006e41f9760f2b562c3eb114975ab2c7575bdcaf7f9b8b441f11615a5eac",
+      "characters": 483,
+      "split": "regression_after_this_diagnostic",
+      "prior_catalog_match": false,
+      "selection": "first complete substantive section/paragraph, selected after freeze; no coverage search"
+    },
+    {
+      "id": "rules",
+      "title": "新宿区生活规则：垃圾投放首节",
+      "url": "https://www.city.shinjuku.lg.jp/tabunka/wakamatsu01_000001_00061.html",
+      "encoding": "utf-8",
+      "raw_sha256": "8a005acd7d0a3a420d933b1b88514cd989a6313546b74c8a6478063a1a1d98cd",
+      "start": "ごみ出しはルールを守りましょう",
+      "end_before": "ごみの出し方に関する情報",
+      "excerpt_sha256": "d7143ce94f99cbe0eb04b58b317de8505877c70c9c4e215d3f8aed524e67d719",
+      "characters": 200,
+      "split": "regression_after_this_diagnostic",
+      "prior_catalog_match": false,
+      "selection": "first complete substantive section/paragraph, selected after freeze; no coverage search"
+    },
+    {
+      "id": "story",
+      "title": "新美南吉《飴だま》首段",
+      "url": "https://www.aozora.gr.jp/cards/000121/files/4723_13209.html",
+      "encoding": "shift_jis",
+      "raw_sha256": "b2b39ff51006e5c716711fdbe517d076cb38a50b9b012dbf0d88973607f36fef",
+      "start": "春のあたたかい日のこと",
+      "end_before": "舟が出ようとすると",
+      "excerpt_sha256": "846523f0b105d2a93230403556e30168a486cad440ceb42ae5ef7ea3da20f39f",
+      "characters": 43,
+      "split": "regression_after_this_diagnostic",
+      "prior_catalog_match": false,
+      "selection": "first complete substantive section/paragraph, selected after freeze; no coverage search"
+    }
+  ]
+}

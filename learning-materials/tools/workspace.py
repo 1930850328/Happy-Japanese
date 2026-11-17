@@ -138,7 +138,9 @@ def fetch_tests():
     with ThreadPoolExecutor(max_workers=4) as pool:
         list(pool.map(fetch, jobs))
     run([PYTHON, TESTS / 'tools/validate.py', '--metadata-only', '--subtitle-dir', assets, '--image-dir', assets])
-    print('12 subtitle files and32 external manga images verified; originals remain local.')
+    subtitle_count = sum('subtitle' in source for source in sources)
+    image_count = sum(len(sample['locator'].get('pages', [])) for sample in samples)
+    print(f'{subtitle_count} subtitle files and {image_count} external manga images verified; originals remain local.')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

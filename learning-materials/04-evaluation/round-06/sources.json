@@ -1,0 +1,415 @@
+[
+  {
+    "id": "chihaya",
+    "genre": "anime_subtitles",
+    "url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Chihayafuru/ちはやふる.S01E01.第一首.さくやこのはな.WEBRip.Netflix.ja[cc].srt",
+    "title": "ちはやふる 第1話",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "raw_file": "chihaya.srt",
+    "raw_sha256": "31a12bb77b6b47b50fac4a4215bcfea1ea36a56084f74c5d6457e3954529c364",
+    "sample_masks": {
+      "1": [
+        {
+          "text": "（女子部員）",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（女子生徒）",
+          "count": 3,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（男子生徒）",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（堀川）",
+          "count": 5,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（千早）",
+          "count": 4,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（宮内）",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "ちーちゃん",
+          "count": 2,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        }
+      ],
+      "2": [
+        {
+          "text": "（女子児童たちの笑い声）",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（女子児童）",
+          "count": 6,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（男子児童）",
+          "count": 6,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "(わたや)",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（太一）",
+          "count": 4,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（千早）",
+          "count": 3,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "ちーちゃん",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "綿谷",
+          "count": 2,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "福井",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        }
+      ]
+    },
+    "continued_display_cues": {
+      "1": [],
+      "2": []
+    }
+  },
+  {
+    "id": "anohana",
+    "genre": "anime_subtitles",
+    "url": "https://raw.githubusercontent.com/Ajatt-Tools/kitsunekko-mirror/619b935cb062b7c122cd25614f02a3ac919c285b/subtitles/anime_tv/Ano%20Hi%20Mita%20Hana%20no%20Namae%20wo%20Bokutachi%20wa%20Mada%20Shiranai/あの日見た花の名前を僕達はまだ知らない。.S01E01.超平和バスターズ.WEBRip.Netflix.ja[cc].srt",
+    "title": "あの日見た花の名前を僕達はまだ知らない。第1話",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。",
+    "raw_file": "anohana.srt",
+    "raw_sha256": "ed26b3f4eb0c37df97400c1e787091bd8efd6f374a723796d3e9d5738f172bb7",
+    "sample_masks": {
+      "1": [
+        {
+          "text": "（じんたん）",
+          "count": 4,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（めんま）",
+          "count": 2,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "(じんた)",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（篤）",
+          "count": 8,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "めんま",
+          "count": 2,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "仁太",
+          "count": 2,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        }
+      ],
+      "2": [
+        {
+          "text": "(あんじょう)",
+          "count": 2,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（チャイム）",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（じんたん）",
+          "count": 4,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（めんま）",
+          "count": 8,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "（あなる）",
+          "count": 1,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "安城",
+          "count": 2,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        },
+        {
+          "text": "あなる",
+          "count": 3,
+          "reason": "speaker/ruby/proper name or non-speech annotation"
+        }
+      ]
+    },
+    "continued_display_cues": {
+      "1": [
+        38,
+        40,
+        42,
+        44,
+        49,
+        51,
+        52
+      ],
+      "2": [
+        153,
+        155,
+        157,
+        159,
+        161,
+        162,
+        165,
+        167,
+        169,
+        170,
+        171
+      ]
+    }
+  },
+  {
+    "id": "slime",
+    "genre": "light_novel",
+    "url": "https://ncode.syosetu.com/n6316bn/1/",
+    "raw_file": "slime.html",
+    "raw_sha256": "4757388430bd6bb7c3fd8c607b4e97ab927f23db9c6e706dfdb1967ad69f4458",
+    "title": "転生したらスライムだった件 Web版 第1話",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。"
+  },
+  {
+    "id": "mushoku",
+    "genre": "light_novel",
+    "url": "https://ncode.syosetu.com/n9669bk/1/",
+    "raw_file": "mushoku.html",
+    "raw_sha256": "6c25facff04d768929573c225db96df3dbe161f4ce3f03bd971f20fc57cc3ff5",
+    "title": "無職転生 Web版 プロローグ",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。"
+  },
+  {
+    "id": "japanpost",
+    "genre": "everyday_instruction",
+    "url": "https://www.post.japanpost.jp/question/66.html",
+    "raw_file": "japanpost.html",
+    "raw_sha256": "9cec4d7a305c65e460bfb1519b746f5566ff3167f3c50b7ec233e865fcba0787",
+    "title": "日本郵便：受取人が忙しくて留守がち",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。"
+  },
+  {
+    "id": "jrwest",
+    "genre": "everyday_instruction",
+    "url": "https://www.jr-odekake.net/ticket/eki/change/",
+    "raw_file": "jrwest.html",
+    "raw_sha256": "6ce2865522d3b1bcc6c0dcdd9c5a99c545af13055ca68ca60f02eaaca730523d",
+    "title": "JR西日本：きっぷの変更",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。"
+  },
+  {
+    "id": "jma",
+    "genre": "nonfiction",
+    "url": "https://www.jma.go.jp/jma/kishou/know/faq/faq13.html",
+    "raw_file": "jma.html",
+    "raw_sha256": "7e08a124a03eb235eb7f9245de2c2c045b4ad9a79deb08fc4996b185eba62f0d",
+    "title": "気象庁：雲・大気現象・大気光象",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。"
+  },
+  {
+    "id": "terada",
+    "genre": "nonfiction",
+    "url": "https://www.aozora.gr.jp/cards/000042/files/2363_13807.html",
+    "raw_file": "terada.html",
+    "raw_sha256": "8afdfebf29f10de3e3522cd7414d4dbb2e98c920f8f072339448afb6b35da846",
+    "title": "寺田寅彦：茶わんの湯",
+    "rights": "原件与连续转写仅本地缓存；报告保留来源、哈希、无句序统计。寺田原作为日本公版，其余遵守各来源条款。"
+  },
+  {
+    "id": "tsuredure",
+    "genre": "manga",
+    "title": "徒然チルドレン カラー版",
+    "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/",
+    "pages": [
+      {
+        "id": "tsuredure-1",
+        "group": "tsuredure",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0001.html",
+        "raw_file": "tsuredure-1.html",
+        "raw_sha256": "bd326b25adaa8daba79f8a31db0eddad4cac649f7832335cb02a5a11bc6d3f67",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0001.3Ps1zVJl8qaWM23PD99hrsHn0PItnV4A.jpg",
+        "image_file": "tsuredure-1.jpg",
+        "image_sha256": "010d6bb2d0c50819fb8d104b1b59102cfde62a0c9e2af3be9f59f4e51423fa4a",
+        "transcript_file": "tsuredure-1.txt",
+        "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "id": "tsuredure-2",
+        "group": "tsuredure",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0002.html",
+        "raw_file": "tsuredure-2.html",
+        "raw_sha256": "b3e714bef76c2c507fc3f22341e0a532ff6a5cbe7d87a9f63f664e1be9c2e89b",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0002.V9zVTBdWEOikFyN7ZStDKsMx54EVOeJI.jpg",
+        "image_file": "tsuredure-2.jpg",
+        "image_sha256": "530434a3634dbf2e8eddd6e148fbeecca9c2a8f50ca048a1851e9d59d203f83a",
+        "transcript_file": "tsuredure-2.txt",
+        "transcript_sha256": "c3dad28aa785475a88ee825ff1d6cb98aba281cf1a55c31048312491063cbf45"
+      },
+      {
+        "id": "tsuredure-3",
+        "group": "tsuredure",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0003.html",
+        "raw_file": "tsuredure-3.html",
+        "raw_sha256": "77cc082cd5ec855771fa81a1a90d4f524560ec105af25c361ada29892d0cbc94",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0003.qQ4amZIY6Pjk08hjqotqhNwyNfvxU3r5.jpg",
+        "image_file": "tsuredure-3.jpg",
+        "image_sha256": "44c0029aefac22a1c2b2afd9508728426e9ecd04e642900ab028a3d6d99806ba",
+        "transcript_file": "tsuredure-3.txt",
+        "transcript_sha256": "f3af710ea90cc47be6fd7612034fd52887a513ee93830c58f753b190683d1476"
+      },
+      {
+        "id": "tsuredure-4",
+        "group": "tsuredure",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/0004.html",
+        "raw_file": "tsuredure-4.html",
+        "raw_sha256": "e32bb4f58da21f7db06ad9ed9c688dbf2face379335c14837b63003504a03e5f",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/tsuredure/works/0004.eRVNXkERv7Nj0XxVQCf3PqQ63BiULS3d.jpg",
+        "image_file": "tsuredure-4.jpg",
+        "image_sha256": "e102c438b267c8663450836688b243822180f0b5be11d9c0027dfcc43ab0f131",
+        "transcript_file": "tsuredure-4.txt",
+        "transcript_sha256": "34c16f80d618887882c8d5bc171c86abfee829de4e6fc80f8174893050aa08c0"
+      }
+    ],
+    "sample_masks": {
+      "1": [],
+      "2": [
+        {
+          "text": "高瀬",
+          "count": 1,
+          "reason": "proper name"
+        }
+      ]
+    },
+    "transcription_method": "逐图读取对白/旁白/心声/语义画内文字；不重复ruby，排除章名和纯音效；保留卡顿；单编者核对。",
+    "visual_notes": "tsuredure第1页为标题页；yojouhan第2页无文字，均保留原位置。第3页牌匾经第4页清晰特写复核为異世界仕様。",
+    "rights": "官方公开图片与完整转写不分发，只保存原件哈希和统计。"
+  },
+  {
+    "id": "yojouhan",
+    "genre": "manga",
+    "title": "悪役令嬢の四畳半",
+    "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/",
+    "pages": [
+      {
+        "id": "yojouhan-1",
+        "group": "yojouhan",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0001.html",
+        "raw_file": "yojouhan-1.html",
+        "raw_sha256": "9fd053b9e7eca40aad40312f3ab82c7711f15b424569a4764926c18d8d7d16f7",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0001.2aLf2o1169evU3885BnqrvBsaOrJfak1.jpg",
+        "image_file": "yojouhan-1.jpg",
+        "image_sha256": "e2e4bb6c33c960d2e10f3c6f4512a9f52f7eeec6874a5f667adff4cd3a04fdf7",
+        "transcript_file": "yojouhan-1.txt",
+        "transcript_sha256": "c02fe95c16bcb9c39aa36dbe170263871ee9edbf01cbe5fb73a0f91a66d7c38a"
+      },
+      {
+        "id": "yojouhan-2",
+        "group": "yojouhan",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0002.html",
+        "raw_file": "yojouhan-2.html",
+        "raw_sha256": "8b9c8b3a14223219cd53b8122c5e7a3807f1660ef4fe314672729b130737ddae",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0002.1l37l0Sqe3qf9ovwVyyrZ8rncNTunrcg.jpg",
+        "image_file": "yojouhan-2.jpg",
+        "image_sha256": "62c7ee9b69e5005c124988daca76103deb1688f94eafdde0f51c4f9209205050",
+        "transcript_file": "yojouhan-2.txt",
+        "transcript_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "id": "yojouhan-3",
+        "group": "yojouhan",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0003.html",
+        "raw_file": "yojouhan-3.html",
+        "raw_sha256": "72a79f8cc13beee570893e5ed34d6baa945e7895a153c31c11b2218c4d63aff9",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0003.592vsO6sSntGab6DeH5xnGZkrdMerOcQ.jpg",
+        "image_file": "yojouhan-3.jpg",
+        "image_sha256": "75d2a6c39ce198ad7be9266fbe9f27128bb518bd6a94459bb625d982669d2ce5",
+        "transcript_file": "yojouhan-3.txt",
+        "transcript_sha256": "e2105599ff6f2f6b5b1363fd94b25b723229e629420bab725fcb8d883a565a7a"
+      },
+      {
+        "id": "yojouhan-4",
+        "group": "yojouhan",
+        "genre": "manga",
+        "url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/0004.html",
+        "raw_file": "yojouhan-4.html",
+        "raw_sha256": "9d448ddb3188114cb227bde620aeda3247c433afc88720c45e895174ad235507",
+        "image_url": "https://sai-zen-sen.jp/comics/twi4/yojouhan/works/0004.iT6gPu1MAuZC1FjshdjypZfGavN4lEbq.jpg",
+        "image_file": "yojouhan-4.jpg",
+        "image_sha256": "4437c59bb13e6fbb67d99f721898cb57ad7ae77a792186dc5ce9d9fc8fac9620",
+        "transcript_file": "yojouhan-4.txt",
+        "transcript_sha256": "7d5861e4be96d68643f2caa1d25313e77efce17bf1011a63644ddd63d183f149"
+      }
+    ],
+    "sample_masks": {
+      "1": [
+        {
+          "text": "クラウディア・ニコラス",
+          "count": 1,
+          "reason": "proper name"
+        },
+        {
+          "text": "クラウディア",
+          "count": 1,
+          "reason": "proper name"
+        },
+        {
+          "text": "ライフォンス",
+          "count": 1,
+          "reason": "proper name"
+        }
+      ],
+      "2": []
+    },
+    "transcription_method": "逐图读取对白/旁白/心声/语义画内文字；不重复ruby，排除章名和纯音效；保留卡顿；单编者核对。",
+    "visual_notes": "tsuredure第1页为标题页；yojouhan第2页无文字，均保留原位置。第3页牌匾经第4页清晰特写复核为異世界仕様。",
+    "rights": "官方公开图片与完整转写不分发，只保存原件哈希和统计。"
+  }
+]
