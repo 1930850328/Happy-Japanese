@@ -6,6 +6,7 @@ import { Toaster } from 'sonner'
 
 import { AppShell } from './components/AppShell'
 
+const LandingPage = lazy(async () => ({ default: (await import('./pages/LandingPage')).LandingPage }))
 const LearnPage = lazy(async () => ({ default: (await import('./pages/LearnPage')).LearnPage }))
 const ReadingCoursePage = lazy(async () => ({ default: (await import('./pages/ReadingCoursePage')).ReadingCoursePage }))
 const ReadingLessonPage = lazy(async () => ({ default: (await import('./pages/ReadingLessonPage')).ReadingLessonPage }))
@@ -24,8 +25,9 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<PageLoader><LandingPage /></PageLoader>} />
         <Route element={<AppShell />}>
-          <Route index element={<PageLoader><ReadingCoursePage /></PageLoader>} />
+          <Route path="/course" element={<PageLoader><ReadingCoursePage /></PageLoader>} />
           <Route path="/course/:day" element={<PageLoader><ReadingLessonPage /></PageLoader>} />
           <Route path="/learn" element={<PageLoader><LearnPage /></PageLoader>} />
           <Route path="/learn/review" element={<PageLoader><CourseReviewPage /></PageLoader>} />

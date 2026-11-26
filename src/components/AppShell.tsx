@@ -10,7 +10,7 @@ import { useCourseStore } from '../store/useCourseStore'
 import styles from './AppShell.module.css'
 
 const navItems = [
-  { to: '/', label: '21天课程', icon: GraduationCap },
+  { to: '/course', label: '21天课程', icon: GraduationCap },
   { to: '/notes', label: '原文阅读', icon: BookOpenText },
   { to: '/learn', label: '拓展练习', icon: LibraryBig },
   { to: '/songs', label: '歌曲', icon: Music2 },
@@ -52,13 +52,13 @@ export function AppShell() {
     <div className={`${styles.shell} ${isImmersiveRoute ? styles.shellImmersive : ''}`}>
       {!isImmersiveRoute ? (
         <aside className={styles.rail}>
-          <div className={styles.brandCard}>
+          <NavLink to="/" className={styles.brandCard} title="返回官网首页">
             <div className={styles.brandBadge}>日</div>
             <div className={styles.brandText}>
               <strong>Happy Japanese</strong>
               <span>一字一句，读懂日语</span>
             </div>
-          </div>
+          </NavLink>
 
           <nav className={styles.nav}>
             {navItems.map((item) => {
@@ -67,9 +67,9 @@ export function AppShell() {
                 <NavLink
                   key={item.to}
                   to={item.to}
-                  end={item.to === '/'}
+                  end={item.to === '/course'}
                   className={({ isActive }) => `${styles.navItem} ${
-                    isActive || (item.to === '/' && location.pathname.startsWith('/course/'))
+                    isActive || (item.to === '/course' && location.pathname.startsWith('/course/'))
                       ? styles.navItemActive
                       : ''
                   }`}
@@ -144,9 +144,9 @@ export function AppShell() {
               <NavLink
                 key={item.to}
                 to={item.to}
-                end={item.to === '/'}
+                end={item.to === '/course'}
                 className={({ isActive }) => `${styles.bottomItem} ${
-                  isActive || (item.to === '/' && location.pathname.startsWith('/course/'))
+                  isActive || (item.to === '/course' && location.pathname.startsWith('/course/'))
                     ? styles.bottomItemActive
                     : ''
                 }`}
