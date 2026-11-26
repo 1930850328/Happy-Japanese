@@ -29,6 +29,12 @@ importers:
       '@fontsource/noto-sans-sc':
         specifier: ^5.2.7
         version: 5.2.7
+      '@fontsource/noto-serif-jp':
+        specifier: ^5.3.1
+        version: 5.3.1
+      '@fontsource/noto-serif-sc':
+        specifier: ^5.3.1
+        version: 5.3.1
       '@huggingface/transformers':
         specifier: ^4.0.0
         version: 4.2.0
@@ -1110,6 +1116,12 @@ packages:
 
   '@fontsource/noto-sans-sc@5.2.7':
     resolution: {integrity: sha512-woVR2wa1UsXLxjEIl5OdaucQSRYwfouOiJAMayh9FUxvqaRRgOXrX3L8tCHvL99zg4DGsZjmgKe9usCnMRX7qQ==}
+
+  '@fontsource/noto-serif-jp@5.3.1':
+    resolution: {integrity: sha512-ewMVFXmG1Ip5u1Po1E1M3qqm8hsFqja0/26vkoaNylPXW9pnmEcBREqXxp+Fs03wpmhICE6qyYBN2bbfNtsR9Q==}
+
+  '@fontsource/noto-serif-sc@5.3.1':
+    resolution: {integrity: sha512-nIK2HyNGcUi2TGwIfrk2MItkh0O3Y5+TI8iPfPSzoNY6uyXYfQ9qqch8czk3aa1VhV4EU52uwCYCe1UDKJELpg==}
 
   '@huggingface/jinja@0.5.8':
     resolution: {integrity: sha512-ZdElB7DPS7QQS8ZnFc5RPPtkg+eN11z8AmIZWAyes6pSbwXqiFB/POVevvm01begdSX1ho9Gxln/F6qlQMsuaA==}
@@ -6081,6 +6093,10 @@ snapshots:
   '@fontsource/noto-sans-jp@5.2.7': {}
 
   '@fontsource/noto-sans-sc@5.2.7': {}
+
+  '@fontsource/noto-serif-jp@5.3.1': {}
+
+  '@fontsource/noto-serif-sc@5.3.1': {}
 
   '@huggingface/jinja@0.5.8': {}
 
